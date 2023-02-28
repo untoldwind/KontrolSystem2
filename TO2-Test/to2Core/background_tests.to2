@@ -1,0 +1,41 @@
+use * from core::testing
+use core::background as background
+
+test sync fn test_background_basic() -> Unit = {
+    const task = background::run(fn() -> {
+        if(background::is_background()) 1200 + 34 else 0
+    })
+
+    for(i in 0..10) {
+        if(task.is_completed) break
+        test_sleep(100)
+    }
+
+    assert_true(task.is_completed)
+    assert_false(task.is_canceled)
+    assert_int(1234, task.result)
+}
+
+test sync fn test_background_cancel() -> Unit = {
+    const task = background::run(fn() -> {
+        let i = 0
+        while(true) {
+            i += 1
+        }
+    })
+
+    test_sleep(500)
+
+    assert_false(task.is_completed)
+    assert_false(task.is_canceled)
+
+    task.cancel()
+
+    for(i in 0..10) {
+        if(task.is_canceled) break
+        test_sleep(100)
+    }
+
+    assert_true(task.is_completed)
+    assert_true(task.is_canceled)
+}

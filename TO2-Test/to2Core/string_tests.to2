@@ -1,0 +1,54 @@
+use * from core::testing
+
+test sync fn test_string_repeat() -> Unit = {
+    assert_string("", "abc".repeat(0))
+    assert_string("abc", "abc".repeat(1))
+    assert_string("abcabc", "abc".repeat(2))
+    assert_string("abcabcabc", "abc".repeat(3))
+}
+
+test sync fn test_string_pad() -> Unit = {
+    assert_string("abcdefghij", "abcdefghij".pad_left(5))
+    assert_string("          abcdefghij", "abcdefghij".pad_left(20))
+
+    assert_string("abcdefghij", "abcdefghij".pad_right(5))
+    assert_string("abcdefghij          ", "abcdefghij".pad_right(20))
+}
+
+test sync fn test_string_assign() -> Unit = {
+    let a = "123"
+
+    assert_string("123", a)
+
+    a += "abc"
+
+    assert_string("123abc", a)
+}
+
+test sync fn test_string_length() -> Unit = {
+    assert_int(0, "".length)
+    assert_int(2, "12".length)
+    assert_int(10, "1234567890".length)
+    assert_int(26, "abcdefghijklmnopqrstuvwxyz".length)
+}
+
+test sync fn test_string_contains() -> Unit = {
+    assert_true("Hello, World".contains("o, Wor"))
+    assert_false("Hello, World".contains("a, Wor"))
+    assert_true("Hello, World".starts_with("Hello"))
+    assert_false("Hello, World".starts_with("ello"))
+    assert_true("Hello, World".ends_with("World"))
+    assert_false("Hello, World".ends_with("Warld"))
+}
+
+test sync fn test_string_compare() -> Unit = {
+    assert_true("abcd" == "abcd")
+    assert_false("abcd" == "abce")
+    assert_true("abcd" < "abce")
+    assert_true("abcd" > "abcc")
+}
+
+test sync fn test_string_convert() -> Unit = {
+    assert_string("abdc", "aBdC".to_lower())
+    assert_string("ABDC", "aBdC".to_upper())
+}

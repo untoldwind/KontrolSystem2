@@ -1,0 +1,61 @@
+use * from core::testing
+
+sync fn outcome() -> int = 3000 + 456
+
+test sync fn test_assign_record_field() -> Unit = {
+    let t = (a : 1234, b: 2345)
+    let u = (first: t, second: 90)
+
+    assert_int(1234, t.a)
+    assert_int(2345, t.b)
+    assert_int(1234, u.first.a)
+    assert_int(90, u.second)
+    
+    t.a = outcome()
+    
+    assert_int(3456, t.a)    
+    assert_int(2345, t.b)
+    assert_int(1234, u.first.a)
+    assert_int(90, u.second)
+    
+    u.first.a = 4567
+
+    assert_int(3456, t.a)    
+    assert_int(2345, t.b)
+    assert_int(4567, u.first.a)
+    assert_int(90, u.second)
+    
+    t.b *= 2
+
+    assert_int(4690, t.b)
+    
+    u.first.b *= 3
+    
+    assert_int(u.first.b, u.first.b)
+}
+
+test sync fn test_assign_array_element() -> Unit = {
+    let arr = [1, 2, 3, 4, 5, 6, 7]
+    
+    assert_int(3, arr[2])
+    
+    arr[2] = 300
+
+    assert_int(300, arr[2])
+    
+    arr[4] *= 3
+
+    assert_int(15, arr[4])
+    
+    let arr2 = [(a : 1234, b : 10), (a : 2345, b : 20)]
+    
+    assert_int(2345, arr2[1].a)
+    assert_int(10, arr2[0].b)
+    
+    arr2[1].a = 3456
+    arr2[0] = (a : 4567, b: 90)
+
+    assert_int(3456, arr2[1].a)
+    assert_int(4567, arr2[0].a)
+    assert_int(90, arr2[0].b)
+}

@@ -1,0 +1,22 @@
+use * from core::testing
+use core::math as math
+
+test sync fn test_sqrt() -> Unit = {
+    assert_float(2.0, math::sqrt(4.0))
+    assert_float(4.0, math::sqrt(16.0))
+    assert_float(4.5, math::sqrt(20.25))
+}
+
+test sync fn test_pi() -> Unit = {
+    assert_float(3.14159265, math::PI, 1e-7)
+    assert_float(2.71828182, math::E, 1e-7)
+}
+
+test sync fn test_sin() -> Unit = {
+    assert_float(math::sqrt(2) / 2, math::sin(45 * math::DEG_TO_RAD))
+    assert_float(math::sqrt(2) / 2, math::sin_deg(45))
+    assert_float(math::sqrt(2) / 2, math::cos(45 * math::DEG_TO_RAD))
+    assert_float(math::sqrt(2) / 2, math::cos_deg(45))
+    assert_float(0.5, math::sin_deg(30))
+    assert_float(0.5, math::cos_deg(60))
+}

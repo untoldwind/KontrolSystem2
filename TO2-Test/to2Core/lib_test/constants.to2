@@ -1,0 +1,7 @@
+use { sqrt } from core::math
+
+pub const SQRT_2 : float = sqrt(2)
+
+pub const SOME_PRIME : int = 137
+
+pub const ADDER : fn(int, int) -> int = fn(a, b) -> SOME_PRIME * a + b

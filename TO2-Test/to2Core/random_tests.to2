@@ -1,0 +1,50 @@
+use * from core::testing
+use { random_from_seed } from core::math
+
+test sync fn test_next_float() -> Unit = {
+    const random = random_from_seed(1234)
+
+    assert_float(0.399080979357977, random.next_float())
+    assert_float(0.895899465724779, random.next_float())
+
+    let sum = 0.0
+
+    for(i in 0..10000) {
+        sum += random.next_float()
+    }
+    assert_float(0.5, sum / 10000, 1e-2)
+}
+
+test sync fn test_next_gaussian() -> Unit = {
+    const random = random_from_seed(1234)
+
+    assert_float(3.35063066015312, random.next_gaussian(5, 2))
+    assert_float(4.00727601160732, random.next_gaussian(5, 2))
+
+    let sum = 0.0
+
+    for(i in 0..10000) {
+        sum += random.next_gaussian(5, 2)
+    }
+    assert_float(5, sum / 10000, 2e-2)
+
+    sum = 0
+    for(i in 0..10000) {
+        sum += random.next_gaussian()
+    }
+    assert_float(0.0, sum / 10000.0, 5)
+}
+
+test sync fn test_next_int() -> Unit = {
+    const random = random_from_seed(1234)
+
+    assert_int(1044, random.next_int(1000, 2000))
+    assert_int(1308, random.next_int(1000, 2000))
+
+    let sum = 0
+
+    for(i in 0..10000) {
+        sum += random.next_int(1000, 2000)
+    }
+    assert_float(1500.0, sum / 10000.0, 5)
+}

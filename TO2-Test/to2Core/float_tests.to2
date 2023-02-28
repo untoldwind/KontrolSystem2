@@ -1,0 +1,74 @@
+use * from core::testing
+use core::math as math
+
+test sync fn test_binary_ops() -> Unit = {
+    assert_float(12.34, 12.0 + .34)
+    assert_float(11.66, 12.0 - .34)
+    assert_float(24.68, 12.34 * 2)
+    assert_float(6.17, 12.34 / 2)
+}
+
+test sync fn test_float_to_string() -> Unit = {
+    assert_string("12.34", 12.34.to_string())
+    assert_string("-12.34", (-12.34).to_string())
+}
+
+test sync fn test_float_to_fixed() -> Unit = {
+    assert_string("123", 123.456.to_fixed(0))
+    assert_string("123.5", 123.456.to_fixed(1))
+    assert_string("123.46", 123.456.to_fixed(2))
+    assert_string("123.456", 123.456.to_fixed(3))
+    assert_string("123.4560", 123.456.to_fixed(4))
+    assert_string("123.45600", 123.456.to_fixed(5))
+
+    assert_string("-123", (-123.456).to_fixed(0))
+    assert_string("-123.5", (-123.456).to_fixed(1))
+    assert_string("-123.46", (-123.456).to_fixed(2))
+    assert_string("-123.456", (-123.456).to_fixed(3))
+    assert_string("-123.4560", (-123.456).to_fixed(4))
+    assert_string("-123.45600", (-123.456).to_fixed(5))
+}
+
+test sync fn test_float_asign() -> Unit = {
+    let a = 12.0
+
+    assert_float(12, a)
+
+    a += .34
+
+    assert_float(12.34, a)
+
+    a *= 2.0
+
+    assert_float(24.68, a)
+
+    a /= 4.0
+
+    assert_float(6.17, a)
+
+    a -= .17
+
+    assert_float(6, a)
+}
+
+test sync fn test_float_fields() -> Unit = {
+    assert_float(12.34, 12.34.abs)
+    assert_float(1.34, (11.0 - 12.34).abs)
+
+    assert_int(0, 0.0.sign)
+    assert_int(1, 12.34.sign)
+    assert_int(-1, (11.0 - 12.34).sign)
+}
+
+test sync fn test_implicit_convert_int() -> Unit = {
+    assert_float(12.34, .34 + 12)
+    assert_float(12.34, 12 + .34)
+    assert_float(-11.66, .34 - 12)
+}
+
+test sync fn test_pow() -> Unit = {
+    const a = math::pow(34.0, 1.5)
+    const b = 34.0 ^ 1.5
+    
+    assert_float(a, b)
+}

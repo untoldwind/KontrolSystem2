@@ -1,0 +1,46 @@
+use * from core::testing
+
+test sync fn basic_while() -> Unit = {
+    let a : int = 0
+    let b : int = 0
+
+    while(a < 10) {
+        a = a + 1
+        b = b + a
+    }
+
+    assert_int(10, a)
+    assert_int(55, b)
+}
+
+test sync fn basic_while_continue() -> Unit = {
+    let a : int = 0
+    let b : int = 0
+
+    while(a < 10) {
+        a = a + 1
+
+        if(a < 6) continue
+
+        b = b + a
+    }
+
+    assert_int(10, a)
+    assert_int(40, b)
+}
+
+test sync fn basic_while_break() -> Unit = {
+    let a : int = 0
+    let b : int = 0
+
+    while(a < 10) {
+        a = a + 1
+
+        if(a > 5) break
+
+        b = b + a
+    }
+
+    assert_int(6, a)
+    assert_int(15, b)
+}

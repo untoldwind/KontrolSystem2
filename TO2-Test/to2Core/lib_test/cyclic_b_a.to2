@@ -1,0 +1,5 @@
+use { call_from_b } from lib_test::cyclic_a_b
+
+pub sync fn needs_a(str : string) -> string = {
+    call_from_b(str + " then needs_a")
+}

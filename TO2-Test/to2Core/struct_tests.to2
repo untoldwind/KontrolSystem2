@@ -1,0 +1,130 @@
+use * from core::testing
+use { TestStruct1, TestStruct2, TestStruct3 } from lib_test::structs
+
+struct Test1(g: int) {
+    i1: int = 2 * g
+    i2: int = 5 * g
+    f1: float = 1.5 * g
+    f2: float = 0.75 * g
+    s1: string = g.to_string()
+    s2: string = ""
+}
+
+impl Test1 {
+    sync fn immutable1(self) -> int = 100 * self.i1 + self.i2
+    
+    sync fn immutable2(self, i: int) -> int = self.i1 * i
+    
+    sync fn set_i1(let self, i: int) -> Unit = {
+        self.i1 = i
+    }
+}
+
+test sync fn test_test1_struct() -> Unit = {
+    const t1 = <Test1>(i1: 12, i2: 34, f1: 45.67, f2: 89.01, s1: "string1", s2: "string2")
+    
+    assert_int(12, t1.i1)
+    assert_int(34, t1.i2)
+    assert_float(45.67, t1.f1)
+    assert_float(89.01, t1.f2)
+    assert_string("string1", t1.s1)
+    assert_string("string2", t1.s2)
+    
+    assert_int(1234, t1.immutable1())
+    assert_int(24, t1.immutable2(2))
+}
+
+test sync fn test_test1_struct_constructor() -> Unit = {
+    const t1 = Test1(6)
+
+    assert_int(12, t1.i1)
+    assert_int(30, t1.i2)
+    assert_float(9.0, t1.f1)
+    assert_float(4.5, t1.f2)
+    assert_string("6", t1.s1)
+    assert_string("", t1.s2)
+}
+
+test sync fn test_test1_struct_mutate() -> Unit = {
+    let t1 = <Test1>(i1: 12, i2: 34, f1: 45.67, f2: 89.01, s1: "string1", s2: "string2")
+
+    assert_int(12, t1.i1)
+    assert_int(34, t1.i2)
+    
+    t1.set_i1(45)
+    
+    assert_int(45, t1.i1)
+    assert_int(34, t1.i2)
+}
+
+test sync fn test_imported_struct() -> Unit = {
+    const t1 = <TestStruct1>(field1: 12, field2: 34)
+    const t2 = TestStruct1()
+
+    assert_int(12, t1.field1)
+    assert_int(34, t1.field2)
+    assert_int(1, t2.field1)
+    assert_int(2, t2.field2)
+    
+    assert_int(46, t1.sum())
+    assert_int(408, t1.mul())
+    assert_int(3, t2.sum())
+    
+    t1.mul_fields(5)
+    
+    assert_int(60, t1.field1)
+    assert_int(170, t1.field2)
+}
+
+test fn test_imported_struct_async() -> Unit = {
+    const t1 = <TestStruct1>(field1: 12, field2: 34)
+    
+    assert_yield(1)
+
+    let i = 0
+
+    while(i < 10) {
+        assert_yield(i + 1)
+
+        const c = t1.sum_async()
+
+        assert_int(46, c)
+
+        i = i + 1
+    }
+
+    assert_int(10, i)
+}
+
+test sync fn test_imported_struct2() -> Unit = {
+    const t1 = TestStruct2(12)
+    
+    assert_int(24, t1.field1)
+    assert_int(1234, t1.field2)
+    
+    const t2 = TestStruct2(-3)
+    
+    assert_int(9, t2.field1)
+    assert_int(1234, t2.field2)
+    
+    const t3 = <TestStruct2>(field1: 1234, field2: 3456)
+
+    assert_int(1234, t3.field1)
+    assert_int(3456, t3.field2)
+}
+
+test sync fn test_imported_struct3() -> Unit = {
+    const t3 = TestStruct3(12, 34)
+    
+    assert_int(24, t3.t2.field1)
+    assert_int(1234, t3.t2.field2)
+    assert_string("34", t3.str)
+}
+
+test sync fn test_cell_struct3() -> Unit = {
+    const cell_t3 : Cell<TestStruct3> = Cell(TestStruct3(12, 34))
+    
+    assert_int(24, cell_t3.value.t2.field1)
+    assert_int(1234, cell_t3.value.t2.field2)
+    
+}

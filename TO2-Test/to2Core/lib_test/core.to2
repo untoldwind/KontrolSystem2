@@ -1,0 +1,15 @@
+use * from core::testing
+use { calculus_sub } from lib_test::core2
+
+pub sync fn calculus_add(a : int, b: int) -> int = {
+    assert_int(a - b, calculus_sub(a, b))
+    a + b
+}
+
+pub sync fn calculus_add_positive(a : int, b: int) -> int = {
+    if (a < 0) return 0
+    if (b < 0) return 0
+    assert_int(a - b, calculus_sub(a, b))
+    assert_true(a >= 0 && b >= 0)
+    a + b
+}

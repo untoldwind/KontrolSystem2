@@ -1,0 +1,49 @@
+use * from core::testing
+
+test sync fn test_assign() -> Unit = {
+    let a: string = "Nothing"
+
+    assert_string("Nothing", a)
+
+    a = "Not Nothing"
+
+    assert_string("Not Nothing", a)
+}
+
+test sync fn test_if() -> Unit = {
+    let a: string = "Nothing"
+    let b: int = 1234
+
+    if(b == 1234) a = "Was eq"
+
+    assert_string("Was eq", a)
+
+    if (b != 1234) a = "Was not eq"
+
+    assert_string("Was eq", a)
+
+    if( b != 1235 ) a = "Was not eq"
+
+    assert_string("Was not eq", a)
+}
+
+test sync fn test_if_else() -> Unit = {
+    let a: string = "Nothing"
+    let b: int = 1234
+
+    assert_string("Was eq", if(b == 1234) "Was eq" else "Was not eq")
+    assert_string("Was not eq", if (b == 1235) "Was eq" else "Was not eq")
+}
+
+test sync fn test_if_result() -> Unit = {
+    const a = 1234
+
+    let result = if(a < 300) "Less 300"
+
+    assert_false(result.defined)
+
+    result = if(a > 300) "Greater 300"
+
+    assert_true(result.defined)
+    assert_string("Greater 300", result.value)
+}

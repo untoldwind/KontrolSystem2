@@ -1,0 +1,6 @@
+use * from core::testing
+use { needs_b } from lib_test::cyclic_a_b
+
+test sync fn test_simple_cyclic() -> Unit = {
+    assert_string("test_simple_cyclic then needs_b then needs_a then call_from_b", needs_b("test_simple_cyclic"))
+}

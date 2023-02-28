@@ -1,0 +1,8 @@
+
+pub sync fn calculus_sub(a : int, b: int) -> int = a - b
+
+pub sync fn with_default(a : int, b : int = 34) -> int = a + b
+
+sync fn b_default() -> float = core::math::sin(1)
+
+pub sync fn with_complex_default(a : float, b : float = b_default()) -> float = a + b

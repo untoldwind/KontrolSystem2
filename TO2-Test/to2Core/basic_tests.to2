@@ -1,0 +1,51 @@
+use * from core::testing
+use { with_default, with_complex_default } from lib_test::core2
+
+test sync fn test_literals() -> Unit = {
+    assert_true(true)
+    assert_false(false)
+
+    assert_int(1234, 1200 + 34)
+
+    assert_int(-2468, 1234 * -2)
+
+    assert_float(12.34, 12.0 + 0.34)
+
+    assert_float(12.34, 12.1 + .24)
+
+    assert_string("abcde", "abc" + "de")
+}
+
+test sync fn test_int_comparison() -> Unit = {
+    assert_true(1234 == 1200 + 34)
+    assert_false(1234 != 1200 + 34)
+    assert_true(1234 <= 1200 + 34)
+    assert_true(1233 <= 1200 + 34)
+    assert_false(1234 < 1200 + 34)
+    assert_true(1233 < 1200 + 34)
+    assert_true(1234 >= 1200 + 34)
+    assert_true(1235 >= 1200 + 34)
+    assert_false(1234 > 1200 + 34)
+    assert_true(1235 > 1200 + 34)
+}
+
+test sync fn test_float_comparison() -> Unit = {
+    assert_true(12.34 == 12.0 + .34)
+    assert_false(12.34 != 12.0 + .34)
+    assert_true(12.34 <= 12.0 + .34)
+    assert_true(12.33 <= 12.0 + .34)
+    assert_false(12.34 < 12.0 + .34)
+    assert_true(12.33 < 12.0 + .34)
+    assert_true(12.34 >= 12.0 + .34)
+    assert_true(12.35 >= 12.0 + .34)
+    assert_false(12.34 > 12.0 + .34)
+    assert_true(12.35 > 12.0 + .34)
+}
+
+test sync fn test_with_defaults() -> Unit = {
+    assert_int(1212, with_default(1200, 12))
+    assert_int(1234, with_default(1200))
+
+    assert_float(12.34, with_complex_default(12.0, 0.34))
+    assert_float(12.8414709848079, with_complex_default(12.0))
+}

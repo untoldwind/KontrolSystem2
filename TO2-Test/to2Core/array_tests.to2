@@ -1,0 +1,117 @@
+use * from core::testing
+
+test sync fn test_basic_array() -> Unit = {
+    let bool_arr : bool[] = [ true, false, true ]
+    let int_arr : int[] = [ 0, 11, 22, 33, 44 ]
+    let float_arr = [ 1.1, 2.2, 3.3, 4.4, 5.5, 6.6 ]
+
+    assert_int(3, bool_arr.length)
+    assert_int(5, int_arr.length)
+    assert_int(5, func_with_array(int_arr))
+    assert_int(6, float_arr.length)
+    assert_true(bool_arr[0])
+    assert_false(bool_arr[1])
+    assert_int(22, int_arr[2])
+    assert_float(4.4, float_arr[3])
+}
+
+test sync fn test_complexer_array() -> Unit = {
+    let tuple_arr = [ (0, 1.1), (2, 3.3), (4, 5.5) ]
+
+    assert_int(3, tuple_arr.length)
+    assert_int(2, tuple_arr[1]._1)
+    assert_float(5.5, tuple_arr[2]._2)
+}
+
+test sync fn test_empty_infer() -> Unit = {
+    let int_arr : int[] = []
+
+    assert_int(0, int_arr.length)
+    assert_int(0, func_with_array([]))
+}
+
+test sync fn test_empty_direct() -> Unit = {
+    let int_arr = <int>[]
+
+    assert_int(0, int_arr.length)
+    assert_int(0, func_with_array(<int>[]))
+}
+
+sync fn func_with_array(arr : int[]) -> int = arr.length
+
+test sync fn test_array_map() -> Unit = {
+    const int_arr = [ 0, 11, 22, 33, 44 ]
+    const mapped_arr = int_arr.map(fn(i) -> 0.1 * i)
+
+    assert_int(5, mapped_arr.length)
+    assert_float(0.0, mapped_arr[0])
+    assert_float(1.1, mapped_arr[1])
+    assert_float(2.2, mapped_arr[2])
+    assert_float(3.3, mapped_arr[3])
+    assert_float(4.4, mapped_arr[4])
+}
+
+test sync fn test_array_map_with_index() -> Unit = {
+    const int_arr = [ 3, 5, 7, 11, 13, 17 ]
+    const mapped_arr = int_arr.map_with_index(fn(i, idx) -> 0.1 * i + idx)
+
+    assert_int(6, mapped_arr.length)
+    assert_float(0.3, mapped_arr[0])
+    assert_float(1.5, mapped_arr[1])
+    assert_float(2.7, mapped_arr[2])
+    assert_float(4.1, mapped_arr[3])
+    assert_float(5.3, mapped_arr[4])
+    assert_float(6.7, mapped_arr[5])
+}
+
+test sync fn test_array_set() -> Unit = {
+    let int_arr = [ 3, 5, 7, 11, 13, 17 ]
+
+    assert_int(6, int_arr.length)
+    assert_int(3, int_arr[0])
+    assert_int(5, int_arr[1])
+    assert_int(7, int_arr[2])
+    assert_int(11, int_arr[3])
+    assert_int(13, int_arr[4])
+    assert_int(17, int_arr[5])
+
+    int_arr[3] = 1234
+
+    assert_int(6, int_arr.length)
+    assert_int(3, int_arr[0])
+    assert_int(5, int_arr[1])
+    assert_int(7, int_arr[2])
+    assert_int(1234, int_arr[3])
+    assert_int(13, int_arr[4])
+    assert_int(17, int_arr[5])
+
+    assert_string("[3, 5, 7, 1234, 13, 17]", int_arr.to_string())
+}
+
+test sync fn test_array_builder() -> Unit = {
+    let builder : ArrayBuilder<(i : int, f : float)> = ArrayBuilder(100)
+
+    assert_int(0, builder.length)
+    for(idx in 0..100) {
+        builder.append((i : idx, f : 1.1 * idx))
+    }
+    assert_int(100, builder.length)
+    for(idx in 100..200) {
+        builder += (i : idx, f : 1.1 * idx)
+    }
+    assert_int(200, builder.length)
+
+    const arr = builder.result()
+
+    for(idx in 0..200) {
+        assert_int(idx, arr[idx].i)
+        assert_float(idx * 1.1, arr[idx].f)
+    }
+}
+
+test sync fn test_array_find() -> Unit = {
+    const arr = [ "One", "Two", "three" ]
+    
+    assert_none(arr.find(fn(item) -> false))
+    assert_some("Two", arr.find(fn(item) -> item.to_lower() == "two"))
+}

@@ -1,0 +1,172 @@
+use * from core::testing
+
+test sync fn test_basic_option() -> Unit = {
+    let opt_int : Option<int> = Some(12 * 10 + 3)    
+
+    assert_some(123, opt_int)
+    assert_true(opt_int.defined)
+    assert_int(123, opt_int.value)
+
+    opt_int = None()
+
+    assert_false(opt_int.defined)
+    assert_int(0, opt_int.value)
+}
+
+test sync fn test_basic_unit_option() -> Unit = {
+    let opt_unit : Option<Unit> = Some({})
+
+    assert_true(opt_unit.defined)
+
+    opt_unit = None()
+
+    assert_false(opt_unit.defined)
+}
+
+sync fn lifted_add(a: Option<int>, b: Option<int>) -> Option<int> = Some(a? + b?)
+
+test sync fn test_unwrap_option() -> Unit = {
+    let result_int = lifted_add(Some(1200), Some(34))
+
+    assert_true(result_int.defined)
+    assert_int(1234, result_int.value)
+
+    result_int = lifted_add(None(), Some(34))
+
+    assert_false(result_int.defined)
+    assert_int(0, result_int.value)
+
+    result_int = lifted_add(Some(1200), None())
+
+    assert_false(result_int.defined)
+    assert_int(0, result_int.value)
+
+    result_int = lifted_add(None(), None())
+
+    assert_false(result_int.defined)
+    assert_int(0, result_int.value)
+}
+
+test sync fn test_option_map() -> Unit = {
+    let option_int = Some(1234)
+
+    let option_float = option_int.map(fn(i) -> i.to_float * 0.25)
+
+    assert_true(option_float.defined)
+    assert_float(308.5, option_float.value)
+
+    option_int = None()
+
+    option_float = option_int.map(fn(i) -> i.to_float * 0.25)
+
+    assert_false(option_float.defined)
+}
+
+test sync fn test_option_to_result() -> Unit = {
+    let option_int = Some(1234)
+
+    let result_int = option_int.ok_or("Not Set")
+
+    assert_true(result_int.success)
+    assert_int(1234, result_int.value)
+
+    option_int = None()
+    result_int = option_int.ok_or("Not Set")
+
+    assert_false(result_int.success)
+    assert_string("Not Set", result_int.error)
+}
+
+sync fn implicit_some_result() -> Option<string> = "This is something"
+
+fn implicit_some_result_async() -> Option<string> = "This is something in the future"
+
+test fn test_option_implicit_some() -> Unit = {
+    let result = implicit_some_result()
+
+    assert_true(result.defined)
+    assert_string("This is something", result.value)
+
+    result = implicit_some_result_async()
+
+    assert_true(result.defined)
+    assert_string("This is something in the future", result.value)
+
+    let other : Option<int> = 1234
+
+    assert_true(other.defined)
+    assert_int(1234, other.value)
+}
+
+test sync fn test_option_or_default() -> Unit = {
+    const maybe_a1 : Option<int> = Some(2345)
+    const maybe_a2 : Option<int> = None()
+    const b = 1234
+    
+    assert_int(2345, maybe_a1 | 5678)
+    assert_int(5678, maybe_a2 | 5678)
+
+    assert_int(3579, (maybe_a1 | 5678) + b)
+    assert_int(6912, (maybe_a2 | 5678) + b)
+    
+    const c = maybe_a1 | 5678
+    const d = maybe_a2 | 5678
+    
+    assert_int(2345, c)
+    assert_int(5678, d)    
+}
+
+test sync fn test_option_if_deconstruct() -> Unit = {
+    const maybe_a1 : Option<int> = Some(2345)
+    const maybe_a2 : Option<int> = None()
+    
+    if(Some(a) = maybe_a1) {
+        assert_int(2345, a)
+    } else {
+        fail_test("This is wrong 1")
+    }
+
+    if(Some(a) = maybe_a2) {
+        fail_test("This is wrong 2")
+    }
+
+    if(Some(a) = maybe_a1) {
+        assert_int(2345, a)
+        return
+    }
+    
+    fail_test("This is wrong 3")
+}
+
+test sync fn test_option_while_deconstruct() -> Unit = {
+    let maybe_a : Option<int> = Some(10)
+    let count = 0
+    
+    while(Some(a) = maybe_a) {
+        count += 1
+        if(a > 0) {
+            maybe_a = Some(a - 1)
+        } else {
+            maybe_a = None()
+        }
+    }
+    
+    assert_int(11, count)
+}
+
+test sync fn test_option_then() -> Unit = {
+    const maybe_a1 = Some(1234)
+    const maybe_a2 = Some(123)
+    const maybe_a3 : Option<int> = None()
+    const maybe_b1 = maybe_a1.then(fn(a) -> if(a > 200) a * 2)
+    const maybe_b2 = maybe_a2.then(fn(a) -> if(a > 200) a * 2)
+    const maybe_b3 = maybe_a3.then(fn(a) -> if(a > 200) a * 2)
+    
+    assert_some(2468, maybe_b1)
+    assert_none(maybe_b2)
+    assert_none(maybe_b3)
+}
+
+test sync fn test_option_autocast() -> Unit = {
+    assert_some(1234, 1234)
+}

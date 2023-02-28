@@ -1,0 +1,210 @@
+use * from core::testing
+
+test sync fn test_tuple2() -> Unit = {
+    let t = (1234, "First") // Use type inference here
+
+    assert_int(1234, t._1)
+    assert_string("First", t._2)
+
+    let (t1: int, t2: string) = t
+
+    assert_int(1234, t1)
+    assert_string("First", t2)
+}
+
+test sync fn test_tuple3() -> Unit = {
+    let t = (1234, "First", 23.45) // Use type inference here
+
+    assert_int(1234, t._1)
+    assert_string("First", t._2)
+    assert_float(23.45, t._3)
+
+    let (t1, t2, t3) = t  // Use type inference here
+
+    assert_int(1234, t1)
+    assert_string("First", t2)
+    assert_float(23.45, t3)
+}
+
+test sync fn test_tuple4() -> Unit = {
+    let t : (int, string, float, bool) = (1234, "First", 23.45, true)
+
+    assert_int(1234, t._1)
+    assert_string("First", t._2)
+    assert_float(23.45, t._3)
+    assert_true(t._4)
+
+    let (t1: int, t2: string, t3: float, t4 : bool) = t
+
+    assert_int(1234, t1)
+    assert_string("First", t2)
+    assert_float(23.45, t3)
+    assert_true(t4)
+}
+
+test sync fn test_tuple5() -> Unit = {
+    let t : (int, string, float, bool, string) = (1234, "First", 23.45, true, "Second")
+
+    assert_int(1234, t._1)
+    assert_string("First", t._2)
+    assert_float(23.45, t._3)
+    assert_true(t._4)
+    assert_string("Second", t._5)
+
+    let (t1: int, t2: string, t3: float, t4 : bool, t5 : string) = t
+
+    assert_int(1234, t1)
+    assert_string("First", t2)
+    assert_float(23.45, t3)
+    assert_true(t4)
+    assert_string("Second", t5)
+}
+
+test sync fn test_tuple6() -> Unit = {
+    let t : (int, string, float, bool, string, int) = (1234, "First", 23.45, true, "Second", 4567)
+
+    assert_int(1234, t._1)
+    assert_string("First", t._2)
+    assert_float(23.45, t._3)
+    assert_true(t._4)
+    assert_string("Second", t._5)
+    assert_int(4567, t._6)
+
+    let (t1: int, t2: string, t3: float, t4 : bool, t5 : string, t6 : int) = t
+
+    assert_int(1234, t1)
+    assert_string("First", t2)
+    assert_float(23.45, t3)
+    assert_true(t4)
+    assert_string("Second", t5)
+    assert_int(4567, t6)
+}
+
+test sync fn test_tuple7() -> Unit = {
+    let t : (int, string, float, bool, string, int, float) = (1234, "First", 23.45, true, "Second", 4567, 78.9)
+
+    assert_int(1234, t._1)
+    assert_string("First", t._2)
+    assert_float(23.45, t._3)
+    assert_true(t._4)
+    assert_string("Second", t._5)
+    assert_int(4567, t._6)
+    assert_float(78.9, t._7)
+
+    let (t1: int, t2: string, t3: float, t4 : bool, t5 : string, t6 : int, t7 : float) = t
+
+    assert_int(1234, t1)
+    assert_string("First", t2)
+    assert_float(23.45, t3)
+    assert_true(t4)
+    assert_string("Second", t5)
+    assert_int(4567, t6)
+    assert_float(78.9, t7)
+}
+
+test sync fn test_tuple8() -> Unit = {
+    let t : (int, string, float, bool, string, int, float, bool) = (1234, "First", 23.45, true, "Second", 4567, 78.9, false)
+
+    assert_int(1234, t._1)
+    assert_string("First", t._2)
+    assert_float(23.45, t._3)
+    assert_true(t._4)
+    assert_string("Second", t._5)
+    assert_int(4567, t._6)
+    assert_float(78.9, t._7)
+    assert_false(t._8)
+
+    let (t1: int, t2: string, t3: float, t4 : bool, t5 : string, t6 : int, t7 : float, t8 : bool) = t
+
+    assert_int(1234, t1)
+    assert_string("First", t2)
+    assert_float(23.45, t3)
+    assert_true(t4)
+    assert_string("Second", t5)
+    assert_int(4567, t6)
+    assert_float(78.9, t7)
+    assert_false(t8)
+}
+
+test sync fn test_tuple32() -> Unit = {
+    let t : (int, string, float, bool, string, int, float, bool,
+             int, string, float, bool, string, int, float, bool,
+             int, string, float, bool, string, int, float, bool,
+             int, string, float, bool, string, int, float, bool) = (
+                 1234, "First", 23.45, true, "Second", 4567, 78.9, false, 
+                 11234, "First1", 23.45, true, "Second1", 14567, 78.9, false, 
+                 21234, "First2", 23.45, true, "Second2", 24567, 78.9, false, 
+                 31234, "First3", 23.45, true, "Second3", 34567, 78.9, false)
+
+    assert_int(1234, t._1)
+    assert_string("First", t._2)
+    assert_float(23.45, t._3)
+    assert_true(t._4)
+    assert_string("Second", t._5)
+    assert_int(4567, t._6)
+    assert_float(78.9, t._7)
+    assert_false(t._8)
+
+    assert_int(11234, t._9)
+    assert_string("First1", t._10)
+    assert_float(23.45, t._11)
+    assert_true(t._12)
+    assert_string("Second1", t._13)
+    assert_int(14567, t._14)
+    assert_float(78.9, t._15)
+    assert_false(t._16)
+
+    assert_int(21234, t._17)
+    assert_string("First2", t._18)
+    assert_float(23.45, t._19)
+    assert_true(t._20)
+    assert_string("Second2", t._21)
+    assert_int(24567, t._22)
+    assert_float(78.9, t._23)
+    assert_false(t._24)
+
+    assert_int(31234, t._25)
+    assert_string("First3", t._26)
+    assert_float(23.45, t._27)
+    assert_true(t._28)
+    assert_string("Second3", t._29)
+    assert_int(34567, t._30)
+    assert_float(78.9, t._31)
+    assert_false(t._32)
+
+    let (t1: int, t2: string, t3: float, t4 : bool, t5 : string, t6 : int, t7 : float, t8 : bool,
+         _, _, _, _, _, _, _, _,
+         t17: int, t18: string, t19: float, t20 : bool, t21 : string, t22 : int, t23 : float, t24 : bool,
+         _, _, _, _, _, _, _, _) = t
+
+    assert_int(1234, t1)
+    assert_string("First", t2)
+    assert_float(23.45, t3)
+    assert_true(t4)
+    assert_string("Second", t5)
+    assert_int(4567, t6)
+    assert_float(78.9, t7)
+    assert_false(t8)
+
+    assert_int(21234, t17)
+    assert_string("First2", t18)
+    assert_float(23.45, t19)
+    assert_true(t20)
+    assert_string("Second2", t21)
+    assert_int(24567, t22)
+    assert_float(78.9, t23)
+    assert_false(t24)
+}
+
+test sync fn test_tupple_deconstruct_to_vars() -> Unit = {
+    let a : int = 34
+    let b : float = 12.34
+
+    assert_int(34, a)
+    assert_float(12.34, b)
+
+    (a, _, b) = (1234, "something", 43.12) 
+
+    assert_int(1234, a)
+    assert_float(43.12, b)
+}

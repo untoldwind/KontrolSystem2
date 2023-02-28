@@ -1,0 +1,9 @@
+use * from core::testing
+use { SOME_PRIME, SQRT_2, ADDER } from lib_test::constants
+
+test sync fn test_imported_constants() -> Unit = {
+    assert_int(137, SOME_PRIME)
+    assert_float(1.4142135623731, SQRT_2)
+
+    assert_int(279, ADDER(2, 5))
+}

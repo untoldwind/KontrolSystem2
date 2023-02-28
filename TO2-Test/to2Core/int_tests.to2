@@ -1,0 +1,61 @@
+use * from core::testing
+
+test sync fn test_int_conversion() -> Unit = {
+    assert_string("1234", 1234.to_string())
+    assert_string("-1234", (-1234).to_string())
+
+    assert_true(1234.to_bool)
+    assert_false(0.to_bool)
+
+    assert_float(1234.0, 1234.to_float)
+}
+
+test sync fn test_binary_ops() -> Unit = {
+    assert_int(1234, 1200 + 34)
+    assert_int(1166, 1200 - 34)
+    assert_int(2468, 1234 * 2)
+    assert_int(617, 1234 / 2)
+    assert_int(4, 9 % 5)
+}
+
+test sync fn test_int_assigns() -> Unit = {
+    let a = 1200
+
+    assert_int(1200, a)
+
+    a += 34
+
+    assert_int(1234, a)
+
+    a *= 2
+
+    assert_int(2468, a)
+
+    a /= 4
+
+    assert_int(617, a)
+
+    a -= 17
+
+    assert_int(600, a)
+}
+
+test sync fn test_int_fields() -> Unit = {
+    assert_int(1234, 1234.abs)
+    assert_int(1222, (12 - 1234).abs)
+
+    assert_int(0, 0.sign)
+    assert_int(1, 1234.sign)
+    assert_int(-1, (12 - 1234).sign)
+}
+
+test sync fn test_int_bit_ops() -> Unit = {
+    assert_int(0x1010, 0x1211 & 0x1034)
+    assert_int(0x1235, 0x1211 | 0x1034)
+    assert_int(0x0225, 0x1211 ^ 0x1034)
+
+    let a = 0x1211
+    a &= 0x1034
+
+    assert_int(0x1010, a)
+}

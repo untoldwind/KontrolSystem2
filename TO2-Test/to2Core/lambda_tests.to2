@@ -1,0 +1,84 @@
+use * from core::testing
+use { lambda_int_callback } from test::module
+
+sync fn do_calc(d : int , e : int, calc : fn(int, int) -> int) -> int = {
+    let a : int = 2 * d
+    let b : int = 3 * e
+
+    calc(a, b)
+}
+
+sync fn do_calc_float(a : float, calc : fn(float) -> float) -> float = calc(a * a)
+
+test sync fn test_simple_lambda() -> Unit = {
+    const lambda1 = fn(a : int, b: int) -> a + b
+    const lambda2 = fn(a : int, b: int) -> a - b
+
+    assert_int(126, do_calc(12, 34, lambda1))
+    assert_int(-78, do_calc(12, 34, lambda2))
+}
+
+test sync fn test_simple_lambda_clone() -> Unit = {
+    const f = 1
+    assert_int(126, do_calc(12, 34, fn(a, b) -> f * a + b))
+
+    const g = 2
+    assert_int(150, do_calc(12, 34, fn(a, b) -> g * a + b))
+}
+
+test sync fn test_lambda_in_loop() -> Unit = {
+    let f = 1
+
+    while(f < 10) {
+        const g = f
+        assert_int(-78 + 24 * (f - 1), do_calc(12, 34, fn(a, b) -> g * a - b))
+
+        f = f + 1
+    }
+}
+
+test sync fn test_loop_in_lambda() -> Unit = {
+    let sum_up = fn(count : int) -> {
+        let a = count
+        let sum = 0
+        while(a > 0) {
+            sum += a
+            a -= 1
+        }
+        sum
+    }
+
+    assert_int(55, sum_up(10))
+    assert_int(210, sum_up(20))
+}
+
+test sync fn test_lambda_interop() -> Unit = {
+    const f = 1
+
+    assert_int(12 + 2 * 34 + 34 + 12, lambda_int_callback(12, 34, fn(a, b) -> f * a + b))
+
+    const g = 10
+
+    assert_int(10 * 12 + 2 * 34 + 10 * 34 + 12, lambda_int_callback(12, 34, fn(a, b) -> g * a + b))
+
+    let callback : fn(int, int) -> int = fn(a, b) -> g * a - b
+
+    assert_int(10 * 12 - 2 * 34 + 10 * 34 - 12, lambda_int_callback(12, 34, callback))
+    assert_int(10 * 34 - 2 * 12 + 10 * 12 - 34, lambda_int_callback(34, 12, callback))
+}
+
+test sync fn test_lamdba_with_funcs() -> Unit = {
+    assert_float(4.0, do_calc_float(4.0, core::math::sqrt))
+    assert_float(0.247403959254523, do_calc_float(0.5, core::math::sin))
+
+    assert_float(8.0, do_calc_float(4.0, fn(a) -> 2.0 * core::math::sqrt(a)))
+
+    const lambda1 = fn(a : int, b: int) -> a + b
+    const lambda2 = fn(a : int, b: int) -> do_calc(a, b, lambda1)
+
+    assert_int(2 * 2 * 12 + 3 * 3 * 34, do_calc(12, 34, lambda2))
+
+    const lambda3 = fn(a : int, b: int) -> lambda_int_callback(a, b, lambda1)
+
+    assert_int(2 * 2 * 12 + 3 * 3 * 34, do_calc(12, 34, lambda3))
+}

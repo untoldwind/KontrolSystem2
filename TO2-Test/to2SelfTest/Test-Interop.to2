@@ -1,0 +1,6 @@
+use { assert_string } from core::testing
+
+pub sync fn test_basic_callback(target : fn(int) -> string) -> Unit = {
+    assert_string("Called with 12345", target(12345))
+    assert_string("Called with 54321", target(54321))
+}

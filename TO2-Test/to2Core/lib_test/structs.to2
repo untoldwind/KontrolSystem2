@@ -1,0 +1,33 @@
+
+pub struct TestStruct1 {
+    field1: int = 1
+    field2: int = 2
+}
+
+impl TestStruct1 {
+    sync fn sum(self) -> int = self.field1 + self.field2
+    
+    sync fn mul(self) -> int = self.field1 * self.field2
+    
+    fn sum_async(self) -> int = self.field1 + self.field2
+    
+    sync fn mul_fields(self, m : int) -> Unit = {
+        self.field1 *= m
+        self.field2 *= m
+    }
+}
+
+pub struct TestStruct2(i: int) {
+    field1: int = {
+        if(i > 0)
+            i * 2
+        else
+            -3 * i
+    }
+    field2: int = 1234
+}
+
+pub struct TestStruct3(i: int, j: int) {
+    t2: TestStruct2 = TestStruct2(i)
+    str: string = j.to_string()
+}

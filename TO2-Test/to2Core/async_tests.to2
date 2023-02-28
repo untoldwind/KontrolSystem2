@@ -1,0 +1,101 @@
+use * from core::testing
+
+fn demo(a : int, b : int) -> int = a + b
+
+fn demo2(a : int, b : int) -> int = a * b
+
+test fn test_basic_async() -> Unit = {
+    assert_true(true)
+    assert_yield(1)
+
+    const a = 1200
+    const b = 34
+
+    const c = demo(a, b)
+
+    assert_yield(2)
+    assert_int(1234, c)
+    assert_int(1200, a)
+    assert_int(34, b)
+
+    const d = demo(c, a)
+
+    assert_yield(3)
+    assert_int(2434, d)
+    assert_int(1234, c)
+    assert_int(1200, a)
+    assert_int(34, b)
+    
+    let cond = true
+    
+    const opt_c = if(cond) {
+        demo(a, b)
+    }
+    
+    assert_yield(4)
+    assert_some(1234, opt_c)
+    
+    cond = false
+    
+    const opt_d = if(cond) {
+        demo(a, b)
+    }
+
+    assert_yield(4)
+    assert_none(opt_d)
+}
+
+test fn test_basic_loop() -> Unit = {
+    assert_yield(1)
+
+    let i = 0
+
+    while(i < 10) {
+        assert_yield(i + 1)
+
+        const c = demo(i, 1200)
+
+        assert_int(i + 1200, c)
+
+        i = i + 1
+    }
+
+    assert_int(10, i)
+}
+
+test fn test_chain_async() -> Unit = {
+    assert_yield(1)
+
+    const single = demo(1200, demo2(2, 17))
+
+    assert_int(1234, single)
+
+    const single2 = 1200 + demo(1200, demo2(2, 17))
+
+    assert_int(2434, single2)
+
+    let i = 0
+
+    while(i < 10) {
+        assert_int(1200 + i * 17, demo(1200, demo2(i, 17)))
+
+        i += 1
+    }
+}
+
+test fn test_create_from_async() -> Unit = {
+    let data : (x: int, y: int) = (x: demo(2400, 34), y: demo2(2, 34))
+
+    assert_int(2434, data.x)
+    assert_int(68, data.y)
+
+    data = data & (y: demo(1200, demo2(2, 17)))
+
+    assert_int(2434, data.x)
+    assert_int(1234, data.y)
+
+    data &= (x: demo(1200, demo2(2, 34)))
+
+    assert_int(1268, data.x)
+    assert_int(1234, data.y)
+}

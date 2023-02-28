@@ -1,0 +1,27 @@
+use * from core::testing
+use { calculus_add, calculus_add_positive } from lib_test::core
+use core::math as abc
+
+test sync fn test_function_import() -> Unit = {
+    assert_int(1234, calculus_add(1200, 34))
+    assert_int(-1234, lib_test::core::calculus_add(-1200, -34))
+
+    assert_int(1234, calculus_add_positive(1200, 34))
+    assert_int(0, calculus_add_positive(-1200, -34))
+    assert_int(0, lib_test::core::calculus_add_positive(1200, -34))
+}
+
+sync fn do_calc(d : int , e : int, calc : fn(int, int) -> int) -> int = {
+    let a : int = 2 * d
+    let b : int = 3 * e
+
+    calc(a, b)
+}
+
+test sync fn test_delegate() -> Unit = {
+    assert_int(9503, do_calc(1234, 2345, calculus_add))
+}
+
+test sync fn test_import_alias() -> Unit = {
+    assert_float(4.0, abc::sqrt(16.0))
+}

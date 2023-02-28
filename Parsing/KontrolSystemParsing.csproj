@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+        <ProjectGuid>{582C6412-9B9D-48F0-B5AC-70C6A68E610A}</ProjectGuid>
+        <OutputType>Library</OutputType>
+        <RootNamespace>KontrolSystem.Parsing</RootNamespace>
+        <AssemblyName>KontrolSystemParsing</AssemblyName>
+        <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+        <OutputPath>..\bin\Debug</OutputPath>
+        <DefineConstants>DEBUG;</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+        <ConsolePause>false</ConsolePause>
+        <NoStdLib>true</NoStdLib>
+        <LangVersion>8</LangVersion>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <Optimize>true</Optimize>
+        <OutputPath>..\bin\Release</OutputPath>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+        <ConsolePause>false</ConsolePause>
+        <NoStdLib>true</NoStdLib>
+        <LangVersion>8</LangVersion>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(KSP2_BASE_DIR)' == ''">
+        <KSP2_BASE_DIR>..\..\..\..\KSPDev\KSP_linux\KSP_Data</KSP2_BASE_DIR>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="System">
+            <HintPath>$(KSP2_BASE_DIR)\Managed\System.dll</HintPath>
+        </Reference>
+        <Reference Include="mscorlib">
+            <HintPath>$(KSP2_BASE_DIR)\Managed\mscorlib.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="**\*.cs" Exclude="obj\**\*.cs" />
+    </ItemGroup>
+    <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+    <Target Name="CopyFiles" AfterTargets="Build">
+        <Copy SourceFiles="../bin/$(Configuration)/KontrolSystemParsing.dll" DestinationFolder="../GameData/KontrolSystem/Plugins" />
+    </Target>
+    <Target Name="Test">
+    </Target>
+</Project>

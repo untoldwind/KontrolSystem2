@@ -1,0 +1,54 @@
+use * from core::testing
+
+test sync fn test_basic_range_exclusive() -> Unit = {
+    let k = 0
+
+    for(i in 0..10) {
+        assert_int(k, i)
+        k = k + 1
+    }
+
+    assert_int(10, k)
+
+    let range = (10 + 5)..(3 * 10)
+
+    k = 15
+
+    for(i in range) {
+        assert_int(k, i)
+        k = k + 1
+    }
+
+    assert_int(30, k)
+}
+
+test sync fn test_basic_range_inclusive() -> Unit = {
+    let k = 0
+
+    for(i in 0...10) {
+        assert_int(k, i)
+        k = k + 1
+    }
+
+    assert_int(11, k)
+
+    let range = (10 + 5)...(3 * 10)
+
+    k = 15
+
+    for(i in range) {
+        assert_int(k, i)
+        k = k + 1
+    }
+
+    assert_int(31, k)
+}
+
+test sync fn test_map_range() -> Unit = {
+    const arr = 10..20.map(fn(i) -> 2 * i)
+
+    assert_int(10, arr.length)
+    for(i in 0..10) {
+        assert_int(2 * (i + 10), arr[i])
+    }
+}

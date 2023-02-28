@@ -1,0 +1,26 @@
+use { yield } from core::testing
+
+// Used by YieldTimeoutTests
+pub sync fn sync_infinite_loop(start: int) -> int = {
+    let counter = start
+    let sum = 0
+    while(counter != 0) {
+        sum += counter
+        counter -= 1
+    }
+    sum
+}
+
+// Used by YieldTimeoutTests
+pub fn async_infinite_loop(start: int) -> int = {
+    let sum = 0
+    let counter = start
+    let yieldCounter = 10
+    while(counter != 0) {
+        yieldCounter -= 1
+        if (yieldCounter > 0) yield()
+        sum += counter
+        counter -= 1
+    }
+    sum
+}

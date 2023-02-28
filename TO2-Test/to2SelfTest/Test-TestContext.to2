@@ -1,0 +1,25 @@
+use { assert_true, assert_false, assert_int, assert_string } from core::testing
+
+sync fn demo(a : int, b: int) -> int = a + b
+
+pub sync fn test_asserts() -> Unit = {
+    // Basic asserts
+    assert_true(true)
+    assert_false(false)
+    assert_int(123, 100 + 23)
+    assert_true(1234 == 1200 + 34)
+    assert_string("abcde", "ab" + "cde")
+    assert_true("abcde" == "abc" + "d" + "e")
+
+    let a : int = 1234
+    let b : int = 4321
+
+    assert_int(5555, a + b)
+    assert_int(5555, demo(a, b))
+
+    let c : string = "Nothing"
+
+    c = if (b == 4321) "Was eq" else "Was not eq"
+
+    assert_string("Was eq", c)
+}
