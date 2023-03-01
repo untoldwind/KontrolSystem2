@@ -63,6 +63,9 @@
     <ItemGroup>
         <Compile Include="**\*.cs" Exclude="obj\**\*.cs" />
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="KSPMath" />
+    </ItemGroup>
     <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
     <Target Name="CopyFiles" AfterTargets="Build">
         <Copy SourceFiles="../bin/$(Configuration)/KontrolSystemKSP2Runtime.dll" DestinationFolder="../dist/SpaceWarp/Mods/KontrolSystem2/bin" />

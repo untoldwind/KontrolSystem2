@@ -1,6 +1,7 @@
 ﻿using System;
 using KontrolSystem.TO2.Runtime;
 using KontrolSystem.KSP.Runtime.KSPConsole;
+using KSP.Game;
 using KSP.Sim.impl;
 
 namespace KontrolSystem.KSP.Runtime {
@@ -15,7 +16,7 @@ namespace KontrolSystem.KSP.Runtime {
     }
 
     public interface IKSPContext : IContext {
-        GameScenes CurrentScene { get; }
+        GameState CurrentGameState { get; }
 
         KSPConsoleBuffer ConsoleBuffer { get; }
 

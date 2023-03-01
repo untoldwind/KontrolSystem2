@@ -1,4 +1,6 @@
-﻿using KSP.Game;
+﻿using KontrolSystem.Parsing;
+using KontrolSystem.TO2.Parser;
+using KSP.Game;
 using KSP.Sim.impl;
 using SpaceWarp.API;
 using SpaceWarp.API.Mods;
@@ -16,15 +18,15 @@ namespace KontrolSystem.SpaceWarpMod {
         
         public void Awake() => guiRect = new Rect((Screen.width * 0.8632f) - (windowWidth / 2), (Screen.height / 2) - (windowHeight / 2), 0, 0);            
         
-        public override void OnInitialized()
-        {
+        public override void OnInitialized() {
+            LoggerAdapter.Instance.Backend = Logger;
+
             _spaceWarpUISkin = SpaceWarpManager.Skin;
 
-            SpaceWarpManager.RegisterAppButton(
-                "Kontrol System 2",
-                "BTN-KontrolSystem",
-                SpaceWarpManager.LoadIcon(),
+            SpaceWarpManager.RegisterAppButton("Kontrol System 2", "BTN-KontrolSystem", SpaceWarpManager.LoadIcon(),
                 delegate { showGUI = !showGUI; });
+            
+            LoggerAdapter.Instance.Info("Hurra");
         }
         
         private void OnGUI()
