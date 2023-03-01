@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+        <ProjectGuid>{AA662164-EC1F-4268-8DF0-9C222D6CAF52}</ProjectGuid>
+        <OutputType>Library</OutputType>
+        <RootNamespace>KontrolSystem.SpaceWarpMod</RootNamespace>
+        <AssemblyName>KontrolSystemSpaceWarpMod</AssemblyName>
+        <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+        <OutputPath>..\bin\Debug</OutputPath>
+        <DefineConstants>DEBUG;</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+        <ConsolePause>false</ConsolePause>
+        <NoStdLib>true</NoStdLib>
+        <LangVersion>8</LangVersion>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <Optimize>true</Optimize>
+        <OutputPath>..\bin\Release</OutputPath>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+        <ConsolePause>false</ConsolePause>
+        <NoStdLib>true</NoStdLib>
+        <LangVersion>8</LangVersion>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(KSP2_BASE_DIR)' == ''">
+        <KSP2_BASE_DIR>..\..\..\..\KSPDev\KSP_linux\KSP_Data</KSP2_BASE_DIR>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="System">
+            <HintPath>$(KSP2_BASE_DIR)\Managed\System.dll</HintPath>
+        </Reference>
+        <Reference Include="netstandard">
+            <HintPath>$(KSP2_BASE_DIR)\Managed\netstandard.dll</HintPath>
+        </Reference>
+        <Reference Include="mscorlib">
+            <HintPath>$(KSP2_BASE_DIR)\Managed\mscorlib.dll</HintPath>
+        </Reference>
+        <Reference Include="Assembly-CSharp">
+            <HintPath>$(KSP2_BASE_DIR)\Managed\Assembly-CSharp.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine">
+            <HintPath>$(KSP2_BASE_DIR)\Managed\UnityEngine.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.CoreModule">
+            <HintPath>$(KSP2_BASE_DIR)\Managed\UnityEngine.CoreModule.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.IMGUIModule">
+            <HintPath>$(KSP2_BASE_DIR)\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+        </Reference>
+        <Reference Include="Newtonsoft.Json">
+            <HintPath>$(KSP2_BASE_DIR)\Managed\Newtonsoft.Json.dll</HintPath>
+        </Reference>
+        <Reference Include="SpaceWarp">
+            <HintPath>$(KSP2_BASE_DIR)\..\SpaceWarp\core\SpaceWarp.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="**\*.cs" Exclude="obj\**\*.cs" />
+    </ItemGroup>
+    <ItemGroup>
+      <Content Include="config.json" />
+      <Content Include="modinfo.json" />
+    </ItemGroup>
+    <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+    <Target Name="CopyFiles" AfterTargets="Build">
+        <Copy SourceFiles="../bin/$(Configuration)/KontrolSystemSpaceWarpMod.dll" DestinationFolder="../dist/SpaceWarp/Mods/KontrolSystem2/bin" />
+        <Copy SourceFiles="icon.png" DestinationFolder="../dist/SpaceWarp/Mods/KontrolSystem2/bin" />
+        <Copy SourceFiles="config.json" DestinationFolder="../dist/SpaceWarp/Mods/KontrolSystem2/config" />
+        <Copy SourceFiles="modinfo.json" DestinationFolder="../dist/SpaceWarp/Mods/KontrolSystem2" />
+    </Target>
+    <Target Name="Test">
+    </Target>
+</Project>

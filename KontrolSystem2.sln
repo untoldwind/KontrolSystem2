@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KontrolSystemParsing-Test",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KontrolSystemTO2-Test", "TO2-Test\KontrolSystemTO2-Test.csproj", "{B0440047-A919-4FF1-8799-16A586035584}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceWarpMod", "SpaceWarpMod\SpaceWarpMod.csproj", "{AA662164-EC1F-4268-8DF0-9C222D6CAF52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KSP2Runtime", "KSP2Runtime\KSP2Runtime.csproj", "{A2AACC87-5749-4E7E-9CF1-311AE2406092}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,5 +35,13 @@ Global
 		{B0440047-A919-4FF1-8799-16A586035584}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0440047-A919-4FF1-8799-16A586035584}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0440047-A919-4FF1-8799-16A586035584}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA662164-EC1F-4268-8DF0-9C222D6CAF52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA662164-EC1F-4268-8DF0-9C222D6CAF52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA662164-EC1F-4268-8DF0-9C222D6CAF52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA662164-EC1F-4268-8DF0-9C222D6CAF52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2AACC87-5749-4E7E-9CF1-311AE2406092}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2AACC87-5749-4E7E-9CF1-311AE2406092}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2AACC87-5749-4E7E-9CF1-311AE2406092}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2AACC87-5749-4E7E-9CF1-311AE2406092}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

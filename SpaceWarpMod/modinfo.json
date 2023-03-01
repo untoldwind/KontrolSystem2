@@ -1,0 +1,13 @@
+{
+  "mod_id": "kontrol_system",
+  "author": "untoldwind",
+  "name": "Kontrol System",
+  "description": "Autopilot scripting framework",
+  "source": "https://github.com/untoldwind/KontrolSystem2",
+  "version": "0.1.0",
+  "dependencies": [],
+  "ksp2_version": {
+    "min": "0.1.0",
+    "max": "0.1.0"
+  }
+}

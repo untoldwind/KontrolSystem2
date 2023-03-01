@@ -57,7 +57,7 @@
     </ItemGroup>
     <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
     <Target Name="CopyFiles" AfterTargets="Build">
-        <Copy SourceFiles="../bin/$(Configuration)/KontrolSystemTO2.dll" DestinationFolder="../GameData/KontrolSystem/Plugins" />
+        <Copy SourceFiles="../bin/$(Configuration)/KontrolSystemTO2.dll" DestinationFolder="../dist/SpaceWarp/Mods/KontrolSystem2/bin" />
     </Target>
     <Target Name="Test">
     </Target>
