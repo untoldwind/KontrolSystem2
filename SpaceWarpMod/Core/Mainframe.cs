@@ -205,7 +205,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         }
 
         public void TriggerBoot(VesselComponent vessel) {
-            GameScenes current = HighLogic.LoadedScene;
+            GameState current = GameManager.Instance.Game.GlobalGameState.GetState();
 
             KontrolSystemProcess bootProcess = processes?.FirstOrDefault(p => p.IsBootFor(current, vessel));
 

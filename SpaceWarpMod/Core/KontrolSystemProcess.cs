@@ -77,9 +77,9 @@ namespace KontrolSystem.SpaceWarpMod.Core {
             }
         }
 
-        public bool IsBootFor(GameScenes gameScene, VesselComponent vessel) {
-            switch (gameScene) {
-            case GameScenes.FLIGHT: return module.IsBootFlightEntrypointFor(vessel);
+        public bool IsBootFor(GameState gameState, VesselComponent vessel) {
+            switch (gameState) {
+            case GameState.FlightView: return module.IsBootFlightEntrypointFor(vessel);
             default: return false;
             }
         }

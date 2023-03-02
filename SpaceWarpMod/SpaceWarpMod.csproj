@@ -55,6 +55,9 @@
         <Reference Include="UnityEngine.IMGUIModule">
             <HintPath>$(KSP2_BASE_DIR)\Managed\UnityEngine.IMGUIModule.dll</HintPath>
         </Reference>
+        <Reference Include="UnityEngine.TextRenderingModule">
+            <HintPath>$(KSP2_BASE_DIR)\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+        </Reference>
         <Reference Include="Newtonsoft.Json">
             <HintPath>$(KSP2_BASE_DIR)\Managed\Newtonsoft.Json.dll</HintPath>
         </Reference>
