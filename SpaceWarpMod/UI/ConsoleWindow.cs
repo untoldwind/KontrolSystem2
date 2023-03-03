@@ -9,9 +9,9 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         private static readonly Color BgColor = new Color(0.0f, 0.0f, 0.0f, 1.0f); // black background of terminal
         private static readonly Color TextColor = new Color(0.5f, 1.0f, 0.5f, 1.0f); // font color on terminal
 
-        private GUIStyle terminalImageStyle;
-        private GUIStyle terminalFrameStyle;
-        private GUIStyle terminalFrameActiveStyle;
+        //private GUIStyle terminalImageStyle;
+        //private GUIStyle terminalFrameStyle;
+        //private GUIStyle terminalFrameActiveStyle;
         private GUISkin terminalLetterSkin;
         private KSPConsoleBuffer consoleBuffer;
         private int fontCharWidth;
@@ -40,6 +40,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             terminalLetterSkin.label.font =
                 FontManager.Instance.GetSystemFontByNameAndSize(FontManager.DefaultConsoleFonts,
                     terminalLetterSkin.label.fontSize, true);
+            LoggerAdapter.Instance.Debug($"Console font: {terminalLetterSkin.label.font}");
 
             CharacterInfo chInfo;
             terminalLetterSkin.label.font
@@ -47,6 +48,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             terminalLetterSkin.label.font.GetCharacterInfo('X', out chInfo);
             fontCharWidth = chInfo.advance;
             fontCharHeight = terminalLetterSkin.label.fontSize;
+            LoggerAdapter.Instance.Debug($"Font metrics: {fontCharWidth} x {fontCharHeight}");
         }
 
         protected override void DrawWindow(int windowId) {
@@ -54,7 +56,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
 
             if (GUI.Button(new Rect(windowRect.width - 75, windowRect.height - 30, 50, 25), "Close")) Close();
 
-            GUI.Label(new Rect(15, 28, windowRect.width - 30, windowRect.height - 63), "", terminalImageStyle);
+            //GUI.Label(new Rect(15, 28, windowRect.width - 30, windowRect.height - 63), "", terminalImageStyle);
 
             GUI.BeginGroup(new Rect(28, 48, (consoleBuffer?.VisibleCols ?? 1) * fontCharWidth + 2,
                 (consoleBuffer?.VisibleRows ?? 1) * fontCharHeight +
@@ -73,7 +75,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
 
             GUI.EndGroup();
 
-            GUI.Label(new Rect(15, 28, windowRect.width - 30, windowRect.height - 63), "", terminalFrameStyle);
+            //GUI.Label(new Rect(15, 28, windowRect.width - 30, windowRect.height - 63), "", terminalFrameStyle);
 
             GUI.Label(new Rect(windowRect.width / 2 - 40, windowRect.height - 16, 100, 10),
                 (consoleBuffer?.VisibleCols ?? 1) + "x" + (consoleBuffer?.VisibleRows ?? 1));

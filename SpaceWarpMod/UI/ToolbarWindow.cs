@@ -6,7 +6,7 @@ using KSP.Game;
 using UnityEngine;
 
 namespace KontrolSystem.SpaceWarpMod.UI {
-       /// <summary>
+    /// <summary>
     /// The window that popups on hover or click of the toolbar button.
     /// Usually this would be a MonoBehaviour, in this case though we just forward the OnGUI
     /// from the ToolbarButton itself.
@@ -37,7 +37,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         public Rect WindowRect => windowRect;
 
         public void SetPosition(bool isTop) {
-            float offset = 64f;
+            float offset = 128f;
 
             if (isTop) {
                 rectToFit = new Rect(0, 0, Screen.width - offset, Screen.height);

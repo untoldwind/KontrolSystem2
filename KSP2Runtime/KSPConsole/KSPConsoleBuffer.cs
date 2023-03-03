@@ -86,6 +86,8 @@ namespace KontrolSystem.KSP.Runtime.KSPConsole {
 
                 CursorCol = CursorRow = 0;
                 cursorLine = topLine;
+                
+                Print("Kontrol System\n--------------\n");
             }
         }
 

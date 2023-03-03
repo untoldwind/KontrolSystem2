@@ -141,10 +141,13 @@ public class FontManager : Singleton<FontManager> {
         private void UpdateSystemFontLists() {
             HashSet<string> namesThatNoLongerExist = new HashSet<string>(fontNames);
             foreach (string fontName in Font.GetOSInstalledFontNames()) {
+                LoggerAdapter.Instance.Debug($"FontManager: found font: {fontName}");
                 if (!fontNames.Contains(fontName)) {
                     // Only add those fonts which pass the monospace test:
-                    if (GetSystemFontByNameAndSize(fontName, 13, true, false, false) != null)
+                    if (GetSystemFontByNameAndSize(fontName, 12, true, false, false) != null) {
+                        LoggerAdapter.Instance.Debug($"FontManager: is mono: {fontName}");
                         fontNames.Add(fontName);
+                    }
                 }
 
                 namesThatNoLongerExist.Remove(fontName);

@@ -71,13 +71,13 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                 }
             } else if (theEvent.type == EventType.MouseDrag || theEvent.type == EventType.MouseUp) {
                 if (theEvent.button == 0) {
-                    // Flip the mouse Y so that 0 is at the top
-                    float mouseY = Screen.height - theEvent.mousePosition.y;
-
-                    windowRect.width = Mathf.Clamp(theEvent.mousePosition.x - windowRect.x + (resizeRect.width / 2), 50,
+                    windowRect.width = Mathf.Clamp(windowRect.width + theEvent.delta.x, 50,
                         Screen.width - windowRect.x);
-                    windowRect.height = Mathf.Clamp(mouseY - windowRect.y + (resizeRect.height / 2), 50,
+                    windowRect.height = Mathf.Clamp(windowRect.height + theEvent.delta.y, 50,
                         Screen.height - windowRect.y);
+                    if (theEvent.type == EventType.MouseUp) {
+                        mouseDown = false;
+                    }
                 } else {
                     mouseDown = false;
                 }
