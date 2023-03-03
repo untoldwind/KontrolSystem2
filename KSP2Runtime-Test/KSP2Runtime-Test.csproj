@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="..\packages\NUnit.3.12.0\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.12.0\build\NUnit.props')" />
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+        <ProjectGuid>{B8E2A508-B32B-409B-BAC3-E5955F4F293A}</ProjectGuid>
+        <OutputType>Library</OutputType>
+        <RootNamespace>KontrolSystem.KSP.Runtime.Test</RootNamespace>
+        <AssemblyName>KSP2Runtime-Test</AssemblyName>
+        <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+        <OutputPath>..\bin\Debug</OutputPath>
+        <DefineConstants>DEBUG;</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+        <ConsolePause>false</ConsolePause>
+        <NoStdLib>true</NoStdLib>
+        <LangVersion>8</LangVersion>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <Optimize>true</Optimize>
+        <OutputPath>..\bin\Release</OutputPath>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+        <ConsolePause>false</ConsolePause>
+        <NoStdLib>true</NoStdLib>
+        <LangVersion>8</LangVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(KSP2_BASE_DIR)' == ''">
+        <KSP2_BASE_DIR>..\..\..\..\KSPDev\KSP_linux\KSP_Data</KSP2_BASE_DIR>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="System">
+            <HintPath>$(KSP2_BASE_DIR)\Managed\System.dll</HintPath>
+        </Reference>
+        <Reference Include="mscorlib">
+            <HintPath>$(KSP2_BASE_DIR)\Managed\mscorlib.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="xunit" Version="2.4.1" />
+        <PackageReference Include="xunit.runner.console" Version="2.4.1">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="xunit.runner.msbuild" Version="2.4.1" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="**\*.cs" Exclude="obj\**\*.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Parsing\KontrolSystemParsing.csproj">
+            <Project>{582C6412-9B9D-48F0-B5AC-70C6A68E610A}</Project>
+            <Name>KontrolSystemParsing</Name>
+            <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+        </ProjectReference>
+        <ProjectReference Include="..\TO2\KontrolSystemTO2.csproj">
+            <Project>{228541DA-6909-4899-9966-1CA2BF16B830}</Project>
+            <Name>KontrolSystemTO2</Name>
+            <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+        </ProjectReference>
+        <ProjectReference Include="..\KSP2Runtime\KSP2Runtime.csproj">
+            <Project>{A2AACC87-5749-4E7E-9CF1-311AE2406092}</Project>
+            <Name>KontrolSystemParsing</Name>
+            <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+        </ProjectReference>
+    </ItemGroup>
+    <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+    <Target Name="Test">
+        <xunit Assemblies="../bin/$(Configuration)/KSP2Runtime-Test.dll" DiagnosticMessages="true" />
+    </Target>
+</Project>

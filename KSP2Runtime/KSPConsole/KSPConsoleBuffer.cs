@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime.KSPConsole {
     public struct ConsoleLine {
@@ -87,7 +88,7 @@ namespace KontrolSystem.KSP.Runtime.KSPConsole {
                 CursorCol = CursorRow = 0;
                 cursorLine = topLine;
                 
-                Print("Kontrol System\n--------------\n");
+//                Print("Kontrol System\n--------------\n");
             }
         }
 

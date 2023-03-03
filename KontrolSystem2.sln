@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceWarpMod", "SpaceWarpMo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KSP2Runtime", "KSP2Runtime\KSP2Runtime.csproj", "{A2AACC87-5749-4E7E-9CF1-311AE2406092}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KSP2Runtime-Test", "KSP2Runtime-Test\KSP2Runtime-Test.csproj", "{B8E2A508-B32B-409B-BAC3-E5955F4F293A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,5 +45,9 @@ Global
 		{A2AACC87-5749-4E7E-9CF1-311AE2406092}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2AACC87-5749-4E7E-9CF1-311AE2406092}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2AACC87-5749-4E7E-9CF1-311AE2406092}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8E2A508-B32B-409B-BAC3-E5955F4F293A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8E2A508-B32B-409B-BAC3-E5955F4F293A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8E2A508-B32B-409B-BAC3-E5955F4F293A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8E2A508-B32B-409B-BAC3-E5955F4F293A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

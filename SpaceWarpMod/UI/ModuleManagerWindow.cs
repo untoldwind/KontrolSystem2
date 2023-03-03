@@ -60,7 +60,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         }
 
         void OnReboot() {
-            Mainframe.Instance.Reboot(new KontrolSystemConfig());
+            Mainframe.Instance.Reboot(ConfigAdapter.Config);
         }
     }
 }

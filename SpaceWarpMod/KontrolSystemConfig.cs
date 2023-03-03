@@ -5,8 +5,12 @@ namespace KontrolSystem.SpaceWarpMod {
     [JsonObject(MemberSerialization.OptOut)]
     [ModConfig]
     public class KontrolSystemConfig {
-        [ConfigField("pi")] 
-        [ConfigDefaultValue(3.14159)]
-        public double pi;
+        [ConfigSection("Paths")]
+        [ConfigField("stdLibPath")] 
+        public string stdLibPath;
+        
+        [ConfigSection("Paths")]
+        [ConfigField("to2Path")] 
+        public string to2Path;
     }
 }
