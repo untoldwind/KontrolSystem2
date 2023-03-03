@@ -1,0 +1,13 @@
+use { Vessel } from ksp::vessel
+use { CONSOLE } from ksp::console
+use { sleep } from ksp::game
+
+pub fn main_flight(vessel: Vessel) -> Unit = {
+    CONSOLE.print_line("Hello world")
+    CONSOLE.print_line("My vessel is: " + vessel.name)
+
+    for(i in 0..10) {
+        sleep(1)
+        CONSOLE.print_line(i.to_string())
+    }
+}

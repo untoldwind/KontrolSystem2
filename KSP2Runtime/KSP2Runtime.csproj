@@ -66,9 +66,13 @@
     <ItemGroup>
       <Folder Include="KSPMath" />
     </ItemGroup>
+    <ItemGroup>
+        <TO2Files Include="to2\**\*.to2" />
+    </ItemGroup>
     <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
     <Target Name="CopyFiles" AfterTargets="Build">
         <Copy SourceFiles="../bin/$(Configuration)/KontrolSystemKSP2Runtime.dll" DestinationFolder="../dist/SpaceWarp/Mods/KontrolSystem2/bin" />
+        <Copy SourceFiles="@(TO2Files)" DestinationFolder="../dist/SpaceWarp/Mods/KontrolSystem2/to2" />
     </Target>
     <Target Name="Test">
     </Target>

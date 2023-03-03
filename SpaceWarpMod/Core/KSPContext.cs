@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Threading;
 using KontrolSystem.KSP.Runtime;
 using KontrolSystem.KSP.Runtime.KSPConsole;
+using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.TO2.Runtime;
 using KSP.Game;
@@ -48,6 +49,13 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         
         public KSPContext(KSPConsoleBuffer consoleBuffer) {
             this.consoleBuffer = consoleBuffer;
+            markers = new List<IMarker>();
+            fixedUpdateObservers = new List<WeakReference<IFixedUpdateObserver>>();
+            autopilotHooks = new Dictionary<VesselComponent, AutopilotHooks>();
+            nextYield = new WaitForFixedUpdate();
+            childContexts = new List<BackgroundKSPContext>();
+            timeStopwatch = Stopwatch.StartNew();
+            timeoutMillis = 100;
         }
 
         public bool IsBackground => false;
@@ -72,7 +80,10 @@ namespace KontrolSystem.SpaceWarpMod.Core {
             return childContext;
         }
 
-        public GameState CurrentGameState => GameManager.Instance.Game.GlobalGameState.GetState();
+        public GameMode GameMode => CurrentGameMode;
+
+        public double UniversalTime => GameManager.Instance.Game.SpaceSimulation.UniverseModel.UniversalTime;
+        
         public KSPConsoleBuffer ConsoleBuffer => consoleBuffer;
 
         public KSPOrbitModule.IBody FindBody(string name) {
@@ -143,6 +154,22 @@ namespace KontrolSystem.SpaceWarpMod.Core {
             
             autopilotHooks.Clear();
             childContexts.Clear();
+        }
+
+        internal static GameMode CurrentGameMode {
+            get {
+                    switch (GameManager.Instance.Game.GlobalGameState.GetState()) {
+                    case GameState.KerbalSpaceCenter:  return GameMode.KSC;
+                    case GameState.TrackingStation: return GameMode.Tracking;
+                    case GameState.VehicleAssemblyBuilder: return GameMode.VAB;
+                    case GameState.Launchpad:
+                    case GameState.Runway:
+                    case GameState.FlightView:
+                    case GameState.Map3DView: return GameMode.Flight;
+                    default:
+                        return GameMode.Unknown;
+                    } 
+            }
         }
     }
     

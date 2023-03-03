@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using KontrolSystem.KSP.Runtime;
 using KontrolSystem.KSP.Runtime.KSPConsole;
+using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.Parsing;
 using KontrolSystem.SpaceWarpMod.Utils;
 using KontrolSystem.TO2;
@@ -106,6 +107,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
                 Stopwatch stopwatch = new Stopwatch();
                 try {
                     stopwatch.Start();
+                    
                     /*
                     string registryPath = Path.GetFullPath(config.TO2BaseDir).TrimEnd(PathSeparator);
 
@@ -114,12 +116,10 @@ namespace KontrolSystem.SpaceWarpMod.Core {
                     Directory.CreateDirectory(registryPath);
                     */
                     KontrolRegistry nextRegistry = KontrolSystemKSPRegistry.CreateKSP();
+                    
+                    LoggerAdapter.Instance.Debug($"Add Directory: {config.stdLibPath}");
+                    nextRegistry.AddDirectory(config.stdLibPath);
                     /*
-                    if (KontrolSystemConfig.Instance.IncludeStdLib) {
-                        PluginLogger.Instance.Debug($"Add Directory: {KontrolSystemConfig.Instance.StdLibDir}");
-                        nextRegistry.AddDirectory(KontrolSystemConfig.Instance.StdLibDir);
-                    }
-
                     PluginLogger.Instance.Debug($"Add Directory: {registryPath}");
                     nextRegistry.AddDirectory(registryPath);
                     */
@@ -170,11 +170,11 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         }
 
         public IEnumerable<KontrolSystemProcess> ListProcesses() {
-            GameState gameState = GameManager.Instance.Game.GlobalGameState.GetState();
+            GameMode gameMode = KSPContext.CurrentGameMode;
             VesselComponent activeVessel = GameManager.Instance.Game.ViewController.GetActiveVehicle(true)?.GetSimVessel(true);
 
             return processes != null
-                ? processes.Where(p => p.AvailableFor(gameState, activeVessel))
+                ? processes.Where(p => p.AvailableFor(gameMode, activeVessel))
                 : Enumerable.Empty<KontrolSystemProcess>();
         }
 
@@ -182,8 +182,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
             switch (process.State) {
             case KontrolSystemProcessState.Available:
                 KSPContext context = new KSPContext(consoleBuffer);
-                GameState gameState = GameManager.Instance.Game.GlobalGameState.GetState();
-                Entrypoint entrypoint = process.EntrypointFor(gameState, context);
+                Entrypoint entrypoint = process.EntrypointFor(context.GameMode, context);
                 if (entrypoint == null) return false;
                 CorouttineAdapter adapter = new CorouttineAdapter(entrypoint(vessel), context,
                     message => OnProcessDone(process, message));
@@ -205,9 +204,9 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         }
 
         public void TriggerBoot(VesselComponent vessel) {
-            GameState current = GameManager.Instance.Game.GlobalGameState.GetState();
+            GameMode gameMode = KSPContext.CurrentGameMode;
 
-            KontrolSystemProcess bootProcess = processes?.FirstOrDefault(p => p.IsBootFor(current, vessel));
+            KontrolSystemProcess bootProcess = processes?.FirstOrDefault(p => p.IsBootFor(gameMode, vessel));
 
             if (bootProcess?.State != KontrolSystemProcessState.Available) return;
 
@@ -249,6 +248,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         }
 
         private void OnStateChange(MessageCenterMessage message) {
+            LoggerAdapter.Instance.Debug($"Got stage change: {message} {message.GetType()}");
             StopAll();
         }
     }

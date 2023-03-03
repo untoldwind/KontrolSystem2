@@ -1,7 +1,6 @@
 ﻿using KontrolSystem.SpaceWarpMod.UI;
 using SpaceWarp.API;
 using SpaceWarp.API.Mods;
-using UnityEngine;
 
 namespace KontrolSystem.SpaceWarpMod {
     [MainMod]
@@ -10,9 +9,7 @@ namespace KontrolSystem.SpaceWarpMod {
         private ToolbarWindow toolbarWindow;
         private ConsoleWindow consoleWindow;
         private ModuleManagerWindow moduleManagerWindow;
-
-        private GUISkin _spaceWarpUISkin;
-
+        
         private bool showGUI = false;
         
         public void Awake() {

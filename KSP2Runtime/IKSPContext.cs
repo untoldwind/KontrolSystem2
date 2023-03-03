@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using KontrolSystem.TO2.Runtime;
 using KontrolSystem.KSP.Runtime.KSPConsole;
+using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
-using KSP.Game;
 using KSP.Sim.impl;
 
 namespace KontrolSystem.KSP.Runtime {
@@ -18,10 +17,12 @@ namespace KontrolSystem.KSP.Runtime {
     }
 
     public interface IKSPContext : IContext {
-        GameState CurrentGameState { get; }
+        GameMode GameMode { get; }
 
         KSPConsoleBuffer ConsoleBuffer { get; }
 
+        double UniversalTime { get;  }
+        
         KSPOrbitModule.IBody FindBody(string name);
         
         object NextYield { get; set; }

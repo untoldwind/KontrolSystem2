@@ -1,6 +1,7 @@
 ﻿using System;
 using KontrolSystem.TO2;
 using KontrolSystem.KSP.Runtime;
+using KontrolSystem.KSP.Runtime.KSPGame;
 using KSP.Game;
 using KSP.Sim.impl;
 using SpaceWarp.API.Logging;
@@ -51,25 +52,25 @@ namespace KontrolSystem.SpaceWarpMod.Core {
             context = null;
         }
 
-        public Entrypoint EntrypointFor(GameState gameState, IKSPContext newContext) {
-            switch (gameState) {
-            case GameState.KerbalSpaceCenter: return module.GetKSCEntrypoint(newContext);
-            case GameState.VehicleAssemblyBuilder:
+        public Entrypoint EntrypointFor(GameMode gameMode, IKSPContext newContext) {
+            switch (gameMode) {
+            case GameMode.KSC: return module.GetKSCEntrypoint(newContext);
+            case GameMode.VAB:
                 return module.GetEditorEntrypoint(newContext);
-            case GameState.TrackingStation: return module.GetTrackingEntrypoint(newContext);
-            case GameState.FlightView:
+            case GameMode.Tracking: return module.GetTrackingEntrypoint(newContext);
+            case GameMode.Flight:
                 return module.GetFlightEntrypoint(newContext);
             default:
                 return null;
             }
         }
 
-        public bool AvailableFor(GameState gameState, VesselComponent vessel) {
-            switch (gameState) {
-            case GameState.KerbalSpaceCenter: return module.HasKSCEntrypoint();
-            case GameState.VehicleAssemblyBuilder: return module.HasEditorEntrypoint();
-            case GameState.TrackingStation: return module.HasTrackingEntrypoint();
-            case GameState.FlightView:
+        public bool AvailableFor(GameMode gameMode, VesselComponent vessel) {
+            switch (gameMode) {
+            case GameMode.KSC: return module.HasKSCEntrypoint();
+            case GameMode.VAB: return module.HasEditorEntrypoint();
+            case GameMode.Tracking: return module.HasTrackingEntrypoint();
+            case GameMode.Flight:
                 return !module.Name.StartsWith("boot::") && module.HasFlightEntrypoint() ||
                        module.IsBootFlightEntrypointFor(vessel);
             default:
@@ -77,9 +78,9 @@ namespace KontrolSystem.SpaceWarpMod.Core {
             }
         }
 
-        public bool IsBootFor(GameState gameState, VesselComponent vessel) {
-            switch (gameState) {
-            case GameState.FlightView: return module.IsBootFlightEntrypointFor(vessel);
+        public bool IsBootFor(GameMode gameMode, VesselComponent vessel) {
+            switch (gameMode) {
+            case GameMode.Flight: return module.IsBootFlightEntrypointFor(vessel);
             default: return false;
             }
         }

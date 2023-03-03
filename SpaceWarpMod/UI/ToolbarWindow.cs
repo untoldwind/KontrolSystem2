@@ -99,7 +99,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
 
         void DrawAvailableModules() {
             scrollPos = GUILayout.BeginScrollView(scrollPos, commonStyles.panelSkin.scrollView,
-                GUILayout.MinWidth(260), GUILayout.MinHeight(350));
+                GUILayout.MinWidth(360), GUILayout.MinHeight(350));
 
             GUILayout.BeginVertical();
             List<KontrolSystemProcess> availableProcesses = Mainframe.Instance.ListProcesses().ToList();
