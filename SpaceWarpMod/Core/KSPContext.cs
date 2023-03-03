@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Threading;
 using KontrolSystem.KSP.Runtime;
 using KontrolSystem.KSP.Runtime.KSPConsole;
+using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.TO2.Runtime;
 using KSP.Game;
 using KSP.Sim.impl;
@@ -73,6 +74,12 @@ namespace KontrolSystem.SpaceWarpMod.Core {
 
         public GameState CurrentGameState => GameManager.Instance.Game.GlobalGameState.GetState();
         public KSPConsoleBuffer ConsoleBuffer => consoleBuffer;
+
+        public KSPOrbitModule.IBody FindBody(string name) {
+            var body = GameManager.Instance.Game.CelestialBodies.Get(name);
+
+            return body != null ? new BodyWrapper(body) : null;
+        }
         
         public object NextYield {
             get {
