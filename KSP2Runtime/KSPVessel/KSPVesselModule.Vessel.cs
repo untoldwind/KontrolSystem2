@@ -16,7 +16,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             internal VesselAdapter(IKSPContext context, VesselComponent vessel) {
                 this.context = context;
                 this.vessel = vessel;
-                maneuver = new ManeuverAdapter(this.vessel);
+                maneuver = new ManeuverAdapter(context, this.vessel);
             }
             
             [KSField(Description = "The name of the vessel.")]
@@ -27,7 +27,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             
             [KSField] public ManeuverAdapter Maneuver => maneuver;
             
-            [KSField] public KSPOrbitModule.IOrbit Orbit => new OrbitWrapper(vessel.Orbit);
+            [KSField] public KSPOrbitModule.IOrbit Orbit => new OrbitWrapper(context, vessel.Orbit);
 
             [KSField] public Vector3d OrbitalVelocity => vessel.OrbitalVelocity.vector;
 
@@ -43,7 +43,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                         CelestialBodyComponent body = target.CelestialBody;
 
                         if (vessel != null) return new Option<IKSPTargetable>(new VesselAdapter(context, vessel));
-                        if (body != null) return new Option<IKSPTargetable>(new BodyWrapper(body));
+                        if (body != null) return new Option<IKSPTargetable>(new BodyWrapper(context, body));
                     }
                     return new Option<IKSPTargetable>();
                 }

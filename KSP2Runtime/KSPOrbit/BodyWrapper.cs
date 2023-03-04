@@ -5,10 +5,14 @@ using KSP.Sim.impl;
 
 namespace KontrolSystem.KSP.Runtime.KSPOrbit {
     public class BodyWrapper : KSPOrbitModule.IBody, KSPVesselModule.IKSPTargetable {
+        private readonly IKSPContext context;
         private readonly CelestialBodyComponent body;
 
-        public BodyWrapper(CelestialBodyComponent body) => this.body = body;
-        
+        public BodyWrapper(IKSPContext context, CelestialBodyComponent body) {
+            this.context = context;
+            this.body = body;
+        }
+
         public string Name => body.Name;
 
         public double GravParameter => body.gravParameter;
@@ -16,8 +20,12 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
         public double SoiRadius => body.sphereOfInfluence;
 
         public double RotationPeriod => body.rotationPeriod;
-        
-        [KSField] public KSPOrbitModule.IOrbit Orbit => new OrbitWrapper(body.Orbit);
+
+        public Vector3d Up => body.transform.up.vector;
+
+        public Vector3d Right => body.transform.right.vector;
+
+        [KSField] public KSPOrbitModule.IOrbit Orbit => new OrbitWrapper(context, body.Orbit);
 
         public bool HasAtmosphere => body.hasAtmosphere;
 
@@ -30,8 +38,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             
             orbit.UpdateFromStateVectors(new Position(body.coordinateSystem, position), new Velocity(body.bodyMotionFrame, velocity), body, ut);
 
-            return new OrbitWrapper(orbit);
+            return new OrbitWrapper(context, orbit);
         }
-
     }
 }

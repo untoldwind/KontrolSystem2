@@ -89,7 +89,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         public KSPOrbitModule.IBody FindBody(string name) {
             var body = GameManager.Instance.Game.ViewController.GetBodyByName(name);
 
-            return body != null ? new BodyWrapper(body) : null;
+            return body != null ? new BodyWrapper(this, body) : null;
         }
         
         public object NextYield {

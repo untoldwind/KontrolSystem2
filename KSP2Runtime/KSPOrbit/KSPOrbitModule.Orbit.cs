@@ -48,16 +48,25 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
             [KSField(Description = "Orbital period.")]
             double Period { get; }
-            
+
+            [KSField(Description = "Normal vector perpendicular to orbital plane.")]
+            Vector3d OrbitNormal { get; }
+
             [KSMethod]
             Vector3d OrbitalVelocity(double ut);
+
+            [KSMethod(Description = "Get the absolute position at a given universal time `ut`")]
+            Vector3d AbsolutePosition(double ut);
 
             [KSMethod]
             Vector3d RelativePosition(double ut);
 
             [KSMethod]
             Vector3d Prograde(double ut);
-            
+
+            [KSMethod]
+            Vector3d NormalPlus(double ut);
+
             [KSMethod]
             Vector3d RadialPlus(double ut);
 
@@ -69,6 +78,55 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
             [KSMethod]
             Vector3d Horizontal(double ut);
+
+            /// <summary>
+            /// Returns a new Orbit object that represents the result of applying a given dV to o at UT
+            /// </summary>
+            [KSMethod]
+            IOrbit PerturbedOrbit(double ut, Vector3d dV);
+
+            /// <summary>
+            /// The mean anomaly of the orbit.
+            /// For elliptical orbits, the value return is always between 0 and 2pi
+            /// For hyperbolic orbits, the value can be any number.
+            /// </summary>
+            [KSMethod]
+            double MeanAnomalyAtUt(double ut);
+
+            /// <summary>
+            /// The next time at which the orbiting object will reach the given mean anomaly.
+            /// For elliptical orbits, this will be a time between UT and UT + o.period
+            /// For hyperbolic orbits, this can be any time, including a time in the past, if
+            /// the given mean anomaly occurred in the past
+            /// </summary>
+            [KSMethod]
+            double UTAtMeanAnomaly(double meanAnomaly, double ut);
+
+            /// <summary>
+            /// Converts an eccentric anomaly into a mean anomaly.
+            /// For an elliptical orbit, the returned value is between 0 and 2pi
+            /// For a hyperbolic orbit, the returned value is any number
+            /// </summary>
+            [KSMethod]
+            double GetMeanAnomalyAtEccentricAnomaly(double ecc);
+
+            /// <summary>
+            /// Converts a true anomaly into an eccentric anomaly.
+            /// For elliptical orbits this returns a value between 0 and 2pi
+            /// For hyperbolic orbits the returned value can be any number.
+            /// NOTE: For a hyperbolic orbit, if a true anomaly is requested that does not exist (a true anomaly
+            /// past the true anomaly of the asymptote) then an ArgumentException is thrown
+            /// </summary>
+            [KSMethod]
+            double GetEccentricAnomalyAtTrueAnomaly(double trueAnomaly);
+
+            /// <summary>
+            /// Next time of a certain true anomly.
+            /// NOTE: this function can throw an ArgumentException, if o is a hyperbolic orbit with an eccentricity
+            /// large enough that it never attains the given true anomaly.
+            /// </summary>
+            [KSMethod]
+            double TimeOfTrueAnomaly(double trueAnomaly, double ut);
             
             /// <summary>
             /// The next time at which the orbiting object will be at periapsis.
@@ -86,6 +144,39 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             /// </summary>
             [KSMethod]
             Result<double, string> NextApoapsisTime(Option<double> ut = new Option<double>());
+            
+            /// <summary>
+            /// Get the true anomaly of a radius.
+            /// If the radius is below the periapsis the true anomaly of the periapsis
+            /// with be returned. If it is above the apoapsis the true anomaly of the
+            /// apoapsis is returned.
+            /// </summary>
+            [KSMethod]
+            double TrueAnomalyAtRadius(double radius);
+            
+            /// <summary>
+            /// Finds the next time at which the orbiting object will achieve a given radius
+            /// from the center of the primary.
+            /// If the given radius is impossible for this orbit, an ArgumentException is thrown.
+            /// For elliptical orbits this will be a time between UT and UT + period
+            /// For hyperbolic orbits this can be any time. If the given radius will be achieved
+            /// in the future then the next time at which that radius will be achieved will be returned.
+            /// If the given radius was only achieved in the past, then there are no guarantees
+            /// about which of the two times in the past will be returned.
+            /// </summary>
+            [KSMethod]
+            Result<double, string> NextTimeOfRadius(double ut, double radius);
+
+            /// <summary>
+            /// Computes the period of the phase angle between orbiting objects a and b.
+            /// This only really makes sense for approximately circular orbits in similar planes.
+            /// For noncircular orbits the time variation of the phase angle is only "quasiperiodic"
+            /// and for high eccentricities and/or large relative inclinations, the relative motion is
+            /// not really periodic at all.
+            /// </summary>
+            [KSMethod]
+            double SynodicPeriod(IOrbit other);
+
         }
     }
 }
