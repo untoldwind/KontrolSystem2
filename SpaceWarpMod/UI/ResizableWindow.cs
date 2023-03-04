@@ -6,6 +6,7 @@ using UnityEngine;
 namespace KontrolSystem.SpaceWarpMod.UI {
     public abstract class ResizableWindow : KerbalMonoBehaviour {
         protected GUISkin _spaceWarpUISkin;
+        protected Texture2D resizeButtonImage;
         protected int objectId;
         protected bool isOpen;
         protected Rect windowRect;
@@ -27,6 +28,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         protected void Initialize(string initialTitle, Rect initialWindowRect, bool initialManualLayout) {
             objectId = GetInstanceID();
 
+            resizeButtonImage = GFXAdapter.GetTexture("resize-button");
             _spaceWarpUISkin = SpaceWarpManager.Skin;
             Title = initialTitle;
             windowRect = initialWindowRect;
@@ -45,10 +47,11 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         }
 
         private void DrawWindowOuter(int windowId) {
-            Rect resizeButtonCoords = new Rect(windowRect.width - 20 + 2,
-                windowRect.height - 20,
-                20,
-                20);
+            Rect resizeButtonCoords = new Rect(windowRect.width - resizeButtonImage.width + 2,
+                windowRect.height - resizeButtonImage.height,
+                resizeButtonImage.width,
+                resizeButtonImage.height);
+            GUI.Label(resizeButtonCoords, resizeButtonImage);
 
             DrawWindow(windowId);
 
