@@ -69,19 +69,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
                 }
             }
         }
-
-        public void FixedUpdate() {
-            if (processes == null) return;
-            foreach (KontrolSystemProcess process in processes) {
-                switch (process.State) {
-                case KontrolSystemProcessState.Outdated:
-                case KontrolSystemProcessState.Running:
-                    process.context?.TriggerFixedUpdateObservers();
-                    break;
-                }
-            }
-        }
-
+        
         public void OnGUI() {
             if (processes == null) return;
             foreach (KontrolSystemProcess process in processes) {

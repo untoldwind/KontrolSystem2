@@ -1,4 +1,5 @@
 ﻿using KontrolSystem.TO2.Binding;
+using KSP.Sim.State;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel {
     [KSModule("ksp::vessel",
@@ -7,6 +8,8 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
     public partial class KSPVesselModule {
 
         public static void DirectBindings() {
+            BindingGenerator.RegisterTypeMapping(typeof(FlightCtrlState),
+                FlightCtrlStateBinding.FlightCtrlStateType);
         }
     }
 }

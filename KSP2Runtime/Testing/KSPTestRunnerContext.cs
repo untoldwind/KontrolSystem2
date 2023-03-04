@@ -23,10 +23,7 @@ namespace KontrolSystem.KSP.Runtime.Testing {
 
         public void ClearMarkers() {
         }
-
-        public void AddFixedUpdateObserver(IFixedUpdateObserver observer) {
-        }
-
+        
         public void HookAutopilot(VesselComponent vessel, FlightInputCallback autopilot) {
         }
 

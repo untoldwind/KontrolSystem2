@@ -43,14 +43,12 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         private readonly Stopwatch timeStopwatch;
         private readonly long timeoutMillis;
         internal readonly List<IMarker> markers;
-        private readonly List<WeakReference<IFixedUpdateObserver>> fixedUpdateObservers;
         private readonly Dictionary<VesselComponent, AutopilotHooks> autopilotHooks;
         private readonly List<BackgroundKSPContext> childContexts;
         
         public KSPContext(KSPConsoleBuffer consoleBuffer) {
             this.consoleBuffer = consoleBuffer;
             markers = new List<IMarker>();
-            fixedUpdateObservers = new List<WeakReference<IFixedUpdateObserver>>();
             autopilotHooks = new Dictionary<VesselComponent, AutopilotHooks>();
             nextYield = new WaitForFixedUpdate();
             childContexts = new List<BackgroundKSPContext>();
@@ -112,27 +110,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
             foreach (IMarker marker in markers) marker.Visible = false;
             markers.Clear();
         }
-
-
-        public void AddFixedUpdateObserver(IFixedUpdateObserver observer) {
-            fixedUpdateObservers.Add(new WeakReference<IFixedUpdateObserver>(observer));
-        }
         
-        internal void TriggerFixedUpdateObservers() {
-            try {
-                ContextHolder.CurrentContext.Value = this;
-                double deltaTime = Time.fixedDeltaTime;
-                for (int i = fixedUpdateObservers.Count - 1; i >= 0; i--) {
-                    IFixedUpdateObserver observer;
-                    if (fixedUpdateObservers[i].TryGetTarget(out observer))
-                        observer.OnFixedUpdate(deltaTime);
-                    else
-                        fixedUpdateObservers.RemoveAt(i);
-                }
-            } finally {
-                ContextHolder.CurrentContext.Value = null;
-            }
-        }
         public void HookAutopilot(VesselComponent vessel, FlightInputCallback autopilot) {
             throw new System.NotImplementedException();
         }

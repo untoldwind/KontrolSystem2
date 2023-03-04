@@ -11,11 +11,7 @@ namespace KontrolSystem.KSP.Runtime {
         void Update();
         void OnRender();
     }
-
-    public interface IFixedUpdateObserver {
-        void OnFixedUpdate(double deltaTime);
-    }
-
+    
     public interface IKSPContext : IContext {
         GameMode GameMode { get; }
 
@@ -32,9 +28,7 @@ namespace KontrolSystem.KSP.Runtime {
         void RemoveMarker(IMarker marker);
 
         void ClearMarkers();
-
-        void AddFixedUpdateObserver(IFixedUpdateObserver observer);
-
+        
         void HookAutopilot(VesselComponent vessel, FlightInputCallback autopilot);
 
         void UnhookAutopilot(VesselComponent vessel, FlightInputCallback autopilot);
