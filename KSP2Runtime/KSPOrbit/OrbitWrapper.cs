@@ -40,7 +40,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
         
         public double Period => orbit.period;
 
-        public Vector3d OrbitNormal => orbit.GetRelativeOrbitNormal();
+        public Vector3d OrbitNormal => orbit.GetRelativeOrbitNormal().SwapYAndZ;
 
         public Vector3d RelativePosition(double ut) => orbit.GetRelativePositionAtUTZup(ut).SwapYAndZ;
 
@@ -50,7 +50,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
         public Vector3d Prograde(double ut) => OrbitalVelocity(ut).normalized;
         
-        public Vector3d NormalPlus(double ut) => -orbit.GetRelativeOrbitNormal().normalized;
+        public Vector3d NormalPlus(double ut) => orbit.GetRelativeOrbitNormal().SwapYAndZ.normalized;
 
         public Vector3d RadialPlus(double ut) => Vector3d.Exclude(Prograde(ut), Up(ut)).normalized;
 

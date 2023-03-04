@@ -34,7 +34,6 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             public Result<ManeuverNodeAdapter, string>
                 Add(double ut, double radialOut, double normal, double prograde) {
                 ManeuverNodeData maneuverNodeData = new ManeuverNodeData(vessel.GlobalId, false, ut);
-                KSPOrbitModule.IOrbit orbit = new OrbitWrapper(context, vessel.Orbit);
 
                 maneuverNodeData.BurnVector = new Vector3d(radialOut, normal, prograde);
 
@@ -51,9 +50,10 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 
                 maneuverNodeData.BurnVector = new Vector3d(
                     Vector3d.Dot(orbit.RadialPlus(ut), burnVector),
-                    Vector3d.Dot(-orbit.NormalPlus(ut), burnVector),
+                    Vector3d.Dot(orbit.NormalPlus(ut), burnVector),
                     Vector3d.Dot(orbit.Prograde(ut), burnVector)
                 );
+                
                 vessel.SimulationObject.ManeuverPlan.AddNode(maneuverNodeData);
 
                 return Result.Ok<ManeuverNodeAdapter, string>(new ManeuverNodeAdapter(vessel, maneuverNodeData));
