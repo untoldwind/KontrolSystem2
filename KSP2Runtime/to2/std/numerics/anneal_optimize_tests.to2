@@ -1,0 +1,35 @@
+use * from core::testing
+use core::math as math
+use { anneal_optimize } from std::numerics::anneal_optimize
+use { vec2 } from ksp::math
+
+sync fn test_func(x : float, y : float) -> float = 20 *(math::sin(x) + math::sin(y)) + ((x - 3) * (x - 3) + (y - 3) * (y - 3))
+
+test sync fn test_anneal() -> Unit = {
+    const expected = vec2(4.55, 4.55)
+    const (best, points) = anneal_optimize(test_func, vec2(-10, -10), vec2(10, 10), 300.0)
+
+    assert_int(10, points.length)
+    assert_float(4.55, best.x, 0.05)
+    assert_float(4.55, best.y, 0.05)
+
+    for(point in points) {
+        assert_float(4.55, point.x, 0.1)
+        assert_float(4.55, point.y, 0.1)
+    }
+}
+
+sync fn rastrigin(x : float, y : float) -> float = 20 + x * x - 10 * math::cos(2 * math::PI * x) + y * y - math::cos(2 * math::PI * y)
+
+test sync fn test_anneal2() -> Unit = {
+    const (best, points) = anneal_optimize(rastrigin, vec2(-5, -10), vec2(10, 5), 300.0)
+
+    assert_int(10, points.length)
+    assert_float(0, best.x, 0.05)
+    assert_float(0, best.y, 0.05)
+
+    for(point in points) {
+        assert_float(0, point.x, 0.2)
+        assert_float(0, point.y, 0.2)
+    }
+}

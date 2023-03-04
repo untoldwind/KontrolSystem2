@@ -1,0 +1,48 @@
+use * from core::testing
+use { J0, J1 } from std::numerics::bessel
+
+test sync fn test_J0() -> Unit = {
+    assert_float(-1.775968e-01, J0(-5), 1e-7)
+    assert_float(-3.971498e-01, J0(-4), 1e-7)
+    assert_float(-2.600520e-01, J0(-3), 1e-7)
+    assert_float( 2.238908e-01, J0(-2), 1e-7)
+    assert_float( 7.651977e-01, J0(-1), 1e-7)
+    assert_float( 1.000000e+00, J0( 0), 1e-7)
+    assert_float( 7.651977e-01, J0( 1), 1e-7)
+    assert_float( 2.238908e-01, J0( 2), 1e-7)
+    assert_float(-2.600520e-01, J0( 3), 1e-7)
+    assert_float(-3.971498e-01, J0( 4), 1e-7)
+    assert_float(-1.775968e-01, J0( 5), 1e-7)
+    assert_float( 1.506453e-01, J0( 6), 1e-7)
+    assert_float( 3.000793e-01, J0( 7), 1e-7)
+    assert_float( 1.716508e-01, J0( 8), 1e-7)
+    assert_float(-9.033361e-02, J0( 9), 1e-7)
+    assert_float(-2.459358e-01, J0(10), 1e-7)
+    assert_float(-1.711903e-01, J0(11), 1e-7)
+    assert_float( 4.768931e-02, J0(12), 1e-7)
+    assert_float( 2.069261e-01, J0(13), 1e-7)
+    assert_float( 1.710735e-01, J0(14), 1e-7)
+}
+
+test sync fn test_J1() -> Unit = {
+    assert_float( 3.275791e-01, J1(-5), 1e-7)
+    assert_float( 6.604333e-02, J1(-4), 1e-7)
+    assert_float(-3.390590e-01, J1(-3), 1e-7)
+    assert_float(-5.767248e-01, J1(-2), 1e-7)
+    assert_float(-4.400506e-01, J1(-1), 1e-7)
+    assert_float( 0.000000e+00, J1( 0), 1e-7)
+    assert_float( 4.400506e-01, J1( 1), 1e-7)
+    assert_float( 5.767248e-01, J1( 2), 1e-7)
+    assert_float( 3.390590e-01, J1( 3), 1e-7)
+    assert_float(-6.604333e-02, J1( 4), 1e-7)
+    assert_float(-3.275791e-01, J1( 5), 1e-7)
+    assert_float(-2.766839e-01, J1( 6), 1e-7)
+    assert_float(-4.682826e-03, J1( 7), 1e-7)
+    assert_float( 2.346363e-01, J1( 8), 1e-7)
+    assert_float( 2.453118e-01, J1( 9), 1e-7)
+    assert_float( 4.347275e-02, J1(10), 1e-7)
+    assert_float(-1.767853e-01, J1(11), 1e-7)
+    assert_float(-2.234471e-01, J1(12), 1e-7)
+    assert_float(-7.031805e-02, J1(13), 1e-7)
+    assert_float( 1.333752e-01, J1(14), 1e-7)
+}

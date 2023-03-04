@@ -1,0 +1,27 @@
+use * from core::testing
+use { J0, J1 } from std::numerics::bessel
+use { brent_optimize } from std::numerics::brent_optimize
+
+test sync fn test_bessel_min() -> Result<Unit, string> = {
+    const expected_mins = [
+        3.831705, 10.173468, 16.470634, 22.760083, 29.046824, 35.332323, 41.617094, 47.901455, 
+        54.185563, 60.469465, 66.753226, 73.036905, 79.320476, 85.604020, 91.887500, 98.170918
+    ]
+    let expected_idx = 0
+
+    for(i in 0..100) {
+        const ax = i
+        const bx = i + 1
+        const (x, fx) = brent_optimize(J0, ax, bx, 1e-6, 1000)?
+
+        if((expected_mins[expected_idx] - x).abs > 1e-4 && expected_idx < expected_mins.length - 1) {
+            expected_idx += 1
+        }
+
+        assert_float(expected_mins[expected_idx], x, 1e-4)
+        assert_float(fx, J0(x), 1e-5)
+        assert_float(0.0, J1(x), 1e-5)
+    }
+
+    Ok({})
+}

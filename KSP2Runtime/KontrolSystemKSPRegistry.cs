@@ -16,10 +16,11 @@ namespace KontrolSystem.KSP.Runtime {
                 BindingGenerator.BindModule(typeof(KSPGame.KSPGameModule)));
 /*            registry.RegisterModule(
                 BindingGenerator.BindModule(typeof(KSPGame.KSPGameWarpModule)));
+                */
             registry.RegisterModule(
                 BindingGenerator.BindModule(typeof(KSPOrbit.KSPOrbitModule)));
             registry.RegisterModule(
-                BindingGenerator.BindModule(typeof(KSPControl.KSPControlModule)));*/
+                BindingGenerator.BindModule(typeof(KSPControl.KSPControlModule)));
             registry.RegisterModule(
                 BindingGenerator.BindModule(typeof(KSPVessel.KSPVesselModule)));
 /*            registry.RegisterModule(BindingGenerator.BindModule(typeof(KSPUI.KSPUIModule)));
@@ -28,8 +29,9 @@ namespace KontrolSystem.KSP.Runtime {
             registry.RegisterModule(BindingGenerator.BindModule(typeof(KSPResource.KSPResourceModule)));
             registry.RegisterModule(BindingGenerator.BindModule(typeof(KSPAddons.KSPAddonsModule)));
             registry.RegisterModule(BindingGenerator.BindModule(typeof(KSPGame.KSPAlarmClockModule)));
+            */
             registry.RegisterModule(BindingGenerator.BindModule(typeof(Testing.KSPTesting)));
-*/
+            
             return registry;
         }
     }

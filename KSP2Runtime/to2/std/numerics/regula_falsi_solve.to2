@@ -1,0 +1,21 @@
+pub sync fn regula_falsi_solve(func : fn(float) -> float, start_a : float, start_b : float, tolerance : float, max_iterations : int) -> float = {
+    let iterations = max_iterations
+    let a = start_a
+    let b = start_b
+    let c = a
+    let fa = func(a)
+    let fb = func(b)
+    let fc = fa
+
+    while(iterations > 0) {
+        iterations -= 1
+        if(fc.abs < tolerance) break
+        c = (a * fb - b * fa) / (fb - fa)
+        fc = func(c)
+        a = b
+        fa = fb
+        b = c
+        fb = fc
+    }
+    c
+}

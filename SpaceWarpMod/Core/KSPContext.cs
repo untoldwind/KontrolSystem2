@@ -87,7 +87,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         public KSPConsoleBuffer ConsoleBuffer => consoleBuffer;
 
         public KSPOrbitModule.IBody FindBody(string name) {
-            var body = GameManager.Instance.Game.CelestialBodies.Get(name);
+            var body = GameManager.Instance.Game.ViewController.GetBodyByName(name);
 
             return body != null ? new BodyWrapper(body) : null;
         }

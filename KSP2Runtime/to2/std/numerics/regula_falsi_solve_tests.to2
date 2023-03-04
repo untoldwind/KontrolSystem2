@@ -1,0 +1,9 @@
+use * from core::testing
+use { regula_falsi_solve } from std::numerics::regula_falsi_solve
+use core::math as math
+
+test sync fn test_regula_falsi() -> Unit = {
+    const x = regula_falsi_solve(fn(x) -> math::cos(x), 0, 3, 1e-7, 1000)
+
+    assert_float(math::PI / 2, x, 1e-5)
+}

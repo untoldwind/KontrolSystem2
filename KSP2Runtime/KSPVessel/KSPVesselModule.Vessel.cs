@@ -1,4 +1,5 @@
-﻿using KontrolSystem.TO2.Binding;
+﻿using KontrolSystem.KSP.Runtime.KSPOrbit;
+using KontrolSystem.TO2.Binding;
 using KSP.Sim.impl;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel {
@@ -6,7 +7,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
         [KSClass("Vessel",
             Description =
                 "Represents an in-game vessel, which might be a rocket, plane, rover ... or actually just a Kerbal in a spacesuite.")]
-        public class VesselAdapter {
+        public class VesselAdapter : IKSPTargetable {
             private readonly IKSPContext context;
             private readonly VesselComponent vessel;
 
@@ -20,6 +21,13 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             
             [KSField] 
             public string ControlStatus => vessel.ControlStatus.ToString();
+            
+            [KSField] public KSPOrbitModule.IOrbit Orbit => new OrbitWrapper(vessel.Orbit);
+
+            [KSField] public Vector3d OrbitalVelocity => vessel.OrbitalVelocity.vector;
+
+            [KSField] public Vector3d SurfaceVelocity => vessel.SurfaceVelocity.vector;
+            
         } 
     }
 }

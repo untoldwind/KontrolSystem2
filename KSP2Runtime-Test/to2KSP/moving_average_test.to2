@@ -1,0 +1,25 @@
+use * from ksp::testing
+use { moving_average } from ksp::control
+
+test sync fn test_moving_average() -> Unit = {
+    const measure = moving_average(10)
+
+    assert_float(0, measure.mean)
+    assert_float(0, measure.mean_diff)
+    
+    measure.update(0, 100)
+    assert_float(100, measure.mean)
+    assert_float(0, measure.mean_diff)
+
+    measure.update(1, 200)
+    assert_float(100, measure.mean)
+    assert_float(100, measure.mean_diff)
+
+    measure.update(3, 300)
+    assert_float(150, measure.mean)
+    assert_float(75, measure.mean_diff)
+ 
+    measure.update(3, 400)
+    assert_float(200, measure.mean)
+    assert_float(75, measure.mean_diff)
+}

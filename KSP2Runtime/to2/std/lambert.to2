@@ -1,0 +1,166 @@
+use { abs, sqrt, acos, asin, sin, sinh, log, pow, PI } from core::math
+use { Vec3, vec3 } from ksp::math
+use { acosh, asinh } from core::math
+
+/// Solve Lambert's problem, i.e. calculate the Kepler orbit to get from point `r1`
+/// to point `r2` in time `tof` (time of flight). 
+///
+/// * `mu` is the standard gravitational parameter of the central body
+/// * `clockwise` defines if a clockwise or counter-clockwise orbit should be calculated
+/// * The result `v1` is the required velocity at `r1`
+/// * The result `v2` is the required velocity at `r2`
+///
+/// This is based on the solver developed by Dario Izzo
+/// Details can be found here: https://arxiv.org/pdf/1403.2705.pdf
+/// Released under the GNU GENERAL PUBLIC LICENSE as part of the PyKEP library:
+pub sync fn solve_lambert(r1 : Vec3, r2 : Vec3, tof : float, mu : float, clockwise : bool) -> (v1: Vec3, v2: Vec3, iters: int) = {
+    const c       = (r2 - r1).magnitude
+    const R1      = r1.magnitude
+    const R2      = r2.magnitude
+    const s       = (c + R1 + R2) / 2.0
+    const ir1     = r1.normalized
+    const ir2     = r2.normalized
+    const ih      = ir1.cross(ir2).normalized
+    const lambda2 = 1.0 - c / s
+    let lambda    = if (ih.z < 0.0) -sqrt(lambda2) else sqrt(lambda2)
+    let it1       = if (ih.z < 0.0) ir1.cross(ih).normalized else ih.cross(ir1).normalized
+    let it2       = if (ih.z < 0.0) ir2.cross(ih).normalized else ih.cross(ir2).normalized
+
+    if (!clockwise) {
+        lambda = -lambda
+        it1 = -it1
+        it2 = -it2
+    }
+
+    const lambda3 = lambda * lambda2
+    const T       = sqrt(2.0 * mu / s / s / s) * tof
+
+    // 2 - We now have lambda, T and we will find all x
+    // 2.1 - Let us first detect the maximum number of revolutions for which there exists a solution
+    const T0      = acos(lambda) + lambda * sqrt(1.0 - lambda2)
+    const T1      = 2.0 / 3.0 * (1.0 - lambda3)
+
+    // 3 - We may now find all solutions in x,y
+    // 3.1 0 rev solution
+    // 3.1.1 initial guess
+    const tmp = if(T >= T0) -(T - T0) / (T - T0 + 4.0) else 
+              if(T <= T1) T1 * (T1 - T) / (2.0 / 5.0 * (1.0 - lambda2 * lambda3) * T) + 1.0 else 
+                          pow((T / T0), 0.69314718055994529 / log(T1 / T0)) - 1.0
+
+    const (x, iters) = householder(lambda, T, tmp, 0, 1e-5, 15)
+
+    const gamma = sqrt(mu * s / 2.0)
+    const rho   = (R1 - R2) / c
+    const sigma = sqrt(1.0 - rho * rho)
+    const y     = sqrt(1.0 - lambda2 + lambda2 * x * x)
+    const vr1   = gamma * ((lambda * y - x) - rho * (lambda * y + x)) / R1
+    const vr2   = -gamma * ((lambda * y - x) + rho * (lambda * y + x)) / R2
+    const vt    = gamma * sigma * (y + lambda * x)
+    const vt1   = vt / R1
+    const vt2   = vt / R2
+
+    (v1: vr1 * ir1 + vt1 * it1, v2: vr2 * ir2 + vt2 * it2, iters: iters)
+}
+
+sync fn householder(lambda : float, T : float, x0 : float, N : int, eps : float, iter_max : int) -> (x: float, iters: int) = {
+    let it   = 0
+    let err  = 1.0
+    let x    = x0
+
+    while ((err > eps) && (it < iter_max)) {
+        const tof = x2tof(lambda, x, N)
+        const (DT, DDT, DDDT) = dTdx(lambda, x, tof)
+        const delta = tof - T
+        const DT2   = DT * DT
+        const xnew  = x - delta * (DT2 - delta * DDT / 2.0) / (DT * (DT2 - delta * DDT) + DDDT * delta * delta / 6.0)
+        err = abs(x - xnew)
+        x = xnew
+        it += 1
+    }
+    (x: x, iters: it)
+}
+
+sync fn dTdx(lambda : float, x : float, T : float) -> (DT: float, DDT: float, DDDT: float) = {
+    const l2   = lambda * lambda
+    const l3   = l2 * lambda
+    const umx2 = 1.0 - x * x
+    const y    = sqrt(1.0 - l2 * umx2)
+    const y2   = y * y
+    const y3   = y2 * y
+
+    const DT   = 1.0 / umx2 * (3.0 * T * x - 2.0 + 2.0 * l3 * x / y)
+    const DDT  = 1.0 / umx2 * (3.0 * T + 5.0 * x * DT + 2.0 * (1.0 - l2) * l3 / y3)
+    const DDDT = 1.0 / umx2 * (7.0 * x * DDT + 8.0 * DT - 6.0 * (1.0 - l2) * l2 * l3 * x / y3 / y2)
+
+    (DT: DT, DDT: DDT, DDDT: DDDT)
+}
+
+sync fn x2tof(lambda : float, x: float, N : int) -> float = {
+    const battin   = 0.01
+    const lagrange = 0.2
+    const dist     = abs(x - 1.0)
+
+    if (dist < lagrange && dist > battin) {
+        // We use Lagrange tof expression
+        return x2tof2(lambda, x, N)
+    }
+
+    const K   = lambda * lambda
+    const E   = x * x - 1.0
+    const rho = abs(E)
+    const z   = sqrt(1.0 + K * E)
+
+    if (dist < battin) {
+        // We use Battin series tof expression
+        const eta = z - lambda * x
+        const S1  = 0.5 * (1.0 - lambda - x * eta)
+        let Q   = hypergeometricF(S1, 1e-11)
+        Q *= 4.0 / 3.0
+        (eta * eta * eta * Q + 4.0 * lambda * eta) / 2.0 + N.to_float * PI / pow(rho, 1.5)
+    } else {
+        // We use Lancaster tof expresion
+        const y = sqrt(rho)
+        const g = x * z - lambda * E
+        let d   = 0.0
+        if (E < 0.0) {
+            const l = acos(g)
+            d = N.to_float * PI + l
+        } else {
+            const f = y * (z - lambda * x)
+            d = log(f + g)
+        }
+        (x - lambda * z - d / y) / E
+    }
+}
+
+sync fn x2tof2(lambda : float, x: float, N : int) -> float = {
+    const a = 1.0 / (1.0 - x * x)
+    if (a > 0.0) { // ellipse
+        const alfa = 2.0 * acos(x)
+        let beta   = 2.0 * asin(sqrt(lambda * lambda / a))
+        if (lambda < 0.0) beta = -beta
+        ((a * sqrt(a) * ((alfa - sin(alfa)) - (beta - sin(beta)) + 2.0 * PI * N.to_float)) / 2.0)
+    } else {
+        const alfa = 2.0 * acosh(x)
+        let beta   = 2.0 * asinh(sqrt(-lambda * lambda / a))
+        if (lambda < 0.0) beta = -beta
+        (-a * sqrt(-a) * ((beta - sinh(beta)) - (alfa - sinh(alfa))) / 2.0)
+    }
+}
+
+sync fn hypergeometricF(z : float, tol : float) -> float = {
+    let Sj  = 1.0
+    let Cj  = 1.0
+    let err = 1.0
+    let j   = 0.0
+
+    while (err > tol) {
+        const Cj1 = Cj * (3.0 + j) * (1.0 + j) / (2.5 + j) * z / (j + 1.0)
+        const Sj1 = Sj + Cj1
+        err = abs(Cj1)
+        Sj = Sj1
+        Cj = Cj1
+        j += 1.0
+    }
+    Sj
+}

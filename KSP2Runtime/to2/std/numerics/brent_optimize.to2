@@ -1,0 +1,151 @@
+use core::math as math
+
+const GOLD : float = 1.618034
+const GLIMIT : float = 100.0
+const TINY : float = 1e-20
+const CGOLD : float = 0.3819660
+const ZEPS : float = 1e-18
+
+pub sync fn brent_optimize(func : fn(float) -> float, start_a : float, start_b : float, tolerance : float, max_iterations : int) -> Result<(x: float, fx: float), string> = {
+    let iterations = max_iterations
+    let (ax, bx, cx, fa, fb, fc) = bracket(func, start_a, start_b)
+
+    let a = if(ax < cx) ax else cx
+    let b = if(ax > cx) ax else cx
+
+    let x = bx
+    let fx = fb
+    let u = bx
+    let fu = fb
+    let v = bx
+    let fv = fb
+    let w = bx
+    let fw = fb
+    let d = 0.0
+    let e = 0.0
+
+    while(iterations > 0) {
+        iterations -= 1
+
+        const xm = 0.5 * (a + b)
+        const tol1 = tolerance * x.abs + ZEPS
+        const tol2 = 2 * tol1
+
+        if((x - xm).abs <= (tol2 - 0.5 * (b - a))) return (x: x, fx: fx)
+        if(e.abs > tol1) {
+            const r = (x - w) * (fx - fv)
+            let q = (x - v) * (fx - fw)
+            let p = (x - v) * q - (x - w) * r
+            q = 2.0 * (q - r)
+            if (q > 0.0) p = -p
+            q = q.abs
+            const etemp = e
+            e = d
+            if(p.abs >= (0.5 *q * etemp).abs || p <= q*(a - x) || p >= q*(b-x)) {
+                e = if(x >= xm) a - x else b - x
+                d = CGOLD * e
+            } else {
+                d = p / q
+                u = x + d
+                if(u - a < tol2 || b - u < tol2) {
+                    d = if(xm - x < 0.0) -tol1 else tol1
+                }
+            }
+        } else {
+            e = if(x >= xm) a - x else b - x
+            d = CGOLD * e
+        }
+        u = if(d.abs >= tol1) x + d else if(d < 0.0) x - tol1 else x + tol1
+        fu = func(u)
+        if(fu <= fx) {
+            if (u >= x) a = x else b = x
+            v = w
+            w = x
+            x = u
+            fv = fw
+            fw = fx
+            fx = fu
+        } else {
+            if (u < x) a = u else b = u
+            if(fu <= fw || w == x) {
+                v = w
+                w = u
+                fv = fw
+                fw = fu
+            } else if(fu <= fv || v == x || v == w) {
+                v = u
+                fv = fu
+            }
+        }
+    }
+
+    Err("brent_optimized reached iteration limit")
+}
+
+sync fn bracket(func : fn(float) -> float, a : float, b : float) -> (ax: float, bx: float, cx: float, fa: float, fb: float, fc: float) = {
+    let ax = a
+    let bx = b
+    let fa = func(ax)
+    let fb = func(bx)
+    
+    if(fb > fa) {
+        let temp = ax
+        ax = bx
+        bx = temp
+        temp = fa
+        fa = fb
+        fb = temp
+    }
+
+    let cx = bx + GOLD * (bx - ax)
+    let fc = func(cx)
+
+    while(fb > fc) {
+        const r = (bx - ax) * (fb - fc)
+        const q = (bx - cx) * (fb - fa)
+        const t = q - (if(r < 0) -2.0 * math::max((q - r).abs, TINY) else 2.0 * math::max((q - r).abs, TINY))
+        const ulim = bx * GLIMIT * (cx - bx)
+        let u = bx - ((bx - cx) * q - (bx - ax) * r) / t
+        let fu = 0.0
+
+        if((bx -u)*(u-cx) >0.0) {
+            fu = func(u)
+            if(fu < fc) {
+                ax = bx
+                bx = u
+                fa = fb
+                fb = fu
+                break
+            } else if(fu > fb) {
+                cx = u
+                fc = fu
+                break
+            }
+            u = cx + GOLD * (cx - bx)
+            fu = func(u)
+        } else if ((cx-u)*(u-ulim) > 0.0) {
+            fu = func(u)
+            if(fu < fc) {
+                bx = cx
+                cx = u
+                u = u + GOLD * (u - cx)
+                fb = fc
+                fc = fu
+                fu = func(u)
+            }
+        } else if((u-ulim)*(ulim-cx) >= 0.0) {
+            u = ulim
+            fu = func(u)
+        } else {
+            u = cx + GOLD * (cx - bx)
+            fu = func(u)
+        }
+        ax = bx
+        bx = cx
+        cx = u
+        fa = fb
+        fb = fc
+        fc = fu
+    }
+    (ax: ax, bx: bx, cx: cx, fa: fa, fb: fb, fc: fc)
+}

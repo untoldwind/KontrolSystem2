@@ -71,6 +71,11 @@
             <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
         </ProjectReference>
     </ItemGroup>
+    <ItemGroup>
+        <Content Include="to2KSP\**\*.*">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
     <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
     <Target Name="Test">
         <xunit Assemblies="../bin/$(Configuration)/KSP2Runtime-Test.dll" DiagnosticMessages="true" />

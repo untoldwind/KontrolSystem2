@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using KontrolSystem.SpaceWarpMod.Core;
@@ -24,13 +25,15 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         private readonly ModuleManagerWindow moduleManagerWindow;
         private readonly Texture2D startButtonTexture;
         private readonly Texture2D stopButtonTexture;
+        private readonly Action onClose;
 
         public ToolbarWindow(int objectId, CommonStyles commonStyles, ConsoleWindow consoleWindow,
-            ModuleManagerWindow moduleManagerWindow) {
+            ModuleManagerWindow moduleManagerWindow, Action onClose) {
             this.objectId = objectId;
             this.commonStyles = commonStyles;
             this.consoleWindow = consoleWindow;
             this.moduleManagerWindow = moduleManagerWindow;
+            this.onClose = onClose;
 
             Assembly assembly = Assembly.GetExecutingAssembly();
             windowTitle = $"KontrolSystem {assembly.GetName().Version}";
@@ -70,6 +73,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         }
 
         public void DrawUI() {
+            
             GUI.skin = commonStyles.baseSkin;
 
             windowRect = GUILayout.Window(objectId, windowRect, DrawWindow, windowTitle);
@@ -77,6 +81,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         }
 
         void DrawWindow(int windowId) {
+            
             GUILayout.BeginVertical();
             GUILayout.BeginHorizontal();
 
@@ -93,6 +98,10 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                 consoleWindow?.AttachTo(Mainframe.Instance.ConsoleBuffer);
                 // ReSharper disable once Unity.NoNullPropagation
                 consoleWindow?.Toggle();
+            }
+            GUILayout.Space(20);
+            if (GUILayout.Button("Close")) {
+                onClose();
             }
 
             GUILayout.EndVertical();

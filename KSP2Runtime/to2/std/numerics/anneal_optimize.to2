@@ -1,0 +1,47 @@
+use core::math as math
+use { Vec2 } from ksp::math
+
+pub sync fn anneal_optimize(func : fn(float, float) -> float, min : Vec2, max : Vec2, max_temp : float, iters : int = 5000, num_particles : int = 10, cooling_rate : float = 0.003) -> (best: (x: float, y: float, f: float), points: (x: float, y: float, f: float)[]) = {
+    const random = math::random()
+    let temp = max_temp
+    const range = max - min
+    let particles = 0..num_particles.map(fn(i) -> {
+        const pos = if(i == 0) range / 2 else <Vec2>(x: random.next_float() * range.x + min.x, y: random.next_float() * range.y + min.y )
+        (x: pos.x, y: pos.y, f: func(pos.x, pos.y))
+    })
+
+    let n = iters
+    while(n > 0) {
+        n -= 1
+        const window = 0.5 * n / iters * range
+        // Randomly choose a particle
+        let i = random.next_int(0, num_particles)
+        // ... and perdurb its position a bit
+        const x = math::clamp(random.next_gaussian(particles[i].x, window.x), min.x, max.x)
+        const y = math::clamp(random.next_gaussian(particles[i].y, window.y), min.y, max.y)
+        const f = func(x, y)
+
+        // Now find a particle that wants to jump to this position
+        const P = random.next_float()
+        // See if this particle wants to jump there
+        if (f < particles[i].f || math::exp((particles[i].f - f) / temp) > P) {
+            particles[i] = (x: x, y: y, f: f)
+        } else {
+            // See if a random another particle want to jump there
+            i = random.next_int(0, num_particles)
+            if (f < particles[i].f || math::exp((particles[i].f - f) / temp) > P) {
+                particles[i] = (x: x, y: y, f: f)
+            }
+        }
+        // And cool it down a bit
+        temp *= 1 - cooling_rate
+    }
+
+    let best = particles[0]
+    let i = 1
+    while(i < num_particles) {
+        if(particles[i].f < best.f) best = particles[i]
+        i += 1
+    }
+    (best: best, points: particles)
+}
