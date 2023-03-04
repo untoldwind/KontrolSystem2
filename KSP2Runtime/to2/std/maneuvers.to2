@@ -1,0 +1,53 @@
+use { current_time } from ksp::game
+use { Body, Orbit } from ksp::orbit
+use core::math as math
+use { vec2, Vec3 } from ksp::math
+use { solve_lambert } from std::lambert
+use { amoeba_optimize_perturbation } from std::numerics::amoeba_optimize
+use { anneal_optimize } from std::numerics::anneal_optimize
+use { regula_falsi_solve } from std::numerics::regula_falsi_solve
+use { CONSOLE } from ksp::console
+
+/// Calculate the required delta-v and time to change the given `orbit`
+/// to a (mostly) circular orbit at the next apoapsis (if `orbit` is elliplic) 
+/// or periapsis (if `orbit` is hyperbolic).
+pub sync fn circularize_orbit(orbit : Orbit) -> Result<(delta_v: Vec3, UT: float), string> = {
+    const UT = if(orbit.eccentricity < 1) orbit.next_apoapsis_time()? else orbit.next_periapsis_time()
+
+    (delta_v: circularize_orbit_at(orbit, UT), UT: UT)
+}
+
+/// Calculate the required delta-v to change the given `orbit`
+/// to a (mostly) circular orbit at a given universal time `UT`.
+pub sync fn circularize_orbit_at(orbit : Orbit, UT : float) -> Vec3 = {
+    const desired_velocity = circular_orbit_speed(orbit.reference_body, orbit.radius(UT)) * orbit.horizontal(UT)
+    const actual_velocity = orbit.orbital_velocity(UT)
+
+    desired_velocity - actual_velocity
+}
+
+sync fn circular_orbit_speed(body : Body, radius : float) -> float = math::sqrt(body.grav_parameter / radius)
+
+/// Calculate the required delta-v to change the `apoapsis` and `periapsis` of the given `orbit` 
+/// at time `UT`.
+pub sync fn ellipticize(orbit : Orbit, UT : float, periapsis : float, apoapsis : float) -> Vec3 = {
+    const radius = orbit.radius(UT)
+
+    const apoapsis_radius = math::max(0, apoapsis) + orbit.reference_body.radius
+    const periapsis_radius = math::max(0, periapsis) + orbit.reference_body.radius
+    const mu = orbit.reference_body.grav_parameter
+
+    const E = -mu / (periapsis_radius + apoapsis_radius) //total energy per unit mass of new orbit
+    const L = math::sqrt(((math::pow(E * (apoapsis_radius - periapsis_radius), 2) - mu * mu) / (2 * E)).abs) //angular momentum per unit mass of new orbit
+    const kineticE = E + mu / radius //kinetic energy (per unit mass) of new orbit at UT
+    const horizontalV = L / radius   //horizontal velocity of new orbit at UT
+    let verticalV = math::sqrt((2 * kineticE - horizontalV * horizontalV).abs) //vertical velocity of new orbit at UT
+
+    const actual_velocity = orbit.orbital_velocity(UT)
+
+    verticalV *= (orbit.up(UT) * actual_velocity).sign
+
+    const desired_velocity = horizontalV * orbit.horizontal(UT) + verticalV * orbit.up(UT)
+
+    desired_velocity - actual_velocity
+}

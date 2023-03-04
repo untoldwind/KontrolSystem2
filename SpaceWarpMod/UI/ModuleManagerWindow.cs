@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using KontrolSystem.SpaceWarpMod.Core;
+using KSP.Sim.impl;
 using UnityEngine;
 
 namespace KontrolSystem.SpaceWarpMod.UI {

@@ -103,6 +103,8 @@ test sync fn test_vector3() -> Unit = {
 
     assert_float(1.0, n.magnitude)
 
+    assert_vec3(vec3(1.0, 3.0, 2.0), a.xzy)
+
     assert_vec3(vec3(-6.0, -30.0, 22.0), a.cross(b))
 
     assert_float(a.x * b.x + a.y * b.y + a.z * b.z, a.dot(b))

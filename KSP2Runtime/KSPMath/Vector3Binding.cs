@@ -151,6 +151,10 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                     "normalized",
                     new BoundPropertyLikeFieldAccessFactory("Normalized vector (i.e. scaled to length 1)",
                         () => Vector3Type, typeof(Vector3d), typeof(Vector3d).GetProperty("normalized"))
+                }, {
+                    "xzy",
+                    new BoundPropertyLikeFieldAccessFactory("Swapped y- and z-coordinate", () => Vector3Type,
+                        typeof(Vector3d), typeof(Vector3d).GetProperty("SwapYAndZ"))
                 }
             });
 

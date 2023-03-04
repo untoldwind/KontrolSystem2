@@ -1,13 +1,27 @@
 use { Vessel } from ksp::vessel
 use { CONSOLE } from ksp::console
-use { sleep } from ksp::game
+use { sleep, current_time } from ksp::game
 
 pub fn main_flight(vessel: Vessel) -> Unit = {
+    CONSOLE.clear()
     CONSOLE.print_line("Hello world")
     CONSOLE.print_line("My vessel is: " + vessel.name)
+    
+    let maybe_target = vessel.target
 
+    if(maybe_target.defined) {
+        CONSOLE.print_line("My target is: " + maybe_target.value.name)
+    }
+    
     for(i in 0..10) {
         sleep(1)
-        CONSOLE.print_line(i.to_string())
+
+        let ut = current_time()
+
+        let pos = vessel.orbit.relative_position(ut)
+        let vel = vessel.orbit.orbital_velocity(ut)
+
+        CONSOLE.print_line("UT: " + ut.to_string() + " pos: " + pos.to_string() + " vel: " + vel.to_string() )
+        
     }
 }

@@ -1,4 +1,5 @@
 ﻿using KontrolSystem.TO2.Binding;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.KSP.Runtime.KSPOrbit {
     public partial class KSPOrbitModule {
@@ -47,6 +48,44 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
             [KSField(Description = "Orbital period.")]
             double Period { get; }
+            
+            [KSMethod]
+            Vector3d OrbitalVelocity(double ut);
+
+            [KSMethod]
+            Vector3d RelativePosition(double ut);
+
+            [KSMethod]
+            Vector3d Prograde(double ut);
+            
+            [KSMethod]
+            Vector3d RadialPlus(double ut);
+
+            [KSMethod]
+            Vector3d Up(double ut);
+
+            [KSMethod]
+            double Radius(double ut);
+
+            [KSMethod]
+            Vector3d Horizontal(double ut);
+            
+            /// <summary>
+            /// The next time at which the orbiting object will be at periapsis.
+            /// For elliptical orbits, this will be between UT and UT + Period.
+            /// For hyperbolic orbits, this can be any time, including a time in the past,
+            /// if the periapsis is in the past.
+            /// </summary>
+            [KSMethod]
+            double NextPeriapsisTime(Option<double> ut = new Option<double>());
+
+            /// <summary>
+            /// Returns the next time at which the orbiting object will be at apoapsis.
+            /// For elliptical orbits, this is a time between UT and UT + period.
+            /// For hyperbolic orbits, this throws an ArgumentException.
+            /// </summary>
+            [KSMethod]
+            Result<double, string> NextApoapsisTime(Option<double> ut = new Option<double>());
         }
     }
 }
