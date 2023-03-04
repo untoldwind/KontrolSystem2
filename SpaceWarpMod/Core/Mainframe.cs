@@ -248,8 +248,15 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         }
 
         private void OnStateChange(MessageCenterMessage message) {
-            LoggerAdapter.Instance.Debug($"Got stage change: {message} {message.GetType()}");
-            StopAll();
+            if (message is GameStateChangedMessage g) {
+                GameMode prevMode = GameModeAdapter.GameModeFromState( g.PreviousState);
+                GameMode currentMode = GameModeAdapter.GameModeFromState(g.CurrentState);
+
+                if (prevMode != currentMode) {
+                    LoggerAdapter.Instance.Info($"Stop all processes due to mode change {prevMode} -> {currentMode}");
+                    StopAll();
+                }
+            }
         }
     }
 }

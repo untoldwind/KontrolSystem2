@@ -55,6 +55,9 @@
         <Reference Include="UnityEngine.IMGUIModule">
             <HintPath>$(KSP2_BASE_DIR)\Managed\UnityEngine.IMGUIModule.dll</HintPath>
         </Reference>
+        <Reference Include="UnityEngine.ImageConversionModule">
+            <HintPath>$(KSP2_BASE_DIR)\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
+        </Reference>
         <Reference Include="UnityEngine.TextRenderingModule">
             <HintPath>$(KSP2_BASE_DIR)\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
         </Reference>
@@ -86,12 +89,19 @@
         <Name>KontrolSystemTO2</Name>
       </ProjectReference>
     </ItemGroup>
+    <ItemGroup>
+        <GFXFiles Include="GFX\**\*.png" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="GFX" />
+    </ItemGroup>
     <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
     <Target Name="CopyFiles" AfterTargets="Build">
         <Copy SourceFiles="../bin/$(Configuration)/KontrolSystemSpaceWarpMod.dll" DestinationFolder="../dist/SpaceWarp/Mods/KontrolSystem2/bin" />
         <Copy SourceFiles="icon.png" DestinationFolder="../dist/SpaceWarp/Mods/KontrolSystem2/bin" />
         <Copy SourceFiles="config.json" DestinationFolder="../dist/SpaceWarp/Mods/KontrolSystem2/config" />
         <Copy SourceFiles="modinfo.json" DestinationFolder="../dist/SpaceWarp/Mods/KontrolSystem2" />
+        <Copy SourceFiles="@(GFXFiles)" DestinationFolder="../dist/SpaceWarp/Mods/KontrolSystem2/GFX" />
     </Target>
     <Target Name="Test">
     </Target>

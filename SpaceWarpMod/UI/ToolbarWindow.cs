@@ -22,6 +22,8 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         private Vector2 scrollPos = new Vector2(0, 0);
         private readonly ConsoleWindow consoleWindow;
         private readonly ModuleManagerWindow moduleManagerWindow;
+        private readonly Texture2D startButtonTexture;
+        private readonly Texture2D stopButtonTexture;
 
         public ToolbarWindow(int objectId, CommonStyles commonStyles, ConsoleWindow consoleWindow,
             ModuleManagerWindow moduleManagerWindow) {
@@ -32,6 +34,9 @@ namespace KontrolSystem.SpaceWarpMod.UI {
 
             Assembly assembly = Assembly.GetExecutingAssembly();
             windowTitle = $"KontrolSystem {assembly.GetName().Version}";
+
+            startButtonTexture = GFXAdapter.GetTexture("start");
+            stopButtonTexture = GFXAdapter.GetTexture("stop");
         }
 
         public Rect WindowRect => windowRect;
@@ -115,12 +120,12 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                     GUILayout.Label($"{process.Name} ({process.State})", GUILayout.ExpandWidth(true));
                     switch (process.State) {
                     case KontrolSystemProcessState.Available:
-                        if (GUILayout.Button("Start", GUILayout.Width(30)))
+                        if (GUILayout.Button(startButtonTexture, GUILayout.Width(30)))
                             Mainframe.Instance.StartProcess(process, GameManager.Instance?.Game?.ViewController?.GetActiveVehicle(true)?.GetSimVessel(true));
                         break;
                     case KontrolSystemProcessState.Running:
                     case KontrolSystemProcessState.Outdated:
-                        if (GUILayout.Button("Stop", GUILayout.Width(30)))
+                        if (GUILayout.Button(stopButtonTexture, GUILayout.Width(30)))
                             Mainframe.Instance.StopProcess(process);
                         break;
                     }

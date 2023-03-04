@@ -7,7 +7,7 @@ using SpaceWarp.API.Managers;
 
 namespace KontrolSystem.SpaceWarpMod {
     public class ConfigAdapter {
-        public static readonly string MOD_ID = "kontrol_system";
+        public static readonly string MOD_ID = "KontrolSystem2";
         private static KontrolSystemConfig cached = null;
         
         public static KontrolSystemConfig Config {
@@ -17,7 +17,7 @@ namespace KontrolSystem.SpaceWarpMod {
                 KontrolSystemConfig config = getFromManager();
                 
                 if (config.stdLibPath == null || config.stdLibPath.Length == 0) {
-                    config.stdLibPath = Path.Combine(SpaceWarpManager.MODS_FULL_PATH, "KontrolSystem2", "to2");
+                    config.stdLibPath = Path.Combine(SpaceWarpManager.MODS_FULL_PATH, MOD_ID, "to2");
                     updateInManager();
                 }
 

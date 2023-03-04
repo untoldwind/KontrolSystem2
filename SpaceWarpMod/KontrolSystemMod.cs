@@ -1,4 +1,5 @@
-﻿using KontrolSystem.SpaceWarpMod.UI;
+﻿using KontrolSystem.SpaceWarpMod.Core;
+using KontrolSystem.SpaceWarpMod.UI;
 using SpaceWarp.API;
 using SpaceWarp.API.Mods;
 
@@ -28,12 +29,14 @@ namespace KontrolSystem.SpaceWarpMod {
             
             SpaceWarpManager.RegisterAppButton("Kontrol System 2", "BTN-KontrolSystem", SpaceWarpManager.LoadIcon(),
                 delegate { showGUI = !showGUI; });
+            
+            Mainframe.Instance.Reboot(ConfigAdapter.Config);
         }
         
         private void OnGUI() {
             if (!showGUI) return;
             
-            toolbarWindow.DrawUI();
+            toolbarWindow?.DrawUI();
         }
     }
 }
