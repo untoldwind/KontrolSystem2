@@ -2,10 +2,7 @@
 using KontrolSystem.TO2;
 using KontrolSystem.KSP.Runtime;
 using KontrolSystem.KSP.Runtime.KSPGame;
-using KSP.Game;
 using KSP.Sim.impl;
-using SpaceWarp.API.Logging;
-using UnityEngine;
 
 namespace KontrolSystem.SpaceWarpMod.Core {
     public enum KontrolSystemProcessState {

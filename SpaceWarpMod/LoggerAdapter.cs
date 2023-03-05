@@ -1,10 +1,10 @@
 ﻿using System;
+using BepInEx.Logging;
 using KontrolSystem.TO2.Runtime;
-using SpaceWarp.API.Logging;
 
 namespace KontrolSystem.SpaceWarpMod {
     public class LoggerAdapter : ITO2Logger {
-        private BaseModLogger backend = new ModLogger("KontrolSystem");
+        private ManualLogSource backend = new ManualLogSource("KontrolSystem");
 
         private static LoggerAdapter _instance;
 
@@ -12,22 +12,22 @@ namespace KontrolSystem.SpaceWarpMod {
 
         public static bool debugEnabled = true;
 
-        internal BaseModLogger Backend {
+        internal ManualLogSource Backend {
             set {
                 backend = value;
             }
         }
         
         public void Debug(string message) {
-            if (debugEnabled) backend.Debug(message);
+            if (debugEnabled) backend.LogDebug(message);
         }
 
-        public void Info(string message) => backend.Info(message);
+        public void Info(string message) => backend.LogInfo(message);
 
-        public void Warning(string message) => backend.Warn(message);
+        public void Warning(string message) => backend.LogWarning(message);
 
-        public void Error(string message) => backend.Error(message);
+        public void Error(string message) => backend.LogError(message);
 
-        public void LogException(Exception exception) => UnityEngine.Debug.LogException(exception);
+        public void LogException(Exception exception) => backend.LogError(exception);
     }
 }

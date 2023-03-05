@@ -1,6 +1,5 @@
 ﻿using KSP.Game;
-using SpaceWarp.API;
-using SpaceWarp.API.AssetBundles;
+using SpaceWarp.API.UI;
 using UnityEngine;
 
 namespace KontrolSystem.SpaceWarpMod.UI {
@@ -29,7 +28,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             objectId = GetInstanceID();
 
             resizeButtonImage = GFXAdapter.GetTexture("resize-button");
-            _spaceWarpUISkin = SpaceWarpManager.Skin;
+            _spaceWarpUISkin = Skins.ConsoleSkin;
             Title = initialTitle;
             windowRect = initialWindowRect;
             manualLayout = initialManualLayout;

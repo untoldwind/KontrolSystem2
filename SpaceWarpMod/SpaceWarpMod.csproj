@@ -64,16 +64,18 @@
         <Reference Include="Newtonsoft.Json">
             <HintPath>$(KSP2_BASE_DIR)\Managed\Newtonsoft.Json.dll</HintPath>
         </Reference>
+        <Reference Include="BepInEx">
+            <HintPath>$(KSP2_BASE_DIR)\..\BepInEx\core\BepInEx.dll</HintPath>
+        </Reference>
         <Reference Include="SpaceWarp">
-            <HintPath>$(KSP2_BASE_DIR)\..\SpaceWarp\core\SpaceWarp.dll</HintPath>
+            <HintPath>$(KSP2_BASE_DIR)\..\BepInEx\plugins\SpaceWarp\SpaceWarp.dll</HintPath>
         </Reference>
     </ItemGroup>
     <ItemGroup>
         <Compile Include="**\*.cs" Exclude="obj\**\*.cs" />
     </ItemGroup>
     <ItemGroup>
-      <Content Include="config.json" />
-      <Content Include="modinfo.json" />
+      <Content Include="swinfo.json" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\KSP2Runtime\KSP2Runtime.csproj">
@@ -97,11 +99,10 @@
     </ItemGroup>
     <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
     <Target Name="CopyFiles" AfterTargets="Build">
-        <Copy SourceFiles="../bin/$(Configuration)/KontrolSystemSpaceWarpMod.dll" DestinationFolder="../dist/SpaceWarp/Mods/KontrolSystem2/bin" />
-        <Copy SourceFiles="icon.png" DestinationFolder="../dist/SpaceWarp/Mods/KontrolSystem2/bin" />
-        <Copy SourceFiles="config.json" DestinationFolder="../dist/SpaceWarp/Mods/KontrolSystem2/config" />
-        <Copy SourceFiles="modinfo.json" DestinationFolder="../dist/SpaceWarp/Mods/KontrolSystem2" />
-        <Copy SourceFiles="@(GFXFiles)" DestinationFolder="../dist/SpaceWarp/Mods/KontrolSystem2/GFX" />
+        <Copy SourceFiles="../bin/$(Configuration)/KontrolSystemSpaceWarpMod.dll" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2" />
+        <Copy SourceFiles="icon.png" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2/assets/images" />
+        <Copy SourceFiles="swinfo.json" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2" />
+        <Copy SourceFiles="@(GFXFiles)" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2/assets/images" />
     </Target>
     <Target Name="Test">
     </Target>

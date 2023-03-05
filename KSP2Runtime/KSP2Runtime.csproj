@@ -71,8 +71,8 @@
     </ItemGroup>
     <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
     <Target Name="CopyFiles" AfterTargets="Build">
-        <Copy SourceFiles="../bin/$(Configuration)/KontrolSystemKSP2Runtime.dll" DestinationFolder="../dist/SpaceWarp/Mods/KontrolSystem2/bin" />
-        <Copy SourceFiles="@(TO2Files)" DestinationFolder="../dist/SpaceWarp/Mods/KontrolSystem2/to2/%(RecursiveDir)" />
+        <Copy SourceFiles="../bin/$(Configuration)/KontrolSystemKSP2Runtime.dll" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2" />
+        <Copy SourceFiles="@(TO2Files)" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2/to2/%(RecursiveDir)" />
     </Target>
     <Target Name="Test">
     </Target>
