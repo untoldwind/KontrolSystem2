@@ -31,44 +31,44 @@
         <LangVersion>8</LangVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(KSP2_BASE_DIR)' == ''">
-        <KSP2_BASE_DIR>C:\Program Files (x86)\Steam\steamapps\common\Kerbal Space Program 2\KSP2_x64_Data</KSP2_BASE_DIR>
+        <KSP2_BASE_DIR>C:\Program Files (x86)\Steam\steamapps\common\Kerbal Space Program 2</KSP2_BASE_DIR>
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="System">
-            <HintPath>$(KSP2_BASE_DIR)\Managed\System.dll</HintPath>
+            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\System.dll</HintPath>
         </Reference>
         <Reference Include="netstandard">
-            <HintPath>$(KSP2_BASE_DIR)\Managed\netstandard.dll</HintPath>
+            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\netstandard.dll</HintPath>
         </Reference>
         <Reference Include="mscorlib">
-            <HintPath>$(KSP2_BASE_DIR)\Managed\mscorlib.dll</HintPath>
+            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\mscorlib.dll</HintPath>
         </Reference>
         <Reference Include="Assembly-CSharp">
-            <HintPath>$(KSP2_BASE_DIR)\Managed\Assembly-CSharp.dll</HintPath>
+            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\Assembly-CSharp.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine">
-            <HintPath>$(KSP2_BASE_DIR)\Managed\UnityEngine.dll</HintPath>
+            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\UnityEngine.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine.CoreModule">
-            <HintPath>$(KSP2_BASE_DIR)\Managed\UnityEngine.CoreModule.dll</HintPath>
+            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine.IMGUIModule">
-            <HintPath>$(KSP2_BASE_DIR)\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine.ImageConversionModule">
-            <HintPath>$(KSP2_BASE_DIR)\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
+            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine.TextRenderingModule">
-            <HintPath>$(KSP2_BASE_DIR)\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
         </Reference>
         <Reference Include="Newtonsoft.Json">
-            <HintPath>$(KSP2_BASE_DIR)\Managed\Newtonsoft.Json.dll</HintPath>
+            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\Newtonsoft.Json.dll</HintPath>
         </Reference>
         <Reference Include="BepInEx">
-            <HintPath>$(KSP2_BASE_DIR)\..\BepInEx\core\BepInEx.dll</HintPath>
+            <HintPath>$(KSP2_BASE_DIR)\BepInEx\core\BepInEx.dll</HintPath>
         </Reference>
         <Reference Include="SpaceWarp">
-            <HintPath>$(KSP2_BASE_DIR)\..\BepInEx\plugins\SpaceWarp\SpaceWarp.dll</HintPath>
+            <HintPath>$(KSP2_BASE_DIR)\BepInEx\plugins\SpaceWarp\SpaceWarp.dll</HintPath>
         </Reference>
     </ItemGroup>
     <ItemGroup>

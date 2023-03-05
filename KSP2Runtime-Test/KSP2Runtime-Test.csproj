@@ -33,14 +33,14 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(KSP2_BASE_DIR)' == ''">
-        <KSP2_BASE_DIR>C:\Program Files (x86)\Steam\steamapps\common\Kerbal Space Program 2\KSP2_x64_Data</KSP2_BASE_DIR>
+        <KSP2_BASE_DIR>C:\Program Files (x86)\Steam\steamapps\common\Kerbal Space Program 2</KSP2_BASE_DIR>
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="System">
-            <HintPath>$(KSP2_BASE_DIR)\Managed\System.dll</HintPath>
+            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\System.dll</HintPath>
         </Reference>
         <Reference Include="mscorlib">
-            <HintPath>$(KSP2_BASE_DIR)\Managed\mscorlib.dll</HintPath>
+            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\mscorlib.dll</HintPath>
         </Reference>
     </ItemGroup>
     <ItemGroup>

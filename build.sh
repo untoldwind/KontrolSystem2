@@ -19,5 +19,5 @@ rm -rf dist
 
 if [[ ! -z "$KSP2_BASE_DIR" ]]
 then
-  cp -r dist/* "$KSP2_BASE_DIR/.."
+  cp -r dist/* "$KSP2_BASE_DIR"
 fi
