@@ -1,7 +1,7 @@
 ﻿namespace KontrolSystem.SpaceWarpMod {
-    public class KontrolSystemConfig {
-        public string stdLibPath;
-        
-        public string to2Path;
+    public interface KontrolSystemConfig {
+        public string StdLibPath { get;  }
+
+        public string To2Path { get;  }
     }
 }

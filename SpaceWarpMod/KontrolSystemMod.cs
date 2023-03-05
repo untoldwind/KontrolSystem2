@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using BepInEx;
 using KontrolSystem.SpaceWarpMod.Core;
 using KontrolSystem.SpaceWarpMod.UI;
@@ -12,7 +13,7 @@ using UnityEngine;
 
 namespace KontrolSystem.SpaceWarpMod {
 
-    [BepInPlugin("com.SpaceWarpAuthorName.ExampleMod", "ExampleMod", "3.0.0")]
+    [BepInPlugin("com.github.untoldwind.KontrolSystem2", "KontrolSystem2", "0.1.0")]
     [BepInDependency(SpaceWarpPlugin.ModGuid, SpaceWarpPlugin.ModVer)]
     public class KontrolSystemMod : BaseSpaceWarpPlugin {
         private CommonStyles commonStyles;
@@ -22,6 +23,10 @@ namespace KontrolSystem.SpaceWarpMod {
         
         private bool showGUI = false;
         
+        public void Awake() {
+            ConfigAdapter.Init(Config);
+        }
+
         public override void OnInitialized() {
             LoggerAdapter.Instance.Backend = Logger;
             LoggerAdapter.Instance.Debug("Initialize KontrolSystemMod");
@@ -31,8 +36,9 @@ namespace KontrolSystem.SpaceWarpMod {
             Appbar.RegisterAppButton("Kontrol System 2", "BTN-KontrolSystem", AssetManager.GetAsset<Texture2D>($"{SpaceWarpMetadata.ModID}/images/icon.png"),
                 delegate { showGUI = !showGUI; });
 
-            ConfigAdapter.Config = new KontrolSystemConfig();
-            ConfigAdapter.Config.stdLibPath = Path.Combine(PluginFolderPath, "to2");
+            if (ConfigAdapter.Instance.stdLibFolder.Value == "") {
+                ConfigAdapter.Instance.stdLibFolder.Value = Path.Combine(PluginFolderPath, "to2");
+            }
         }
         
         private void OnGUI() {
@@ -48,7 +54,7 @@ namespace KontrolSystem.SpaceWarpMod {
                 toolbarWindow.SetPosition(false);
             
             
-                Mainframe.Instance.Reboot(ConfigAdapter.Config);
+                Mainframe.Instance.Reboot(ConfigAdapter.Instance);
             }
 
             toolbarWindow?.DrawUI();

@@ -105,8 +105,8 @@ namespace KontrolSystem.SpaceWarpMod.Core {
                     */
                     KontrolRegistry nextRegistry = KontrolSystemKSPRegistry.CreateKSP();
                     
-                    LoggerAdapter.Instance.Debug($"Add Directory: {config.stdLibPath}");
-                    nextRegistry.AddDirectory(config.stdLibPath);
+                    LoggerAdapter.Instance.Debug($"Add Directory: {config.StdLibPath}");
+                    nextRegistry.AddDirectory(config.StdLibPath);
                     /*
                     PluginLogger.Instance.Debug($"Add Directory: {registryPath}");
                     nextRegistry.AddDirectory(registryPath);
