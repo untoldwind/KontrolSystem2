@@ -133,7 +133,7 @@ namespace KontrolSystem.TO2.AST {
                         "is_finite",
                         new BoundPropertyLikeFieldAccessFactory("Check if float is finite", () => Bool,
                             typeof(Double),
-                            typeof(TO2Float).GetMethod("IsFiniteWrapper", new[] {typeof(double)}), null)
+                            typeof(Double).GetMethod("IsFinite", new[] {typeof(double)}) ?? typeof(TO2Float).GetMethod("IsFiniteWrapper", new[] {typeof(double)}), null)
                     }
                 };
                 intToFloatAssign = new IntToFloatAssign();
@@ -153,8 +153,8 @@ namespace KontrolSystem.TO2.AST {
             public override IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) =>
                 otherType == BuiltinType.Int ? intToFloatAssign : DefaultAssignEmitter.Instance;
 
-            // Necessary due to aggressive inlining
-            public static bool IsFiniteWrapper(double d) => Double.IsFinite(d);
+            // Fallback if framework is (slightly) incompatible
+            public static bool IsFiniteWrapper(double d) => !Double.IsInfinity(d);
         }
     }
 }

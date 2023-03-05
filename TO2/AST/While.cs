@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection.Emit;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
@@ -52,7 +53,7 @@ namespace KontrolSystem.TO2.AST {
             Dictionary<string, TO2Type> scopeVariables = condition.GetScopeVariables(tmpContext);
 
             if (scopeVariables != null) {
-                foreach (var (name, type) in scopeVariables) {
+                foreach (var (name, type) in scopeVariables.Select(x => (x.Key, x.Value))) {
                     tmpContext.DeclaredVariable(name, true, type.UnderlyingType(context.ModuleContext));
                 }
             }
@@ -81,7 +82,7 @@ namespace KontrolSystem.TO2.AST {
             IBlockContext loopContext = context.CreateLoopContext(whileStart, whileEnd);
 
             if (scopeVariables != null) {
-                foreach (var (name, type) in scopeVariables) {
+                foreach (var (name, type) in scopeVariables.Select(x => (x.Key, x.Value))) {
                     if (loopContext.FindVariable(name) != null) {
                         loopContext.AddError(new StructuralError(
                             StructuralError.ErrorType.DuplicateVariableName,
