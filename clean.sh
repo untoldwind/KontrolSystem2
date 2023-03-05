@@ -1,6 +1,5 @@
 #!/bin/sh
 
-rm -rf GameData
 rm -rf bin
 rm -rf dist
 rm -rf Parsing/obj

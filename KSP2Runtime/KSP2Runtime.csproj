@@ -7,7 +7,7 @@
         <OutputType>Library</OutputType>
         <RootNamespace>KontrolSystem.KSP2.Runtime</RootNamespace>
         <AssemblyName>KontrolSystemKSP2Runtime</AssemblyName>
-        <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+        <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <DebugSymbols>true</DebugSymbols>
@@ -31,7 +31,7 @@
         <LangVersion>8</LangVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(KSP2_BASE_DIR)' == ''">
-        <KSP2_BASE_DIR>..\..\..\..\KSPDev\KSP_linux\KSP_Data</KSP2_BASE_DIR>
+        <KSP2_BASE_DIR>C:\Program Files (x86)\Steam\steamapps\common\Kerbal Space Program 2\KSP2_x64_Data</KSP2_BASE_DIR>
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="System">
