@@ -1,7 +1,6 @@
 use { Vessel } from ksp::vessel
 use { CONSOLE } from ksp::console
 use { sleep, current_time } from ksp::game
-use { circularize_orbit } from std::maneuvers
 
 pub fn main_flight(vessel: Vessel) -> Result<Unit, string> = {
     CONSOLE.clear()
@@ -13,14 +12,13 @@ pub fn main_flight(vessel: Vessel) -> Result<Unit, string> = {
     if(maybe_target.defined) {
         CONSOLE.print_line("My target is: " + maybe_target.value.name)
     }
-
-    let (delta_v, UT) = circularize_orbit(vessel.orbit)?
-
-    CONSOLE.print_line("Circle: " + delta_v.to_string() + " " + UT.to_string())
-
-    vessel.maneuver.add_burn_vector(UT, delta_v)?
     
-    for(i in 0..10) {
+    CONSOLE.print_line("Autopilot: " + vessel.autopilot.enabled.to_string() + " " + vessel.autopilot.mode)
+    
+    vessel.autopilot.enabled = true
+
+    // Just demonstrating running in the background
+    for(i in 0..40) {
         sleep(1)
 
         let ut = current_time()

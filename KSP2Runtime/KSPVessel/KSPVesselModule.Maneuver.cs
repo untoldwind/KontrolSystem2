@@ -20,14 +20,14 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField]
             public ManeuverNodeAdapter[] Nodes => vessel.Game.SpaceSimulation.Maneuvers
-                .GetNodesForVessel(vessel.GlobalId)?.Select(node => new ManeuverNodeAdapter(vessel, node)).ToArray() ?? Array.Empty<ManeuverNodeAdapter>();
+                .GetNodesForVessel(vessel.GlobalId)?.Select(node => new ManeuverNodeAdapter(context, vessel, node)).ToArray() ?? Array.Empty<ManeuverNodeAdapter>();
             
             [KSMethod]
             public Result<ManeuverNodeAdapter, string> NextNode() {
                 ManeuverNodeData node = vessel.Game.SpaceSimulation.Maneuvers.GetNodesForVessel(vessel.GlobalId)?.FirstOrDefault();
 
                 if (node == null) return Result.Err<ManeuverNodeAdapter, string>("No maneuver node present");
-                return Result.Ok<ManeuverNodeAdapter, string>(new ManeuverNodeAdapter(vessel, node));
+                return Result.Ok<ManeuverNodeAdapter, string>(new ManeuverNodeAdapter(context, vessel, node));
             }
 
             [KSMethod]
@@ -39,7 +39,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
                 vessel.SimulationObject.ManeuverPlan.AddNode(maneuverNodeData);
 
-                return Result.Ok<ManeuverNodeAdapter, string>(new ManeuverNodeAdapter(vessel, maneuverNodeData));
+                return Result.Ok<ManeuverNodeAdapter, string>(new ManeuverNodeAdapter(context, vessel, maneuverNodeData));
             }
             
 
@@ -56,7 +56,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 
                 vessel.SimulationObject.ManeuverPlan.AddNode(maneuverNodeData);
 
-                return Result.Ok<ManeuverNodeAdapter, string>(new ManeuverNodeAdapter(vessel, maneuverNodeData));
+                return Result.Ok<ManeuverNodeAdapter, string>(new ManeuverNodeAdapter(context, vessel, maneuverNodeData));
             }
         }
     }

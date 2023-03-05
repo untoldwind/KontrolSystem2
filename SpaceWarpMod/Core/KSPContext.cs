@@ -27,7 +27,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
 
         internal bool IsEmpty => autopilots.Count == 0;
 
-        internal void RunAutopilots(FlightCtrlState state, float deltaTime) {
+        internal void RunAutopilots(ref FlightCtrlState state, float deltaTime) {
             try {
                 ContextHolder.CurrentContext.Value = context;
                 foreach (FlightInputCallback autopilot in autopilots)
@@ -112,15 +112,44 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         }
         
         public void HookAutopilot(VesselComponent vessel, FlightInputCallback autopilot) {
-            throw new System.NotImplementedException();
+            LoggerAdapter.Instance.Debug($"Hook autopilot {autopilot} to {vessel.Name}");
+            if (autopilotHooks.ContainsKey(vessel)) {
+                autopilotHooks[vessel].Add(autopilot);
+            } else {
+                AutopilotHooks autopilots = new AutopilotHooks(this);
+                autopilots.Add(autopilot);
+                autopilotHooks.Add(vessel, autopilots);
+
+                LoggerAdapter.Instance.Debug($"Hooking up for vessel: {vessel.Name}");
+                // Ensure that duplicates do no trigger an exception
+                vessel.SimulationObject.objVesselBehavior.OnPreAutopilotUpdate -= autopilots.RunAutopilots;
+                vessel.SimulationObject.objVesselBehavior.OnPreAutopilotUpdate += autopilots.RunAutopilots;
+            }
         }
 
         public void UnhookAutopilot(VesselComponent vessel, FlightInputCallback autopilot) {
-            throw new System.NotImplementedException();
+            if (!autopilotHooks.ContainsKey(vessel)) return;
+
+            LoggerAdapter.Instance.Debug($"Unhook autopilot {autopilot} to {vessel.Name}");
+
+            AutopilotHooks autopilots = autopilotHooks[vessel];
+
+            autopilots.Remove(autopilot);
+            if (autopilots.IsEmpty) {
+                LoggerAdapter.Instance.Debug($"Unhooking from vessel: {vessel.Name}");
+                autopilotHooks.Remove(vessel);
+                vessel.SimulationObject.objVesselBehavior.OnPreAutopilotUpdate -= autopilots.RunAutopilots;
+            }
         }
 
         public void UnhookAllAutopilots(VesselComponent vessel) {
-            throw new System.NotImplementedException();
+            if (!autopilotHooks.ContainsKey(vessel)) return;
+            
+            AutopilotHooks autopilots = autopilotHooks[vessel];
+
+            autopilotHooks.Remove(vessel);
+            LoggerAdapter.Instance.Debug($"Unhooking from vessel: {vessel.Name}");
+            vessel.SimulationObject.objVesselBehavior.OnPreAutopilotUpdate -= autopilots.RunAutopilots;
         }
         
         public void Cleanup() {

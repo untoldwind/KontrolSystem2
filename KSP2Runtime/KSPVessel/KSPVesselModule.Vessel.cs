@@ -4,7 +4,6 @@ using KontrolSystem.KSP.Runtime.KSPMath;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
-using KSP.Sim;
 using KSP.Sim.impl;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel {
@@ -16,11 +15,15 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             private readonly IKSPContext context;
             internal readonly VesselComponent vessel;
             private readonly ManeuverAdapter maneuver;
-            
+            private readonly ActionGroupsAdapter actions;
+            private readonly AutopilotAdapter autopilot;
+
             internal VesselAdapter(IKSPContext context, VesselComponent vessel) {
                 this.context = context;
                 this.vessel = vessel;
                 maneuver = new ManeuverAdapter(context, this.vessel);
+                actions = new ActionGroupsAdapter(this.vessel);
+                autopilot = new AutopilotAdapter(context, this.vessel);
             }
             
             [KSField(Description = "The name of the vessel.")]
@@ -31,6 +34,10 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             
             [KSField] public ManeuverAdapter Maneuver => maneuver;
             
+            [KSField] public ActionGroupsAdapter Actions => actions;
+
+            [KSField] public AutopilotAdapter Autopilot => autopilot;
+
             [KSField] public KSPOrbitModule.IOrbit Orbit => new OrbitWrapper(context, vessel.Orbit);
 
             [KSField] public Vector3d OrbitalVelocity => vessel.OrbitalVelocity.vector;
