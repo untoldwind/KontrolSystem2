@@ -1,6 +1,7 @@
 use { Vessel } from ksp::vessel
 use { CONSOLE } from ksp::console
 use { circularize_orbit } from std::maneuvers
+use { estimate_burn_time } from std::vac
 
 pub fn main_flight(vessel: Vessel) -> Result<Unit, string> = {
     CONSOLE.clear()
@@ -9,5 +10,9 @@ pub fn main_flight(vessel: Vessel) -> Result<Unit, string> = {
 
     CONSOLE.print_line("Circle: " + delta_v.to_string() + " " + UT.to_string())
 
-    vessel.maneuver.add_burn_vector(UT, delta_v)?
+    let (burn_time, half_burn_time) = estimate_burn_time(vessel, delta_v.magnitude, 0.5, 1.0)
+
+    CONSOLE.print_line("Burntime: " + burn_time.to_string() + " " + half_burn_time.to_string())
+
+    vessel.maneuver.add_burn_vector(UT - half_burn_time, delta_v)?
 }

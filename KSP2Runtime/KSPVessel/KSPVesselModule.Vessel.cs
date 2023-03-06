@@ -18,6 +18,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             private readonly ActionGroupsAdapter actions;
             private readonly AutopilotAdapter autopilot;
             private readonly VesselDeltaVAdapter deltaV;
+            private readonly StagingAdapter staging;
 
             internal VesselAdapter(IKSPContext context, VesselComponent vessel) {
                 this.context = context;
@@ -26,6 +27,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 actions = new ActionGroupsAdapter(this.vessel);
                 autopilot = new AutopilotAdapter(context, this.vessel);
                 deltaV = new VesselDeltaVAdapter(this);
+                staging = new StagingAdapter(this);
             }
             
             [KSField(Description = "The name of the vessel.")]
@@ -41,6 +43,8 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField] public AutopilotAdapter Autopilot => autopilot;
 
             [KSField] public VesselDeltaVAdapter DeltaV => deltaV;
+
+            [KSField] public StagingAdapter Staging => staging;
 
             [KSField] public KSPOrbitModule.IOrbit Orbit => new OrbitWrapper(context, vessel.Orbit);
 

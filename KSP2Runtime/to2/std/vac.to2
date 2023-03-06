@@ -1,0 +1,56 @@
+use { Vessel, SITUATION_VACUUM } from ksp::vessel
+use { look_dir_up } from ksp::math
+use core::math as math
+
+/// Estimate the required burn time for a desired `delta_v` in vacuum.
+///
+/// * `stage_delay` is the assumed amount of seconds required for staging
+/// * `throttle_limit` is a limit for the throttle to be considered
+pub sync fn estimate_burn_time(vessel : Vessel, delta_v : float, stage_delay : float, throttle_limit : float) -> (burn_time: float, half_burn_time: float) = {
+    let stage = vessel.staging.count
+    let dv_left = delta_v
+    let half_dv_left = delta_v / 2
+    let burn_time = 0.0
+    let half_burn_time = 0.0
+    let last_stage_burn_time = 0.0
+
+    while(stage >= 0) {
+        stage -= 1
+
+        const maybe_stage_info = vessel.delta_v.stage(stage)
+
+        if(!maybe_stage_info.defined) continue
+
+        const stage_info = maybe_stage_info.value
+        const stage_deltav = stage_info.get_deltav(SITUATION_VACUUM)
+        const stage_thrust = stage_info.get_thrust(SITUATION_VACUUM)
+
+        if(stage_deltav <= 0.0 || stage_thrust <= 0.0) {
+            // This stage has to be skipped, i.e. it will be necessary to stage twice
+            if (burn_time - last_stage_burn_time < stage_delay && stage != vessel.staging.count)
+                burn_time += stage_delay - (burn_time - last_stage_burn_time)
+            burn_time += stage_delay
+            last_stage_burn_time = burn_time
+            continue
+        }
+        const stage_burn_dv = math::min(stage_deltav, dv_left)
+        dv_left -= stage_burn_dv
+        const stage_burn_fraction = stage_burn_dv / stage_deltav
+
+        // Delta-V is proportional to ln(m0 / m1) (where m0 is initial
+        // mass and m1 is final mass). We need to know the final mass
+        // after this stage burns (m1b):
+        //      ln(m0 / m1) * stageBurnFraction = ln(m0 / m1b)
+        //      exp(ln(m0 / m1) * stageBurnFraction) = m0 / m1b
+        //      m1b = m0 / (exp(ln(m0 / m1) * stageBurnFraction))
+        const stage_burn_final_mass = stage_info.start_mass / math::exp(math::log(stage_info.start_mass / stage_info.end_mass) * stage_burn_fraction)
+        const stage_avg_accel = stage_thrust / ((stage_info.start_mass + stage_burn_final_mass) / 2) * throttle_limit
+
+        half_burn_time += math::min(half_dv_left, stage_burn_dv) / stage_avg_accel
+        half_dv_left = math::max(0, half_dv_left - stage_burn_dv)
+
+        burn_time += stage_burn_dv / stage_avg_accel
+    }
+
+    (burn_time: burn_time, half_burn_time: half_burn_time)
+}
