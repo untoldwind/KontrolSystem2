@@ -7,7 +7,7 @@ Functions are the bread and butter of every programming language, so we are tryi
 ### Basic syntax
 
 ```rust
-fn the_function_name(param1: type1, param2: type2) -> return_type {
+fn the_function_name(param1: type1, param2: type2) -> return_type = {
     ... the implementation ...
 }
 ```
@@ -17,7 +17,7 @@ as mentioned in the intro, this defines an asynchronous function that is safe to
 If best performance is required (e.g. for some numerical stuff), it is also possible to define a synchronous function
 
 ```rust
-sync fn the_function_name(param1: type1, param2: type2) -> return_type {
+sync fn the_function_name(param1: type1, param2: type2) -> return_type = {
     ... the implementation ...
 }
 ```
@@ -26,13 +26,13 @@ NOTE: Be somewhat careful with potentially long running loops here as it might i
 By default functions can only be used within the same file. If a function should be callable from other scripts it is necessary to add a `pub` prefix:
 
 ```rust
-pub fn the_function_name(param1: type1, param2: type2) -> return_type {
+pub fn the_function_name(param1: type1, param2: type2) -> return_type = {
     ... the implementation ...
 }
 ```
 resp.
 ```rust
-pub sync fn the_function_name(param1: type1, param2: type2) -> return_type {
+pub sync fn the_function_name(param1: type1, param2: type2) -> return_type = {
     ... the implementation ...
 }
 ```
@@ -42,14 +42,14 @@ pub sync fn the_function_name(param1: type1, param2: type2) -> return_type {
 ```rust
 use { CONSOLE } from ksp::console
 
-pub fn print_hello() -> Unit {
+pub fn print_hello() -> Unit = {
     CONSOLE.print_line("Hello world")
 }
 ```
 is a public function `print_hello` with no parameters and no return value that prints "Hello world" to the console.
 
 ```rust
-fn add_three(a : int, b : float, c : float) -> float {
+fn add_three(a : int, b : float, c : float) -> float = {
     a.to_float() + b + c
 }
 ```

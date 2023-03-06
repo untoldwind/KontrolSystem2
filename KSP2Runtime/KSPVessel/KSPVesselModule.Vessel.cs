@@ -64,10 +64,22 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField] public double VerticalSurfaceSpeed => vessel.VerticalSrfSpeed;
             
+
             [KSField] public Vector3d AngularMomentum => vessel.AngularVelocity.relativeAngularVelocity.vector;
 
             [KSField]
             public KSPOrbitModule.GeoCoordinates GeoCoordinates => new KSPOrbitModule.GeoCoordinates(MainBody, vessel.Latitude, vessel.Longitude);
+
+            [KSField]
+            public Direction Facing {
+                get {
+                    QuaternionD vesselRotation = vessel.ControlTransform.localRotation;
+                    QuaternionD vesselFacing = QuaternionD.Inverse(QuaternionD.Euler(90, 0, 0) *
+                                                                   QuaternionD.Inverse(vesselRotation) *
+                                                                   QuaternionD.identity);
+                    return new Direction(vesselFacing);
+                }
+            }
             
             [KSField]
             public Option<IKSPTargetable> Target {
