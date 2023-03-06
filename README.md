@@ -4,6 +4,8 @@ A scripting framework for autopilots in Kerbal Space Programm 2.
 
 This is the successor of [KontrolSystem](https://github.com/untoldwind/KontrolSystem) which in turn was (supposed to by) the spiritual offspring of the wonderful [KOS](https://github.com/KSP-KOS/KOS) mod.
 
+[Documentation](https://kontrolsystem2.readthedocs.io)
+
 ## Installation
 
 * Install [BepInEx](https://github.com/BepInEx/BepInEx) and [SpaceWarp](https://github.com/SpaceWarpDev/SpaceWarp) v0.4.0
