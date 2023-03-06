@@ -12,18 +12,20 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             Description =
                 "Represents an in-game vessel, which might be a rocket, plane, rover ... or actually just a Kerbal in a spacesuite.")]
         public class VesselAdapter : IKSPTargetable {
-            private readonly IKSPContext context;
+            internal readonly IKSPContext context;
             internal readonly VesselComponent vessel;
             private readonly ManeuverAdapter maneuver;
             private readonly ActionGroupsAdapter actions;
             private readonly AutopilotAdapter autopilot;
+            private readonly VesselDeltaVAdapter deltaV;
 
             internal VesselAdapter(IKSPContext context, VesselComponent vessel) {
                 this.context = context;
                 this.vessel = vessel;
-                maneuver = new ManeuverAdapter(context, this.vessel);
+                maneuver = new ManeuverAdapter(this);
                 actions = new ActionGroupsAdapter(this.vessel);
                 autopilot = new AutopilotAdapter(context, this.vessel);
+                deltaV = new VesselDeltaVAdapter(this);
             }
             
             [KSField(Description = "The name of the vessel.")]
@@ -37,6 +39,8 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField] public ActionGroupsAdapter Actions => actions;
 
             [KSField] public AutopilotAdapter Autopilot => autopilot;
+
+            [KSField] public VesselDeltaVAdapter DeltaV => deltaV;
 
             [KSField] public KSPOrbitModule.IOrbit Orbit => new OrbitWrapper(context, vessel.Orbit);
 

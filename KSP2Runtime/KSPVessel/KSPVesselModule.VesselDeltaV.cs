@@ -1,0 +1,32 @@
+﻿using KontrolSystem.TO2.Binding;
+using KontrolSystem.TO2.Runtime;
+using KSP.Sim.DeltaV;
+using UniLinq;
+
+namespace KontrolSystem.KSP.Runtime.KSPVessel {
+    public partial class KSPVesselModule {
+        [KSClass("VesselDeltaV")]
+        public class VesselDeltaVAdapter {
+            private readonly VesselAdapter vesselAdapter;
+            private readonly VesselDeltaVComponent deltaV;
+
+            public VesselDeltaVAdapter(VesselAdapter vesselAdapter) {
+                this.vesselAdapter = vesselAdapter;
+                deltaV = vesselAdapter.vessel.VesselDeltaV;
+            }
+
+            [KSField]
+            public DeltaVStageInfoAdapter[] Stages => deltaV.StageInfo
+                .Select(stage => new DeltaVStageInfoAdapter(vesselAdapter, stage)).ToArray();
+            
+            [KSMethod(Description = "Get delta-v information for a specific `stage` of the vessel, if existent.")]
+            public Option<DeltaVStageInfoAdapter> Stage(long stage) {
+                DeltaVStageInfo stageInfo = deltaV.GetStage((int)stage);
+
+                return stageInfo != null
+                    ? new Option<DeltaVStageInfoAdapter>(new DeltaVStageInfoAdapter(vesselAdapter, stageInfo))
+                    : new Option<DeltaVStageInfoAdapter>();
+            }
+        }
+    }
+}

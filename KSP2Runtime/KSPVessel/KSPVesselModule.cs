@@ -1,5 +1,7 @@
 ﻿using KontrolSystem.TO2.Binding;
+using KSP.Sim.DeltaV;
 using KSP.Sim.State;
+using System;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel {
     [KSModule("ksp::vessel",
@@ -11,5 +13,13 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             BindingGenerator.RegisterTypeMapping(typeof(FlightCtrlState),
                 FlightCtrlStateBinding.FlightCtrlStateType);
         }
+        
+        internal static DeltaVSituationOptions SituationFromString(string situation) {
+            if (Enum.TryParse(situation, true, out DeltaVSituationOptions option)) {
+                return option;
+            }
+
+            return DeltaVSituationOptions.Vaccum;
+        }        
     }
 }
