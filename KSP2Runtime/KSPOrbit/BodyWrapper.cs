@@ -33,6 +33,13 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
         public double Radius => body.radius;
         
+        public Vector3d SurfaceNormal(double lat, double lon) => body.GetSurfaceNVector(lat, lon);
+
+        public double TerrainHeight(double lat, double lon) => body.SurfaceProvider.GetTerrainAltitudeFromCenter(lat, lon);
+
+        public Vector3d SurfacePosition(double latitude, double longitude, double altitude) =>
+            body.GetWorldSurfacePosition(latitude, longitude, altitude, body.coordinateSystem);
+        
         public KSPOrbitModule.IOrbit CreateOrbit(Vector3d position, Vector3d velocity, double ut) {
             PatchedConicsOrbit orbit = new PatchedConicsOrbit(body.universeModel);
             

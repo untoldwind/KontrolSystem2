@@ -34,6 +34,64 @@ enabled | bool |
 mode | string | 
 target_orientation | ksp::math::Vec3 | 
 
+### EngineData
+
+
+
+#### Fields
+
+Name | Type | Description
+--- | --- | ---
+has_ignited | bool | 
+is_flameout | bool | 
+is_shutdown | bool | 
+is_staged | bool | 
+max_fuel_flow | float | 
+max_thrust_output_atm | float | 
+max_thrust_output_vac | float | 
+min_fuel_flow | float | 
+throttle_min | float | 
+
+### EngineDeltaV
+
+
+
+#### Fields
+
+Name | Type | Description
+--- | --- | ---
+engine_data | ksp::vessel::EngineData | 
+start_burn_stage | int | Number of the stage when engine is supposed to start 
+
+#### Methods
+
+##### get_ISP
+
+```rust
+enginedeltav.get_ISP ( situation : string ) -> float
+```
+
+Estimated ISP of the engine in a given `situation`
+
+
+##### get_thrust
+
+```rust
+enginedeltav.get_thrust ( situation : string ) -> float
+```
+
+Estimated thrust of the engine in a given `situation`
+
+
+##### get_thrust_vector
+
+```rust
+enginedeltav.get_thrust_vector ( situation : string ) -> ksp::math::Vec3
+```
+
+Estimated thrust vector of the engine in a given `situation`
+
+
 ### Maneuver
 
 
@@ -99,6 +157,76 @@ maneuvernode.remove ( ) -> Unit
 
 
 
+### PartModule
+
+
+
+### StageDeltaV
+
+
+
+#### Fields
+
+Name | Type | Description
+--- | --- | ---
+active_engines | ksp::vessel::EngineDeltaV[] | 
+burn_time | float | Estimated burn time of the stage. 
+dry_mass | float | Dry mass of the stage. 
+end_mass | float | End mass of the stage. 
+engines | ksp::vessel::EngineDeltaV[] | 
+fuel_mass | float | Mass of the fuel in the stage. 
+stage | int | The stage number. 
+start_mass | float | Start mass of the stage. 
+
+#### Methods
+
+##### get_deltav
+
+```rust
+stagedeltav.get_deltav ( situation : string ) -> float
+```
+
+Estimated delta-v of the stage in a given `situation`
+
+
+##### get_ISP
+
+```rust
+stagedeltav.get_ISP ( situation : string ) -> float
+```
+
+Estimated ISP of the stage in a given `situation`
+
+
+##### get_thrust
+
+```rust
+stagedeltav.get_thrust ( situation : string ) -> float
+```
+
+Estimated thrust of the stage in a given `situation`
+
+
+##### get_TWR
+
+```rust
+stagedeltav.get_TWR ( situation : string ) -> float
+```
+
+Estimated TWR of the stage in a given `situation`
+
+
+### Staging
+
+
+
+#### Fields
+
+Name | Type | Description
+--- | --- | ---
+count | int | 
+total_count | int | 
+
 ### Targetable
 
 
@@ -120,16 +248,24 @@ Represents an in-game vessel, which might be a rocket, plane, rover ... or actua
 Name | Type | Description
 --- | --- | ---
 actions | ksp::vessel::ActionGroups | 
+angular_momentum | ksp::math::Vec3 | 
 autopilot | ksp::vessel::Autopilot | 
 CoM | ksp::math::Vec3 | 
 control_status | string | 
+delta_v | ksp::vessel::VesselDeltaV | 
+geo_coordinates | ksp::orbit::GeoCoordinates | 
+heading | float | 
+horizontal_surface_speed | float | 
+main_body | ksp::orbit::Body | 
 maneuver | ksp::vessel::Maneuver | 
 mass | float | 
 name | string | The name of the vessel. 
 orbit | ksp::orbit::Orbit | 
 orbital_velocity | ksp::math::Vec3 | 
+staging | ksp::vessel::Staging | 
 surface_velocity | ksp::math::Vec3 | 
 target | Option<ksp::vessel::Targetable> | 
+vertical_surface_speed | float | 
 
 #### Methods
 
@@ -187,4 +323,46 @@ vessel.set_steering ( direction : ksp::math::Direction ) -> ksp::control::Steeri
 vessel.set_throttle ( throttle : float ) -> ksp::control::ThrottleManager
 ```
 
+
+
+### VesselDeltaV
+
+
+
+#### Fields
+
+Name | Type | Description
+--- | --- | ---
+stages | ksp::vessel::StageDeltaV[] | 
+
+#### Methods
+
+##### stage
+
+```rust
+vesseldeltav.stage ( stage : int ) -> Option<ksp::vessel::StageDeltaV>
+```
+
+Get delta-v information for a specific `stage` of the vessel, if existent.
+
+
+## Constants
+
+Name | Type | Description
+--- | --- | ---
+MODE_ANTINORMAL | string | 
+MODE_ANTITARGET | string | 
+MODE_AUTOPILOT | string | 
+MODE_MANEUVER | string | 
+MODE_NAVIGATION | string | 
+MODE_NORMAL | string | 
+MODE_PROGRADE | string | 
+MODE_RADIALIN | string | 
+MODE_RADIALOUT | string | 
+MODE_RETROGRADE | string | 
+MODE_STABILITYASSIST | string | 
+MODE_TARGET | string | 
+SITUATION_ALTITUDE | string | Used for delta-v calculation at the current altitude. 
+SITUATION_SEALEVEL | string | Used for delta-v calculation at sea level of the current body. 
+SITUATION_VACUUM | string | Used for delta-v calculation in vacuum. 
 

@@ -38,6 +38,59 @@ body.create_orbit ( position : ksp::math::Vec3,
 Create a new orbit around this body starting at a given relative `position` and `velocity` at universal time `ut`
 
 
+##### surface_normal
+
+```rust
+body.surface_normal ( latitude : float,
+                      longitude : float ) -> ksp::math::Vec3
+```
+
+Get the surface normal at a `latitude` and `longitude` (i.e. the vector pointing up at this geo coordinate
+
+
+##### surface_position
+
+```rust
+body.surface_position ( latitude : float,
+                        longitude : float,
+                        altitude : float ) -> ksp::math::Vec3
+```
+
+
+
+##### terrain_height
+
+```rust
+body.terrain_height ( lat : float,
+                      lon : float ) -> float
+```
+
+
+
+### GeoCoordinates
+
+
+
+#### Fields
+
+Name | Type | Description
+--- | --- | ---
+body | ksp::orbit::Body | 
+latitude | float | 
+longitude | float | 
+surface_normal | ksp::math::Vec3 | 
+terrain_height | float | 
+
+#### Methods
+
+##### altitude_position
+
+```rust
+geocoordinates.altitude_position ( altitude : float ) -> ksp::math::Vec3
+```
+
+
+
 ### Orbit
 
 Represents an in-game orbit.

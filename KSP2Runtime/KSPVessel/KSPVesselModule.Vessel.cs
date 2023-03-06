@@ -46,6 +46,8 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField] public StagingAdapter Staging => staging;
 
+            [KSField] public KSPOrbitModule.IBody MainBody => new BodyWrapper(context, vessel.mainBody);
+
             [KSField] public KSPOrbitModule.IOrbit Orbit => new OrbitWrapper(context, vessel.Orbit);
 
             [KSField] public Vector3d OrbitalVelocity => vessel.OrbitalVelocity.vector;
@@ -64,6 +66,9 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             
             [KSField] public Vector3d AngularMomentum => vessel.AngularVelocity.relativeAngularVelocity.vector;
 
+            [KSField]
+            public KSPOrbitModule.GeoCoordinates GeoCoordinates => new KSPOrbitModule.GeoCoordinates(MainBody, vessel.Latitude, vessel.Longitude);
+            
             [KSField]
             public Option<IKSPTargetable> Target {
                 get {
