@@ -1,0 +1,32 @@
+{
+  "name": "to2-syntax",
+  "displayName": "to2-syntax",
+  "description": "",
+  "version": "0.0.1",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.76.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "private": true,
+  "icon": "assets/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/untoldwind/KontrolSystem2"
+  },
+  "contributes": {
+    "languages": [{
+      "id": "to2",
+      "aliases": ["TO2", "to2"],
+      "extensions": [".to2"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "to2",
+      "scopeName": "source.to2",
+      "path": "./syntaxes/to2.tmLanguage.json"
+    }]
+  }
+}

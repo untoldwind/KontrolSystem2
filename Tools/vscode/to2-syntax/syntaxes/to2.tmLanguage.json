@@ -1,0 +1,187 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "TO2",
+	"patterns": [
+		{
+			"include": "#comment"
+		},
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#constant"
+		},
+		{
+			"include": "#operator"
+		},
+		{
+			"include": "#punctuation"
+		},
+		{
+			"include": "#entity"
+		},
+		{
+			"include": "#storage"
+		},
+		{
+			"include": "#variable"
+		}
+	],
+	"repository": {
+		"comment": {
+			"patterns": [
+				{
+					"name": "comment.block.to2",
+					"begin": "/\\*",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.comment.begin.to2"
+						}
+					},
+					"end": "\\*/",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.comment.end.to2"
+						}
+					}
+				},
+				{
+					"begin": "//",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.comment.to2"
+						}
+					},
+					"end": "(\n)",
+					"name": "comment.line.double-slash.to2"
+				}
+			]
+		},
+		"keywords": {
+			"patterns": [
+				{
+					"name": "keyword.control.to2",
+					"match": "\\b(if|while|return|break|continue|else|for)\\b"
+				},
+				{
+					"name": "keyword.other.to2",
+					"match": "\\b(use|from|in|as)\\b"
+				},
+				{
+					"name": "keyword.type.to2",
+					"match": "\\b(bool|int|float|string|Unit)\\b"
+				}
+			]
+		},
+		"operator": {
+			"patterns": [
+				{
+					"match": "%|/|-|\\+|\\*",
+					"name": "keyword.operator.to2"
+				},
+				{
+					"match": "!=|<=|>=|==|<|>",
+					"name": "keyword.operator.comparison.to2"
+				},
+				{
+					"match": "&&|\\|\\|",
+					"name": "keyword.operator.logical.to2"
+				}			]
+		},
+		"strings": {
+			"name": "string.quoted.double.to2",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.to2",
+					"match": "\\\\."
+				}
+			]
+		},
+		"constant": {
+			"patterns": [
+				{
+					"match": "\\b(EOF|NULL|true|false|TRUE|FALSE)\\b",
+					"name": "constant.language.to2"
+				},
+				{
+					"match": "\\b((0(x|X)[0-9a-fA-F]([0-9a-fA-F']*[0-9a-fA-F])?)|(0(b|B)[01]([01']*[01])?)|(([0-9]([0-9']*[0-9])?\\.?[0-9]*([0-9']*[0-9])?)|(\\.[0-9]([0-9']*[0-9])?))((e|E)(\\+|-)?[0-9]([0-9']*[0-9])?)?)(L|l|UL|ul|u|U|F|f|ll|LL|ull|ULL)?\\b",
+					"name": "constant.numeric.to2"
+				}
+			]
+		},
+		"punctuation": {
+			"patterns": [
+				{
+					"match": ",",
+					"name": "punctuation.separator.delimiter.to2"
+				}
+			]
+		},
+		"entity": {
+			"patterns": [
+				{
+					"match": "(?<=fn )([a-zA-Z][a-zA-Z0-9_]+)",
+					"name": "entity.name.function.to2"
+				},
+				{
+					"match": "(?<=from )([a-zA-Z0-9_\\:]+)",
+					"name": "entity.name.type.module.to2"
+				}
+			]
+		},
+		"storage": {
+			"patterns": [
+				{
+					"name": "storage.modifier.visibility.to2",
+					"match": "\\b(pub|test)\\b"
+				},
+				{
+					"name": "storage.type.function.to2",
+					"match": "\\b(fn|sync)\\b"
+				},
+				{
+					"name": "storage.type.variable.to2",
+					"match": "\\b(let|const)\\b"
+				}
+			]
+		},
+		"variable": {
+			"patterns": [
+				{
+					"match": "(?<=let )([a-zA-Z_][a-zA-Z0-9_]*)",
+					"name": "entity.name.variable.to2"
+				},
+				{
+					"match": "(?<=const )([a-zA-Z_][a-zA-Z0-9_]*)",
+					"name": "entity.name.variable.to2"
+				},
+				{
+					"match": "(?<=\\: )([a-zA-Z_][a-zA-Z0-9_]*)",
+					"name": "entity.name.type.to2"
+				},
+				{
+					"match": "(?<=\\-> )([a-zA-Z_][a-zA-Z0-9_]*)",
+					"name": "entity.name.type.to2"
+				},
+				{
+					"match": "([a-zA-Z_][a-zA-Z0-9_]*)\\s*\\(",
+					"name": "entity.name.function.to2"
+				},
+				{
+					"match": "(?<=\\.)([a-zA-Z_][a-zA-Z0-9_]*)",
+					"name": "entity.name.property.to2"
+				},
+				{
+					"match": "[a-zA-Z_][a-zA-Z0-9_]*",
+					"name": "variable.other.to2"
+				}
+			]
+		}
+	},
+	"scopeName": "source.to2"
+}
