@@ -249,10 +249,12 @@ Name | Type | Description
 --- | --- | ---
 actions | ksp::vessel::ActionGroups | 
 angular_momentum | ksp::math::Vec3 | 
+angular_velocity | ksp::math::Vec3 | 
 autopilot | ksp::vessel::Autopilot | 
 CoM | ksp::math::Vec3 | 
 control_status | string | 
 delta_v | ksp::vessel::VesselDeltaV | 
+facing | ksp::math::Direction | 
 geo_coordinates | ksp::orbit::GeoCoordinates | 
 heading | float | 
 horizontal_surface_speed | float | 
