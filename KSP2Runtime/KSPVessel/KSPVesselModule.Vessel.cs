@@ -65,7 +65,9 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField] public double VerticalSurfaceSpeed => vessel.VerticalSrfSpeed;
             
 
-            [KSField] public Vector3d AngularMomentum => vessel.AngularVelocity.relativeAngularVelocity.vector;
+            [KSField] public Vector3d AngularMomentum => vessel.angularMomentum.relativeAngularVelocity.vector;
+
+            [KSField] public Vector3d AngularVelocity => vessel.AngularVelocity.relativeAngularVelocity.vector;
 
             [KSField]
             public KSPOrbitModule.GeoCoordinates GeoCoordinates => new KSPOrbitModule.GeoCoordinates(MainBody, vessel.Latitude, vessel.Longitude);

@@ -14,9 +14,8 @@ namespace KontrolSystem.KSP.Runtime {
                 BindingGenerator.BindModule(typeof(KSPConsole.KSPConsoleModule)));
             registry.RegisterModule(
                 BindingGenerator.BindModule(typeof(KSPGame.KSPGameModule)));
-/*            registry.RegisterModule(
+            registry.RegisterModule(
                 BindingGenerator.BindModule(typeof(KSPGame.KSPGameWarpModule)));
-                */
             registry.RegisterModule(
                 BindingGenerator.BindModule(typeof(KSPOrbit.KSPOrbitModule)));
             registry.RegisterModule(

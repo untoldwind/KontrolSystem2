@@ -1,6 +1,7 @@
 ﻿using System;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
+using KSP.Sim.impl;
 using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime.KSPGame {

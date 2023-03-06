@@ -1,4 +1,5 @@
-﻿using KontrolSystem.KSP.Runtime.KSPOrbit;
+﻿using System.Collections.Generic;
+using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.TO2.Binding;
 using KSP.Sim.Maneuver;
 
@@ -65,7 +66,8 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSMethod]
             public void Remove() {
-                vesselAdapter.vessel.SimulationObject.ManeuverPlan.RemoveNode(maneuverNode, false);
+                vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.RemoveNodesFromVessel(vesselAdapter.vessel.GlobalId, new List<ManeuverNodeData>() { maneuverNode });
+//                vesselAdapter.vessel.SimulationObject.ManeuverPlan.RemoveNode(maneuverNode, false);
             }
 
             private void UpdateNode(double radialOut, double normal, double prograde, double ut) {

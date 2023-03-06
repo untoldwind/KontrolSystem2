@@ -2,6 +2,7 @@ use { Vessel } from ksp::vessel
 use { CONSOLE } from ksp::console
 use { circularize_orbit } from std::maneuvers
 use { estimate_burn_time } from std::vac
+use { remove_all_nodes } from std::utils
 
 pub fn main_flight(vessel: Vessel) -> Result<Unit, string> = {
     CONSOLE.clear()
@@ -14,5 +15,7 @@ pub fn main_flight(vessel: Vessel) -> Result<Unit, string> = {
 
     CONSOLE.print_line("Burntime: " + burn_time.to_string() + " " + half_burn_time.to_string())
 
+    remove_all_nodes(vessel)
+    
     vessel.maneuver.add_burn_vector(UT - half_burn_time, delta_v)?
 }

@@ -52,8 +52,8 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                     Vector3d.Dot(orbit.NormalPlus(ut), burnVector),
                     Vector3d.Dot(orbit.Prograde(ut), burnVector)
                 );
-                
-                maneuverPlan.AddNode(maneuverNodeData);
+                vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.AddNodeToVessel(maneuverNodeData);
+//                maneuverPlan.AddNode(maneuverNodeData);
 
                 return Result.Ok<ManeuverNodeAdapter, string>(new ManeuverNodeAdapter(vesselAdapter, maneuverNodeData));
             }

@@ -10,6 +10,10 @@ Functions are the bread and butter of every programming language, so we are tryi
 fn the_function_name(param1: type1, param2: type2) -> return_type = {
     ... the implementation ...
 }
+
+// or
+
+fn the_function_name(param1: type1, param2: type2) -> return_type = some_expression
 ```
 
 as mentioned in the intro, this defines an asynchronous function that is safe to use (i.e. does not block the current thread).
@@ -20,6 +24,10 @@ If best performance is required (e.g. for some numerical stuff), it is also poss
 sync fn the_function_name(param1: type1, param2: type2) -> return_type = {
     ... the implementation ...
 }
+
+// or
+
+sync fn the_function_name(param1: type1, param2: type2) -> return_type = some_expression
 ```
 NOTE: Be somewhat careful with potentially long running loops here as it might impact the game.
 
@@ -49,15 +57,11 @@ pub fn print_hello() -> Unit = {
 is a public function `print_hello` with no parameters and no return value that prints "Hello world" to the console.
 
 ```rust
-fn add_three(a : int, b : float, c : float) -> float = {
-    a.to_float() + b + c
-}
+fn add_three(a : int, b : float, c : float) -> float = a.to_float + b + c
 ```
 is a local function `add_three` that takes an integer and two floats, adds them all up and returns a float.
 
-NOTE 1: The result of the final expression of a function is implicitly the result of the function (i.e. a `return` is not necessary)
-
-NOTE 2: Adding an integer with a float is not allowed, i.e. the integer has to be explicitly converted to a float first via `.to_float()`. This prevents any ambiguity of implicit type conversion.
+NOTE: Adding an integer with a float is not allowed, i.e. the integer has to be explicitly converted to a float first via `.to_float()`. This prevents any ambiguity of implicit type conversion.
 
 ## Lamdbas (anonymous functions)
 
@@ -74,7 +78,7 @@ Note that lambdas are synchronous by default. Currently there is no support for 
 ### Examples
 
 ```rust
-const add_three_lambda = fn(a : int, b : float, c : float) -> a.to_float() + b + c
+const add_three_lambda = fn(a : int, b : float, c : float) -> a.to_float + b + c
 ```
 the `add_three` function written as a lambda expression.
 

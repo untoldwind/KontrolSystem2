@@ -1,20 +1,14 @@
 use { Vessel, MODE_AUTOPILOT } from ksp::vessel
 use { CONSOLE } from ksp::console
 use { sleep, current_time } from ksp::game
+use { warp_to } from ksp::game::warp
+use { remove_all_nodes } from std::utils
 
 pub fn main_flight(vessel: Vessel) -> Result<Unit, string> = {
     CONSOLE.clear()
+    remove_all_nodes(vessel)
 
-    for(i in 0..40) {
-        sleep(1)
+    let ut = current_time()
 
-        let ut = current_time()
-
-        let vel = vessel.orbit.orbital_velocity(ut)
-
-        CONSOLE.print_line("P: " + vessel.orbit.prograde(ut).to_string())
-        CONSOLE.print_line("R: " + vessel.orbit.radial_plus(ut).to_string())
-        CONSOLE.print_line("N: " + vessel.orbit.normal_plus(ut).to_string())
-        CONSOLE.print_line("V2: " + vessel.facing.vector.to_string())
-    }
+    warp_to(ut + 3600)
 }
