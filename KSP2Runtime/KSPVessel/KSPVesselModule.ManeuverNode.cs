@@ -1,6 +1,5 @@
 ﻿using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.TO2.Binding;
-using KSP.Sim.impl;
 using KSP.Sim.Maneuver;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel {

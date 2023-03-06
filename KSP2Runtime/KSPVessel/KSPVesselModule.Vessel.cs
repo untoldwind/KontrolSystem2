@@ -51,12 +51,19 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField] public double Mass => vessel.totalMass;
             
             [KSField("CoM")] public Vector3d CoM => vessel.CenterOfMass.localPosition;
+
+            [KSField] public double Heading => vessel.Heading;
             
+            [KSField] public double HorizontalSurfaceSpeed => vessel.HorizontalSrfSpeed;
+
+            [KSField] public double VerticalSurfaceSpeed => vessel.VerticalSrfSpeed;
+            
+            [KSField] public Vector3d AngularMomentum => vessel.AngularVelocity.relativeAngularVelocity.vector;
+
             [KSField]
             public Option<IKSPTargetable> Target {
                 get {
                     SimulationObjectModel target = vessel.TargetObject;
-                    
                     if (target != null) {
                         VesselComponent vessel = target.Vessel;
                         CelestialBodyComponent body = target.CelestialBody;
