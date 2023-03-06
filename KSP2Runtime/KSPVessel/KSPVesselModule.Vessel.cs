@@ -73,10 +73,10 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField]
             public Direction Facing {
                 get {
-                    QuaternionD vesselRotation = vessel.ControlTransform.localRotation;
+                    QuaternionD vesselRotation = vessel.transform.GetSimSOIBodyParentTransformFrame()
+                        .ToLocalRotation(vessel.ControlTransform.bodyFrame, QuaternionD.identity);
                     QuaternionD vesselFacing = QuaternionD.Inverse(QuaternionD.Euler(90, 0, 0) *
-                                                                   QuaternionD.Inverse(vesselRotation) *
-                                                                   QuaternionD.identity);
+                                                                   QuaternionD.Inverse(vesselRotation));
                     return new Direction(vesselFacing);
                 }
             }

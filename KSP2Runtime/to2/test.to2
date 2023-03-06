@@ -12,7 +12,9 @@ pub fn main_flight(vessel: Vessel) -> Result<Unit, string> = {
 
         let vel = vessel.orbit.orbital_velocity(ut)
 
-        CONSOLE.print_line("V1: " + vel.normalized.to_string())
+        CONSOLE.print_line("P: " + vessel.orbit.prograde(ut).to_string())
+        CONSOLE.print_line("R: " + vessel.orbit.radial_plus(ut).to_string())
+        CONSOLE.print_line("N: " + vessel.orbit.normal_plus(ut).to_string())
         CONSOLE.print_line("V2: " + vessel.facing.vector.to_string())
     }
 }
