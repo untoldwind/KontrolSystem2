@@ -1,18 +1,16 @@
----
-title: "ksp::orbit"
----
+# ksp::orbit
 
 
 
-# Types
+## Types
 
 
-## Body
+### Body
 
 Represents an in-game celestial body.
 
 
-### Fields
+#### Fields
 
 Name | Type | Description
 --- | --- | ---
@@ -27,9 +25,9 @@ rotation_period | float | Rotation period of the planet.
 SOI_radius | float | Radius of the sphere of influence of the body 
 up | ksp::math::Vec3 | 
 
-### Methods
+#### Methods
 
-#### create_orbit
+##### create_orbit
 
 ```rust
 body.create_orbit ( position : ksp::math::Vec3,
@@ -40,12 +38,12 @@ body.create_orbit ( position : ksp::math::Vec3,
 Create a new orbit around this body starting at a given relative `position` and `velocity` at universal time `ut`
 
 
-## Orbit
+### Orbit
 
 Represents an in-game orbit.
 
 
-### Fields
+#### Fields
 
 Name | Type | Description
 --- | --- | ---
@@ -65,9 +63,9 @@ period | float | Orbital period.
 reference_body | ksp::orbit::Body | The celestial body the orbit is referenced on. 
 semi_major_axis | float | Semi major axis of the orbit. 
 
-### Methods
+#### Methods
 
-#### absolute_position
+##### absolute_position
 
 ```rust
 orbit.absolute_position ( ut : float ) -> ksp::math::Vec3
@@ -76,7 +74,7 @@ orbit.absolute_position ( ut : float ) -> ksp::math::Vec3
 Get the absolute position at a given universal time `ut`
 
 
-#### get_eccentric_anomaly_at_true_anomaly
+##### get_eccentric_anomaly_at_true_anomaly
 
 ```rust
 orbit.get_eccentric_anomaly_at_true_anomaly ( trueAnomaly : float ) -> float
@@ -84,7 +82,7 @@ orbit.get_eccentric_anomaly_at_true_anomaly ( trueAnomaly : float ) -> float
 
 
 
-#### get_mean_anomaly_at_eccentric_anomaly
+##### get_mean_anomaly_at_eccentric_anomaly
 
 ```rust
 orbit.get_mean_anomaly_at_eccentric_anomaly ( ecc : float ) -> float
@@ -92,7 +90,7 @@ orbit.get_mean_anomaly_at_eccentric_anomaly ( ecc : float ) -> float
 
 
 
-#### horizontal
+##### horizontal
 
 ```rust
 orbit.horizontal ( ut : float ) -> ksp::math::Vec3
@@ -100,7 +98,7 @@ orbit.horizontal ( ut : float ) -> ksp::math::Vec3
 
 
 
-#### mean_anomaly_at_ut
+##### mean_anomaly_at_ut
 
 ```rust
 orbit.mean_anomaly_at_ut ( ut : float ) -> float
@@ -108,7 +106,7 @@ orbit.mean_anomaly_at_ut ( ut : float ) -> float
 
 
 
-#### next_apoapsis_time
+##### next_apoapsis_time
 
 ```rust
 orbit.next_apoapsis_time ( ut : Option<float> ) -> Result<float, string>
@@ -116,7 +114,7 @@ orbit.next_apoapsis_time ( ut : Option<float> ) -> Result<float, string>
 
 
 
-#### next_periapsis_time
+##### next_periapsis_time
 
 ```rust
 orbit.next_periapsis_time ( ut : Option<float> ) -> float
@@ -124,7 +122,7 @@ orbit.next_periapsis_time ( ut : Option<float> ) -> float
 
 
 
-#### next_time_of_radius
+##### next_time_of_radius
 
 ```rust
 orbit.next_time_of_radius ( ut : float,
@@ -133,7 +131,7 @@ orbit.next_time_of_radius ( ut : float,
 
 
 
-#### normal_plus
+##### normal_plus
 
 ```rust
 orbit.normal_plus ( ut : float ) -> ksp::math::Vec3
@@ -141,7 +139,7 @@ orbit.normal_plus ( ut : float ) -> ksp::math::Vec3
 
 
 
-#### orbital_velocity
+##### orbital_velocity
 
 ```rust
 orbit.orbital_velocity ( ut : float ) -> ksp::math::Vec3
@@ -149,7 +147,7 @@ orbit.orbital_velocity ( ut : float ) -> ksp::math::Vec3
 
 
 
-#### perturbed_orbit
+##### perturbed_orbit
 
 ```rust
 orbit.perturbed_orbit ( ut : float,
@@ -158,7 +156,7 @@ orbit.perturbed_orbit ( ut : float,
 
 
 
-#### prograde
+##### prograde
 
 ```rust
 orbit.prograde ( ut : float ) -> ksp::math::Vec3
@@ -166,7 +164,7 @@ orbit.prograde ( ut : float ) -> ksp::math::Vec3
 
 
 
-#### radial_plus
+##### radial_plus
 
 ```rust
 orbit.radial_plus ( ut : float ) -> ksp::math::Vec3
@@ -174,7 +172,7 @@ orbit.radial_plus ( ut : float ) -> ksp::math::Vec3
 
 
 
-#### radius
+##### radius
 
 ```rust
 orbit.radius ( ut : float ) -> float
@@ -182,7 +180,7 @@ orbit.radius ( ut : float ) -> float
 
 
 
-#### relative_position
+##### relative_position
 
 ```rust
 orbit.relative_position ( ut : float ) -> ksp::math::Vec3
@@ -190,7 +188,7 @@ orbit.relative_position ( ut : float ) -> ksp::math::Vec3
 
 
 
-#### synodic_period
+##### synodic_period
 
 ```rust
 orbit.synodic_period ( other : ksp::orbit::Orbit ) -> float
@@ -198,7 +196,7 @@ orbit.synodic_period ( other : ksp::orbit::Orbit ) -> float
 
 
 
-#### time_of_true_anomaly
+##### time_of_true_anomaly
 
 ```rust
 orbit.time_of_true_anomaly ( trueAnomaly : float,
@@ -207,7 +205,7 @@ orbit.time_of_true_anomaly ( trueAnomaly : float,
 
 
 
-#### true_anomaly_at_radius
+##### true_anomaly_at_radius
 
 ```rust
 orbit.true_anomaly_at_radius ( radius : float ) -> float
@@ -215,7 +213,7 @@ orbit.true_anomaly_at_radius ( radius : float ) -> float
 
 
 
-#### u_t_at_mean_anomaly
+##### u_t_at_mean_anomaly
 
 ```rust
 orbit.u_t_at_mean_anomaly ( meanAnomaly : float,
@@ -224,7 +222,7 @@ orbit.u_t_at_mean_anomaly ( meanAnomaly : float,
 
 
 
-#### up
+##### up
 
 ```rust
 orbit.up ( ut : float ) -> ksp::math::Vec3
@@ -232,10 +230,10 @@ orbit.up ( ut : float ) -> ksp::math::Vec3
 
 
 
-# Functions
+## Functions
 
 
-## find_body
+### find_body
 
 ```rust
 pub sync fn find_body ( name : string ) -> Result<ksp::orbit::Body, string>

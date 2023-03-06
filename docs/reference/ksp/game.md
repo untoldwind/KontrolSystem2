@@ -1,14 +1,12 @@
----
-title: "ksp::game"
----
+# ksp::game
 
 Collection to game and runtime related functions.
 
 
-# Functions
+## Functions
 
 
-## current_time
+### current_time
 
 ```rust
 pub sync fn current_time ( ) -> float
@@ -17,7 +15,7 @@ pub sync fn current_time ( ) -> float
 Get the current universal time (UT) in seconds from start.
 
 
-## sleep
+### sleep
 
 ```rust
 pub fn sleep ( seconds : float ) -> Unit
@@ -26,7 +24,7 @@ pub fn sleep ( seconds : float ) -> Unit
 Stop execution of given number of seconds (factions of a seconds are supported as well).
 
 
-## wait_until
+### wait_until
 
 ```rust
 pub fn wait_until ( predicate : fn() -> bool ) -> Unit
@@ -35,7 +33,7 @@ pub fn wait_until ( predicate : fn() -> bool ) -> Unit
 Stop execution until a given condition is met.
 
 
-## wait_while
+### wait_while
 
 ```rust
 pub fn wait_while ( predicate : fn() -> bool ) -> Unit
@@ -44,7 +42,7 @@ pub fn wait_while ( predicate : fn() -> bool ) -> Unit
 Stop execution as long as a given condition is met.
 
 
-## yield
+### yield
 
 ```rust
 pub fn yield ( ) -> Unit

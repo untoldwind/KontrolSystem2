@@ -1,6 +1,4 @@
----
-title: "ksp::console"
----
+# ksp::console
 
 Provides functions to interact with the in-game KontrolSystem Console. As of now the console is output- and monochrome-only, this might change in the future.
 
@@ -8,24 +6,24 @@ Additionally there is support for displaying popup messages on the HUD.
 
 
 
-# Types
+## Types
 
 
-## Console
+### Console
 
 Representation of a console
 
 
-### Fields
+#### Fields
 
 Name | Type | Description
 --- | --- | ---
 cursor_col | int | 
 cursor_row | int | 
 
-### Methods
+#### Methods
 
-#### clear
+##### clear
 
 ```rust
 console.clear ( ) -> Unit
@@ -34,7 +32,7 @@ console.clear ( ) -> Unit
 Clear the console of all its content and move cursor to (0, 0).
 
 
-#### clear_line
+##### clear_line
 
 ```rust
 console.clear_line ( row : int ) -> Unit
@@ -43,7 +41,7 @@ console.clear_line ( row : int ) -> Unit
 Clear a line
 
 
-#### move_cursor
+##### move_cursor
 
 ```rust
 console.move_cursor ( row : int,
@@ -53,7 +51,7 @@ console.move_cursor ( row : int,
 Move the cursor to a give `row` and `column`.
 
 
-#### print
+##### print
 
 ```rust
 console.print ( message : string ) -> Unit
@@ -62,7 +60,7 @@ console.print ( message : string ) -> Unit
 Print a message at the current cursor position (and move cursor forward)
 
 
-#### print_at
+##### print_at
 
 ```rust
 console.print_at ( row : int,
@@ -73,7 +71,7 @@ console.print_at ( row : int,
 Moves the cursor to the specified position, prints the message and restores the previous cursor position
 
 
-#### print_line
+##### print_line
 
 ```rust
 console.print_line ( message : string ) -> Unit
@@ -82,12 +80,12 @@ console.print_line ( message : string ) -> Unit
 Print a message at the current cursor position and move cursor to the beginning of the next line.
 
 
-## RgbaColor
+### RgbaColor
 
 Interface color with alpha channel.
 
 
-### Fields
+#### Fields
 
 Name | Type | Description
 --- | --- | ---
@@ -96,7 +94,7 @@ blue | float |
 green | float | 
 red | float | 
 
-# Constants
+## Constants
 
 Name | Type | Description
 --- | --- | ---
@@ -108,10 +106,10 @@ RED | ksp::console::RgbaColor | Color red
 YELLOW | ksp::console::RgbaColor | Color yellow 
 
 
-# Functions
+## Functions
 
 
-## color
+### color
 
 ```rust
 pub sync fn color ( red : float,

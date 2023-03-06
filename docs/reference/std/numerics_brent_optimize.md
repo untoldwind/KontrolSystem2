@@ -1,13 +1,11 @@
----
-title: "std::numerics::brent_optimize"
----
+# std::numerics::brent_optimize
 
 
 
-# Functions
+## Functions
 
 
-## brent_optimize
+### brent_optimize
 
 ```rust
 pub sync fn brent_optimize ( func : fn(float) -> float,

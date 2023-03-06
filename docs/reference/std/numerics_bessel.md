@@ -1,13 +1,11 @@
----
-title: "std::numerics::bessel"
----
+# std::numerics::bessel
 
 
 
-# Functions
+## Functions
 
 
-## J0
+### J0
 
 ```rust
 pub sync fn J0 ( x : float ) -> float
@@ -15,7 +13,7 @@ pub sync fn J0 ( x : float ) -> float
 
 
 
-## J1
+### J1
 
 ```rust
 pub sync fn J1 ( x : float ) -> float

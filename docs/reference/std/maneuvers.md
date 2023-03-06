@@ -1,13 +1,11 @@
----
-title: "std::maneuvers"
----
+# std::maneuvers
 
 
 
-# Functions
+## Functions
 
 
-## bi_impulsive_transfer
+### bi_impulsive_transfer
 
 ```rust
 pub sync fn bi_impulsive_transfer ( start : ksp::orbit::Orbit,
@@ -23,7 +21,7 @@ acceleration and deacceleration.
 Will result in an error if maneuver nodes cannot be created
 (e.g. because command or tracking facility has not been sufficiently upgraded)
 
-## bi_impulsive_transfer_body
+### bi_impulsive_transfer_body
 
 ```rust
 pub sync fn bi_impulsive_transfer_body ( start : ksp::orbit::Orbit,
@@ -34,7 +32,7 @@ pub sync fn bi_impulsive_transfer_body ( start : ksp::orbit::Orbit,
 
 
 
-## bi_impulsive_transfer_near
+### bi_impulsive_transfer_near
 
 ```rust
 pub sync fn bi_impulsive_transfer_near ( start : ksp::orbit::Orbit,
@@ -47,7 +45,7 @@ Calculate delta-v to intercept a `target` orbit starting nearly at time `UT` wit
 a nearly transfer time of `TT`. `UT` and `TT` will be optimized for a minimal delta-v for
 acceleration and deacceleration.
 
-## change_apoapsis
+### change_apoapsis
 
 ```rust
 pub sync fn change_apoapsis ( orbit : ksp::orbit::Orbit,
@@ -58,7 +56,7 @@ pub sync fn change_apoapsis ( orbit : ksp::orbit::Orbit,
 Calculate the required delta-v to change the apoapsis of an `orbit`
 to `apoapsis_radius` at time `UT`
 
-## change_periapsis
+### change_periapsis
 
 ```rust
 pub sync fn change_periapsis ( orbit : ksp::orbit::Orbit,
@@ -69,7 +67,7 @@ pub sync fn change_periapsis ( orbit : ksp::orbit::Orbit,
 Calculate the required delta-v to change the periapsis of an `orbit`
 to `periapsis_radius` at time `UT`
 
-## circularize_orbit
+### circularize_orbit
 
 ```rust
 pub sync fn circularize_orbit ( orbit : ksp::orbit::Orbit ) -> Result<(delta_v : ksp::math::Vec3, UT : float), string>
@@ -79,7 +77,7 @@ Calculate the required delta-v and time to change the given `orbit`
 to a (mostly) circular orbit at the next apoapsis (if `orbit` is elliplic)
 or periapsis (if `orbit` is hyperbolic).
 
-## circularize_orbit_at
+### circularize_orbit_at
 
 ```rust
 pub sync fn circularize_orbit_at ( orbit : ksp::orbit::Orbit,
@@ -89,7 +87,7 @@ pub sync fn circularize_orbit_at ( orbit : ksp::orbit::Orbit,
 Calculate the required delta-v to change the given `orbit`
 to a (mostly) circular orbit at a given universal time `UT`.
 
-## course_correction_body
+### course_correction_body
 
 ```rust
 pub sync fn course_correction_body ( start : ksp::orbit::Orbit,
@@ -100,7 +98,7 @@ pub sync fn course_correction_body ( start : ksp::orbit::Orbit,
 
 
 
-## ellipticize
+### ellipticize
 
 ```rust
 pub sync fn ellipticize ( orbit : ksp::orbit::Orbit,
@@ -112,7 +110,7 @@ pub sync fn ellipticize ( orbit : ksp::orbit::Orbit,
 Calculate the required delta-v to change the `apoapsis` and `periapsis` of the given `orbit`
 at time `UT`.
 
-## intercept_at
+### intercept_at
 
 ```rust
 pub sync fn intercept_at ( start : ksp::orbit::Orbit,
@@ -125,7 +123,7 @@ pub sync fn intercept_at ( start : ksp::orbit::Orbit,
 Calculate required delta-v to intercept `target` orbit at time `target_UT` from `start` orbit at time `start_UT`.
 `offset_distance` may be used to define a desired distance to the target.
 
-## next_closest_approach_time
+### next_closest_approach_time
 
 ```rust
 pub sync fn next_closest_approach_time ( start : ksp::orbit::Orbit,

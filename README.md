@@ -2,7 +2,7 @@
 
 A scripting framework for autopilots in Kerbal Space Programm 2.
 
-This is the successor of [KontrolSystem](https://github.com/untoldwind/KontrolSystem) which in turn was (supposed to by) the spiritual successor of the wonderful [KOS](https://github.com/KSP-KOS/KOS) mod.
+This is the successor of [KontrolSystem](https://github.com/untoldwind/KontrolSystem) which in turn was (supposed to by) the spiritual offspring of the wonderful [KOS](https://github.com/KSP-KOS/KOS) mod.
 
 ## Installation
 

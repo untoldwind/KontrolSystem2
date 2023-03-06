@@ -1,13 +1,11 @@
----
-title: "std::numerics::amoeba_optimize"
----
+# std::numerics::amoeba_optimize
 
 
 
-# Functions
+## Functions
 
 
-## amoeba_optimize
+### amoeba_optimize
 
 ```rust
 pub sync fn amoeba_optimize ( func : fn(float, float) -> float,
@@ -18,7 +16,7 @@ pub sync fn amoeba_optimize ( func : fn(float, float) -> float,
 
 
 
-## amoeba_optimize_perturbation
+### amoeba_optimize_perturbation
 
 ```rust
 pub sync fn amoeba_optimize_perturbation ( func : fn(float, float) -> float,

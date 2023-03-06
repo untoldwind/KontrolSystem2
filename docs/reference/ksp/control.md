@@ -1,17 +1,15 @@
----
-title: "ksp::control"
----
+# ksp::control
 
 
 
-# Types
+## Types
 
 
-## MovingAverage
+### MovingAverage
 
 
 
-### Fields
+#### Fields
 
 Name | Type | Description
 --- | --- | ---
@@ -20,9 +18,9 @@ mean_diff | float |
 sample_limit | int | 
 value_count | int | 
 
-### Methods
+#### Methods
 
-#### reset
+##### reset
 
 ```rust
 movingaverage.reset ( ) -> Unit
@@ -30,7 +28,7 @@ movingaverage.reset ( ) -> Unit
 
 
 
-#### update
+##### update
 
 ```rust
 movingaverage.update ( sampleTime : float,
@@ -39,11 +37,11 @@ movingaverage.update ( sampleTime : float,
 
 
 
-## PIDLoop
+### PIDLoop
 
 
 
-### Fields
+#### Fields
 
 Name | Type | Description
 --- | --- | ---
@@ -64,9 +62,9 @@ output | float |
 p_term | float | 
 setpoint | float | 
 
-### Methods
+#### Methods
 
-#### reset_i
+##### reset_i
 
 ```rust
 pidloop.reset_i ( ) -> Unit
@@ -74,7 +72,7 @@ pidloop.reset_i ( ) -> Unit
 
 
 
-#### update
+##### update
 
 ```rust
 pidloop.update ( sampleTime : float,
@@ -83,19 +81,19 @@ pidloop.update ( sampleTime : float,
 
 
 
-## RCSTranslateManager
+### RCSTranslateManager
 
 
 
-### Fields
+#### Fields
 
 Name | Type | Description
 --- | --- | ---
 translate | ksp::math::Vec3 | 
 
-### Methods
+#### Methods
 
-#### release
+##### release
 
 ```rust
 rcstranslatemanager.release ( ) -> Unit
@@ -103,7 +101,7 @@ rcstranslatemanager.release ( ) -> Unit
 
 
 
-#### resume
+##### resume
 
 ```rust
 rcstranslatemanager.resume ( ) -> Unit
@@ -111,7 +109,7 @@ rcstranslatemanager.resume ( ) -> Unit
 
 
 
-#### set_translate_provider
+##### set_translate_provider
 
 ```rust
 rcstranslatemanager.set_translate_provider ( newTranslateProvider : fn() -> ksp::math::Vec3 ) -> Unit
@@ -119,11 +117,11 @@ rcstranslatemanager.set_translate_provider ( newTranslateProvider : fn() -> ksp:
 
 
 
-## SteeringManager
+### SteeringManager
 
 
 
-### Fields
+#### Fields
 
 Name | Type | Description
 --- | --- | ---
@@ -143,9 +141,9 @@ yaw_torque_adjust | float |
 yaw_torque_factor | float | 
 yaw_ts | float | 
 
-### Methods
+#### Methods
 
-#### release
+##### release
 
 ```rust
 steeringmanager.release ( ) -> Unit
@@ -153,7 +151,7 @@ steeringmanager.release ( ) -> Unit
 
 
 
-#### reset_to_default
+##### reset_to_default
 
 ```rust
 steeringmanager.reset_to_default ( ) -> Unit
@@ -161,7 +159,7 @@ steeringmanager.reset_to_default ( ) -> Unit
 
 
 
-#### resume
+##### resume
 
 ```rust
 steeringmanager.resume ( ) -> Unit
@@ -169,7 +167,7 @@ steeringmanager.resume ( ) -> Unit
 
 
 
-#### set_direction_provider
+##### set_direction_provider
 
 ```rust
 steeringmanager.set_direction_provider ( newDirectionProvider : fn() -> ksp::math::Direction ) -> Unit
@@ -177,19 +175,19 @@ steeringmanager.set_direction_provider ( newDirectionProvider : fn() -> ksp::mat
 
 
 
-## ThrottleManager
+### ThrottleManager
 
 
 
-### Fields
+#### Fields
 
 Name | Type | Description
 --- | --- | ---
 throttle | float | 
 
-### Methods
+#### Methods
 
-#### release
+##### release
 
 ```rust
 throttlemanager.release ( ) -> Unit
@@ -197,7 +195,7 @@ throttlemanager.release ( ) -> Unit
 
 
 
-#### resume
+##### resume
 
 ```rust
 throttlemanager.resume ( ) -> Unit
@@ -205,7 +203,7 @@ throttlemanager.resume ( ) -> Unit
 
 
 
-#### set_throttle_provider
+##### set_throttle_provider
 
 ```rust
 throttlemanager.set_throttle_provider ( newThrottleProvider : fn() -> float ) -> Unit
@@ -213,11 +211,11 @@ throttlemanager.set_throttle_provider ( newThrottleProvider : fn() -> float ) ->
 
 
 
-## TorquePI
+### TorquePI
 
 
 
-### Fields
+#### Fields
 
 Name | Type | Description
 --- | --- | ---
@@ -226,9 +224,9 @@ loop | ksp::control::PIDLoop |
 tr | float | 
 ts | float | 
 
-### Methods
+#### Methods
 
-#### reset_i
+##### reset_i
 
 ```rust
 torquepi.reset_i ( ) -> Unit
@@ -236,7 +234,7 @@ torquepi.reset_i ( ) -> Unit
 
 
 
-#### update
+##### update
 
 ```rust
 torquepi.update ( sampleTime : float,
@@ -248,10 +246,10 @@ torquepi.update ( sampleTime : float,
 
 
 
-# Functions
+## Functions
 
 
-## moving_average
+### moving_average
 
 ```rust
 pub sync fn moving_average ( sampleLimit : int ) -> ksp::control::MovingAverage
@@ -260,7 +258,7 @@ pub sync fn moving_average ( sampleLimit : int ) -> ksp::control::MovingAverage
 Create a new MovingAverage with given sample limit.
 
 
-## pid_loop
+### pid_loop
 
 ```rust
 pub sync fn pid_loop ( kp : float,

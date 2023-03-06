@@ -1,13 +1,11 @@
----
-title: "std::lambert"
----
+# std::lambert
 
 
 
-# Functions
+## Functions
 
 
-## solve_lambert
+### solve_lambert
 
 ```rust
 pub sync fn solve_lambert ( r1 : ksp::math::Vec3,

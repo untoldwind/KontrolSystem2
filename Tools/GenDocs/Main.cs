@@ -19,9 +19,12 @@ namespace KontrolSystem.GenDocs {
 
         public static void GenerateDocs(ModuleContext moduleContext, KontrolRegistry registry) {
             foreach (IKontrolModule module in registry.modules.Values) {
-                if (IsModuleEmpty(module)) continue;
-                using (StreamWriter fs = File.CreateText(Path.Combine(Directory.GetCurrentDirectory(), "docs",
-                    "reference", module.Name.Replace("::", "_") + ".md"))) {
+                if (IsModuleEmpty(module) || !module.Name.Contains("::")) continue;
+                var split = module.Name.Split(new string[] { "::" }, StringSplitOptions.None);
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "docs", "reference",  split.First());
+                Directory.CreateDirectory(path);
+                var fileName = Path.Combine(path, String.Join("_", split.Skip(1)) + ".md");
+                using (StreamWriter fs = File.CreateText(fileName)) {
                     GenerateDocs(moduleContext, module, fs);
                     Console.Out.WriteLine($"Generated: {module.Name}");
                 }
@@ -33,28 +36,26 @@ namespace KontrolSystem.GenDocs {
                                                                    !module.AllTypeNames.Any();
 
         public static void GenerateDocs(ModuleContext moduleContext, IKontrolModule module, TextWriter output) {
-            output.WriteLine("---");
-            output.WriteLine($"title: \"{module.Name}\"");
-            output.WriteLine("---");
+            output.WriteLine($"# {module.Name}");
             output.WriteLine();
             output.WriteLine(module.Description);
 
             if (module.AllTypeNames.Any()) {
                 output.WriteLine();
-                output.WriteLine("# Types");
+                output.WriteLine("## Types");
                 output.WriteLine();
 
                 foreach (string typeName in module.AllTypeNames.OrderBy(name => name)) {
                     RealizedType type = module.FindType(typeName)?.UnderlyingType(moduleContext);
 
                     output.WriteLine();
-                    output.WriteLine($"## {typeName}");
+                    output.WriteLine($"### {typeName}");
                     output.WriteLine();
                     output.WriteLine(type.Description);
 
                     if (type.DeclaredFields.Count > 0) {
                         output.WriteLine();
-                        output.WriteLine("### Fields");
+                        output.WriteLine("#### Fields");
                         output.WriteLine();
 
                         output.WriteLine("Name | Type | Description");
@@ -68,11 +69,11 @@ namespace KontrolSystem.GenDocs {
 
                     if (type.DeclaredMethods.Count > 0) {
                         output.WriteLine();
-                        output.WriteLine("### Methods");
+                        output.WriteLine("#### Methods");
 
                         foreach (var kv in type.DeclaredMethods.OrderBy(kv => kv.Key)) {
                             output.WriteLine();
-                            output.WriteLine($"#### {kv.Key}");
+                            output.WriteLine($"##### {kv.Key}");
                             output.WriteLine();
                             output.WriteLine("```rust");
                             output.WriteLine(MethodSignature(type.LocalName, kv.Key, kv.Value));
@@ -86,7 +87,7 @@ namespace KontrolSystem.GenDocs {
 
             if (module.AllConstantNames.Any()) {
                 output.WriteLine();
-                output.WriteLine("# Constants");
+                output.WriteLine("## Constants");
                 output.WriteLine();
 
                 output.WriteLine("Name | Type | Description");
@@ -102,14 +103,14 @@ namespace KontrolSystem.GenDocs {
 
             if (module.AllFunctionNames.Any()) {
                 output.WriteLine();
-                output.WriteLine("# Functions");
+                output.WriteLine("## Functions");
                 output.WriteLine();
 
                 foreach (string functionName in module.AllFunctionNames.OrderBy(name => name)) {
                     IKontrolFunction function = module.FindFunction(functionName);
 
                     output.WriteLine();
-                    output.WriteLine($"## {functionName}");
+                    output.WriteLine($"### {functionName}");
                     output.WriteLine();
                     output.WriteLine("```rust");
                     output.WriteLine(FunctionSignature(function));

@@ -1,13 +1,11 @@
----
-title: "std::numerics::anneal_optimize"
----
+# std::numerics::anneal_optimize
 
 
 
-# Functions
+## Functions
 
 
-## anneal_optimize
+### anneal_optimize
 
 ```rust
 pub sync fn anneal_optimize ( func : fn(float, float) -> float,

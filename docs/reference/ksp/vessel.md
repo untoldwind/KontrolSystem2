@@ -1,18 +1,16 @@
----
-title: "ksp::vessel"
----
+# ksp::vessel
 
 Collection of types and functions to get information and control in-game vessels.
 
 
-# Types
+## Types
 
 
-## ActionGroups
+### ActionGroups
 
 
 
-### Fields
+#### Fields
 
 Name | Type | Description
 --- | --- | ---
@@ -24,11 +22,11 @@ rcs | bool |
 sas | bool | 
 solar_panels | bool | 
 
-## Autopilot
+### Autopilot
 
 
 
-### Fields
+#### Fields
 
 Name | Type | Description
 --- | --- | ---
@@ -36,19 +34,19 @@ enabled | bool |
 mode | string | 
 target_orientation | ksp::math::Vec3 | 
 
-## Maneuver
+### Maneuver
 
 
 
-### Fields
+#### Fields
 
 Name | Type | Description
 --- | --- | ---
 nodes | ksp::vessel::ManeuverNode[] | 
 
-### Methods
+#### Methods
 
-#### add
+##### add
 
 ```rust
 maneuver.add ( ut : float,
@@ -59,7 +57,7 @@ maneuver.add ( ut : float,
 
 
 
-#### add_burn_vector
+##### add_burn_vector
 
 ```rust
 maneuver.add_burn_vector ( ut : float,
@@ -68,7 +66,7 @@ maneuver.add_burn_vector ( ut : float,
 
 
 
-#### next_node
+##### next_node
 
 ```rust
 maneuver.next_node ( ) -> Result<ksp::vessel::ManeuverNode, string>
@@ -76,11 +74,11 @@ maneuver.next_node ( ) -> Result<ksp::vessel::ManeuverNode, string>
 
 
 
-## ManeuverNode
+### ManeuverNode
 
 
 
-### Fields
+#### Fields
 
 Name | Type | Description
 --- | --- | ---
@@ -91,9 +89,9 @@ prograde | float |
 radial_out | float | 
 time | float | 
 
-### Methods
+#### Methods
 
-#### remove
+##### remove
 
 ```rust
 maneuvernode.remove ( ) -> Unit
@@ -101,23 +99,23 @@ maneuvernode.remove ( ) -> Unit
 
 
 
-## Targetable
+### Targetable
 
 
 
-### Fields
+#### Fields
 
 Name | Type | Description
 --- | --- | ---
 name | string | 
 orbit | ksp::orbit::Orbit | 
 
-## Vessel
+### Vessel
 
 Represents an in-game vessel, which might be a rocket, plane, rover ... or actually just a Kerbal in a spacesuite.
 
 
-### Fields
+#### Fields
 
 Name | Type | Description
 --- | --- | ---
@@ -133,9 +131,9 @@ orbital_velocity | ksp::math::Vec3 |
 surface_velocity | ksp::math::Vec3 | 
 target | Option<ksp::vessel::Targetable> | 
 
-### Methods
+#### Methods
 
-#### manage_rcs_translate
+##### manage_rcs_translate
 
 ```rust
 vessel.manage_rcs_translate ( translateProvider : fn() -> ksp::math::Vec3 ) -> ksp::control::RCSTranslateManager
@@ -143,7 +141,7 @@ vessel.manage_rcs_translate ( translateProvider : fn() -> ksp::math::Vec3 ) -> k
 
 
 
-#### manage_steering
+##### manage_steering
 
 ```rust
 vessel.manage_steering ( directionProvider : fn() -> ksp::math::Direction ) -> ksp::control::SteeringManager
@@ -151,7 +149,7 @@ vessel.manage_steering ( directionProvider : fn() -> ksp::math::Direction ) -> k
 
 
 
-#### manage_throttle
+##### manage_throttle
 
 ```rust
 vessel.manage_throttle ( throttleProvider : fn() -> float ) -> ksp::control::ThrottleManager
@@ -159,7 +157,7 @@ vessel.manage_throttle ( throttleProvider : fn() -> float ) -> ksp::control::Thr
 
 
 
-#### release_control
+##### release_control
 
 ```rust
 vessel.release_control ( ) -> Unit
@@ -167,7 +165,7 @@ vessel.release_control ( ) -> Unit
 
 
 
-#### set_rcs_translate
+##### set_rcs_translate
 
 ```rust
 vessel.set_rcs_translate ( translate : ksp::math::Vec3 ) -> ksp::control::RCSTranslateManager
@@ -175,7 +173,7 @@ vessel.set_rcs_translate ( translate : ksp::math::Vec3 ) -> ksp::control::RCSTra
 
 
 
-#### set_steering
+##### set_steering
 
 ```rust
 vessel.set_steering ( direction : ksp::math::Direction ) -> ksp::control::SteeringManager
@@ -183,7 +181,7 @@ vessel.set_steering ( direction : ksp::math::Direction ) -> ksp::control::Steeri
 
 
 
-#### set_throttle
+##### set_throttle
 
 ```rust
 vessel.set_throttle ( throttle : float ) -> ksp::control::ThrottleManager

@@ -1,19 +1,17 @@
----
-title: "core::background"
----
+# core::background
 
 Provides means to run functions as asynchronous background task.
 
 
-# Types
+## Types
 
 
-## Task
+### Task
 
 Represents a background task
 
 
-### Fields
+#### Fields
 
 Name | Type | Description
 --- | --- | ---
@@ -22,9 +20,9 @@ is_completed | bool | Check if the task is completed
 is_success | bool | Check if the task is completed and has a value 
 result | T | Get the result of the task once completed 
 
-### Methods
+#### Methods
 
-#### cancel
+##### cancel
 
 ```rust
 task.cancel ( ) -> Unit
@@ -33,10 +31,10 @@ task.cancel ( ) -> Unit
 Cancel/abort the task
 
 
-# Functions
+## Functions
 
 
-## is_background
+### is_background
 
 ```rust
 pub sync fn is_background ( ) -> bool
@@ -45,7 +43,7 @@ pub sync fn is_background ( ) -> bool
 Check if current thread is a background thread
 
 
-## run
+### run
 
 ```rust
 pub sync fn run ( function : fn() -> T ) -> core::background::Task<T>
