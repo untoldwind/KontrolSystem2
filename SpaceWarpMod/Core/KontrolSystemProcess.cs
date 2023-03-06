@@ -42,6 +42,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         public void MarkDone(string message) {
             if (!string.IsNullOrEmpty(message)) {
                 LoggerAdapter.Instance.Info($"Process {id} for module {module.Name} terminated with: {message}");
+                context.ConsoleBuffer.Print($"\n\n>>>>> ERROR <<<<<<<<<\n\nModule {module.Name} terminated with:\n{message}");
             }
 
             state = KontrolSystemProcessState.Available;

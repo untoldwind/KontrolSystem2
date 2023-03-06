@@ -1,0 +1,16 @@
+use { Vessel } from ksp::vessel
+use { CONSOLE } from ksp::console
+use { bi_impulsive_transfer } from std::maneuvers
+use { sleep, current_time } from ksp::game
+
+pub fn main_flight(vessel: Vessel) -> Result<Unit, string> = {
+    CONSOLE.clear()
+
+    let ut = current_time()
+
+    let (delta_v, UT) = bi_impulsive_transfer(vessel.orbit, vessel.target.ok_or("No Target")?.orbit, ut, ut + 3600)?
+
+    CONSOLE.print_line("Intercept: " + delta_v.to_string() + " " + UT.to_string())
+
+    vessel.maneuver.add_burn_vector(UT, delta_v)?
+}
