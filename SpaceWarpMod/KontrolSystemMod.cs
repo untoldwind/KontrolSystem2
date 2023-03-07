@@ -49,7 +49,7 @@ namespace KontrolSystem.SpaceWarpMod {
                 consoleWindow ??= gameObject.AddComponent<ConsoleWindow>();
                 moduleManagerWindow ??= gameObject.AddComponent<ModuleManagerWindow>();
 
-                toolbarWindow ??= new ToolbarWindow(GetInstanceID(), commonStyles, consoleWindow, moduleManagerWindow, OnCloseWindow);
+                toolbarWindow ??= new ToolbarWindow(GetInstanceID(), Info.Metadata.Version.ToString(), commonStyles, consoleWindow, moduleManagerWindow, OnCloseWindow);
 
                 toolbarWindow.SetPosition(false);
                 

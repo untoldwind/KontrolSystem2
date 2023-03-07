@@ -26,7 +26,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         private readonly Texture2D stopButtonTexture;
         private readonly Action onClose;
 
-        public ToolbarWindow(int objectId, CommonStyles commonStyles, ConsoleWindow consoleWindow,
+        public ToolbarWindow(int objectId, string version, CommonStyles commonStyles, ConsoleWindow consoleWindow,
             ModuleManagerWindow moduleManagerWindow, Action onClose) {
             this.objectId = objectId;
             this.commonStyles = commonStyles;
@@ -35,7 +35,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             this.onClose = onClose;
 
             Assembly assembly = Assembly.GetExecutingAssembly();
-            windowTitle = $"KontrolSystem {assembly.GetName().Version}";
+            windowTitle = $"KontrolSystem {version}";
 
             startButtonTexture = GFXAdapter.GetTexture("start");
             stopButtonTexture = GFXAdapter.GetTexture("stop");
