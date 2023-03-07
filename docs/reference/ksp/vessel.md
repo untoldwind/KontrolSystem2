@@ -31,6 +31,7 @@ solar_panels | bool |
 Name | Type | Description
 --- | --- | ---
 enabled | bool | 
+lock_direction | ksp::math::Direction | 
 mode | string | 
 target_orientation | ksp::math::Vec3 | 
 
@@ -140,6 +141,7 @@ maneuver.next_node ( ) -> Result<ksp::vessel::ManeuverNode, string>
 
 Name | Type | Description
 --- | --- | ---
+burn_duration | float | 
 burn_vector | ksp::math::Vec3 | 
 ETA | float | 
 normal | float | 
@@ -251,6 +253,7 @@ actions | ksp::vessel::ActionGroups |
 angular_momentum | ksp::math::Vec3 | 
 angular_velocity | ksp::math::Vec3 | 
 autopilot | ksp::vessel::Autopilot | 
+available_thrust | float | 
 CoM | ksp::math::Vec3 | 
 control_status | string | 
 delta_v | ksp::vessel::VesselDeltaV | 
