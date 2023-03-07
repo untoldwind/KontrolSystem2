@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection.Emit;
 using KontrolSystem.TO2;
 using KontrolSystem.TO2.AST;
+using System.Globalization;
 
 namespace KontrolSystem.KSP.Runtime.KSPMath {
     public static class Vector3Binding {
@@ -119,8 +120,8 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                 }, {
                     "to_string",
                     new BoundMethodInvokeFactory("Convert vector to string.", true, () => BuiltinType.String,
-                        () => new List<RealizedParameter>(), false, typeof(Vector3d),
-                        typeof(Vector3d).GetMethod("ToString", new Type[0]))
+                        () => new List<RealizedParameter>(), false, typeof(Vector3Binding),
+                        typeof(Vector3Binding).GetMethod("ToString", new Type[] { typeof(Vector3d) }))
                 }, {
                     "to_fixed",
                     new BoundMethodInvokeFactory("Convert the vector to string with fixed number of `decimals`.",
@@ -160,7 +161,12 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
 
         public static Vector3d Vec3(double x, double y, double z) => new Vector3d(x, y, z);
 
-        public static string ToFixed(Vector3d v, long decimals) => v.ToString(decimals <= 0 ? "F0" : "F" + decimals);
+        public static string ToString(Vector3d v) => "[" + v.x.ToString(CultureInfo.InvariantCulture) + ", " + v.y.ToString(CultureInfo.InvariantCulture) + ", " + v.z.ToString(CultureInfo.InvariantCulture) + "]";
+
+        public static string ToFixed(Vector3d v, long decimals) {
+            String format = decimals <= 0 ? "F0" : "F" + decimals;
+            return "[" + v.x.ToString(format, CultureInfo.InvariantCulture) + ", " + v.y.ToString(format, CultureInfo.InvariantCulture) + ", " + v.z.ToString(format, CultureInfo.InvariantCulture) + "]";
+        }
 
         public static Direction ToDirection(Vector3d v) => new Direction(v, false);
     }

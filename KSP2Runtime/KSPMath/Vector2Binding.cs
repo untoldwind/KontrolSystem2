@@ -4,6 +4,7 @@ using System.Reflection.Emit;
 using KontrolSystem.TO2;
 using KontrolSystem.TO2.AST;
 using UnityEngine;
+using System.Globalization;
 
 namespace KontrolSystem.KSP.Runtime.KSPMath {
     public static class Vector2Binding {
@@ -78,8 +79,8 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                 }, {
                     "to_string",
                     new BoundMethodInvokeFactory("Convert the vector to string", true, () => BuiltinType.String,
-                        () => new List<RealizedParameter>(), false, typeof(Vector2d),
-                        typeof(Vector2d).GetMethod("ToString", new Type[0]))
+                        () => new List<RealizedParameter>(), false, typeof(Vector2Binding),
+                        typeof(Vector2Binding).GetMethod("ToString", new Type[] { typeof(Vector2d) }))
                 }, {
                     "to_fixed",
                     new BoundMethodInvokeFactory("Convert the vector to string with fixed number of `decimals`.",
@@ -107,6 +108,11 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
 
         public static Vector2d Vec2(double x, double y) => new Vector2d(x, y);
 
-        public static string ToFixed(Vector2d v, long decimals) => v.ToString(decimals <= 0 ? "F0" : "F" + decimals);
+        public static string ToString(Vector2d v) => "(" + v.x.ToString(CultureInfo.InvariantCulture) + ", " + v.y.ToString(CultureInfo.InvariantCulture) + ")";
+
+        public static string ToFixed(Vector2d v, long decimals) {
+            String format = decimals <= 0 ? "F0" : "F" + decimals;
+            return "(" + v.x.ToString(format, CultureInfo.InvariantCulture) + ", " + v.y.ToString(format, CultureInfo.InvariantCulture) + ")";
+        }
     }
 }
