@@ -90,3 +90,4 @@ A function can be invoked in the regular fashon of most programming languages (e
 function_name(value1, value2)
 ```
 
+One important caveat is that asynchronous functions can NOT be called within a synchronous function. The other way round is ok.
