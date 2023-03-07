@@ -1,34 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
         <ProjectGuid>{AA662164-EC1F-4268-8DF0-9C222D6CAF52}</ProjectGuid>
         <OutputType>Library</OutputType>
         <RootNamespace>KontrolSystem.SpaceWarpMod</RootNamespace>
         <AssemblyName>KontrolSystemSpaceWarpMod</AssemblyName>
-        <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-        <DebugSymbols>true</DebugSymbols>
-        <DebugType>full</DebugType>
-        <Optimize>false</Optimize>
-        <OutputPath>..\bin\Debug</OutputPath>
-        <DefineConstants>DEBUG;</DefineConstants>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-        <ConsolePause>false</ConsolePause>
+        <TargetFramework>net472</TargetFramework>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <NoStdLib>true</NoStdLib>
         <LangVersion>8</LangVersion>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-        <Optimize>true</Optimize>
-        <OutputPath>..\bin\Release</OutputPath>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-        <ConsolePause>false</ConsolePause>
-        <NoStdLib>true</NoStdLib>
-        <LangVersion>8</LangVersion>
+        <BaseOutputPath>../bin</BaseOutputPath>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(KSP2_BASE_DIR)' == ''">
         <KSP2_BASE_DIR>C:\Program Files (x86)\Steam\steamapps\common\Kerbal Space Program 2</KSP2_BASE_DIR>
@@ -72,9 +53,6 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="**\*.cs" Exclude="obj\**\*.cs" />
-    </ItemGroup>
-    <ItemGroup>
       <Content Include="swinfo.json" />
     </ItemGroup>
     <ItemGroup>
@@ -97,7 +75,6 @@
     <ItemGroup>
       <Folder Include="GFX" />
     </ItemGroup>
-    <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
     <Target Name="CopyFiles" AfterTargets="Build">
         <Copy SourceFiles="../bin/$(Configuration)/KontrolSystemSpaceWarpMod.dll" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2" />
         <Copy SourceFiles="icon.png" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2/assets/images" />

@@ -1,37 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
         <ProjectGuid>{B19D88C6-94C6-446C-A3BE-E1BA5FF4B643}</ProjectGuid>
         <OutputType>Exe</OutputType>
         <RootNamespace>KontrolSystem.GenDocs</RootNamespace>
         <AssemblyName>KontrolSystemGenDocs</AssemblyName>
-        <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-        <DebugSymbols>true</DebugSymbols>
-        <DebugType>full</DebugType>
-        <Optimize>false</Optimize>
-        <OutputPath>..\..\bin\Debug</OutputPath>
-        <DefineConstants>DEBUG;</DefineConstants>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-        <ExternalConsole>true</ExternalConsole>
+        <TargetFramework>net472</TargetFramework>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <NoStdLib>true</NoStdLib>
         <LangVersion>8</LangVersion>
+        <BaseOutputPath>../../bin</BaseOutputPath>
     </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-        <Optimize>true</Optimize>
-        <OutputPath>..\..\bin\Release</OutputPath>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-        <ExternalConsole>true</ExternalConsole>
-        <NoStdLib>true</NoStdLib>
-        <LangVersion>8</LangVersion>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(KSP_BASE_DIR)' == ''">
+    <PropertyGroup Condition=" '$(KSP2_BASE_DIR)' == ''">
         <KSP2_BASE_DIR>C:\Program Files (x86)\Steam\steamapps\common\Kerbal Space Program 2</KSP2_BASE_DIR>
     </PropertyGroup>
     <ItemGroup>
@@ -52,9 +33,6 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="**\*.cs" Exclude="obj\**\*.cs"/>
-    </ItemGroup>
-    <ItemGroup>
         <ProjectReference Include="..\..\TO2\KontrolSystemTO2.csproj">
             <Project>{228541DA-6909-4899-9966-1CA2BF16B830}</Project>
             <Name>KontrolSystemTO2</Name>
@@ -64,7 +42,6 @@
             <Name>KontrolSystemKSP2Runtime</Name>
         </ProjectReference>
     </ItemGroup>
-    <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets"/>
     <Target Name="Test">
     </Target>
 </Project>

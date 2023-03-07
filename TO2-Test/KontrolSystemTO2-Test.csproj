@@ -1,35 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <Import Project="..\packages\NUnit.3.12.0\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.12.0\build\NUnit.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
         <ProjectGuid>{B0440047-A919-4FF1-8799-16A586035584}</ProjectGuid>
         <OutputType>Library</OutputType>
         <RootNamespace>KontrolSystem.TO2.Test</RootNamespace>
         <AssemblyName>KontrolSystemTO2-Test</AssemblyName>
-        <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-        <DebugSymbols>true</DebugSymbols>
-        <DebugType>full</DebugType>
-        <Optimize>false</Optimize>
-        <OutputPath>..\bin\Debug</OutputPath>
-        <DefineConstants>DEBUG;</DefineConstants>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-        <ConsolePause>false</ConsolePause>
+        <TargetFramework>net472</TargetFramework>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <NoStdLib>true</NoStdLib>
         <LangVersion>8</LangVersion>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-        <Optimize>true</Optimize>
-        <OutputPath>..\bin\Release</OutputPath>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-        <ConsolePause>false</ConsolePause>
-        <NoStdLib>true</NoStdLib>
-        <LangVersion>8</LangVersion>
+        <BaseOutputPath>../bin</BaseOutputPath>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(KSP2_BASE_DIR)' == ''">
         <KSP2_BASE_DIR>C:\Program Files (x86)\Steam\steamapps\common\Kerbal Space Program 2</KSP2_BASE_DIR>
@@ -42,9 +22,6 @@
             <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\mscorlib.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.CSharp" />
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="**\*.cs" Exclude="obj\**\*.cs" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="xunit" Version="2.4.1" />
@@ -74,7 +51,6 @@
             <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
         </ProjectReference>
     </ItemGroup>
-    <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
     <Target Name="Test">
         <xunit Assemblies="../bin/$(Configuration)/KontrolSystemTO2-Test.dll" DiagnosticMessages="true" />
     </Target>

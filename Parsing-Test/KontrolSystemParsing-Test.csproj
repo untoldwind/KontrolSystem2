@@ -1,35 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <Import Project="..\packages\NUnit.3.12.0\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.12.0\build\NUnit.props')"/>
+<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
         <ProjectGuid>{BA4EBDA8-0E06-4B0F-B8E2-9F545B05B133}</ProjectGuid>
         <OutputType>Library</OutputType>
         <RootNamespace>KontrolSystem.Parsing.Test</RootNamespace>
         <AssemblyName>KontrolSystemParsing-Test</AssemblyName>
-        <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-        <DebugSymbols>true</DebugSymbols>
-        <DebugType>full</DebugType>
-        <Optimize>false</Optimize>
-        <OutputPath>..\bin\Debug</OutputPath>
-        <DefineConstants>DEBUG;</DefineConstants>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-        <ConsolePause>false</ConsolePause>
+        <TargetFramework>net472</TargetFramework>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <NoStdLib>true</NoStdLib>
         <LangVersion>8</LangVersion>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-        <Optimize>true</Optimize>
-        <OutputPath>..\bin\Release</OutputPath>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-        <ConsolePause>false</ConsolePause>
-        <NoStdLib>true</NoStdLib>
-        <LangVersion>8</LangVersion>
+        <BaseOutputPath>../bin</BaseOutputPath>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(KSP2_BASE_DIR)' == ''">
         <KSP2_BASE_DIR>C:\Program Files (x86)\Steam\steamapps\common\Kerbal Space Program 2</KSP2_BASE_DIR>
@@ -43,15 +23,12 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="xunit" Version="2.4.1"/>
+        <PackageReference Include="xunit" Version="2.4.1" />
         <PackageReference Include="xunit.runner.console" Version="2.4.1">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="xunit.runner.msbuild" Version="2.4.1"/>
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="**\*.cs" Exclude="obj\**\*.cs"/>
+        <PackageReference Include="xunit.runner.msbuild" Version="2.4.1" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Parsing\KontrolSystemParsing.csproj">
@@ -60,8 +37,7 @@
             <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
         </ProjectReference>
     </ItemGroup>
-    <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets"/>
     <Target Name="Test">
-        <xunit Assemblies="../bin/$(Configuration)/KontrolSystemParsing-Test.dll" DiagnosticMessages="true"/>
+        <xunit Assemblies="../bin/$(Configuration)/KontrolSystemParsing-Test.dll" DiagnosticMessages="true" />
     </Target>
 </Project>
