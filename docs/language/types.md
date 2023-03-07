@@ -138,4 +138,15 @@ A type alias is just a convenient shorthand for a potentially more complex types
 type alias_name = type definition
 ```
 
+e.g.
 
+```rust
+type MyParameters = ( ra: int, rb: string, rc: float )
+```
+created an alias `MyParameters` for the record type defined above.
+
+Like functions type aliases can be made available to other scripts with the `pub` keyword:
+
+```rust
+pub type MyParameters = ( ra: int, rb: string, rc: float )
+```
