@@ -68,7 +68,7 @@
 				},
 				{
 					"name": "keyword.other.to2",
-					"match": "\\b(use|from|in|as)\\b"
+					"match": "->|\\b(use|from|in|as)\\b"
 				},
 				{
 					"name": "keyword.type.to2",
