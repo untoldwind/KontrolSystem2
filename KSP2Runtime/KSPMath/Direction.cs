@@ -4,13 +4,13 @@ using UnityEngine;
 namespace KontrolSystem.KSP.Runtime.KSPMath {
     public class Direction {
         private Vector3d euler;
-        private Quaternion rotation;
+        private QuaternionD rotation;
         private Vector3d vector;
 
         public Direction() {
         }
 
-        public Direction(Quaternion q) {
+        public Direction(QuaternionD q) {
             rotation = q;
             euler = q.eulerAngles;
             vector = rotation * Vector3d.forward;
@@ -42,7 +42,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
             }
         }
 
-        public Quaternion Rotation {
+        public QuaternionD Rotation {
             get => rotation;
             set {
                 rotation = value;

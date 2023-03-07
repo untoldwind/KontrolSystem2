@@ -15,7 +15,7 @@ using UnityEngine;
 namespace KontrolSystem.SpaceWarpMod.Core {
     internal class AutopilotHooks {
         private readonly IKSPContext context;
-        private readonly List<FlightInputCallback> autopilots = new List<FlightInputCallback>();
+        internal readonly List<FlightInputCallback> autopilots = new List<FlightInputCallback>();
 
         internal AutopilotHooks(IKSPContext context) => this.context = context;
 
@@ -23,7 +23,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
             if (!autopilots.Contains(autopilot)) autopilots.Add(autopilot);
         }
 
-        internal void Remove(FlightInputCallback autopilot) => autopilots.Remove(autopilot);
+        internal bool Remove(FlightInputCallback autopilot) => autopilots.Remove(autopilot);
 
         internal bool IsEmpty => autopilots.Count == 0;
 

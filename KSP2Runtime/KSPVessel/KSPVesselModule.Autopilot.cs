@@ -1,4 +1,5 @@
 ﻿using System;
+using KontrolSystem.KSP.Runtime.KSPMath;
 using KontrolSystem.TO2.Binding;
 using KSP.Sim;
 using KSP.Sim.impl;
@@ -43,6 +44,12 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             public Vector3d TargetOrientation {
                 get => autopilot.SAS.TargetOrientation;
                 set => autopilot.SAS.SetTargetOrientation(new Vector(autopilot.SAS.ReferenceFrame, value), false);
+            }
+
+            [KSField]
+            public Direction LockDirection {
+                get => new Direction(autopilot.SAS.LockedRotation);
+                set => autopilot.SAS.LockRotation(value.Rotation);
             }
         }
     }

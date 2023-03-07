@@ -64,6 +64,8 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 }
             }
 
+            [KSField] public double BurnDuration => maneuverNode.BurnDuration;
+
             [KSMethod]
             public void Remove() {
                 vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.RemoveNodesFromVessel(vesselAdapter.vessel.GlobalId, new List<ManeuverNodeData>() { maneuverNode });

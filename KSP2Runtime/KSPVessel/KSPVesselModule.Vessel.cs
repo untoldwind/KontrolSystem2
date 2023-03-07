@@ -4,6 +4,7 @@ using KontrolSystem.KSP.Runtime.KSPMath;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
+using KSP.Modules;
 using KSP.Sim.impl;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel {
@@ -101,6 +102,20 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 }
             }
 
+            [KSField]
+            public double AvailableThrust {
+                get {
+                    double thrust = 0.0;
+
+                    foreach (PartComponent part in vessel.SimulationObject.PartOwner.Parts) {
+                        if (part.TryGetModuleData<PartComponentModule_Engine, Data_Engine>(out var engine) && engine.staged) {
+                            thrust += engine.MaxThrustOutputVac(true);
+                        }
+                    }
+
+                    return thrust;
+                }
+            }
             [KSMethod]
             public KSPControlModule.SteeringManager SetSteering(Direction direction) =>
                 new KSPControlModule.SteeringManager(context, this, () => direction);

@@ -52,8 +52,6 @@ Convenient build scripts: `build.ps1` (Windows), `build.sh` (Linux)
 
 ## Known issues
 
-* The unit tests are currently not working on windows with a standard Visual Studio setup as `msbuild` uses some incompatible system libraries. They should run fine in a mono-setup
-  * It probably requires migration to a different testing framework to fix this
 * The calculated maneuver nodes are slightly of from the expected result
   * ... since the game does a more precise brun simulation
   * This requires some careful examination of all the numbers
@@ -64,5 +62,4 @@ Convenient build scripts: `build.ps1` (Windows), `build.sh` (Linux)
 ## Missing parts aka. "soon"(tm)
 
 * Lots of documentation
-* Ability to control time warp
 * Better support of vessel steering, throttle etc.

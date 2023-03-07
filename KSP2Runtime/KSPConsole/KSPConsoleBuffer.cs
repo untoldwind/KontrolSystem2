@@ -118,8 +118,11 @@ namespace KontrolSystem.KSP.Runtime.KSPConsole {
 
                     string line = lines[i];
                     cursorLine.Value.AdjustCols(VisibleCols);
-                    for (int j = 0; CursorCol < VisibleCols && j < line.Length; j++)
+                    for (int j = 0; CursorCol < VisibleCols && j < line.Length; j++) {
+                        if (CursorCol >= cursorLine.Value.line.Length)
+                            break;
                         cursorLine.Value.line[CursorCol++] = line[j];
+                    }
                 }
             }
         }

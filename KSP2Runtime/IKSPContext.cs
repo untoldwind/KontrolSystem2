@@ -4,6 +4,7 @@ using KontrolSystem.KSP.Runtime.KSPConsole;
 using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KSP.Sim.impl;
+using KSP.Sim.State;
 
 namespace KontrolSystem.KSP.Runtime {
     public interface IMarker {
