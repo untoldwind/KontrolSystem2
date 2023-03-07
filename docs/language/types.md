@@ -28,7 +28,7 @@ element_type[]
 E.g.
 
 ```rust
-stirng[]
+string[]
 ```
 is an array of strings.
 
@@ -138,8 +138,4 @@ A type alias is just a convenient shorthand for a potentially more complex types
 type alias_name = type definition
 ```
 
-
-## Options
-
-## Results
 

@@ -52,8 +52,7 @@ namespace KontrolSystem.SpaceWarpMod {
                 toolbarWindow ??= new ToolbarWindow(GetInstanceID(), commonStyles, consoleWindow, moduleManagerWindow, OnCloseWindow);
 
                 toolbarWindow.SetPosition(false);
-            
-            
+                
                 Mainframe.Instance.Reboot(ConfigAdapter.Instance);
             }
 

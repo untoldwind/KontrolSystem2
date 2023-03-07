@@ -17,7 +17,6 @@ namespace KontrolSystem.SpaceWarpMod.UI {
     public class ToolbarWindow {
         private readonly int objectId;
         private readonly string windowTitle;
-        private Rect rectToFit;
         private Rect windowRect;
         private readonly CommonStyles commonStyles;
         private Vector2 scrollPos = new Vector2(0, 0);
@@ -45,39 +44,20 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         public Rect WindowRect => windowRect;
 
         public void SetPosition(bool isTop) {
-            float offset = 128f;
+            float offset = 750f;
 
             if (isTop) {
-                rectToFit = new Rect(0, 0, Screen.width - offset, Screen.height);
-                windowRect = new Rect(Screen.width, 0, 0, 0);
+                windowRect = new Rect(Screen.width - offset, 20, 0, 0);
             } else {
-                rectToFit = new Rect(0, 0, Screen.width - offset, Screen.height - offset);
-                windowRect = new Rect(Screen.width, Screen.height, 0, 0);
+                windowRect = new Rect(Screen.width - offset, Screen.height - 600, 0, 0);
             }
         }
-
-        public void SetPosition(bool isTop, Vector3 anchorPos) {
-            float offset = 64f;
-            float launcherScreenX = anchorPos.x + Screen.width / 2f;
-            float launcherScreenY = anchorPos.y + Screen.height / 2f;
-
-            float fitWidth = (isTop ? launcherScreenX : Screen.width - offset);
-            float fitHeight = (isTop ? Screen.height : Screen.height - launcherScreenY);
-
-            rectToFit = new Rect(0, 0f, fitWidth, fitHeight);
-
-            float leftEdge = Screen.width;
-            float topEdge = isTop ? 0f : Screen.height;
-
-            windowRect = new Rect(leftEdge, topEdge, 0, 0);
-        }
-
+        
         public void DrawUI() {
             
             GUI.skin = commonStyles.baseSkin;
 
             windowRect = GUILayout.Window(objectId, windowRect, DrawWindow, windowTitle);
-            windowRect = RectExtensions.ClampToRectAngle(windowRect, rectToFit);
         }
 
         void DrawWindow(int windowId) {
@@ -109,6 +89,8 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             GUILayout.EndHorizontal();
             DrawStatus();
             GUILayout.EndVertical();
+
+            GUI.DragWindow();
         }
 
         void DrawAvailableModules() {
