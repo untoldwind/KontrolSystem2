@@ -66,7 +66,7 @@ let a = if (b < 0) 12 else 34
 ```
 where `a` will be the integer `12` if `b < 0` is true or otherwise the integer `34`.
 
-If the else part is omitted the result becomes an [`Option`](./special_types.md#option).
+If the else part is omitted the result becomes an [`Option`](special_types/option.md).
 
 ```rust
 let maybe_a = if (b < 0) 12

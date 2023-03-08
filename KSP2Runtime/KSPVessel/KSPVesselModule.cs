@@ -2,6 +2,9 @@
 using KSP.Sim.DeltaV;
 using KSP.Sim.State;
 using System;
+using KontrolSystem.TO2.Runtime;
+using KSP.Game;
+using KSP.Sim.impl;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel {
     [KSModule("ksp::vessel",
@@ -31,6 +34,17 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
         [KSConstant("SITUATION_VACUUM", Description = "Used for delta-v calculation in vacuum.")]
         public static readonly string SituationVacuum = "VACUUM";
+        
+        [KSFunction(
+            Description = "Try to get the currently active vessel. Will result in an error if there is none."
+        )]
+        public static Result<VesselAdapter, string> ActiveVessel() {
+            VesselComponent activeVessel =
+                GameManager.Instance.Game.ViewController.GetActiveSimVessel(true);
+            
+            return VesselAdapter.NullSafe(KSPContext.CurrentContext, activeVessel)
+                .OkOr("No active vessel");
+        }
         
         public static void DirectBindings() {
             BindingGenerator.RegisterTypeMapping(typeof(FlightCtrlState),

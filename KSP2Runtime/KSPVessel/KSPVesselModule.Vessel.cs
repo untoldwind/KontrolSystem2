@@ -21,6 +21,10 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             private readonly VesselDeltaVAdapter deltaV;
             private readonly StagingAdapter staging;
 
+            public static Option<VesselAdapter> NullSafe(IKSPContext context, VesselComponent vessel) => vessel != null
+                ? new Option<VesselAdapter>(new VesselAdapter(context, vessel))
+                : new Option<VesselAdapter>();
+            
             internal VesselAdapter(IKSPContext context, VesselComponent vessel) {
                 this.context = context;
                 this.vessel = vessel;

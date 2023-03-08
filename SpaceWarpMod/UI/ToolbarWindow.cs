@@ -111,7 +111,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                     switch (process.State) {
                     case KontrolSystemProcessState.Available:
                         if (GUILayout.Button(startButtonTexture, GUILayout.Width(30)))
-                            Mainframe.Instance.StartProcess(process, GameManager.Instance?.Game?.ViewController?.GetActiveVehicle(true)?.GetSimVessel(true));
+                            Mainframe.Instance.StartProcess(process, GameManager.Instance?.Game?.ViewController?.GetActiveSimVessel(true));
                         break;
                     case KontrolSystemProcessState.Running:
                     case KontrolSystemProcessState.Outdated:

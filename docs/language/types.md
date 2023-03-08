@@ -91,7 +91,7 @@ let (b, c) = floor_remain(12.34)
 ```
 will define an integer variable `b` with value `12` and a float variable `c` with value `0.34`
 
-## Records aka. Structs
+## Records
 
 Records are similar to tuples just with the addition that every element gets a unique name.
 

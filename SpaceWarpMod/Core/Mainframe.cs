@@ -159,7 +159,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
 
         public IEnumerable<KontrolSystemProcess> ListProcesses() {
             GameMode gameMode = KSPContext.CurrentGameMode;
-            VesselComponent activeVessel = GameManager.Instance.Game.ViewController.GetActiveVehicle(true)?.GetSimVessel(true);
+            VesselComponent activeVessel = GameManager.Instance.Game.ViewController.GetActiveSimVessel(true);
 
             return processes != null
                 ? processes.Where(p => p.AvailableFor(gameMode, activeVessel))
