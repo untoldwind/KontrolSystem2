@@ -283,6 +283,13 @@ staging | ksp::vessel::Staging |
 surface_velocity | ksp::math::Vec3 | 
 target | Option<ksp::vessel::Targetable> | 
 vertical_surface_speed | float | 
+offset_ground | float | Offset to ground or height of vessel.
+atmosphere_density | float | Atmosphere density in current position.
+altitude_terrain | float | Altitude from terrain (Incorrectly calibrated).
+altitude_scenery | float | Altitude from scenery (This is the one that the game shows).
+altitude_sealevel | float | Altitude from sea level.
+
+
 
 #### Methods
 
