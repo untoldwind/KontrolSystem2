@@ -2,7 +2,7 @@
 
 ## 0.1.1 -> 0.1.2
 
-* Readding the unit tests that where failing on windows
+* Re-adding the unit tests that where failing on windows
 * Add hotkey "Alt-K" to open the main window even if toolbar is not present/visible
   * Can be toggled of in BepInEx configuration manager
 * Increase internal line length of console

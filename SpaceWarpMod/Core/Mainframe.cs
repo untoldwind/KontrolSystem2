@@ -46,6 +46,8 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         public bool Rebooting => rebooting;
         public TimeSpan LastRebootTime => state?.bootTime ?? TimeSpan.Zero;
         public IEnumerable<MainframeError> LastErrors => state?.errors ?? Enumerable.Empty<MainframeError>();
+        public KontrolRegistry LastRegistry => state?.registry;
+        
         private readonly Dictionary<Guid, Coroutine> coroutines = new Dictionary<Guid, Coroutine>();
 
         public void Awake() {
