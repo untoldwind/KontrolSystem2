@@ -94,6 +94,8 @@ namespace KontrolSystem.TO2.AST {
 
             if (context.HasErrors) return;
 
+            typeDelegate.EnsureFields();
+            typeDelegate.CreateStructType();
             Type type = typeDelegate.GeneratedType(context.ModuleContext);
             IBlockVariable variable =
                 context.DeclaredVariable("instance", false, typeDelegate.UnderlyingType(context.ModuleContext));
@@ -109,8 +111,6 @@ namespace KontrolSystem.TO2.AST {
             }
 
             context.IL.EmitReturn(type);
-
-            typeDelegate.CreateStructType();
         }
     }
 
