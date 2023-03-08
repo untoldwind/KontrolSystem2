@@ -65,12 +65,24 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             
             [KSField("CoM")] public Vector3d CoM => vessel.CenterOfMass.localPosition;
 
+            [KSField] public double OffsetGround => vessel.OffsetToGround;
+
+            [KSField] public double AtmosphereDensity => vessel.AtmDensity;
+
             [KSField] public double Heading => vessel.Heading;
             
             [KSField] public double HorizontalSurfaceSpeed => vessel.HorizontalSrfSpeed;
 
             [KSField] public double VerticalSurfaceSpeed => vessel.VerticalSrfSpeed;
-            
+
+            [KSField] public double AltitudeTerrain => vessel.AltitudeFromTerrain;
+
+            [KSField] public double AltitudeSealevel => vessel.AltitudeFromSeaLevel;
+
+            [KSField] public double AltitudeScenery => vessel.AltitudeFromScenery;
+
+
+
 
             [KSField] public Vector3d AngularMomentum => vessel.angularMomentum.relativeAngularVelocity.vector;
 
