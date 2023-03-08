@@ -34,7 +34,6 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             this.moduleManagerWindow = moduleManagerWindow;
             this.onClose = onClose;
 
-            Assembly assembly = Assembly.GetExecutingAssembly();
             windowTitle = $"KontrolSystem {version}";
 
             startButtonTexture = GFXAdapter.GetTexture("start");
