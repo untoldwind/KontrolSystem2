@@ -11,6 +11,8 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         protected Rect windowRect;
         protected bool mouseDown;
         protected bool manualLayout;
+        protected float minWidth;
+        protected float minHeight;
 
         public string Title { get; set; } = "KontrolSystem";
 
@@ -24,7 +26,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
 
         public bool IsOpen => isOpen;
 
-        protected void Initialize(string initialTitle, Rect initialWindowRect, bool initialManualLayout) {
+        protected void Initialize(string initialTitle, Rect initialWindowRect, float initialMinWidth, float initialMinHeight, bool initialManualLayout) {
             objectId = GetInstanceID();
 
             resizeButtonImage = GFXAdapter.GetTexture("resize-button");
@@ -32,6 +34,8 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             Title = initialTitle;
             windowRect = initialWindowRect;
             manualLayout = initialManualLayout;
+            minWidth = initialMinWidth;
+            minHeight = initialMinHeight;
         }
 
         public void OnGUI() {
@@ -73,9 +77,9 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                 }
             } else if (theEvent.type == EventType.MouseDrag || theEvent.type == EventType.MouseUp) {
                 if (theEvent.button == 0) {
-                    windowRect.width = Mathf.Clamp(windowRect.width + theEvent.delta.x, 50,
+                    windowRect.width = Mathf.Clamp(windowRect.width + theEvent.delta.x, minHeight,
                         Screen.width - windowRect.x);
-                    windowRect.height = Mathf.Clamp(windowRect.height + theEvent.delta.y, 50,
+                    windowRect.height = Mathf.Clamp(windowRect.height + theEvent.delta.y, minHeight,
                         Screen.height - windowRect.y);
                     if (theEvent.type == EventType.MouseUp) {
                         mouseDown = false;

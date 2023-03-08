@@ -33,7 +33,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         // --------------------- MonoBehaviour callbacks ------------------------
 
         public void Awake() {
-            Initialize("KontrolSystem: Console", new Rect(60, 60, 100, 100), true);
+            Initialize("KontrolSystem: Console", new Rect(60, 60, 100, 100), 120,120, true);
             
             Texture2D terminalImage = GFXAdapter.GetTexture("monitor_minimal");
             Texture2D terminalFrameImage = GFXAdapter.GetTexture("monitor_minimal_frame");

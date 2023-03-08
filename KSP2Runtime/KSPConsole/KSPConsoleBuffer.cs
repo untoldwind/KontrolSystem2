@@ -17,6 +17,16 @@ namespace KontrolSystem.KSP.Runtime.KSPConsole {
             for (int i = 0; i < line.Length; i++) line[i] = ' ';
         }
 
+        internal bool IsEmpty() {
+            if (line != null) {
+                for (int i = 0; i < line.Length; i++)
+                    if (line[i] != ' ' && line[i] != 0)
+                        return false;
+            }
+
+            return true;
+        }
+
         public override string ToString() => new string(line);
     }
 
@@ -133,10 +143,16 @@ namespace KontrolSystem.KSP.Runtime.KSPConsole {
                     AddLines(VisibleRows - bufferLines.Count);
 
                 topLine = bufferLines.Last;
-                while (topLine.Previous != null && topLine.Value.lineNumber >= bufferLines.Count - VisibleRows)
+                while (topLine.Previous != null && topLine.Value.IsEmpty())
                     topLine = topLine.Previous;
+                int lastNonEmpty = topLine.Value.lineNumber;                
+                int count = 1;
+                while (topLine.Previous != null && count < VisibleRows) {
+                    topLine = topLine.Previous;
+                    count++;
+                }
 
-                CursorRow = Math.Min(CursorRow, VisibleRows - 1);
+                CursorRow = Math.Min(CursorRow, lastNonEmpty + 1);
                 CursorCol = Math.Min(CursorCol, VisibleCols);
 
                 cursorLine = topLine;

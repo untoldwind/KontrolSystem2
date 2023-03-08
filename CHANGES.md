@@ -9,3 +9,4 @@
 * Add `ksp::vessel::Vessel.staging.next()` method to trigger staging
 * Fix throttle_manager unhook problem
   * Should eventually work for all other control managers as well
+* Ignore empty lines on console resize

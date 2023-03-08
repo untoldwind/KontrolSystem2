@@ -13,7 +13,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         }
 
         public void Awake() {
-            Initialize("KontrolSystem: ModuleManager", new Rect(50, 50, 400, 400), false);
+            Initialize("KontrolSystem: ModuleManager", new Rect(50, 50, 400, 400), 120, 120, false);
         }
 
         protected override void DrawWindow(int windowId) {
