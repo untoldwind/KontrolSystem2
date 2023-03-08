@@ -16,7 +16,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
     /// </summary>
     public class ToolbarWindow {
         private readonly int objectId;
-        private readonly string windowTitle;
+        private readonly GUIContent windowTitle;
         private Rect windowRect;
         private readonly CommonStyles commonStyles;
         private Vector2 scrollPos = new Vector2(0, 0);
@@ -24,6 +24,9 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         private readonly ModuleManagerWindow moduleManagerWindow;
         private readonly Texture2D startButtonTexture;
         private readonly Texture2D stopButtonTexture;
+        private readonly Texture2D stateActiveTexture;
+        private readonly Texture2D stateInactiveTexture;
+        private readonly Texture2D stateErrorTexture;
         private readonly Action onClose;
 
         public ToolbarWindow(int objectId, string version, CommonStyles commonStyles, ConsoleWindow consoleWindow,
@@ -34,10 +37,13 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             this.moduleManagerWindow = moduleManagerWindow;
             this.onClose = onClose;
 
-            windowTitle = $"KontrolSystem {version}";
-
             startButtonTexture = GFXAdapter.GetTexture("start");
             stopButtonTexture = GFXAdapter.GetTexture("stop");
+            stateActiveTexture = GFXAdapter.GetTexture("state_active");
+            stateInactiveTexture = GFXAdapter.GetTexture("state_inactive");
+            stateErrorTexture = GFXAdapter.GetTexture("state_error");
+
+            windowTitle = new GUIContent($"KontrolSystem {version}", stateInactiveTexture);
         }
 
         public Rect WindowRect => windowRect;
@@ -55,7 +61,14 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         public void DrawUI() {
             
             GUI.skin = commonStyles.baseSkin;
-
+            
+            if (Mainframe.Instance.Initialized) {
+                if (Mainframe.Instance.LastErrors.Any()) windowTitle.image = stateErrorTexture;
+                else windowTitle.image = stateActiveTexture;
+            } else if (Mainframe.Instance.Rebooting) {
+                windowTitle.image = stateInactiveTexture;
+            }
+            
             windowRect = GUILayout.Window(objectId, windowRect, DrawWindow, windowTitle);
         }
 

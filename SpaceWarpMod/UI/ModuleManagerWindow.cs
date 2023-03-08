@@ -18,14 +18,16 @@ namespace KontrolSystem.SpaceWarpMod.UI {
 
         protected override void DrawWindow(int windowId) {
             GUILayout.BeginVertical();
+            
             GUILayout.BeginHorizontal();
 
-            GUILayout.BeginVertical();
+            GUILayout.BeginVertical(GUILayout.ExpandWidth(false));
             if (GUILayout.Button(Mainframe.Instance.Rebooting ? "Rebooting..." : "Reboot")) OnReboot();
+            GUILayout.Space(20);
             if (GUILayout.Button("Close")) Close();
             GUILayout.EndVertical();
 
-            errorScrollPos = GUILayout.BeginScrollView(errorScrollPos, GUILayout.MinWidth(300), GUILayout.MaxWidth(700),
+            errorScrollPos = GUILayout.BeginScrollView(errorScrollPos, GUILayout.MinWidth(300), GUILayout.MaxWidth(3000),
                 GUILayout.ExpandWidth(true));
             GUILayout.BeginVertical();
 
