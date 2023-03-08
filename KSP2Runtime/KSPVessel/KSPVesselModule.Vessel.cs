@@ -38,6 +38,8 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField(Description = "The name of the vessel.")]
             public string Name => vessel.Name;
             
+            [KSField] public bool IsActive => vessel.SimulationObject.IsActiveVessel;
+            
             [KSField] 
             public string ControlStatus => vessel.ControlStatus.ToString();
             
