@@ -51,11 +51,13 @@ namespace KontrolSystem.TO2.Generator {
             constructorEmitter = new GeneratorILEmitter(constructorBuilder.GetILGenerator());
         }
 
-        private ModuleContext(ModuleContext parent, string subTypeName, Type parentType, Type[] interfaces) {
+        private ModuleContext(ModuleContext parent, string subTypeName, Type parentType, Type[] interfaces, bool nestedType) {
             root = parent.root;
             moduleName = parent.moduleName;
-            typeBuilder =
-                parent.typeBuilder.DefineNestedType(subTypeName, TypeAttributes.NestedPublic, parentType, interfaces);
+            typeBuilder = nestedType
+                ? parent.typeBuilder.DefineNestedType(subTypeName, TypeAttributes.NestedPublic, parentType, interfaces)
+                : root.moduleBuilder.DefineType(
+                    this.moduleName.ToUpperInvariant().Replace(':', '_') + "_" + subTypeName);
             moduleAliases = parent.moduleAliases;
             mappedTypes = parent.mappedTypes;
             mappedConstants = parent.mappedConstants;
@@ -82,8 +84,16 @@ namespace KontrolSystem.TO2.Generator {
             return new SyncBlockContext(this, modifier, isAsync, methodName, returnType, parameters.ToList());
         }
 
+        public ModuleContext DefineSiblingContext(string name, Type parentType, params Type[] interfaces) {
+            ModuleContext subContext = new ModuleContext(this, name, parentType, interfaces, false);
+            
+            subTypes.Add(name, subContext.typeBuilder);
+
+            return subContext;
+        }
+
         public ModuleContext DefineSubContext(string name, Type parentType, params Type[] interfaces) {
-            ModuleContext subContext = new ModuleContext(this, name, parentType, interfaces);
+            ModuleContext subContext = new ModuleContext(this, name, parentType, interfaces, true);
 
             subTypes.Add(name, subContext.typeBuilder);
 

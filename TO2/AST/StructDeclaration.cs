@@ -129,7 +129,7 @@ namespace KontrolSystem.TO2.AST {
             Name = name;
             Description = description;
             this.fields = fields;
-            structContext = declaredModule.DefineSubContext(name, typeof(object));
+            structContext = declaredModule.DefineSiblingContext(name, typeof(object));
 
             ConstructorBuilder constructorBuilder = structContext.typeBuilder.DefineConstructor(
                 MethodAttributes.Public, CallingConventions.Standard, Type.EmptyTypes);
