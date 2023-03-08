@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime.KSPConsole {
     public struct ConsoleLine {
@@ -11,18 +10,6 @@ namespace KontrolSystem.KSP.Runtime.KSPConsole {
         internal ConsoleLine(int lineNumber, char[] line) {
             this.lineNumber = lineNumber;
             this.line = line;
-        }
-
-        internal void AdjustCols(int cols) {
-            if (line.Length < cols) return;
-
-            char[] newLine = new char[cols];
-
-            Array.Copy(line, newLine, Math.Min(cols, line.Length));
-
-            for (int i = line.Length; i < cols; i++) newLine[i] = ' ';
-
-            line = newLine;
         }
 
         internal void Clear() {
@@ -44,13 +31,16 @@ namespace KontrolSystem.KSP.Runtime.KSPConsole {
 
         private readonly int maxLines;
 
+        private readonly int maxLineLength;
+
         private readonly object consoleLock = new object();
 
-        public KSPConsoleBuffer(int visibleRows, int visibleCols, int maxLines = 2000) {
+        public KSPConsoleBuffer(int visibleRows, int visibleCols, int maxLineLength = 1000, int maxLines = 2000) {
             bufferLines = new LinkedList<ConsoleLine>();
             this.VisibleRows = Math.Max(visibleRows, 1);
             this.VisibleCols = Math.Max(visibleCols, 1);
             this.maxLines = maxLines;
+            this.maxLineLength = maxLineLength;
 
             Clear();
         }
@@ -117,10 +107,7 @@ namespace KontrolSystem.KSP.Runtime.KSPConsole {
                     }
 
                     string line = lines[i];
-                    cursorLine.Value.AdjustCols(VisibleCols);
-                    for (int j = 0; CursorCol < VisibleCols && j < line.Length; j++) {
-                        if (CursorCol >= cursorLine.Value.line.Length)
-                            break;
+                    for (int j = 0; CursorCol < maxLineLength && j < line.Length; j++) {
                         cursorLine.Value.line[CursorCol++] = line[j];
                     }
                 }
@@ -159,7 +146,7 @@ namespace KontrolSystem.KSP.Runtime.KSPConsole {
 
         private void AddLines(int count) {
             for (int i = 0; i < count; i++)
-                bufferLines.AddLast(new ConsoleLine(bufferLines.Count, new char[VisibleCols]));
+                bufferLines.AddLast(new ConsoleLine(bufferLines.Count, new char[maxLineLength]));
             topLine ??= bufferLines.First;
             while (topLine != null && topLine.Value.lineNumber < bufferLines.Count - VisibleRows)
                 topLine = topLine.Next;
