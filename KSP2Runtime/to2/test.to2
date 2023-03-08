@@ -1,0 +1,20 @@
+use { Vessel } from ksp::vessel
+use { CONSOLE } from ksp::console
+use { sleep, current_time } from ksp::game
+
+pub fn main_flight(vessel: Vessel) -> Result<Unit, string> = {
+    CONSOLE.clear()
+    CONSOLE.print_line("On")
+    
+    const throttle_manager = vessel.manage_throttle(fn(deltaT) -> {
+        CONSOLE.print_line("D: " + deltaT.to_string())
+        
+        1.0
+    })
+    
+    sleep(2)
+    
+    throttle_manager.release()
+        
+    CONSOLE.print_line("Off")
+}

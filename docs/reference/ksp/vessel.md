@@ -227,7 +227,18 @@ Estimated TWR of the stage in a given `situation`
 Name | Type | Description
 --- | --- | ---
 count | int | 
+ready | bool | 
 total_count | int | 
+
+#### Methods
+
+##### next
+
+```rust
+staging.next ( ) -> bool
+```
+
+
 
 ### Targetable
 
@@ -261,6 +272,7 @@ facing | ksp::math::Direction |
 geo_coordinates | ksp::orbit::GeoCoordinates | 
 heading | float | 
 horizontal_surface_speed | float | 
+is_active | bool | 
 main_body | ksp::orbit::Body | 
 maneuver | ksp::vessel::Maneuver | 
 mass | float | 
@@ -293,7 +305,7 @@ vessel.manage_steering ( directionProvider : fn() -> ksp::math::Direction ) -> k
 ##### manage_throttle
 
 ```rust
-vessel.manage_throttle ( throttleProvider : fn() -> float ) -> ksp::control::ThrottleManager
+vessel.manage_throttle ( throttleProvider : fn(float) -> float ) -> ksp::control::ThrottleManager
 ```
 
 
@@ -370,4 +382,16 @@ MODE_TARGET | string |
 SITUATION_ALTITUDE | string | Used for delta-v calculation at the current altitude. 
 SITUATION_SEALEVEL | string | Used for delta-v calculation at sea level of the current body. 
 SITUATION_VACUUM | string | Used for delta-v calculation in vacuum. 
+
+
+## Functions
+
+
+### active_vessel
+
+```rust
+pub sync fn active_vessel ( ) -> Result<ksp::vessel::Vessel, string>
+```
+
+Try to get the currently active vessel. Will result in an error if there is none.
 

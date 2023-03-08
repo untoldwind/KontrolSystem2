@@ -1,4 +1,5 @@
-﻿using KontrolSystem.KSP.Runtime.KSPConsole;
+﻿using System;
+using KontrolSystem.KSP.Runtime.KSPConsole;
 using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.TO2.Runtime;
@@ -15,6 +16,9 @@ namespace KontrolSystem.KSP.Runtime.Testing {
         }
 
         public object NextYield { get; set; }
+        
+        public Action OnNextYieldOnce { get; set; }
+        
         public void AddMarker(IMarker marker) {
         }
 

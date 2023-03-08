@@ -5,6 +5,7 @@ using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KSP.Sim.impl;
 using KSP.Sim.State;
+using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime {
     public interface IMarker {
@@ -23,6 +24,8 @@ namespace KontrolSystem.KSP.Runtime {
         KSPOrbitModule.IBody FindBody(string name);
         
         object NextYield { get; set; }
+        
+        Action OnNextYieldOnce { get; set; }
 
         void AddMarker(IMarker marker);
 

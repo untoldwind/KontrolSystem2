@@ -206,7 +206,7 @@ throttlemanager.resume ( ) -> Unit
 ##### set_throttle_provider
 
 ```rust
-throttlemanager.set_throttle_provider ( newThrottleProvider : fn() -> float ) -> Unit
+throttlemanager.set_throttle_provider ( newThrottleProvider : fn(float) -> float ) -> Unit
 ```
 
 

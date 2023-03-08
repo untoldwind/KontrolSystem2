@@ -40,6 +40,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
     public class KSPContext : IKSPContext {
         private readonly KSPConsoleBuffer consoleBuffer;
         private object nextYield;
+        private Action onNextYieldOnce;
         private readonly Stopwatch timeStopwatch;
         private readonly long timeoutMillis;
         internal readonly List<IMarker> markers;
@@ -66,6 +67,10 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         }
 
         public void ResetTimeout() {
+            if (onNextYieldOnce != null) {
+                onNextYieldOnce();
+                onNextYieldOnce = null;
+            }
             timeStopwatch.Reset();
             timeStopwatch.Start();
         }
@@ -98,7 +103,12 @@ namespace KontrolSystem.SpaceWarpMod.Core {
             }
             set => nextYield = value;
         }
-        
+
+        public Action OnNextYieldOnce {
+            get => onNextYieldOnce;
+            set => onNextYieldOnce = value;
+        }
+
         public void AddMarker(IMarker marker) => markers.Add(marker);
 
         public void RemoveMarker(IMarker marker) {

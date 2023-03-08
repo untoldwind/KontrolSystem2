@@ -132,10 +132,10 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             
             [KSMethod]
             public KSPControlModule.ThrottleManager SetThrottle(double throttle) =>
-                new KSPControlModule.ThrottleManager(context, vessel, () => throttle);
+                new KSPControlModule.ThrottleManager(context, vessel, _ => throttle);
 
             [KSMethod]
-            public KSPControlModule.ThrottleManager ManageThrottle(Func<double> throttleProvider) =>
+            public KSPControlModule.ThrottleManager ManageThrottle(Func<double, double> throttleProvider) =>
                 new KSPControlModule.ThrottleManager(context, vessel, throttleProvider);
 
             [KSMethod]

@@ -44,9 +44,6 @@ pub fn exec_next_node(vessel : Vessel) -> Result<Unit, string> = {
 
     CONSOLE.print_line("DONE")
     
-    throttle_manager.throttle = 0
-    sleep(0.1)
-    
     throttle_manager.release()
     
     node.remove()
