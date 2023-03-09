@@ -42,7 +42,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField] public double MaxThrustOutputVac => dataEngine.MaxThrustOutputVac(true);
 
             [KSField] public double MaxThrustOutputAtm => dataEngine.MaxThrustOutputAtm();
-            
+
             [KSField]
             public EngineModeAdapter[] EngineModes => dataEngine.engineModes
                 .Select(engineMode => new EngineModeAdapter(engineMode)).ToArray();

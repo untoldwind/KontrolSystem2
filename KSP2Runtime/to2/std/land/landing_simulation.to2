@@ -7,26 +7,27 @@ use { angle_to_180 } from std::utils
 use { current_time } from ksp::game
 
 pub struct BodyParameters(body : Body, decel_end_altitude_asl : float, landing_altitude_asl : float, speed_policy : SpeedPolicy) {
-    position : Vec3 = body.position
+    position : Vec3 = body.position.to_local(body.reference_frame)
     angular_velocity : Vec3 = body.angular_velocity
     aerobraked_radius : float = body.radius + (if(body.has_atmosphere) body.atmosphere_depth else 0)
     decel_radius : float = body.radius + decel_end_altitude_asl
     landing_radius : float = body.radius + landing_altitude_asl
     speed_policy : SpeedPolicy = speed_policy
     grav_parameter : float = body.grav_parameter
-    lat90_at_start : Vec3 = body.surface_normal(90, 0)
-    lat0_lon0_at_start : Vec3 = body.surface_normal(0, 0)
-    lot0_lon90_at_start : Vec3 = body.surface_normal(0, 90)
+    lat90_at_start : Vec3 = body.surface_normal(90, 0).to_local(body.reference_frame)
+    lat0_lon0_at_start : Vec3 = body.surface_normal(0, 0).to_local(body.reference_frame)
+    lot0_lon90_at_start : Vec3 = body.surface_normal(0, 90).to_local(body.reference_frame)
     epoch : float = current_time()
     rotation_period : float = body.rotation_period
 }
 
 impl BodyParameters {
     sync fn reset(self, body : Body) -> Unit = {
-        self.position = body.position
-        self.lat90_at_start = body.surface_normal(90, 0)
-        self.lat0_lon0_at_start = body.surface_normal(0, 0)
-        self.lot0_lon90_at_start = body.surface_normal(0, 90)
+        const frame = body.reference_frame
+        self.position = body.position.to_local(frame)
+        self.lat90_at_start = body.surface_normal(90, 0).to_local(frame)
+        self.lat0_lon0_at_start = body.surface_normal(0, 0).to_local(frame)
+        self.lot0_lon90_at_start = body.surface_normal(0, 90).to_local(frame)
         self.epoch = current_time()
     }
     

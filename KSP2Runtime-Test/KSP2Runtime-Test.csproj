@@ -21,6 +21,9 @@
         <Reference Include="mscorlib">
             <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\mscorlib.dll</HintPath>
         </Reference>
+        <Reference Include="Assembly-CSharp">
+            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\Assembly-CSharp.dll</HintPath>
+        </Reference>
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="xunit" Version="2.4.1" />

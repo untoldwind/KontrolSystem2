@@ -91,6 +91,8 @@ namespace KontrolSystem.SpaceWarpMod.Core {
 
         public double UniversalTime => Game.SpaceSimulation.UniverseModel.UniversalTime;
 
+        public VesselComponent ActiveVessel => gameInstance.ViewController.GetActiveSimVessel(true);
+        
         public KSPConsoleBuffer ConsoleBuffer => consoleBuffer;
 
         public KSPOrbitModule.IBody FindBody(string name) {

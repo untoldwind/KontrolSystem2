@@ -246,8 +246,8 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
             }
 
             public void UpdateStateVectors(float detlaT) {
-                targetRot = directionProvider().Rotation;
-                centerOfMass = vessel.CoM;
+                targetRot = directionProvider().Rotation.localRotation;
+                centerOfMass = vessel.CoM.localPosition;
 
                 vesselTransform = vessel.vessel.transform;
                 // Found that the default rotation has top pointing forward, forward pointing down, and right pointing starboard.

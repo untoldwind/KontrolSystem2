@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection.Emit;
 using KontrolSystem.TO2;
 using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Binding;
+using KSP.Api;
+using KSP.Sim;
 using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime.KSPMath {
@@ -15,10 +18,6 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                     Operator.Neg,
                     new StaticMethodOperatorEmitter(() => BuiltinType.Unit, () => DirectionType,
                         typeof(Direction).GetMethod("op_UnaryNegation", new[] {typeof(Vector2d)}))
-                }, {
-                    Operator.Mul,
-                    new StaticMethodOperatorEmitter(() => Vector3Binding.Vector3Type, () => Vector3Binding.Vector3Type,
-                        typeof(Direction).GetMethod("op_Multiply", new[] {typeof(Vector3d), typeof(Direction)}))
                 },
             },
             new OperatorCollection {
@@ -48,8 +47,8 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                         typeof(Direction).GetMethod("op_Multiply", new[] {typeof(Direction), typeof(Direction)}))
                 }, {
                     Operator.Mul,
-                    new StaticMethodOperatorEmitter(() => Vector3Binding.Vector3Type, () => Vector3Binding.Vector3Type,
-                        typeof(Direction).GetMethod("op_Multiply", new[] {typeof(Direction), typeof(Vector3d)}))
+                    new StaticMethodOperatorEmitter(() => VectorBinding.VectorType, () => VectorBinding.VectorType,
+                        typeof(Direction).GetMethod("op_Multiply", new[] {typeof(Direction), typeof(Vector)}))
                 }, {
                     Operator.Eq,
                     new StaticMethodOperatorEmitter(() => DirectionType, () => BuiltinType.Bool,
@@ -63,55 +62,61 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
             },
             new Dictionary<string, IMethodInvokeFactory> {
                 {
+                    "euler",
+                    new BoundMethodInvokeFactory("Get euler angles in a specific coordinate system", true, () => Vector3Binding.Vector3Type,
+                    () => new List<RealizedParameter>() { new RealizedParameter("frame", TransformFrameBinding.TransformFrameType) }, false, typeof(Direction),
+                    typeof(Direction).GetMethod("Euler"))
+                },
+                {
+                    "pitch",
+                    new BoundMethodInvokeFactory("Get pitch angle in a specific coordinate system", true, () => BuiltinType.Float,
+                        () => new List<RealizedParameter>() { new RealizedParameter("frame", TransformFrameBinding.TransformFrameType) }, false, typeof(Direction),
+                        typeof(Direction).GetMethod("Pitch"))
+                },
+                {
+                    "yaw",
+                    new BoundMethodInvokeFactory("Get yaw angle in a specific coordinate system", true, () => BuiltinType.Float,
+                        () => new List<RealizedParameter>() { new RealizedParameter("frame", TransformFrameBinding.TransformFrameType) }, false, typeof(Direction),
+                        typeof(Direction).GetMethod("Yaw"))
+                },
+                {
+                    "roll",
+                    new BoundMethodInvokeFactory("Get roll angle in a specific coordinate system", true, () => BuiltinType.Float,
+                        () => new List<RealizedParameter>() { new RealizedParameter("frame", TransformFrameBinding.TransformFrameType) }, false, typeof(Direction),
+                        typeof(Direction).GetMethod("Roll"))
+                },
+                {
                     "to_string",
                     new BoundMethodInvokeFactory("Convert the direction to string", true, () => BuiltinType.String,
-                        () => new List<RealizedParameter>(), false, typeof(Direction),
-                        typeof(Direction).GetMethod("ToString"))
+                        () => new List<RealizedParameter>() { new RealizedParameter("frame", TransformFrameBinding.TransformFrameType) }, false, typeof(Direction),
+                        typeof(Direction).GetMethod("ToString", new Type[] { typeof(ITransformFrame)}))
                 }
             },
             new Dictionary<string, IFieldAccessFactory> {
                 {
-                    "euler",
-                    new BoundPropertyLikeFieldAccessFactory("Euler angles in degree of the rotation",
-                        () => Vector3Binding.Vector3Type, typeof(Direction),
-                        typeof(Direction).GetProperty("Euler"))
-                }, {
                     "vector",
                     new BoundPropertyLikeFieldAccessFactory(
-                        "Fore vector of the rotation (i.e. looking/facing direction", () => Vector3Binding.Vector3Type,
+                        "Fore vector of the rotation (i.e. looking/facing direction", () => VectorBinding.VectorType,
                         typeof(Direction), typeof(Direction).GetProperty("Vector"))
                 }, {
                     "up_vector",
                     new BoundPropertyLikeFieldAccessFactory("Up vector of the rotation",
-                        () => Vector3Binding.Vector3Type, typeof(Direction),
+                        () => VectorBinding.VectorType, typeof(Direction),
                         typeof(Direction).GetProperty("UpVector"))
                 }, {
                     "right_vector",
                     new BoundPropertyLikeFieldAccessFactory("Right vector of the rotation",
-                        () => Vector3Binding.Vector3Type, typeof(Direction),
+                        () => VectorBinding.VectorType, typeof(Direction),
                         typeof(Direction).GetProperty("RightVector"))
-                }, {
-                    "pitch",
-                    new BoundPropertyLikeFieldAccessFactory("Pitch in degree", () => BuiltinType.Float,
-                        typeof(Direction), typeof(Direction).GetProperty("Pitch"))
-                }, {
-                    "yaw",
-                    new BoundPropertyLikeFieldAccessFactory("Yaw in degree", () => BuiltinType.Float, typeof(Direction),
-                        typeof(Direction).GetProperty("Yaw"))
-                }, {
-                    "roll",
-                    new BoundPropertyLikeFieldAccessFactory("Roll in degree", () => BuiltinType.Float,
-                        typeof(Direction), typeof(Direction).GetProperty("Roll"))
                 },
             });
 
-        public static Direction LookDirUp(Vector3d lookDirection, Vector3d upDirection) =>
-            Direction.LookRotation(lookDirection, upDirection);
+        public static Direction LookDirUp(Vector lookDirection, Vector upDirection) => Direction.LookRotation(lookDirection, upDirection);
 
-        public static Direction Euler(double x, double y, double z) => new Direction(new Vector3d(x, y, z), true);
+        public static Direction Euler(ITransformFrame frame, double x, double y, double z) => new Direction(new Rotation(frame, QuaternionD.Euler(x, y, z)));
 
-        public static Direction AngleAxis(double angle, Vector3d axis) => Direction.AngleAxis(angle, axis);
+        public static Direction AngleAxis(double angle, Vector axis) => Direction.AngleAxis(angle, axis);
 
-        public static Direction FromVectorToVector(Vector3d v1, Vector3d v2) => Direction.FromVectorToVector(v1, v2);
+        public static Direction FromVectorToVector(Vector v1, Vector v2) => Direction.FromVectorToVector(v1, v2);
     }
 }

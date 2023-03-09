@@ -1,9 +1,12 @@
 ﻿using System;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KSP.Sim.impl;
+using KSP.Api;
+using KSP.Sim;
 
 namespace KontrolSystem.KSP.Runtime.Testing {
     public class MockBody : KSPOrbitModule.IBody {
+        // These orbits are from KSP1 ... they have to be checked with KSP2
         public static readonly MockBody Kerbol = new MockBody("Kerbol", 261600000, 1.17233279483249E+18);
 
         public static readonly MockBody Kerbin = new MockBody("Kerbin", 600000, Kerbol, 0, 0, 13599840256, 0, 0, 0,
@@ -119,11 +122,13 @@ namespace KontrolSystem.KSP.Runtime.Testing {
 
         public double RotationPeriod => rotationPeriod;
 
-        public Vector3d Position => Vector3d.zero;
+        public ITransformFrame ReferenceFrame => KSPTesting.IDENTITY_COORDINATE_SYSTEM;
 
-        public Vector3d Up => Vector3d.up;
+        public Position Position => new Position(ReferenceFrame, Vector3d.zero);
 
-        public Vector3d Right => Vector3d.right;
+        public Vector Up => new Vector(KSPTesting.IDENTITY_COORDINATE_SYSTEM, Vector3d.up);
+
+        public Vector Right => new Vector(KSPTesting.IDENTITY_COORDINATE_SYSTEM, Vector3d.right);
 
         public Vector3d AngularVelocity => angularVelocity;
 
@@ -135,13 +140,13 @@ namespace KontrolSystem.KSP.Runtime.Testing {
             return orbit?.GetOrbitalVelocityAtUT(ut) ?? Vector3d.zero;
         }
 
-        public Vector3d SurfaceNormal(double lat, double lon) {
+        public Vector SurfaceNormal(double lat, double lon) {
             lat *= Math.PI / 180.0;
             lon *= Math.PI / 180.0;
             double phi = Math.Cos(lat);
             double z = Math.Sin(lat);
 
-            return new Vector3d(phi * Math.Cos(lon), z, phi * Math.Sin(lon));
+            return new Vector(ReferenceFrame, new Vector3d(phi * Math.Cos(lon), z, phi * Math.Sin(lon)));
         }
 
         public double TerrainHeight(double lat, double lon) => 0.0;
@@ -159,8 +164,8 @@ namespace KontrolSystem.KSP.Runtime.Testing {
         public KSPOrbitModule.GeoCoordinates GeoCoordinates(double latitude, double longitude) =>
             new KSPOrbitModule.GeoCoordinates(this, latitude, longitude);
 
-        public Vector3d SurfacePosition(double latitude, double longitude, double altitude) =>
-            SurfaceNormal(latitude, longitude) * (radius + altitude);
+        public Position SurfacePosition(double latitude, double longitude, double altitude) =>
+             Position + SurfaceNormal(latitude, longitude) * (radius + altitude);
 
         public Vector3d RelativeVelocity(Vector3d position) => Vector3d.Cross(this.angularVelocity, position);
 

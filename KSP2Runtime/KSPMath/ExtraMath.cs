@@ -1,4 +1,7 @@
-﻿namespace KontrolSystem.KSP.Runtime.KSPMath {
+﻿using KSP.Api;
+using KSP.Sim.impl;
+
+namespace KontrolSystem.KSP.Runtime.KSPMath {
     public class ExtraMath {
         public static double AngleDelta(double a, double b) {
             var delta = b - a;

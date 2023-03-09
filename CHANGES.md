@@ -40,7 +40,6 @@
 * Support array of arrays types (addresses #12)
 * Add engine mode information (addresses #12)
 
-
 ## 0.1.5 -> 0.1.6
 
 * Add `vessel.situtation` binding (Addressing #8)

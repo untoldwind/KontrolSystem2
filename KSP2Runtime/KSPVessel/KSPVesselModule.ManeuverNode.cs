@@ -50,19 +50,20 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             }
 
             [KSField]
-            public Vector3d BurnVector {
+            public Vector BurnVector {
                 get {
                     KSPOrbitModule.IOrbit orbit = new OrbitWrapper(vesselAdapter.context, vesselAdapter.vessel.Orbit);
-                    return orbit.RadialPlus(maneuverNode.Time) * maneuverNode.BurnVector.x +
+                    return new Vector(orbit.ReferenceFrame, orbit.RadialPlus(maneuverNode.Time) * maneuverNode.BurnVector.x +
                            orbit.NormalPlus(maneuverNode.Time) * maneuverNode.BurnVector.y +
-                           orbit.Prograde(maneuverNode.Time) * maneuverNode.BurnVector.z;
+                           orbit.Prograde(maneuverNode.Time) * maneuverNode.BurnVector.z);
                 }
                 set {
                     KSPOrbitModule.IOrbit orbit = new OrbitWrapper(vesselAdapter.context, vesselAdapter.vessel.Orbit);
+                    Vector3d local = orbit.ReferenceFrame.ToLocalVector(value);
                     UpdateNode(
-                        Vector3d.Dot(orbit.RadialPlus(maneuverNode.Time), value),
-                        Vector3d.Dot(orbit.NormalPlus(maneuverNode.Time), value),
-                        Vector3d.Dot(orbit.Prograde(maneuverNode.Time), value),
+                        Vector3d.Dot(orbit.RadialPlus(maneuverNode.Time), local),
+                        Vector3d.Dot(orbit.NormalPlus(maneuverNode.Time), local),
+                        Vector3d.Dot(orbit.Prograde(maneuverNode.Time), local),
                         maneuverNode.Time);
                 }
             }

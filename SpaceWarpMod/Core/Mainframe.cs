@@ -244,5 +244,8 @@ namespace KontrolSystem.SpaceWarpMod.Core {
                 }
             }
         }
+
+
+        private GameMode CurrentGameMode => GameModeAdapter.GameModeFromState(Game.GlobalGameState.GetState());
     }
 }

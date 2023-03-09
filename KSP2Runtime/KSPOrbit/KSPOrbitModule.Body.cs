@@ -1,5 +1,8 @@
-﻿using KontrolSystem.KSP.Runtime.KSPVessel;
+using KontrolSystem.KSP.Runtime.KSPVessel;
 using KontrolSystem.TO2.Binding;
+using KontrolSystem.TO2.Binding;
+using KSP.Api;
+using KSP.Sim;
 
 namespace KontrolSystem.KSP.Runtime.KSPOrbit {
     public partial class KSPOrbitModule {
@@ -28,29 +31,36 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
             [KSField(Description = "Rotation period of the planet.")]
             double RotationPeriod { get; }
-
-            [KSField(Description = "The current position of the body")] Vector3d Position { get; }
             
             [KSField(Description = "Angular velocity vector of the body")] Vector3d AngularVelocity { get; }
             
-            [KSField] Vector3d Up { get; }
+            [KSField] ITransformFrame ReferenceFrame { get; }
 
-            [KSField] Vector3d Right { get; }
-            
+            [KSField] public Position Position { get; }
+
+            [KSField] Vector Up { get; }
+
+            [KSField] Vector Right { get; }
+
             [KSMethod(Description = "Get the surface normal at a `latitude` and `longitude` (i.e. the vector pointing up at this geo coordinate")]
-            Vector3d SurfaceNormal(double latitude, double longitude);
+            Vector SurfaceNormal(double latitude, double longitude);
 
             [KSMethod]
             double TerrainHeight(double lat, double lon);
 
             [KSMethod]
-            Vector3d SurfacePosition(double latitude, double longitude, double altitude);
+            Position SurfacePosition(double latitude, double longitude, double altitude);
 
             [KSMethod] GeoCoordinates GeoCoordinates(double latitude, double longitude);
 
             [KSMethod(Description =
                 "Create a new orbit around this body starting at a given relative `position` and `velocity` at universal time `ut`")]
             IOrbit CreateOrbit(Vector3d position, Vector3d velocity, double ut);
+
+            [KSMethod]
+            IOrbit CreateOrbitFromParameters(double inclination, double eccentricity,
+                double semiMajorAxis, double lan,
+                double argumentOfPeriapsis, double meanAnomalyAtEpoch, double epoch);
         }
     }
 }
