@@ -1,5 +1,3 @@
-mkdocs
-mkdocs-autorefs
-mkdocstrings
-mkdocs-awesome-pages-plugin 
-markdown-include
+sphinx
+myst_parser
+sphinx_rtd_theme

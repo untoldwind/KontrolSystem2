@@ -1,0 +1,7 @@
+# Quickstart
+
+```{toctree}
+:glob:
+
+*
+```

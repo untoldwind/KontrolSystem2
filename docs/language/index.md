@@ -11,3 +11,16 @@ Core features:
   * ... to IL code for <s>maximum</s> acceptable performance
 * By default every function is asynchronous so that it can run as a Unity-coroutine
   * ... i.e. a running script does not block the main thread of the game (which would be rather bad)
+
+```{toctree}
+:maxdepth: 2
+
+conditionals
+entrypoint
+function
+loops
+modules
+types
+special_types/index
+examples/index
+```

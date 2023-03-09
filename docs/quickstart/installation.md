@@ -31,4 +31,4 @@ The "Manage" button shows all errors if the system failed to reboot. If everythi
 
 And there is a console where scripts can write helpful (or not so helpful) stuff to:
 
-![Console](onsole1.png)
+![Console](console1.png)

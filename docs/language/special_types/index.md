@@ -1,0 +1,7 @@
+# Special types
+
+```{toctree}
+:glob:
+
+*
+```
