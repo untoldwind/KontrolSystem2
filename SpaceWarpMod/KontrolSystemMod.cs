@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using BepInEx;
 using KontrolSystem.SpaceWarpMod.Core;
 using KontrolSystem.SpaceWarpMod.UI;
 using KSP.Game;
+using KSP.Messages;
 using KSP.UI.Binding;
 using SpaceWarp;
 using SpaceWarp.API.Assets;
@@ -31,7 +33,7 @@ namespace KontrolSystem.SpaceWarpMod {
         public void Awake() {
             ConfigAdapter.Init(Config);
         }
-
+        
         public override void OnInitialized() {
             LoggerAdapter.Instance.Backend = Logger;
             LoggerAdapter.Instance.Debug("Initialize KontrolSystemMod");
@@ -66,6 +68,9 @@ namespace KontrolSystem.SpaceWarpMod {
                 toolbarWindow.SetPosition(false);
                 
                 Mainframe.Instance.Reboot(ConfigAdapter.Instance);
+                
+                // Temporary fix for windows hiding main menu
+                GameManager.Instance.Game.Messages.Subscribe<EscapeMenuOpenedMessage>(OnEscapeMenuOpened);
             }
 
             toolbarWindow?.DrawUI();
@@ -74,6 +79,12 @@ namespace KontrolSystem.SpaceWarpMod {
         private void ToggleButton(bool toggle) {
             GameObject.Find("BTN-KontrolSystem")?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(toggle);
             showGUI = toggle;
+        }
+
+        private void OnEscapeMenuOpened(MessageCenterMessage message) {
+            ToggleButton(false);
+            consoleWindow?.Close();
+            moduleManagerWindow?.Close();
         }
     }
 }

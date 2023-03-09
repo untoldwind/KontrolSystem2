@@ -1,5 +1,9 @@
 # Changes
 
+## 0.1.2 -> 0.1.3
+
+* Close windows on ESC menu
+
 ## 0.1.1 -> 0.1.2
 
 * Re-adding the unit tests that where failing on windows
