@@ -1,0 +1,23 @@
+use * from ksp::testing
+use { Vec2, vec2, Vec3, vec3, euler, Position, Vector } from ksp::math
+
+test sync fn test_coordinate_system() -> Unit = {
+    assert_vec3(vec3(0, 0, 1), IDENTITY_COORDINATE_SYSTEM.forward.local)
+    assert_vec3(vec3(0, 0, -1), IDENTITY_COORDINATE_SYSTEM.back.local)
+    assert_vec3(vec3(0, 1, 0), IDENTITY_COORDINATE_SYSTEM.up.local)
+    assert_vec3(vec3(0, -1, 0), IDENTITY_COORDINATE_SYSTEM.down.local)
+    assert_vec3(vec3(1, 0, 0), IDENTITY_COORDINATE_SYSTEM.right.local)
+    assert_vec3(vec3(-1, 0, 0), IDENTITY_COORDINATE_SYSTEM.left.local)
+}
+
+test sync fn test_position() -> Unit = {
+    const p1 : Position = vec3(1, 2, 3).to_position(IDENTITY_COORDINATE_SYSTEM)
+    const p2 : Position = vec3(12, 23, 34).to_position(IDENTITY_COORDINATE_SYSTEM)
+    const v1 : Vector = p2 - p1
+    const v2 : Vector = -v1
+    
+    assert_vec3(vec3(1, 2, 3), p1.local)
+    assert_vec3(vec3(12, 23, 34), p2.local)
+    assert_vec3(vec3(11, 21, 31), v1.local)
+    assert_vec3((p1 - p2).local, v2.local)
+}

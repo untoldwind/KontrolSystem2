@@ -4,6 +4,8 @@ using System.Reflection.Emit;
 using KontrolSystem.TO2;
 using KontrolSystem.TO2.AST;
 using System.Globalization;
+using KSP.Api;
+using KSP.Sim;
 
 namespace KontrolSystem.KSP.Runtime.KSPMath {
     public static class Vector3Binding {
@@ -137,7 +139,15 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                         () => DirectionBinding.DirectionType,
                         () => new List<RealizedParameter>(),
                         false, typeof(Vector3Binding), typeof(Vector3Binding).GetMethod("ToDirection"))
-                }
+                }, {
+                    "to_position",
+                    new BoundMethodInvokeFactory("Consider this vector as position in a coordinate system",
+                        true,
+                        () => PositionBinding.PositionType,
+                        () => new List<RealizedParameter>() { new RealizedParameter("coordinate_system", CoordindateSystemBinding.CoordindateSystemType) },
+                        false, typeof(Vector3Binding), typeof(Vector3Binding).GetMethod("ToPosition"))
+                },
+                
             },
             new Dictionary<string, IFieldAccessFactory> {
                 {
@@ -169,5 +179,8 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
         }
 
         public static Direction ToDirection(Vector3d v) => new Direction(v, false);
+
+        public static Position ToPosition(Vector3d local, ICoordinateSystem coordinateSystem) =>
+            new Position(coordinateSystem, local);
     }
 }

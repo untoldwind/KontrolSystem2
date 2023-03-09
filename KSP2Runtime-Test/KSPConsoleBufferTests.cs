@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using Xunit;
 using KontrolSystem.KSP.Runtime.KSPConsole;
+using KontrolSystem.KSP.Runtime.Testing;
+using KSP.Sim.impl;
 
 namespace KontrolSystem.KSP.Runtime.Test {
     public class KSPConsoleBufferTests {
