@@ -3,6 +3,8 @@
 ## 0.1.2 -> 0.1.3
 
 * Close windows on ESC menu
+* Fix `vessel.stating.next()` to actually work
+* Made a `launch_rocket` script working (for at least one rocket)
 
 ## 0.1.1 -> 0.1.2
 

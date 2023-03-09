@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using KontrolSystem.KSP.Runtime.KSPControl;
 using KontrolSystem.KSP.Runtime.KSPMath;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
@@ -74,15 +75,12 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField] public double HorizontalSurfaceSpeed => vessel.HorizontalSrfSpeed;
 
             [KSField] public double VerticalSurfaceSpeed => vessel.VerticalSrfSpeed;
-
+            
             [KSField] public double AltitudeTerrain => vessel.AltitudeFromTerrain;
 
             [KSField] public double AltitudeSealevel => vessel.AltitudeFromSeaLevel;
 
             [KSField] public double AltitudeScenery => vessel.AltitudeFromScenery;
-
-
-
 
             [KSField] public Vector3d AngularMomentum => vessel.angularMomentum.relativeAngularVelocity.vector;
 
@@ -91,6 +89,20 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField]
             public KSPOrbitModule.GeoCoordinates GeoCoordinates => new KSPOrbitModule.GeoCoordinates(MainBody, vessel.Latitude, vessel.Longitude);
 
+            [KSField] public Vector3d Up => vessel.transform.GetSimSOIBodyParentTransformFrame().ToLocalVector(vessel.SimulationObject.Telemetry.HorizonUp);
+
+            [KSField] public Vector3d North => vessel.transform.GetSimSOIBodyParentTransformFrame().ToLocalVector(vessel.SimulationObject.Telemetry.HorizonNorth);
+
+            [KSField] public Vector3d East => vessel.transform.GetSimSOIBodyParentTransformFrame().ToLocalVector(vessel.SimulationObject.Telemetry.HorizonEast);
+            
+            [KSMethod]
+            public Direction HeadingDirection(double degreesFromNorth, double pitchAboveHorizon, double roll) {
+                QuaternionD q = QuaternionD.LookRotation(North, Up);
+                q *= QuaternionD.Euler(-pitchAboveHorizon, degreesFromNorth, 0);
+                q *= QuaternionD.Euler(0, 0, roll);
+                return new Direction(q);
+            }
+            
             [KSField]
             public Direction Facing {
                 get {
@@ -101,6 +113,17 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                     return new Direction(vesselFacing);
                 }
             }
+            
+            [KSField] public PartAdapter[] Parts => vessel.SimulationObject.PartOwner.Parts.Select(part => new PartAdapter(this, part)).ToArray();
+
+            [KSField]
+            public EngineDataAdapter[] Engines => vessel.SimulationObject.PartOwner.Parts.Select(part => {
+                if (part.TryGetModuleData<PartComponentModule_Engine, Data_Engine>(out Data_Engine data)) {
+                    return new EngineDataAdapter(data);
+                } else {
+                    return null;
+                }
+            }).Where(engine => engine != null).ToArray();
             
             [KSField]
             public Option<IKSPTargetable> Target {

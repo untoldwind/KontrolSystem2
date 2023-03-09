@@ -1,0 +1,86 @@
+
+use { Vessel, MODE_AUTOPILOT, MODE_PROGRADE, MODE_STABILITYASSIST } from ksp::vessel
+use { trigger_staging } from std::staging
+use { sleep, wait_until } from ksp::game
+use { acos_deg, max, clamp } from core::math
+use { CONSOLE } from ksp::console
+use { estimate_burn_time, exec_next_node } from std::vac
+use { circularize_orbit } from std::maneuvers
+
+/// Automatically launch a rocket from an atmosphere to a circular orbit.
+pub fn atmo_launch(vessel: Vessel, target_apoapsis: float, heading: float) -> Result<Unit, string> = {
+    vessel.actions.light = true
+
+    vessel.autopilot.enabled = true
+    vessel.autopilot.mode = MODE_AUTOPILOT
+    
+    atmo_launch_ascent(vessel, target_apoapsis, heading)
+
+    const (delta_v, UT) = circularize_orbit(vessel.orbit)?
+
+    let (burn_time, half_burn_time) = estimate_burn_time(vessel, delta_v.magnitude, 0.5, 1.0)
+
+    vessel.maneuver.add_burn_vector(UT - half_burn_time, delta_v)?
+
+    exec_next_node(vessel)?
+}
+
+
+/// Perform a rocket launch ascent from an atmosphere.
+///
+/// Note: The rocket will not end up in a stable orbit and most likely crash if no further action
+/// is taken.
+pub fn atmo_launch_ascent(vessel: Vessel, target_apoapsis: float, heading: float) -> Unit = {
+    CONSOLE.print_line("=== Start: atmo_launch_ascent ===")
+    const console_row = CONSOLE.cursor_row
+    CONSOLE.move_cursor(console_row + 2, 0)
+    
+ 	// Starting/ending height of gravity turn
+    const launch_gt0 = vessel.main_body.atmosphere_depth * 0.007
+    const launch_gt1 = vessel.main_body.atmosphere_depth * 0.7
+
+    const throttle_manager = vessel.manage_throttle(fn(deltaT) -> {
+        const atmPct = vessel.altitude_sealevel / (vessel.main_body.atmosphere_depth + 1)
+        const spd = vessel.surface_velocity.magnitude
+        const cutoff = 200 + (400 * max(0, atmPct * 3))
+
+        const throttle = if(spd > cutoff) {
+            1.0 - max(0.1, ((spd - cutoff) / cutoff))
+        } else {
+            const apoPercent = vessel.orbit.apoapsis / target_apoapsis
+            const apoCompensation = if(apoPercent > 0.9) (apoPercent - 0.9) * 10 else 0.0
+            1.0 - clamp(apoCompensation, 0, 0.5)
+        }
+        CONSOLE.print_at(console_row + 1, 0, "Target throttle: " + throttle.to_string() )
+
+        throttle
+    })
+
+    sleep(1.0)
+
+    CONSOLE.print_line("Launch: Trigger initial stage")
+    vessel.staging.next()
+
+    while(vessel.orbit.apoapsis < target_apoapsis) {
+        const gtPct = clamp((vessel.altitude_sealevel - launch_gt0) / (launch_gt1 - launch_gt0), 0, 1)
+        const pitch = acos_deg(gtPct)
+
+        CONSOLE.print_at(console_row, 0, "Target pitch: " + pitch.to_string())
+
+        vessel.autopilot.target_orientation = vessel.heading_direction(heading, pitch, 0).vector
+
+        if(trigger_staging(vessel)) {
+            CONSOLE.print_line("Next stage triggered")
+        }
+        
+        sleep(0.05)
+    }
+
+    throttle_manager.release()
+
+    vessel.autopilot.mode = MODE_PROGRADE
+    
+    wait_until(fn() -> vessel.altitude_sealevel > vessel.main_body.atmosphere_depth * 0.9)
+    
+    CONSOLE.print_line("=== Done: atmo_launch_ascent ===")
+}

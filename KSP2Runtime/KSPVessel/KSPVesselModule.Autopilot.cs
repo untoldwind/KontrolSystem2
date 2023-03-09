@@ -42,8 +42,8 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField]
             public Vector3d TargetOrientation {
-                get => autopilot.SAS.TargetOrientation;
-                set => autopilot.SAS.SetTargetOrientation(new Vector(autopilot.SAS.ReferenceFrame, value), false);
+                get => vessel.transform.GetSimSOIBodyParentTransformFrame().ToLocalVector(autopilot.SAS.ReferenceFrame, autopilot.SAS.TargetOrientation);
+                set => autopilot.SAS.SetTargetOrientation(new Vector(vessel.transform.GetSimSOIBodyParentTransformFrame(), value), false);
             }
 
             [KSField]

@@ -28,7 +28,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
             get => vector;
             set {
                 vector = value.normalized;
-                rotation = Quaternion.LookRotation(value);
+                rotation = QuaternionD.LookRotation(value);
                 euler = rotation.eulerAngles;
             }
         }
@@ -37,7 +37,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
             get => euler;
             set {
                 euler = value;
-                rotation = Quaternion.Euler(value);
+                rotation = QuaternionD.Euler(value);
                 vector = rotation * Vector3d.forward;
             }
         }
@@ -73,7 +73,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
         /// <param name="v2">go to this vector </param>
         /// <returns></returns>
         public static Direction FromVectorToVector(Vector3d v1, Vector3d v2) =>
-            new Direction(Quaternion.FromToRotation(v1, v2));
+            new Direction(QuaternionD.FromToRotation(v1, v2));
 
         /// <summary>
         /// Produces a direction in which you are looking in lookdirection, and
@@ -85,7 +85,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
         /// <param name="upDirection">direction for the 'TOP' of the roll axis</param>
         /// <returns>new direction.</returns>
         public static Direction LookRotation(Vector3d lookDirection, Vector3d upDirection) =>
-            new Direction(Quaternion.LookRotation(lookDirection, upDirection));
+            new Direction(QuaternionD.LookRotation(lookDirection, upDirection));
 
         // This next one doesn't have a common signature, but it's kept as a static
         // instead of a constructor because it's coherent with the other ones that way:
@@ -96,7 +96,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
         /// <param name="axis">The axis to rotate around.  Rotations use a left-hand rule because it's a left-handed coord system.</param>
         /// </summary>
         public static Direction AngleAxis(double degrees, Vector3d axis) =>
-            new Direction(Quaternion.AngleAxis((float)degrees, axis));
+            new Direction(QuaternionD.AngleAxis((float)degrees, axis));
 
         public static Direction operator *(Direction a, Direction b) => new Direction(a.Rotation * b.Rotation);
 
@@ -112,7 +112,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
 
         public static Direction operator -(Direction a, Direction b) => new Direction(a.Euler - b.Euler, true);
 
-        public static Direction operator -(Direction a) => new Direction(Quaternion.Inverse(a.rotation));
+        public static Direction operator -(Direction a) => new Direction(QuaternionD.Inverse(a.rotation));
 
         public override bool Equals(object obj) {
             Type compareType = typeof(Direction);
@@ -146,7 +146,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
         /// <param name="fromDir">start rotation.</param>
         /// <returns>new Direction representing such a rotation.</returns>
         public Direction RelativeFrom(Direction fromDir) =>
-            new Direction(Quaternion.RotateTowards(fromDir.rotation, rotation, 99999.0f));
+            new Direction(QuaternionD.RotateTowards(fromDir.rotation, rotation, 99999.0f));
 
         public override string ToString() =>
             $"R({Math.Round(euler.x, 3)},{Math.Round(euler.y, 3)},{Math.Round(euler.z, 3)})";

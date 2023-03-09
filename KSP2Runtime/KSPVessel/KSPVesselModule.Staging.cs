@@ -22,9 +22,12 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSMethod]
             public Future<bool> Next() {
-                if (staging.StageCount > 0 && vesselAdapter.vessel.HasControlForEditingStagingStack()) return new Future.Success<bool>(false);
-                staging.ActivateNextStage();
-                return new Future.Success<bool>(true);
+                if (staging.StageCount > 0 && vesselAdapter.vessel.HasControlForEditingStagingStack()) {
+                    staging.ActivateNextStage();
+                    return new Future.Success<bool>(true);
+                }
+
+                return new Future.Success<bool>(false);
             }
         }
         

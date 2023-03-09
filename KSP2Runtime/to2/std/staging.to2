@@ -1,0 +1,31 @@
+/// Collection of helper functions to control staging of a vessel
+
+use { Vessel } from ksp::vessel
+use { wait_until } from ksp::game
+use { CONSOLE } from ksp::console
+
+/// Helper function to automatically trigger staging during a burn.
+///
+/// This function is just checking if one of the ignited engines has has a flameout,
+/// which in most cases means that the current stage has burned out.
+///
+/// Will return `true` if stating has been triggered.
+pub fn trigger_staging(vessel : Vessel) -> bool = {
+    if(vessel.staging.count == 0) return false
+
+    let needs_staging = has_flameout(vessel)
+    if(needs_staging) {
+        CONSOLE.print_line("Trigger next stage")
+        wait_until(fn() -> vessel.staging.ready)
+        vessel.staging.next()
+    }
+
+    needs_staging
+}
+
+pub sync fn has_flameout(vessel : Vessel) -> bool = {
+    for(engine in vessel.engines)
+        if(engine.has_ignited && engine.is_flameout)
+            return true
+    false
+}
