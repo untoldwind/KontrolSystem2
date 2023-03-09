@@ -11,3 +11,4 @@
   * Should eventually work for all other control managers as well
 * Ignore empty lines on console resize
 * Add indicator light to main window
+* Additional vessel information (thanks EloxZ) 
