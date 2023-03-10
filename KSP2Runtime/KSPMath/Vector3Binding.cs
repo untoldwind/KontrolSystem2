@@ -147,7 +147,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                         () => new List<RealizedParameter>() { new RealizedParameter("coordinate_system", CoordindateSystemBinding.CoordindateSystemType) },
                         false, typeof(Vector3Binding), typeof(Vector3Binding).GetMethod("ToPosition"))
                 },
-                
+
             },
             new Dictionary<string, IFieldAccessFactory> {
                 {

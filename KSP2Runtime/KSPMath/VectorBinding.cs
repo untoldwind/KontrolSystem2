@@ -44,7 +44,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                         typeof(Vector).GetMethod("op_Multiply", new[] {typeof(Vector), typeof(double)}))
                 },
             },
-            new Dictionary<string, IMethodInvokeFactory> {},
+            new Dictionary<string, IMethodInvokeFactory> { },
             new Dictionary<string, IFieldAccessFactory> {
                 { "local", new BoundPropertyLikeFieldAccessFactory("coordinates in coordindate system", () => Vector3Binding.Vector3Type, typeof(Vector), typeof(Vector).GetProperty("vector") )},
                 { "coordinate_system", new BoundPropertyLikeFieldAccessFactory("coordindate system", () => CoordindateSystemBinding.CoordindateSystemType, typeof(Vector), typeof(Vector).GetProperty("coordinateSystem") )}

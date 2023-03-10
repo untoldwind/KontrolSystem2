@@ -31,7 +31,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                 PositionBinding.PositionType,
                 VectorBinding.VectorType
             };
-            
+
             BindingGenerator.RegisterTypeMapping(typeof(Vector2d), Vector2Binding.Vector2Type);
             BindingGenerator.RegisterTypeMapping(typeof(Vector3d), Vector3Binding.Vector3Type);
             BindingGenerator.RegisterTypeMapping(typeof(Direction), DirectionBinding.DirectionType);
