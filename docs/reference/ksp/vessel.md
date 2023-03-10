@@ -43,6 +43,8 @@ target_orientation | ksp::math::Vec3 |
 
 Name | Type | Description
 --- | --- | ---
+current_throttle | float | 
+current_thrust | float | 
 has_ignited | bool | 
 is_flameout | bool | 
 is_shutdown | bool | 
@@ -144,6 +146,7 @@ Name | Type | Description
 burn_duration | float | 
 burn_vector | ksp::math::Vec3 | 
 ETA | float | 
+expected_orbit | ksp::orbit::Orbit | 
 normal | float | 
 prograde | float | 
 radial_out | float | 
@@ -159,9 +162,18 @@ maneuvernode.remove ( ) -> Unit
 
 
 
-### PartModule
+### Part
 
 
+
+#### Fields
+
+Name | Type | Description
+--- | --- | ---
+engine_data | Option<ksp::vessel::EngineData> | 
+is_engine | bool | 
+is_solar_panel | bool | 
+part_name | string | 
 
 ### StageDeltaV
 
@@ -227,6 +239,7 @@ Estimated TWR of the stage in a given `situation`
 Name | Type | Description
 --- | --- | ---
 count | int | 
+current | int | 
 ready | bool | 
 total_count | int | 
 
@@ -236,6 +249,14 @@ total_count | int |
 
 ```rust
 staging.next ( ) -> bool
+```
+
+
+
+##### parts_in_stage
+
+```rust
+staging.parts_in_stage ( stage : int ) -> ksp::vessel::Part[]
 ```
 
 
@@ -261,13 +282,19 @@ Represents an in-game vessel, which might be a rocket, plane, rover ... or actua
 Name | Type | Description
 --- | --- | ---
 actions | ksp::vessel::ActionGroups | 
+altitude_scenery | float | 
+altitude_sealevel | float | 
+altitude_terrain | float | 
 angular_momentum | ksp::math::Vec3 | 
 angular_velocity | ksp::math::Vec3 | 
+atmosphere_density | float | 
 autopilot | ksp::vessel::Autopilot | 
 available_thrust | float | 
 CoM | ksp::math::Vec3 | 
 control_status | string | 
 delta_v | ksp::vessel::VesselDeltaV | 
+east | ksp::math::Vec3 | 
+engines | ksp::vessel::EngineData[] | 
 facing | ksp::math::Direction | 
 geo_coordinates | ksp::orbit::GeoCoordinates | 
 heading | float | 
@@ -277,21 +304,28 @@ main_body | ksp::orbit::Body |
 maneuver | ksp::vessel::Maneuver | 
 mass | float | 
 name | string | The name of the vessel. 
+north | ksp::math::Vec3 | 
+offset_ground | float | 
 orbit | ksp::orbit::Orbit | 
 orbital_velocity | ksp::math::Vec3 | 
+parts | ksp::vessel::Part[] | 
 staging | ksp::vessel::Staging | 
 surface_velocity | ksp::math::Vec3 | 
 target | Option<ksp::vessel::Targetable> | 
+up | ksp::math::Vec3 | 
 vertical_surface_speed | float | 
-offset_ground | float | Offset to ground or height of vessel.
-atmosphere_density | float | Atmosphere density in current position.
-altitude_terrain | float | Altitude from terrain (Incorrectly calibrated).
-altitude_scenery | float | Altitude from scenery (This is the one that the game shows).
-altitude_sealevel | float | Altitude from sea level.
-
-
 
 #### Methods
+
+##### heading_direction
+
+```rust
+vessel.heading_direction ( degreesFromNorth : float,
+                           pitchAboveHorizon : float,
+                           roll : float ) -> ksp::math::Direction
+```
+
+
 
 ##### manage_rcs_translate
 

@@ -104,6 +104,7 @@ apoapsis | float | Apoapsis of the orbit above sealevel of the `reference_body`.
 apoapsis_radius | float | Radius of apoapsis of the orbit (i.e. from the center of the `reference_body') 
 argument_of_periapsis | float | Argument of periapsis of the orbit. 
 eccentricity | float | Eccentricity of the orbit. 
+end_ut | float | 
 epoch | float | Orbit epoch. 
 inclination | float | Inclination of the orbit in degree. 
 LAN | float | Longitude of ascending node of the orbit in degree 
@@ -115,6 +116,7 @@ periapsis_radius | float | Radius of periapsis of the orbit (i.e. from the cente
 period | float | Orbital period. 
 reference_body | ksp::orbit::Body | The celestial body the orbit is referenced on. 
 semi_major_axis | float | Semi major axis of the orbit. 
+start_ut | float | 
 
 #### Methods
 
@@ -254,6 +256,22 @@ orbit.synodic_period ( other : ksp::orbit::Orbit ) -> float
 ```rust
 orbit.time_of_true_anomaly ( trueAnomaly : float,
                              ut : float ) -> float
+```
+
+
+
+##### to_fixed
+
+```rust
+orbit.to_fixed ( decimals : int ) -> string
+```
+
+
+
+##### to_string
+
+```rust
+orbit.to_string ( ) -> string
 ```
 
 
