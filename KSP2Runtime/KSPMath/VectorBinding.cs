@@ -9,7 +9,7 @@ using UnityEngine;
 namespace KontrolSystem.KSP.Runtime.KSPMath {
     public class VectorBinding {
         public static readonly BoundType VectorType = Direct.BindType("ksp::math", "Vector",
-            "This is a 3-dimenstional vector in a specific coordindate system", typeof(Vector),
+            "This is a 3-dimensional vector in a specific coordinate system", typeof(Vector),
             new OperatorCollection {
                 {
                     Operator.Neg,
@@ -44,10 +44,46 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                         typeof(Vector).GetMethod("op_Multiply", new[] {typeof(Vector), typeof(double)}))
                 },
             },
-            new Dictionary<string, IMethodInvokeFactory> { },
+            new Dictionary<string, IMethodInvokeFactory> {
+                {
+                    "cross",
+                    new BoundMethodInvokeFactory("Calculate the cross/other product with `other` vector.", true,
+                        () => VectorType,
+                        () => new List<RealizedParameter> {new RealizedParameter("other", VectorType)}, false,
+                        typeof(Vector), typeof(Vector).GetMethod("cross"))
+                }, {
+                    "dot",
+                    new BoundMethodInvokeFactory("Calculate the dot/inner product with `other` vector.", true,
+                        () => BuiltinType.Float,
+                        () => new List<RealizedParameter> {new RealizedParameter("other", VectorType)}, false,
+                        typeof(Vector), typeof(Vector).GetMethod("dot"))
+                }, {
+                    "lerp_to",
+                    new BoundMethodInvokeFactory(
+                        "Linear interpolate position between this and `other` vector, where `t = 0.0` is this and `t = 1.0` is `other`.",
+                        true,
+                        () => VectorType,
+                        () => new List<RealizedParameter> {
+                            new RealizedParameter("other", VectorType), new RealizedParameter("t", BuiltinType.Float)
+                        }, false, typeof(Vector), typeof(Vector).GetMethod("Lerp"))
+                }, 
+            },
             new Dictionary<string, IFieldAccessFactory> {
                 { "local", new BoundPropertyLikeFieldAccessFactory("coordinates in coordindate system", () => Vector3Binding.Vector3Type, typeof(Vector), typeof(Vector).GetProperty("vector") )},
-                { "coordinate_system", new BoundPropertyLikeFieldAccessFactory("coordindate system", () => CoordindateSystemBinding.CoordindateSystemType, typeof(Vector), typeof(Vector).GetProperty("coordinateSystem") )}
+                { "coordinate_system", new BoundPropertyLikeFieldAccessFactory("coordindate system", () => CoordindateSystemBinding.CoordindateSystemType, typeof(Vector), typeof(Vector).GetProperty("coordinateSystem") )},
+                {
+                    "magnitude",
+                    new BoundPropertyLikeFieldAccessFactory("Magnitude/length of the vector", () => BuiltinType.Float,
+                        typeof(Vector), typeof(Vector).GetProperty("magnitude"))
+                }, {
+                    "sqr_magnitude",
+                    new BoundPropertyLikeFieldAccessFactory("Squared magnitude of the vector", () => BuiltinType.Float,
+                        typeof(Vector), typeof(Vector).GetProperty("sqrMagnitude"))
+                }, {
+                    "normalized",
+                    new BoundPropertyLikeFieldAccessFactory("Normalized vector (i.e. scaled to length 1)",
+                        () => VectorType, typeof(Vector), typeof(Vector).GetMethod("normalize"), null)
+                },                
             });
     }
 }

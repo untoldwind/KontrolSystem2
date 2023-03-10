@@ -39,6 +39,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
             BindingGenerator.RegisterTypeMapping(typeof(ICoordinateSystem), CoordindateSystemBinding.CoordindateSystemType);
             BindingGenerator.RegisterTypeMapping(typeof(Position), PositionBinding.PositionType);
             BindingGenerator.RegisterTypeMapping(typeof(Vector), VectorBinding.VectorType);
+            BindingGenerator.RegisterTypeMapping(typeof(Rotation), RotationBinding.RotationType);
 
             List<CompiledKontrolConstant> constants = new List<CompiledKontrolConstant>();
 

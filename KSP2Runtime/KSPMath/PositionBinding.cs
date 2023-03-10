@@ -7,7 +7,7 @@ using KSP.Sim;
 namespace KontrolSystem.KSP.Runtime.KSPMath {
     public class PositionBinding {
         public static readonly BoundType PositionType = Direct.BindType("ksp::math", "Position",
-            "A position in space. This is a 3-dimenstional vector in a specific coordindate system", typeof(Position),
+            "A position in space. This is a 3-dimensional vector in a specific coordinate system", typeof(Position),
             new OperatorCollection { },
             new OperatorCollection {
                 {

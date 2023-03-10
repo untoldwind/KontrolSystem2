@@ -146,6 +146,13 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                         () => PositionBinding.PositionType,
                         () => new List<RealizedParameter>() { new RealizedParameter("coordinate_system", CoordindateSystemBinding.CoordindateSystemType) },
                         false, typeof(Vector3Binding), typeof(Vector3Binding).GetMethod("ToPosition"))
+                }, {
+                    "to_vector",
+                    new BoundMethodInvokeFactory("Associate this vector with a coordinate system",
+                        true,
+                        () => VectorBinding.VectorType,
+                        () => new List<RealizedParameter>() { new RealizedParameter("coordinate_system", CoordindateSystemBinding.CoordindateSystemType) },
+                        false, typeof(Vector3Binding), typeof(Vector3Binding).GetMethod("ToVector"))
                 },
 
             },
@@ -182,5 +189,9 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
 
         public static Position ToPosition(Vector3d local, ICoordinateSystem coordinateSystem) =>
             new Position(coordinateSystem, local);
+        
+        public static Vector ToVector(Vector3d local, ICoordinateSystem coordinateSystem) =>
+            new Vector(coordinateSystem, local);
+
     }
 }

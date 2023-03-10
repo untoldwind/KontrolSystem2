@@ -21,3 +21,13 @@ test sync fn test_position() -> Unit = {
     assert_vec3(vec3(11, 21, 31), v1.local)
     assert_vec3((p1 - p2).local, v2.local)
 }
+
+test sync fn test_vector() -> Unit = {
+    const v1 : Vector = vec3(1, 2, 3).to_vector(IDENTITY_COORDINATE_SYSTEM)
+    const v2 : Vector = vec3(12, 23, 34).to_vector(IDENTITY_COORDINATE_SYSTEM)
+
+    assert_vec3(vec3(1, 2, 3), v1.local)
+    assert_vec3(vec3(1, 2, 3).normalized, v1.normalized.local)
+    assert_vec3(vec3(12, 23, 34), v2.local)
+    assert_vec3(vec3(12, 23, 34).normalized, v2.normalized.local)
+}
