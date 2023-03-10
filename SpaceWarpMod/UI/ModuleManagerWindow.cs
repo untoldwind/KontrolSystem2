@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using KontrolSystem.SpaceWarpMod.Core;
 using KSP.Game;
+using KSP.Messages;
 using KSP.Sim.impl;
+using KSP.UI.Binding;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace KontrolSystem.SpaceWarpMod.UI {
     public class ModuleManagerWindow : ResizableWindow {
@@ -21,7 +24,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         }
 
         public void Awake() {
-            Initialize($"KontrolSystem {ConfigAdapter.Instance.Version}", new Rect(50, 50, 400, 400), 120, 120, false);
+            Initialize($"KontrolSystem {ConfigAdapter.Instance.Version}", new Rect(Screen.width - 750, Screen.height - 600, 0, 0), 120, 120, false);
             
             Title.image = CommonStyles.Instance.stateInactiveTexture;
             
@@ -48,15 +51,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                 DrawReference();
                 break;
             }
-            
-            GUILayout.BeginHorizontal();
 
-            if (GUILayout.Button(Mainframe.Instance.Rebooting ? "Rebooting..." : "Reboot")) OnReboot();
-            GUILayout.FlexibleSpace();
-            if (GUILayout.Button("Close")) Close();
-
-            GUILayout.EndHorizontal();
-            
             GUILayout.EndVertical();
         }
 
@@ -78,7 +73,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             }
             GUILayout.Space(20);
             if (GUILayout.Button("Close")) {
-//                onClose();
+                Close();
             }
 
             GUILayout.EndVertical();
@@ -86,8 +81,6 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             GUILayout.EndHorizontal();
             DrawStatus();
             GUILayout.EndVertical();
-
-            GUI.DragWindow();            
         }
 
         void DrawStatus() {
@@ -147,17 +140,26 @@ namespace KontrolSystem.SpaceWarpMod.UI {
 
             GUILayout.EndScrollView();
         }
-        
+
         private void DrawStateTab() {
             GUILayout.BeginHorizontal();
-            
-            errorScrollPos = GUILayout.BeginScrollView(errorScrollPos, GUILayout.MinWidth(300), GUILayout.MaxWidth(3000), GUILayout.ExpandWidth(true));
+
+            errorScrollPos = GUILayout.BeginScrollView(errorScrollPos, GUILayout.MinWidth(300),
+                GUILayout.MaxWidth(3000), GUILayout.ExpandWidth(true));
             GUILayout.BeginVertical();
 
             DrawErrors();
 
             GUILayout.EndVertical();
             GUILayout.EndScrollView();
+
+            GUILayout.BeginVertical();
+
+            if (GUILayout.Button(Mainframe.Instance.Rebooting ? "Rebooting..." : "Reboot")) OnReboot();
+            GUILayout.FlexibleSpace();
+            if (GUILayout.Button("Close")) Close();
+
+            GUILayout.EndVertical();
 
             GUILayout.EndHorizontal();
         }
@@ -195,11 +197,28 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             }
         }
 
-        protected override void OnResize(Rect newWindowRect) {
-        }
 
         void OnReboot() {
             Mainframe.Instance.Reboot(ConfigAdapter.Instance);
+        }
+
+        protected override void OnOpen() {
+            if (!Mainframe.Instance.Initialized) {
+                LoggerAdapter.Instance.Debug("Lazy Initialize KontrolSystemMod");
+                Mainframe.Instance.Reboot(ConfigAdapter.Instance);
+                
+                // Temporary fix for windows hiding main menu
+                GameManager.Instance.Game.Messages.Subscribe<EscapeMenuOpenedMessage>(OnEscapeMenuOpened);
+            }
+        }
+        
+        protected override void OnClose() {
+            GameObject.Find("BTN-KontrolSystem")?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(false);    
+        }
+        
+        private void OnEscapeMenuOpened(MessageCenterMessage message) {
+            Close();
+            consoleWindow?.Close();
         }
     }
 }

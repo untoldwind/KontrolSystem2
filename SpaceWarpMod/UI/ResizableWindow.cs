@@ -17,11 +17,17 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         public GUIContent Title { get; set; } = new GUIContent("KontrolSystem");
 
         public void Open() {
-            isOpen = true;
+            if (!isOpen) {
+                isOpen = true;
+                OnOpen();
+            }
         }
 
         public virtual void Close() {
-            isOpen = false;
+            if (isOpen) {
+                isOpen = false;
+                OnClose();
+            }
         }
 
         public bool IsOpen => isOpen;
@@ -37,6 +43,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             minWidth = initialMinWidth;
             minHeight = initialMinHeight;
         }
+
 
         public void OnGUI() {
             if (!isOpen) return;
@@ -94,6 +101,13 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             }
         }
 
-        protected abstract void OnResize(Rect newWindowRect);
+        protected virtual void OnResize(Rect newWindowRect) {}
+        
+        protected virtual void OnOpen() {
+        }
+
+        protected virtual void OnClose() {
+        }
+
     }
 }

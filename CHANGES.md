@@ -1,5 +1,10 @@
 # Changes
 
+## 0.1.3 -> 0.1.4
+
+* Combined Toolbar window and Modulemanager window to one
+  * ... i.e. got rid of the window that had little to no purpose
+
 ## 0.1.2 -> 0.1.3
 
 * Close windows on ESC menu
