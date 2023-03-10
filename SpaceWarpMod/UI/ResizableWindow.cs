@@ -14,7 +14,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         protected float minWidth;
         protected float minHeight;
 
-        public string Title { get; set; } = "KontrolSystem";
+        public GUIContent Title { get; set; } = new GUIContent("KontrolSystem");
 
         public void Open() {
             isOpen = true;
@@ -31,7 +31,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
 
             resizeButtonImage = GFXAdapter.GetTexture("resize-button");
             _spaceWarpUISkin = Skins.ConsoleSkin;
-            Title = initialTitle;
+            Title.text = initialTitle;
             windowRect = initialWindowRect;
             manualLayout = initialManualLayout;
             minWidth = initialMinWidth;

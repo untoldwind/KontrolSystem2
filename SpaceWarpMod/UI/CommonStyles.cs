@@ -1,12 +1,18 @@
-﻿using UnityEngine;
+﻿using SpaceWarp.API.Assets;
+using UnityEngine;
 
 namespace KontrolSystem.SpaceWarpMod.UI {
     public class CommonStyles {
         public readonly GUISkin baseSkin;
         public readonly GUISkin panelSkin;
         public readonly GUIStyle headingLabelStyle;
+        public readonly Texture2D startButtonTexture;
+        public readonly Texture2D stopButtonTexture;
+        public readonly Texture2D stateActiveTexture;
+        public readonly Texture2D stateInactiveTexture;
+        public readonly Texture2D stateErrorTexture;
 
-        public CommonStyles(GUISkin baseSkin, GUISkin skin) {
+        private CommonStyles(GUISkin baseSkin, GUISkin skin) {
             this.baseSkin = baseSkin;
             panelSkin = skin;
 
@@ -28,6 +34,23 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                 fontSize = 13,
                 padding = new RectOffset(2, 2, 2, 2)
             };
+            
+            startButtonTexture = GetTexture("start");
+            stopButtonTexture = GetTexture("stop");
+            stateActiveTexture = GetTexture("state_active");
+            stateInactiveTexture = GetTexture("state_inactive");
+            stateErrorTexture = GetTexture("state_error");            
         }
+        
+        internal static Texture2D GetTexture(string name) {
+            return AssetManager.GetAsset<Texture2D>($"KontrolSystem2/images/{name}.png");
+        }        
+        
+        public static CommonStyles Instance;
+
+        internal static void Init(GUISkin baseSkin, GUISkin skin) {
+            Instance = new CommonStyles(baseSkin, skin);
+        }
+        
     }
 }

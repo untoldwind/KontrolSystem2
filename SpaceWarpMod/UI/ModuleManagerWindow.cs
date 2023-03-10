@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using KontrolSystem.SpaceWarpMod.Core;
+using KSP.Game;
 using KSP.Sim.impl;
 using UnityEngine;
 
@@ -8,8 +10,10 @@ namespace KontrolSystem.SpaceWarpMod.UI {
     public class ModuleManagerWindow : ResizableWindow {
         private Vector2 errorScrollPos;
         private Vector2 moduleListScrollPos;
+        private Vector2 entryPointScrollPos;
         private int tabIdx;
         private int selectedModule;
+        private ConsoleWindow consoleWindow;
 
         public void Toggle() {
             if (!isOpen) Open();
@@ -17,7 +21,11 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         }
 
         public void Awake() {
-            Initialize("KontrolSystem: ModuleManager", new Rect(50, 50, 400, 400), 120, 120, false);
+            Initialize($"KontrolSystem {ConfigAdapter.Instance.Version}", new Rect(50, 50, 400, 400), 120, 120, false);
+            
+            Title.image = CommonStyles.Instance.stateInactiveTexture;
+            
+            consoleWindow = gameObject.AddComponent<ConsoleWindow>();
         }
 
         protected override void DrawWindow(int windowId) {
@@ -25,15 +33,18 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             
             GUILayout.BeginHorizontal();
             
-            tabIdx = GUILayout.Toolbar(tabIdx, new string[] { "Error logs", "Modules" });
+            tabIdx = GUILayout.Toolbar(tabIdx, new string[] { "Entrypoints", "Reboot Errors", "Modules" });
             
             GUILayout.EndHorizontal();
 
             switch (tabIdx) {
             case 0:
-                DrawStateTab();
+                DrawEntrypointsTab();
                 break;
             case 1:
+                DrawStateTab();
+                break;
+            case 2:
                 DrawReference();
                 break;
             }
@@ -49,6 +60,94 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             GUILayout.EndVertical();
         }
 
+        private void DrawEntrypointsTab() {
+            GUILayout.BeginVertical();
+            GUILayout.BeginHorizontal();
+
+            DrawAvailableModules();
+
+            GUILayout.BeginVertical(GUILayout.MinWidth(150));
+            // ReSharper disable once Unity.NoNullPropagation
+            if (GUILayout.Button(Mainframe.Instance.Rebooting ? "Rebooting..." : "Reboot")) OnReboot();
+            GUILayout.FlexibleSpace();
+            if (GUILayout.Button("Console")) {
+                // ReSharper disable once Unity.NoNullPropagation
+                consoleWindow?.AttachTo(Mainframe.Instance.ConsoleBuffer);
+                // ReSharper disable once Unity.NoNullPropagation
+                consoleWindow?.Toggle();
+            }
+            GUILayout.Space(20);
+            if (GUILayout.Button("Close")) {
+//                onClose();
+            }
+
+            GUILayout.EndVertical();
+
+            GUILayout.EndHorizontal();
+            DrawStatus();
+            GUILayout.EndVertical();
+
+            GUI.DragWindow();            
+        }
+
+        void DrawStatus() {
+            string status = "Unavailable";
+
+            if (Mainframe.Instance.Rebooting) {
+                Title.image = CommonStyles.Instance.stateInactiveTexture;
+                status = "Rebooting";
+            } else if (Mainframe.Instance.Initialized) {
+                if (Mainframe.Instance.LastErrors.Any()) {
+                    Title.image = CommonStyles.Instance.stateErrorTexture;
+                    status = "Critical (Reboot failed)";
+                }
+                else Title.image = CommonStyles.Instance.stateActiveTexture;
+            }
+
+            if (Mainframe.Instance.Initialized) {
+                if (Mainframe.Instance.LastErrors.Any()) status = "Critical (Reboot failed)";
+                else status = "OK";
+            }
+
+            GUILayout.Label($"Status: {status}");
+        }        
+        void DrawAvailableModules() {
+            entryPointScrollPos = GUILayout.BeginScrollView(entryPointScrollPos, CommonStyles.Instance.panelSkin.scrollView,
+                GUILayout.MinWidth(360), GUILayout.MinHeight(350));
+
+            GUILayout.BeginVertical();
+            List<KontrolSystemProcess> availableProcesses = Mainframe.Instance.ListProcesses().ToList();
+            if (!availableProcesses.Any()) {
+                GUILayout.Label("No runnable Kontrol module found.\n" +
+                                "-------------------------\n" +
+                                "Add one by implementing main_ksc(),\n" +
+                                "main_editor(), main_tracking or\n" +
+                                "main_flight().", CommonStyles.Instance.panelSkin.label);
+            } else {
+                foreach (KontrolSystemProcess process in availableProcesses) {
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label($"{process.Name} ({process.State})", GUILayout.ExpandWidth(true));
+                    switch (process.State) {
+                    case KontrolSystemProcessState.Available:
+                        if (GUILayout.Button(CommonStyles.Instance.startButtonTexture, GUILayout.Width(30)))
+                            Mainframe.Instance.StartProcess(process, GameManager.Instance?.Game?.ViewController?.GetActiveSimVessel(true));
+                        break;
+                    case KontrolSystemProcessState.Running:
+                    case KontrolSystemProcessState.Outdated:
+                        if (GUILayout.Button(CommonStyles.Instance.stopButtonTexture, GUILayout.Width(30)))
+                            Mainframe.Instance.StopProcess(process);
+                        break;
+                    }
+
+                    GUILayout.EndHorizontal();
+                }
+            }
+
+            GUILayout.EndVertical();
+
+            GUILayout.EndScrollView();
+        }
+        
         private void DrawStateTab() {
             GUILayout.BeginHorizontal();
             

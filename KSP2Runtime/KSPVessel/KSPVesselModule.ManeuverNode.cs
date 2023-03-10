@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.TO2.Binding;
+using KontrolSystem.TO2.Runtime;
 using KSP.Sim.Maneuver;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel {
@@ -66,6 +67,18 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField] public double BurnDuration => maneuverNode.BurnDuration;
 
+            [KSField]
+            public Option<KSPOrbitModule.IOrbit> ExpectedOrbit {
+                get {
+                    foreach (var patchedOrbit in vesselAdapter.vessel.Orbiter.PatchedConicSolver.CurrentTrajectory) {
+                        if (patchedOrbit.StartUT > maneuverNode.Time) {
+                            return new Option<KSPOrbitModule.IOrbit>(new OrbitWrapper(vesselAdapter.context, patchedOrbit));
+                        }                        
+                    }
+                    return new Option<KSPOrbitModule.IOrbit>();
+                }
+            }
+            
             [KSMethod]
             public void Remove() {
                 vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.RemoveNodesFromVessel(vesselAdapter.vessel.GlobalId, new List<ManeuverNodeData>() { maneuverNode });

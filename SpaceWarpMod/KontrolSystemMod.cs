@@ -20,7 +20,6 @@ namespace KontrolSystem.SpaceWarpMod {
     [BepInPlugin("com.github.untoldwind.KontrolSystem2", "KontrolSystem2", "0.1.3")]
     [BepInDependency(SpaceWarpPlugin.ModGuid, SpaceWarpPlugin.ModVer)]
     public class KontrolSystemMod : BaseSpaceWarpPlugin {
-        private CommonStyles commonStyles;
         private ToolbarWindow toolbarWindow;
         private ConsoleWindow consoleWindow;
         private ModuleManagerWindow moduleManagerWindow;
@@ -31,14 +30,14 @@ namespace KontrolSystem.SpaceWarpMod {
         private bool showGUI = false;
         
         public void Awake() {
-            ConfigAdapter.Init(Config);
+            ConfigAdapter.Init(Info, Config);
         }
         
         public override void OnInitialized() {
             LoggerAdapter.Instance.Backend = Logger;
             LoggerAdapter.Instance.Debug("Initialize KontrolSystemMod");
 
-            commonStyles ??= new CommonStyles(Skins.ConsoleSkin, Instantiate(Skins.ConsoleSkin));
+            CommonStyles.Init(Skins.ConsoleSkin, Instantiate(Skins.ConsoleSkin));
 
             Appbar.RegisterAppButton("Kontrol System 2", "BTN-KontrolSystem", AssetManager.GetAsset<Texture2D>($"{SpaceWarpMetadata.ModID}/images/icon.png"),
                 ToggleButton);
@@ -63,7 +62,7 @@ namespace KontrolSystem.SpaceWarpMod {
                 consoleWindow ??= gameObject.AddComponent<ConsoleWindow>();
                 moduleManagerWindow ??= gameObject.AddComponent<ModuleManagerWindow>();
 
-                toolbarWindow ??= new ToolbarWindow(GetInstanceID(), Info.Metadata.Version.ToString(), commonStyles, consoleWindow, moduleManagerWindow, () => ToggleButton(false));
+                toolbarWindow ??= new ToolbarWindow(GetInstanceID(), Info.Metadata.Version.ToString(), consoleWindow, moduleManagerWindow, () => ToggleButton(false));
 
                 toolbarWindow.SetPosition(false);
                 

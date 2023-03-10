@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using KontrolSystem.SpaceWarpMod.Core;
 using KSP.Game;
 using UnityEngine;
@@ -18,7 +17,6 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         private readonly int objectId;
         private readonly GUIContent windowTitle;
         private Rect windowRect;
-        private readonly CommonStyles commonStyles;
         private Vector2 scrollPos = new Vector2(0, 0);
         private readonly ConsoleWindow consoleWindow;
         private readonly ModuleManagerWindow moduleManagerWindow;
@@ -29,10 +27,9 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         private readonly Texture2D stateErrorTexture;
         private readonly Action onClose;
 
-        public ToolbarWindow(int objectId, string version, CommonStyles commonStyles, ConsoleWindow consoleWindow,
+        public ToolbarWindow(int objectId, string version, ConsoleWindow consoleWindow,
             ModuleManagerWindow moduleManagerWindow, Action onClose) {
             this.objectId = objectId;
-            this.commonStyles = commonStyles;
             this.consoleWindow = consoleWindow;
             this.moduleManagerWindow = moduleManagerWindow;
             this.onClose = onClose;
@@ -60,7 +57,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         
         public void DrawUI() {
             
-            GUI.skin = commonStyles.baseSkin;
+            GUI.skin = CommonStyles.Instance.baseSkin;
             
             if (Mainframe.Instance.Initialized) {
                 if (Mainframe.Instance.LastErrors.Any()) windowTitle.image = stateErrorTexture;
@@ -80,11 +77,11 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             DrawAvailableModules();
 
             GUILayout.BeginVertical(GUILayout.MinWidth(150));
-            GUILayout.Label("Control", commonStyles.headingLabelStyle);
+            GUILayout.Label("Control", CommonStyles.Instance.headingLabelStyle);
             // ReSharper disable once Unity.NoNullPropagation
             if (GUILayout.Button("Manage")) moduleManagerWindow?.Toggle();
             if (GUILayout.Button(Mainframe.Instance.Rebooting ? "Rebooting..." : "Reboot")) OnReboot();
-            GUILayout.Label("Global VALUES", commonStyles.headingLabelStyle);
+            GUILayout.Label("Global VALUES", CommonStyles.Instance.headingLabelStyle);
             if (GUILayout.Button("Console")) {
                 // ReSharper disable once Unity.NoNullPropagation
                 consoleWindow?.AttachTo(Mainframe.Instance.ConsoleBuffer);
@@ -106,7 +103,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         }
 
         void DrawAvailableModules() {
-            scrollPos = GUILayout.BeginScrollView(scrollPos, commonStyles.panelSkin.scrollView,
+            scrollPos = GUILayout.BeginScrollView(scrollPos, CommonStyles.Instance.panelSkin.scrollView,
                 GUILayout.MinWidth(360), GUILayout.MinHeight(350));
 
             GUILayout.BeginVertical();
@@ -116,7 +113,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                                 "-------------------------\n" +
                                 "Add one by implementing main_ksc(),\n" +
                                 "main_editor(), main_tracking or\n" +
-                                "main_flight().", commonStyles.panelSkin.label);
+                                "main_flight().", CommonStyles.Instance.panelSkin.label);
             } else {
                 foreach (KontrolSystemProcess process in availableProcesses) {
                     GUILayout.BeginHorizontal();
