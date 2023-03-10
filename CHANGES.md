@@ -4,6 +4,9 @@
 
 * Combined Toolbar window and Modulemanager window to one
   * ... i.e. got rid of the window that had little to no purpose
+* Added an `exepect_orbit` to the maneuvering node
+* Added `parts_in_stage` to staging information
+* Improved the `exec_node` script (a lot)
 
 ## 0.1.2 -> 0.1.3
 
