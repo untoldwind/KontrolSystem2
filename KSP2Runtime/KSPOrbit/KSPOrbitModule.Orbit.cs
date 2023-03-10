@@ -1,4 +1,6 @@
-﻿using KontrolSystem.TO2.Binding;
+﻿using System;
+using System.Globalization;
+using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.KSP.Runtime.KSPOrbit {
@@ -9,6 +11,12 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
         public interface IOrbit {
             [KSField(Description = "The celestial body the orbit is referenced on.")]
             IBody ReferenceBody { get; }
+
+            [KSField]
+            public double StartUt { get; }
+
+            [KSField]
+            public double EndUt { get; }
 
             [KSField(Description = "Apoapsis of the orbit above sealevel of the `reference_body`.")]
             double Apoapsis { get; }
@@ -177,6 +185,22 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             [KSMethod]
             double SynodicPeriod(IOrbit other);
 
+            [KSMethod]
+            string ToString();
+
+            [KSMethod]
+            string ToFixed(long decimals);
+        }
+
+        internal static string OrbitToString(IOrbit orbit) {
+            return
+                $"Orbit(inc={orbit.Inclination.ToString(CultureInfo.InvariantCulture)},ecc={orbit.Eccentricity.ToString(CultureInfo.InvariantCulture)},sma={orbit.SemiMajorAxis.ToString(CultureInfo.InvariantCulture)},lan={orbit.Lan.ToString(CultureInfo.InvariantCulture)},aop={orbit.ArgumentOfPeriapsis.ToString(CultureInfo.InvariantCulture)},mae={orbit.MeanAnomalyAtEpoch.ToString(CultureInfo.InvariantCulture)},epoch={orbit.Epoch.ToString(CultureInfo.InvariantCulture)})";
+        }
+
+        internal static string OrbitToFixed(IOrbit orbit, long decimals) {
+            String format = decimals <= 0 ? "F0" : "F" + decimals;
+            return
+                $"Orbit(inc={orbit.Inclination.ToString(format, CultureInfo.InvariantCulture)},ecc={orbit.Eccentricity.ToString(format, CultureInfo.InvariantCulture)},sma={orbit.SemiMajorAxis.ToString(format, CultureInfo.InvariantCulture)},lan={orbit.Lan.ToString(format, CultureInfo.InvariantCulture)},aop={orbit.ArgumentOfPeriapsis.ToString(format, CultureInfo.InvariantCulture)},mae={orbit.MeanAnomalyAtEpoch.ToString(format, CultureInfo.InvariantCulture)},epoch={orbit.Epoch.ToString(format, CultureInfo.InvariantCulture)})";
         }
     }
 }

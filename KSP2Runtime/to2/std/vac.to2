@@ -5,6 +5,7 @@ use { CONSOLE } from ksp::console
 use { current_time, sleep, wait_until } from ksp::game
 use { ship_is_facing } from std::utils
 use { warp_to } from ksp::game::warp
+use { trigger_staging } from std::staging
 
 /// Execute the next planed maneuver node.
 ///
@@ -19,7 +20,7 @@ pub fn exec_next_node(vessel : Vessel) -> Result<Unit, string> = {
     vessel.autopilot.enabled = true
     vessel.autopilot.mode = MODE_MANEUVER
     
-    const start = current_time()
+    const target_orbit = node.expected_orbit
     const dv0 = node.burn_vector
     const burn_duration = node.burn_duration 
     
@@ -36,11 +37,44 @@ pub fn exec_next_node(vessel : Vessel) -> Result<Unit, string> = {
     wait_until(fn() -> node.ETA <= 0.5)
 
     CONSOLE.print_at(console_row + 2, 0, "BURN")
-    const end_ut = current_time() + burn_duration
 
-    const throttle_manager = vessel.set_throttle(1)
+    const end_ut = node.time + node.burn_duration
+    const dv_min : Cell<float> = Cell(dv0.magnitude)
+    const throttle_limit : Cell<(min: float, max: float)> = Cell((min: 0.0, max: 0.0))
+    const throttle_manager = vessel.manage_throttle(fn(deltaT) -> {
+        const (min, max) = throttle_limit.value
+        const dv = math::min(dv_min.value, node.burn_vector.magnitude)
+        const throttle = math::clamp(dv * vessel.mass / math::max(1.0, vessel.available_thrust), min, max)
+        CONSOLE.print_at(console_row + 1, 0, "Throttle: " + throttle.to_string())
+        throttle
+    })
 
-    wait_until(fn() -> current_time() >= end_ut)
+    while(dv_min.value >= 0.05) {
+        const ut = current_time()
+        
+        if (ut > end_ut + 5) break
+        
+        const dv = target_orbit.orbital_velocity(ut) - vessel.orbit.orbital_velocity(ut)
+
+        if(dv0 * dv < 0) break
+
+        dv_min.update(fn(m) -> math::min(m, dv.magnitude))
+        CONSOLE.print_at(console_row    , 0, "DV remaining: " + dv_min.value.to_string())
+        
+        sleep(0.1)
+
+        if(trigger_staging(vessel)) {
+            CONSOLE.print_line("Next stage triggered")
+        }
+        
+        if(ship_is_facing(vessel, dv0, 20, 2)) {
+           CONSOLE.print_at(console_row + 2, 0, "Ship aligned, unlock thrust")
+           throttle_limit.set_value((min: 0.05, max: 1.0))
+        } else {
+            CONSOLE.print_at(console_row + 2, 0, "Ship unaligned, limited throttle")
+            throttle_limit.set_value((min: 0.1, max: 0.1))
+        }
+    }
 
     CONSOLE.print_line("DONE")
     

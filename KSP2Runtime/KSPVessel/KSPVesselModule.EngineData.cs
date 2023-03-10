@@ -17,6 +17,10 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField] public bool IsStaged => dataEngine.staged;
 
+            [KSField] public double CurrentThrottle => dataEngine.currentThrottle;
+
+            [KSField] public double CurrentThrust => dataEngine.FinalThrustValue;
+            
             [KSField] public double ThrottleMin => dataEngine.ThrottleMin;
 
             [KSField] public double MinFuelFlow => dataEngine.MinFuelFlow;

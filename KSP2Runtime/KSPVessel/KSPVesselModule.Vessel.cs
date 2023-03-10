@@ -6,6 +6,7 @@ using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
 using KSP.Modules;
+using KSP.Sim.DeltaV;
 using KSP.Sim.impl;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel {
@@ -118,7 +119,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField]
             public EngineDataAdapter[] Engines => vessel.SimulationObject.PartOwner.Parts.Select(part => {
-                if (part.TryGetModuleData<PartComponentModule_Engine, Data_Engine>(out Data_Engine data)) {
+                if (part.IsPartEngine(out Data_Engine data)) {
                     return new EngineDataAdapter(data);
                 } else {
                     return null;

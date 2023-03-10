@@ -164,6 +164,10 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         
         public void Cleanup() {
             ClearMarkers();
+            foreach (var kv in autopilotHooks) {
+                LoggerAdapter.Instance.Debug($"Unhooking from vessel: {kv.Key.Name}");
+                kv.Key.SimulationObject.objVesselBehavior.OnPreAutopilotUpdate -= kv.Value.RunAutopilots;
+            }
             
             foreach (var childContext in childContexts) {
                 childContext.Cleanup();

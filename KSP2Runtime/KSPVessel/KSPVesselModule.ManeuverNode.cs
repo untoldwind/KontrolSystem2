@@ -2,6 +2,8 @@
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
+using KSP.Sim;
+using KSP.Sim.impl;
 using KSP.Sim.Maneuver;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel {
@@ -68,14 +70,14 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField] public double BurnDuration => maneuverNode.BurnDuration;
 
             [KSField]
-            public Option<KSPOrbitModule.IOrbit> ExpectedOrbit {
+            public KSPOrbitModule.IOrbit ExpectedOrbit {
                 get {
-                    foreach (var patchedOrbit in vesselAdapter.vessel.Orbiter.PatchedConicSolver.CurrentTrajectory) {
-                        if (patchedOrbit.StartUT > maneuverNode.Time) {
-                            return new Option<KSPOrbitModule.IOrbit>(new OrbitWrapper(vesselAdapter.context, patchedOrbit));
+                    foreach (var patchedOrbit in vesselAdapter.vessel.Orbiter.ManeuverPlanSolver.ManeuverTrajectory) {
+                        if (patchedOrbit is PatchedConicsOrbit o && o.ActivePatch && o.StartUT > maneuverNode.Time && o.PatchStartTransition == PatchTransitionType.EndThrust) {
+                            return new OrbitWrapper(vesselAdapter.context, o);
                         }                        
                     }
-                    return new Option<KSPOrbitModule.IOrbit>();
+                    return vesselAdapter.Orbit;
                 }
             }
             

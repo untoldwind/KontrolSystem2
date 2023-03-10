@@ -1,4 +1,7 @@
 ﻿using KontrolSystem.TO2.Binding;
+using KontrolSystem.TO2.Runtime;
+using KSP.Modules;
+using KSP.Sim.DeltaV;
 using KSP.Sim.impl;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel {
@@ -14,6 +17,21 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             }
 
             [KSField] public string PartName => part.PartName;
+
+            [KSField] public bool IsEngine => part.IsPartEngine(out var _);
+
+            [KSField]
+            public Option<EngineDataAdapter> EngineData {
+                get {
+                    if (part.IsPartEngine(out Data_Engine data)) {
+                        return new Option<EngineDataAdapter>(new EngineDataAdapter(data));
+                    }
+
+                    return new Option<EngineDataAdapter>();
+                }
+            }
+
+            [KSField] public bool IsSolarPanel => part.IsPartSolarPanel(out var _);
         }
     }
 }

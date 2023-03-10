@@ -14,6 +14,10 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
         public KSPOrbitModule.IBody ReferenceBody => new BodyWrapper(context, orbit.referenceBody);
 
+        public double StartUt => orbit.StartUT;
+
+        public double EndUt => orbit.EndUT;
+        
         public double Apoapsis => orbit.ApoapsisArl;
         
         public double Periapsis => orbit.PeriapsisArl;
@@ -123,5 +127,9 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             return Math.Abs(1.0 /
                             (1.0 / Period - sign * 1.0 / other.Period)); //period after which the phase angle repeats
         }
+
+        public string ToString() => KSPOrbitModule.OrbitToString(this);
+
+        public string ToFixed(long decimals) => KSPOrbitModule.OrbitToFixed(this, decimals);
     }
 }

@@ -78,7 +78,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             terminalLetterSkin.label.normal.textColor = TextColor;
 
             for (int row = 0; row < visibleLines.Count; row++) {
-                string lineString = visibleLines[row].ToString().Replace('\0', ' ');
+                string lineString = visibleLines[row].ToString().Replace('\0', ' ').Substring(0, consoleBuffer?.VisibleCols ?? 0);
 
                 GUI.Label(new Rect(0, (row * fontCharHeight), windowRect.width - 10, fontCharHeight), lineString,
                     terminalLetterSkin.label);

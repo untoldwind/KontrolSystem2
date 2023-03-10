@@ -1,7 +1,7 @@
 /// Collection of helper functions to control staging of a vessel
 
 use { Vessel } from ksp::vessel
-use { wait_until } from ksp::game
+use { wait_until, sleep } from ksp::game
 use { CONSOLE } from ksp::console
 
 /// Helper function to automatically trigger staging during a burn.
@@ -11,13 +11,22 @@ use { CONSOLE } from ksp::console
 ///
 /// Will return `true` if stating has been triggered.
 pub fn trigger_staging(vessel : Vessel) -> bool = {
-    if(vessel.staging.count == 0) return false
+    if(vessel.staging.current == 0) return false
 
     let needs_staging = has_flameout(vessel)
     if(needs_staging) {
+        const stage = vessel.staging.current
+        const next_has_engine = if(stage > 0) has_engine_in_stage(vessel, stage - 1) else false
         CONSOLE.print_line("Trigger next stage")
         wait_until(fn() -> vessel.staging.ready)
         vessel.staging.next()
+
+        if(stage > 0 && !next_has_engine) {
+            CONSOLE.print_line("No engine staged, trigger next")
+            wait_until(fn() -> vessel.staging.ready)
+
+            vessel.staging.next()
+        }
     }
 
     needs_staging
@@ -27,5 +36,20 @@ pub sync fn has_flameout(vessel : Vessel) -> bool = {
     for(engine in vessel.engines)
         if(engine.has_ignited && engine.is_flameout)
             return true
+    false
+}
+
+pub sync fn has_ignited(vessel : Vessel) -> bool = {
+    for(engine in vessel.engines)
+        if(engine.has_ignited)
+            return true
+    false
+}
+
+pub sync fn has_engine_in_stage(vessel : Vessel, stage: int) -> bool = {
+    for(part in vessel.staging.parts_in_stage(stage)) {
+        if(part.is_engine)
+            return true
+    }
     false
 }
