@@ -66,7 +66,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                         () => new List<RealizedParameter> {
                             new RealizedParameter("other", VectorType), new RealizedParameter("t", BuiltinType.Float)
                         }, false, typeof(Vector), typeof(Vector).GetMethod("Lerp"))
-                }, 
+                },
             },
             new Dictionary<string, IFieldAccessFactory> {
                 { "local", new BoundPropertyLikeFieldAccessFactory("coordinates in coordindate system", () => Vector3Binding.Vector3Type, typeof(Vector), typeof(Vector).GetProperty("vector") )},
@@ -83,7 +83,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                     "normalized",
                     new BoundPropertyLikeFieldAccessFactory("Normalized vector (i.e. scaled to length 1)",
                         () => VectorType, typeof(Vector), typeof(Vector).GetMethod("normalize"), null)
-                },                
+                },
             });
     }
 }

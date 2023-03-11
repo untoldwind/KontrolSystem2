@@ -1,5 +1,7 @@
 ﻿using System;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
+using KSP.Api;
+using KSP.Sim;
 
 namespace KontrolSystem.KSP.Runtime.Testing {
     public class MockBody : KSPOrbitModule.IBody {
@@ -116,7 +118,9 @@ namespace KontrolSystem.KSP.Runtime.Testing {
 
         public double RotationPeriod => rotationPeriod;
 
-        public Vector3d Position => Vector3d.zero;
+        public ICoordinateSystem ReferenceFrame => KSPTesting.IDENTITY_COORDINATE_SYSTEM;
+
+        public Position Position => new Position(ReferenceFrame, Vector3d.zero);
 
         public Vector3d Up => Vector3d.up;
 

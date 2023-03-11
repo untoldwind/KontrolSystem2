@@ -1,5 +1,6 @@
 ﻿using KontrolSystem.KSP.Runtime.KSPVessel;
 using KontrolSystem.TO2.Binding;
+using KSP.Api;
 using KSP.Sim;
 using KSP.Sim.impl;
 
@@ -32,6 +33,10 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
         public double AtmosphereDepth => body.atmosphereDepth;
 
         public double Radius => body.radius;
+
+        public ICoordinateSystem ReferenceFrame => body.coordinateSystem;
+
+        public Position Position => body.Position;
 
         public Vector3d SurfaceNormal(double lat, double lon) => body.GetSurfaceNVector(lat, lon);
 

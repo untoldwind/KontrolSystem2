@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using KontrolSystem.TO2;
 using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Binding;
@@ -35,7 +35,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                         typeof(Rotation).GetProperty("coordinateSystem"))
                 }
             });
-        
+
         public static Direction ToDirection(Rotation rotation) => new Direction(rotation.localRotation);
     }
 }

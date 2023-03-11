@@ -189,7 +189,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
 
         public static Position ToPosition(Vector3d local, ICoordinateSystem coordinateSystem) =>
             new Position(coordinateSystem, local);
-        
+
         public static Vector ToVector(Vector3d local, ICoordinateSystem coordinateSystem) =>
             new Vector(coordinateSystem, local);
 

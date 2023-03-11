@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Linq;
-using System.Xml.Schema;
 using KontrolSystem.KSP.Runtime.KSPControl;
 using KontrolSystem.KSP.Runtime.KSPMath;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
-using KSP.Game;
-using KSP.Messages;
+using KSP.Api;
 using KSP.Modules;
+using KSP.Sim;
 using KSP.Sim.DeltaV;
 using KSP.Sim.impl;
 
@@ -62,13 +61,17 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField] public KSPOrbitModule.IOrbit Orbit => new OrbitWrapper(context, vessel.Orbit);
 
-            [KSField] public Vector3d OrbitalVelocity => vessel.mainBody.coordinateSystem.ToLocalVector(vessel.OrbitalVelocity);
+            [KSField] public ICoordinateSystem ReferenceFrame => vessel.ControlTransform.coordinateSystem;
+
+            [KSField] public Position Position => vessel.SimulationObject.Position;
+
+            [KSField] public Vector3d OrbitalVelocity => vessel.OrbitalVelocity.vector;
 
             [KSField] public Vector3d SurfaceVelocity => vessel.mainBody.coordinateSystem.ToLocalVector(vessel.SurfaceVelocity);
 
             [KSField] public double Mass => vessel.totalMass;
 
-            [KSField("CoM")] public Vector3d CoM => vessel.mainBody.coordinateSystem.ToLocalPosition(vessel.CenterOfMass);
+            [KSField("CoM")] public Position CoM => vessel.CenterOfMass;
 
             [KSField] public double OffsetGround => vessel.OffsetToGround;
 

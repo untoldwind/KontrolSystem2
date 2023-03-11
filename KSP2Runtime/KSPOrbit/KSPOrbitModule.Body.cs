@@ -1,4 +1,6 @@
 ﻿using KontrolSystem.TO2.Binding;
+using KSP.Api;
+using KSP.Sim;
 
 namespace KontrolSystem.KSP.Runtime.KSPOrbit {
     public partial class KSPOrbitModule {
@@ -27,6 +29,10 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
             [KSField(Description = "Rotation period of the planet.")]
             double RotationPeriod { get; }
+
+            [KSField] ICoordinateSystem ReferenceFrame { get; }
+
+            [KSField] public Position Position { get; }
 
             [KSField] Vector3d Up { get; }
 
