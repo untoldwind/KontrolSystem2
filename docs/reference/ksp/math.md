@@ -13,12 +13,12 @@ Represents the rotation from an initial coordinate system when looking down the 
 
 Name | Type | Description
 --- | --- | ---
-euler | ksp::math::Vec3 | Euler angles in degree of the rotation
+euler | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | Euler angles in degree of the rotation
 pitch | float | Pitch in degree
-right_vector | ksp::math::Vec3 | Right vector of the rotation
+right_vector | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | Right vector of the rotation
 roll | float | Roll in degree
-up_vector | ksp::math::Vec3 | Up vector of the rotation
-vector | ksp::math::Vec3 | Fore vector of the rotation (i.e. looking/facing direction
+up_vector | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | Up vector of the rotation
+vector | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | Fore vector of the rotation (i.e. looking/facing direction
 yaw | float | Yaw in degree
 
 #### Methods
@@ -44,7 +44,7 @@ b | float | b
 c | float | c
 d | float | d
 determinant | float | Get determinant of matrix
-inverse | ksp::math::Matrix2x2 | Invert matrix
+inverse | [ksp::math::Matrix2x2](/reference/ksp/math.md#matrix2x2) | Invert matrix
 
 ### Vec2
 
@@ -55,7 +55,7 @@ A 2-dimensional vector.
 Name | Type | Description
 --- | --- | ---
 magnitude | float | Magnitude/length of the vector
-normalized | ksp::math::Vec2 | Normalized vector (i.e. scaled to length 1)
+normalized | [ksp::math::Vec2](/reference/ksp/math.md#vec2) | Normalized vector (i.e. scaled to length 1)
 sqr_magnitude | float | Squared magnitude of the vector
 x | float | x-coordinate
 y | float | y-coordinate
@@ -95,10 +95,10 @@ A 3-dimensional vector.
 Name | Type | Description
 --- | --- | ---
 magnitude | float | Magnitude/length of the vector
-normalized | ksp::math::Vec3 | Normalized vector (i.e. scaled to length 1)
+normalized | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | Normalized vector (i.e. scaled to length 1)
 sqr_magnitude | float | Squared magnitude of the vector
 x | float | x-coordinate
-xzy | ksp::math::Vec3 | Swapped y- and z-coordinate
+xzy | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | Swapped y- and z-coordinate
 y | float | y-coordinate
 z | float | z-coordinate
 

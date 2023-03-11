@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Linq;
@@ -61,9 +62,9 @@ namespace KontrolSystem.GenDocs {
                         output.WriteLine("Name | Type | Description");
                         output.WriteLine("--- | --- | ---");
 
-                        foreach (var kv in type.DeclaredFields.OrderBy(kv => kv.Key)) {
+                        foreach (var (name, declaredType) in type.DeclaredFields.OrderBy(kv => kv.Key).Select(kv => (kv.Key, kv.Value))) {
                             output.WriteLine(
-                                $"{kv.Key} | {kv.Value.DeclaredType} | {kv.Value.Description?.Replace("\n", " ")}");
+                                $"{name} | {LinkType(declaredType.DeclaredType.Name)} | {declaredType.Description?.Replace("\n", " ")}");
                         }
                     }
 
@@ -71,15 +72,15 @@ namespace KontrolSystem.GenDocs {
                         output.WriteLine();
                         output.WriteLine("#### Methods");
 
-                        foreach (var kv in type.DeclaredMethods.OrderBy(kv => kv.Key)) {
+                        foreach (var (name, method) in type.DeclaredMethods.OrderBy(kv => kv.Key).Select(kv => (kv.Key, kv.Value))) {
                             output.WriteLine();
-                            output.WriteLine($"##### {kv.Key}");
+                            output.WriteLine($"##### {name}");
                             output.WriteLine();
                             output.WriteLine("```rust");
-                            output.WriteLine(MethodSignature(type.LocalName, kv.Key, kv.Value));
+                            output.WriteLine(MethodSignature(type.LocalName, name, method));
                             output.WriteLine("```");
                             output.WriteLine();
-                            output.WriteLine(kv.Value.Description);
+                            output.WriteLine(method.Description);
                         }
                     }
                 }
@@ -119,6 +120,29 @@ namespace KontrolSystem.GenDocs {
                     output.WriteLine(function.Description);
                 }
             }
+        }
+
+        public static string LinkType(string typeName) {
+            var idx = typeName.LastIndexOf("::");
+
+            if (idx > 0) {
+                var moduleName = typeName.Substring(0, idx);
+                var localName = typeName.Substring(idx + 2);
+
+                idx = localName.IndexOf('[');
+                if (idx > 0) {
+                    localName = localName.Substring(0, idx);
+                }
+                var split = moduleName.Split(new string[] { "::" }, StringSplitOptions.None);
+                if (split.Length > 0) {
+                    var folder = split.First();
+                    var file = Path.Combine(folder, String.Join("_", split.Skip(1)) + ".md");
+
+                    return $"[{typeName}](/reference/{file}#{localName.ToLower(CultureInfo.InvariantCulture)})";
+                }
+            }
+
+            return typeName;
         }
 
         public static string FunctionSignature(IKontrolFunction function) {

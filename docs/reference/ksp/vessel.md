@@ -31,9 +31,9 @@ solar_panels | bool |
 Name | Type | Description
 --- | --- | ---
 enabled | bool | 
-lock_direction | ksp::math::Direction | 
+lock_direction | [ksp::math::Direction](/reference/ksp/math.md#direction) | 
 mode | string | 
-target_orientation | ksp::math::Vec3 | 
+target_orientation | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
 
 ### EngineData
 
@@ -63,7 +63,7 @@ throttle_min | float |
 
 Name | Type | Description
 --- | --- | ---
-engine_data | ksp::vessel::EngineData | 
+engine_data | [ksp::vessel::EngineData](/reference/ksp/vessel.md#enginedata) | 
 start_burn_stage | int | Number of the stage when engine is supposed to start 
 
 #### Methods
@@ -103,7 +103,7 @@ Estimated thrust vector of the engine in a given `situation`
 
 Name | Type | Description
 --- | --- | ---
-nodes | ksp::vessel::ManeuverNode[] | 
+nodes | [ksp::vessel::ManeuverNode[]](/reference/ksp/vessel.md#maneuvernode) | 
 
 #### Methods
 
@@ -144,9 +144,9 @@ maneuver.next_node ( ) -> Result<ksp::vessel::ManeuverNode, string>
 Name | Type | Description
 --- | --- | ---
 burn_duration | float | 
-burn_vector | ksp::math::Vec3 | 
+burn_vector | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
 ETA | float | 
-expected_orbit | ksp::orbit::Orbit | 
+expected_orbit | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit) | 
 normal | float | 
 prograde | float | 
 radial_out | float | 
@@ -170,7 +170,7 @@ maneuvernode.remove ( ) -> Unit
 
 Name | Type | Description
 --- | --- | ---
-engine_data | Option<ksp::vessel::EngineData> | 
+engine_data | [Option<ksp::vessel::EngineData>](/reference/Option<ksp/vessel.md#enginedata>) | 
 is_engine | bool | 
 is_solar_panel | bool | 
 part_name | string | 
@@ -183,11 +183,11 @@ part_name | string |
 
 Name | Type | Description
 --- | --- | ---
-active_engines | ksp::vessel::EngineDeltaV[] | 
+active_engines | [ksp::vessel::EngineDeltaV[]](/reference/ksp/vessel.md#enginedeltav) | 
 burn_time | float | Estimated burn time of the stage. 
 dry_mass | float | Dry mass of the stage. 
 end_mass | float | End mass of the stage. 
-engines | ksp::vessel::EngineDeltaV[] | 
+engines | [ksp::vessel::EngineDeltaV[]](/reference/ksp/vessel.md#enginedeltav) | 
 fuel_mass | float | Mass of the fuel in the stage. 
 stage | int | The stage number. 
 start_mass | float | Start mass of the stage. 
@@ -270,7 +270,7 @@ staging.parts_in_stage ( stage : int ) -> ksp::vessel::Part[]
 Name | Type | Description
 --- | --- | ---
 name | string | 
-orbit | ksp::orbit::Orbit | 
+orbit | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit) | 
 
 ### Vessel
 
@@ -281,38 +281,38 @@ Represents an in-game vessel, which might be a rocket, plane, rover ... or actua
 
 Name | Type | Description
 --- | --- | ---
-actions | ksp::vessel::ActionGroups | 
+actions | [ksp::vessel::ActionGroups](/reference/ksp/vessel.md#actiongroups) | 
 altitude_scenery | float | 
 altitude_sealevel | float | 
 altitude_terrain | float | 
-angular_momentum | ksp::math::Vec3 | 
-angular_velocity | ksp::math::Vec3 | 
+angular_momentum | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
+angular_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
 atmosphere_density | float | 
-autopilot | ksp::vessel::Autopilot | 
+autopilot | [ksp::vessel::Autopilot](/reference/ksp/vessel.md#autopilot) | 
 available_thrust | float | 
-CoM | ksp::math::Vec3 | 
+CoM | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
 control_status | string | 
-delta_v | ksp::vessel::VesselDeltaV | 
-east | ksp::math::Vec3 | 
-engines | ksp::vessel::EngineData[] | 
-facing | ksp::math::Direction | 
-geo_coordinates | ksp::orbit::GeoCoordinates | 
+delta_v | [ksp::vessel::VesselDeltaV](/reference/ksp/vessel.md#vesseldeltav) | 
+east | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
+engines | [ksp::vessel::EngineData[]](/reference/ksp/vessel.md#enginedata) | 
+facing | [ksp::math::Direction](/reference/ksp/math.md#direction) | 
+geo_coordinates | [ksp::orbit::GeoCoordinates](/reference/ksp/orbit.md#geocoordinates) | 
 heading | float | 
 horizontal_surface_speed | float | 
 is_active | bool | 
-main_body | ksp::orbit::Body | 
-maneuver | ksp::vessel::Maneuver | 
+main_body | [ksp::orbit::Body](/reference/ksp/orbit.md#body) | 
+maneuver | [ksp::vessel::Maneuver](/reference/ksp/vessel.md#maneuver) | 
 mass | float | 
 name | string | The name of the vessel. 
-north | ksp::math::Vec3 | 
+north | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
 offset_ground | float | 
-orbit | ksp::orbit::Orbit | 
-orbital_velocity | ksp::math::Vec3 | 
-parts | ksp::vessel::Part[] | 
-staging | ksp::vessel::Staging | 
-surface_velocity | ksp::math::Vec3 | 
-target | Option<ksp::vessel::Targetable> | 
-up | ksp::math::Vec3 | 
+orbit | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit) | 
+orbital_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
+parts | [ksp::vessel::Part[]](/reference/ksp/vessel.md#part) | 
+staging | [ksp::vessel::Staging](/reference/ksp/vessel.md#staging) | 
+surface_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
+target | [Option<ksp::vessel::Targetable>](/reference/Option<ksp/vessel.md#targetable>) | 
+up | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
 vertical_surface_speed | float | 
 
 #### Methods
@@ -391,7 +391,7 @@ vessel.set_throttle ( throttle : float ) -> ksp::control::ThrottleManager
 
 Name | Type | Description
 --- | --- | ---
-stages | ksp::vessel::StageDeltaV[] | 
+stages | [ksp::vessel::StageDeltaV[]](/reference/ksp/vessel.md#stagedeltav) | 
 
 #### Methods
 

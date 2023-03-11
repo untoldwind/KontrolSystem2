@@ -18,12 +18,12 @@ atmosphere_depth | float | Depth/height of the atmosphere if present.
 grav_parameter | float | Standard gravitation parameter of the body. 
 has_atmosphere | bool | `true` if the celestial body has an atmosphere to deal with. 
 name | string | Name of the celestial body. 
-orbit | ksp::orbit::Orbit | The orbit of the celestial body itself (around the parent body) 
+orbit | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit) | The orbit of the celestial body itself (around the parent body) 
 radius | float | Radius of the body at sea level 
-right | ksp::math::Vec3 | 
+right | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
 rotation_period | float | Rotation period of the planet. 
 SOI_radius | float | Radius of the sphere of influence of the body 
-up | ksp::math::Vec3 | 
+up | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
 
 #### Methods
 
@@ -75,10 +75,10 @@ body.terrain_height ( lat : float,
 
 Name | Type | Description
 --- | --- | ---
-body | ksp::orbit::Body | 
+body | [ksp::orbit::Body](/reference/ksp/orbit.md#body) | 
 latitude | float | 
 longitude | float | 
-surface_normal | ksp::math::Vec3 | 
+surface_normal | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
 terrain_height | float | 
 
 #### Methods
@@ -110,11 +110,11 @@ inclination | float | Inclination of the orbit in degree.
 LAN | float | Longitude of ascending node of the orbit in degree 
 mean_anomaly_at_epoch | float | Mean anomaly of the orbit at `epoch` 
 mean_motion | float | Mean motion of the orbit. 
-orbit_normal | ksp::math::Vec3 | Normal vector perpendicular to orbital plane. 
+orbit_normal | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | Normal vector perpendicular to orbital plane. 
 periapsis | float | Periapsis of the orbit above sealevel of the `reference_body` 
 periapsis_radius | float | Radius of periapsis of the orbit (i.e. from the center of the `reference_body') 
 period | float | Orbital period. 
-reference_body | ksp::orbit::Body | The celestial body the orbit is referenced on. 
+reference_body | [ksp::orbit::Body](/reference/ksp/orbit.md#body) | The celestial body the orbit is referenced on. 
 semi_major_axis | float | Semi major axis of the orbit. 
 start_ut | float | 
 

@@ -30,6 +30,14 @@ pub sync fn has_ignited ( vessel : ksp::vessel::Vessel ) -> bool
 
 
 
+### has_still_running
+
+```rust
+pub sync fn has_still_running ( vessel : ksp::vessel::Vessel ) -> bool
+```
+
+
+
 ### trigger_staging
 
 ```rust

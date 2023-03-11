@@ -89,7 +89,7 @@ pidloop.update ( sampleTime : float,
 
 Name | Type | Description
 --- | --- | ---
-translate | ksp::math::Vec3 | 
+translate | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
 
 #### Methods
 
@@ -125,7 +125,7 @@ rcstranslatemanager.set_translate_provider ( newTranslateProvider : fn() -> ksp:
 
 Name | Type | Description
 --- | --- | ---
-direction | ksp::math::Direction | 
+direction | [ksp::math::Direction](/reference/ksp/math.md#direction) | 
 max_stopping_time | float | 
 pitch_torque_adjust | float | 
 pitch_torque_factor | float | 
@@ -220,7 +220,7 @@ throttlemanager.set_throttle_provider ( newThrottleProvider : fn(float) -> float
 Name | Type | Description
 --- | --- | ---
 i | float | 
-loop | ksp::control::PIDLoop | 
+loop | [ksp::control::PIDLoop](/reference/ksp/control.md#pidloop) | 
 tr | float | 
 ts | float | 
 
