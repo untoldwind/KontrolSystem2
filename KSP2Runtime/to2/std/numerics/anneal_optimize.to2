@@ -5,7 +5,7 @@ pub sync fn anneal_optimize(func : fn(float, float) -> float, min : Vec2, max : 
     const random = math::random()
     let temp = max_temp
     const range = max - min
-    let particles = 0..num_particles.map(fn(i) -> {
+    let particles = (0..num_particles).map(fn(i) -> {
         const pos = if(i == 0) range / 2 else <Vec2>(x: random.next_float() * range.x + min.x, y: random.next_float() * range.y + min.y )
         (x: pos.x, y: pos.y, f: func(pos.x, pos.y))
     })
