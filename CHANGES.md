@@ -3,6 +3,7 @@
 ## 0.1.5 -> 0.1.6
 
 * Add `vessel.situtation` binding (Addressing #8)
+* Made coordinate transformation more stable (try always to be in coordinate frame of the main body, addresses #4)
 
 ## 0.1.4 -> 0.1.5
 
