@@ -38,7 +38,7 @@ namespace KontrolSystem.TO2.AST {
     }
 
     public class ReturnValue : Expression {
-        private readonly Expression returnValue;
+        internal readonly Expression returnValue;
 
         public ReturnValue(Expression returnValue, Position start = new Position(), Position end = new Position()) :
             base(start, end) {

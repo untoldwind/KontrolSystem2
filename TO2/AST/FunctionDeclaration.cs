@@ -48,7 +48,11 @@ namespace KontrolSystem.TO2.AST {
             this.isAsync = isAsync;
             this.parameters = parameters;
             this.declaredReturn = declaredReturn;
-            this.expression = expression;
+            if (expression is Block b) {
+                this.expression = b.CollapseFinalReturn();
+            } else {
+                this.expression = expression;
+            }
             this.expression.VariableContainer = this;
             this.expression.TypeHint = context => this.declaredReturn.UnderlyingType(context.ModuleContext);
         }

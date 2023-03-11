@@ -1,0 +1,31 @@
+use * from core::testing
+
+sync fn simple_add(a : int, b: int) -> int = a + b
+
+sync fn simple_add_end_return(a : int, b: int) -> int = {
+    // comment before
+    return a + b
+    // comment after
+}
+
+sync fn condition_add(a : int, b: int) -> int = {
+    if ( a < 0 ) return b - a
+    // comment between
+    a + b
+}
+
+sync fn condition_add_end_return(a : int, b: int) -> int = {
+    if ( a < 0 ) return b - a
+    // comment between
+    return a + b
+}
+
+test sync fn test_func_return() -> Unit = {
+    assert_int(5, simple_add(2, 3))
+    assert_int(25, simple_add_end_return(20, 5))
+    
+    assert_int(5, condition_add(2, 3))
+    assert_int(5, condition_add(-2, 3))
+    assert_int(25, condition_add_end_return(20, 5))
+    assert_int(25, condition_add_end_return(-20, 5))
+}

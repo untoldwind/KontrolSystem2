@@ -112,5 +112,15 @@ namespace KontrolSystem.TO2.AST {
 
             if (childScope) context.IL.EndScope();
         }
+
+        internal Block CollapseFinalReturn() {
+            var (lastItem, lastIdx) = items.Select((item, idx) => (item, idx)).LastOrDefault(item => !item.item.IsComment);
+
+            if (lastItem != null && lastItem is ReturnValue r) {
+                items[lastIdx] = r.returnValue;
+            }
+
+            return this;
+        }
     }
 }
