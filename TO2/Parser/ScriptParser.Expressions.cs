@@ -120,7 +120,7 @@ namespace KontrolSystem.TO2.Parser {
         private static readonly Parser<Expression> BracketTerm = Expression
             .Between(Char('(').Then(WhiteSpaces0), WhiteSpaces0.Then(Char(')')))
             .Map((expression, start, end) => new Bracket(expression, start, end));
-        
+
         private static readonly Parser<Expression> Term = Alt(
             LiteralBool,
             LiteralFloat,
@@ -161,7 +161,7 @@ namespace KontrolSystem.TO2.Parser {
                 default: throw new ParseException(start, new List<string> { "<valid suffix>" });
                 }
             });
-        
+
         private static readonly Parser<Operator> UnaryPrefixOp = Alt(
             Char('-').To(Operator.Neg),
             Char('!').To(Operator.Not),
@@ -204,7 +204,7 @@ namespace KontrolSystem.TO2.Parser {
             BITBinaryExpr, Spacing0.Then(Tag("..")).Then(Opt(Char('.'))),
             Spacing0.Then(BITBinaryExpr)
         ).Map((items, start, end) => new RangeCreate(items.Item1, items.Item3, items.Item2.IsDefined, start, end));
-        
+
         private static readonly Parser<Expression> UnapplyExpr = Seq(
             Identifier,
             Spacing0.Then(

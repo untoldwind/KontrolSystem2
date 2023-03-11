@@ -3,7 +3,7 @@ using KontrolSystem.SpaceWarpMod.Utils;
 using UnityEngine;
 
 namespace KontrolSystem.SpaceWarpMod.UI {
-public class FontManager : Singleton<FontManager> {
+    public class FontManager : Singleton<FontManager> {
         public static readonly string[] DefaultConsoleFonts = {
             "User pick Goes Here", // overwrite this first one with the user selection - the rest are a fallback just in case
             "Consolas Bold", // typical Windows good programming font

@@ -101,8 +101,8 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             }
         }
 
-        protected virtual void OnResize(Rect newWindowRect) {}
-        
+        protected virtual void OnResize(Rect newWindowRect) { }
+
         protected virtual void OnOpen() {
         }
 

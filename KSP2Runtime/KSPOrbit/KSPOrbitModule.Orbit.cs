@@ -23,7 +23,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
             [KSField(Description = "Periapsis of the orbit above sealevel of the `reference_body`")]
             double Periapsis { get; }
-            
+
             [KSField(Description = "Radius of apoapsis of the orbit (i.e. from the center of the `reference_body')")]
             double ApoapsisRadius { get; }
 
@@ -135,7 +135,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             /// </summary>
             [KSMethod]
             double TimeOfTrueAnomaly(double trueAnomaly, double ut);
-            
+
             /// <summary>
             /// The next time at which the orbiting object will be at periapsis.
             /// For elliptical orbits, this will be between UT and UT + Period.
@@ -152,7 +152,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             /// </summary>
             [KSMethod]
             Result<double, string> NextApoapsisTime(Option<double> ut = new Option<double>());
-            
+
             /// <summary>
             /// Get the true anomaly of a radius.
             /// If the radius is below the periapsis the true anomaly of the periapsis
@@ -161,7 +161,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             /// </summary>
             [KSMethod]
             double TrueAnomalyAtRadius(double radius);
-            
+
             /// <summary>
             /// Finds the next time at which the orbiting object will achieve a given radius
             /// from the center of the primary.

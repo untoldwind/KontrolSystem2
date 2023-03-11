@@ -33,7 +33,7 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                 get => endProvider();
                 set => endProvider = () => value;
             }
-            
+
         }
     }
 }

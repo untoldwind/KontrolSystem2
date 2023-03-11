@@ -18,7 +18,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField]
             public DeltaVStageInfoAdapter[] Stages => deltaV.StageInfo
                 .Select(stage => new DeltaVStageInfoAdapter(vesselAdapter, stage)).ToArray();
-            
+
             [KSMethod(Description = "Get delta-v information for a specific `stage` of the vessel, if existent.")]
             public Option<DeltaVStageInfoAdapter> Stage(long stage) {
                 DeltaVStageInfo stageInfo = deltaV.GetStage((int)stage);

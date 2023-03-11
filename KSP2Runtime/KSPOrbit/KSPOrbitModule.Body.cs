@@ -40,7 +40,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
             [KSMethod]
             Vector3d SurfacePosition(double latitude, double longitude, double altitude);
-            
+
             [KSMethod(Description =
                 "Create a new orbit around this body starting at a given relative `position` and `velocity` at universal time `ut`")]
             IOrbit CreateOrbit(Vector3d position, Vector3d velocity, double ut);

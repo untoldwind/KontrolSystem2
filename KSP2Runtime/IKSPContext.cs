@@ -13,18 +13,18 @@ namespace KontrolSystem.KSP.Runtime {
         void Update();
         void OnRender();
     }
-    
+
     public interface IKSPContext : IContext {
         GameMode GameMode { get; }
 
         KSPConsoleBuffer ConsoleBuffer { get; }
 
-        double UniversalTime { get;  }
-        
+        double UniversalTime { get; }
+
         KSPOrbitModule.IBody FindBody(string name);
-        
+
         object NextYield { get; set; }
-        
+
         Action OnNextYieldOnce { get; set; }
 
         void AddMarker(IMarker marker);
@@ -32,7 +32,7 @@ namespace KontrolSystem.KSP.Runtime {
         void RemoveMarker(IMarker marker);
 
         void ClearMarkers();
-        
+
         void HookAutopilot(VesselComponent vessel, FlightInputCallback autopilot);
 
         void UnhookAutopilot(VesselComponent vessel, FlightInputCallback autopilot);

@@ -20,7 +20,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField]
             public ManeuverNodeAdapter[] Nodes => maneuverPlan.GetNodes().Select(node => new ManeuverNodeAdapter(vesselAdapter, node)).ToArray();
-            
+
             [KSMethod]
             public Result<ManeuverNodeAdapter, string> NextNode() {
                 ManeuverNodeData node = maneuverPlan.GetNodes().FirstOrDefault();
@@ -40,20 +40,20 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
                 return Result.Ok<ManeuverNodeAdapter, string>(new ManeuverNodeAdapter(vesselAdapter, maneuverNodeData));
             }
-            
+
 
             [KSMethod]
             public Result<ManeuverNodeAdapter, string> AddBurnVector(double ut, Vector3d burnVector) {
                 ManeuverNodeData maneuverNodeData = new ManeuverNodeData(vesselAdapter.vessel.GlobalId, false, ut);
                 KSPOrbitModule.IOrbit orbit = new OrbitWrapper(vesselAdapter.context, vesselAdapter.vessel.Orbit);
-                
+
                 maneuverNodeData.BurnVector = new Vector3d(
                     Vector3d.Dot(orbit.RadialPlus(ut), burnVector),
                     Vector3d.Dot(orbit.NormalPlus(ut), burnVector),
                     Vector3d.Dot(orbit.Prograde(ut), burnVector)
                 );
                 vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.AddNodeToVessel(maneuverNodeData);
-//                maneuverPlan.AddNode(maneuverNodeData);
+                //                maneuverPlan.AddNode(maneuverNodeData);
 
                 return Result.Ok<ManeuverNodeAdapter, string>(new ManeuverNodeAdapter(vesselAdapter, maneuverNodeData));
             }

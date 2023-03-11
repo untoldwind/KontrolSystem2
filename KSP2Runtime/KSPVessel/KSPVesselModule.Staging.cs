@@ -17,9 +17,9 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             }
 
             [KSField] public long Current => staging.StageCount > 0 ? staging.StageCount - 1 : 0;
-            
+
             [KSField] public long Count => staging.StageCount;
-            
+
             [KSField] public long TotalCount => staging.TotalStageCount;
 
             [KSField] public bool Ready => vesselAdapter.vessel.HasControlForEditingStagingStack();

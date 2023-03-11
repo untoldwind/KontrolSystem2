@@ -14,8 +14,8 @@ namespace KontrolSystem.KSP.Runtime.Test {
             try {
                 var registry = KontrolSystemKSPRegistry.CreateKSP();
 
-//                registry.AddDirectory(Path.Combine("..", "..", "GameData", "KontrolSystem", "to2"));
-//                registry.AddDirectory(Path.Combine(Path.Combine(".", "to2Sample")));
+                //                registry.AddDirectory(Path.Combine("..", "..", "GameData", "KontrolSystem", "to2"));
+                //                registry.AddDirectory(Path.Combine(Path.Combine(".", "to2Sample")));
 
 
             } catch (CompilationErrorException e) {

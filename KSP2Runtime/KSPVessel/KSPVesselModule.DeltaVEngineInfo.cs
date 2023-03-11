@@ -26,7 +26,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField(Description = "Number of the stage when engine is supposed to start")]
             public long StartBurnStage => deltaVEngineInfo.StartBurnStage;
-            
+
             [KSField]
             public EngineDataAdapter EngineData => new EngineDataAdapter(deltaVEngineInfo.Engine);
         }

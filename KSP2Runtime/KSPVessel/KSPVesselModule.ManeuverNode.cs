@@ -17,17 +17,17 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 this.vesselAdapter = vesselAdapter;
                 this.maneuverNode = maneuverNode;
             }
-            
+
             [KSField]
             public double Time {
                 get => maneuverNode.Time;
-                set =>  UpdateNode(maneuverNode.BurnVector.x, maneuverNode.BurnVector.y, maneuverNode.BurnVector.z, value);
+                set => UpdateNode(maneuverNode.BurnVector.x, maneuverNode.BurnVector.y, maneuverNode.BurnVector.z, value);
             }
 
             [KSField]
             public double Prograde {
                 get => maneuverNode.BurnVector.z;
-                set =>  UpdateNode(maneuverNode.BurnVector.x, maneuverNode.BurnVector.y, value, maneuverNode.Time);
+                set => UpdateNode(maneuverNode.BurnVector.x, maneuverNode.BurnVector.y, value, maneuverNode.Time);
             }
 
             [KSField]
@@ -75,16 +75,16 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                     foreach (var patchedOrbit in vesselAdapter.vessel.Orbiter.ManeuverPlanSolver.ManeuverTrajectory) {
                         if (patchedOrbit is PatchedConicsOrbit o && o.ActivePatch && o.StartUT > maneuverNode.Time && o.PatchStartTransition == PatchTransitionType.EndThrust) {
                             return new OrbitWrapper(vesselAdapter.context, o);
-                        }                        
+                        }
                     }
                     return vesselAdapter.Orbit;
                 }
             }
-            
+
             [KSMethod]
             public void Remove() {
                 vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.RemoveNodesFromVessel(vesselAdapter.vessel.GlobalId, new List<ManeuverNodeData>() { maneuverNode });
-//                vesselAdapter.vessel.SimulationObject.ManeuverPlan.RemoveNode(maneuverNode, false);
+                //                vesselAdapter.vessel.SimulationObject.ManeuverPlan.RemoveNode(maneuverNode, false);
             }
 
             private void UpdateNode(double radialOut, double normal, double prograde, double ut) {

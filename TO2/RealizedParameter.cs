@@ -2,8 +2,7 @@
 using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Generator;
 
-namespace KontrolSystem.TO2
-{
+namespace KontrolSystem.TO2 {
     public readonly struct RealizedParameter {
         public readonly string name;
         public readonly RealizedType type;

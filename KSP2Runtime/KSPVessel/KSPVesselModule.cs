@@ -34,29 +34,29 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
         [KSConstant("SITUATION_VACUUM", Description = "Used for delta-v calculation in vacuum.")]
         public static readonly string SituationVacuum = "VACUUM";
-        
+
         [KSFunction(
             Description = "Try to get the currently active vessel. Will result in an error if there is none."
         )]
         public static Result<VesselAdapter, string> ActiveVessel() {
             VesselComponent activeVessel =
                 GameManager.Instance.Game.ViewController.GetActiveSimVessel(true);
-            
+
             return VesselAdapter.NullSafe(KSPContext.CurrentContext, activeVessel)
                 .OkOr("No active vessel");
         }
-        
+
         public static void DirectBindings() {
             BindingGenerator.RegisterTypeMapping(typeof(FlightCtrlState),
                 FlightCtrlStateBinding.FlightCtrlStateType);
         }
-        
+
         internal static DeltaVSituationOptions SituationFromString(string situation) {
             if (Enum.TryParse(situation, true, out DeltaVSituationOptions option)) {
                 return option;
             }
 
             return DeltaVSituationOptions.Vaccum;
-        }        
+        }
     }
 }

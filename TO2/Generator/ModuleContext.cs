@@ -86,7 +86,7 @@ namespace KontrolSystem.TO2.Generator {
 
         public ModuleContext DefineSiblingContext(string name, Type parentType, params Type[] interfaces) {
             ModuleContext subContext = new ModuleContext(this, name, parentType, interfaces, false);
-            
+
             subTypes.Add(name, subContext.typeBuilder);
 
             return subContext;

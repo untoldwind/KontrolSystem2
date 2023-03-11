@@ -34,23 +34,23 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                 fontSize = 13,
                 padding = new RectOffset(2, 2, 2, 2)
             };
-            
+
             startButtonTexture = GetTexture("start");
             stopButtonTexture = GetTexture("stop");
             stateActiveTexture = GetTexture("state_active");
             stateInactiveTexture = GetTexture("state_inactive");
-            stateErrorTexture = GetTexture("state_error");            
+            stateErrorTexture = GetTexture("state_error");
         }
-        
+
         internal static Texture2D GetTexture(string name) {
             return AssetManager.GetAsset<Texture2D>($"KontrolSystem2/images/{name}.png");
-        }        
-        
+        }
+
         public static CommonStyles Instance;
 
         internal static void Init(GUISkin baseSkin, GUISkin skin) {
             Instance = new CommonStyles(baseSkin, skin);
         }
-        
+
     }
 }

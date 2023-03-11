@@ -17,31 +17,31 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
         public double StartUt => orbit.StartUT;
 
         public double EndUt => orbit.EndUT;
-        
+
         public double Apoapsis => orbit.ApoapsisArl;
-        
+
         public double Periapsis => orbit.PeriapsisArl;
-        
+
         public double ApoapsisRadius => orbit.Apoapsis;
-        
+
         public double PeriapsisRadius => orbit.Periapsis;
-        
+
         public double SemiMajorAxis => orbit.SemiMinorAxis;
-        
+
         public double Inclination => orbit.inclination;
-        
+
         public double Eccentricity => orbit.eccentricity;
-        
+
         public double Lan => orbit.longitudeOfAscendingNode;
-        
+
         public double Epoch => orbit.epoch;
-        
+
         public double ArgumentOfPeriapsis => orbit.argumentOfPeriapsis;
-        
+
         public double MeanAnomalyAtEpoch => orbit.meanAnomalyAtEpoch;
-        
+
         public double MeanMotion => orbit.meanMotion;
-        
+
         public double Period => orbit.period;
 
         public Vector3d OrbitNormal => orbit.GetRelativeOrbitNormal().SwapYAndZ;
@@ -53,7 +53,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
         public Vector3d OrbitalVelocity(double ut) => orbit.GetOrbitalVelocityAtUTZup(ut).SwapYAndZ;
 
         public Vector3d Prograde(double ut) => OrbitalVelocity(ut).normalized;
-        
+
         public Vector3d NormalPlus(double ut) => orbit.GetRelativeOrbitNormal().SwapYAndZ.normalized;
 
         public Vector3d RadialPlus(double ut) => Vector3d.Exclude(Prograde(ut), Up(ut)).normalized;
@@ -63,13 +63,13 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
         public double Radius(double ut) => RelativePosition(ut).magnitude;
 
         public Vector3d Horizontal(double ut) => Vector3d.Exclude(Up(ut), Prograde(ut)).normalized;
-        
+
         public KSPOrbitModule.IOrbit PerturbedOrbit(double ut, Vector3d dV) =>
             ReferenceBody.CreateOrbit(RelativePosition(ut), OrbitalVelocity(ut) + dV, ut);
 
         public double MeanAnomalyAtUt(double ut) {
             double ret = (orbit.ObTAtEpoch + (ut - orbit.epoch)) * orbit.meanMotion;
-            
+
             return orbit.eccentricity < 1 ? DirectBindingMath.ClampRadians2Pi(ret) : ret;
         }
 
@@ -108,7 +108,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
         }
 
         public double TrueAnomalyAtRadius(double radius) => orbit.TrueAnomalyAtRadius(radius);
-        
+
         public Result<double, string> NextTimeOfRadius(double ut, double radius) {
             if (radius < orbit.Periapsis || (orbit.eccentricity < 1 && radius > orbit.Apoapsis))
                 Result.Err<double, string>("OrbitExtensions.NextTimeOfRadius: given radius of " + radius +

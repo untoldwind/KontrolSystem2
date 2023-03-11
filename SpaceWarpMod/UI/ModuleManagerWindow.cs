@@ -25,19 +25,19 @@ namespace KontrolSystem.SpaceWarpMod.UI {
 
         public void Awake() {
             Initialize($"KontrolSystem {ConfigAdapter.Instance.Version}", new Rect(Screen.width - 750, Screen.height - 600, 0, 0), 120, 120, false);
-            
+
             Title.image = CommonStyles.Instance.stateInactiveTexture;
-            
+
             consoleWindow = gameObject.AddComponent<ConsoleWindow>();
         }
 
         protected override void DrawWindow(int windowId) {
             GUILayout.BeginVertical();
-            
+
             GUILayout.BeginHorizontal();
-            
+
             tabIdx = GUILayout.Toolbar(tabIdx, new string[] { "Entrypoints", "Reboot Errors", "Modules" });
-            
+
             GUILayout.EndHorizontal();
 
             switch (tabIdx) {
@@ -93,8 +93,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                 if (Mainframe.Instance.LastErrors.Any()) {
                     Title.image = CommonStyles.Instance.stateErrorTexture;
                     status = "Critical (Reboot failed)";
-                }
-                else Title.image = CommonStyles.Instance.stateActiveTexture;
+                } else Title.image = CommonStyles.Instance.stateActiveTexture;
             }
 
             if (Mainframe.Instance.Initialized) {
@@ -103,7 +102,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             }
 
             GUILayout.Label($"Status: {status}");
-        }        
+        }
         void DrawAvailableModules() {
             entryPointScrollPos = GUILayout.BeginScrollView(entryPointScrollPos, CommonStyles.Instance.panelSkin.scrollView,
                 GUILayout.MinWidth(360), GUILayout.MinHeight(350));
@@ -172,9 +171,9 @@ namespace KontrolSystem.SpaceWarpMod.UI {
 
             selectedModule = GUILayout.SelectionGrid(selectedModule,
                 Mainframe.Instance.LastRegistry?.modules.Keys.ToArray() ?? Array.Empty<string>(), 1);
-            
+
             GUILayout.EndScrollView();
-            
+
             GUILayout.EndHorizontal();
         }
 
@@ -206,16 +205,16 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             if (!Mainframe.Instance.Initialized) {
                 LoggerAdapter.Instance.Debug("Lazy Initialize KontrolSystemMod");
                 Mainframe.Instance.Reboot(ConfigAdapter.Instance);
-                
+
                 // Temporary fix for windows hiding main menu
                 GameManager.Instance.Game.Messages.Subscribe<EscapeMenuOpenedMessage>(OnEscapeMenuOpened);
             }
         }
-        
+
         protected override void OnClose() {
-            GameObject.Find("BTN-KontrolSystem")?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(false);    
+            GameObject.Find("BTN-KontrolSystem")?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(false);
         }
-        
+
         private void OnEscapeMenuOpened(MessageCenterMessage message) {
             Close();
             consoleWindow?.Close();

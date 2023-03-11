@@ -8,7 +8,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             private readonly Data_Engine dataEngine;
 
             public EngineDataAdapter(Data_Engine dataEngine) => this.dataEngine = dataEngine;
-            
+
             [KSField] public bool IsShutdown => dataEngine.EngineShutdown;
 
             [KSField] public bool HasIgnited => dataEngine.EngineIgnited;
@@ -20,11 +20,11 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField] public double CurrentThrottle => dataEngine.currentThrottle;
 
             [KSField] public double CurrentThrust => dataEngine.FinalThrustValue;
-            
+
             [KSField] public double ThrottleMin => dataEngine.ThrottleMin;
 
             [KSField] public double MinFuelFlow => dataEngine.MinFuelFlow;
-            
+
             [KSField] public double MaxFuelFlow => dataEngine.MaxFuelFlow;
 
             [KSField] public double MaxThrustOutputVac => dataEngine.MaxThrustOutputVac(true);

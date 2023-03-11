@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.TO2.Runtime;
 using UnityEngine;
@@ -27,7 +27,7 @@ namespace KontrolSystem.KSP.Runtime.Testing {
 
         public double StartUt => 0;
         public double EndUt => 0;
-        
+
         public double Apoapsis => ApoapsisRadius - body.radius;
         public double Periapsis => PeriapsisRadius - body.radius;
 
@@ -44,7 +44,7 @@ namespace KontrolSystem.KSP.Runtime.Testing {
         double KSPOrbitModule.IOrbit.Lan => lan;
 
         public KSPOrbitModule.IBody ReferenceBody => body;
-        
+
         public double MeanMotion => meanMotion;
 
         public double Epoch => epoch;
@@ -487,7 +487,7 @@ namespace KontrolSystem.KSP.Runtime.Testing {
 
         public double TimeOfDescendingNode(KSPOrbitModule.IOrbit b, double ut) =>
             TimeOfTrueAnomaly(DescendingNodeTrueAnomaly(b), ut);
-        
+
         public string ToString() => KSPOrbitModule.OrbitToString(this);
 
         public string ToFixed(long decimals) => KSPOrbitModule.OrbitToFixed(this, decimals);

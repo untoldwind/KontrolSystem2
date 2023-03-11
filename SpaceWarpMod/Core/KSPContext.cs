@@ -46,7 +46,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         internal readonly List<IMarker> markers;
         private readonly Dictionary<VesselComponent, AutopilotHooks> autopilotHooks;
         private readonly List<BackgroundKSPContext> childContexts;
-        
+
         public KSPContext(KSPConsoleBuffer consoleBuffer) {
             this.consoleBuffer = consoleBuffer;
             markers = new List<IMarker>();
@@ -59,7 +59,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
 
         public bool IsBackground => false;
         public ITO2Logger Logger => LoggerAdapter.Instance;
-        
+
         public void CheckTimeout() {
             long elapsed = timeStopwatch.ElapsedMilliseconds;
             if (elapsed >= timeoutMillis)
@@ -74,7 +74,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
             timeStopwatch.Reset();
             timeStopwatch.Start();
         }
-        
+
         public IContext CloneBackground(CancellationTokenSource token) {
             var childContext = new BackgroundKSPContext(consoleBuffer, token);
 
@@ -86,7 +86,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         public GameMode GameMode => CurrentGameMode;
 
         public double UniversalTime => GameManager.Instance.Game.SpaceSimulation.UniverseModel.UniversalTime;
-        
+
         public KSPConsoleBuffer ConsoleBuffer => consoleBuffer;
 
         public KSPOrbitModule.IBody FindBody(string name) {
@@ -94,7 +94,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
 
             return body != null ? new BodyWrapper(this, body) : null;
         }
-        
+
         public object NextYield {
             get {
                 object result = nextYield;
@@ -120,7 +120,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
             foreach (IMarker marker in markers) marker.Visible = false;
             markers.Clear();
         }
-        
+
         public void HookAutopilot(VesselComponent vessel, FlightInputCallback autopilot) {
             LoggerAdapter.Instance.Debug($"Hook autopilot {autopilot} to {vessel.Name}");
             if (autopilotHooks.ContainsKey(vessel)) {
@@ -154,25 +154,25 @@ namespace KontrolSystem.SpaceWarpMod.Core {
 
         public void UnhookAllAutopilots(VesselComponent vessel) {
             if (!autopilotHooks.ContainsKey(vessel)) return;
-            
+
             AutopilotHooks autopilots = autopilotHooks[vessel];
 
             autopilotHooks.Remove(vessel);
             LoggerAdapter.Instance.Debug($"Unhooking from vessel: {vessel.Name}");
             vessel.SimulationObject.objVesselBehavior.OnPreAutopilotUpdate -= autopilots.RunAutopilots;
         }
-        
+
         public void Cleanup() {
             ClearMarkers();
             foreach (var kv in autopilotHooks) {
                 LoggerAdapter.Instance.Debug($"Unhooking from vessel: {kv.Key.Name}");
                 kv.Key.SimulationObject.objVesselBehavior.OnPreAutopilotUpdate -= kv.Value.RunAutopilots;
             }
-            
+
             foreach (var childContext in childContexts) {
                 childContext.Cleanup();
             }
-            
+
             autopilotHooks.Clear();
             childContexts.Clear();
         }
@@ -180,7 +180,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         internal static GameMode CurrentGameMode =>
             GameModeAdapter.GameModeFromState(GameManager.Instance.Game.GlobalGameState.GetState());
     }
-    
+
     public class BackgroundKSPContext : IContext {
         private readonly KSPConsoleBuffer consoleBuffer;
         private readonly CancellationTokenSource token;

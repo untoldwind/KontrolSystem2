@@ -23,7 +23,7 @@ namespace KontrolSystem.SpaceWarpMod {
         public void Awake() {
             ConfigAdapter.Init(Info, Config);
         }
-        
+
         public override void OnInitialized() {
             LoggerAdapter.Instance.Backend = Logger;
             LoggerAdapter.Instance.Debug("Initialize KontrolSystemMod");
@@ -42,7 +42,7 @@ namespace KontrolSystem.SpaceWarpMod {
                 ConfigAdapter.Instance.stdLibFolder.Value = Path.Combine(PluginFolderPath, "to2");
             }
         }
-        
+
         void Update() {
             if (Input.GetKey(KeyCode.LeftAlt) && Input.GetKeyDown(KeyCode.K) && ConfigAdapter.Instance.HotKeyEnabled &&
                 !InvalidStates.Contains(GameManager.Instance.Game.GlobalGameState.GetState())) {

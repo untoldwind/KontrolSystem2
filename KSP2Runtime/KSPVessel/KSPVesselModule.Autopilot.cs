@@ -18,7 +18,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 set {
                     if (value && !vesselAdapter.vessel.AutopilotStatus.IsEnabled) {
                         vesselAdapter.vessel.SetAutopilotEnableDisable(true);
-                    } else if(!value && vesselAdapter.vessel.AutopilotStatus.IsEnabled) {
+                    } else if (!value && vesselAdapter.vessel.AutopilotStatus.IsEnabled) {
                         vesselAdapter.vessel.SetAutopilotEnableDisable(false);
                     }
                 }
@@ -48,7 +48,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             public Direction LockDirection {
                 get {
                     var sas = vesselAdapter.vessel.Autopilot?.SAS;
-                    return sas != null ? new Direction( vesselAdapter.vessel.transform.GetSimSOIBodyParentTransformFrame()
+                    return sas != null ? new Direction(vesselAdapter.vessel.transform.GetSimSOIBodyParentTransformFrame()
                         .ToLocalRotation(sas.ReferenceFrame, sas.LockedRotation)) : vesselAdapter.Facing;
                 }
                 set => vesselAdapter.vessel.Autopilot?.SAS?.LockRotation(value.Rotation);

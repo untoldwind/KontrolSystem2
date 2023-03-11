@@ -22,7 +22,7 @@ namespace KontrolSystem.GenDocs {
             foreach (IKontrolModule module in registry.modules.Values) {
                 if (IsModuleEmpty(module) || !module.Name.Contains("::")) continue;
                 var split = module.Name.Split(new string[] { "::" }, StringSplitOptions.None);
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "docs", "reference",  split.First());
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "docs", "reference", split.First());
                 Directory.CreateDirectory(path);
                 var fileName = Path.Combine(path, String.Join("_", split.Skip(1)) + ".md");
                 using (StreamWriter fs = File.CreateText(fileName)) {
@@ -143,14 +143,14 @@ namespace KontrolSystem.GenDocs {
 
             return LinkTypeInner(typeName);
         }
-        
+
         public static string LinkTypeInner(string typeName) {
             var idx = typeName.LastIndexOf("::");
 
             if (idx > 0) {
                 var moduleName = typeName.Substring(0, idx);
                 var localName = typeName.Substring(idx + 2);
-                
+
                 var split = moduleName.Split(new string[] { "::" }, StringSplitOptions.None);
                 if (split.Length > 0) {
                     var folder = split.First();

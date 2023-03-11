@@ -9,19 +9,19 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             private readonly VesselComponent vessel;
 
             public ActionGroupsAdapter(VesselComponent vessel) => this.vessel = vessel;
-            
+
             [KSField]
             public bool Sas {
                 get => vessel.GetActionGroupState(KSPActionGroup.SAS) == KSPActionGroupState.True;
                 set => vessel.SetActionGroup(KSPActionGroup.SAS, value);
             }
-            
+
             [KSField]
             public bool Rcs {
                 get => vessel.GetActionGroupState(KSPActionGroup.RCS) == KSPActionGroupState.True;
                 set => vessel.SetActionGroup(KSPActionGroup.RCS, value);
             }
-            
+
             [KSField]
             public bool Brakes {
                 get => vessel.GetActionGroupState(KSPActionGroup.Brakes) == KSPActionGroupState.True;
@@ -33,7 +33,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 get => vessel.GetActionGroupState(KSPActionGroup.SolarPanels) == KSPActionGroupState.True;
                 set => vessel.SetActionGroup(KSPActionGroup.SolarPanels, value);
             }
-            
+
             [KSField]
             public bool Gear {
                 get => vessel.GetActionGroupState(KSPActionGroup.Gear) == KSPActionGroupState.True;
@@ -50,7 +50,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             public bool Abort {
                 get => vessel.GetActionGroupState(KSPActionGroup.Abort) == KSPActionGroupState.True;
                 set => vessel.SetActionGroup(KSPActionGroup.Abort, value);
-            }            
+            }
         }
     }
 }

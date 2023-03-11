@@ -28,7 +28,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
             this.message = message;
         }
     }
-    
+
     public class Mainframe : Singleton<Mainframe> {
         static readonly char[] PathSeparator = { '\\', '/' };
 
@@ -47,7 +47,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         public TimeSpan LastRebootTime => state?.bootTime ?? TimeSpan.Zero;
         public IEnumerable<MainframeError> LastErrors => state?.errors ?? Enumerable.Empty<MainframeError>();
         public KontrolRegistry LastRegistry => state?.registry;
-        
+
         private readonly Dictionary<Guid, Coroutine> coroutines = new Dictionary<Guid, Coroutine>();
 
         public void Awake() {
@@ -71,7 +71,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
                 }
             }
         }
-        
+
         public void OnGUI() {
             if (processes == null) return;
             foreach (KontrolSystemProcess process in processes) {
@@ -97,7 +97,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
                 Stopwatch stopwatch = new Stopwatch();
                 try {
                     stopwatch.Start();
-                    
+
                     /*
                     string registryPath = Path.GetFullPath(config.TO2BaseDir).TrimEnd(PathSeparator);
 
@@ -106,7 +106,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
                     Directory.CreateDirectory(registryPath);
                     */
                     KontrolRegistry nextRegistry = KontrolSystemKSPRegistry.CreateKSP();
-                    
+
                     LoggerAdapter.Instance.Debug($"Add Directory: {config.StdLibPath}");
                     nextRegistry.AddDirectory(config.StdLibPath);
                     /*
@@ -239,7 +239,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
 
         private void OnStateChange(MessageCenterMessage message) {
             if (message is GameStateChangedMessage g) {
-                GameMode prevMode = GameModeAdapter.GameModeFromState( g.PreviousState);
+                GameMode prevMode = GameModeAdapter.GameModeFromState(g.PreviousState);
                 GameMode currentMode = GameModeAdapter.GameModeFromState(g.CurrentState);
 
                 if (prevMode != currentMode) {

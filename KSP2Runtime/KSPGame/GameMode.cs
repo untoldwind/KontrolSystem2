@@ -8,11 +8,11 @@ namespace KontrolSystem.KSP.Runtime.KSPGame {
         Tracking,
         Flight,
     }
-    
+
     public static class GameModeAdapter {
         public static GameMode GameModeFromState(GameState state) {
             switch (GameManager.Instance.Game.GlobalGameState.GetState()) {
-            case GameState.KerbalSpaceCenter:  return GameMode.KSC;
+            case GameState.KerbalSpaceCenter: return GameMode.KSC;
             case GameState.TrackingStation: return GameMode.Tracking;
             case GameState.VehicleAssemblyBuilder: return GameMode.VAB;
             case GameState.Launchpad:
@@ -21,7 +21,7 @@ namespace KontrolSystem.KSP.Runtime.KSPGame {
             case GameState.Map3DView: return GameMode.Flight;
             default:
                 return GameMode.Unknown;
-            } 
+            }
         }
     }
 }

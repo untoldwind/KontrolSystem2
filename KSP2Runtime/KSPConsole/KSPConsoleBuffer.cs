@@ -87,8 +87,8 @@ namespace KontrolSystem.KSP.Runtime.KSPConsole {
 
                 CursorCol = CursorRow = 0;
                 cursorLine = topLine;
-                
-//                Print("Kontrol System\n--------------\n");
+
+                //                Print("Kontrol System\n--------------\n");
             }
         }
 
@@ -145,7 +145,7 @@ namespace KontrolSystem.KSP.Runtime.KSPConsole {
                 topLine = bufferLines.Last;
                 while (topLine.Previous != null && topLine.Value.IsEmpty())
                     topLine = topLine.Previous;
-                int lastNonEmpty = topLine.Value.lineNumber;                
+                int lastNonEmpty = topLine.Value.lineNumber;
                 int count = 1;
                 while (topLine.Previous != null && count < VisibleRows) {
                     topLine = topLine.Previous;

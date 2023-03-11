@@ -16,9 +16,9 @@ namespace KontrolSystem.KSP.Runtime.Testing {
         }
 
         public object NextYield { get; set; }
-        
+
         public Action OnNextYieldOnce { get; set; }
-        
+
         public void AddMarker(IMarker marker) {
         }
 
@@ -27,7 +27,7 @@ namespace KontrolSystem.KSP.Runtime.Testing {
 
         public void ClearMarkers() {
         }
-        
+
         public void HookAutopilot(VesselComponent vessel, FlightInputCallback autopilot) {
         }
 

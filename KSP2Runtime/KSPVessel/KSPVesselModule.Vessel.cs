@@ -26,7 +26,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             public static Option<VesselAdapter> NullSafe(IKSPContext context, VesselComponent vessel) => vessel != null
                 ? new Option<VesselAdapter>(new VesselAdapter(context, vessel))
                 : new Option<VesselAdapter>();
-            
+
             internal VesselAdapter(IKSPContext context, VesselComponent vessel) {
                 this.context = context;
                 this.vessel = vessel;
@@ -36,17 +36,17 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 deltaV = new VesselDeltaVAdapter(this);
                 staging = new StagingAdapter(this);
             }
-            
+
             [KSField(Description = "The name of the vessel.")]
             public string Name => vessel.Name;
-            
+
             [KSField] public bool IsActive => vessel.SimulationObject.IsActiveVessel;
-            
-            [KSField] 
+
+            [KSField]
             public string ControlStatus => vessel.ControlStatus.ToString();
-            
+
             [KSField] public ManeuverAdapter Maneuver => maneuver;
-            
+
             [KSField] public ActionGroupsAdapter Actions => actions;
 
             [KSField] public AutopilotAdapter Autopilot => autopilot;
@@ -64,7 +64,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField] public Vector3d SurfaceVelocity => vessel.SurfaceVelocity.vector;
 
             [KSField] public double Mass => vessel.totalMass;
-            
+
             [KSField("CoM")] public Vector3d CoM => vessel.CenterOfMass.localPosition;
 
             [KSField] public double OffsetGround => vessel.OffsetToGround;
@@ -72,11 +72,11 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField] public double AtmosphereDensity => vessel.AtmDensity;
 
             [KSField] public double Heading => vessel.Heading;
-            
+
             [KSField] public double HorizontalSurfaceSpeed => vessel.HorizontalSrfSpeed;
 
             [KSField] public double VerticalSurfaceSpeed => vessel.VerticalSrfSpeed;
-            
+
             [KSField] public double AltitudeTerrain => vessel.AltitudeFromTerrain;
 
             [KSField] public double AltitudeSealevel => vessel.AltitudeFromSeaLevel;
@@ -95,7 +95,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField] public Vector3d North => vessel.transform.GetSimSOIBodyParentTransformFrame().ToLocalVector(vessel.SimulationObject.Telemetry.HorizonNorth);
 
             [KSField] public Vector3d East => vessel.transform.GetSimSOIBodyParentTransformFrame().ToLocalVector(vessel.SimulationObject.Telemetry.HorizonEast);
-            
+
             [KSMethod]
             public Direction HeadingDirection(double degreesFromNorth, double pitchAboveHorizon, double roll) {
                 QuaternionD q = QuaternionD.LookRotation(North, Up);
@@ -103,7 +103,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 q *= QuaternionD.Euler(0, 0, roll);
                 return new Direction(q);
             }
-            
+
             [KSField]
             public Direction Facing {
                 get {
@@ -114,7 +114,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                     return new Direction(vesselFacing);
                 }
             }
-            
+
             [KSField] public PartAdapter[] Parts => vessel.SimulationObject.PartOwner.Parts.Select(part => new PartAdapter(this, part)).ToArray();
 
             [KSField]
@@ -125,7 +125,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                     return null;
                 }
             }).Where(engine => engine != null).ToArray();
-            
+
             [KSField]
             public Option<IKSPTargetable> Target {
                 get {
@@ -165,7 +165,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSMethod]
             public KSPControlModule.SteeringManager ManageSteering(Func<Direction> directionProvider) =>
                 new KSPControlModule.SteeringManager(context, this, directionProvider);
-            
+
             [KSMethod]
             public KSPControlModule.ThrottleManager SetThrottle(double throttle) =>
                 new KSPControlModule.ThrottleManager(context, vessel, _ => throttle);
@@ -181,10 +181,10 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSMethod]
             public KSPControlModule.RCSTranslateManager ManageRcsTranslate(Func<Vector3d> translateProvider) =>
                 new KSPControlModule.RCSTranslateManager(context, vessel, translateProvider);
-            
+
             [KSMethod]
             public void ReleaseControl() => context.UnhookAllAutopilots(vessel);
-            
-        } 
+
+        }
     }
 }

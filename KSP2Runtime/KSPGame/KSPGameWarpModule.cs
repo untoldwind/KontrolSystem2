@@ -16,7 +16,7 @@ namespace KontrolSystem.KSP.Runtime.KSPGame {
 
         [KSFunction(Description = "Warp forward to a specific universal time.")]
         public static void WarpTo(double ut) => TimeWarp.WarpTo(ut);
-        
+
         [KSFunction(Description = "Cancel time warp")]
         public static void Cancel() {
             TimeWarp.StopTimeWarp();

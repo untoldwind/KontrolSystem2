@@ -17,7 +17,7 @@ namespace KontrolSystem.SpaceWarpMod {
                 backend = value;
             }
         }
-        
+
         public void Debug(string message) {
             if (debugEnabled) backend.LogDebug(message);
         }

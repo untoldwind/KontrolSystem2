@@ -16,13 +16,13 @@ namespace KontrolSystem.SpaceWarpMod {
         }
 
         public string Version => version;
-        
+
         public string StdLibPath => stdLibFolder.Value;
-        
+
         public string To2Path => "";
 
         public bool HotKeyEnabled => enableHotkey.Value;
-        
+
         public static ConfigAdapter Instance;
 
         internal static void Init(PluginInfo pluginInfo, ConfigFile config) {

@@ -6,7 +6,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
         [KSClass("Targetable")]
         public interface IKSPTargetable {
             [KSField] string Name { get; }
-            
+
             [KSField] KSPOrbitModule.IOrbit Orbit { get; }
         }
     }

@@ -2,7 +2,7 @@
 using System;
 
 namespace KontrolSystem.KSP.Runtime.KSPControl {
-public partial class KSPControlModule {
+    public partial class KSPControlModule {
         // For the most part this is a rip-off from KOS
         [KSClass("PIDLoop")]
         public class PidLoop {
