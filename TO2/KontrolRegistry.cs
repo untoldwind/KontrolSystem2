@@ -6,6 +6,7 @@ using KontrolSystem.TO2.Runtime;
 using KontrolSystem.TO2.Parser;
 using KontrolSystem.TO2.Generator;
 using KontrolSystem.TO2.AST;
+using KontrolSystem.TO2.Runtime.KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2 {
     public class KontrolRegistry {
@@ -25,6 +26,7 @@ namespace KontrolSystem.TO2 {
         public static KontrolRegistry CreateCore() {
             KontrolRegistry registry = new KontrolRegistry();
 
+            registry.RegisterModule(BindingGenerator.BindModule(typeof(CoreStr)));
             registry.RegisterModule(BindingGenerator.BindModule(typeof(CoreLogging)));
             registry.RegisterModule(BindingGenerator.BindModule(typeof(CoreTesting)));
             registry.RegisterModule(BindingGenerator.BindModule(typeof(CoreBackground)));

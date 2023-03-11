@@ -69,14 +69,14 @@ namespace KontrolSystem.TO2.AST {
             context.IL.Emit(OpCodes.Ldc_I4, Elements.Count);
             context.IL.Emit(OpCodes.Newarr, elementType.GeneratedType(context.ModuleContext));
 
-            foreach (var element in Elements) {
-                TO2Type valueType = element.ResultType(context);
+            for(int i = 0; i < Elements.Count; i++) {
+                TO2Type valueType = Elements[i].ResultType(context);
                 if (!elementType.IsAssignableFrom(context.ModuleContext, valueType)) {
                     context.AddError(new StructuralError(
                         StructuralError.ErrorType.InvalidType,
-                        "Element {i} is of type {valueType}, expected {elementType}",
-                        element.Start,
-                        element.End
+                        $"Element {i} is of type {valueType}, expected {elementType}",
+                        Elements[i].Start,
+                        Elements[i].End
                     ));
                 }
             }

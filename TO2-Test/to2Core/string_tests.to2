@@ -1,4 +1,5 @@
 use * from core::testing
+use { join, format } from core::str
 
 test sync fn test_string_repeat() -> Unit = {
     assert_string("", "abc".repeat(0))
@@ -51,4 +52,17 @@ test sync fn test_string_compare() -> Unit = {
 test sync fn test_string_convert() -> Unit = {
     assert_string("abdc", "aBdC".to_lower())
     assert_string("ABDC", "aBdC".to_upper())
+}
+
+test sync fn test_string_join() -> Unit = {
+    assert_string("Hello|World|Joined", join("|", ["Hello", "World", "Joined"]))
+    assert_string("Hello | World | Joined", join(" | ", ["Hello", "World", "Joined"]))
+    assert_string("Hello, World, Joined", join(", ", ["Hello", "World", "Joined"]))
+}
+
+test sync fn test_string_format() -> Unit = {
+    assert_string("First:       1, Second:     12.25", format("First: {0,7}, Second: {1,9}", [1.0, 12.25]))
+    assert_string("First: 1.123, Second: 12.35", format("First: {0:F3}, Second: {1:F2}", [1.1234567, 12.345678]))
+    assert_string("First:       1, Second:     12.25, Third: Hallo", format("First: {0,7}, Second: {1,9}, Third: {2}", (1.0, 12.25, "Hallo")))
+    assert_string("First: 1.123, Second: 12.35, Third: Hallo", format("First: {0:F3}, Second: {1:F2}, Third: {2}", (1.1234567, 12.345678, "Hallo")))
 }
