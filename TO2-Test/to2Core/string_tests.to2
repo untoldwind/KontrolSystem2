@@ -65,4 +65,5 @@ test sync fn test_string_format() -> Unit = {
     assert_string("First: 1.123, Second: 12.35", format("First: {0:F3}, Second: {1:F2}", [1.1234567, 12.345678]))
     assert_string("First:       1, Second:     12.25, Third: Hallo", format("First: {0,7}, Second: {1,9}, Third: {2}", (1.0, 12.25, "Hallo")))
     assert_string("First: 1.123, Second: 12.35, Third: Hallo", format("First: {0:F3}, Second: {1:F2}, Third: {2}", (1.1234567, 12.345678, "Hallo")))
+    assert_string("First:   1.123, Second:   12.35, Third: Hallo", format("First: {0,7:F3}, Second: {1,7:F2}, Third: {2}", (1.1234567, 12.345678, "Hallo")))
 }

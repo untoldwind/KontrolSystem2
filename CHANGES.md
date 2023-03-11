@@ -6,6 +6,12 @@
   * Tweak precedence of the range operator `..` and `...` so that it more consistent
   * Handle final return statement in functions correctly
 * Added null checks in the `AutopilotAdapter` (addressing issue #3) 
+* Added `core::std` package with string `join` and `format` functions
+* The formatting is based on C# `String.Format`, so something like this works:
+  
+```format("First: {0,7:F3}, Second: {1,7:F2}, Third: {2}", (1.1234567, 12.345678, "Hallo")))```
+gives "First:   1.123, Second:   12.35, Third: Hallo"
+
 
 ## 0.1.3 -> 0.1.4
 
