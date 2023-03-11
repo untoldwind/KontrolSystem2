@@ -123,16 +123,34 @@ namespace KontrolSystem.GenDocs {
         }
 
         public static string LinkType(string typeName) {
+            var idx = typeName.IndexOf('[');
+            if (idx > 0) {
+                return $"{LinkTypeInner(typeName.Substring(0, idx))}[]";
+            }
+
+            if (typeName.StartsWith("Record<")) {
+                idx = typeName.IndexOf(",");
+                if (idx > 0) {
+                    return $"Record&lt;{LinkType(typeName.Substring(7, idx - 7))}{typeName.Substring(idx)}";
+                }
+            }
+            if (typeName.StartsWith("Option<")) {
+                idx = typeName.IndexOf(">");
+                if (idx > 0) {
+                    return $"Option&lt;{LinkType(typeName.Substring(7, idx - 7))}{typeName.Substring(idx)}";
+                }
+            }
+
+            return LinkTypeInner(typeName);
+        }
+        
+        public static string LinkTypeInner(string typeName) {
             var idx = typeName.LastIndexOf("::");
 
             if (idx > 0) {
                 var moduleName = typeName.Substring(0, idx);
                 var localName = typeName.Substring(idx + 2);
-
-                idx = localName.IndexOf('[');
-                if (idx > 0) {
-                    localName = localName.Substring(0, idx);
-                }
+                
                 var split = moduleName.Split(new string[] { "::" }, StringSplitOptions.None);
                 if (split.Length > 0) {
                     var folder = split.First();
