@@ -120,16 +120,10 @@ namespace KontrolSystem.TO2.Parser {
         private static readonly Parser<Expression> BracketTerm = Expression
             .Between(Char('(').Then(WhiteSpaces0), WhiteSpaces0.Then(Char(')')))
             .Map((expression, start, end) => new Bracket(expression, start, end));
-
-        private static readonly Parser<Expression> RangeCreate = Seq(
-            Alt(LiteralInt, BracketTerm, VariableRefOrCall), Spacing0.Then(Tag("..")).Then(Opt(Char('.'))),
-            Spacing0.Then(Alt(LiteralInt, BracketTerm, VariableRefOrCall))
-        ).Map((items, start, end) => new RangeCreate(items.Item1, items.Item3, items.Item2.IsDefined, start, end));
-
+        
         private static readonly Parser<Expression> Term = Alt(
             LiteralBool,
             LiteralFloat,
-            RangeCreate,
             LiteralInt,
             LiteralString,
             BracketTerm,
@@ -167,7 +161,7 @@ namespace KontrolSystem.TO2.Parser {
                 default: throw new ParseException(start, new List<string> { "<valid suffix>" });
                 }
             });
-
+        
         private static readonly Parser<Operator> UnaryPrefixOp = Alt(
             Char('-').To(Operator.Neg),
             Char('!').To(Operator.Not),
@@ -206,6 +200,11 @@ namespace KontrolSystem.TO2.Parser {
         private static readonly Parser<Expression> BITBinaryExpr = Chain(AddSubBinaryExpr, BITOp,
             (left, op, right, start, end) => new Binary(left, op, right, start, end));
 
+        private static readonly Parser<Expression> RangeCreate = Seq(
+            BITBinaryExpr, Spacing0.Then(Tag("..")).Then(Opt(Char('.'))),
+            Spacing0.Then(BITBinaryExpr)
+        ).Map((items, start, end) => new RangeCreate(items.Item1, items.Item3, items.Item2.IsDefined, start, end));
+        
         private static readonly Parser<Expression> UnapplyExpr = Seq(
             Identifier,
             Spacing0.Then(
@@ -223,7 +222,7 @@ namespace KontrolSystem.TO2.Parser {
             Char('>').To(Operator.Gt)
         ).Between(WhiteSpaces0, WhiteSpaces0);
 
-        private static readonly Parser<Expression> CompareExpr = Chain(Alt(UnapplyExpr, BITBinaryExpr), CompareOp,
+        private static readonly Parser<Expression> CompareExpr = Chain(Alt(UnapplyExpr, RangeCreate, BITBinaryExpr), CompareOp,
             (left, op, right, start, end) => new Binary(left, op, right, start, end));
 
         private static readonly Parser<Operator> BooleanOp = Alt(

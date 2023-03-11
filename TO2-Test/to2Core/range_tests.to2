@@ -45,7 +45,7 @@ test sync fn test_basic_range_inclusive() -> Unit = {
 }
 
 test sync fn test_map_range() -> Unit = {
-    const arr = 10..20.map(fn(i) -> 2 * i)
+    const arr = (10 .. 20).map(fn(i) -> 2 * i)
 
     assert_int(10, arr.length)
     for(i in 0..10) {
