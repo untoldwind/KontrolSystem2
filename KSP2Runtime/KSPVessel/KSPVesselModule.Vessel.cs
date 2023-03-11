@@ -32,7 +32,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 this.vessel = vessel;
                 maneuver = new ManeuverAdapter(this);
                 actions = new ActionGroupsAdapter(this.vessel);
-                autopilot = new AutopilotAdapter(context, this.vessel);
+                autopilot = new AutopilotAdapter(this);
                 deltaV = new VesselDeltaVAdapter(this);
                 staging = new StagingAdapter(this);
             }

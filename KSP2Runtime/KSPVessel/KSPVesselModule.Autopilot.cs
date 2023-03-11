@@ -8,48 +8,50 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
     public partial class KSPVesselModule {
         [KSClass("Autopilot")]
         public class AutopilotAdapter {
-            private readonly IKSPContext context;
-            private readonly VesselComponent vessel;
-            private readonly VesselAutopilot autopilot;
+            private readonly VesselAdapter vesselAdapter;
 
-            public AutopilotAdapter(IKSPContext context, VesselComponent vessel) {
-                this.context = context;
-                this.vessel = vessel;
-                autopilot = this.vessel.Autopilot;
-            }
+            public AutopilotAdapter(VesselAdapter vesselAdapter) => this.vesselAdapter = vesselAdapter;
 
             [KSField]
             public bool Enabled {
-                get => autopilot.Enabled;
+                get => vesselAdapter.vessel.AutopilotStatus.IsEnabled;
                 set {
-                    if (value && !autopilot.Enabled) {
-                        autopilot.Activate(autopilot.AutopilotMode);
-                    } else if(!value && autopilot.Enabled) {
-                        autopilot.Deactivate();
+                    if (value && !vesselAdapter.vessel.AutopilotStatus.IsEnabled) {
+                        vesselAdapter.vessel.SetAutopilotEnableDisable(true);
+                    } else if(!value && vesselAdapter.vessel.AutopilotStatus.IsEnabled) {
+                        vesselAdapter.vessel.SetAutopilotEnableDisable(false);
                     }
                 }
-               }
+            }
 
             [KSField]
             public string Mode {
-                get => autopilot.AutopilotMode.ToString();
+                get => vesselAdapter.vessel.AutopilotStatus.Mode.ToString();
                 set {
                     if (Enum.TryParse(value, true, out AutopilotMode mode)) {
-                        autopilot.SetMode(mode);
+                        vesselAdapter.vessel.SetAutopilotMode(mode);
                     }
                 }
             }
 
             [KSField]
             public Vector3d TargetOrientation {
-                get => vessel.transform.GetSimSOIBodyParentTransformFrame().ToLocalVector(autopilot.SAS.ReferenceFrame, autopilot.SAS.TargetOrientation);
-                set => autopilot.SAS.SetTargetOrientation(new Vector(vessel.transform.GetSimSOIBodyParentTransformFrame(), value), false);
+                get {
+                    var sas = vesselAdapter.vessel.Autopilot?.SAS;
+                    return sas != null ? vesselAdapter.vessel.transform.GetSimSOIBodyParentTransformFrame()
+                        .ToLocalVector(sas.ReferenceFrame, sas.TargetOrientation) : vesselAdapter.Facing.Vector;
+                }
+                set => vesselAdapter.vessel.Autopilot?.SAS?.SetTargetOrientation(new Vector(vesselAdapter.vessel.transform.GetSimSOIBodyParentTransformFrame(), value), false);
             }
 
             [KSField]
             public Direction LockDirection {
-                get => new Direction(autopilot.SAS.LockedRotation);
-                set => autopilot.SAS.LockRotation(value.Rotation);
+                get {
+                    var sas = vesselAdapter.vessel.Autopilot?.SAS;
+                    return sas != null ? new Direction( vesselAdapter.vessel.transform.GetSimSOIBodyParentTransformFrame()
+                        .ToLocalRotation(sas.ReferenceFrame, sas.LockedRotation)) : vesselAdapter.Facing;
+                }
+                set => vesselAdapter.vessel.Autopilot?.SAS?.LockRotation(value.Rotation);
             }
         }
     }

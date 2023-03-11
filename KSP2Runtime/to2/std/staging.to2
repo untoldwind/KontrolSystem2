@@ -16,12 +16,15 @@ pub fn trigger_staging(vessel : Vessel) -> bool = {
     let needs_staging = has_flameout(vessel)
     if(needs_staging) {
         const stage = vessel.staging.current
+        // Only some engines had a flameout
+        const is_partial_flameout = has_still_running(vessel)
+        // The next stage does not trigger any engines
         const next_has_engine = if(stage > 0) has_engine_in_stage(vessel, stage - 1) else false
         CONSOLE.print_line("Trigger next stage")
         wait_until(fn() -> vessel.staging.ready)
         vessel.staging.next()
 
-        if(stage > 0 && !next_has_engine) {
+        if(stage > 0 && !is_partial_flameout && !next_has_engine) {
             CONSOLE.print_line("No engine staged, trigger next")
             wait_until(fn() -> vessel.staging.ready)
 
@@ -35,6 +38,13 @@ pub fn trigger_staging(vessel : Vessel) -> bool = {
 pub sync fn has_flameout(vessel : Vessel) -> bool = {
     for(engine in vessel.engines)
         if(engine.has_ignited && engine.is_flameout)
+            return true
+    false
+}
+
+pub sync fn has_still_running(vessel : Vessel) -> bool = {
+    for(engine in vessel.engines)
+        if(engine.has_ignited && !engine.is_flameout)
             return true
     false
 }

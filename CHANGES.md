@@ -1,5 +1,12 @@
 # Changes
 
+## 0.1.4 -> 0.1.5
+
+* Minor language adjustments
+  * Tweak precedence of the range operator `..` and `...` so that it more consistent
+  * Handle final return statement in functions correctly
+* Added null checks in the `AutopilotAdapter` (addressing issue #3) 
+
 ## 0.1.3 -> 0.1.4
 
 * Combined Toolbar window and Modulemanager window to one
