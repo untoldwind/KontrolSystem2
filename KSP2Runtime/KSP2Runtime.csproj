@@ -50,9 +50,14 @@
     <ItemGroup>
         <TO2Files Include="to2\**\*.to2" />
     </ItemGroup>
+    <ItemGroup>
+        <LocalTO2Files Include="to2Local\README" />
+        <LocalTO2Files Include="to2Local\**\*.to2" />
+    </ItemGroup>
     <Target Name="CopyFiles" AfterTargets="Build">
         <Copy SourceFiles="../bin/$(Configuration)/KontrolSystemKSP2Runtime.dll" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2" />
         <Copy SourceFiles="@(TO2Files)" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2/to2/%(RecursiveDir)" />
+        <Copy SourceFiles="@(LocalTO2Files)" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2/to2Local/%(RecursiveDir)" />
     </Target>
     <Target Name="Test">
     </Target>

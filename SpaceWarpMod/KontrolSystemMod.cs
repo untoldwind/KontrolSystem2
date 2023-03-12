@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace KontrolSystem.SpaceWarpMod {
 
-    [BepInPlugin("com.github.untoldwind.KontrolSystem2", "KontrolSystem2", "0.1.5.1")]
+    [BepInPlugin("com.github.untoldwind.KontrolSystem2", "KontrolSystem2", "0.1.6")]
     [BepInDependency(SpaceWarpPlugin.ModGuid, SpaceWarpPlugin.ModVer)]
     public class KontrolSystemMod : BaseSpaceWarpPlugin {
         private ModuleManagerWindow moduleManagerWindow;
@@ -37,10 +37,6 @@ namespace KontrolSystem.SpaceWarpMod {
                     if (toggle) moduleManagerWindow.Open();
                     else moduleManagerWindow.Close();
                 });
-
-            if (ConfigAdapter.Instance.stdLibFolder.Value == "") {
-                ConfigAdapter.Instance.stdLibFolder.Value = Path.Combine(PluginFolderPath, "to2");
-            }
         }
 
         void Update() {
