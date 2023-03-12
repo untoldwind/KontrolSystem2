@@ -17,6 +17,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         private int tabIdx;
         private int selectedModule;
         private ConsoleWindow consoleWindow;
+        private readonly List<EditorWindow> editorWindows = new List<EditorWindow>();
 
         public void Toggle() {
             if (!isOpen) Open();
@@ -70,6 +71,9 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                 consoleWindow?.AttachTo(Mainframe.Instance.ConsoleBuffer);
                 // ReSharper disable once Unity.NoNullPropagation
                 consoleWindow?.Toggle();
+            }
+            if (GUILayout.Button("Editor")) {
+                OpenEditorWindow();
             }
             GUILayout.Space(20);
             if (GUILayout.Button("Close")) {
@@ -215,9 +219,29 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             GameObject.Find("BTN-KontrolSystem")?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(false);
         }
 
+        public void OpenEditorWindow() {
+            EditorWindow editorWindow = gameObject.AddComponent<EditorWindow>();
+            editorWindow.OnCloseClicked += () => CloseEditorWindow(editorWindow);
+            editorWindow.Open();
+            editorWindows.Add(editorWindow);
+        }
+
+        public void CloseEditorWindow(EditorWindow editorWindow) {
+            editorWindows.Remove(editorWindow);
+            Destroy(editorWindow);
+        }
+
+        public void CloseAllEditorWindows() {
+            var oldEditorWindows = editorWindows.ToArray(); // to avoid removing items from a list while iterating it
+            foreach (var editorWindow in oldEditorWindows) {
+                CloseEditorWindow(editorWindow);
+            }
+        }
+
         private void OnEscapeMenuOpened(MessageCenterMessage message) {
             Close();
             consoleWindow?.Close();
+            CloseAllEditorWindows();
         }
     }
 }
