@@ -98,21 +98,21 @@ namespace KontrolSystem.SpaceWarpMod.Core {
                 try {
                     stopwatch.Start();
 
-                    /*
-                    string registryPath = Path.GetFullPath(config.TO2BaseDir).TrimEnd(PathSeparator);
-
-                    PluginLogger.Instance.Info($"Rebooting Mainframe on path {registryPath}");
-
-                    Directory.CreateDirectory(registryPath);
-                    */
                     KontrolRegistry nextRegistry = KontrolSystemKSPRegistry.CreateKSP();
 
-                    LoggerAdapter.Instance.Debug($"Add Directory: {config.StdLibPath}");
-                    nextRegistry.AddDirectory(config.StdLibPath);
-                    /*
-                    PluginLogger.Instance.Debug($"Add Directory: {registryPath}");
-                    nextRegistry.AddDirectory(registryPath);
-                    */
+                    if (Directory.Exists(config.StdLibPath)) {
+                        LoggerAdapter.Instance.Debug($"Add Directory: {config.StdLibPath}");
+                        nextRegistry.AddDirectory(config.StdLibPath);
+                    } else {
+                        LoggerAdapter.Instance.Warning($"StdLibPath does not exists: {config.LocalLibPath}");
+                    }
+
+                    if (Directory.Exists(config.LocalLibPath)) {
+                        LoggerAdapter.Instance.Debug($"Add Directory: {config.LocalLibPath}");
+                        nextRegistry.AddDirectory(config.LocalLibPath);
+                    } else {
+                        LoggerAdapter.Instance.Warning($"LocalLibPath does not exists: {config.LocalLibPath}");
+                    }
                     stopwatch.Stop();
 
                     return new State(nextRegistry, stopwatch.Elapsed, new List<MainframeError>());

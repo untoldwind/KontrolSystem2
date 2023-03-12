@@ -37,10 +37,6 @@ namespace KontrolSystem.SpaceWarpMod {
                     if (toggle) moduleManagerWindow.Open();
                     else moduleManagerWindow.Close();
                 });
-
-            if (ConfigAdapter.Instance.stdLibFolder.Value == "") {
-                ConfigAdapter.Instance.stdLibFolder.Value = Path.Combine(PluginFolderPath, "to2");
-            }
         }
 
         void Update() {

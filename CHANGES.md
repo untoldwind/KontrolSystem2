@@ -4,6 +4,9 @@
 
 * Add `vessel.situtation` binding (Addressing #8)
 * Made coordinate transformation more stable (try always to be in coordinate frame of the main body, addresses #4)
+* Optimize the parsing/compiling speed
+* Add addition scripting director "localTo2" to cleanly distinguish between scripts provided by by the plugin and scripts you write your own
+  * This can be modified in the public configuration `/BepInEx/config/com.github.untoldwind.KontrolSystem2.cfg`
 
 ## 0.1.4 -> 0.1.5
 

@@ -1,0 +1,7 @@
+This is the place where you can add your own scripts.
+
+You can change the location of this folder in the BepInEx/SpaceDock configuration manager or 
+modify the "localLibPath" setting in the 
+  <GameRoot>/BepInEx/config/com.github.untoldwind.KontrolSystem2.cfg
+file directly.
+ 
