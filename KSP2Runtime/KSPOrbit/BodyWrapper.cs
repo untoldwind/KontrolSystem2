@@ -52,5 +52,21 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
             return new OrbitWrapper(context, orbit);
         }
+
+        public KSPOrbitModule.IOrbit CreateOrbitFromParameters(double inclination, double eccentricity,
+            double semiMajorAxis, double lan,
+            double argumentOfPeriapsis, double meanAnomalyAtEpoch, double epoch) {
+            PatchedConicsOrbit orbit = new PatchedConicsOrbit(body.universeModel);
+
+            orbit.inclination = inclination;
+            orbit.eccentricity = eccentricity;
+            orbit.semiMajorAxis = semiMajorAxis;
+            orbit.longitudeOfAscendingNode = lan;
+            orbit.argumentOfPeriapsis = argumentOfPeriapsis;
+            orbit.meanAnomalyAtEpoch = meanAnomalyAtEpoch;
+            orbit.epoch = epoch;
+
+            return new OrbitWrapper(context, orbit);
+        }
     }
 }

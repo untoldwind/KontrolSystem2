@@ -129,6 +129,39 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             else return Result.Ok<double, string>(time1);
         }
 
+        public Vector3d RelativePositionApoapsis {
+            get {
+                Vector3d vectorToAn = QuaternionD.AngleAxis(-orbit.longitudeOfAscendingNode, Vector3d.up) * Vector3d.right;
+                Vector3d vectorToPe = QuaternionD.AngleAxis((float)orbit.argumentOfPeriapsis, OrbitNormal) * vectorToAn;
+                return -ApoapsisRadius * vectorToPe;
+            }
+        }
+
+        public Vector3d RelativePositionPeriapsis {
+            get {
+                Vector3d vectorToAn = QuaternionD.AngleAxis(-orbit.longitudeOfAscendingNode, Vector3d.up) * Vector3d.right;
+                Vector3d vectorToPe = QuaternionD.AngleAxis(orbit.argumentOfPeriapsis, OrbitNormal) * vectorToAn;
+                return PeriapsisRadius * vectorToPe;
+            }
+        }        
+        public double TrueAnomalyFromVector(Vector3d vec) {
+            Vector3d oNormal = OrbitNormal;
+            Vector3d projected = Vector3d.Exclude(oNormal, vec);
+            Vector3d vectorToPe = RelativePositionPeriapsis;
+            double angleFromPe = Vector3d.Angle(vectorToPe, projected);
+
+            //If the vector points to the infalling part of the orbit then we need to do 360 minus the
+            //angle from Pe to get the true anomaly. Test this by taking the the cross product of the
+            //orbit normal and vector to the periapsis. This gives a vector that points to center of the
+            //outgoing side of the orbit. If vectorToAN is more than 90 degrees from this vector, it occurs
+            //during the infalling part of the orbit.
+            if (Math.Abs(Vector3d.Angle(projected, Vector3d.Cross(oNormal, vectorToPe))) < 90) {
+                return angleFromPe * DirectBindingMath.DegToRad;
+            } else {
+                return (360 - angleFromPe) * DirectBindingMath.DegToRad;
+            }
+        }
+        
         public double SynodicPeriod(KSPOrbitModule.IOrbit other) {
             int sign = (Vector3d.Dot(OrbitNormal, other.OrbitNormal) > 0 ? 1 : -1); //detect relative retrograde motion
             return Math.Abs(1.0 /

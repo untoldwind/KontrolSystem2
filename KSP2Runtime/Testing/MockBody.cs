@@ -5,6 +5,7 @@ using KSP.Sim;
 
 namespace KontrolSystem.KSP.Runtime.Testing {
     public class MockBody : KSPOrbitModule.IBody {
+        // These orbits are from KSP1 ... they have to be checked with KSP2
         public static readonly MockBody Kerbol = new MockBody("Kerbol", 261600000, 1.17233279483249E+18);
 
         public static readonly MockBody Kerbin = new MockBody("Kerbin", 600000, Kerbol, 0, 0, 13599840256, 0, 0, 0,

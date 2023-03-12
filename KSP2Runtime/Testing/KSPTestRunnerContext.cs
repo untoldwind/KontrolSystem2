@@ -1,13 +1,31 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using KontrolSystem.KSP.Runtime.KSPConsole;
 using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
+using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Runtime;
 using KSP.Sim.impl;
 
 namespace KontrolSystem.KSP.Runtime.Testing {
     public class KSPTestRunnerContext : TestRunnerContext, IKSPContext {
+        private Dictionary<string, KSPOrbitModule.IBody> Bodies => new KSPOrbitModule.IBody[] {
+            MockBody.Kerbol,
+            MockBody.Eve,
+            MockBody.Gilly,
+            MockBody.Kerbin,
+            MockBody.Mun,
+            MockBody.Minmus,
+            MockBody.Duna,
+            MockBody.Ike,
+            MockBody.Jool,
+            MockBody.Tylo,
+            MockBody.Vall,
+            MockBody.Pol
+        }.ToDictionary(body => body.Name);
+
         private KSPConsoleBuffer consoleBuffer = new KSPConsoleBuffer(50, 80);
 
         public GameMode GameMode => GameMode.Unknown;
@@ -18,9 +36,7 @@ namespace KontrolSystem.KSP.Runtime.Testing {
 
         public VesselComponent ActiveVessel => null;
 
-        public KSPOrbitModule.IBody FindBody(string name) {
-            return null;
-        }
+        public KSPOrbitModule.IBody FindBody(string name) => Bodies.Get(name);
 
         public object NextYield { get; set; }
 

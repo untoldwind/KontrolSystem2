@@ -193,6 +193,23 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             [KSMethod]
             double SynodicPeriod(IOrbit other);
 
+            [KSField] Vector3d RelativePositionApoapsis { get; }
+
+            /// <summary>
+            /// Returns the vector from the primary to the orbiting body at periapsis
+            /// Better than using Orbit.eccVec because that is zero for circular orbits
+            /// </summary>
+            [KSField] Vector3d RelativePositionPeriapsis { get; }
+
+            /// <summary>
+            /// Converts a direction, specified by a Vector3d, into a true anomaly.
+            /// The vector is projected into the orbital plane and then the true anomaly is
+            /// computed as the angle this vector makes with the vector pointing to the periapsis.
+            /// The returned value is always between 0 and 360.
+            /// </summary>
+            [KSMethod]
+            double TrueAnomalyFromVector(Vector3d vec);
+            
             [KSMethod]
             string ToString();
 
