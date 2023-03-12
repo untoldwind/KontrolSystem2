@@ -1,0 +1,39 @@
+use { Vessel } from ksp::vessel
+use { CONSOLE } from ksp::console
+use { sleep } from ksp::game
+
+pub fn main_flight(vessel: Vessel) -> Result<Unit, string> = {
+    let isActive = true
+    let checkpointArrived = false
+    let margin = 7
+    let targetRoll = vessel.roll_horizon_relative
+    let checkpoint = (targetRoll + 180) % 360
+    while (isActive) {
+        CONSOLE.clear()
+        if (checkpointArrived) CONSOLE.print_line("Checkpoint")
+        roll(vessel)
+        if ((minAngleDif(targetRoll, vessel.roll_horizon_relative) < margin) && checkpointArrived) isActive = false
+        if (minAngleDif(checkpoint, vessel.roll_horizon_relative) < margin) checkpointArrived = true
+    }
+}
+
+fn pitchUp(vessel: Vessel) -> Unit = {
+    vessel.override_input_pitch(1)
+}
+
+fn pitchDownABit(vessel: Vessel) -> Unit = {
+    vessel.override_input_pitch(-0.2)
+}
+
+fn roll(vessel: Vessel)-> Unit = {
+    vessel.override_input_roll(1)
+}
+
+sync fn minAngleDif(d1: float, d2: float) -> float = {
+    let dif = d1 + d2
+    if (dif < 0) dif = -dif
+    dif = dif % 360
+    if (dif > 180) dif = 360 - dif
+    
+    dif
+}

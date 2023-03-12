@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Linq;
+using System.Xml.Schema;
 using KontrolSystem.KSP.Runtime.KSPControl;
 using KontrolSystem.KSP.Runtime.KSPMath;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
+using KSP.Game;
+using KSP.Messages;
 using KSP.Modules;
 using KSP.Sim.DeltaV;
 using KSP.Sim.impl;
@@ -162,6 +165,13 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                     return thrust;
                 }
             }
+
+            [KSField]
+            public double RollHorizonRelative => vessel.Roll_HorizonRelative;
+
+            [KSField]
+            public double PitchHorizonRelative => vessel.Pitch_HorizonRelative;
+
             [KSMethod]
             public KSPControlModule.SteeringManager SetSteering(Direction direction) =>
                 new KSPControlModule.SteeringManager(context, this, () => direction);
@@ -188,6 +198,24 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSMethod]
             public void ReleaseControl() => context.UnhookAllAutopilots(vessel);
+
+            [KSMethod]
+            public void OverrideInputPitch(double value) => FlightInputHandler.OverrideInputPitch((float)value);
+
+            [KSMethod]
+            public void OverrideInputRoll(double value) => FlightInputHandler.OverrideInputRoll((float)value);
+
+            [KSMethod]
+            public void OverrideInputYaw(double value) => FlightInputHandler.OverrideInputYaw((float)value);
+
+            [KSMethod]
+            public void OverrideInputTranslateX(double value) => FlightInputHandler.OverrideInputTranslateX((float)value);
+
+            [KSMethod]
+            public void OverrideInputTranslateY(double value) => FlightInputHandler.OverrideInputTranslateY((float)value);
+
+            [KSMethod]
+            public void OverrideInputTranslateZ(double value) => FlightInputHandler.OverrideInputTranslateZ((float)value);
 
         }
     }
