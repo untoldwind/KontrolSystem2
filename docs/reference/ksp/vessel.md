@@ -309,6 +309,7 @@ offset_ground | float |
 orbit | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit) | 
 orbital_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
 parts | [ksp::vessel::Part](/reference/ksp/vessel.md#part)[] | 
+situation | string | 
 staging | [ksp::vessel::Staging](/reference/ksp/vessel.md#staging) | 
 surface_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
 target | Option&lt;[ksp::vessel::Targetable](/reference/ksp/vessel.md#targetable)> | 
