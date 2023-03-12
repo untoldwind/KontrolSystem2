@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using KontrolSystem.KSP.Runtime.KSPConsole;
 using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
@@ -8,9 +9,15 @@ using KSP.Sim.impl;
 namespace KontrolSystem.KSP.Runtime.Testing {
     public class KSPTestRunnerContext : TestRunnerContext, IKSPContext {
         private KSPConsoleBuffer consoleBuffer = new KSPConsoleBuffer(50, 80);
+
         public GameMode GameMode => GameMode.Unknown;
+
         public KSPConsoleBuffer ConsoleBuffer => consoleBuffer;
+
         public double UniversalTime => 0;
+
+        public VesselComponent ActiveVessel => null;
+
         public KSPOrbitModule.IBody FindBody(string name) {
             return null;
         }
