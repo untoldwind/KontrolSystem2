@@ -96,6 +96,8 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField] public Vector3d East => vessel.transform.GetSimSOIBodyParentTransformFrame().ToLocalVector(vessel.SimulationObject.Telemetry.HorizonEast);
 
+            [KSField] public string Situation => vessel.Situation.ToString();
+            
             [KSMethod]
             public Direction HeadingDirection(double degreesFromNorth, double pitchAboveHorizon, double roll) {
                 QuaternionD q = QuaternionD.LookRotation(North, Up);

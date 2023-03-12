@@ -1,5 +1,9 @@
 # Changes
 
+## 0.1.5 -> 0.1.6
+
+* Add `vessel.situtation` binding (Addressing #8)
+
 ## 0.1.4 -> 0.1.5
 
 * Minor language adjustments
