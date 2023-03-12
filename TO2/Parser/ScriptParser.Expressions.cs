@@ -201,9 +201,13 @@ namespace KontrolSystem.TO2.Parser {
             (left, op, right, start, end) => new Binary(left, op, right, start, end));
 
         private static readonly Parser<Expression> RangeCreate = Seq(
-            BITBinaryExpr, Spacing0.Then(Tag("..")).Then(Opt(Char('.'))),
-            Spacing0.Then(BITBinaryExpr)
-        ).Map((items, start, end) => new RangeCreate(items.Item1, items.Item3, items.Item2.IsDefined, start, end));
+            BITBinaryExpr, Opt(Seq(Spacing0.Then(Tag("..")).Then(Opt(Char('.'))),
+                Spacing0.Then(BITBinaryExpr)))
+        ).Map((items, start, end) => {
+            if(items.Item2.IsDefined)
+                return new RangeCreate(items.Item1, items.Item2.Value.Item2, items.Item2.Value.Item1.IsDefined, start, end);
+            return items.Item1;
+        });
 
         private static readonly Parser<Expression> UnapplyExpr = Seq(
             Identifier,
@@ -222,7 +226,7 @@ namespace KontrolSystem.TO2.Parser {
             Char('>').To(Operator.Gt)
         ).Between(WhiteSpaces0, WhiteSpaces0);
 
-        private static readonly Parser<Expression> CompareExpr = Chain(Alt(UnapplyExpr, RangeCreate, BITBinaryExpr), CompareOp,
+        private static readonly Parser<Expression> CompareExpr = Chain(Alt(UnapplyExpr, RangeCreate), CompareOp,
             (left, op, right, start, end) => new Binary(left, op, right, start, end));
 
         private static readonly Parser<Operator> BooleanOp = Alt(
