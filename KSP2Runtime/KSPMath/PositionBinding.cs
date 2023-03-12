@@ -2,6 +2,7 @@
 using KontrolSystem.TO2;
 using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Binding;
+using KSP.Api;
 using KSP.Sim;
 
 namespace KontrolSystem.KSP.Runtime.KSPMath {
@@ -30,6 +31,13 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
             },
             new Dictionary<string, IMethodInvokeFactory> {
                 {
+                    "to_local",
+                    new BoundMethodInvokeFactory("Get local vector in a coordinate system", true,
+                        () => Vector3Binding.Vector3Type,
+                        () => new List<RealizedParameter> {new RealizedParameter("coordinate_system", CoordindateSystemBinding.CoordindateSystemType)}, false,
+                        typeof(PositionBinding), typeof(PositionBinding).GetMethod("ToLocal"))
+                },
+                {
                     "distance",
                     new BoundMethodInvokeFactory("Calculate the distance of `other` position.", true,
                         () => BuiltinType.Float,
@@ -52,19 +60,11 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                         }, false, typeof(Position), typeof(Position).GetMethod("Lerp"))
                 },
             },
-            new Dictionary<string, IFieldAccessFactory> {
-                {
-                    "local",
-                    new BoundPropertyLikeFieldAccessFactory("coordinates in coordindate system",
-                        () => Vector3Binding.Vector3Type, typeof(Position),
-                        typeof(Position).GetProperty("localPosition"))
-                }, {
-                    "coordinate_system",
-                    new BoundPropertyLikeFieldAccessFactory("coordindate system",
-                        () => CoordindateSystemBinding.CoordindateSystemType, typeof(Position),
-                        typeof(Position).GetProperty("coordinateSystem"))
-                }
-            });
+            new Dictionary<string, IFieldAccessFactory> { });
+        
+        public static Vector3d ToLocal(Position position, ICoordinateSystem coordinateSystem) =>
+            coordinateSystem.ToLocalPosition(position);
+
     }
 }
 

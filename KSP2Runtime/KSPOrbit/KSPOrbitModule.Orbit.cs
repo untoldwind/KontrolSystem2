@@ -2,6 +2,8 @@
 using System.Globalization;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
+using KSP.Api;
+using KSP.Sim;
 
 namespace KontrolSystem.KSP.Runtime.KSPOrbit {
     public partial class KSPOrbitModule {
@@ -57,6 +59,9 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             [KSField(Description = "Orbital period.")]
             double Period { get; }
 
+            [KSField]
+            public ICoordinateSystem ReferenceFrame { get; }
+            
             [KSField(Description = "Normal vector perpendicular to orbital plane.")]
             Vector3d OrbitNormal { get; }
 
@@ -64,8 +69,11 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             Vector3d OrbitalVelocity(double ut);
 
             [KSMethod(Description = "Get the absolute position at a given universal time `ut`")]
-            Vector3d AbsolutePosition(double ut);
+            Position Position(double ut);
 
+            [KSMethod]
+            Vector Velocity(double ut);
+            
             [KSMethod]
             Vector3d RelativePosition(double ut);
 

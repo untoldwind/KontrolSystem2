@@ -3,6 +3,7 @@ using System.Reflection.Emit;
 using KontrolSystem.TO2;
 using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Binding;
+using KSP.Api;
 using KSP.Sim;
 using UnityEngine;
 
@@ -36,6 +37,10 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                         typeof(Vector).GetMethod("op_Subtraction", new[] {typeof(Vector), typeof(Vector)}))
                 }, {
                     Operator.Mul,
+                    new StaticMethodOperatorEmitter(() => VectorBinding.VectorType, () => BuiltinType.Float,
+                        typeof(Vector).GetMethod("dot"))
+                }, {
+                    Operator.Mul,
                     new StaticMethodOperatorEmitter(() => BuiltinType.Float, () => VectorType,
                         typeof(Vector).GetMethod("op_Multiply", new[] {typeof(Vector), typeof(double)}))
                 }, {
@@ -45,6 +50,13 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                 },
             },
             new Dictionary<string, IMethodInvokeFactory> {
+                {
+                    "to_local",
+                    new BoundMethodInvokeFactory("Get local vector in a coordinate system", true,
+                        () => Vector3Binding.Vector3Type,
+                        () => new List<RealizedParameter> {new RealizedParameter("coordinate_system", CoordindateSystemBinding.CoordindateSystemType)}, false,
+                        typeof(VectorBinding), typeof(VectorBinding).GetMethod("ToLocal"))
+                },
                 {
                     "cross",
                     new BoundMethodInvokeFactory("Calculate the cross/other product with `other` vector.", true,
@@ -69,8 +81,6 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                 },
             },
             new Dictionary<string, IFieldAccessFactory> {
-                { "local", new BoundPropertyLikeFieldAccessFactory("coordinates in coordindate system", () => Vector3Binding.Vector3Type, typeof(Vector), typeof(Vector).GetProperty("vector") )},
-                { "coordinate_system", new BoundPropertyLikeFieldAccessFactory("coordindate system", () => CoordindateSystemBinding.CoordindateSystemType, typeof(Vector), typeof(Vector).GetProperty("coordinateSystem") )},
                 {
                     "magnitude",
                     new BoundPropertyLikeFieldAccessFactory("Magnitude/length of the vector", () => BuiltinType.Float,
@@ -85,5 +95,8 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                         () => VectorType, typeof(Vector), typeof(Vector).GetMethod("normalize"), null)
                 },
             });
+
+        public static Vector3d ToLocal(Vector vector, ICoordinateSystem coordinateSystem) =>
+            coordinateSystem.ToLocalVector(vector);
     }
 }

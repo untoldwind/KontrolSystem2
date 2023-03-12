@@ -22,9 +22,9 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
         public double RotationPeriod => body.rotationPeriod;
 
-        public Vector3d Up => body.transform.up.vector;
+        public Vector Up => body.transform.up;
 
-        public Vector3d Right => body.transform.right.vector;
+        public Vector Right => body.transform.right;
 
         [KSField] public KSPOrbitModule.IOrbit Orbit => new OrbitWrapper(context, body.Orbit);
 

@@ -2,6 +2,7 @@
 using KontrolSystem.TO2;
 using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Binding;
+using KSP.Api;
 using KSP.Sim;
 
 namespace KontrolSystem.KSP.Runtime.KSPMath {
@@ -11,6 +12,13 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
             new OperatorCollection { },
             new OperatorCollection { },
             new Dictionary<string, IMethodInvokeFactory> {
+                {
+                    "to_local",
+                    new BoundMethodInvokeFactory("Get local direction in a coordinate system", true,
+                        () => DirectionBinding.DirectionType,
+                        () => new List<RealizedParameter> {new RealizedParameter("coordinate_system", CoordindateSystemBinding.CoordindateSystemType)}, false,
+                        typeof(RotationBinding), typeof(RotationBinding).GetMethod("ToLocal"))
+                },
                 {
                     "lerp_to",
                     new BoundMethodInvokeFactory(
@@ -22,20 +30,8 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                         }, false, typeof(Rotation), typeof(Rotation).GetMethod("Lerp"))
                 },
             },
-            new Dictionary<string, IFieldAccessFactory> {
-                {
-                    "local",
-                    new BoundPropertyLikeFieldAccessFactory("coordinates in coordindate system",
-                        () => DirectionBinding.DirectionType, typeof(RotationBinding),
-                        typeof(RotationBinding).GetMethod("ToDirection"), null)
-                }, {
-                    "coordinate_system",
-                    new BoundPropertyLikeFieldAccessFactory("coordindate system",
-                        () => CoordindateSystemBinding.CoordindateSystemType, typeof(Rotation),
-                        typeof(Rotation).GetProperty("coordinateSystem"))
-                }
-            });
+            new Dictionary<string, IFieldAccessFactory> { });
 
-        public static Direction ToDirection(Rotation rotation) => new Direction(rotation.localRotation);
+        public static Direction ToLocal(Rotation rotation, ICoordinateSystem coordinateSystem) => new Direction(coordinateSystem.ToLocalRotation(rotation));
     }
 }

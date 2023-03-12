@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using KontrolSystem.TO2;
 using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Binding;
 using KSP.Api;
@@ -11,7 +12,26 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
             "Representation of a coordinate system", typeof(ICoordinateSystem),
             new OperatorCollection { },
             new OperatorCollection { },
-            new Dictionary<string, IMethodInvokeFactory> { },
+            new Dictionary<string, IMethodInvokeFactory> {
+                {
+                    "to_local_position",
+                    new BoundMethodInvokeFactory("Get local coordinates of a position", true, () => Vector3Binding.Vector3Type,
+                        () => new List<RealizedParameter>() { new RealizedParameter("position", PositionBinding.PositionType) }, false, typeof(ICoordinateSystem),
+                        typeof(ICoordinateSystem).GetMethod("ToLocalPosition", new Type[] { typeof(Position) }))
+                },
+                {
+                    "to_local_vector",
+                    new BoundMethodInvokeFactory("Get local coordinates of a vector", true, () => Vector3Binding.Vector3Type,
+                        () => new List<RealizedParameter>() { new RealizedParameter("position", VectorBinding.VectorType) }, false, typeof(ICoordinateSystem),
+                        typeof(ICoordinateSystem).GetMethod("ToLocalVector", new Type[] { typeof(Vector) }))
+                },
+                {
+                    "to_local_direction",
+                    new BoundMethodInvokeFactory("Get local direction of a rotation", true, () => DirectionBinding.DirectionType,
+                        () => new List<RealizedParameter>() { new RealizedParameter("rotation", RotationBinding.RotationType) }, false, typeof(ICoordinateSystem),
+                        typeof(ICoordinateSystem).GetMethod("ToLocalRotation", new Type[] { typeof(Rotation) }))
+                },
+            },
             new Dictionary<string, IFieldAccessFactory> {
                 { "forward", new BoundPropertyLikeFieldAccessFactory("forward vector of the coordinate system", () => VectorBinding.VectorType, typeof(ICoordinateSystem), typeof(ICoordinateSystem).GetProperty("forward") )},
                 { "back", new BoundPropertyLikeFieldAccessFactory("backward vector of the coordinate system", () => VectorBinding.VectorType, typeof(ICoordinateSystem), typeof(ICoordinateSystem).GetProperty("back") )},

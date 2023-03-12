@@ -122,9 +122,9 @@ namespace KontrolSystem.KSP.Runtime.Testing {
 
         public Position Position => new Position(ReferenceFrame, Vector3d.zero);
 
-        public Vector3d Up => Vector3d.up;
+        public Vector Up => new Vector(KSPTesting.IDENTITY_COORDINATE_SYSTEM, Vector3d.up);
 
-        public Vector3d Right => Vector3d.right;
+        public Vector Right => new Vector(KSPTesting.IDENTITY_COORDINATE_SYSTEM, Vector3d.right);
 
         public Vector3d AngularVelocity => angularVelocity;
 

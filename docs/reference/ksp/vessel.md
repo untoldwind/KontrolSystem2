@@ -315,15 +315,15 @@ actions | [ksp::vessel::ActionGroups](/reference/ksp/vessel.md#actiongroups) |
 altitude_scenery | float | 
 altitude_sealevel | float | 
 altitude_terrain | float | 
-angular_momentum | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
-angular_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
+angular_momentum | [ksp::math::Vector](/reference/ksp/math.md#vector) | 
+angular_velocity | [ksp::math::Vector](/reference/ksp/math.md#vector) | 
 atmosphere_density | float | 
 autopilot | [ksp::vessel::Autopilot](/reference/ksp/vessel.md#autopilot) | 
 available_thrust | float | 
-CoM | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
+CoM | [ksp::math::Position](/reference/ksp/math.md#position) | 
 control_status | string | 
 delta_v | [ksp::vessel::VesselDeltaV](/reference/ksp/vessel.md#vesseldeltav) | 
-east | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
+east | [ksp::math::Vector](/reference/ksp/math.md#vector) | 
 engines | [ksp::vessel::EngineData](/reference/ksp/vessel.md#enginedata)[] | 
 facing | [ksp::math::Direction](/reference/ksp/math.md#direction) | 
 geo_coordinates | [ksp::orbit::GeoCoordinates](/reference/ksp/orbit.md#geocoordinates) | 
@@ -334,18 +334,20 @@ main_body | [ksp::orbit::Body](/reference/ksp/orbit.md#body) |
 maneuver | [ksp::vessel::Maneuver](/reference/ksp/vessel.md#maneuver) | 
 mass | float | 
 name | string | The name of the vessel. 
-north | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
+north | [ksp::math::Vector](/reference/ksp/math.md#vector) | 
 offset_ground | float | 
 orbit | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit) | 
-orbital_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
+orbital_velocity | [ksp::math::Vector](/reference/ksp/math.md#vector) | 
 parts | [ksp::vessel::Part](/reference/ksp/vessel.md#part)[] | 
 pitch_horizon_relative | float | 
 roll_horizon_relative | float | 
+position | [ksp::math::Position](/reference/ksp/math.md#position) | 
+reference_frame | [ksp::math::CoordinateSystem](/reference/ksp/math.md#coordinatesystem) | 
 situation | string | 
 staging | [ksp::vessel::Staging](/reference/ksp/vessel.md#staging) | 
-surface_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
+surface_velocity | [ksp::math::Vector](/reference/ksp/math.md#vector) | 
 target | Option&lt;[ksp::vessel::Targetable](/reference/ksp/vessel.md#targetable)> | 
-up | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
+up | [ksp::math::Vector](/reference/ksp/math.md#vector) | 
 vertical_surface_speed | float | 
 
 #### Methods

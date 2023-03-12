@@ -65,9 +65,9 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField] public Position Position => vessel.SimulationObject.Position;
 
-            [KSField] public Vector3d OrbitalVelocity => vessel.OrbitalVelocity.vector;
+            [KSField] public Vector OrbitalVelocity => vessel.OrbitalVelocity;
 
-            [KSField] public Vector3d SurfaceVelocity => vessel.mainBody.coordinateSystem.ToLocalVector(vessel.SurfaceVelocity);
+            [KSField] public Vector SurfaceVelocity => vessel.SurfaceVelocity;
 
             [KSField] public double Mass => vessel.totalMass;
 
@@ -89,26 +89,24 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField] public double AltitudeScenery => vessel.AltitudeFromScenery;
 
-            [KSField] public Vector3d AngularMomentum => vessel.mainBody.coordinateSystem.ToLocalVector(vessel.angularMomentum.relativeAngularVelocity);
+            [KSField] public Vector AngularMomentum => vessel.angularMomentum.relativeAngularVelocity;
 
-            [KSField] public Vector3d AngularVelocity => vessel.mainBody.coordinateSystem.ToLocalVector(vessel.AngularVelocity.relativeAngularVelocity);
+            [KSField] public Vector AngularVelocity => vessel.AngularVelocity.relativeAngularVelocity;
 
             [KSField]
             public KSPOrbitModule.GeoCoordinates GeoCoordinates => new KSPOrbitModule.GeoCoordinates(MainBody, vessel.Latitude, vessel.Longitude);
 
-            [KSField]
-            public Vector3d Up => vessel.mainBody.coordinateSystem
-                .ToLocalVector(vessel.SimulationObject.Telemetry.HorizonUp);
+            [KSField] public Vector Up => vessel.SimulationObject.Telemetry.HorizonUp;
 
-            [KSField] public Vector3d North => vessel.mainBody.coordinateSystem.ToLocalVector(vessel.SimulationObject.Telemetry.HorizonNorth);
+            [KSField] public Vector North => vessel.SimulationObject.Telemetry.HorizonNorth;
 
-            [KSField] public Vector3d East => vessel.mainBody.coordinateSystem.ToLocalVector(vessel.SimulationObject.Telemetry.HorizonEast);
+            [KSField] public Vector East => vessel.SimulationObject.Telemetry.HorizonEast;
 
             [KSField] public string Situation => vessel.Situation.ToString();
 
             [KSMethod]
             public Direction HeadingDirection(double degreesFromNorth, double pitchAboveHorizon, double roll) {
-                QuaternionD q = QuaternionD.LookRotation(North, Up);
+                QuaternionD q = QuaternionD.LookRotation(vessel.mainBody.coordinateSystem.ToLocalVector(North), vessel.mainBody.coordinateSystem.ToLocalVector(Up));
                 q *= QuaternionD.Euler(-pitchAboveHorizon, degreesFromNorth, 0);
                 q *= QuaternionD.Euler(0, 0, roll);
                 return new Direction(q);

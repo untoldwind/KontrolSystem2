@@ -142,7 +142,7 @@ pub sync fn bi_impulsive_transfer_body(start : Orbit, target : Body, min_UT : fl
         const rel_velocity = test_orbit.orbital_velocity(SOI_change_UT) - body_velocity
         const L = rel_velocity.cross(rel_position)
         const E = 0.5 * rel_velocity.sqr_magnitude - body_mu / target.SOI_radius
-        const PeR = (target.up * L).sign * 0.5 * (math::sqrt(body_mu * body_mu + 2 * E * L.sqr_magnitude) - body_mu) / E
+        const PeR = (target.up.to_local(test_orbit.reference_frame) * L).sign * 0.5 * (math::sqrt(body_mu * body_mu + 2 * E * L.sqr_magnitude) - body_mu) / E
 
         PeR - target_PeR
     }
@@ -173,7 +173,7 @@ pub sync fn course_correction_body(start : Orbit, target : Body, UT : float, tar
         const rel_velocity = test_orbit.orbital_velocity(SOI_change_UT) - body_velocity
         const L = rel_velocity.cross(rel_position)
         const E = 0.5 * rel_velocity.sqr_magnitude - body_mu / target.SOI_radius
-        const PeR = (target.up * L).sign * 0.5 * (math::sqrt(body_mu * body_mu + 2 * E * L.sqr_magnitude) - body_mu) / E
+        const PeR = (target.up.to_local(test_orbit.reference_frame) * L).sign * 0.5 * (math::sqrt(body_mu * body_mu + 2 * E * L.sqr_magnitude) - body_mu) / E
 
         PeR - target_PeR
     }
@@ -221,7 +221,7 @@ pub sync fn next_closest_approach_time(start : Orbit, target : Orbit, UT : float
        
       for (i in 0..num_divisions) {
         const t = min_time + i * dt
-        const distance = (start.absolute_position(t) - target.absolute_position(t)).magnitude
+        const distance = (start.position(t) - target.position(t)).magnitude
         
         if (distance < closest_approach_distance) {
           closest_approach_distance = distance

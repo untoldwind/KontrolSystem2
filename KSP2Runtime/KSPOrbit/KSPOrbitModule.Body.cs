@@ -34,9 +34,9 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
             [KSField] public Position Position { get; }
 
-            [KSField] Vector3d Up { get; }
+            [KSField] Vector Up { get; }
 
-            [KSField] Vector3d Right { get; }
+            [KSField] Vector Right { get; }
 
             [KSMethod(Description = "Get the surface normal at a `latitude` and `longitude` (i.e. the vector pointing up at this geo coordinate")]
             Vector3d SurfaceNormal(double latitude, double longitude);
