@@ -24,9 +24,6 @@
         <Reference Include="Assembly-CSharp">
             <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\Assembly-CSharp.dll</HintPath>
         </Reference>
-        <Reference Include="Unity.InputSystem">
-          <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\Unity.InputSystem.dll</HintPath>
-        </Reference>
         <Reference Include="UnityEngine">
             <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\UnityEngine.dll</HintPath>
         </Reference>

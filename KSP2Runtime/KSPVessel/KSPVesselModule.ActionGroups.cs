@@ -20,10 +20,8 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField]
             public bool Rcs {
-                get => vessel.GetActionGroupState(KSPActionGroup.RCS) == KSPActionGroupState.True;
-                set {
-                    if (Rcs != value) TryToggleFlightAction(GameManager.Instance.Game.Input.Flight.ToggleRCS.name);
-                }
+                get => GameManager.Instance.Game.ViewController.DataProvider.TelemetryDataProvider.RCSEnabled.GetValue();
+                set => GameManager.Instance.Game.ViewController.DataProvider.TelemetryDataProvider.RCSEnabled.SetValueInternal(value);
             }
 
             [KSField]
@@ -54,17 +52,6 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             public bool Abort {
                 get => vessel.GetActionGroupState(KSPActionGroup.Abort) == KSPActionGroupState.True;
                 set => vessel.SetActionGroup(KSPActionGroup.Abort, value);
-            }
-
-            protected void TryToggleFlightAction(string nameId) {
-                try {
-                    FlightInputDefinition def;
-
-                    if (GameManager.Instance.Game.InputManager.TryGetInputDefinition<FlightInputDefinition>(out def)) {
-                        def.TriggerAction(nameId);
-                    }
-                } catch {
-                }
             }
         }
     }
