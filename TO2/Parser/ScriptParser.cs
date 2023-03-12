@@ -62,8 +62,8 @@ namespace KontrolSystem.TO2.Parser {
             TupleType,
             RecordType,
             TypeReference
-        ), Opt(Spacing0.Then(Char('[')).Then(Spacing0).Then(Char(']')))).Map(items => {
-            if (items.Item2.IsDefined) return new ArrayType(items.Item1);
+        ), Many0(Spacing0.Then(Char('[')).Then(Spacing0).Then(Char(']')))).Map(items => {
+            if (items.Item2.Count > 0) return new ArrayType(items.Item1, items.Item2.Count);
             return items.Item1;
         });
 

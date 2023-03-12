@@ -10,8 +10,8 @@ namespace KontrolSystem.TO2.AST {
     public class ArrayType : RealizedType {
         public TO2Type ElementType { get; }
 
-        public ArrayType(TO2Type elementType) {
-            ElementType = elementType;
+        public ArrayType(TO2Type elementType, int dimension = 1) {
+            ElementType = dimension > 1 ? new ArrayType(elementType, dimension - 1) : elementType;
             DeclaredMethods = new Dictionary<string, IMethodInvokeFactory> {
                 {
                     "map", new BoundMethodInvokeFactory("Map the content of the array", true,
