@@ -6,6 +6,7 @@
 * `vessel.actions.rcs = true/false` now working
 * Add `vessel.actions.custom1` .. `vessel.actions.custom10` (addresses #10)
 * Support array of arrays types (addresses #12)
+* Add engine mode information (addresses #12)
 
 
 ## 0.1.5 -> 0.1.6
