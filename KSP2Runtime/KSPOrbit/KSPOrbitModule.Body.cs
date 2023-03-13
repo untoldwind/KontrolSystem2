@@ -39,13 +39,13 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             [KSField] Vector Right { get; }
 
             [KSMethod(Description = "Get the surface normal at a `latitude` and `longitude` (i.e. the vector pointing up at this geo coordinate")]
-            Vector3d SurfaceNormal(double latitude, double longitude);
+            Vector SurfaceNormal(double latitude, double longitude);
 
             [KSMethod]
             double TerrainHeight(double lat, double lon);
 
             [KSMethod]
-            Vector3d SurfacePosition(double latitude, double longitude, double altitude);
+            Position SurfacePosition(double latitude, double longitude, double altitude);
 
             [KSMethod(Description =
                 "Create a new orbit around this body starting at a given relative `position` and `velocity` at universal time `ut`")]

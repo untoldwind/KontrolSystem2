@@ -62,7 +62,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField] public KSPOrbitModule.IBody MainBody => new BodyWrapper(context, vessel.mainBody);
 
             [KSField] public KSPOrbitModule.IOrbit Orbit => new OrbitWrapper(context, vessel.Orbit);
-
+            
             [KSField] public ITransformFrame ReferenceFrame => vessel.transform.bodyFrame;
 
             [KSField] public ITransformFrame ControlFrame => vessel.ControlTransform.bodyFrame;
@@ -144,7 +144,11 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                     return new Option<IKSPTargetable>();
                 }
                 set {
-                    // TODO
+                    if (value.defined) {
+                        vessel.SetTargetByID(value.value.UnderlyingId);
+                    } else {
+                        vessel.ClearTarget();
+                    }
                 }
             }
 
@@ -214,6 +218,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSMethod]
             public void OverrideInputTranslateZ(double value) => FlightInputHandler.OverrideInputTranslateZ((float)value);
 
+            public IGGuid UnderlyingId => vessel.SimulationObject.GlobalId;
         }
     }
 }

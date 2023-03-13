@@ -138,13 +138,13 @@ namespace KontrolSystem.KSP.Runtime.Testing {
             return orbit?.GetOrbitalVelocityAtUT(ut) ?? Vector3d.zero;
         }
 
-        public Vector3d SurfaceNormal(double lat, double lon) {
+        public Vector SurfaceNormal(double lat, double lon) {
             lat *= Math.PI / 180.0;
             lon *= Math.PI / 180.0;
             double phi = Math.Cos(lat);
             double z = Math.Sin(lat);
 
-            return new Vector3d(phi * Math.Cos(lon), z, phi * Math.Sin(lon));
+            return new Vector(ReferenceFrame, new Vector3d(phi * Math.Cos(lon), z, phi * Math.Sin(lon)));
         }
 
         public double TerrainHeight(double lat, double lon) => 0.0;
@@ -162,8 +162,8 @@ namespace KontrolSystem.KSP.Runtime.Testing {
         public KSPOrbitModule.GeoCoordinates GeoCoordinates(double latitude, double longitude) =>
             new KSPOrbitModule.GeoCoordinates(this, latitude, longitude);
 
-        public Vector3d SurfacePosition(double latitude, double longitude, double altitude) =>
-            SurfaceNormal(latitude, longitude) * (radius + altitude);
+        public Position SurfacePosition(double latitude, double longitude, double altitude) =>
+             Position + SurfaceNormal(latitude, longitude) * (radius + altitude);
 
         public Vector3d RelativeVelocity(Vector3d position) => Vector3d.Cross(this.angularVelocity, position);
 

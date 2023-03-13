@@ -38,12 +38,12 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
         public Position Position => body.Position;
 
-        public Vector3d SurfaceNormal(double lat, double lon) => body.GetSurfaceNVector(lat, lon);
+        public Vector SurfaceNormal(double lat, double lon) => new Vector(body.transform.celestialFrame, body.GetSurfaceNVector(lat, lon));
 
         public double TerrainHeight(double lat, double lon) => body.SurfaceProvider.GetTerrainAltitudeFromCenter(lat, lon);
 
-        public Vector3d SurfacePosition(double latitude, double longitude, double altitude) =>
-            body.GetWorldSurfacePosition(latitude, longitude, altitude, body.coordinateSystem);
+        public Position SurfacePosition(double latitude, double longitude, double altitude) =>
+            new Position(body.transform.celestialFrame, body.GetRelSurfacePosition(latitude, longitude, altitude));
 
         public KSPOrbitModule.IOrbit CreateOrbit(Vector3d position, Vector3d velocity, double ut) {
             PatchedConicsOrbit orbit = new PatchedConicsOrbit(body.universeModel);
@@ -68,5 +68,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
             return new OrbitWrapper(context, orbit);
         }
+        
+        public IGGuid UnderlyingId => body.SimulationObject.GlobalId;
     }
 }
