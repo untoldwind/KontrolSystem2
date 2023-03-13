@@ -13,6 +13,8 @@ using KSP.Sim.impl;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel {
     public partial class KSPVesselModule {
+        private static QuaternionD ControlFacingRotation = QuaternionD.Euler(270, 0, 0);
+        
         [KSClass("Vessel",
             Description =
                 "Represents an in-game vessel, which might be a rocket, plane, rover ... or actually just a Kerbal in a spacesuite.")]
@@ -61,7 +63,9 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField] public KSPOrbitModule.IOrbit Orbit => new OrbitWrapper(context, vessel.Orbit);
 
-            [KSField] public ITransformFrame ReferenceFrame => vessel.ControlTransform.bodyFrame;
+            [KSField] public ITransformFrame ReferenceFrame => vessel.transform.bodyFrame;
+
+            [KSField] public ITransformFrame ControlFrame => vessel.ControlTransform.bodyFrame;
 
             [KSField] public Position Position => vessel.SimulationObject.Position;
 
@@ -113,15 +117,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             }
 
             [KSField]
-            public Direction Facing {
-                get {
-                    QuaternionD vesselRotation = vessel.mainBody.coordinateSystem
-                        .ToLocalRotation(vessel.ControlTransform.bodyFrame, QuaternionD.identity);
-                    QuaternionD vesselFacing = QuaternionD.Inverse(QuaternionD.Euler(90, 0, 0) *
-                                                                   QuaternionD.Inverse(vesselRotation));
-                    return new Direction(new Rotation(vessel.mainBody.coordinateSystem, vesselFacing));
-                }
-            }
+            public Direction Facing => new Direction(new Rotation(vessel.ControlTransform.coordinateSystem, ControlFacingRotation));
 
             [KSField] public PartAdapter[] Parts => vessel.SimulationObject.PartOwner.Parts.Select(part => new PartAdapter(this, part)).ToArray();
 
