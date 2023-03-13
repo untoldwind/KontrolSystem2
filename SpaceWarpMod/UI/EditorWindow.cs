@@ -8,10 +8,38 @@ namespace KontrolSystem.SpaceWarpMod.UI {
 
     public class EditorWindow : ResizableWindow {
 
-        public string text = "";
-        public string filename = "unnamed.to2";
+        private string text = "use { Vessel } from ksp::vessel\r\nuse { CONSOLE } from ksp::console\r\n\r\npub fn main_flight(vessel: Vessel) -> Result<Unit, string> = {\r\n    CONSOLE.clear()\r\n    CONSOLE.print_line(\"Hello world\")\r\n}";
+        private string filename = "unnamed.to2";
+        private bool unsavedChanges = false;
+        private bool showingUnsavedChangesDialog = false;
 
         public event Action OnCloseClicked;
+
+        // use this setter to automatically set the unsaved changes flag when needed
+        public string Text {
+            get {
+                return text;
+            }
+            set {
+                if (text != value) {
+                    unsavedChanges = true;
+                }
+                text = value;
+            }
+        }
+
+        // use this setter to automatically set the unsaved changes flag when needed
+        public string Filename {
+            get {
+                return filename;
+            }
+            set {
+                if (filename != value) {
+                    unsavedChanges = true;
+                }
+                filename = value;
+            }
+        }
 
         public string FullFilename => Path.Combine(ConfigAdapter.Instance.LocalLibPath, filename);
 
@@ -22,6 +50,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             } catch (FileNotFoundException) {
                 text = "";
             }
+            unsavedChanges = false;
         }
 
         public void Awake() {
@@ -29,12 +58,25 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         }
 
         protected override void DrawWindow(int windowId) {
+            if (showingUnsavedChangesDialog) {
+                DrawUnsavedChangesDialog();
+            } else {
+                DrawNormal();
+            }
+        }
+
+        private void DrawNormal() {
 
             GUILayout.BeginVertical();
 
             GUILayout.BeginHorizontal();
 
-            filename = GUILayout.TextArea(filename);
+            Filename = GUILayout.TextField(filename);
+
+            if (unsavedChanges) {
+                GUILayout.Label("*", GUILayout.ExpandWidth(false));
+            }
+
             bool filenameValid =
                 !string.IsNullOrWhiteSpace(filename)
                 && filename.IndexOfAny(Path.GetInvalidFileNameChars()) < 0
@@ -46,13 +88,14 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                     Path.Combine(ConfigAdapter.Instance.LocalLibPath, filename),
                     text
                 );
+                unsavedChanges = false;
                 Mainframe.Instance.Reboot(ConfigAdapter.Instance);
             }
             GUI.enabled = true;
 
             GUILayout.EndHorizontal();
 
-            text = GUILayout.TextArea(text, GUILayout.ExpandHeight(true));
+            Text = GUILayout.TextArea(text, GUILayout.ExpandHeight(true));
 
             GUILayout.BeginHorizontal();
 
@@ -61,6 +104,31 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             GUILayout.FlexibleSpace();
 
             if (GUILayout.Button("Close")) {
+                if (unsavedChanges) {
+                    showingUnsavedChangesDialog = true;
+                } else {
+                    OnCloseClicked();
+                }
+            }
+
+            GUILayout.EndHorizontal();
+
+            GUILayout.EndVertical();
+        }
+
+        private void DrawUnsavedChangesDialog() {
+            GUILayout.BeginVertical();
+            GUILayout.Label($"{filename} has unsaved changes. Are you sure you want to discard these changes?");
+
+            GUILayout.BeginHorizontal();
+
+            if (GUILayout.Button("Go Back")) {
+                showingUnsavedChangesDialog = false;
+            }
+
+            GUILayout.FlexibleSpace();
+
+            if (GUILayout.Button("Close and Discard Changes")) {
                 OnCloseClicked();
             }
 

@@ -72,7 +72,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                 // ReSharper disable once Unity.NoNullPropagation
                 consoleWindow?.Toggle();
             }
-            if (GUILayout.Button("Editor")) {
+            if (GUILayout.Button("New Module")) {
                 OpenEditorWindow();
             }
             GUILayout.Space(20);
@@ -212,6 +212,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
 
                 // Temporary fix for windows hiding main menu
                 GameManager.Instance.Game.Messages.Subscribe<EscapeMenuOpenedMessage>(OnEscapeMenuOpened);
+                GameManager.Instance.Game.Messages.Subscribe<EscapeMenuClosedMessage>(OnEscapeMenuClosed);
             }
         }
 
@@ -231,17 +232,12 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             Destroy(editorWindow);
         }
 
-        public void CloseAllEditorWindows() {
-            var oldEditorWindows = editorWindows.ToArray(); // to avoid removing items from a list while iterating it
-            foreach (var editorWindow in oldEditorWindows) {
-                CloseEditorWindow(editorWindow);
-            }
+        private void OnEscapeMenuOpened(MessageCenterMessage message) {
+            hideAllWindows = true; // Temporary fix for windows hiding main menu
         }
 
-        private void OnEscapeMenuOpened(MessageCenterMessage message) {
-            Close();
-            consoleWindow?.Close();
-            CloseAllEditorWindows();
+        private void OnEscapeMenuClosed(MessageCenterMessage message) {
+            hideAllWindows = false; // Temporary fix for windows hiding main menu
         }
     }
 }

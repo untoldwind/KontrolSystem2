@@ -14,6 +14,8 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         protected float minWidth;
         protected float minHeight;
 
+        protected static bool hideAllWindows = false; // Temporary fix for windows hiding main menu
+
         public GUIContent Title { get; set; } = new GUIContent("KontrolSystem");
 
         public void Open() {
@@ -46,7 +48,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
 
 
         public void OnGUI() {
-            if (!isOpen) return;
+            if (!isOpen || hideAllWindows) return; // hideAllWindows is a temporary fix for windows hiding main menu
 
             GUI.skin = _spaceWarpUISkin;
 
