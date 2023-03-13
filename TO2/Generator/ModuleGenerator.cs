@@ -7,14 +7,14 @@ using KontrolSystem.TO2.AST;
 
 namespace KontrolSystem.TO2.Generator {
     public static class ModuleGenerator {
-        public static DeclaredKontrolModule DeclareModule(Context context, TO2Module module) {
+        public static DeclaredKontrolModule DeclareModule(Context context, TO2Module module, string sourceFile) {
             ModuleContext moduleContext = context.CreateModuleContext(module.name);
 
             List<StructuralError> errors = module.TryDeclareTypes(moduleContext);
 
             if (errors.Any()) throw new CompilationErrorException(errors);
 
-            return new DeclaredKontrolModule(module.name, module.description, moduleContext, module,
+            return new DeclaredKontrolModule(module.name, module.description, false, sourceFile, moduleContext, module,
                 moduleContext.exportedTypes);
         }
 
@@ -181,6 +181,8 @@ namespace KontrolSystem.TO2.Generator {
 
             return new CompiledKontrolModule(declaredModule.Name,
                 declaredModule.Description,
+                declaredModule.IsBuiltin,
+                declaredModule.SourceFile,
                 moduleContext.exportedTypes.Select(t => (t.alias, t.type.UnderlyingType(moduleContext))),
                 compiledConstants,
                 compiledFunctions,

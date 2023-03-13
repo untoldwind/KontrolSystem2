@@ -52,7 +52,7 @@ namespace KontrolSystem.TO2.Binding {
             List<RealizedType> types,
             List<CompiledKontrolConstant> constants,
             List<CompiledKontrolFunction> functions) {
-            return new CompiledKontrolModule(name, description, types.Select(t => (t.LocalName, t)), constants,
+            return new CompiledKontrolModule(name, description, true, null, types.Select(t => (t.LocalName, t)), constants,
                 functions, new List<CompiledKontrolFunction>());
         }
     }

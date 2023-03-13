@@ -38,7 +38,7 @@ namespace KontrolSystem.TO2 {
         public Context AddFile(string baseDir, string file) {
             TO2Module to2Module = TO2Parser.ParseModuleFile(baseDir, file);
             Context context = new Context(this);
-            DeclaredKontrolModule declaredKontrolModule = ModuleGenerator.DeclareModule(context, to2Module);
+            DeclaredKontrolModule declaredKontrolModule = ModuleGenerator.DeclareModule(context, to2Module, Path.Combine(baseDir, file));
             ModuleGenerator.ImportTypes(declaredKontrolModule);
             ModuleGenerator.DeclareFunctions(declaredKontrolModule);
             ModuleGenerator.ImportFunctions(declaredKontrolModule);
@@ -57,7 +57,7 @@ namespace KontrolSystem.TO2 {
             foreach (string fileName in Directory.GetFiles(baseDir, "*.to2", SearchOption.AllDirectories)) {
                 // First declare the existence of a module and its types
                 TO2Module to2Module = TO2Parser.ParseModuleFile(baseDir, fileName.Remove(0, baseDir.Length + 1));
-                DeclaredKontrolModule module = ModuleGenerator.DeclareModule(context, to2Module);
+                DeclaredKontrolModule module = ModuleGenerator.DeclareModule(context, to2Module, fileName);
 
                 declaredModules.Add(module);
                 context.registry.RegisterModule(module);
