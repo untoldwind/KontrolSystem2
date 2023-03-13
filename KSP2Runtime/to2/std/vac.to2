@@ -15,6 +15,8 @@ pub fn exec_next_node(vessel : Vessel) -> Result<Unit, string> = {
     const console_row = CONSOLE.cursor_row
     CONSOLE.move_cursor(console_row + 4, 0)
     
+    const frame = vessel.main_body.reference_frame
+    
     const node = vessel.maneuver.next_node()?
     
     vessel.autopilot.enabled = true
@@ -25,7 +27,7 @@ pub fn exec_next_node(vessel : Vessel) -> Result<Unit, string> = {
     const burn_duration = node.burn_duration 
     
     while(!ship_is_facing(vessel, dv0, 5, 0.5)) {
-        CONSOLE.print_at(console_row, 0, "Waiting for ship to align " + vessel.facing.vector.normalized.to_fixed(3) + " " + dv0.to_fixed(3))
+        CONSOLE.print_at(console_row, 0, "Waiting for ship to align " + vessel.facing.vector.normalized.to_fixed(frame, 3) + " " + dv0.to_fixed(frame, 3))
         sleep(0.2)
     }
     
@@ -54,7 +56,7 @@ pub fn exec_next_node(vessel : Vessel) -> Result<Unit, string> = {
         
         if (ut > end_ut + 5) break
         
-        const dv = target_orbit.orbital_velocity(ut) - vessel.orbit.orbital_velocity(ut)
+        const dv = target_orbit.velocity(ut) - vessel.orbit.velocity(ut)
 
         if(dv0 * dv < 0) break
 

@@ -106,7 +106,7 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
             private readonly Dictionary<PartComponentModule, ITorqueProvider> torqueProviders =
                 new Dictionary<PartComponentModule, ITorqueProvider>();
 
-            private ITransformModel vesselTransform;
+            private ITransformFrame vesselTransform;
 
             private KSPDebugModule.VectorRenderer vForward;
             private KSPDebugModule.VectorRenderer vTop;
@@ -245,13 +245,13 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
             }
 
             public void UpdateStateVectors(float detlaT) {
-                targetRot = directionProvider().Rotation;
+                vesselTransform = vessel.ReferenceFrame;
+                targetRot = vesselTransform.ToLocalRotation(directionProvider().Rotation);
                 centerOfMass = vessel.CoM.localPosition;
 
-                vesselTransform = vessel.vessel.transform;
                 // Found that the default rotation has top pointing forward, forward pointing down, and right pointing starboard.
                 // This fixes that rotation.
-                vesselRotation = vesselTransform.localRotation * QuaternionD.Euler(-90, 0, 0);
+                vesselRotation = vesselTransform.ToLocalRotation(vessel.Facing.Rotation);
 
                 vesselForward = vesselRotation * Vector3d.forward;
                 vesselTop = vesselRotation * Vector3d.up;
@@ -389,7 +389,7 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
                         // add the part inertiaTensor to the ship inertiaTensor
                         KSPUtil.Add(ref tensor, rotMatrix * partTensor * invMatrix);
 
-                        Vector3 position = QuaternionD.Inverse(vesselTransform.localRotation) * (part.SimulationObject.Rigidbody.Position.localPosition - centerOfMass);
+                        Vector3 position = (part.SimulationObject.Rigidbody.Position.localPosition - centerOfMass);
 
                         // add the part mass to the ship inertiaTensor
                         KSPUtil.ToDiagonalMatrix2(part.SimulationObject.Rigidbody.mass * position.sqrMagnitude, ref inertiaMatrix);

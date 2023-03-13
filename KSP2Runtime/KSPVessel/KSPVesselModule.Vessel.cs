@@ -61,9 +61,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField] public KSPOrbitModule.IOrbit Orbit => new OrbitWrapper(context, vessel.Orbit);
 
-            [KSField] public ITransformFrame CelestialFrame => vessel.ControlTransform.celestialFrame;
-            
-            [KSField] public ITransformFrame BodyFrame => vessel.ControlTransform.bodyFrame;
+            [KSField] public ITransformFrame ReferenceFrame => vessel.ControlTransform.bodyFrame;
 
             [KSField] public Position Position => vessel.SimulationObject.Position;
 
@@ -108,10 +106,10 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSMethod]
             public Direction HeadingDirection(double degreesFromNorth, double pitchAboveHorizon, double roll) {
-                QuaternionD q = QuaternionD.LookRotation(vessel.mainBody.coordinateSystem.ToLocalVector(North), vessel.mainBody.coordinateSystem.ToLocalVector(Up));
+                QuaternionD q = QuaternionD.LookRotation(vessel.transform.bodyFrame.ToLocalVector(North), vessel.transform.bodyFrame.ToLocalVector(Up));
                 q *= QuaternionD.Euler(-pitchAboveHorizon, degreesFromNorth, 0);
                 q *= QuaternionD.Euler(0, 0, roll);
-                return new Direction(q);
+                return new Direction(new Rotation(vessel.transform.bodyFrame, q));
             }
 
             [KSField]
@@ -121,7 +119,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                         .ToLocalRotation(vessel.ControlTransform.bodyFrame, QuaternionD.identity);
                     QuaternionD vesselFacing = QuaternionD.Inverse(QuaternionD.Euler(90, 0, 0) *
                                                                    QuaternionD.Inverse(vesselRotation));
-                    return new Direction(vesselFacing);
+                    return new Direction(new Rotation(vessel.mainBody.coordinateSystem, vesselFacing));
                 }
             }
 

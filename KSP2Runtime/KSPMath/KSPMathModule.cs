@@ -39,7 +39,6 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
             BindingGenerator.RegisterTypeMapping(typeof(ITransformFrame), TransformFrameBinding.TransformFrameType);
             BindingGenerator.RegisterTypeMapping(typeof(Position), PositionBinding.PositionType);
             BindingGenerator.RegisterTypeMapping(typeof(Vector), VectorBinding.VectorType);
-            BindingGenerator.RegisterTypeMapping(typeof(Rotation), RotationBinding.RotationType);
 
             List<CompiledKontrolConstant> constants = new List<CompiledKontrolConstant>();
 
@@ -49,14 +48,14 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                 Direct.BindFunction(typeof(Vector3Binding), "Vec3", "Create a new 3-dimensional vector", typeof(double),
                     typeof(double), typeof(double)),
                 Direct.BindFunction(typeof(DirectionBinding), "Euler", "Create a Direction from euler angles in degree",
-                    typeof(double), typeof(double), typeof(double)),
+                    typeof(ITransformFrame), typeof(double), typeof(double), typeof(double)),
                 Direct.BindFunction(typeof(DirectionBinding), "AngleAxis",
                     "Create a Direction from a given axis with rotation angle in degree", typeof(double),
-                    typeof(Vector3d)),
+                    typeof(Vector)),
                 Direct.BindFunction(typeof(DirectionBinding), "FromVectorToVector",
-                    "Create a Direction to rotate from one vector to another", typeof(Vector3d), typeof(Vector3d)),
+                    "Create a Direction to rotate from one vector to another", typeof(Vector), typeof(Vector)),
                 Direct.BindFunction(typeof(DirectionBinding), "LookDirUp",
-                    "Create a Direction from a fore-vector and an up-vector", typeof(Vector3d), typeof(Vector3d)),
+                    "Create a Direction from a fore-vector and an up-vector", typeof(Vector), typeof(Vector)),
                 Direct.BindFunction(typeof(ExtraMath), "AngleDelta",
                     "Calculate the difference between to angles in degree (-180 .. 180)", typeof(double),
                     typeof(double)),

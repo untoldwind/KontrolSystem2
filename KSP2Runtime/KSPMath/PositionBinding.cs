@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using KontrolSystem.TO2;
 using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Binding;
@@ -36,6 +37,18 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                         () => Vector3Binding.Vector3Type,
                         () => new List<RealizedParameter> {new RealizedParameter("frame", TransformFrameBinding.TransformFrameType)}, false,
                         typeof(PositionBinding), typeof(PositionBinding).GetMethod("ToLocal"))
+                }, {
+                    "to_string",
+                    new BoundMethodInvokeFactory("Convert vector to string in a given coordinate system.", true, () => BuiltinType.String,
+                        () => new List<RealizedParameter>() { new RealizedParameter("frame", TransformFrameBinding.TransformFrameType) }, false, typeof(PositionBinding),
+                        typeof(PositionBinding).GetMethod("ToString", new Type[] { typeof(Position), typeof(ITransformFrame) }))
+                }, {
+                    "to_fixed",
+                    new BoundMethodInvokeFactory("Convert the vector to string with fixed number of `decimals` in a given coordinate system.",
+                        true,
+                        () => BuiltinType.String,
+                        () => new List<RealizedParameter>() {new RealizedParameter("frame", TransformFrameBinding.TransformFrameType), new RealizedParameter("decimals", BuiltinType.Int)},
+                        false, typeof(PositionBinding), typeof(PositionBinding).GetMethod("ToFixed"))
                 },
                 {
                     "distance",
@@ -61,9 +74,13 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                 },
             },
             new Dictionary<string, IFieldAccessFactory> { });
-        
+
         public static Vector3d ToLocal(Position position, ITransformFrame frame) => frame.ToLocalPosition(position);
 
+        public static string ToString(Position p, ITransformFrame frame) => Vector3Binding.ToString(frame.ToLocalPosition(p));
+
+        public static string ToFixed(Position p, ITransformFrame frame, long decimals) =>
+            Vector3Binding.ToFixed(frame.ToLocalPosition(p), decimals);
     }
 }
 

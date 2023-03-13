@@ -53,7 +53,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
         public Vector3d RelativePosition(double ut) => orbit.GetRelativePositionAtUTZup(ut).SwapYAndZ;
 
-        public Position Position(double ut) => orbit.GetTruePositionAtUT(ut);
+        public Position Position(double ut) => new Position(ReferenceFrame, RelativePosition(ut));
 
         public Vector Velocity(double ut) => new Vector(ReferenceFrame, orbit.GetOrbitalVelocityAtUTZup(ut).SwapYAndZ);
 
@@ -143,7 +143,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
                 Vector3d vectorToPe = QuaternionD.AngleAxis(orbit.argumentOfPeriapsis, OrbitNormal) * vectorToAn;
                 return PeriapsisRadius * vectorToPe;
             }
-        }        
+        }
         public double TrueAnomalyFromVector(Vector3d vec) {
             Vector3d oNormal = OrbitNormal;
             Vector3d projected = Vector3d.Exclude(oNormal, vec);
@@ -161,7 +161,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
                 return (360 - angleFromPe) * DirectBindingMath.DegToRad;
             }
         }
-        
+
         public double SynodicPeriod(KSPOrbitModule.IOrbit other) {
             int sign = (Vector3d.Dot(OrbitNormal, other.OrbitNormal) > 0 ? 1 : -1); //detect relative retrograde motion
             return Math.Abs(1.0 /

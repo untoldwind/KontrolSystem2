@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection.Emit;
 using KontrolSystem.TO2;
 using KontrolSystem.TO2.AST;
@@ -56,6 +57,18 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                         () => Vector3Binding.Vector3Type,
                         () => new List<RealizedParameter> {new RealizedParameter("frame", TransformFrameBinding.TransformFrameType)}, false,
                         typeof(VectorBinding), typeof(VectorBinding).GetMethod("ToLocal"))
+                }, {
+                    "to_string",
+                    new BoundMethodInvokeFactory("Convert vector to string in a given coordinate system.", true, () => BuiltinType.String,
+                        () => new List<RealizedParameter>() { new RealizedParameter("frame", TransformFrameBinding.TransformFrameType) }, false, typeof(VectorBinding),
+                        typeof(VectorBinding).GetMethod("ToString", new Type[] { typeof(Vector), typeof(ITransformFrame) }))
+                }, {
+                    "to_fixed",
+                    new BoundMethodInvokeFactory("Convert the vector to string with fixed number of `decimals` in a given coordinate system.",
+                        true,
+                        () => BuiltinType.String,
+                        () => new List<RealizedParameter>() {new RealizedParameter("frame", TransformFrameBinding.TransformFrameType), new RealizedParameter("decimals", BuiltinType.Int)},
+                        false, typeof(VectorBinding), typeof(VectorBinding).GetMethod("ToFixed"))
                 },
                 {
                     "cross",
@@ -97,5 +110,10 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
             });
 
         public static Vector3d ToLocal(Vector vector, ITransformFrame frame) => frame.ToLocalVector(vector);
+
+        public static string ToString(Vector v, ITransformFrame frame) => Vector3Binding.ToString(frame.ToLocalVector(v));
+
+        public static string ToFixed(Vector v, ITransformFrame frame, long decimals) =>
+            Vector3Binding.ToFixed(frame.ToLocalVector(v), decimals);
     }
 }

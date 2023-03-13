@@ -25,12 +25,6 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                         () => new List<RealizedParameter>() { new RealizedParameter("position", VectorBinding.VectorType) }, false, typeof(ITransformFrame),
                         typeof(ICoordinateSystem).GetMethod("ToLocalVector", new Type[] { typeof(Vector) }))
                 },
-                {
-                    "to_local_direction",
-                    new BoundMethodInvokeFactory("Get local direction of a rotation", true, () => DirectionBinding.DirectionType,
-                        () => new List<RealizedParameter>() { new RealizedParameter("rotation", RotationBinding.RotationType) }, false, typeof(ITransformFrame),
-                        typeof(ICoordinateSystem).GetMethod("ToLocalRotation", new Type[] { typeof(Rotation) }))
-                },
             },
             new Dictionary<string, IFieldAccessFactory> {
                 { "forward", new BoundPropertyLikeFieldAccessFactory("forward vector of the coordinate system", () => VectorBinding.VectorType, typeof(ITransformFrame), typeof(ICoordinateSystem).GetProperty("forward") )},

@@ -132,13 +132,6 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                         false, typeof(Vector3Binding), typeof(Vector3Binding).GetMethod("ToFixed"))
                 },
                 {
-                    "to_direction",
-                    new BoundMethodInvokeFactory("Point in direction of this vector.",
-                        true,
-                        () => DirectionBinding.DirectionType,
-                        () => new List<RealizedParameter>(),
-                        false, typeof(Vector3Binding), typeof(Vector3Binding).GetMethod("ToDirection"))
-                }, {
                     "to_position",
                     new BoundMethodInvokeFactory("Consider this vector as position in a coordinate system",
                         true,
@@ -183,8 +176,6 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
             String format = decimals <= 0 ? "F0" : "F" + decimals;
             return "[" + v.x.ToString(format, CultureInfo.InvariantCulture) + ", " + v.y.ToString(format, CultureInfo.InvariantCulture) + ", " + v.z.ToString(format, CultureInfo.InvariantCulture) + "]";
         }
-
-        public static Direction ToDirection(Vector3d v) => new Direction(v, false);
 
         public static Position ToPosition(Vector3d local, ITransformFrame frame) => new Position(frame, local);
 

@@ -61,7 +61,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
             [KSField]
             public ITransformFrame ReferenceFrame { get; }
-            
+
             [KSField(Description = "Normal vector perpendicular to orbital plane.")]
             Vector3d OrbitNormal { get; }
 
@@ -73,7 +73,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
             [KSMethod]
             Vector Velocity(double ut);
-            
+
             [KSMethod]
             Vector3d RelativePosition(double ut);
 
@@ -209,7 +209,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             /// </summary>
             [KSMethod]
             double TrueAnomalyFromVector(Vector3d vec);
-            
+
             [KSMethod]
             string ToString();
 
