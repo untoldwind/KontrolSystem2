@@ -47,7 +47,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
         public double Period => orbit.period;
 
-        public ICoordinateSystem ReferenceFrame => orbit.coordinateSystem;
+        public ITransformFrame ReferenceFrame => orbit.ReferenceFrame;
 
         public Vector3d OrbitNormal => orbit.GetRelativeOrbitNormal().SwapYAndZ;
 

@@ -7,46 +7,46 @@ using KSP.Api;
 using KSP.Sim;
 
 namespace KontrolSystem.KSP.Runtime.KSPMath {
-    public class CoordindateSystemBinding {
-        public static readonly BoundType CoordindateSystemType = Direct.BindType("ksp::math", "CoordinateSystem",
-            "Representation of a coordinate system", typeof(ICoordinateSystem),
+    public class TransformFrameBinding {
+        public static readonly BoundType TransformFrameType = Direct.BindType("ksp::math", "TransformFrame",
+            "Representation of a coordinate frame of reference", typeof(ITransformFrame),
             new OperatorCollection { },
             new OperatorCollection { },
             new Dictionary<string, IMethodInvokeFactory> {
                 {
                     "to_local_position",
                     new BoundMethodInvokeFactory("Get local coordinates of a position", true, () => Vector3Binding.Vector3Type,
-                        () => new List<RealizedParameter>() { new RealizedParameter("position", PositionBinding.PositionType) }, false, typeof(ICoordinateSystem),
+                        () => new List<RealizedParameter>() { new RealizedParameter("position", PositionBinding.PositionType) }, false, typeof(ITransformFrame),
                         typeof(ICoordinateSystem).GetMethod("ToLocalPosition", new Type[] { typeof(Position) }))
                 },
                 {
                     "to_local_vector",
                     new BoundMethodInvokeFactory("Get local coordinates of a vector", true, () => Vector3Binding.Vector3Type,
-                        () => new List<RealizedParameter>() { new RealizedParameter("position", VectorBinding.VectorType) }, false, typeof(ICoordinateSystem),
+                        () => new List<RealizedParameter>() { new RealizedParameter("position", VectorBinding.VectorType) }, false, typeof(ITransformFrame),
                         typeof(ICoordinateSystem).GetMethod("ToLocalVector", new Type[] { typeof(Vector) }))
                 },
                 {
                     "to_local_direction",
                     new BoundMethodInvokeFactory("Get local direction of a rotation", true, () => DirectionBinding.DirectionType,
-                        () => new List<RealizedParameter>() { new RealizedParameter("rotation", RotationBinding.RotationType) }, false, typeof(ICoordinateSystem),
+                        () => new List<RealizedParameter>() { new RealizedParameter("rotation", RotationBinding.RotationType) }, false, typeof(ITransformFrame),
                         typeof(ICoordinateSystem).GetMethod("ToLocalRotation", new Type[] { typeof(Rotation) }))
                 },
             },
             new Dictionary<string, IFieldAccessFactory> {
-                { "forward", new BoundPropertyLikeFieldAccessFactory("forward vector of the coordinate system", () => VectorBinding.VectorType, typeof(ICoordinateSystem), typeof(ICoordinateSystem).GetProperty("forward") )},
-                { "back", new BoundPropertyLikeFieldAccessFactory("backward vector of the coordinate system", () => VectorBinding.VectorType, typeof(ICoordinateSystem), typeof(ICoordinateSystem).GetProperty("back") )},
-                { "up", new BoundPropertyLikeFieldAccessFactory("up vector of the coordinate system", () => VectorBinding.VectorType, typeof(ICoordinateSystem), typeof(ICoordinateSystem).GetProperty("up") )},
-                { "down", new BoundPropertyLikeFieldAccessFactory("down vector of the coordinate system", () => VectorBinding.VectorType, typeof(ICoordinateSystem), typeof(ICoordinateSystem).GetProperty("down") )},
-                { "right", new BoundPropertyLikeFieldAccessFactory("right vector of the coordinate system", () => VectorBinding.VectorType, typeof(ICoordinateSystem), typeof(ICoordinateSystem).GetProperty("right") )},
-                { "left", new BoundPropertyLikeFieldAccessFactory("left vector of the coordinate system", () => VectorBinding.VectorType, typeof(ICoordinateSystem), typeof(ICoordinateSystem).GetProperty("left") )},
+                { "forward", new BoundPropertyLikeFieldAccessFactory("forward vector of the coordinate system", () => VectorBinding.VectorType, typeof(ITransformFrame), typeof(ICoordinateSystem).GetProperty("forward") )},
+                { "back", new BoundPropertyLikeFieldAccessFactory("backward vector of the coordinate system", () => VectorBinding.VectorType, typeof(ITransformFrame), typeof(ICoordinateSystem).GetProperty("back") )},
+                { "up", new BoundPropertyLikeFieldAccessFactory("up vector of the coordinate system", () => VectorBinding.VectorType, typeof(ITransformFrame), typeof(ICoordinateSystem).GetProperty("up") )},
+                { "down", new BoundPropertyLikeFieldAccessFactory("down vector of the coordinate system", () => VectorBinding.VectorType, typeof(ITransformFrame), typeof(ICoordinateSystem).GetProperty("down") )},
+                { "right", new BoundPropertyLikeFieldAccessFactory("right vector of the coordinate system", () => VectorBinding.VectorType, typeof(ITransformFrame), typeof(ICoordinateSystem).GetProperty("right") )},
+                { "left", new BoundPropertyLikeFieldAccessFactory("left vector of the coordinate system", () => VectorBinding.VectorType, typeof(ITransformFrame), typeof(ICoordinateSystem).GetProperty("left") )},
             }
         );
     }
 
-    public class CoordinateSystemProvider : ICoordinateSystem {
-        private readonly Func<ICoordinateSystem> provider;
+    public class TransformFrameProvider : ITransformFrame {
+        private readonly Func<ITransformFrame> provider;
 
-        public CoordinateSystemProvider(Func<ICoordinateSystem> provider) {
+        public TransformFrameProvider(Func<ITransformFrame> provider) {
             this.provider = provider;
         }
 
@@ -71,5 +71,11 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
         public Vector down => provider().down;
         public Vector right => provider().right;
         public Vector left => provider().left;
+
+        public TransformFrameType type => provider().type;
+
+        public ITransformModel transform => provider().transform;
+
+        public IMotionFrame motionFrame => provider().motionFrame;
     }
 }

@@ -34,7 +34,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                     "to_local",
                     new BoundMethodInvokeFactory("Get local vector in a coordinate system", true,
                         () => Vector3Binding.Vector3Type,
-                        () => new List<RealizedParameter> {new RealizedParameter("coordinate_system", CoordindateSystemBinding.CoordindateSystemType)}, false,
+                        () => new List<RealizedParameter> {new RealizedParameter("frame", TransformFrameBinding.TransformFrameType)}, false,
                         typeof(PositionBinding), typeof(PositionBinding).GetMethod("ToLocal"))
                 },
                 {
@@ -62,8 +62,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
             },
             new Dictionary<string, IFieldAccessFactory> { });
         
-        public static Vector3d ToLocal(Position position, ICoordinateSystem coordinateSystem) =>
-            coordinateSystem.ToLocalPosition(position);
+        public static Vector3d ToLocal(Position position, ITransformFrame frame) => frame.ToLocalPosition(position);
 
     }
 }

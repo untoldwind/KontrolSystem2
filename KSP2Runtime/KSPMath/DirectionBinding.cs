@@ -69,7 +69,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                     new BoundMethodInvokeFactory("Associate this direction with a coordinate system",
                         true,
                         () => RotationBinding.RotationType,
-                        () => new List<RealizedParameter>() { new RealizedParameter("coordinate_system", CoordindateSystemBinding.CoordindateSystemType) },
+                        () => new List<RealizedParameter>() { new RealizedParameter("frame", TransformFrameBinding.TransformFrameType) },
                         false, typeof(DirectionBinding), typeof(DirectionBinding).GetMethod("ToRotation"))
                 },
                 {

@@ -2,6 +2,7 @@
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KSP.Api;
 using KSP.Sim;
+using ITransformModel = KSP.Test.ITransformModel;
 
 namespace KontrolSystem.KSP.Runtime.Testing {
     public class MockBody : KSPOrbitModule.IBody {
@@ -119,7 +120,7 @@ namespace KontrolSystem.KSP.Runtime.Testing {
 
         public double RotationPeriod => rotationPeriod;
 
-        public ICoordinateSystem ReferenceFrame => KSPTesting.IDENTITY_COORDINATE_SYSTEM;
+        public ITransformFrame ReferenceFrame => KSPTesting.IDENTITY_COORDINATE_SYSTEM;
 
         public Position Position => new Position(ReferenceFrame, Vector3d.zero);
 

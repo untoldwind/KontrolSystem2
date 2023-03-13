@@ -60,7 +60,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             double Period { get; }
 
             [KSField]
-            public ICoordinateSystem ReferenceFrame { get; }
+            public ITransformFrame ReferenceFrame { get; }
             
             [KSField(Description = "Normal vector perpendicular to orbital plane.")]
             Vector3d OrbitNormal { get; }

@@ -4,7 +4,6 @@ using System.Reflection.Emit;
 using KontrolSystem.TO2;
 using KontrolSystem.TO2.AST;
 using System.Globalization;
-using KSP.Api;
 using KSP.Sim;
 
 namespace KontrolSystem.KSP.Runtime.KSPMath {
@@ -144,14 +143,14 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                     new BoundMethodInvokeFactory("Consider this vector as position in a coordinate system",
                         true,
                         () => PositionBinding.PositionType,
-                        () => new List<RealizedParameter>() { new RealizedParameter("coordinate_system", CoordindateSystemBinding.CoordindateSystemType) },
+                        () => new List<RealizedParameter>() { new RealizedParameter("frame", TransformFrameBinding.TransformFrameType) },
                         false, typeof(Vector3Binding), typeof(Vector3Binding).GetMethod("ToPosition"))
                 }, {
                     "to_vector",
                     new BoundMethodInvokeFactory("Associate this vector with a coordinate system",
                         true,
                         () => VectorBinding.VectorType,
-                        () => new List<RealizedParameter>() { new RealizedParameter("coordinate_system", CoordindateSystemBinding.CoordindateSystemType) },
+                        () => new List<RealizedParameter>() { new RealizedParameter("frame", TransformFrameBinding.TransformFrameType) },
                         false, typeof(Vector3Binding), typeof(Vector3Binding).GetMethod("ToVector"))
                 },
 
@@ -187,11 +186,9 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
 
         public static Direction ToDirection(Vector3d v) => new Direction(v, false);
 
-        public static Position ToPosition(Vector3d local, ICoordinateSystem coordinateSystem) =>
-            new Position(coordinateSystem, local);
+        public static Position ToPosition(Vector3d local, ITransformFrame frame) => new Position(frame, local);
 
-        public static Vector ToVector(Vector3d local, ICoordinateSystem coordinateSystem) =>
-            new Vector(coordinateSystem, local);
+        public static Vector ToVector(Vector3d local, ITransformFrame frame) => new Vector(frame, local);
 
     }
 }

@@ -1,6 +1,7 @@
 ﻿using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
 using KSP.Api;
+using KSP.Sim;
 using KSP.Sim.impl;
 using UnityEngine;
 
@@ -21,6 +22,6 @@ namespace KontrolSystem.KSP.Runtime.Testing {
                 throw new AssertException($"assert_vec3: {expected} != {actual}");
         }
 
-        [KSConstant("IDENTITY_COORDINATE_SYSTEM")] public static readonly ICoordinateSystem IDENTITY_COORDINATE_SYSTEM = new TransformModel("Ident").celestialFrame;
+        [KSConstant("IDENTITY_COORDINATE_SYSTEM")] public static readonly ITransformFrame IDENTITY_COORDINATE_SYSTEM = new TransformModel("Ident").celestialFrame;
     }
 }

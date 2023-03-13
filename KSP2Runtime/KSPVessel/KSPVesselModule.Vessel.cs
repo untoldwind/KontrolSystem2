@@ -61,7 +61,9 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField] public KSPOrbitModule.IOrbit Orbit => new OrbitWrapper(context, vessel.Orbit);
 
-            [KSField] public ICoordinateSystem ReferenceFrame => vessel.ControlTransform.coordinateSystem;
+            [KSField] public ITransformFrame CelestialFrame => vessel.ControlTransform.celestialFrame;
+            
+            [KSField] public ITransformFrame BodyFrame => vessel.ControlTransform.bodyFrame;
 
             [KSField] public Position Position => vessel.SimulationObject.Position;
 

@@ -56,7 +56,7 @@ namespace KontrolSystem.KSP.Runtime.Testing {
         public double MeanAnomalyAtEpoch => meanAnomalyAtEpoch;
 
         public double Period => period;
-        public ICoordinateSystem ReferenceFrame => KSPTesting.IDENTITY_COORDINATE_SYSTEM;
+        public ITransformFrame ReferenceFrame => KSPTesting.IDENTITY_COORDINATE_SYSTEM;
 
         public Vector3d OrbitNormal => -frameZ.normalized.SwapYAndZ;
 

@@ -27,7 +27,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                 Vector3Binding.Vector3Type,
                 DirectionBinding.DirectionType,
                 Matrix2x2Binding.Matrix2x2Type,
-                CoordindateSystemBinding.CoordindateSystemType,
+                TransformFrameBinding.TransformFrameType,
                 PositionBinding.PositionType,
                 VectorBinding.VectorType
             };
@@ -36,7 +36,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
             BindingGenerator.RegisterTypeMapping(typeof(Vector3d), Vector3Binding.Vector3Type);
             BindingGenerator.RegisterTypeMapping(typeof(Direction), DirectionBinding.DirectionType);
             BindingGenerator.RegisterTypeMapping(typeof(Matrix2x2), Matrix2x2Binding.Matrix2x2Type);
-            BindingGenerator.RegisterTypeMapping(typeof(ICoordinateSystem), CoordindateSystemBinding.CoordindateSystemType);
+            BindingGenerator.RegisterTypeMapping(typeof(ITransformFrame), TransformFrameBinding.TransformFrameType);
             BindingGenerator.RegisterTypeMapping(typeof(Position), PositionBinding.PositionType);
             BindingGenerator.RegisterTypeMapping(typeof(Vector), VectorBinding.VectorType);
             BindingGenerator.RegisterTypeMapping(typeof(Rotation), RotationBinding.RotationType);

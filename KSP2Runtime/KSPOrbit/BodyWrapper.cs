@@ -34,7 +34,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
         public double Radius => body.radius;
 
-        public ICoordinateSystem ReferenceFrame => body.coordinateSystem;
+        public ITransformFrame ReferenceFrame => body.Orbiter == null ? body.transform.celestialFrame : body.Orbiter.PatchedOrbit.ReferenceFrame;
 
         public Position Position => body.Position;
 

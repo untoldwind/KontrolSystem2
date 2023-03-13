@@ -16,7 +16,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                     "to_local",
                     new BoundMethodInvokeFactory("Get local direction in a coordinate system", true,
                         () => DirectionBinding.DirectionType,
-                        () => new List<RealizedParameter> {new RealizedParameter("coordinate_system", CoordindateSystemBinding.CoordindateSystemType)}, false,
+                        () => new List<RealizedParameter> {new RealizedParameter("frame", TransformFrameBinding.TransformFrameType)}, false,
                         typeof(RotationBinding), typeof(RotationBinding).GetMethod("ToLocal"))
                 },
                 {

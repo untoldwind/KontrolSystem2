@@ -30,7 +30,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             [KSField(Description = "Rotation period of the planet.")]
             double RotationPeriod { get; }
 
-            [KSField] ICoordinateSystem ReferenceFrame { get; }
+            [KSField] ITransformFrame ReferenceFrame { get; }
 
             [KSField] public Position Position { get; }
 
