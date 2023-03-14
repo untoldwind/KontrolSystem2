@@ -170,58 +170,6 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                     OnCloseClicked();
                 }
             }
-
-            /* GUILayout.BeginVertical();
-
-            GUILayout.BeginHorizontal();
-
-            filepathScrollPos = GUILayout.BeginScrollView(filepathScrollPos, Guiver);
-            Filepath = GUILayout.TextField(filepath);
-            if (unsavedChanges) {
-                GUILayout.Label("*", GUILayout.ExpandWidth(false));
-            }
-            GUILayout.EndScrollView();
-
-            bool filepathValid =
-                !string.IsNullOrWhiteSpace(filepath)
-                && filepath.IndexOfAny(Path.GetInvalidPathChars()) < 0
-                && Path.GetExtension(filepath) == ".to2";
-
-            GUI.enabled = filepathValid && !Mainframe.Instance.Rebooting;
-            if (GUILayout.Button("Save and Reboot", GUILayout.ExpandWidth(false))) {
-                File.WriteAllText(filepath, text);
-                unsavedChanges = false;
-                Mainframe.Instance.Reboot(ConfigAdapter.Instance);
-            }
-            GUI.enabled = true;
-
-            GUILayout.EndHorizontal();
-
-            GUIStyle style = new GUIStyle {
-                wordWrap = false
-            };
-
-            textScrollPos = GUILayout.BeginScrollView(textScrollPos);
-            Text = GUILayout.TextArea(text, style, GUILayout.ExpandHeight(true));
-            GUILayout.EndScrollView();
-
-            GUILayout.BeginHorizontal();
-
-            DrawDisableEnableGameInput();
-
-            GUILayout.FlexibleSpace();
-
-            if (GUILayout.Button("Close")) {
-                if (unsavedChanges) {
-                    showingUnsavedChangesDialog = true;
-                } else {
-                    OnCloseClicked();
-                }
-            }
-
-            GUILayout.EndHorizontal();
-
-            GUILayout.EndVertical(); */
         }
 
         private void DrawUnsavedChangesDialog() {
@@ -244,17 +192,5 @@ namespace KontrolSystem.SpaceWarpMod.UI {
 
             GUILayout.EndVertical();
         }
-
-        /* static void DrawDisableEnableGameInput() {
-            if (GameManager.Instance.Game.Input.asset.enabled) {
-                if (GUILayout.Button("Disable Game Input")) {
-                    GameManager.Instance.Game.Input.Disable();
-                }
-            } else {
-                if (GUILayout.Button("Enable Game Input")) {
-                    GameManager.Instance.Game.Input.Enable();
-                }
-            }
-        } */
     }
 }
