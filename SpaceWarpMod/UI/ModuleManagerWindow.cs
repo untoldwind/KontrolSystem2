@@ -123,7 +123,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                     switch (process.State) {
                     case KontrolSystemProcessState.Available:
                         if (GUILayout.Button(CommonStyles.Instance.startButtonTexture, GUILayout.Width(30)))
-                            Mainframe.Instance.StartProcess(process, GameManager.Instance?.Game?.ViewController?.GetActiveSimVessel(true));
+                            Mainframe.Instance.StartProcess(process, Game.ViewController?.GetActiveSimVessel(true));
                         break;
                     case KontrolSystemProcessState.Running:
                     case KontrolSystemProcessState.Outdated:
@@ -222,7 +222,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                 Mainframe.Instance.Reboot(ConfigAdapter.Instance);
 
                 // Temporary fix for windows hiding main menu
-                GameManager.Instance.Game.Messages.Subscribe<EscapeMenuOpenedMessage>(OnEscapeMenuOpened);
+                Game.Messages.Subscribe<EscapeMenuOpenedMessage>(OnEscapeMenuOpened);
             }
         }
 

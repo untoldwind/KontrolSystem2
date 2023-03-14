@@ -5,6 +5,47 @@ Collection of KSP/Unity related mathematical functions.
 ## Types
 
 
+### CoordinateSystem
+
+Representation of a coordinate system
+
+#### Fields
+
+Name | Type | Description
+--- | --- | ---
+back | [ksp::math::Vector](/reference/ksp/math.md#vector) | backward vector of the coordinate system
+down | [ksp::math::Vector](/reference/ksp/math.md#vector) | down vector of the coordinate system
+forward | [ksp::math::Vector](/reference/ksp/math.md#vector) | forward vector of the coordinate system
+left | [ksp::math::Vector](/reference/ksp/math.md#vector) | left vector of the coordinate system
+right | [ksp::math::Vector](/reference/ksp/math.md#vector) | right vector of the coordinate system
+up | [ksp::math::Vector](/reference/ksp/math.md#vector) | up vector of the coordinate system
+
+#### Methods
+
+##### to_local_direction
+
+```rust
+coordinatesystem.to_local_direction ( rotation : ksp::math::Rotation ) -> ksp::math::Direction
+```
+
+Get local direction of a rotation
+
+##### to_local_position
+
+```rust
+coordinatesystem.to_local_position ( position : ksp::math::Position ) -> ksp::math::Vec3
+```
+
+Get local coordinates of a position
+
+##### to_local_vector
+
+```rust
+coordinatesystem.to_local_vector ( position : ksp::math::Vector ) -> ksp::math::Vec3
+```
+
+Get local coordinates of a vector
+
 ### Direction
 
 Represents the rotation from an initial coordinate system when looking down the z-axis and "up" being the y-axis
@@ -22,6 +63,14 @@ vector | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | Fore vector of the rot
 yaw | float | Yaw in degree
 
 #### Methods
+
+##### to_rotation
+
+```rust
+direction.to_rotation ( coordinate_system : ksp::math::CoordinateSystem ) -> ksp::math::Rotation
+```
+
+Associate this direction with a coordinate system
 
 ##### to_string
 
@@ -45,6 +94,45 @@ c | float | c
 d | float | d
 determinant | float | Get determinant of matrix
 inverse | [ksp::math::Matrix2x2](/reference/ksp/math.md#matrix2x2) | Invert matrix
+
+### Position
+
+A position in space. This is a 3-dimensional vector in a specific coordinate system
+
+#### Methods
+
+##### distance
+
+```rust
+position.distance ( other : ksp::math::Position ) -> float
+```
+
+Calculate the distance of `other` position.
+
+##### distance_sqr
+
+```rust
+position.distance_sqr ( other : ksp::math::Position ) -> float
+```
+
+Calculate the squared distance of `other` position.
+
+##### lerp_to
+
+```rust
+position.lerp_to ( other : ksp::math::Position,
+                   t : float ) -> ksp::math::Position
+```
+
+Linear interpolate position between this and `other` position, where `t = 0.0` is this and `t = 1.0` is `other`.
+
+##### to_local
+
+```rust
+position.to_local ( coordinate_system : ksp::math::CoordinateSystem ) -> ksp::math::Vec3
+```
+
+Get local vector in a coordinate system
 
 ### Vec2
 
@@ -177,6 +265,14 @@ vec3.to_fixed ( decimals : int ) -> string
 
 Convert the vector to string with fixed number of `decimals`.
 
+##### to_position
+
+```rust
+vec3.to_position ( coordinate_system : ksp::math::CoordinateSystem ) -> ksp::math::Position
+```
+
+Consider this vector as position in a coordinate system
+
 ##### to_string
 
 ```rust
@@ -184,6 +280,61 @@ vec3.to_string ( ) -> string
 ```
 
 Convert vector to string.
+
+##### to_vector
+
+```rust
+vec3.to_vector ( coordinate_system : ksp::math::CoordinateSystem ) -> ksp::math::Vector
+```
+
+Associate this vector with a coordinate system
+
+### Vector
+
+This is a 3-dimensional vector in a specific coordinate system
+
+#### Fields
+
+Name | Type | Description
+--- | --- | ---
+magnitude | float | Magnitude/length of the vector
+normalized | [ksp::math::Vector](/reference/ksp/math.md#vector) | Normalized vector (i.e. scaled to length 1)
+sqr_magnitude | float | Squared magnitude of the vector
+
+#### Methods
+
+##### cross
+
+```rust
+vector.cross ( other : ksp::math::Vector ) -> ksp::math::Vector
+```
+
+Calculate the cross/other product with `other` vector.
+
+##### dot
+
+```rust
+vector.dot ( other : ksp::math::Vector ) -> float
+```
+
+Calculate the dot/inner product with `other` vector.
+
+##### lerp_to
+
+```rust
+vector.lerp_to ( other : ksp::math::Vector,
+                 t : float ) -> ksp::math::Vector
+```
+
+Linear interpolate position between this and `other` vector, where `t = 0.0` is this and `t = 1.0` is `other`.
+
+##### to_local
+
+```rust
+vector.to_local ( coordinate_system : ksp::math::CoordinateSystem ) -> ksp::math::Vec3
+```
+
+Get local vector in a coordinate system
 
 ## Functions
 

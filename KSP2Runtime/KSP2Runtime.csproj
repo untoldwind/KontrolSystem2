@@ -42,9 +42,6 @@
         </ProjectReference>
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="KSPMath" />
-    </ItemGroup>
-    <ItemGroup>
         <TO2Files Include="to2\**\*.to2" />
     </ItemGroup>
     <ItemGroup>

@@ -35,21 +35,19 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             }
 
             [KSField]
-            public Vector3d TargetOrientation {
+            public Vector TargetOrientation {
                 get {
                     var sas = vesselAdapter.vessel.Autopilot?.SAS;
-                    return sas != null ? vesselAdapter.vessel.mainBody.coordinateSystem
-                        .ToLocalVector(sas.ReferenceFrame, sas.TargetOrientation) : vesselAdapter.Facing.Vector;
+                    return sas != null ? new Vector(sas.ReferenceFrame, sas.TargetOrientation) : vesselAdapter.Facing.Vector;
                 }
-                set => vesselAdapter.vessel.Autopilot?.SAS?.SetTargetOrientation(new Vector(vesselAdapter.vessel.mainBody.coordinateSystem, value), false);
+                set => vesselAdapter.vessel.Autopilot?.SAS?.SetTargetOrientation(value, false);
             }
 
             [KSField]
             public Direction LockDirection {
                 get {
                     var sas = vesselAdapter.vessel.Autopilot?.SAS;
-                    return sas != null ? new Direction(vesselAdapter.vessel.mainBody.coordinateSystem
-                        .ToLocalRotation(sas.ReferenceFrame, sas.LockedRotation)) : vesselAdapter.Facing;
+                    return sas != null ? new Direction(new Rotation(sas.ReferenceFrame, sas.LockedRotation)) : vesselAdapter.Facing;
                 }
                 set => vesselAdapter.vessel.Autopilot?.SAS?.LockRotation(value.Rotation);
             }

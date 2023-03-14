@@ -142,7 +142,7 @@ pub sync fn bi_impulsive_transfer_body(start : Orbit, target : Body, min_UT : fl
         const rel_velocity = test_orbit.orbital_velocity(SOI_change_UT) - body_velocity
         const L = rel_velocity.cross(rel_position)
         const E = 0.5 * rel_velocity.sqr_magnitude - body_mu / target.SOI_radius
-        const PeR = (target.up * L).sign * 0.5 * (math::sqrt(body_mu * body_mu + 2 * E * L.sqr_magnitude) - body_mu) / E
+        const PeR = (target.up.to_local(test_orbit.reference_frame) * L).sign * 0.5 * (math::sqrt(body_mu * body_mu + 2 * E * L.sqr_magnitude) - body_mu) / E
 
         PeR - target_PeR
     }
@@ -150,37 +150,6 @@ pub sync fn bi_impulsive_transfer_body(start : Orbit, target : Body, min_UT : fl
     const factor = regula_falsi_solve(calc_periapsis_diff, 0.99, 1.0, 10, 100)
 
     (delta_v: delta_v * factor, UT: UT, TT: TT)
-}
-
-pub sync fn course_correction_body(start : Orbit, target : Body, UT : float, target_periapsis : float) -> Vec3 = {
-    const closest_approach_time = next_closest_approach_time(start, target.orbit, UT + 2)
-    const delta_v = intercept_at(start, UT, target.orbit, closest_approach_time).start_velocity
-    const target_PeR = if(target_periapsis > 0) target_periapsis + target.radius else target_periapsis - target.radius
-
-    const calc_periapsis_diff = fn(factor : float) -> {
-        const test_orbit = start.perturbed_orbit(UT, delta_v * factor)
-        const SOI_change_UT = regula_falsi_solve(fn(t) -> {
-            const diff = target.orbit.relative_position(t) - test_orbit.relative_position(t)
-
-            target.SOI_radius - diff.magnitude
-        }, UT, closest_approach_time, 10, 100)
-        const body_position = target.orbit.relative_position(SOI_change_UT)
-        const body_velocity = target.orbit.orbital_velocity(SOI_change_UT)
-        const body_radius = target.radius
-        const body_mu = target.grav_parameter
-
-        const rel_position = test_orbit.relative_position(SOI_change_UT) - body_position
-        const rel_velocity = test_orbit.orbital_velocity(SOI_change_UT) - body_velocity
-        const L = rel_velocity.cross(rel_position)
-        const E = 0.5 * rel_velocity.sqr_magnitude - body_mu / target.SOI_radius
-        const PeR = (target.up * L).sign * 0.5 * (math::sqrt(body_mu * body_mu + 2 * E * L.sqr_magnitude) - body_mu) / E
-
-        PeR - target_PeR
-    }
-    
-    const factor = regula_falsi_solve(calc_periapsis_diff, 0.99, 1.0, 10, 100)
-    
-    delta_v * factor
 }
 
 /// Calculate required delta-v to intercept `target` orbit at time `target_UT` from `start` orbit at time `start_UT`.
@@ -221,7 +190,7 @@ pub sync fn next_closest_approach_time(start : Orbit, target : Orbit, UT : float
        
       for (i in 0..num_divisions) {
         const t = min_time + i * dt
-        const distance = (start.absolute_position(t) - target.absolute_position(t)).magnitude
+        const distance = (start.position(t) - target.position(t)).magnitude
         
         if (distance < closest_approach_distance) {
           closest_approach_distance = distance
@@ -234,4 +203,98 @@ pub sync fn next_closest_approach_time(start : Orbit, target : Orbit, UT : float
     }
     
     closest_approach_time
+}
+
+pub sync fn cheapest_course_correction(orbit: Orbit, min_UT: float, target: Orbit) -> (delta_v: Vec3, UT: float) = {
+    const closest_approach_time = next_closest_approach_time(orbit, target, min_UT + 2)
+
+    let burn_UT = min_UT
+    let delta_v = intercept_at(orbit, burn_UT, target, closest_approach_time).start_velocity
+    const steps = 20.0
+    let step = 0.5
+
+    while(step < steps) {
+        const test_UT = min_UT + (closest_approach_time - min_UT) * step / steps
+        const test_delta_v = intercept_at(orbit, test_UT, target, closest_approach_time).start_velocity
+
+        if(test_delta_v.magnitude < delta_v.magnitude) {
+            delta_v = test_delta_v
+            burn_UT = test_UT
+        }
+
+        step += 1.0
+    }
+
+    (delta_v: delta_v, UT: burn_UT)
+}
+
+pub sync fn course_correction_body(start : Orbit, target : Body, UT : float, target_periapsis : float) -> Vec3 = {
+    const closest_approach_time = next_closest_approach_time(start, target.orbit, UT + 2)
+    const delta_v = intercept_at(start, UT, target.orbit, closest_approach_time).start_velocity
+    const target_PeR = if(target_periapsis > 0) target_periapsis + target.radius else target_periapsis - target.radius
+
+    const calc_periapsis_diff = fn(factor : float) -> {
+        const test_orbit = start.perturbed_orbit(UT, delta_v * factor)
+        const SOI_change_UT = regula_falsi_solve(fn(t) -> {
+            const diff = target.orbit.relative_position(t) - test_orbit.relative_position(t)
+
+            target.SOI_radius - diff.magnitude
+        }, UT, closest_approach_time, 10, 100)
+        const body_position = target.orbit.relative_position(SOI_change_UT)
+        const body_velocity = target.orbit.orbital_velocity(SOI_change_UT)
+        const body_radius = target.radius
+        const body_mu = target.grav_parameter
+
+        const rel_position = test_orbit.relative_position(SOI_change_UT) - body_position
+        const rel_velocity = test_orbit.orbital_velocity(SOI_change_UT) - body_velocity
+        const L = rel_velocity.cross(rel_position)
+        const E = 0.5 * rel_velocity.sqr_magnitude - body_mu / target.SOI_radius
+        const PeR = (target.up.to_local(test_orbit.reference_frame) * L).sign * 0.5 * (math::sqrt(body_mu * body_mu + 2 * E * L.sqr_magnitude) - body_mu) / E
+
+        PeR - target_PeR
+    }
+    
+    const factor = regula_falsi_solve(calc_periapsis_diff, 0.99, 1.0, 10, 100)
+    
+    delta_v * factor
+}
+
+pub sync fn match_velocities(start : Orbit, target : Orbit) -> (delta_v: Vec3, UT: float) = {
+    const collision_UT = next_closest_approach_time(start, target, current_time())
+    
+    (delta_v: target.orbital_velocity(collision_UT) - start.orbital_velocity(collision_UT), UT: collision_UT)
+}
+
+sync fn sample_ejection(body : Body, frame_x : Vec3, frame_y : Vec3, radius : float, exit_velocity : float) -> (orbit: Orbit, periapsis_velocity: float) = {
+    const exit_energy = 0.5 * exit_velocity * exit_velocity - body.grav_parameter / body.SOI_radius
+    const periapsis_velocity = math::sqrt(2 * (exit_energy + body.grav_parameter / radius))
+
+    (orbit: body.create_orbit(frame_x * radius, frame_y * periapsis_velocity, 0), periapsis_velocity: periapsis_velocity)
+}
+
+/// Calculate the ideal ejection from a (nearly) circular orbit around a given `body`, `radius` and `normal` vector.
+/// The resulting orbit is choosen so that the vessel will have a given `exit_velocity` on the SOI radius at time `UT`.
+pub sync fn ideal_ejection(body : Body, UT : float, radius : float, normal : Vec3, exit_velocity : Vec3) -> Orbit = {
+    // Create a more or less arbitrary frame of reference where exitVelocity points to sampleX
+    const frame_x = exit_velocity.normalized
+    const frame_z = frame_x.exclude_from(normal).normalized
+    const frame_y = frame_z.cross(frame_x).normalized
+
+    // Create a sample orbit in the plane perpendicular to sampleZ
+    const (orbit, periapsis_velocity) = sample_ejection(body, frame_x, frame_y, radius, exit_velocity.magnitude)
+    // Now we get the true anomaly of the exit point
+    const exit_ta = orbit.true_anomaly_at_radius(body.SOI_radius)
+    // ... the time it takes ot get from periapsis to exit point
+    const dt = orbit.time_of_true_anomaly(exit_ta, 0)
+    const sample_exit_velocity = orbit.orbital_velocity(dt)
+    
+    // By choice of the reference plane neither exitVelocity nor sampleExitVelocity
+    // should have an z-component. So we just have to turn everything
+    // around sampleY so that sampleExitVelocity points to sampleX as well.
+    const angle = -math::atan2(frame_y * sample_exit_velocity, frame_x * sample_exit_velocity)
+
+    const start_pos = radius * (math::cos(angle) * frame_x + math::sin(angle) * frame_y)
+    const start_vel = periapsis_velocity * (math::cos(angle) * frame_y - math::sin(angle) * frame_x)
+
+    body.create_orbit(start_pos, start_vel, UT - dt)
 }

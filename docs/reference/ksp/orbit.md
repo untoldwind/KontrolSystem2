@@ -19,11 +19,13 @@ grav_parameter | float | Standard gravitation parameter of the body.
 has_atmosphere | bool | `true` if the celestial body has an atmosphere to deal with. 
 name | string | Name of the celestial body. 
 orbit | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit) | The orbit of the celestial body itself (around the parent body) 
+position | [ksp::math::Position](/reference/ksp/math.md#position) | 
 radius | float | Radius of the body at sea level 
-right | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
+reference_frame | [ksp::math::CoordinateSystem](/reference/ksp/math.md#coordinatesystem) | 
+right | [ksp::math::Vector](/reference/ksp/math.md#vector) | 
 rotation_period | float | Rotation period of the planet. 
 SOI_radius | float | Radius of the sphere of influence of the body 
-up | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
+up | [ksp::math::Vector](/reference/ksp/math.md#vector) | 
 
 #### Methods
 
@@ -115,19 +117,11 @@ periapsis | float | Periapsis of the orbit above sealevel of the `reference_body
 periapsis_radius | float | Radius of periapsis of the orbit (i.e. from the center of the `reference_body') 
 period | float | Orbital period. 
 reference_body | [ksp::orbit::Body](/reference/ksp/orbit.md#body) | The celestial body the orbit is referenced on. 
+reference_frame | [ksp::math::CoordinateSystem](/reference/ksp/math.md#coordinatesystem) | 
 semi_major_axis | float | Semi major axis of the orbit. 
 start_ut | float | 
 
 #### Methods
-
-##### absolute_position
-
-```rust
-orbit.absolute_position ( ut : float ) -> ksp::math::Vec3
-```
-
-Get the absolute position at a given universal time `ut`
-
 
 ##### get_eccentric_anomaly_at_true_anomaly
 
@@ -209,6 +203,15 @@ orbit.perturbed_orbit ( ut : float,
                         dV : ksp::math::Vec3 ) -> ksp::orbit::Orbit
 ```
 
+
+
+##### position
+
+```rust
+orbit.position ( ut : float ) -> ksp::math::Position
+```
+
+Get the absolute position at a given universal time `ut`
 
 
 ##### prograde
@@ -297,6 +300,14 @@ orbit.u_t_at_mean_anomaly ( meanAnomaly : float,
 
 ```rust
 orbit.up ( ut : float ) -> ksp::math::Vec3
+```
+
+
+
+##### velocity
+
+```rust
+orbit.velocity ( ut : float ) -> ksp::math::Vector
 ```
 
 

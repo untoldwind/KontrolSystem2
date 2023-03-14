@@ -11,7 +11,7 @@ namespace KontrolSystem.KSP.Runtime.KSPGame {
 
     public static class GameModeAdapter {
         public static GameMode GameModeFromState(GameState state) {
-            switch (GameManager.Instance.Game.GlobalGameState.GetState()) {
+            switch (state) {
             case GameState.KerbalSpaceCenter: return GameMode.KSC;
             case GameState.TrackingStation: return GameMode.Tracking;
             case GameState.VehicleAssemblyBuilder: return GameMode.VAB;

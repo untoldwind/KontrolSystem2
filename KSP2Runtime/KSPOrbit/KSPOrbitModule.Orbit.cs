@@ -2,6 +2,8 @@
 using System.Globalization;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
+using KSP.Api;
+using KSP.Sim;
 
 namespace KontrolSystem.KSP.Runtime.KSPOrbit {
     public partial class KSPOrbitModule {
@@ -57,6 +59,9 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             [KSField(Description = "Orbital period.")]
             double Period { get; }
 
+            [KSField]
+            public ITransformFrame ReferenceFrame { get; }
+
             [KSField(Description = "Normal vector perpendicular to orbital plane.")]
             Vector3d OrbitNormal { get; }
 
@@ -64,7 +69,10 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             Vector3d OrbitalVelocity(double ut);
 
             [KSMethod(Description = "Get the absolute position at a given universal time `ut`")]
-            Vector3d AbsolutePosition(double ut);
+            Position Position(double ut);
+
+            [KSMethod]
+            Vector Velocity(double ut);
 
             [KSMethod]
             Vector3d RelativePosition(double ut);
@@ -184,6 +192,23 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             /// </summary>
             [KSMethod]
             double SynodicPeriod(IOrbit other);
+
+            [KSField] Vector3d RelativePositionApoapsis { get; }
+
+            /// <summary>
+            /// Returns the vector from the primary to the orbiting body at periapsis
+            /// Better than using Orbit.eccVec because that is zero for circular orbits
+            /// </summary>
+            [KSField] Vector3d RelativePositionPeriapsis { get; }
+
+            /// <summary>
+            /// Converts a direction, specified by a Vector3d, into a true anomaly.
+            /// The vector is projected into the orbital plane and then the true anomaly is
+            /// computed as the angle this vector makes with the vector pointing to the periapsis.
+            /// The returned value is always between 0 and 360.
+            /// </summary>
+            [KSMethod]
+            double TrueAnomalyFromVector(Vector3d vec);
 
             [KSMethod]
             string ToString();

@@ -4,8 +4,6 @@ using KontrolSystem.KSP.Runtime.KSPConsole;
 using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KSP.Sim.impl;
-using KSP.Sim.State;
-using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime {
     public interface IMarker {
@@ -16,6 +14,8 @@ namespace KontrolSystem.KSP.Runtime {
 
     public interface IKSPContext : IContext {
         GameMode GameMode { get; }
+
+        VesselComponent ActiveVessel { get; }
 
         KSPConsoleBuffer ConsoleBuffer { get; }
 

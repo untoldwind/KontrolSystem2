@@ -4,6 +4,7 @@ using System.Reflection.Emit;
 using KontrolSystem.TO2;
 using KontrolSystem.TO2.AST;
 using System.Globalization;
+using KSP.Sim;
 
 namespace KontrolSystem.KSP.Runtime.KSPMath {
     public static class Vector3Binding {
@@ -131,13 +132,21 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                         false, typeof(Vector3Binding), typeof(Vector3Binding).GetMethod("ToFixed"))
                 },
                 {
-                    "to_direction",
-                    new BoundMethodInvokeFactory("Point in direction of this vector.",
+                    "to_position",
+                    new BoundMethodInvokeFactory("Consider this vector as position in a coordinate system",
                         true,
-                        () => DirectionBinding.DirectionType,
-                        () => new List<RealizedParameter>(),
-                        false, typeof(Vector3Binding), typeof(Vector3Binding).GetMethod("ToDirection"))
-                }
+                        () => PositionBinding.PositionType,
+                        () => new List<RealizedParameter>() { new RealizedParameter("frame", TransformFrameBinding.TransformFrameType) },
+                        false, typeof(Vector3Binding), typeof(Vector3Binding).GetMethod("ToPosition"))
+                }, {
+                    "to_vector",
+                    new BoundMethodInvokeFactory("Associate this vector with a coordinate system",
+                        true,
+                        () => VectorBinding.VectorType,
+                        () => new List<RealizedParameter>() { new RealizedParameter("frame", TransformFrameBinding.TransformFrameType) },
+                        false, typeof(Vector3Binding), typeof(Vector3Binding).GetMethod("ToVector"))
+                },
+
             },
             new Dictionary<string, IFieldAccessFactory> {
                 {
@@ -168,6 +177,9 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
             return "[" + v.x.ToString(format, CultureInfo.InvariantCulture) + ", " + v.y.ToString(format, CultureInfo.InvariantCulture) + ", " + v.z.ToString(format, CultureInfo.InvariantCulture) + "]";
         }
 
-        public static Direction ToDirection(Vector3d v) => new Direction(v, false);
+        public static Position ToPosition(Vector3d local, ITransformFrame frame) => new Position(frame, local);
+
+        public static Vector ToVector(Vector3d local, ITransformFrame frame) => new Vector(frame, local);
+
     }
 }

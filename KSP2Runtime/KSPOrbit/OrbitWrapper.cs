@@ -1,6 +1,9 @@
 ﻿using System;
 using KontrolSystem.TO2.Runtime;
+using KSP.Api;
+using KSP.Sim;
 using KSP.Sim.impl;
+using Result = KontrolSystem.TO2.Runtime.Result;
 
 namespace KontrolSystem.KSP.Runtime.KSPOrbit {
     public class OrbitWrapper : KSPOrbitModule.IOrbit {
@@ -44,11 +47,15 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
         public double Period => orbit.period;
 
+        public ITransformFrame ReferenceFrame => orbit.ReferenceFrame;
+
         public Vector3d OrbitNormal => orbit.GetRelativeOrbitNormal().SwapYAndZ;
 
         public Vector3d RelativePosition(double ut) => orbit.GetRelativePositionAtUTZup(ut).SwapYAndZ;
 
-        public Vector3d AbsolutePosition(double ut) => orbit.referenceBody.localPosition + RelativePosition(ut);
+        public Position Position(double ut) => new Position(ReferenceFrame, RelativePosition(ut));
+
+        public Vector Velocity(double ut) => new Vector(ReferenceFrame, orbit.GetOrbitalVelocityAtUTZup(ut).SwapYAndZ);
 
         public Vector3d OrbitalVelocity(double ut) => orbit.GetOrbitalVelocityAtUTZup(ut).SwapYAndZ;
 
@@ -120,6 +127,39 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             double time2 = TimeOfTrueAnomaly(trueAnomaly2, ut);
             if (time2 < time1 && time2 > ut) return Result.Ok<double, string>(time2);
             else return Result.Ok<double, string>(time1);
+        }
+
+        public Vector3d RelativePositionApoapsis {
+            get {
+                Vector3d vectorToAn = QuaternionD.AngleAxis(-orbit.longitudeOfAscendingNode, Vector3d.up) * Vector3d.right;
+                Vector3d vectorToPe = QuaternionD.AngleAxis((float)orbit.argumentOfPeriapsis, OrbitNormal) * vectorToAn;
+                return -ApoapsisRadius * vectorToPe;
+            }
+        }
+
+        public Vector3d RelativePositionPeriapsis {
+            get {
+                Vector3d vectorToAn = QuaternionD.AngleAxis(-orbit.longitudeOfAscendingNode, Vector3d.up) * Vector3d.right;
+                Vector3d vectorToPe = QuaternionD.AngleAxis(orbit.argumentOfPeriapsis, OrbitNormal) * vectorToAn;
+                return PeriapsisRadius * vectorToPe;
+            }
+        }
+        public double TrueAnomalyFromVector(Vector3d vec) {
+            Vector3d oNormal = OrbitNormal;
+            Vector3d projected = Vector3d.Exclude(oNormal, vec);
+            Vector3d vectorToPe = RelativePositionPeriapsis;
+            double angleFromPe = Vector3d.Angle(vectorToPe, projected);
+
+            //If the vector points to the infalling part of the orbit then we need to do 360 minus the
+            //angle from Pe to get the true anomaly. Test this by taking the the cross product of the
+            //orbit normal and vector to the periapsis. This gives a vector that points to center of the
+            //outgoing side of the orbit. If vectorToAN is more than 90 degrees from this vector, it occurs
+            //during the infalling part of the orbit.
+            if (Math.Abs(Vector3d.Angle(projected, Vector3d.Cross(oNormal, vectorToPe))) < 90) {
+                return angleFromPe * DirectBindingMath.DegToRad;
+            } else {
+                return (360 - angleFromPe) * DirectBindingMath.DegToRad;
+            }
         }
 
         public double SynodicPeriod(KSPOrbitModule.IOrbit other) {

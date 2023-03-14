@@ -1,5 +1,10 @@
 # Changes
 
+## 0.1.7 -> 0.1.8
+
+* Add simple ODE solver to `std::numerics` (runge kutta 23)
+* Add multiple maneuver node calculations (including SOI change)
+
 ## 0.1.6 -> 0.1.7
 
 * `vessel.actions.sas = true/false` now working
@@ -7,7 +12,6 @@
 * Add `vessel.actions.custom1` .. `vessel.actions.custom10` (addresses #10)
 * Support array of arrays types (addresses #12)
 * Add engine mode information (addresses #12)
-
 
 ## 0.1.5 -> 0.1.6
 

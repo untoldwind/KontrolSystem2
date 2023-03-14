@@ -1,5 +1,6 @@
 ﻿using KontrolSystem.KSP.Runtime.KSPVessel;
 using KontrolSystem.TO2.Binding;
+using KSP.Api;
 using KSP.Sim;
 using KSP.Sim.impl;
 
@@ -21,9 +22,9 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
         public double RotationPeriod => body.rotationPeriod;
 
-        public Vector3d Up => body.transform.up.vector;
+        public Vector Up => body.transform.up;
 
-        public Vector3d Right => body.transform.right.vector;
+        public Vector Right => body.transform.right;
 
         [KSField] public KSPOrbitModule.IOrbit Orbit => new OrbitWrapper(context, body.Orbit);
 
@@ -33,12 +34,16 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
         public double Radius => body.radius;
 
-        public Vector3d SurfaceNormal(double lat, double lon) => body.GetSurfaceNVector(lat, lon);
+        public ITransformFrame ReferenceFrame => body.transform.celestialFrame;
+
+        public Position Position => body.Position;
+
+        public Vector SurfaceNormal(double lat, double lon) => new Vector(body.transform.celestialFrame, body.GetSurfaceNVector(lat, lon));
 
         public double TerrainHeight(double lat, double lon) => body.SurfaceProvider.GetTerrainAltitudeFromCenter(lat, lon);
 
-        public Vector3d SurfacePosition(double latitude, double longitude, double altitude) =>
-            body.GetWorldSurfacePosition(latitude, longitude, altitude, body.coordinateSystem);
+        public Position SurfacePosition(double latitude, double longitude, double altitude) =>
+            new Position(body.transform.celestialFrame, body.GetRelSurfacePosition(latitude, longitude, altitude));
 
         public KSPOrbitModule.IOrbit CreateOrbit(Vector3d position, Vector3d velocity, double ut) {
             PatchedConicsOrbit orbit = new PatchedConicsOrbit(body.universeModel);
@@ -47,5 +52,23 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
             return new OrbitWrapper(context, orbit);
         }
+
+        public KSPOrbitModule.IOrbit CreateOrbitFromParameters(double inclination, double eccentricity,
+            double semiMajorAxis, double lan,
+            double argumentOfPeriapsis, double meanAnomalyAtEpoch, double epoch) {
+            PatchedConicsOrbit orbit = new PatchedConicsOrbit(body.universeModel);
+
+            orbit.inclination = inclination;
+            orbit.eccentricity = eccentricity;
+            orbit.semiMajorAxis = semiMajorAxis;
+            orbit.longitudeOfAscendingNode = lan;
+            orbit.argumentOfPeriapsis = argumentOfPeriapsis;
+            orbit.meanAnomalyAtEpoch = meanAnomalyAtEpoch;
+            orbit.epoch = epoch;
+
+            return new OrbitWrapper(context, orbit);
+        }
+        
+        public IGGuid UnderlyingId => body.SimulationObject.GlobalId;
     }
 }

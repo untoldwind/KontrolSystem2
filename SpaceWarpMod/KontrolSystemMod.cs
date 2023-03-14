@@ -41,7 +41,7 @@ namespace KontrolSystem.SpaceWarpMod {
 
         void Update() {
             if (Input.GetKey(KeyCode.LeftAlt) && Input.GetKeyDown(KeyCode.K) && ConfigAdapter.Instance.HotKeyEnabled &&
-                !InvalidStates.Contains(GameManager.Instance.Game.GlobalGameState.GetState())) {
+                !InvalidStates.Contains(Game.GlobalGameState.GetState())) {
                 moduleManagerWindow.Toggle();
             }
         }

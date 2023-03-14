@@ -51,11 +51,11 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         private readonly Dictionary<Guid, Coroutine> coroutines = new Dictionary<Guid, Coroutine>();
 
         public void Awake() {
-            GameManager.Instance.Game.Messages.Subscribe<GameStateChangedMessage>(OnStateChange);
+            Game.Messages.Subscribe<GameStateChangedMessage>(OnStateChange);
         }
 
         public void Destroy() {
-            GameManager.Instance.Game.Messages.Unsubscribe<GameStateChangedMessage>(OnStateChange);
+            Game.Messages.Unsubscribe<GameStateChangedMessage>(OnStateChange);
         }
 
         public void Update() {
@@ -160,8 +160,8 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         }
 
         public IEnumerable<KontrolSystemProcess> ListProcesses() {
-            GameMode gameMode = KSPContext.CurrentGameMode;
-            VesselComponent activeVessel = GameManager.Instance.Game.ViewController.GetActiveSimVessel(true);
+            GameMode gameMode = CurrentGameMode;
+            VesselComponent activeVessel = Game.ViewController.GetActiveSimVessel(true);
 
             return processes != null
                 ? processes.Where(p => p.AvailableFor(gameMode, activeVessel))
@@ -171,7 +171,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         public bool StartProcess(KontrolSystemProcess process, VesselComponent vessel) {
             switch (process.State) {
             case KontrolSystemProcessState.Available:
-                KSPContext context = new KSPContext(consoleBuffer);
+                KSPContext context = new KSPContext(Game, consoleBuffer);
                 Entrypoint entrypoint = process.EntrypointFor(context.GameMode, context);
                 if (entrypoint == null) return false;
                 CorouttineAdapter adapter = new CorouttineAdapter(entrypoint(vessel), context,
@@ -194,7 +194,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         }
 
         public void TriggerBoot(VesselComponent vessel) {
-            GameMode gameMode = KSPContext.CurrentGameMode;
+            GameMode gameMode = CurrentGameMode;
 
             KontrolSystemProcess bootProcess = processes?.FirstOrDefault(p => p.IsBootFor(gameMode, vessel));
 
@@ -248,5 +248,8 @@ namespace KontrolSystem.SpaceWarpMod.Core {
                 }
             }
         }
+
+
+        private GameMode CurrentGameMode => GameModeAdapter.GameModeFromState(Game.GlobalGameState.GetState());
     }
 }

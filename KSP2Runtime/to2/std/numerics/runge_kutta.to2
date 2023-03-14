@@ -1,0 +1,50 @@
+use { Vec3 } from ksp::math
+
+const TOLERANCE : float = 0.01
+const D9  : float = 1.0 / 9.0
+const D24 : float = 1.0 / 24.0
+
+pub sync fn rk23(accel : fn(float, Vec3, Vec3) -> Vec3,
+                 end_condition : fn(float, Vec3, Vec3) -> bool,
+                 start_t : float, start_position : Vec3, start_velocity : Vec3,
+                 min_dt : float, max_dt : float) -> (t : float, position : Vec3, velocity : Vec3)[] = {
+    let t = start_t
+    let position = start_position
+    let velocity = start_velocity
+    let dt = max_dt
+    let builder : ArrayBuilder<(t : float, position: Vec3, velocity: Vec3)> = ArrayBuilder(100)
+
+    builder += (t : t, position : position, velocity : velocity)
+
+    while(!end_condition(t, position, velocity)) {
+        const dx1 = dt * velocity
+        const dv1 = dt * accel(t, position, velocity)
+
+        const dx2 = dt * (velocity + 0.5 * dv1)
+        const dv2 = dt * accel(t + 0.5 * dt, position + 0.5 * dx1, velocity + 0.5 * dv1)
+
+        const dx3 = dt * (velocity + 0.75 * dv2)
+        const dv3 = dt * accel(t + 0.75 * dt, position + 0.75 * dx2, velocity + 0.75 * dv2)
+
+        const dv4 = dt * accel(t + dt, position + 2 * D9 * dx1 + 3 * D9 * dx2 + 4 * D9 * dx3, velocity + 2 * D9 * dv1 + 3 * D9 * dv2 + 4 * D9 * dv3)
+
+        const dx = (2 * dx1 + 3 * dx2 + 4 * dx3) * D9
+        const dv = (2 * dv1 + 3 * dv2 + 4 * dv3) * D9
+
+        const zv = (7 * dv1 + 6 * dv2 + 8 * dv3 + 3 * dv4) * D24
+        const error_v = zv - dv
+
+        if(error_v.magnitude > TOLERANCE && dt > min_dt * 2)
+            dt *= 0.5
+        else if(error_v.magnitude < TOLERANCE && 2 * dt < max_dt)
+            dt *= 2.0
+        else {
+            t += dt
+            position += dx
+            velocity += dv
+            builder += (t : t, position : position, velocity : velocity)
+        }
+    }
+
+    builder.result()
+}
