@@ -35,6 +35,16 @@ vessel.autopilot.target_orientation = direction
 ```
 tells the SAS to steer the vessel into `direction`.
 
+## Use input override methods
+
+If direct control is required is is possible to just override the controls of a vessel by using the following methods:
+* [`override_input_pitch`](../reference/ksp/vessel.md#overrideinputpitch)
+* [`override_input_yaw`](../reference/ksp/vessel.md#overrideinputyaw)
+* [`override_input_roll`](../reference/ksp/vessel.md#overrideinputroll)
+* [`override_input_translate_x`](../reference/ksp/vessel.md#overrideinputtranslatex)
+* [`override_input_translate_y`](../reference/ksp/vessel.md#overrideinputtranslatey)
+* [`override_input_translate_z`](../reference/ksp/vessel.md#overrideinputtranslatez)
+
 ## Control manager
 
 All control managers in the [`ksp::control`](../reference/ksp/control.md) module follow the same principle:
