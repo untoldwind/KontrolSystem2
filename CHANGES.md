@@ -1,5 +1,11 @@
 # Changes
 
+## 0.1.7 -> 0.1.8
+
+* Add `.reverse()` on arrays
+* Fix internal error if function is called with too many arguments (now correct error message is displayed)
+* Update all the steering / throttle managers in `ksp::control` (see https://kontrolsystem2.readthedocs.io/en/latest/interact/control.html)
+
 ## 0.1.6 -> 0.1.7
 
 * `vessel.actions.sas = true/false` now working
