@@ -8,12 +8,14 @@ namespace KontrolSystem.SpaceWarpMod.UI {
 
     public class EditorWindow : ResizableWindow {
 
-        private string text = "use { Vessel } from ksp::vessel\r\nuse { CONSOLE } from ksp::console\r\n\r\npub fn main_flight(vessel: Vessel) -> Result<Unit, string> = {\r\n    CONSOLE.clear()\r\n    CONSOLE.print_line(\"Hello world\")\r\n}";
-        private string filename = "unnamed.to2";
+        private string text = null;
+        private string filepath = null;
         private bool unsavedChanges = false;
         private bool showingUnsavedChangesDialog = false;
 
         public event Action OnCloseClicked;
+
+        public bool Ready => text != null && filepath != null;
 
         // use this setter to automatically set the unsaved changes flag when needed
         public string Text {
@@ -21,6 +23,9 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                 return text;
             }
             set {
+                if (value == null) {
+                    throw new ArgumentNullException("value");
+                }
                 if (text != value) {
                     unsavedChanges = true;
                 }
@@ -29,35 +34,55 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         }
 
         // use this setter to automatically set the unsaved changes flag when needed
-        public string Filename {
+        public string Filepath {
             get {
-                return filename;
+                return filepath;
             }
             set {
-                if (filename != value) {
+                if (value == null) {
+                    throw new ArgumentNullException("value");
+                }
+                if (filepath != value) {
                     unsavedChanges = true;
                 }
-                filename = value;
+                filepath = value;
             }
         }
 
-        public string FullFilename => Path.Combine(ConfigAdapter.Instance.LocalLibPath, filename);
+        public void NewFile(string filepath = null) {
 
-        public void OpenFile(string filename) {
-            this.filename = filename;
-            try {
-                text = File.ReadAllText(FullFilename);
-            } catch (FileNotFoundException) {
-                text = "";
+            if (filepath == null) {
+
+                filepath = Path.Combine(ConfigAdapter.Instance.LocalLibPath, "unnamed.to2");
+
+                int i = 2;
+                while (File.Exists(filepath)) {
+                    filepath = Path.Combine(ConfigAdapter.Instance.LocalLibPath, $"unnamed ({i++}).to2");
+                }
             }
+
+            Filepath = filepath;
+            Text = "use { Vessel } from ksp::vessel\r\nuse { CONSOLE } from ksp::console\r\n\r\npub fn main_flight(vessel: Vessel) -> Result<Unit, string> = {\r\n    CONSOLE.clear()\r\n    CONSOLE.print_line(\"Hello world\")\r\n}";
+            unsavedChanges = false;
+        }
+
+        public void OpenFile(string filepath) {
+            Filepath = filepath;
+            Text = File.ReadAllText(filepath);
             unsavedChanges = false;
         }
 
         public void Awake() {
-            Initialize($"KontrolSystem: Editor", new Rect(Screen.width - 750, Screen.height - 600, 0, 0), 120, 120, false);
+            Initialize("KontrolSystem: Editor", new Rect(60, 60, 800, 600), 300, 300, true);
+            Title.image = CommonStyles.Instance.stateInactiveTexture;
         }
 
         protected override void DrawWindow(int windowId) {
+
+            if (!Ready) {
+                GUILayout.Label("Initializing...");
+            }
+
             if (showingUnsavedChangesDialog) {
                 DrawUnsavedChangesDialog();
             } else {
@@ -67,27 +92,104 @@ namespace KontrolSystem.SpaceWarpMod.UI {
 
         private void DrawNormal() {
 
-            GUILayout.BeginVertical();
+            var padding = 15;
+            var paddingTop = 30;
+            var saveAndRebootButtonWidth = 200;
+            var disableGameInputButtonWidth = 250;
+            var closeButtonWidth = 50;
+            var buttonHeight = 25;
+
+            bool filepathValid =
+               !string.IsNullOrWhiteSpace(filepath)
+               && filepath.IndexOfAny(Path.GetInvalidPathChars()) < 0
+               && Path.GetExtension(filepath) == ".to2";
+
+            Filepath = GUI.TextField(new Rect(
+                padding,
+                paddingTop,
+                -padding + windowRect.width - padding - saveAndRebootButtonWidth - padding,
+                buttonHeight
+            ), filepath);
+
+            if (filepathValid) {
+                Title.image = unsavedChanges ? CommonStyles.Instance.stateActiveTexture : CommonStyles.Instance.stateInactiveTexture;
+            } else {
+                Title.image = CommonStyles.Instance.stateErrorTexture;
+            }
+
+            GUIStyle textAreaStyle = new GUIStyle(_spaceWarpUISkin.textArea) {
+                wordWrap = false
+            };
+
+            GUI.enabled = filepathValid && !Mainframe.Instance.Rebooting;
+            if (GUI.Button(new Rect(
+                windowRect.width - saveAndRebootButtonWidth - padding,
+                paddingTop,
+                saveAndRebootButtonWidth,
+                buttonHeight
+            ), "Save and Reboot")) {
+                LoggerAdapter.Instance.Debug($"Saving {filepath}...");
+                File.WriteAllText(filepath, text);
+                unsavedChanges = false;
+                Mainframe.Instance.Reboot(ConfigAdapter.Instance);
+                LoggerAdapter.Instance.Debug($"Saved {filepath}.");
+            }
+            GUI.enabled = true;
+
+            Text = GUI.TextArea(new Rect(
+                padding,
+                paddingTop + buttonHeight + padding,
+                -padding + windowRect.width - padding,
+                -paddingTop - buttonHeight - padding + windowRect.height - padding - buttonHeight - padding
+            ), text, textAreaStyle);
+
+            string label = GameManager.Instance.Game.Input.asset.enabled ? "Disable Game Input" : "Enable Game Input";
+
+            if (GUI.Button(new Rect(
+                padding,
+                windowRect.height - buttonHeight - padding,
+                disableGameInputButtonWidth,
+                buttonHeight
+            ), label)) {
+                if (GameManager.Instance.Game.Input.asset.enabled) {
+                    GameManager.Instance.Game.Input.Disable();
+                } else {
+                    GameManager.Instance.Game.Input.Enable();
+                }
+            }
+
+            if (GUI.Button(new Rect(
+                windowRect.width - closeButtonWidth - padding,
+                windowRect.height - buttonHeight - padding,
+                closeButtonWidth,
+                buttonHeight
+            ), "Close")) {
+                if (unsavedChanges) {
+                    showingUnsavedChangesDialog = true;
+                } else {
+                    OnCloseClicked();
+                }
+            }
+
+            /* GUILayout.BeginVertical();
 
             GUILayout.BeginHorizontal();
 
-            Filename = GUILayout.TextField(filename);
-
+            filepathScrollPos = GUILayout.BeginScrollView(filepathScrollPos, Guiver);
+            Filepath = GUILayout.TextField(filepath);
             if (unsavedChanges) {
                 GUILayout.Label("*", GUILayout.ExpandWidth(false));
             }
+            GUILayout.EndScrollView();
 
-            bool filenameValid =
-                !string.IsNullOrWhiteSpace(filename)
-                && filename.IndexOfAny(Path.GetInvalidFileNameChars()) < 0
-                && Path.GetExtension(filename) == ".to2";
+            bool filepathValid =
+                !string.IsNullOrWhiteSpace(filepath)
+                && filepath.IndexOfAny(Path.GetInvalidPathChars()) < 0
+                && Path.GetExtension(filepath) == ".to2";
 
-            GUI.enabled = filenameValid && !Mainframe.Instance.Rebooting;
+            GUI.enabled = filepathValid && !Mainframe.Instance.Rebooting;
             if (GUILayout.Button("Save and Reboot", GUILayout.ExpandWidth(false))) {
-                File.WriteAllText(
-                    Path.Combine(ConfigAdapter.Instance.LocalLibPath, filename),
-                    text
-                );
+                File.WriteAllText(filepath, text);
                 unsavedChanges = false;
                 Mainframe.Instance.Reboot(ConfigAdapter.Instance);
             }
@@ -95,7 +197,13 @@ namespace KontrolSystem.SpaceWarpMod.UI {
 
             GUILayout.EndHorizontal();
 
-            Text = GUILayout.TextArea(text, GUILayout.ExpandHeight(true));
+            GUIStyle style = new GUIStyle {
+                wordWrap = false
+            };
+
+            textScrollPos = GUILayout.BeginScrollView(textScrollPos);
+            Text = GUILayout.TextArea(text, style, GUILayout.ExpandHeight(true));
+            GUILayout.EndScrollView();
 
             GUILayout.BeginHorizontal();
 
@@ -113,12 +221,12 @@ namespace KontrolSystem.SpaceWarpMod.UI {
 
             GUILayout.EndHorizontal();
 
-            GUILayout.EndVertical();
+            GUILayout.EndVertical(); */
         }
 
         private void DrawUnsavedChangesDialog() {
             GUILayout.BeginVertical();
-            GUILayout.Label($"{filename} has unsaved changes. Are you sure you want to discard these changes?");
+            GUILayout.Label($"{filepath} has unsaved changes. Are you sure you want to discard these changes?");
 
             GUILayout.BeginHorizontal();
 
@@ -137,7 +245,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             GUILayout.EndVertical();
         }
 
-        static void DrawDisableEnableGameInput() {
+        /* static void DrawDisableEnableGameInput() {
             if (GameManager.Instance.Game.Input.asset.enabled) {
                 if (GUILayout.Button("Disable Game Input")) {
                     GameManager.Instance.Game.Input.Disable();
@@ -147,6 +255,6 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                     GameManager.Instance.Game.Input.Enable();
                 }
             }
-        }
+        } */
     }
 }

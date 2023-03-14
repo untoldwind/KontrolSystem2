@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using KontrolSystem.SpaceWarpMod.Core;
 using KontrolSystem.TO2;
@@ -189,6 +190,19 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                 GUILayout.Label($"Description: {module.Description}");
                 GUILayout.Label($"Builtin: {module.IsBuiltin}");
                 if (!module.IsBuiltin) GUILayout.Label($"Source: {module.SourceFile}");
+
+                GUILayout.FlexibleSpace();
+                GUILayout.BeginHorizontal();
+                GUI.enabled = !module.IsBuiltin;
+                if (GUILayout.Button("Edit")) {
+                    OpenEditorWindow(module.SourceFile);
+                }
+                if (GUILayout.Button("Delete")) {
+                    File.Delete(module.SourceFile);
+                    Mainframe.Instance.Reboot(ConfigAdapter.Instance);
+                }
+                GUI.enabled = true;
+                GUILayout.EndHorizontal();
             }
 
             GUILayout.EndVertical();
@@ -239,6 +253,15 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             EditorWindow editorWindow = gameObject.AddComponent<EditorWindow>();
             editorWindow.OnCloseClicked += () => CloseEditorWindow(editorWindow);
             editorWindow.Open();
+            editorWindow.NewFile();
+            editorWindows.Add(editorWindow);
+        }
+
+        public void OpenEditorWindow(string filepath) {
+            EditorWindow editorWindow = gameObject.AddComponent<EditorWindow>();
+            editorWindow.OnCloseClicked += () => CloseEditorWindow(editorWindow);
+            editorWindow.Open();
+            editorWindow.OpenFile(filepath);
             editorWindows.Add(editorWindow);
         }
 
