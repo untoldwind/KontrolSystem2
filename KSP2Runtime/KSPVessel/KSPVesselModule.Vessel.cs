@@ -173,12 +173,12 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             public double PitchHorizonRelative => vessel.Pitch_HorizonRelative;
 
             [KSMethod]
-            public KSPControlModule.SteeringManager SetSteering(Direction direction) =>
-                new KSPControlModule.SteeringManager(context, this, () => direction);
+            public KSPControlModule.SteeringManager SetSteering(Vector3d pitchYawRoll) =>
+                new KSPControlModule.SteeringManager(context, vessel, _ => pitchYawRoll);
 
             [KSMethod]
-            public KSPControlModule.SteeringManager ManageSteering(Func<Direction> directionProvider) =>
-                new KSPControlModule.SteeringManager(context, this, directionProvider);
+            public KSPControlModule.SteeringManager ManageSteering(Func<double, Vector3d> pitchYawRollProvider) =>
+                new KSPControlModule.SteeringManager(context, vessel, pitchYawRollProvider);
 
             [KSMethod]
             public KSPControlModule.ThrottleManager SetThrottle(double throttle) =>
@@ -190,11 +190,27 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSMethod]
             public KSPControlModule.RCSTranslateManager SetRcsTranslate(Vector3d translate) =>
-                new KSPControlModule.RCSTranslateManager(context, vessel, () => translate);
+                new KSPControlModule.RCSTranslateManager(context, vessel, _ => translate);
 
             [KSMethod]
-            public KSPControlModule.RCSTranslateManager ManageRcsTranslate(Func<Vector3d> translateProvider) =>
+            public KSPControlModule.RCSTranslateManager ManageRcsTranslate(Func<double, Vector3d> translateProvider) =>
                 new KSPControlModule.RCSTranslateManager(context, vessel, translateProvider);
+
+            [KSMethod]
+            public KSPControlModule.WheelSteeringManager SetWheelSteering(double wheelSteering) =>
+                new KSPControlModule.WheelSteeringManager(context, vessel, _ => wheelSteering);
+
+            [KSMethod]
+            public KSPControlModule.WheelSteeringManager ManageWheelSteering(Func<double, double> wheelSteeringProvider) =>
+                new KSPControlModule.WheelSteeringManager(context, vessel, wheelSteeringProvider);
+
+            [KSMethod]
+            public KSPControlModule.WheelThrottleManager SetWheelThrottle(double wheelThrottle) =>
+                new KSPControlModule.WheelThrottleManager(context, vessel, _ => wheelThrottle);
+
+            [KSMethod]
+            public KSPControlModule.WheelThrottleManager ManageWheelThrottle(Func<double, double> wheelThrottleProvider) =>
+                new KSPControlModule.WheelThrottleManager(context, vessel, wheelThrottleProvider);
 
             [KSMethod]
             public void ReleaseControl() => context.UnhookAllAutopilots(vessel);

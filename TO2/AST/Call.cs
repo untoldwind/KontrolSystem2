@@ -227,8 +227,8 @@ namespace KontrolSystem.TO2.AST {
                     End
                 ));
                 return;
-            } 
-            
+            }
+
             if (function.RequiredParameterCount() > arguments.Count) {
                 context.AddError(new StructuralError(
                     StructuralError.ErrorType.ArgumentMismatch,
@@ -238,7 +238,7 @@ namespace KontrolSystem.TO2.AST {
                 ));
                 return;
             }
-            
+
             (MethodInfo genericMethod, RealizedType genericResult, List<RealizedParameter> genericParameters) =
                 Helpers.MakeGeneric(context,
                     function.ReturnType, function.Parameters, function.RuntimeMethod,
