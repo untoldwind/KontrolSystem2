@@ -115,3 +115,12 @@ test sync fn test_array_find() -> Unit = {
     assert_none(arr.find(fn(item) -> false))
     assert_some("Two", arr.find(fn(item) -> item.to_lower() == "two"))
 }
+
+test sync fn test_array_reverse() -> Unit = {
+    let int_arr : int[] = [ 0, 11, 22, 33, 44 ]
+    let reverse_arr = int_arr.reverse()
+    
+    assert_int(5, reverse_arr.length)
+    assert_int(44, reverse_arr[0])
+    assert_int(22, reverse_arr[2])
+}

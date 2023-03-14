@@ -42,6 +42,10 @@ namespace KontrolSystem.TO2.Runtime {
             return source.Where(predicate).ToArray();
         }
 
+        public static T[] Reverse<T>(T[] source) {
+            return source.Reverse().ToArray();
+        }
+
         public static string ArrayToString<T>(T[] array) {
             StringBuilder builder = new StringBuilder("[");
 

@@ -60,7 +60,15 @@ namespace KontrolSystem.TO2.AST {
                         },
                         false, typeof(ArrayMethods), typeof(ArrayMethods).GetMethod("Exists"),
                         context => ("T", ElementType.UnderlyingType(context)).Yield())
-                }, {
+                },
+                {
+                    "reverse",
+                    new BoundMethodInvokeFactory("Reverse the order of the array", true, () => new ArrayType(ElementType),
+                        () => new List<RealizedParameter>(), false, typeof(ArrayMethods),
+                        typeof(ArrayMethods).GetMethod("Reverse"),
+                        context => ("T", ElementType.UnderlyingType(context)).Yield())
+                },
+                {
                     "to_string", new BoundMethodInvokeFactory("Get string representation of the array", true,
                         () => BuiltinType.String,
                         () => new List<RealizedParameter>(),
