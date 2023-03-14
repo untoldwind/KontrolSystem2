@@ -5,14 +5,32 @@
 
 * `bool`
   * A boolean value
+  * booleans have the following helper methods:
+    * `.to_string()` converts the boolean to a `string`
 * `int`
   * An integer value
   * Internally a 64-bit value is used, i.e. in C# this would be a `long`
+  * integers have the following helper methods:
+    * `.to_float` converts the integer to a `float`
+    * `.to_string()` converts the integer to a `string`
 * `float`
   * A floating point value
   * Internally a 64-bit value is used, i.e in C# this would be a `double`
+  * floats have the following helper methods:
+    * `.to_int` converts the float to an `int` (be truncating it)
+    * `.to_string()` converts the float to a `string` (with all the decimals)
+    * `.to_fixed(decimals)` converts the float to a `string` with number of decimals limited to `decimals`
 * `string`
   * A string value
+  * strings have the following helper methods:
+    * `.length` will give the length of the string
+    * `.contains("substring")` checks if the string contains "substring"
+    * `.starts_with("prefix")` checks if the string starts with "prefix"
+    * `.ends_with("suffix")` checks if the string ends with "suffix"
+    * `.pad_left(number)` will left pad the string with spaces (does nothing if `number < length`)
+    * `.pad_right(number` will right pad the string with spaces (does nothing if `number < length`)
+    * `.to_lower()` will convert the string to lowercase
+    * `.to_upper()` will convert the string to uppercase
 * `Unit`
   * Something that is not relevant for processing.
   * Usually used to mark a function with no result, i.e. in C# this would be something like a `void`
@@ -37,19 +55,7 @@ int[][]
 ```
 is an array of arrays of integers.
 
-An array can be initialized with a `[ element_list ]` notation:
-
-```rust
-let a : string[] = ["zero", "one", "two", "three"]
-```
-initializes the variable `a` with an array of string with the elements "zero", "one", "two", "three".
-
-Elements of an array can be accessed with the usual index notation:
-
-```rest
-a[2]
-```
-will be the string "two".
+More details can be found [here](special_types/array.md).
 
 ## Tuples
 

@@ -16,3 +16,27 @@ for(i in 0..10) {
     k = k + 1
 }
 ```
+
+## Properties
+
+A range has a `length` property. Therefor
+
+```
+(3..6).length
+```
+
+will be `3`
+
+## Methods
+
+A range has a `map(converter)` function that can be used to convert to into an array, whereas `converter` is a generic function that converts an `int` into something else:
+
+```rust
+(0..4).map(fn(i) -> i * 2)
+```
+will be the array `[0, 2, 4, 6]`.
+
+```rust
+(0..4).map(fn(i) -> i.to_string())
+```
+will be the array `["0", "1", "2", "3"]`.
