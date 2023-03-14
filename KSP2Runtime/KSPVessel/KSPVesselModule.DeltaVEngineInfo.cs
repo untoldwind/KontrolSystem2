@@ -1,5 +1,6 @@
 ﻿using KontrolSystem.TO2.Binding;
 using KSP.Sim.DeltaV;
+using KSP.Sim.impl;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel {
     public partial class KSPVesselModule {
@@ -28,7 +29,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             public long StartBurnStage => deltaVEngineInfo.StartBurnStage;
 
             [KSField]
-            public EngineDataAdapter EngineData => new EngineDataAdapter(deltaVEngineInfo.Engine);
+            public EngineModuleAdapter EngineModule => new EngineModuleAdapter(deltaVEngineInfo.Part as PartComponent, deltaVEngineInfo.Engine);
         }
     }
 }

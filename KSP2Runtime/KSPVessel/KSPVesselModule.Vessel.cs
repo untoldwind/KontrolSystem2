@@ -125,9 +125,9 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField] public PartAdapter[] Parts => vessel.SimulationObject.PartOwner.Parts.Select(part => new PartAdapter(this, part)).ToArray();
 
             [KSField]
-            public EngineDataAdapter[] Engines => vessel.SimulationObject.PartOwner.Parts.Select(part => {
+            public EngineModuleAdapter[] Engines => vessel.SimulationObject.PartOwner.Parts.Select(part => {
                 if (part.IsPartEngine(out Data_Engine data)) {
-                    return new EngineDataAdapter(data);
+                    return new EngineModuleAdapter(part, data);
                 } else {
                     return null;
                 }

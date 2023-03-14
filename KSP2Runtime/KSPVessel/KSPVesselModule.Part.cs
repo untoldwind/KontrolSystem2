@@ -21,13 +21,13 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField] public bool IsEngine => part.IsPartEngine(out var _);
 
             [KSField]
-            public Option<EngineDataAdapter> EngineData {
+            public Option<EngineModuleAdapter> EngineModule {
                 get {
                     if (part.IsPartEngine(out Data_Engine data)) {
-                        return new Option<EngineDataAdapter>(new EngineDataAdapter(data));
+                        return new Option<EngineModuleAdapter>(new EngineModuleAdapter(part, data));
                     }
 
-                    return new Option<EngineDataAdapter>();
+                    return new Option<EngineModuleAdapter>();
                 }
             }
 
