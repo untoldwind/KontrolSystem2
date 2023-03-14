@@ -219,16 +219,26 @@ namespace KontrolSystem.TO2.AST {
                 return;
             }
 
+            if (arguments.Count > function.Parameters.Count) {
+                context.AddError(new StructuralError(
+                    StructuralError.ErrorType.ArgumentMismatch,
+                    $"Function '{FullName}' only allows {function.Parameters.Count} arguments, {arguments.Count} where given",
+                    Start,
+                    End
+                ));
+                return;
+            } 
+            
             if (function.RequiredParameterCount() > arguments.Count) {
                 context.AddError(new StructuralError(
                     StructuralError.ErrorType.ArgumentMismatch,
-                    $"Function '{FullName}' requires at least {function.RequiredParameterCount()} arguments",
+                    $"Function '{FullName}' requires at least {function.RequiredParameterCount()} arguments, {arguments.Count} where given",
                     Start,
                     End
                 ));
                 return;
             }
-
+            
             (MethodInfo genericMethod, RealizedType genericResult, List<RealizedParameter> genericParameters) =
                 Helpers.MakeGeneric(context,
                     function.ReturnType, function.Parameters, function.RuntimeMethod,
