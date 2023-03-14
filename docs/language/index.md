@@ -21,6 +21,7 @@ function
 loops
 modules
 types
+operators
 special_types/index
 examples/index
 ```
