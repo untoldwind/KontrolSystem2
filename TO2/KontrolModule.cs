@@ -11,6 +11,10 @@ namespace KontrolSystem.TO2 {
 
         bool IsCompiled { get; }
 
+        bool IsBuiltin { get; }
+
+        string SourceFile { get; }
+
         IEnumerable<string> AllTypeNames { get; }
 
         TO2Type FindType(string name);
@@ -29,6 +33,8 @@ namespace KontrolSystem.TO2 {
     public class CompiledKontrolModule : IKontrolModule {
         public string Name { get; }
         public string Description { get; }
+        public bool IsBuiltin { get; }
+        public string SourceFile { get; }
         private readonly Dictionary<string, CompiledKontrolFunction> publicFunctions;
         private readonly List<CompiledKontrolFunction> testFunctions;
         private readonly Dictionary<string, RealizedType> types;
@@ -36,12 +42,16 @@ namespace KontrolSystem.TO2 {
 
         public CompiledKontrolModule(string name,
             string description,
+            bool builtin,
+            string sourceFile,
             IEnumerable<(string alias, RealizedType type)> types,
             IEnumerable<CompiledKontrolConstant> constants,
             IEnumerable<CompiledKontrolFunction> functions,
             List<CompiledKontrolFunction> testFunctions) {
             Name = name;
             Description = description;
+            IsBuiltin = builtin;
+            SourceFile = sourceFile;
             var compiledKontrolConstants = constants.ToList();
             this.constants = compiledKontrolConstants.ToDictionary(constant => constant.Name);
             var compiledKontrolFunctions = functions.ToList();
@@ -83,11 +93,18 @@ namespace KontrolSystem.TO2 {
         public readonly TO2Module to2Module;
         public string Name { get; }
         public string Description { get; }
+        public bool IsBuiltin { get; }
+        public string SourceFile { get; }
 
-        public DeclaredKontrolModule(string name, string description, ModuleContext moduleContext, TO2Module to2Module,
+        public DeclaredKontrolModule(string name, string description,
+            bool builtin,
+            string sourceFile,
+            ModuleContext moduleContext, TO2Module to2Module,
             IEnumerable<(string alias, TO2Type type)> types) {
             Name = name;
             Description = description;
+            IsBuiltin = builtin;
+            SourceFile = sourceFile;
             this.moduleContext = moduleContext;
             this.to2Module = to2Module;
             publicTypes = types.ToDictionary(t => t.alias, t => t.type);

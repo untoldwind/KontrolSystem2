@@ -1,4 +1,5 @@
-﻿using KontrolSystem.TO2.Binding;
+﻿using System.Linq;
+using KontrolSystem.TO2.Binding;
 using KSP.Modules;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel {
@@ -17,6 +18,8 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField] public bool IsStaged => dataEngine.staged;
 
+            [KSField] public bool IsOperational => dataEngine.IsOperational;
+
             [KSField] public double CurrentThrottle => dataEngine.currentThrottle;
 
             [KSField] public double CurrentThrust => dataEngine.FinalThrustValue;
@@ -30,6 +33,14 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField] public double MaxThrustOutputVac => dataEngine.MaxThrustOutputVac(true);
 
             [KSField] public double MaxThrustOutputAtm => dataEngine.MaxThrustOutputAtm();
+
+            [KSField]
+            public EngineModeAdapter[] EngineModes => dataEngine.engineModes
+                .Select(engineMode => new EngineModeAdapter(engineMode)).ToArray();
+
+            [KSField]
+            public EngineModeAdapter CurrentEngineMode =>
+                new EngineModeAdapter(dataEngine.engineModes[dataEngine.currentEngineModeIndex]);
         }
     }
 }

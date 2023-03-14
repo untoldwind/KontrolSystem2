@@ -1,0 +1,25 @@
+use * from core::testing
+
+sync fn func_with_array_array(arr : int[][]) -> int = arr.length
+
+test sync fn test_basic_array_array() -> Unit = {
+    let bool_arr : bool[][] = [[ true, false, true ], [ true, false ]]
+    let int_arr : int[][] = [[ 0, 11, 22, 33, 44 ], [ 5, 6, 7, 8, 9 ]]
+
+    assert_int(2, bool_arr.length)
+    assert_int(3, bool_arr[0].length)
+    assert_int(2, bool_arr[1].length)
+    
+    assert_int(2, int_arr.length)
+    assert_int(5, int_arr[0].length)
+    assert_int(5, int_arr[1].length)
+    assert_int(2, func_with_array_array(int_arr))
+
+    assert_true(bool_arr[0][0])
+    assert_false(bool_arr[1][1])
+    assert_int(22, int_arr[0][2])
+    assert_int(7, int_arr[1][2])
+
+    assert_string("[[true, false, false], [true, false]]", bool_arr.to_string())
+    assert_string("[[0, 11, 22, 33, 44], [5, 6, 7, 8, 9]]", int_arr.to_string())
+}

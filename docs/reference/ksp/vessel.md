@@ -16,8 +16,19 @@ Name | Type | Description
 --- | --- | ---
 abort | bool | 
 brakes | bool | 
+custom1 | bool | 
+custom10 | bool | 
+custom2 | bool | 
+custom3 | bool | 
+custom4 | bool | 
+custom5 | bool | 
+custom6 | bool | 
+custom7 | bool | 
+custom8 | bool | 
+custom9 | bool | 
 gear | bool | 
 light | bool | 
+radiator_panels | bool | 
 rcs | bool | 
 sas | bool | 
 solar_panels | bool | 
@@ -43,10 +54,13 @@ target_orientation | [ksp::math::Vec3](/reference/ksp/math.md#vec3) |
 
 Name | Type | Description
 --- | --- | ---
+current_engine_mode | [ksp::vessel::EngineMode](/reference/ksp/vessel.md#enginemode) | 
 current_throttle | float | 
 current_thrust | float | 
+engine_modes | [ksp::vessel::EngineMode](/reference/ksp/vessel.md#enginemode)[] | 
 has_ignited | bool | 
 is_flameout | bool | 
+is_operational | bool | 
 is_shutdown | bool | 
 is_staged | bool | 
 max_fuel_flow | float | 
@@ -94,6 +108,22 @@ enginedeltav.get_thrust_vector ( situation : string ) -> ksp::math::Vec3
 
 Estimated thrust vector of the engine in a given `situation`
 
+
+### EngineMode
+
+
+
+#### Fields
+
+Name | Type | Description
+--- | --- | ---
+allow_restart | bool | 
+allow_shutdown | bool | 
+engine_type | string | 
+max_thrust | float | 
+min_thrust | float | 
+name | string | 
+throttle_locked | bool | 
 
 ### Maneuver
 
@@ -309,6 +339,8 @@ offset_ground | float |
 orbit | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit) | 
 orbital_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
 parts | [ksp::vessel::Part](/reference/ksp/vessel.md#part)[] | 
+pitch_horizon_relative | float | 
+roll_horizon_relative | float | 
 situation | string | 
 staging | [ksp::vessel::Staging](/reference/ksp/vessel.md#staging) | 
 surface_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
@@ -348,6 +380,54 @@ vessel.manage_steering ( directionProvider : fn() -> ksp::math::Direction ) -> k
 
 ```rust
 vessel.manage_throttle ( throttleProvider : fn(float) -> float ) -> ksp::control::ThrottleManager
+```
+
+
+
+##### override_input_pitch
+
+```rust
+vessel.override_input_pitch ( value : float ) -> Unit
+```
+
+
+
+##### override_input_roll
+
+```rust
+vessel.override_input_roll ( value : float ) -> Unit
+```
+
+
+
+##### override_input_translate_x
+
+```rust
+vessel.override_input_translate_x ( value : float ) -> Unit
+```
+
+
+
+##### override_input_translate_y
+
+```rust
+vessel.override_input_translate_y ( value : float ) -> Unit
+```
+
+
+
+##### override_input_translate_z
+
+```rust
+vessel.override_input_translate_z ( value : float ) -> Unit
+```
+
+
+
+##### override_input_yaw
+
+```rust
+vessel.override_input_yaw ( value : float ) -> Unit
 ```
 
 

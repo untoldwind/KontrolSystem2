@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using KontrolSystem.SpaceWarpMod.Core;
+using KontrolSystem.TO2;
 using KSP.Game;
 using KSP.Messages;
 using KSP.Sim.impl;
@@ -173,10 +174,24 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             moduleListScrollPos = GUILayout.BeginScrollView(moduleListScrollPos, GUILayout.MinWidth(300),
                 GUILayout.MaxWidth(700), GUILayout.ExpandWidth(true));
 
-            selectedModule = GUILayout.SelectionGrid(selectedModule,
-                Mainframe.Instance.LastRegistry?.modules.Keys.ToArray() ?? Array.Empty<string>(), 1);
+            var modules = Mainframe.Instance.LastRegistry?.modules.Values.ToArray() ?? Array.Empty<IKontrolModule>();
+
+            selectedModule = GUILayout.SelectionGrid(selectedModule, modules.Select(module => module.Name).ToArray(), 1);
 
             GUILayout.EndScrollView();
+
+            GUILayout.BeginVertical();
+
+            if (selectedModule >= 0 && selectedModule < modules.Length) {
+                var module = modules[selectedModule];
+
+                GUILayout.Label($"Name: {module.Name}");
+                GUILayout.Label($"Description: {module.Description}");
+                GUILayout.Label($"Builtin: {module.IsBuiltin}");
+                if (!module.IsBuiltin) GUILayout.Label($"Source: {module.SourceFile}");
+            }
+
+            GUILayout.EndVertical();
 
             GUILayout.EndHorizontal();
         }

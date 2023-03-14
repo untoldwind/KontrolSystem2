@@ -10,8 +10,8 @@ namespace KontrolSystem.TO2.AST {
     public class ArrayType : RealizedType {
         public TO2Type ElementType { get; }
 
-        public ArrayType(TO2Type elementType) {
-            ElementType = elementType;
+        public ArrayType(TO2Type elementType, int dimension = 1) {
+            ElementType = dimension > 1 ? new ArrayType(elementType, dimension - 1) : elementType;
             DeclaredMethods = new Dictionary<string, IMethodInvokeFactory> {
                 {
                     "map", new BoundMethodInvokeFactory("Map the content of the array", true,
@@ -60,7 +60,15 @@ namespace KontrolSystem.TO2.AST {
                         },
                         false, typeof(ArrayMethods), typeof(ArrayMethods).GetMethod("Exists"),
                         context => ("T", ElementType.UnderlyingType(context)).Yield())
-                }, {
+                },
+                {
+                    "reverse",
+                    new BoundMethodInvokeFactory("Reverse the order of the array", true, () => new ArrayType(ElementType),
+                        () => new List<RealizedParameter>(), false, typeof(ArrayMethods),
+                        typeof(ArrayMethods).GetMethod("Reverse"),
+                        context => ("T", ElementType.UnderlyingType(context)).Yield())
+                },
+                {
                     "to_string", new BoundMethodInvokeFactory("Get string representation of the array", true,
                         () => BuiltinType.String,
                         () => new List<RealizedParameter>(),

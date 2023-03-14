@@ -204,7 +204,7 @@ namespace KontrolSystem.TO2.Parser {
             BITBinaryExpr, Opt(Seq(Spacing0.Then(Tag("..")).Then(Opt(Char('.'))),
                 Spacing0.Then(BITBinaryExpr)))
         ).Map((items, start, end) => {
-            if(items.Item2.IsDefined)
+            if (items.Item2.IsDefined)
                 return new RangeCreate(items.Item1, items.Item2.Value.Item2, items.Item2.Value.Item1.IsDefined, start, end);
             return items.Item1;
         });

@@ -42,12 +42,26 @@ namespace KontrolSystem.TO2.Runtime {
             return source.Where(predicate).ToArray();
         }
 
+        public static T[] Reverse<T>(T[] source) {
+            return source.Reverse().ToArray();
+        }
+
         public static string ArrayToString<T>(T[] array) {
             StringBuilder builder = new StringBuilder("[");
 
             for (int i = 0; i < array.Length; i++) {
                 if (i > 0) builder.Append(", ");
-                builder.Append(array[i]);
+                if (array[i] is Array subArray) {
+                    builder.Append(ArrayToString(subArray.Cast<object>().ToArray()));
+                } else if (array[i] is bool b) {
+                    builder.Append(FormatUtils.BoolToString(b));
+                } else if (array[i] is long l) {
+                    builder.Append(FormatUtils.IntToString(l));
+                } else if (array[i] is double d) {
+                    builder.Append(FormatUtils.FloatToString(d));
+                } else {
+                    builder.Append(array[i]);
+                }
             }
 
             builder.Append("]");

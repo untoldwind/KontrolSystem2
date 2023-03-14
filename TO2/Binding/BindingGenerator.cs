@@ -75,7 +75,7 @@ namespace KontrolSystem.TO2.Binding {
                 }
 
                 CompiledKontrolModule module = new CompiledKontrolModule(ksModule.Name,
-                    NormalizeDescription(ksModule.Description), types.Select(t => (t.localName, t as RealizedType)),
+                    NormalizeDescription(ksModule.Description), true, null, types.Select(t => (t.localName, t as RealizedType)),
                     constants, functions, new List<CompiledKontrolFunction>());
                 BoundModules.Add(moduleType, module);
                 return module;

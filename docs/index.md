@@ -8,6 +8,7 @@ An autopilot scripting system for Kerbal Space Program 2
 Home <self>
 quickstart/index
 language/index
+interact/index
 reference/index
 contributing/index
 ```

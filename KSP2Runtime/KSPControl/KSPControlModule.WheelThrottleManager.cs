@@ -1,37 +1,36 @@
 ﻿using System;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
-using KSP.Api;
 using KSP.Sim.impl;
 using KSP.Sim.State;
 using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime.KSPControl {
     public partial class KSPControlModule {
-        [KSClass("RCSTranslateManager")]
-        public class RCSTranslateManager {
+        [KSClass("WheelThrottleManager")]
+        public class WheelThrottleManager {
             private readonly IKSPContext context;
             private readonly VesselComponent vessel;
-            private Func<double, Vector3d> translateProvider;
             private bool suspended;
+            private Func<double, double> wheelThrottleProvider;
 
-            public RCSTranslateManager(IKSPContext context, VesselComponent vessel, Func<double, Vector3d> translateProvider) {
+            public WheelThrottleManager(IKSPContext context, VesselComponent vessel, Func<double, double> wheelThrottleProvider) {
                 this.context = context;
                 this.vessel = vessel;
-                this.translateProvider = translateProvider;
+                this.wheelThrottleProvider = wheelThrottleProvider;
 
                 this.context.HookAutopilot(this.vessel, UpdateAutopilot);
+                suspended = false;
             }
 
             [KSField]
-            public Vector3d Translate {
-                get => translateProvider(0);
-                set => translateProvider = _ => value;
+            public double WheelThrottle {
+                get => wheelThrottleProvider(0);
+                set => wheelThrottleProvider = _ => value;
             }
 
             [KSMethod]
-            public void SetTranslateProvider(Func<double, Vector3d> newTranslateProvider) =>
-                translateProvider = newTranslateProvider;
+            public void SetWheelThrottleProvider(Func<double, double> newWheelThrottleProvider) => wheelThrottleProvider = newWheelThrottleProvider;
 
             [KSMethod]
             public Future<object> Release() {
@@ -50,10 +49,11 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
             }
 
             public void UpdateAutopilot(ref FlightCtrlState c, float deltaT) {
-                Vector3d translate = suspended ? Vector3d.zero : translateProvider(deltaT);
-                c.X = (float)DirectBindingMath.Clamp(translate.x, -1, 1);
-                c.Y = (float)DirectBindingMath.Clamp(translate.y, -1, 1);
-                c.Z = (float)DirectBindingMath.Clamp(translate.z, -1, 1);
+                if (suspended) {
+                    c.mainThrottle = 0;
+                } else {
+                    c.mainThrottle = (float)DirectBindingMath.Clamp(wheelThrottleProvider(deltaT), -1, 1);
+                }
             }
         }
     }
