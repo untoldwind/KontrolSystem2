@@ -82,6 +82,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             windowRect = new Rect(parentPosition.xMin + 20, parentPosition.yMin + 50, 0, 0);
 
             Open();
+            GUI.FocusWindow(objectId);
         }
 
         public void Awake() {

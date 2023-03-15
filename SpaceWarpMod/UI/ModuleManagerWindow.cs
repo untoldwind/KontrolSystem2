@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.SpaceWarpMod.Core;
 using KontrolSystem.TO2;
 using KSP.Game;
@@ -129,8 +130,12 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                     GUILayout.Label($"{process.Name} ({process.State})", GUILayout.ExpandWidth(true));
                     switch (process.State) {
                     case KontrolSystemProcessState.Available:
-                        if (GUILayout.Button("O", GUILayout.Width(30))) {
-                            scriptSettingsWindow.Attach(process, windowRect);
+                        var gameMode = GameModeAdapter.GameModeFromState(GameManager.Instance.Game.GlobalGameState.GetState());
+                        var argCount = process.EntrypointArgumentCount(gameMode);
+                        if (argCount > 1) {
+                            if (GUILayout.Button($"{argCount - 1}", GUILayout.Width(30))) {
+                                scriptSettingsWindow.Attach(process, windowRect);
+                            }
                         }
                         if (GUILayout.Button(CommonStyles.Instance.startButtonTexture, GUILayout.Width(30)))
                             Mainframe.Instance.StartProcess(process, GameManager.Instance?.Game?.ViewController?.GetActiveSimVessel(true));

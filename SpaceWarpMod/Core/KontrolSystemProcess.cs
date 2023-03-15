@@ -63,15 +63,9 @@ namespace KontrolSystem.SpaceWarpMod.Core {
             }
         }
 
-        public EntrypointArgumentDescriptor[] EntrypointArgumentDescriptors(GameMode gameMode) {
-            switch (gameMode) {
-            case GameMode.Flight: return module.GetFlightEntrypointArgumentDescriptors(LoggerAdapter.Instance);
-            case GameMode.KSC: return module.GetKSCEntrypointArgumentDescriptors(LoggerAdapter.Instance);
-            case GameMode.Tracking: return module.GetTrackingEntrypointArgumentDescriptors(LoggerAdapter.Instance);
-            case GameMode.VAB: return module.GetEditorEntrypointArgumentDescriptors(LoggerAdapter.Instance);
-            default: return null;
-            }
-        }
+        public int EntrypointArgumentCount(GameMode gameMode) => module.GetEntrypointArgumentCount(gameMode);
+
+        public EntrypointArgumentDescriptor[] EntrypointArgumentDescriptors(GameMode gameMode) => module.GetEntrypointParameterDescriptors(gameMode);
 
         public bool AvailableFor(GameMode gameMode, VesselComponent vessel) {
             switch (gameMode) {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.KSP.Runtime.KSPVessel;
 using KontrolSystem.TO2;
 using KontrolSystem.TO2.AST;
@@ -63,13 +64,9 @@ namespace KontrolSystem.KSP.Runtime {
             }
         }
 
-        public static EntrypointArgumentDescriptor[] GetFlightEntrypointArgumentDescriptors(this IKontrolModule module, ITO2Logger logger = null) => GetEntrypointParameterDescriptors(module, MainFlight, logger);
-        public static EntrypointArgumentDescriptor[] GetKSCEntrypointArgumentDescriptors(this IKontrolModule module, ITO2Logger logger = null) => GetEntrypointParameterDescriptors(module, MainKsc, logger);
-        public static EntrypointArgumentDescriptor[] GetTrackingEntrypointArgumentDescriptors(this IKontrolModule module, ITO2Logger logger = null) => GetEntrypointParameterDescriptors(module, MainTracking, logger);
-        public static EntrypointArgumentDescriptor[] GetEditorEntrypointArgumentDescriptors(this IKontrolModule module, ITO2Logger logger = null) => GetEntrypointParameterDescriptors(module, MainEditor, logger);
-
-        private static EntrypointArgumentDescriptor[] GetEntrypointParameterDescriptors(IKontrolModule module, string name, ITO2Logger logger = null) {
+        public static EntrypointArgumentDescriptor[] GetEntrypointParameterDescriptors(this IKontrolModule module, GameMode gameMode, ITO2Logger logger = null) {
             try {
+                var name = GetEntrypointFunctionName(gameMode);
                 IKontrolFunction function = module.FindFunction(name);
                 if (function == null || function.Parameters.Count <= 1) {
                     throw new Exception($"Function {name} does not exist or does not have any parameters");
@@ -94,6 +91,22 @@ namespace KontrolSystem.KSP.Runtime {
             }
 
             return Array.Empty<EntrypointArgumentDescriptor>();
+        }
+
+        public static int GetEntrypointArgumentCount(this IKontrolModule module, GameMode gameMode) {
+            string name = GetEntrypointFunctionName(gameMode);
+            IKontrolFunction function = module.FindFunction(name);
+            return function?.Parameters?.Count ?? 0;
+        }
+
+        private static string GetEntrypointFunctionName(GameMode gameMode) {
+            return gameMode switch {
+                GameMode.VAB => MainEditor,
+                GameMode.Tracking => MainTracking,
+                GameMode.KSC => MainKsc,
+                GameMode.Flight => MainFlight,
+                _ => null
+            };
         }
 
         private static bool HasEntrypoint(IKontrolModule module, string name, bool allowVessel) {
