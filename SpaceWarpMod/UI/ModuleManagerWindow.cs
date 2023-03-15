@@ -18,6 +18,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         private int tabIdx;
         private int selectedModule;
         private ConsoleWindow consoleWindow;
+        private ProcessArgumentsWindow scriptSettingsWindow;
 
         public void Toggle() {
             if (!isOpen) Open();
@@ -30,6 +31,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             Title.image = CommonStyles.Instance.stateInactiveTexture;
 
             consoleWindow = gameObject.AddComponent<ConsoleWindow>();
+            scriptSettingsWindow = gameObject.AddComponent<ProcessArgumentsWindow>();
         }
 
         protected override void DrawWindow(int windowId) {
@@ -122,6 +124,9 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                     GUILayout.Label($"{process.Name} ({process.State})", GUILayout.ExpandWidth(true));
                     switch (process.State) {
                     case KontrolSystemProcessState.Available:
+                        if (GUILayout.Button("O", GUILayout.Width(30))) {
+                            scriptSettingsWindow.Attach(process);
+                        }
                         if (GUILayout.Button(CommonStyles.Instance.startButtonTexture, GUILayout.Width(30)))
                             Mainframe.Instance.StartProcess(process, GameManager.Instance?.Game?.ViewController?.GetActiveSimVessel(true));
                         break;

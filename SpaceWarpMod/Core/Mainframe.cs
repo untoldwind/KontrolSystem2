@@ -168,13 +168,14 @@ namespace KontrolSystem.SpaceWarpMod.Core {
                 : Enumerable.Empty<KontrolSystemProcess>();
         }
 
-        public bool StartProcess(KontrolSystemProcess process, VesselComponent vessel) {
+        public bool StartProcess(KontrolSystemProcess process, VesselComponent vessel, object[] arguments = null) {
             switch (process.State) {
             case KontrolSystemProcessState.Available:
                 KSPContext context = new KSPContext(consoleBuffer);
                 Entrypoint entrypoint = process.EntrypointFor(context.GameMode, context);
                 if (entrypoint == null) return false;
-                CorouttineAdapter adapter = new CorouttineAdapter(entrypoint(vessel), context,
+                arguments ??= process.EntrypointArgumentDescriptors(context.GameMode).Select(arg => arg.DefaultValue).ToArray();
+                CorouttineAdapter adapter = new CorouttineAdapter(entrypoint(vessel, arguments), context,
                     message => OnProcessDone(process, message));
                 process.MarkRunning(context);
 

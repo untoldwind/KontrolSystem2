@@ -1,11 +1,29 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.NetworkInformation;
 using KontrolSystem.KSP.Runtime.KSPVessel;
 using KontrolSystem.TO2;
+using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
 using KSP.Sim.impl;
+using static KSP.Api.UIDataPropertyStrings.View;
 
 namespace KontrolSystem.KSP.Runtime {
-    public delegate IAnyFuture Entrypoint(VesselComponent vessel);
+    public delegate IAnyFuture Entrypoint(VesselComponent vessel, object[] args = null);
+
+    public class EntrypointArgumentDescriptor {
+        public string Name { get; }
+        public string Type { get; }
+        public object DefaultValue { get; }
+
+        public EntrypointArgumentDescriptor(string name, string type, object defaultValue) {
+            this.Name = name;
+            this.Type = type;
+            this.DefaultValue = defaultValue;
+        }
+    }
 
     public static class KontrolModuleExtensions {
         private const string MainKsc = "main_ksc";
@@ -19,12 +37,26 @@ namespace KontrolSystem.KSP.Runtime {
                 if (function == null || !function.IsAsync) return null;
 
                 if (function.Parameters.Count == 0) {
-                    return _ => (IAnyFuture)function.Invoke(context);
+                    return new Entrypoint((_, _arg) => (IAnyFuture)function.Invoke(context));
                 }
 
                 if (function.Parameters.Count == 1 && function.Parameters[0].type.Name == "ksp::vessel::Vessel") {
-                    return vessel =>
+                    return (vessel, _) =>
                         (IAnyFuture)function.Invoke(context, new KSPVesselModule.VesselAdapter(context, vessel));
+                }
+
+                if (function.Parameters.Count > 1 && function.Parameters[0].type.Name == "ksp::vessel::Vessel") {
+                    return (vessel, args) => {
+                        var vesselAdapter = new KSPVesselModule.VesselAdapter(context, vessel);
+
+                        if (args == null) {
+                            context.Logger.Error("Calling without extra args");
+                            return (IAnyFuture)function.Invoke(context, vesselAdapter);
+                        } else {
+                            context.Logger.Error($"Calling with {args.Length} extra args");
+                            return (IAnyFuture)function.Invoke(context, args.Prepend(vesselAdapter).ToArray());
+                        }
+                    };
                 }
 
                 context.Logger.Error($"GetEntrypoint {name} failed: Invalid parameters {function.Parameters}");
@@ -35,11 +67,61 @@ namespace KontrolSystem.KSP.Runtime {
             }
         }
 
+        public static EntrypointArgumentDescriptor[] GetFlightEntrypointArgumentDescriptors(this IKontrolModule module, ITO2Logger logger = null) => GetEntrypointParameterDescriptors(module, MainFlight, logger);
+        public static EntrypointArgumentDescriptor[] GetKSCEntrypointArgumentDescriptors(this IKontrolModule module, ITO2Logger logger = null) => GetEntrypointParameterDescriptors(module, MainKsc, logger);
+        public static EntrypointArgumentDescriptor[] GetTrackingEntrypointArgumentDescriptors(this IKontrolModule module, ITO2Logger logger = null) => GetEntrypointParameterDescriptors(module, MainTracking, logger);
+        public static EntrypointArgumentDescriptor[] GetEditorEntrypointArgumentDescriptors(this IKontrolModule module, ITO2Logger logger = null) => GetEntrypointParameterDescriptors(module, MainEditor, logger);
+
+        private static EntrypointArgumentDescriptor[] GetEntrypointParameterDescriptors(IKontrolModule module, string name, ITO2Logger logger = null) {
+            try {
+                IKontrolFunction function = module.FindFunction(name);
+                if (function == null || function.Parameters.Count <= 1) {
+                    throw new Exception($"Function {name} does not exist or does not have any parameters");
+                }
+
+                return function.Parameters.Skip(1).Select(param => {
+                    if (param.type.Name == "int") {
+                        var defaultValue = param.defaultValue as IntDefaultValue;
+                        if (defaultValue == null) {
+                            throw new Exception($"Parameter {param.name} does not have a default value");
+                        }
+                        return new EntrypointArgumentDescriptor(param.name, param.type.Name, defaultValue.Value);
+                    } else if (param.type.Name == "float") {
+                        var defaultValue = param.defaultValue as FloatDefaultValue;
+                        if (defaultValue == null) {
+                            throw new Exception($"Parameter {param.name} does not have a default value");
+                        }
+                        return new EntrypointArgumentDescriptor(param.name, param.type.Name, defaultValue.Value);
+                    } else if (param.type.Name == "bool") {
+                        var defaultValue = param.defaultValue as BoolDefaultValue;
+                        if (defaultValue == null) {
+                            throw new Exception($"Parameter {param.name} does not have a default value");
+                        }
+                        return new EntrypointArgumentDescriptor(param.name, param.type.Name, defaultValue.Value);
+                    } else {
+                        throw new Exception($"Parameter {param.name} unsupported type {param.type.Name}");
+                    }
+                }).ToArray();
+            } catch (Exception e) {
+                logger?.Error($"GetEntrypointParameterDescriptors failed: {e}");
+            }
+
+            return Array.Empty<EntrypointArgumentDescriptor>();
+        }
+
         private static bool HasEntrypoint(IKontrolModule module, string name, bool allowVessel) {
             IKontrolFunction function = module.FindFunction(name);
-            return function != null && function.IsAsync &&
-                   (function.Parameters.Count == 0 || allowVessel && function.Parameters.Count == 1 &&
-                       function.Parameters[0].type.Name == "ksp::vessel::Vessel");
+            if (function == null || !function.IsAsync) {
+                return false;
+            }
+            if (function.Parameters.Count == 0) {
+                return true;
+            }
+            if (allowVessel && function.Parameters.Count > 0 &&
+                       function.Parameters[0].type.Name == "ksp::vessel::Vessel") {
+                return true;
+            }
+            return false;
         }
 
         public static bool HasKSCEntrypoint(this IKontrolModule module) => HasEntrypoint(module, MainKsc, false);

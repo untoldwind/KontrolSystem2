@@ -50,6 +50,8 @@ namespace KontrolSystem.TO2 {
 
         public BoolDefaultValue(bool value) => this.value = value;
 
+        public bool Value => value;
+
         public void EmitCode(IBlockContext context) => context.IL.Emit(value ? OpCodes.Ldc_I4_1 : OpCodes.Ldc_I4_0);
     }
 
@@ -58,6 +60,8 @@ namespace KontrolSystem.TO2 {
 
         public IntDefaultValue(long value) => this.value = value;
 
+        public long Value => value;
+
         public void EmitCode(IBlockContext context) => context.IL.Emit(OpCodes.Ldc_I8, value);
     }
 
@@ -65,6 +69,8 @@ namespace KontrolSystem.TO2 {
         private readonly double value;
 
         public FloatDefaultValue(double value) => this.value = value;
+
+        public double Value => value;
 
         public void EmitCode(IBlockContext context) => context.IL.Emit(OpCodes.Ldc_R8, value);
     }
