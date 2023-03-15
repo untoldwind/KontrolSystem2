@@ -125,13 +125,36 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField] public PartAdapter[] Parts => vessel.SimulationObject.PartOwner.Parts.Select(part => new PartAdapter(this, part)).ToArray();
 
             [KSField]
-            public EngineModuleAdapter[] Engines => vessel.SimulationObject.PartOwner.Parts.Select(part => {
-                if (part.IsPartEngine(out Data_Engine data)) {
-                    return new EngineModuleAdapter(part, data);
-                } else {
-                    return null;
+            public ModuleAirIntakeAdapter[] AirIntakes => vessel.SimulationObject.PartOwner.Parts.Select(part => {
+                if (part.IsPartAirIntake(out Data_ResourceIntake data)) {
+                    return new ModuleAirIntakeAdapter(part, data);
                 }
+                return null;
+            }).Where(intake => intake != null).ToArray();
+            
+            [KSField]
+            public ModuleEngineAdapter[] Engines => vessel.SimulationObject.PartOwner.Parts.Select(part => {
+                if (part.IsPartEngine(out Data_Engine data)) {
+                    return new ModuleEngineAdapter(part, data);
+                }
+                return null;
             }).Where(engine => engine != null).ToArray();
+
+            [KSField]
+            public ModuleDockingNodeAdapter[] DockingNodes => vessel.SimulationObject.PartOwner.Parts.Select(part => {
+                if (part.IsPartDockingPort(out Data_DockingNode data)) {
+                    return new ModuleDockingNodeAdapter(part, data);
+                }
+                return null;
+            }).Where(node => node != null).ToArray();
+
+            [KSField]
+            public ModuleSolarPanelAdapter[] SolarPanels => vessel.SimulationObject.PartOwner.Parts.Select(part => {
+                if (part.IsPartSolarPanel(out Data_SolarPanel data)) {
+                    return new ModuleSolarPanelAdapter(part, data);
+                }
+                return null;
+            }).Where(panel => panel != null).ToArray();
 
             [KSField]
             public Option<IKSPTargetable> Target {

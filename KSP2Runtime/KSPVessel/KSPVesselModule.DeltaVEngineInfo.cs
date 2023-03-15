@@ -29,7 +29,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             public long StartBurnStage => deltaVEngineInfo.StartBurnStage;
 
             [KSField]
-            public EngineModuleAdapter EngineModule => new EngineModuleAdapter(deltaVEngineInfo.Part as PartComponent, deltaVEngineInfo.Engine);
+            public ModuleEngineAdapter EngineModule => new ModuleEngineAdapter(deltaVEngineInfo.Part as PartComponent, deltaVEngineInfo.Engine);
         }
     }
 }

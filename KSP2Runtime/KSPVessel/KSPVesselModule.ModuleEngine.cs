@@ -7,13 +7,12 @@ using KSP.Sim.impl;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel {
     public partial class KSPVesselModule {
-        [KSClass("EngineModule")]
-        public class EngineModuleAdapter {
+        [KSClass("ModuleEngine")]
+        public class ModuleEngineAdapter {
             private readonly PartComponent part;
             private readonly Data_Engine dataEngine;
 
-            public EngineModuleAdapter(PartComponent part, Data_Engine dataEngine) {
-                UnityEngine.Debug.Log("Got part: " + part);
+            public ModuleEngineAdapter(PartComponent part, Data_Engine dataEngine) {
                 this.part = part;
                 this.dataEngine = dataEngine;
             }
