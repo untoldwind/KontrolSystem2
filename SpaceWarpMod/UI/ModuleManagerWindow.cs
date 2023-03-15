@@ -268,6 +268,9 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         public void CloseEditorWindow(EditorWindow editorWindow) {
             editorWindows.Remove(editorWindow);
             Destroy(editorWindow);
+            if (editorWindows.Count == 0 && !GameManager.Instance.Game.Input.asset.enabled) {
+                GameManager.Instance.Game.Input.Enable();
+            }
         }
 
         private void OnEscapeMenuOpened(MessageCenterMessage message) {
