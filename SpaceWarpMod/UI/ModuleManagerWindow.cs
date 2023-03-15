@@ -130,7 +130,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                     switch (process.State) {
                     case KontrolSystemProcessState.Available:
                         if (GUILayout.Button("O", GUILayout.Width(30))) {
-                            scriptSettingsWindow.Attach(process);
+                            scriptSettingsWindow.Attach(process, windowRect);
                         }
                         if (GUILayout.Button(CommonStyles.Instance.startButtonTexture, GUILayout.Width(30)))
                             Mainframe.Instance.StartProcess(process, GameManager.Instance?.Game?.ViewController?.GetActiveSimVessel(true));

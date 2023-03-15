@@ -1,24 +1,20 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net.NetworkInformation;
 using KontrolSystem.KSP.Runtime.KSPVessel;
 using KontrolSystem.TO2;
-using KontrolSystem.TO2.Binding;
+using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Runtime;
 using KSP.Sim.impl;
-using static KSP.Api.UIDataPropertyStrings.View;
 
 namespace KontrolSystem.KSP.Runtime {
     public delegate IAnyFuture Entrypoint(VesselComponent vessel, object[] args = null);
 
     public class EntrypointArgumentDescriptor {
         public string Name { get; }
-        public string Type { get; }
+        public RealizedType Type { get; }
         public object DefaultValue { get; }
 
-        public EntrypointArgumentDescriptor(string name, string type, object defaultValue) {
+        public EntrypointArgumentDescriptor(string name, RealizedType type, object defaultValue) {
             this.Name = name;
             this.Type = type;
             this.DefaultValue = defaultValue;
@@ -80,24 +76,15 @@ namespace KontrolSystem.KSP.Runtime {
                 }
 
                 return function.Parameters.Skip(1).Select(param => {
-                    if (param.type.Name == "int") {
+                    if (param.type == BuiltinType.Int) {
                         var defaultValue = param.defaultValue as IntDefaultValue;
-                        if (defaultValue == null) {
-                            throw new Exception($"Parameter {param.name} does not have a default value");
-                        }
-                        return new EntrypointArgumentDescriptor(param.name, param.type.Name, defaultValue.Value);
-                    } else if (param.type.Name == "float") {
+                        return new EntrypointArgumentDescriptor(param.name, param.type, defaultValue?.Value ?? 0);
+                    } else if (param.type == BuiltinType.Float) {
                         var defaultValue = param.defaultValue as FloatDefaultValue;
-                        if (defaultValue == null) {
-                            throw new Exception($"Parameter {param.name} does not have a default value");
-                        }
-                        return new EntrypointArgumentDescriptor(param.name, param.type.Name, defaultValue.Value);
-                    } else if (param.type.Name == "bool") {
+                        return new EntrypointArgumentDescriptor(param.name, param.type, defaultValue?.Value ?? 0.0);
+                    } else if (param.type == BuiltinType.Bool) {
                         var defaultValue = param.defaultValue as BoolDefaultValue;
-                        if (defaultValue == null) {
-                            throw new Exception($"Parameter {param.name} does not have a default value");
-                        }
-                        return new EntrypointArgumentDescriptor(param.name, param.type.Name, defaultValue.Value);
+                        return new EntrypointArgumentDescriptor(param.name, param.type, defaultValue?.Value ?? false);
                     } else {
                         throw new Exception($"Parameter {param.name} unsupported type {param.type.Name}");
                     }

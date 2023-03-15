@@ -1,38 +1,37 @@
 ﻿using KontrolSystem.KSP.Runtime;
 using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.SpaceWarpMod.Core;
+using KontrolSystem.TO2.AST;
 using KSP.Game;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace KontrolSystem.SpaceWarpMod.UI {
     public class ProcessArgumentsWindow : ResizableWindow {
-
         private KontrolSystemProcess process;
         private EntrypointArgumentDescriptor[] argumentDescs;
         private string[] argumentValues;
 
-        public void Attach(KontrolSystemProcess process) {
+        public void Attach(KontrolSystemProcess process, Rect parentPosition) {
             var gameMode = GameModeAdapter.GameModeFromState(GameManager.Instance.Game.GlobalGameState.GetState());
 
             argumentDescs = process.EntrypointArgumentDescriptors(gameMode);
             argumentValues = argumentDescs.Select(arg => arg.DefaultValue.ToString()).ToArray();
 
             this.process = process;
+            windowRect = new Rect(parentPosition.xMin + 20, parentPosition.yMin + 50, 0, 0);
+
             Open();
         }
 
         public void Awake() {
-            Initialize($"Program Arguments", new Rect(Screen.width - 750, Screen.height - 600, 0, 0), 120, 120, false);
+            Initialize($"Program Arguments", windowRect, 120, 120, false);
         }
 
         protected override void DrawWindow(int windowId) {
             GUILayout.BeginVertical();
-            argumentValues = argumentDescs.Zip(argumentValues, Tuple.Create).Select(arg => {
+            argumentValues = argumentDescs.Zip(argumentValues, Tuple.Create).Select((arg, i) => {
                 var (desc, val) = arg;
                 GUILayout.BeginHorizontal();
 
@@ -50,13 +49,13 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                 object[] arguments = argumentDescs.Zip(argumentValues, Tuple.Create).Select(arg => {
                     var (desc, val) = arg;
 
-                    if (desc.Type == "int") {
+                    if (desc.Type == BuiltinType.Int) {
                         long.TryParse(val, out long result);
                         return (object) result;
-                    } else if (desc.Type == "float") {
+                    } else if (desc.Type == BuiltinType.Float) {
                         double.TryParse(val, out double result);
                         return result;
-                    } else if (desc.Type == "bool") {
+                    } else if (desc.Type == BuiltinType.Bool) {
                         bool.TryParse(val, out bool result);
                         return result;
                     } else {
