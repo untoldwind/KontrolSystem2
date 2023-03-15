@@ -27,7 +27,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         }
 
         public void Awake() {
-            Initialize($"Script Settings", new Rect(Screen.width - 750, Screen.height - 600, 0, 0), 120, 120, false);
+            Initialize($"Program Arguments", new Rect(Screen.width - 750, Screen.height - 600, 0, 0), 120, 120, false);
         }
 
         protected override void DrawWindow(int windowId) {
