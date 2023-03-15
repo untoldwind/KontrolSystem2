@@ -5,19 +5,78 @@ using KontrolSystem.TO2.AST;
 using KSP.Game;
 using System;
 using System.Linq;
+using System.Security.Cryptography;
 using UnityEngine;
 
 namespace KontrolSystem.SpaceWarpMod.UI {
     public class ProcessArgumentsWindow : ResizableWindow {
+        abstract class ArgumentListElement {
+            public EntrypointArgumentDescriptor Descriptor { get; }
+            public object Value { get; protected set; }
+            public abstract void Draw();
+
+            protected ArgumentListElement(EntrypointArgumentDescriptor descriptor) {
+                Descriptor = descriptor;
+                Value = descriptor.DefaultValue;
+            }
+        }
+
+        class NumberListElement : ArgumentListElement {
+            private string stringValue;
+
+            public NumberListElement(EntrypointArgumentDescriptor descriptor) : base(descriptor) {
+                stringValue = Value.ToString();
+            }
+
+            public override void Draw() {
+                stringValue = GUILayout.TextField(stringValue, GUILayout.MinWidth(100));
+
+                if (Descriptor.Type == BuiltinType.Int) {
+                    if (long.TryParse(stringValue, out var value)) {
+                        Value = value;
+                    } else {
+                        Value = Descriptor.DefaultValue;
+                    }
+                } else if (Descriptor.Type == BuiltinType.Float) {
+                    if (double.TryParse(stringValue, out var value)) {
+                        Value = value;
+                    } else {
+                        Value = Descriptor.DefaultValue;
+                    }
+                }
+            }
+        }
+
+        class BoolListElement : ArgumentListElement {
+            private bool boolValue;
+
+            public BoolListElement(EntrypointArgumentDescriptor descriptor) : base(descriptor) {
+                boolValue = (bool)descriptor.DefaultValue;
+            }
+
+            public override void Draw() {
+                boolValue = GUILayout.Toggle(boolValue, "", GUILayout.MinWidth(100));
+                Value = boolValue;
+            }
+        }
+
         private KontrolSystemProcess process;
-        private EntrypointArgumentDescriptor[] argumentDescs;
-        private string[] argumentValues;
+        private ArgumentListElement[] arguments;
 
         public void Attach(KontrolSystemProcess process, Rect parentPosition) {
             var gameMode = GameModeAdapter.GameModeFromState(GameManager.Instance.Game.GlobalGameState.GetState());
 
-            argumentDescs = process.EntrypointArgumentDescriptors(gameMode);
-            argumentValues = argumentDescs.Select(arg => arg.DefaultValue.ToString()).ToArray();
+            var argumentDescs = process.EntrypointArgumentDescriptors(gameMode);
+            arguments = argumentDescs.Select<EntrypointArgumentDescriptor, ArgumentListElement>(arg => {
+                if (arg.Type == BuiltinType.Int || arg.Type == BuiltinType.Float) {
+                    return new NumberListElement(arg);
+                } else if (arg.Type == BuiltinType.Bool) {
+                    return new BoolListElement(arg);
+                } else {
+                    throw new Exception($"Invalid Process Argument Type {arg.Type.Name}");
+                }
+            }
+                ).ToArray();
 
             this.process = process;
             windowRect = new Rect(parentPosition.xMin + 20, parentPosition.yMin + 50, 0, 0);
@@ -31,40 +90,21 @@ namespace KontrolSystem.SpaceWarpMod.UI {
 
         protected override void DrawWindow(int windowId) {
             GUILayout.BeginVertical();
-            argumentValues = argumentDescs.Zip(argumentValues, Tuple.Create).Select((arg, i) => {
-                var (desc, val) = arg;
+
+            foreach (var argument in arguments) {
                 GUILayout.BeginHorizontal();
 
-                GUILayout.Label($"{desc.Name}", GUILayout.MinWidth(200));
-                var newValueString = GUILayout.TextField(val, GUILayout.MinWidth(100));
+                GUILayout.Label($"{argument.Descriptor.Name}", GUILayout.MinWidth(150));
+                argument.Draw();
 
                 GUILayout.EndHorizontal();
-
-                return newValueString;
-            }).ToArray();
+            }
 
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("Start")) {
 
-                object[] arguments = argumentDescs.Zip(argumentValues, Tuple.Create).Select(arg => {
-                    var (desc, val) = arg;
-
-                    if (desc.Type == BuiltinType.Int) {
-                        long.TryParse(val, out long result);
-                        return (object) result;
-                    } else if (desc.Type == BuiltinType.Float) {
-                        double.TryParse(val, out double result);
-                        return result;
-                    } else if (desc.Type == BuiltinType.Bool) {
-                        bool.TryParse(val, out bool result);
-                        return result;
-                    } else {
-                        LoggerAdapter.Instance.Error($"Unknown Program Argument Type {desc.Type}");
-                        return null;
-                    }
-                }).ToArray();
-
-                Mainframe.Instance.StartProcess(process, GameManager.Instance?.Game?.ViewController?.GetActiveSimVessel(true), arguments);
+                object[] values = arguments.Select(arg => arg.Value).ToArray();
+                Mainframe.Instance.StartProcess(process, GameManager.Instance?.Game?.ViewController?.GetActiveSimVessel(true), values);
             }
             if (GUILayout.Button("Close")) {
                 Close();
