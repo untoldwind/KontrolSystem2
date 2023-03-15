@@ -112,7 +112,7 @@ rcstranslatemanager.resume ( ) -> Unit
 ##### set_translate_provider
 
 ```rust
-rcstranslatemanager.set_translate_provider ( newTranslateProvider : fn() -> ksp::math::Vec3 ) -> Unit
+rcstranslatemanager.set_translate_provider ( newTranslateProvider : fn(float) -> ksp::math::Vec3 ) -> Unit
 ```
 
 
@@ -125,21 +125,7 @@ rcstranslatemanager.set_translate_provider ( newTranslateProvider : fn() -> ksp:
 
 Name | Type | Description
 --- | --- | ---
-direction | [ksp::math::Direction](/reference/ksp/math.md#direction) | 
-max_stopping_time | float | 
-pitch_torque_adjust | float | 
-pitch_torque_factor | float | 
-pitch_ts | float | 
-roll_control_angle_range | float | 
-roll_torque_adjust | float | 
-roll_torque_factor | float | 
-roll_ts | float | 
-show_angular_vectors | bool | 
-show_facing_vectors | bool | 
-show_steering_stats | bool | 
-yaw_torque_adjust | float | 
-yaw_torque_factor | float | 
-yaw_ts | float | 
+pitch_yaw_roll | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
 
 #### Methods
 
@@ -147,14 +133,6 @@ yaw_ts | float |
 
 ```rust
 steeringmanager.release ( ) -> Unit
-```
-
-
-
-##### reset_to_default
-
-```rust
-steeringmanager.reset_to_default ( ) -> Unit
 ```
 
 
@@ -167,10 +145,10 @@ steeringmanager.resume ( ) -> Unit
 
 
 
-##### set_direction_provider
+##### set_pitch_yaw_roll_provider
 
 ```rust
-steeringmanager.set_direction_provider ( newDirectionProvider : fn() -> ksp::math::Direction ) -> Unit
+steeringmanager.set_pitch_yaw_roll_provider ( newPitchYawRollProvider : fn(float) -> ksp::math::Vec3 ) -> Unit
 ```
 
 
@@ -242,6 +220,78 @@ torquepi.update ( sampleTime : float,
                   setpoint : float,
                   momentOfInertia : float,
                   maxOutput : float ) -> float
+```
+
+
+
+### WheelSteeringManager
+
+
+
+#### Fields
+
+Name | Type | Description
+--- | --- | ---
+wheel_steer | float | 
+
+#### Methods
+
+##### release
+
+```rust
+wheelsteeringmanager.release ( ) -> Unit
+```
+
+
+
+##### resume
+
+```rust
+wheelsteeringmanager.resume ( ) -> Unit
+```
+
+
+
+##### set_wheel_steer_provider
+
+```rust
+wheelsteeringmanager.set_wheel_steer_provider ( newWheelSteerProvider : fn(float) -> float ) -> Unit
+```
+
+
+
+### WheelThrottleManager
+
+
+
+#### Fields
+
+Name | Type | Description
+--- | --- | ---
+wheel_throttle | float | 
+
+#### Methods
+
+##### release
+
+```rust
+wheelthrottlemanager.release ( ) -> Unit
+```
+
+
+
+##### resume
+
+```rust
+wheelthrottlemanager.resume ( ) -> Unit
+```
+
+
+
+##### set_wheel_throttle_provider
+
+```rust
+wheelthrottlemanager.set_wheel_throttle_provider ( newWheelThrottleProvider : fn(float) -> float ) -> Unit
 ```
 
 

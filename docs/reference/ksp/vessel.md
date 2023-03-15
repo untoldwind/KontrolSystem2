@@ -363,7 +363,7 @@ vessel.heading_direction ( degreesFromNorth : float,
 ##### manage_rcs_translate
 
 ```rust
-vessel.manage_rcs_translate ( translateProvider : fn() -> ksp::math::Vec3 ) -> ksp::control::RCSTranslateManager
+vessel.manage_rcs_translate ( translateProvider : fn(float) -> ksp::math::Vec3 ) -> ksp::control::RCSTranslateManager
 ```
 
 
@@ -371,7 +371,7 @@ vessel.manage_rcs_translate ( translateProvider : fn() -> ksp::math::Vec3 ) -> k
 ##### manage_steering
 
 ```rust
-vessel.manage_steering ( directionProvider : fn() -> ksp::math::Direction ) -> ksp::control::SteeringManager
+vessel.manage_steering ( pitchYawRollProvider : fn(float) -> ksp::math::Vec3 ) -> ksp::control::SteeringManager
 ```
 
 
@@ -380,6 +380,22 @@ vessel.manage_steering ( directionProvider : fn() -> ksp::math::Direction ) -> k
 
 ```rust
 vessel.manage_throttle ( throttleProvider : fn(float) -> float ) -> ksp::control::ThrottleManager
+```
+
+
+
+##### manage_wheel_steering
+
+```rust
+vessel.manage_wheel_steering ( wheelSteeringProvider : fn(float) -> float ) -> ksp::control::WheelSteeringManager
+```
+
+
+
+##### manage_wheel_throttle
+
+```rust
+vessel.manage_wheel_throttle ( wheelThrottleProvider : fn(float) -> float ) -> ksp::control::WheelThrottleManager
 ```
 
 
@@ -451,7 +467,7 @@ vessel.set_rcs_translate ( translate : ksp::math::Vec3 ) -> ksp::control::RCSTra
 ##### set_steering
 
 ```rust
-vessel.set_steering ( direction : ksp::math::Direction ) -> ksp::control::SteeringManager
+vessel.set_steering ( pitchYawRoll : ksp::math::Vec3 ) -> ksp::control::SteeringManager
 ```
 
 
@@ -460,6 +476,22 @@ vessel.set_steering ( direction : ksp::math::Direction ) -> ksp::control::Steeri
 
 ```rust
 vessel.set_throttle ( throttle : float ) -> ksp::control::ThrottleManager
+```
+
+
+
+##### set_wheel_steering
+
+```rust
+vessel.set_wheel_steering ( wheelSteering : float ) -> ksp::control::WheelSteeringManager
+```
+
+
+
+##### set_wheel_throttle
+
+```rust
+vessel.set_wheel_throttle ( wheelThrottle : float ) -> ksp::control::WheelThrottleManager
 ```
 
 

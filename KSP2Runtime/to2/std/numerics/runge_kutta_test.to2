@@ -1,0 +1,29 @@
+use * from ksp::testing
+use { rk23 } from std::numerics::runge_kutta
+use core::math as math
+use { Vec3, vec3 } from ksp::math
+use ksp::orbit as orbit
+
+const mu : float = 3.5316e12
+
+sync fn freefall(t : float, position : Vec3, velocity : Vec3) -> Vec3 = {
+    const r2 = position.sqr_magnitude
+
+    (-mu / r2) * position.normalized
+}
+
+test sync fn test_rk23() -> Result<Unit, string> = {
+    const orbit = rk23(freefall, fn(t, position, velocity) -> t >= 10000, 0, vec3(700000, 0, 0), vec3(0, 2400, 0), 0.1, 1.0)
+
+    assert_int(10001, orbit.length)
+
+    const kerbin = orbit::find_body("Kerbin")?
+
+    const ref_orbit = kerbin.create_orbit(vec3(700000, 0, 0), vec3(0, 2400, 0), 0)
+
+    for(i in 0...1000) {
+        assert_float(i, orbit[i].t)
+        assert_vec3(ref_orbit.relative_position(i), orbit[i].position, 0.1)
+        assert_vec3(ref_orbit.orbital_velocity(i), orbit[i].velocity, 0.1)
+    }
+}
