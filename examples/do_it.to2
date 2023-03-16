@@ -1,0 +1,73 @@
+use { Vessel } from ksp::vessel
+use { CONSOLE } from ksp::console
+use { find_body, Body } from ksp::orbit
+use { atmo_launch } from std::atmo
+use { exec_next_node, estimate_burn_time } from std::vac
+use { bi_impulsive_transfer_body, bi_impulsive_transfer } from std::maneuvers
+use { sleep, current_time, wait_until } from ksp::game
+use { remove_all_nodes } from std::utils
+use { warp_to } from ksp::game::warp
+use { circularize_orbit } from std::maneuvers
+use { vac_land } from std::land::vac
+
+pub fn main_flight(vessel: Vessel) -> Result<Unit, string> = {
+    CONSOLE.clear()
+    phase_launch(vessel)?
+
+    const target = find_body("Mun")?
+    
+    CONSOLE.clear()
+    phase_boost_to_mun(vessel, target)?
+
+    sleep(3.0)
+    
+    CONSOLE.clear()
+    phase_warp_to_mun(vessel)?
+
+    CONSOLE.clear()
+    phase_orbit_mun(vessel)?
+
+    CONSOLE.clear()
+    vac_land(vessel, target.geo_coordinates(0, 37), 2)?
+}
+
+fn phase_launch(vessel: Vessel) -> Result<Unit, string> = {
+    atmo_launch(vessel, 120000, 90)?
+}
+
+fn phase_boost_to_mun(vessel: Vessel, target: Body) -> Result<Unit, string> = {
+    vessel.target = target
+
+    const (delta_v, UT) = bi_impulsive_transfer_body(vessel.orbit, target, current_time() + 60, 100000)?
+
+    let (burn_time, half_burn_time) = estimate_burn_time(vessel, delta_v.magnitude, 0.5, 1.0)
+
+    CONSOLE.print_line("Burntime: " + burn_time.to_string() + " " + half_burn_time.to_string())
+
+    remove_all_nodes(vessel)
+    
+    vessel.maneuver.add_burn_vector(UT - half_burn_time, delta_v)?
+
+    exec_next_node(vessel)?
+}
+
+fn phase_warp_to_mun(vessel: Vessel) -> Result<Unit, string> = {
+    warp_to(vessel.orbit.end_ut + 300)
+
+    wait_until(fn() -> vessel.main_body.name != "Kerbin")
+}
+
+fn phase_orbit_mun(vessel: Vessel) -> Result<Unit, string> = {
+    const (delta_v, UT) = circularize_orbit(vessel.orbit)?
+
+    let (burn_time, half_burn_time) = estimate_burn_time(vessel, delta_v.magnitude, 0.5, 1.0)
+
+    CONSOLE.print_line("Burntime: " + burn_time.to_string() + " " + half_burn_time.to_string())
+
+    remove_all_nodes(vessel)
+    
+    vessel.maneuver.add_burn_vector(UT - half_burn_time, delta_v)?
+
+    exec_next_node(vessel)?
+}
+
