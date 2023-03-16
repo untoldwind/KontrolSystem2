@@ -90,6 +90,8 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField] public Vector3d AngularVelocity => vessel.mainBody.coordinateSystem.ToLocalVector(vessel.AngularVelocity.relativeAngularVelocity);
 
+            [KSField] public double VerticalSpeed => vessel.VerticalSrfSpeed;
+            
             [KSField]
             public KSPOrbitModule.GeoCoordinates GeoCoordinates => new KSPOrbitModule.GeoCoordinates(MainBody, vessel.Latitude, vessel.Longitude);
 
@@ -170,7 +172,11 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                     return new Option<IKSPTargetable>();
                 }
                 set {
-                    // TODO
+                    if (value.defined) {
+                        vessel.SetTargetByID(value.value.UnderlyingId);
+                    } else {
+                        vessel.ClearTarget();
+                    }
                 }
             }
 
@@ -256,6 +262,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSMethod]
             public void OverrideInputTranslateZ(double value) => FlightInputHandler.OverrideInputTranslateZ((float)value);
 
+            public IGGuid UnderlyingId => vessel.SimulationObject.GlobalId;
         }
     }
 }

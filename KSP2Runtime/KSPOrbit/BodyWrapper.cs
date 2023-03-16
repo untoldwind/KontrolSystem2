@@ -21,6 +21,10 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
         public double RotationPeriod => body.rotationPeriod;
 
+        public Vector3d Position => body.coordinateSystem.ToLocalPosition(body.Position);
+
+        public Vector3d AngularVelocity => body.celestialMotionFrame.ToLocalAngularVelocity(body.AngularVelocity);
+
         public Vector3d Up => body.transform.up.vector;
 
         public Vector3d Right => body.transform.right.vector;
@@ -40,6 +44,8 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
         public Vector3d SurfacePosition(double latitude, double longitude, double altitude) =>
             body.GetWorldSurfacePosition(latitude, longitude, altitude, body.coordinateSystem);
 
+        public KSPOrbitModule.GeoCoordinates GeoCoordinates(double latitude, double longitude) => new KSPOrbitModule.GeoCoordinates(this, latitude, longitude);
+        
         public KSPOrbitModule.IOrbit CreateOrbit(Vector3d position, Vector3d velocity, double ut) {
             PatchedConicsOrbit orbit = new PatchedConicsOrbit(body.universeModel);
 
@@ -47,5 +53,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
             return new OrbitWrapper(context, orbit);
         }
+        
+        public IGGuid UnderlyingId => body.SimulationObject.GlobalId;        
     }
 }

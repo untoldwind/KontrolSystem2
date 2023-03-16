@@ -1,9 +1,10 @@
-﻿using KontrolSystem.TO2.Binding;
+﻿using KontrolSystem.KSP.Runtime.KSPVessel;
+using KontrolSystem.TO2.Binding;
 
 namespace KontrolSystem.KSP.Runtime.KSPOrbit {
     public partial class KSPOrbitModule {
         [KSClass("Body", Description = "Represents an in-game celestial body.")]
-        public interface IBody {
+        public interface IBody : KSPVesselModule.IKSPTargetable {
             [KSField(Description = "Name of the celestial body.")]
             string Name { get; }
 
@@ -28,10 +29,14 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             [KSField(Description = "Rotation period of the planet.")]
             double RotationPeriod { get; }
 
+            [KSField(Description = "The current position of the body")] Vector3d Position { get; }
+            
+            [KSField(Description = "Angular velocity vector of the body")] Vector3d AngularVelocity { get; }
+            
             [KSField] Vector3d Up { get; }
 
             [KSField] Vector3d Right { get; }
-
+            
             [KSMethod(Description = "Get the surface normal at a `latitude` and `longitude` (i.e. the vector pointing up at this geo coordinate")]
             Vector3d SurfaceNormal(double latitude, double longitude);
 
@@ -40,6 +45,8 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
             [KSMethod]
             Vector3d SurfacePosition(double latitude, double longitude, double altitude);
+
+            [KSMethod] GeoCoordinates GeoCoordinates(double latitude, double longitude);
 
             [KSMethod(Description =
                 "Create a new orbit around this body starting at a given relative `position` and `velocity` at universal time `ut`")]
