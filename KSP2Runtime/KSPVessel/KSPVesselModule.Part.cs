@@ -69,10 +69,10 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField] public bool IsSolarPanel => part.IsPartSolarPanel(out var _);
 
-            [KSField] public bool IsFairing => part.TryGetModuleData<PartComponentModule_Fairing, Data_Fairing>(out var _); // todo: make IsPartFairing in IsPartExtensions
+            [KSField] public bool IsFairing => part.TryGetModuleData<PartComponentModule_Fairing, Data_Fairing>(out var _);
 
             [KSField]
-            public Option<ModuleFairingAdapter> Fairing { // todo: make IsPartFairing in IsPartExtensions
+            public Option<ModuleFairingAdapter> Fairing {
                 get {
                     if (part.TryGetModuleData<PartComponentModule_Fairing, Data_Fairing>(out Data_Fairing data)) {
                         return new Option<ModuleFairingAdapter>(new ModuleFairingAdapter(part, data));
