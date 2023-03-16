@@ -1,0 +1,35 @@
+﻿using System;
+using System.Linq;
+using KontrolSystem.TO2.Binding;
+using KSP.Game;
+using KSP.Modules;
+using KSP.Sim.impl;
+
+namespace KontrolSystem.KSP.Runtime.KSPVessel {
+    public partial class KSPVesselModule {
+        [KSClass("ModuleFairing")]
+        public class ModuleFairingAdapter {
+            private readonly PartComponent part;
+            private readonly Data_Fairing dataFairing;
+
+            public ModuleFairingAdapter(PartComponent part, Data_Fairing dataFairing) {
+                this.part = part;
+                this.dataFairing = dataFairing;
+            }
+
+            [KSField] public string PartName => part?.PartName ?? "Unknown";
+
+            [KSField]
+            public double EjectionForce {
+                get {
+                    return dataFairing.EjectionForce.GetValue();
+                }
+                set {
+                     dataFairing.EjectionForce.SetValue((float)value);
+                }
+            }
+
+            [KSField] public bool IsDeployed => dataFairing.IsDeployed.GetValue();
+        }
+    }
+}
