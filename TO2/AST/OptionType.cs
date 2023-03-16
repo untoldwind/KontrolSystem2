@@ -239,6 +239,11 @@ namespace KontrolSystem.TO2.AST {
 
         public IOperatorEmitter FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) =>
             this;
+
+        public IREPLValue Eval(Node node, IREPLValue left, IREPLValue right) {
+            // TODO fix this
+            throw new NotImplementedException();
+        }
     }
 
     internal class OptionUnwrapOperator : IOperatorEmitter {
@@ -304,6 +309,11 @@ namespace KontrolSystem.TO2.AST {
 
         public IOperatorEmitter FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) =>
             this;
+
+        public IREPLValue Eval(Node node, IREPLValue left, IREPLValue right) {
+            // TODO fix this
+            throw new NotImplementedException();
+        }
     }
 
     internal class OptionMapFactory : IMethodInvokeFactory {

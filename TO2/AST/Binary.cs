@@ -1,6 +1,7 @@
 ﻿using System.Reflection.Emit;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     public class Binary : Expression {
@@ -84,6 +85,47 @@ namespace KontrolSystem.TO2.AST {
             else rightEmitter.EmitCode(context, this);
 
             if (dropResult) context.IL.Emit(OpCodes.Pop);
+        }
+
+        public override REPLValueFuture Eval(IREPLContext context) {
+            var leftFuture = this.left.Eval(context);
+            var rightFuture = this.right.Eval(context);
+            
+            return new BinaryREPLFuture(leftFuture, rightFuture, op);
+        }
+
+        class BinaryREPLFuture : REPLValueFuture {
+            private readonly Future<IREPLValue> left;
+            private IREPLValue leftResult;
+            private readonly Future<IREPLValue> right;
+            private IREPLValue rightResult;
+            private readonly Operator op;
+
+            public BinaryREPLFuture(REPLValueFuture left, REPLValueFuture right, Operator op) : base(BuiltinType.Unit) {
+                this.left = left;
+                this.right = right;
+                this.op = op;
+            }
+
+            public override FutureResult<IREPLValue> PollValue() {
+                if (leftResult == null) {
+                    var result = left.PollValue();
+                    if (result.IsReady) {
+                        leftResult = result.value;
+                    } else {
+                        return new FutureResult<IREPLValue>();
+                    }
+                }
+                if (rightResult == null) {
+                    var result = right.PollValue();
+                    if (result.IsReady) {
+                        rightResult = result.value;
+                    } else {
+                        return new FutureResult<IREPLValue>();
+                    }
+                }
+                return new FutureResult<IREPLValue>();
+            }
         }
     }
 }

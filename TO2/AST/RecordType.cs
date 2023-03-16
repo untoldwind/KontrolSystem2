@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using KontrolSystem.TO2.Generator;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     public abstract class RecordType : RealizedType {
@@ -102,6 +103,11 @@ namespace KontrolSystem.TO2.AST {
 
         public IOperatorEmitter FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) =>
             this;
+
+        public IREPLValue Eval(Node node, IREPLValue left, IREPLValue right) {
+            // TODO fix this
+            throw new NotImplementedException();
+        }
 
         // ---------------- IAssignEmitter -----------------
         public void EmitAssign(IBlockContext context, IBlockVariable variable, Expression expression, bool dropResult) {

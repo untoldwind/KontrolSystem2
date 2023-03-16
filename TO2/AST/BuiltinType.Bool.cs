@@ -16,24 +16,23 @@ namespace KontrolSystem.TO2.AST {
                 allowedPrefixOperators = new OperatorCollection {
                     {
                         Operator.Not,
-                        new DirectOperatorEmitter(() => Unit, () => Bool, OpCodes.Ldc_I4_0,
+                        new DirectOperatorEmitter(() => Unit, () => Bool, REPLBool.Not, OpCodes.Ldc_I4_0,
                             OpCodes.Ceq)
                     }
                 };
                 allowedSuffixOperators = new OperatorCollection {
                     {
                         Operator.Eq,
-                        new DirectOperatorEmitter(() => Bool, () => Bool, OpCodes.Ceq)
+                        new DirectOperatorEmitter(() => Bool, () => Bool, REPLBool.Eq,  OpCodes.Ceq)
                     }, {
                         Operator.NotEq,
-                        new DirectOperatorEmitter(() => Bool, () => Bool, OpCodes.Ceq, OpCodes.Ldc_I4_0,
-                            OpCodes.Ceq)
+                        new DirectOperatorEmitter(() => Bool, () => Bool, REPLBool.Neq, OpCodes.Ceq, OpCodes.Ldc_I4_0, OpCodes.Ceq)
                     }, {
                         Operator.BoolAnd,
-                        new DirectOperatorEmitter(() => Bool, () => Bool, OpCodes.And)
+                        new DirectOperatorEmitter(() => Bool, () => Bool, REPLBool.And, OpCodes.And)
                     }, {
                         Operator.BoolOr,
-                        new DirectOperatorEmitter(() => Bool, () => Bool, OpCodes.Or)
+                        new DirectOperatorEmitter(() => Bool, () => Bool, REPLBool.Or, OpCodes.Or)
                     }
                 };
                 DeclaredMethods = new Dictionary<string, IMethodInvokeFactory> {
@@ -63,6 +62,8 @@ namespace KontrolSystem.TO2.AST {
             public override IOperatorCollection AllowedPrefixOperators(ModuleContext context) => allowedPrefixOperators;
 
             public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) => allowedSuffixOperators;
+            
+            public override IREPLValue REPLCast(object value) => new REPLBool((bool)value);
         }
     }
 }

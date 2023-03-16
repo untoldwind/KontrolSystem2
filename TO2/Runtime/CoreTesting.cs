@@ -6,7 +6,7 @@ using System.Threading;
 using KontrolSystem.TO2.Binding;
 
 namespace KontrolSystem.TO2.Runtime {
-    public class TestRunnerContext : IContext, ITO2Logger {
+    public class TestRunnerContext : IREPLContext, ITO2Logger {
         private readonly ConcurrentQueue<string> messages = new ConcurrentQueue<string>();
         private Stopwatch timeStopwatch = Stopwatch.StartNew();
         private long timeoutMillis = 100;

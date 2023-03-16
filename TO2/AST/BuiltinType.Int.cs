@@ -16,78 +16,78 @@ namespace KontrolSystem.TO2.AST {
                 allowedPrefixOperators = new OperatorCollection {
                     {
                         Operator.Neg,
-                        new DirectOperatorEmitter(() => Unit, () => Int, OpCodes.Neg)
+                        new DirectOperatorEmitter(() => Unit, () => Int, REPLBool.Neq, OpCodes.Neg)
                     },
                 };
                 allowedSuffixOperators = new OperatorCollection {
                     {
                         Operator.Add,
-                        new DirectOperatorEmitter(() => Int, () => Int, OpCodes.Add)
+                        new DirectOperatorEmitter(() => Int, () => Int, REPLInt.Add, OpCodes.Add)
                     }, {
                         Operator.AddAssign,
-                        new DirectOperatorEmitter(() => Int, () => Int, OpCodes.Add)
+                        new DirectOperatorEmitter(() => Int, () => Int, REPLInt.Add, OpCodes.Add)
                     }, {
                         Operator.Sub,
-                        new DirectOperatorEmitter(() => Int, () => Int, OpCodes.Sub)
+                        new DirectOperatorEmitter(() => Int, () => Int, REPLInt.Sub, OpCodes.Sub)
                     }, {
                         Operator.SubAssign,
-                        new DirectOperatorEmitter(() => Int, () => Int, OpCodes.Sub)
+                        new DirectOperatorEmitter(() => Int, () => Int, REPLInt.Sub, OpCodes.Sub)
                     }, {
                         Operator.Mul,
-                        new DirectOperatorEmitter(() => Int, () => Int, OpCodes.Mul)
+                        new DirectOperatorEmitter(() => Int, () => Int, REPLInt.Mul, OpCodes.Mul)
                     }, {
                         Operator.MulAssign,
-                        new DirectOperatorEmitter(() => Int, () => Int, OpCodes.Mul)
+                        new DirectOperatorEmitter(() => Int, () => Int, REPLInt.Mul, OpCodes.Mul)
                     }, {
                         Operator.Div,
-                        new DirectOperatorEmitter(() => Int, () => Int, OpCodes.Div)
+                        new DirectOperatorEmitter(() => Int, () => Int, REPLInt.Div, OpCodes.Div)
                     }, {
                         Operator.DivAssign,
-                        new DirectOperatorEmitter(() => Int, () => Int, OpCodes.Div)
+                        new DirectOperatorEmitter(() => Int, () => Int, REPLInt.Div, OpCodes.Div)
                     }, {
                         Operator.Mod,
-                        new DirectOperatorEmitter(() => Int, () => Int, OpCodes.Rem)
+                        new DirectOperatorEmitter(() => Int, () => Int, REPLInt.Rem, OpCodes.Rem)
                     }, {
                         Operator.ModAssign,
-                        new DirectOperatorEmitter(() => Int, () => Int, OpCodes.Rem)
+                        new DirectOperatorEmitter(() => Int, () => Int, REPLInt.Rem, OpCodes.Rem)
                     }, {
                         Operator.BitOr,
-                        new DirectOperatorEmitter(() => Int, () => Int, OpCodes.Or)
+                        new DirectOperatorEmitter(() => Int, () => Int, REPLInt.BitOr, OpCodes.Or)
                     }, {
                         Operator.BitOrAssign,
-                        new DirectOperatorEmitter(() => Int, () => Int, OpCodes.Or)
+                        new DirectOperatorEmitter(() => Int, () => Int, REPLInt.BitOr, OpCodes.Or)
                     }, {
                         Operator.BitAnd,
-                        new DirectOperatorEmitter(() => Int, () => Int, OpCodes.And)
+                        new DirectOperatorEmitter(() => Int, () => Int, REPLInt.BitAnd, OpCodes.And)
                     }, {
                         Operator.BitAndAssign,
-                        new DirectOperatorEmitter(() => Int, () => Int, OpCodes.And)
+                        new DirectOperatorEmitter(() => Int, () => Int, REPLInt.BitAnd, OpCodes.And)
                     }, {
                         Operator.BitXor,
-                        new DirectOperatorEmitter(() => Int, () => Int, OpCodes.Xor)
+                        new DirectOperatorEmitter(() => Int, () => Int, REPLInt.BitXor, OpCodes.Xor)
                     }, {
                         Operator.BitXorAssign,
-                        new DirectOperatorEmitter(() => Int, () => Int, OpCodes.Xor)
+                        new DirectOperatorEmitter(() => Int, () => Int, REPLInt.BitXor, OpCodes.Xor)
                     }, {
                         Operator.Eq,
-                        new DirectOperatorEmitter(() => Int, () => Bool, OpCodes.Ceq)
+                        new DirectOperatorEmitter(() => Int, () => Bool, REPLInt.Eq, OpCodes.Ceq)
                     }, {
                         Operator.NotEq,
-                        new DirectOperatorEmitter(() => Int, () => Bool, OpCodes.Ceq,
+                        new DirectOperatorEmitter(() => Int, () => Bool, REPLInt.Neq, OpCodes.Ceq,
                             OpCodes.Ldc_I4_0, OpCodes.Ceq)
                     }, {
                         Operator.Gt,
-                        new DirectOperatorEmitter(() => Int, () => Bool, OpCodes.Cgt)
+                        new DirectOperatorEmitter(() => Int, () => Bool, REPLInt.Gt, OpCodes.Cgt)
                     }, {
                         Operator.Lt,
-                        new DirectOperatorEmitter(() => Int, () => Bool, OpCodes.Clt)
+                        new DirectOperatorEmitter(() => Int, () => Bool, REPLInt.Lt, OpCodes.Clt)
                     }, {
                         Operator.Ge,
-                        new DirectOperatorEmitter(() => Int, () => Bool, OpCodes.Clt,
+                        new DirectOperatorEmitter(() => Int, () => Bool, REPLInt.Geq, OpCodes.Clt,
                             OpCodes.Ldc_I4_0, OpCodes.Ceq)
                     }, {
                         Operator.Le,
-                        new DirectOperatorEmitter(() => Int, () => Bool, OpCodes.Cgt,
+                        new DirectOperatorEmitter(() => Int, () => Bool, REPLInt.Leq, OpCodes.Cgt,
                             OpCodes.Ldc_I4_0, OpCodes.Ceq)
                     },
                 };
@@ -127,6 +127,8 @@ namespace KontrolSystem.TO2.AST {
             public override IOperatorCollection AllowedPrefixOperators(ModuleContext context) => allowedPrefixOperators;
 
             public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) => allowedSuffixOperators;
+            
+            public override IREPLValue REPLCast(object value) => new REPLInt((long)value);
         }
 
         private class IntToFloatAssign : IAssignEmitter {
