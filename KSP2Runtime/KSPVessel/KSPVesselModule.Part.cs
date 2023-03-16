@@ -3,8 +3,6 @@ using KontrolSystem.TO2.Runtime;
 using KSP.Modules;
 using KSP.Sim.DeltaV;
 using KSP.Sim.impl;
-using KSP.Sim.ResourceSystem;
-using System.Linq;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel {
     public partial class KSPVesselModule {
