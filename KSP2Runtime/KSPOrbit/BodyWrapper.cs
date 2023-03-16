@@ -49,7 +49,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
         public KSPOrbitModule.IOrbit CreateOrbit(Vector3d position, Vector3d velocity, double ut) {
             PatchedConicsOrbit orbit = new PatchedConicsOrbit(body.universeModel);
 
-            orbit.UpdateFromStateVectors(new Position(body.coordinateSystem, position), new Velocity(body.bodyMotionFrame, velocity), body, ut);
+            orbit.UpdateFromStateVectors(new Position(body.SimulationObject.transform.celestialFrame, position), new Velocity(body.SimulationObject.transform.celestialFrame.motionFrame, velocity), body, ut);
 
             return new OrbitWrapper(context, orbit);
         }
