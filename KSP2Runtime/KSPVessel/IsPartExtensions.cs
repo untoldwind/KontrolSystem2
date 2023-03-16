@@ -3,7 +3,7 @@ using KSP.Sim.DeltaV;
 using KSP.Sim.impl;
 
 namespace KontrolSystem.KSP2.Runtime.KSPVessel {
-    public static class IsPart {
+    public static class IsPartExtensions {
         public static bool IsPartDeployable(this IDeltaVPart PartRef, out Data_Deployable deployable) {
             if (PartRef == null) {
                 deployable = null;

@@ -10,7 +10,6 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             private readonly Data_Deployable dataDeployable;
 
             public ModuleDeployableAdapter(PartComponent part, Data_Deployable dataDeployable) {
-                UnityEngine.Debug.Log("Got part: " + part);
                 this.part = part;
                 this.dataDeployable = dataDeployable;
             }

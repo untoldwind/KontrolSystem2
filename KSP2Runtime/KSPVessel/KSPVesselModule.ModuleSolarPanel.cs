@@ -3,6 +3,7 @@ using KSP.Modules;
 using KSP.Sim.impl;
 using static KontrolSystem.KSP.Runtime.KSPOrbit.KSPOrbitModule;
 using KontrolSystem.TO2.Runtime;
+using System;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel {
     public partial class KSPVesselModule {
@@ -12,7 +13,6 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             private readonly Data_SolarPanel dataSolarPanel;
 
             public ModuleSolarPanelAdapter(PartComponent part, Data_SolarPanel dataSolarPanel) {
-                UnityEngine.Debug.Log("Got part: " + part);
                 this.part = part;
                 this.dataSolarPanel = dataSolarPanel;
             }
@@ -23,8 +23,13 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField] public Option<IBody> BlockingBody {
                 get {
-                    IBody body = KSPContext.CurrentContext.FindBody(dataSolarPanel.SimBlockingBody);
-                    return body != null ? Option.Some(body) : Option.None<IBody>();
+                    string bodyName = dataSolarPanel.SimBlockingBody;
+                    if (string.IsNullOrWhiteSpace(bodyName)) {
+                        return Option.None<IBody>();
+                    }
+                    IBody body = KSPContext.CurrentContext.FindBody(bodyName)
+                        ?? throw new Exception($"Data_SolarPanel.SimBlockingBody returned an invalid body name: '{bodyName}'");
+                    return Option.Some(body);
                 }
             }
         }
