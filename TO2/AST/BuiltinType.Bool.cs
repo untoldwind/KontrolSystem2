@@ -26,7 +26,7 @@ namespace KontrolSystem.TO2.AST {
                         new DirectOperatorEmitter(() => Bool, () => Bool, OpCodes.Ceq)
                     }, {
                         Operator.NotEq,
-                        new DirectOperatorEmitter(() => Bool, () => Bool, OpCodes.Ldc_I4_0,
+                        new DirectOperatorEmitter(() => Bool, () => Bool, OpCodes.Ceq, OpCodes.Ldc_I4_0,
                             OpCodes.Ceq)
                     }, {
                         Operator.BoolAnd,

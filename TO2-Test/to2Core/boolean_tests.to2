@@ -1,6 +1,14 @@
 use * from core::testing
 
 test sync fn test_boolean_ops() -> Unit = {
+    assert_true(true == true)
+    assert_true(false == false)
+    assert_false(true == false)
+
+    assert_false(true != true)
+    assert_false(false != false)
+    assert_true(true != false)
+
     assert_true(true && true)
     assert_false(false && true)
     assert_false(true && false)
