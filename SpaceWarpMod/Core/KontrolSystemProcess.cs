@@ -63,6 +63,10 @@ namespace KontrolSystem.SpaceWarpMod.Core {
             }
         }
 
+        public int EntrypointArgumentCount(GameMode gameMode) => module.GetEntrypointArgumentCount(gameMode);
+
+        public EntrypointArgumentDescriptor[] EntrypointArgumentDescriptors(GameMode gameMode) => module.GetEntrypointParameterDescriptors(gameMode);
+
         public bool AvailableFor(GameMode gameMode, VesselComponent vessel) {
             switch (gameMode) {
             case GameMode.KSC: return module.HasKSCEntrypoint();
