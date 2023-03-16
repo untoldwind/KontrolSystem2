@@ -1,5 +1,16 @@
 # Changes
 
+## 0.1.8 -> 0.1.9
+
+* Add basic ingame script editor (thanks to ThunderousEcho)
+  * Note: There is an issue of IMGUI elements not capturing the keyboard focus. As a temporary workaround there is a toggle to disable keyboard control of the game
+* Add the ability to add additional arguments to scripts (thanks to kbleeke).
+  * As an example the `launch_rocket` script has now a `target_apoapsis` argument
+* Experimental: Add `change_mode` to ModuleEngine
+* Fix for `bool != bool`
+* Check that it still works with game version 0.1.1.0
+  * Known issue: After a reload it might happen that the reference to the active vessel is lost. A "Reboot" can fix that.
+
 ## 0.1.7 -> 0.1.8
 
 * Add `.reverse()` on arrays
