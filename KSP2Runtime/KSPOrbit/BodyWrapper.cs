@@ -39,7 +39,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
         public Vector3d SurfaceNormal(double lat, double lon) => body.GetSurfaceNVector(lat, lon);
 
-        public double TerrainHeight(double lat, double lon) => body.SurfaceProvider.GetTerrainAltitudeFromCenter(lat, lon);
+        public double TerrainHeight(double lat, double lon) => body.SurfaceProvider.GetTerrainAltitudeFromCenter(lat, lon) - body.radius;
 
         public Vector3d SurfacePosition(double latitude, double longitude, double altitude) =>
             body.GetWorldSurfacePosition(latitude, longitude, altitude, body.coordinateSystem);

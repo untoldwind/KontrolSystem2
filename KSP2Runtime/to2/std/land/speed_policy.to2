@@ -1,0 +1,65 @@
+use { Vec3 } from ksp::math 
+use { sqrt, MAX_FLOAT, max } from core::math
+
+pub type SpeedPolicy = fn(Vec3, Vec3) -> float
+
+pub sync fn gravity_turn_speed_policy(terrain_radius : float, g : float, thrust : float) -> SpeedPolicy = {
+    const steps = 10
+    
+    const gravity_turn_fall_distance = fn(start_x : Vec3, start_v : Vec3) -> {
+        let x = start_x
+        let v = start_v
+        const start_radius = x.magnitude
+        
+        for(i in 0..steps) {
+            const g_vec = -g * x.normalized
+            const thrust_vec = -thrust * v.normalized
+            const dt = (1.0 / (steps - i)) * (v.magnitude / thrust)
+            const new_v = v + dt * (thrust_vec + g_vec)
+            
+            x += dt * (v + new_v) / 2
+            v = new_v
+        }
+        
+        const end_radius = x.magnitude - v.sqr_magnitude / (2 * (thrust - g))
+        
+        start_radius - end_radius
+    }
+    
+    fn(pos: Vec3, vel: Vec3) -> {
+        const max_fall_distance = pos.magnitude - terrain_radius
+        let lower_bound = 0.0
+        let upper_bound = 1.1 * vel.magnitude
+        
+        while((upper_bound - lower_bound) > 0.1) {
+            const test = (upper_bound - lower_bound) / 2
+            if(gravity_turn_fall_distance(pos, test * vel.normalized) < max_fall_distance)
+                lower_bound = test
+            else
+                upper_bound = test
+        }
+        
+        0.95 * ((upper_bound + lower_bound) / 2)
+    }
+}
+
+pub sync fn safe_speed_policy(terrain_radius : float, g : float, thrust : float) -> SpeedPolicy = {
+    fn(pos: Vec3, vel: Vec3) -> {
+        if(terrain_radius > pos.magnitude) return 20
+        
+        const altitude = pos.magnitude - terrain_radius
+        
+        max(0.9 * sqrt(2 * (thrust - g) * altitude), 20)
+    }
+}
+
+pub sync fn powered_coast_speed_policy(terrain_radius : float, g : float, thrust : float) -> SpeedPolicy = {
+    fn(pos: Vec3, vel: Vec3) -> {
+        if(terrain_radius > pos.magnitude) return 10
+        
+        const v_speed = vel * pos.normalized
+        const tof = (v_speed + sqrt(v_speed * v_speed + 2 * g * (pos.magnitude - terrain_radius))) / g
+        
+        0.8 * (thrust - g) * tof
+    }
+}
