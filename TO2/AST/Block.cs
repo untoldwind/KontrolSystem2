@@ -102,7 +102,11 @@ namespace KontrolSystem.TO2.AST {
             if (len > 0) {
                 for (int i = 0; i < len - 1; i++) {
                     IBlockItem item = nonComments[i];
-                    item.EmitCode(effectiveContext, true);
+                    try {
+                        item.EmitCode(effectiveContext, true);
+                    } catch (CodeGenerationException e) {
+                        context.AddError(new StructuralError(StructuralError.ErrorType.CoreGeneration, e.Message, item.Start, item.End));
+                    }
                 }
 
                 nonComments[len - 1].EmitCode(effectiveContext, dropResult);
