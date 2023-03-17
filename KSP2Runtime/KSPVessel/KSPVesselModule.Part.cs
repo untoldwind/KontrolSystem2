@@ -69,9 +69,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                     return new Option<ModuleSolarPanelAdapter>();
                 }
             }
-
-            [KSField] public bool IsSolarPanel => part.IsPartSolarPanel(out var _);
-
+            
             [KSField] public bool IsFairing => part.TryGetModuleData<PartComponentModule_Fairing, Data_Fairing>(out var _);
 
             [KSField]
@@ -82,6 +80,8 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                     }
 
                     return new Option<ModuleFairingAdapter>();
+                }
+            }
 
             [KSField] public bool IsDeployable => part.IsPartDeployable(out var _);
 
