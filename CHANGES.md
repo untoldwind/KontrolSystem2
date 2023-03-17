@@ -5,6 +5,7 @@
 * Potentially fixed reload/revert issue
 * Add bindings for solar panels
 * Add bindings for fairings
+* Improve handling of code generation bugs
 
 ## 0.1.8 -> 0.1.9
 
