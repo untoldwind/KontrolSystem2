@@ -39,7 +39,8 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
             BindingGenerator.RegisterTypeMapping(typeof(ITransformFrame), TransformFrameBinding.TransformFrameType);
             BindingGenerator.RegisterTypeMapping(typeof(Position), PositionBinding.PositionType);
             BindingGenerator.RegisterTypeMapping(typeof(Vector), VectorBinding.VectorType);
-
+            BindingGenerator.RegisterTypeMapping(typeof(VelocityAtPosition), VelocityBinding.VelocityType);
+            
             List<CompiledKontrolConstant> constants = new List<CompiledKontrolConstant>();
 
             List<CompiledKontrolFunction> functions = new List<CompiledKontrolFunction> {

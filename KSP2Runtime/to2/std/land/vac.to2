@@ -98,6 +98,7 @@ pub fn vac_land_course_correct(vessel : Vessel, simulation : ReentrySimulation, 
     const console_row = CONSOLE.cursor_row
     CONSOLE.move_cursor(console_row + 2, 0)
 
+    const frame = vessel.main_body.reference_frame
     const last_result = Cell(initial_result)
     let last_prediction = vessel.main_body.geo_coordinates(last_result.value.end_latitude, last_result.value.end_longitude)
 
@@ -108,7 +109,7 @@ pub fn vac_land_course_correct(vessel : Vessel, simulation : ReentrySimulation, 
     vessel.autopilot.enabled = true
     vessel.autopilot.mode = MODE_AUTOPILOT
     
-    const throttle = vessel.manage_throttle(fn(deltaT) -> if(!ship_is_facing(vessel, last_correction.value, 5, 1))
+    const throttle = vessel.manage_throttle(fn(deltaT) -> if(!ship_is_facing(vessel, last_correction.value.to_vector(frame), 5, 1))
             0.0
         else
             clamp(last_correction.value.magnitude * vessel.mass / vessel.available_thrust, 0.1, 1)

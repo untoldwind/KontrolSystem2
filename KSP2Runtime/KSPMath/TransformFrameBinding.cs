@@ -22,8 +22,14 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                 {
                     "to_local_vector",
                     new BoundMethodInvokeFactory("Get local coordinates of a vector", true, () => Vector3Binding.Vector3Type,
-                        () => new List<RealizedParameter>() { new RealizedParameter("position", VectorBinding.VectorType) }, false, typeof(ITransformFrame),
+                        () => new List<RealizedParameter>() { new RealizedParameter("vector", VectorBinding.VectorType) }, false, typeof(ITransformFrame),
                         typeof(ICoordinateSystem).GetMethod("ToLocalVector", new Type[] { typeof(Vector) }))
+                },
+                {
+                    "to_local_velocity",
+                    new BoundMethodInvokeFactory("Get local coordinates of a velocity", true, () => Vector3Binding.Vector3Type,
+                        () => new List<RealizedParameter>() { new RealizedParameter("velocity", VelocityBinding.VelocityType) }, false, typeof(TransformFrameBinding),
+                        typeof(TransformFrameBinding).GetMethod("ToLocalVelocity", new Type[] { typeof(ITransformFrame), typeof(VelocityAtPosition) }))
                 },
             },
             new Dictionary<string, IFieldAccessFactory> {
@@ -35,6 +41,8 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                 { "left", new BoundPropertyLikeFieldAccessFactory("left vector of the coordinate system", () => VectorBinding.VectorType, typeof(ITransformFrame), typeof(ICoordinateSystem).GetProperty("left") )},
             }
         );
+        
+        public static Vector3d ToLocalVelocity(ITransformFrame frame, VelocityAtPosition velocity) => frame.motionFrame.ToLocalVelocity(velocity.velocity, velocity.position);
     }
 
     public class TransformFrameProvider : ITransformFrame {

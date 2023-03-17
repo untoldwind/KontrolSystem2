@@ -11,7 +11,7 @@ using UnityEngine;
 namespace KontrolSystem.KSP.Runtime.KSPMath {
     public class VectorBinding {
         public static readonly BoundType VectorType = Direct.BindType("ksp::math", "Vector",
-            "This is a 3-dimensional vector in a specific coordinate system", typeof(Vector),
+            "Abstract vector in space that can be projected to a concrete 3-dimensional vector in a specific coordinate system", typeof(Vector),
             new OperatorCollection {
                 {
                     Operator.Neg,
