@@ -1,6 +1,10 @@
 # Changes
 
-## 0.1.9 ->
+## 0.1.9.2 -> 
+
+* Fix main window rescale
+
+## 0.1.9 -> 0.1.9.2
 
 * Potentially fixed reload/revert issue
 * Add bindings for solar panels
