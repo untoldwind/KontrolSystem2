@@ -1,4 +1,5 @@
-﻿using KontrolSystem.TO2.Binding;
+﻿using KontrolSystem.KSP2.Runtime.KSPVessel;
+using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
 using KSP.Modules;
 using KSP.Sim.DeltaV;
@@ -57,6 +58,8 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 }
             }
 
+            [KSField] public bool IsSolarPanel => part.IsPartSolarPanel(out var _);
+
             [KSField]
             public Option<ModuleSolarPanelAdapter> SolarPanel {
                 get {
@@ -68,7 +71,18 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 }
             }
 
-            [KSField] public bool IsSolarPanel => part.IsPartSolarPanel(out var _);
+            [KSField] public bool IsDeployable => part.IsPartDeployable(out var _);
+
+            [KSField]
+            public Option<ModuleDeployableAdapter> Deployable {
+                get {
+                    if (part.IsPartDeployable(out Data_Deployable data)) {
+                        return new Option<ModuleDeployableAdapter>(new ModuleDeployableAdapter(part, data));
+                    }
+
+                    return new Option<ModuleDeployableAdapter>();
+                }
+            }
         }
     }
 }
