@@ -4,7 +4,6 @@ using KontrolSystem.TO2.Runtime;
 using KSP.Modules;
 using KSP.Sim.DeltaV;
 using KSP.Sim.impl;
-using KSP.Sim.ResourceSystem;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel {
     public partial class KSPVesselModule {
@@ -70,6 +69,19 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                     return new Option<ModuleSolarPanelAdapter>();
                 }
             }
+
+            [KSField] public bool IsSolarPanel => part.IsPartSolarPanel(out var _);
+
+            [KSField] public bool IsFairing => part.TryGetModuleData<PartComponentModule_Fairing, Data_Fairing>(out var _);
+
+            [KSField]
+            public Option<ModuleFairingAdapter> Fairing {
+                get {
+                    if (part.TryGetModuleData<PartComponentModule_Fairing, Data_Fairing>(out Data_Fairing data)) {
+                        return new Option<ModuleFairingAdapter>(new ModuleFairingAdapter(part, data));
+                    }
+
+                    return new Option<ModuleFairingAdapter>();
 
             [KSField] public bool IsDeployable => part.IsPartDeployable(out var _);
 
