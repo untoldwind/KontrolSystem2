@@ -16,6 +16,12 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
             vector = new Vector(this.rotation.coordinateSystem, rotation.localRotation * Vector3d.forward);
         }
 
+        public Direction(Vector vector) {
+            this.vector = Vector.normalize(vector);
+            rotation = SimRotation.LookRotation(vector, new Vector(vector.coordinateSystem, Vector3d.up));
+            
+        }
+
         public Vector Vector {
             get => vector;
             set {

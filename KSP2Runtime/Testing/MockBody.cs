@@ -130,7 +130,7 @@ namespace KontrolSystem.KSP.Runtime.Testing {
 
         public Vector Right => new Vector(KSPTesting.IDENTITY_COORDINATE_SYSTEM, Vector3d.right);
 
-        public Vector3d AngularVelocity => angularVelocity;
+        public Vector AngularVelocity => new Vector(KSPTesting.IDENTITY_COORDINATE_SYSTEM, angularVelocity);
 
         public Vector3d GetPositionAtUT(double ut) {
             return orbit?.GetRelativePositionAtUT(ut) ?? Vector3d.zero;

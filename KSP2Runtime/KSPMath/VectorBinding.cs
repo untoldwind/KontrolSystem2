@@ -17,6 +17,10 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                     Operator.Neg,
                     new StaticMethodOperatorEmitter(() => BuiltinType.Unit, () => VectorType,
                         typeof(Vector).GetMethod("negate", new[] {typeof(Vector)}))
+                }, {
+                    Operator.Mul,
+                    new StaticMethodOperatorEmitter(() => BuiltinType.Float, () => VectorType,
+                        typeof(VectorBinding).GetMethod("Multiply", new[] {typeof(double), typeof(Vector)}))
                 },
             },
             new OperatorCollection {
@@ -69,8 +73,14 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                         () => BuiltinType.String,
                         () => new List<RealizedParameter>() {new RealizedParameter("frame", TransformFrameBinding.TransformFrameType), new RealizedParameter("decimals", BuiltinType.Int)},
                         false, typeof(VectorBinding), typeof(VectorBinding).GetMethod("ToFixed"))
-                },
-                {
+                }, {
+                    "to_direction",
+                    new BoundMethodInvokeFactory("Convert the vector to a direction in space.",
+                        true,
+                        () => DirectionBinding.DirectionType,
+                        () => new List<RealizedParameter>() { },
+                        false, typeof(VectorBinding), typeof(VectorBinding).GetMethod("ToDirection"))
+                }, {
                     "cross",
                     new BoundMethodInvokeFactory("Calculate the cross/other product with `other` vector.", true,
                         () => VectorType,
@@ -91,7 +101,12 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                         () => new List<RealizedParameter> {
                             new RealizedParameter("other", VectorType), new RealizedParameter("t", BuiltinType.Float)
                         }, false, typeof(Vector), typeof(Vector).GetMethod("Lerp"))
-                },
+                }, {
+                    "exclude_from",
+                    new BoundMethodInvokeFactory("Exclude this from `other` vector.", true, () => VectorType,
+                        () => new List<RealizedParameter> {new RealizedParameter("other", VectorType)}, false,
+                        typeof(VectorBinding), typeof(VectorBinding).GetMethod("ExcludeFrom"))
+                }, 
             },
             new Dictionary<string, IFieldAccessFactory> {
                 {
@@ -115,5 +130,14 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
 
         public static string ToFixed(Vector v, ITransformFrame frame, long decimals) =>
             Vector3Binding.ToFixed(frame.ToLocalVector(v), decimals);
+
+        public static Direction ToDirection(Vector v) => new Direction(v);
+
+        public static Vector ExcludeFrom(Vector v, Vector other) {
+            var otherLocal = v.coordinateSystem.ToLocalVector(other);
+            return new Vector(v.coordinateSystem, Vector3d.Exclude(v.vector, otherLocal));
+        }
+
+        public static Vector Multiply(double scale, Vector v) => v * scale;
     }
 }

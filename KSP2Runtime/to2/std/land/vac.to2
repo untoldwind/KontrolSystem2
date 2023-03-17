@@ -1,7 +1,7 @@
 use { Vessel, MODE_AUTOPILOT, MODE_STABILITYASSIST } from ksp::vessel
 use { GeoCoordinates } from ksp::orbit
 use { CONSOLE } from ksp::console
-use { Vec3, vec3, vec2, from_vector_to_vector, angle_axis, matrix2x2, look_dir_up } from ksp::math
+use { Vector, Vec3, vec3, vec2, from_vector_to_vector, angle_axis, matrix2x2, look_dir_up } from ksp::math
 use { sin_deg, cos_deg, clamp, max, min, sqrt, PI } from core::math
 use { angle_to_360, ship_is_facing } from std::utils
 use { land_time_to_longitude, land_deorbit_delta_v } from std::land::lib
@@ -119,7 +119,7 @@ pub fn vac_land_course_correct(vessel : Vessel, simulation : ReentrySimulation, 
     let update_run = background::run(fn() -> simulation.run())
     
     while(last_result.value.brake_time > current_time() + 20 && (last_prediction.altitude_position(0) -  landing_site.altitude_position(0)).magnitude > 500) {
-        vessel.autopilot.target_orientation = last_correction.value.to_direction().vector
+        vessel.autopilot.target_orientation = last_correction.value.to_direction(frame).vector
         
         if(last_correction.value.magnitude < 0.5) {
             CONSOLE.print_line("Coorection to subtle, warp half way through")
@@ -165,11 +165,13 @@ pub fn vac_deceleration_burn(vessel : Vessel, simulation : ReentrySimulation, in
     const console_row = CONSOLE.cursor_row
     CONSOLE.move_cursor(console_row + 4, 0)
     
+    const frame = vessel.main_body.reference_frame
+    
     vessel.actions.rcs = false
     
     const vel_at_brake = vessel.orbit.orbital_velocity(initial_result.brake_time)
     
-    const steering_direction = look_dir_up(-vel_at_brake, vessel.orbit.relative_position(initial_result.brake_time))
+    const steering_direction = look_dir_up(-vel_at_brake.to_vector(frame), vessel.orbit.relative_position(initial_result.brake_time).to_vector(frame))
     vessel.autopilot.target_orientation = steering_direction.vector
     
     wait_until(fn() -> ship_is_facing(vessel, steering_direction.vector, 5, 0.5))
@@ -191,7 +193,7 @@ pub fn vac_deceleration_burn(vessel : Vessel, simulation : ReentrySimulation, in
     let update_run = background::run(fn() -> simulation.run())
     const throttle_pid = pid_loop(0.04, 0.001, 0.01, 0, 1)
     const throttle = vessel.manage_throttle(fn(deltaT) -> {
-        let desired_speed : float = speed_policy(vessel.CoM - vessel.main_body.position, vessel.surface_velocity)
+        let desired_speed : float = speed_policy((vessel.CoM - vessel.main_body.position).to_local(frame), vessel.surface_velocity.to_local(frame))
 
         if(desired_speed.is_nan || desired_speed < 0) desired_speed = 0
         
@@ -204,9 +206,9 @@ pub fn vac_deceleration_burn(vessel : Vessel, simulation : ReentrySimulation, in
     while(vessel.altitude_terrain > 500) {
         const limited_max_thrust_accel = max(throttle.throttle * vessel.available_thrust / vessel.mass, 0.1)
         const correction_angle = min(last_correction.value.magnitude / (2.0 * limited_max_thrust_accel), 0.5)
-        const steering_vector = (correction_angle * last_correction.value.normalized - vessel.surface_velocity.normalized).normalized
+        const steering_vector = (correction_angle * last_correction.value.normalized - vessel.surface_velocity.normalized.to_local(frame)).normalized
                 
-        vessel.autopilot.target_orientation = steering_vector
+        vessel.autopilot.target_orientation = steering_vector.to_vector(frame)
 
         CONSOLE.print_at(console_row + 2, 0, "Ship height:     " + vessel.altitude_terrain.to_fixed(2))
         
@@ -288,6 +290,7 @@ sync fn course_correction(vessel : Vessel, UT : float, prediction : ReentryTraje
     const prediction_site = vessel.main_body.geo_coordinates(prediction.end_latitude, prediction.end_longitude)
     const end_radius = vessel.main_body.radius + prediction_site.terrain_height + 500
     const actual_landing_position = prediction_site.altitude_position(end_radius) - vessel.main_body.position
+    const frame = vessel.main_body.reference_frame
     
     if(end_radius > vessel.orbit.apoapsis_radius) return vec3(0,0,0)
     
@@ -296,11 +299,11 @@ sync fn course_correction(vessel : Vessel, UT : float, prediction : ReentryTraje
         else
             vessel.orbit.next_periapsis_time(UT)
     const orbit_landing_position = vessel.orbit.relative_position(orbit_landing_time)
-    const convert_orbit_to_actual = from_vector_to_vector(orbit_landing_position, actual_landing_position)
+    const convert_orbit_to_actual = from_vector_to_vector(orbit_landing_position.to_vector(frame), actual_landing_position)
     const directions = [
-        vessel.surface_velocity.normalized,
-        radial_plus_surface(vessel),
-        normal_plus_surface(vessel)
+        vessel.surface_velocity.normalized.to_local(frame),
+        radial_plus_surface(vessel).to_local(frame),
+        normal_plus_surface(vessel).to_local(frame)
     ]
     const deltas = directions.map(fn(perturbation) -> {
         const perturbed_orbit = vessel.orbit.perturbed_orbit(UT, perturbation)
@@ -311,7 +314,7 @@ sync fn course_correction(vessel : Vessel, UT : float, prediction : ReentryTraje
         const perturbed_landing_position = perturbed_orbit.relative_position(perturbed_landing_time)
         const landing_delta = perturbed_landing_position - orbit_landing_position
         
-        actual_landing_position.exclude_from(convert_orbit_to_actual * landing_delta)
+        actual_landing_position.exclude_from(convert_orbit_to_actual * landing_delta.to_vector(frame))
     })
     
     let desired_landing_position = landing_site.altitude_position(0) - vessel.main_body.position
@@ -342,12 +345,12 @@ sync fn course_correction(vessel : Vessel, UT : float, prediction : ReentryTraje
     coeffs.x * downrange_direction + coeffs.y * directions[2]
 }
 
-sync fn radial_plus_surface(vessel : Vessel) -> Vec3 = {
+sync fn radial_plus_surface(vessel : Vessel) -> Vector = {
     const up = (vessel.CoM - vessel.main_body.position).normalized
     
     vessel.surface_velocity.normalized.exclude_from(up).normalized
 }
 
-sync fn normal_plus_surface(vessel : Vessel) -> Vec3 = {
+sync fn normal_plus_surface(vessel : Vessel) -> Vector = {
     -radial_plus_surface(vessel).cross(vessel.surface_velocity).normalized
 }

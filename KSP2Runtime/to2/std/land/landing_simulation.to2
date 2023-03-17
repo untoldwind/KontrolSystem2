@@ -8,7 +8,7 @@ use { current_time } from ksp::game
 
 pub struct BodyParameters(body : Body, decel_end_altitude_asl : float, landing_altitude_asl : float, speed_policy : SpeedPolicy) {
     position : Vec3 = body.position.to_local(body.reference_frame)
-    angular_velocity : Vec3 = body.angular_velocity
+    angular_velocity : Vec3 = body.angular_velocity.to_local(body.reference_frame)
     aerobraked_radius : float = body.radius + (if(body.has_atmosphere) body.atmosphere_depth else 0)
     decel_radius : float = body.radius + decel_end_altitude_asl
     landing_radius : float = body.radius + landing_altitude_asl

@@ -23,7 +23,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
         public double RotationPeriod => body.rotationPeriod;
 
 
-        public Vector3d AngularVelocity => body.celestialMotionFrame.ToLocalAngularVelocity(body.AngularVelocity);
+        public Vector AngularVelocity => body.celestialMotionFrame.ToRelativeAngularVelocity(body.AngularVelocity);
 
         public Vector Up => body.transform.up;
 

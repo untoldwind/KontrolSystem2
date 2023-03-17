@@ -145,7 +145,14 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                         () => VectorBinding.VectorType,
                         () => new List<RealizedParameter>() { new RealizedParameter("frame", TransformFrameBinding.TransformFrameType) },
                         false, typeof(Vector3Binding), typeof(Vector3Binding).GetMethod("ToVector"))
-                },
+                }, {
+                    "to_direction",
+                    new BoundMethodInvokeFactory("Convert the vector to a direction in space.",
+                        true,
+                        () => DirectionBinding.DirectionType,
+                        () => new List<RealizedParameter>() { new RealizedParameter("frame", TransformFrameBinding.TransformFrameType) },
+                        false, typeof(Vector3Binding), typeof(Vector3Binding).GetMethod("ToDirection"))
+                }, 
 
             },
             new Dictionary<string, IFieldAccessFactory> {
@@ -180,6 +187,8 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
         public static Position ToPosition(Vector3d local, ITransformFrame frame) => new Position(frame, local);
 
         public static Vector ToVector(Vector3d local, ITransformFrame frame) => new Vector(frame, local);
+
+        public static Direction ToDirection(Vector3d local, ITransformFrame frame) => new Direction(new Vector(frame, local));
 
     }
 }

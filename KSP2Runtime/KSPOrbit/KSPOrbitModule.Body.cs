@@ -32,7 +32,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             [KSField(Description = "Rotation period of the planet.")]
             double RotationPeriod { get; }
             
-            [KSField(Description = "Angular velocity vector of the body")] Vector3d AngularVelocity { get; }
+            [KSField(Description = "Angular velocity vector of the body")] Vector AngularVelocity { get; }
             
             [KSField] ITransformFrame ReferenceFrame { get; }
 
