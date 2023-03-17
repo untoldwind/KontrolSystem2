@@ -15,7 +15,7 @@ pub fn exec_next_node(vessel : Vessel) -> Result<Unit, string> = {
     const console_row = CONSOLE.cursor_row
     CONSOLE.move_cursor(console_row + 4, 0)
     
-    const frame = vessel.main_body.reference_frame
+    const frame = vessel.main_body.celestial_frame
     
     const node = vessel.maneuver.next_node()?
     

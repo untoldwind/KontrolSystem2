@@ -122,15 +122,17 @@ namespace KontrolSystem.KSP.Runtime.Testing {
 
         public double RotationPeriod => rotationPeriod;
 
-        public ITransformFrame ReferenceFrame => KSPTesting.IDENTITY_COORDINATE_SYSTEM;
+        public ITransformFrame CelestialFrame => KSPTesting.IDENTITY_COORDINATE_SYSTEM;
 
-        public Position Position => new Position(ReferenceFrame, Vector3d.zero);
+        public ITransformFrame BodyFrame => KSPTesting.IDENTITY_COORDINATE_SYSTEM;
+
+        public Position Position => new Position(CelestialFrame, Vector3d.zero);
 
         public Vector Up => new Vector(KSPTesting.IDENTITY_COORDINATE_SYSTEM, Vector3d.up);
 
         public Vector Right => new Vector(KSPTesting.IDENTITY_COORDINATE_SYSTEM, Vector3d.right);
 
-        public Vector AngularVelocity => new Vector(KSPTesting.IDENTITY_COORDINATE_SYSTEM, angularVelocity);
+        public AngularVelocity AngularVelocity => new AngularVelocity(KSPTesting.IDENTITY_COORDINATE_SYSTEM.motionFrame, angularVelocity);
 
         public Vector3d GetPositionAtUT(double ut) {
             return orbit?.GetRelativePositionAtUT(ut) ?? Vector3d.zero;
@@ -146,7 +148,7 @@ namespace KontrolSystem.KSP.Runtime.Testing {
             double phi = Math.Cos(lat);
             double z = Math.Sin(lat);
 
-            return new Vector(ReferenceFrame, new Vector3d(phi * Math.Cos(lon), z, phi * Math.Sin(lon)));
+            return new Vector(CelestialFrame, new Vector3d(phi * Math.Cos(lon), z, phi * Math.Sin(lon)));
         }
 
         public double TerrainHeight(double lat, double lon) => 0.0;

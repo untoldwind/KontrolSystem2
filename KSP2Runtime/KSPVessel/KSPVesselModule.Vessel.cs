@@ -63,12 +63,18 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField] public KSPOrbitModule.IOrbit Orbit => new OrbitWrapper(context, vessel.Orbit);
             
-            [KSField] public ITransformFrame ReferenceFrame => vessel.transform.bodyFrame;
+            [KSField] public ITransformFrame CelestialFrame => vessel.transform.celestialFrame;
+
+            [KSField] public ITransformFrame BodyFrame => vessel.transform.bodyFrame;
 
             [KSField] public ITransformFrame ControlFrame => vessel.ControlTransform.bodyFrame;
 
             [KSField] public Position Position => vessel.SimulationObject.Position;
 
+            [KSField]
+            public VelocityAtPosition Velocity =>
+                new VelocityAtPosition(vessel.Velocity, vessel.SimulationObject.Position);
+            
             [KSField] public Vector OrbitalVelocity => vessel.OrbitalVelocity;
 
             [KSField] public Vector SurfaceVelocity => vessel.SurfaceVelocity;
@@ -93,9 +99,9 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField] public double AltitudeScenery => vessel.AltitudeFromScenery;
 
-            [KSField] public Vector AngularMomentum => vessel.angularMomentum.relativeAngularVelocity;
+            [KSField] public AngularVelocity AngularMomentum => vessel.angularMomentum;
 
-            [KSField] public Vector AngularVelocity => vessel.AngularVelocity.relativeAngularVelocity;
+            [KSField] public AngularVelocity AngularVelocity => vessel.AngularVelocity;
 
             [KSField] public double VerticalSpeed => vessel.VerticalSrfSpeed;
             

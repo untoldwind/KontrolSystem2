@@ -98,7 +98,7 @@ pub fn vac_land_course_correct(vessel : Vessel, simulation : ReentrySimulation, 
     const console_row = CONSOLE.cursor_row
     CONSOLE.move_cursor(console_row + 2, 0)
 
-    const frame = vessel.main_body.reference_frame
+    const frame = vessel.main_body.celestial_frame
     const last_result = Cell(initial_result)
     let last_prediction = vessel.main_body.geo_coordinates(last_result.value.end_latitude, last_result.value.end_longitude)
 
@@ -165,7 +165,7 @@ pub fn vac_deceleration_burn(vessel : Vessel, simulation : ReentrySimulation, in
     const console_row = CONSOLE.cursor_row
     CONSOLE.move_cursor(console_row + 4, 0)
     
-    const frame = vessel.main_body.reference_frame
+    const frame = vessel.main_body.celestial_frame
     
     vessel.actions.rcs = false
     
@@ -290,7 +290,7 @@ sync fn course_correction(vessel : Vessel, UT : float, prediction : ReentryTraje
     const prediction_site = vessel.main_body.geo_coordinates(prediction.end_latitude, prediction.end_longitude)
     const end_radius = vessel.main_body.radius + prediction_site.terrain_height + 500
     const actual_landing_position = prediction_site.altitude_position(end_radius) - vessel.main_body.position
-    const frame = vessel.main_body.reference_frame
+    const frame = vessel.main_body.celestial_frame
     
     if(end_radius > vessel.orbit.apoapsis_radius) return vec3(0,0,0)
     
@@ -319,7 +319,7 @@ sync fn course_correction(vessel : Vessel, UT : float, prediction : ReentryTraje
     
     let desired_landing_position = landing_site.altitude_position(0) - vessel.main_body.position
     const body_rotation_angle_during_descent = 360 * (prediction.end_time - UT) / vessel.main_body.rotation_period
-    const body_rotation_during_fall = angle_axis(body_rotation_angle_during_descent, vessel.main_body.angular_velocity.normalized)
+    const body_rotation_during_fall = angle_axis(body_rotation_angle_during_descent, vessel.main_body.angular_velocity.relative_to(frame).normalized)
     desired_landing_position = body_rotation_during_fall * desired_landing_position
     
     let desired_delta = desired_landing_position - actual_landing_position

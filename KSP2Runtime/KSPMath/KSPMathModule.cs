@@ -40,6 +40,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
             BindingGenerator.RegisterTypeMapping(typeof(Position), PositionBinding.PositionType);
             BindingGenerator.RegisterTypeMapping(typeof(Vector), VectorBinding.VectorType);
             BindingGenerator.RegisterTypeMapping(typeof(VelocityAtPosition), VelocityBinding.VelocityType);
+            BindingGenerator.RegisterTypeMapping(typeof(AngularVelocity), AngularVelocityBinding.AngularVelocityType);
             
             List<CompiledKontrolConstant> constants = new List<CompiledKontrolConstant>();
 
