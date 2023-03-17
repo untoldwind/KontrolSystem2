@@ -59,7 +59,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
                 if (idx < 0 || idx == dataEngine.currentEngineModeIndex) return false;
 
-                if (!GameManager.Instance.Game.SpaceSimulation.TryGetViewObject(part.SimulationObject,
+                if (!KSPContext.CurrentContext.Game.SpaceSimulation.TryGetViewObject(part.SimulationObject,
                         out var viewObject)) return false;
 
                 if (!viewObject.TryGetComponent<Module_Engine>(out var moduleEngine)) return false;

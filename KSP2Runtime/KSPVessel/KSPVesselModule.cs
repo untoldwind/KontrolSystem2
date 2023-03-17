@@ -40,7 +40,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
         )]
         public static Result<VesselAdapter, string> ActiveVessel() {
             VesselComponent activeVessel =
-                GameManager.Instance.Game.ViewController.GetActiveSimVessel(true);
+                KSPContext.CurrentContext.Game.ViewController.GetActiveSimVessel(true);
 
             return VesselAdapter.NullSafe(KSPContext.CurrentContext, activeVessel)
                 .OkOr("No active vessel");

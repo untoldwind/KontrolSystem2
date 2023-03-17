@@ -64,7 +64,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         private ArgumentListElement[] arguments;
 
         public void Attach(KontrolSystemProcess process, Rect parentPosition) {
-            var gameMode = GameModeAdapter.GameModeFromState(GameManager.Instance.Game.GlobalGameState.GetState());
+            var gameMode = GameModeAdapter.GameModeFromState(Game.GlobalGameState.GetState());
 
             var argumentDescs = process.EntrypointArgumentDescriptors(gameMode);
             arguments = argumentDescs.Select<EntrypointArgumentDescriptor, ArgumentListElement>(arg => {
@@ -105,7 +105,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             if (GUILayout.Button("Start")) {
 
                 object[] values = arguments.Select(arg => arg.Value).ToArray();
-                Mainframe.Instance.StartProcess(process, GameManager.Instance?.Game?.ViewController?.GetActiveSimVessel(true), values);
+                Mainframe.Instance.StartProcess(process, Game.ViewController.GetActiveSimVessel(true), values);
             }
             if (GUILayout.Button("Close")) {
                 Close();

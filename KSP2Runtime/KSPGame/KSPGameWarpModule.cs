@@ -22,6 +22,6 @@ namespace KontrolSystem.KSP.Runtime.KSPGame {
             TimeWarp.StopTimeWarp();
         }
 
-        private static TimeWarp TimeWarp => GameManager.Instance.Game.ViewController.TimeWarp;
+        private static TimeWarp TimeWarp => KSPContext.CurrentContext.Game.ViewController.TimeWarp;
     }
 }

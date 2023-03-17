@@ -143,7 +143,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                 -paddingTop - buttonHeight - padding + windowRect.height - padding - buttonHeight - padding
             ), text, textAreaStyle);
 
-            string label = GameManager.Instance.Game.Input.asset.enabled ? "Disable Game Input" : "Enable Game Input";
+            string label = Game.Input.asset.enabled ? "Disable Game Input" : "Enable Game Input";
 
             if (GUI.Button(new Rect(
                 padding,
@@ -151,10 +151,10 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                 disableGameInputButtonWidth,
                 buttonHeight
             ), label)) {
-                if (GameManager.Instance.Game.Input.asset.enabled) {
-                    GameManager.Instance.Game.Input.Disable();
+                if (Game.Input.asset.enabled) {
+                    Game.Input.Disable();
                 } else {
-                    GameManager.Instance.Game.Input.Enable();
+                    Game.Input.Enable();
                 }
             }
 

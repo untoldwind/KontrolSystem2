@@ -31,7 +31,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSMethod] public bool PerformJettison() {
 
-                if (!GameManager.Instance.Game.SpaceSimulation.TryGetViewObject(part.SimulationObject,
+                if (!KSPContext.CurrentContext.Game.SpaceSimulation.TryGetViewObject(part.SimulationObject,
                         out var viewObject)) return false;
 
                 if (!viewObject.TryGetComponent<Module_Fairing>(out var moduleFairing)) return false;

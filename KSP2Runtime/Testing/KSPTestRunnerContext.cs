@@ -7,6 +7,7 @@ using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Runtime;
+using KSP.Game;
 using KSP.Sim.impl;
 
 namespace KontrolSystem.KSP.Runtime.Testing {
@@ -28,6 +29,8 @@ namespace KontrolSystem.KSP.Runtime.Testing {
 
         private KSPConsoleBuffer consoleBuffer = new KSPConsoleBuffer(50, 80);
 
+        public GameInstance Game => throw new NotImplementedException("Game is no available in test-mode");
+        
         public GameMode GameMode => GameMode.Unknown;
 
         public KSPConsoleBuffer ConsoleBuffer => consoleBuffer;

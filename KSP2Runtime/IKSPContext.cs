@@ -3,6 +3,7 @@ using KontrolSystem.TO2.Runtime;
 using KontrolSystem.KSP.Runtime.KSPConsole;
 using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
+using KSP.Game;
 using KSP.Sim.impl;
 using KSP.Sim.State;
 using UnityEngine;
@@ -15,6 +16,8 @@ namespace KontrolSystem.KSP.Runtime {
     }
 
     public interface IKSPContext : IContext {
+        GameInstance Game { get; }
+        
         GameMode GameMode { get; }
 
         KSPConsoleBuffer ConsoleBuffer { get; }

@@ -20,8 +20,8 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField]
             public bool Rcs {
-                get => GameManager.Instance.Game.ViewController.DataProvider.TelemetryDataProvider.RCSEnabled.GetValue();
-                set => GameManager.Instance.Game.ViewController.DataProvider.TelemetryDataProvider.RCSEnabled.SetValueInternal(value);
+                get => KSPContext.CurrentContext.Game.ViewController.DataProvider.TelemetryDataProvider.RCSEnabled.GetValue();
+                set => KSPContext.CurrentContext.Game.ViewController.DataProvider.TelemetryDataProvider.RCSEnabled.SetValueInternal(value);
             }
 
             [KSField]

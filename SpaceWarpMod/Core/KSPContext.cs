@@ -38,6 +38,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         }
     }
     public class KSPContext : IKSPContext {
+        private readonly GameInstance gameInstance;
         private readonly KSPConsoleBuffer consoleBuffer;
         private object nextYield;
         private Action onNextYieldOnce;
@@ -47,7 +48,8 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         private readonly Dictionary<VesselComponent, AutopilotHooks> autopilotHooks;
         private readonly List<BackgroundKSPContext> childContexts;
 
-        public KSPContext(KSPConsoleBuffer consoleBuffer) {
+        public KSPContext(GameInstance gameInstance, KSPConsoleBuffer consoleBuffer) {
+            this.gameInstance = gameInstance;
             this.consoleBuffer = consoleBuffer;
             markers = new List<IMarker>();
             autopilotHooks = new Dictionary<VesselComponent, AutopilotHooks>();
@@ -83,14 +85,16 @@ namespace KontrolSystem.SpaceWarpMod.Core {
             return childContext;
         }
 
-        public GameMode GameMode => CurrentGameMode;
+        public GameInstance Game => gameInstance;
+        
+        public GameMode GameMode => GameModeAdapter.GameModeFromState(Game.GlobalGameState.GetState());
 
-        public double UniversalTime => GameManager.Instance.Game.SpaceSimulation.UniverseModel.UniversalTime;
+        public double UniversalTime => Game.SpaceSimulation.UniverseModel.UniversalTime;
 
         public KSPConsoleBuffer ConsoleBuffer => consoleBuffer;
 
         public KSPOrbitModule.IBody FindBody(string name) {
-            var body = GameManager.Instance.Game.ViewController.GetBodyByName(name);
+            var body = Game.ViewController.GetBodyByName(name);
 
             return body != null ? new BodyWrapper(this, body) : null;
         }
@@ -176,9 +180,6 @@ namespace KontrolSystem.SpaceWarpMod.Core {
             autopilotHooks.Clear();
             childContexts.Clear();
         }
-
-        internal static GameMode CurrentGameMode =>
-            GameModeAdapter.GameModeFromState(GameManager.Instance.Game.GlobalGameState.GetState());
     }
 
     public class BackgroundKSPContext : IContext {

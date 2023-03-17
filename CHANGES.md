@@ -1,5 +1,11 @@
 # Changes
 
+## 0.1.9 ->
+
+* Potentially fixed reload/revert issue
+* Add bindings for solar panels
+* Add bindings for fairings
+
 ## 0.1.8 -> 0.1.9
 
 * Add basic ingame script editor (thanks to ThunderousEcho)

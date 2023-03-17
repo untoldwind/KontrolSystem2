@@ -113,11 +113,14 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             GUILayout.Label($"Status: {status}");
         }
         void DrawAvailableModules() {
+            var gameMode = GameModeAdapter.GameModeFromState(Game.GlobalGameState.GetState());
+            var activeVessel = Game.ViewController.GetActiveSimVessel(true);
+            
             entryPointScrollPos = GUILayout.BeginScrollView(entryPointScrollPos, CommonStyles.Instance.panelSkin.scrollView,
                 GUILayout.MinWidth(360), GUILayout.MinHeight(350));
 
             GUILayout.BeginVertical();
-            List<KontrolSystemProcess> availableProcesses = Mainframe.Instance.ListProcesses().ToList();
+            List<KontrolSystemProcess> availableProcesses = Mainframe.Instance.ListProcesses(gameMode, activeVessel).ToList();
             if (!availableProcesses.Any()) {
                 GUILayout.Label("No runnable Kontrol module found.\n" +
                                 "-------------------------\n" +
@@ -130,7 +133,6 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                     GUILayout.Label($"{process.Name} ({process.State})", GUILayout.ExpandWidth(true));
                     switch (process.State) {
                     case KontrolSystemProcessState.Available:
-                        var gameMode = GameModeAdapter.GameModeFromState(GameManager.Instance.Game.GlobalGameState.GetState());
                         var argCount = process.EntrypointArgumentCount(gameMode);
                         if (argCount > 1) {
                             if (GUILayout.Button($"{argCount - 1}", GUILayout.Width(30))) {
@@ -138,7 +140,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                             }
                         }
                         if (GUILayout.Button(CommonStyles.Instance.startButtonTexture, GUILayout.Width(30)))
-                            Mainframe.Instance.StartProcess(process, GameManager.Instance?.Game?.ViewController?.GetActiveSimVessel(true));
+                            Mainframe.Instance.StartProcess(process, activeVessel);
                         break;
                     case KontrolSystemProcessState.Running:
                     case KontrolSystemProcessState.Outdated:
@@ -250,8 +252,8 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                 Mainframe.Instance.Reboot(ConfigAdapter.Instance);
 
                 // Temporary fix for windows hiding main menu
-                GameManager.Instance.Game.Messages.Subscribe<EscapeMenuOpenedMessage>(OnEscapeMenuOpened);
-                GameManager.Instance.Game.Messages.Subscribe<EscapeMenuClosedMessage>(OnEscapeMenuClosed);
+                Game.Messages.Subscribe<EscapeMenuOpenedMessage>(OnEscapeMenuOpened);
+                Game.Messages.Subscribe<EscapeMenuClosedMessage>(OnEscapeMenuClosed);
             }
         }
 
@@ -278,8 +280,8 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         public void CloseEditorWindow(EditorWindow editorWindow) {
             editorWindows.Remove(editorWindow);
             Destroy(editorWindow);
-            if (editorWindows.Count == 0 && !GameManager.Instance.Game.Input.asset.enabled) {
-                GameManager.Instance.Game.Input.Enable();
+            if (editorWindows.Count == 0 && !Game.Input.asset.enabled) {
+                Game.Input.Enable();
             }
         }
 
