@@ -1,0 +1,36 @@
+use { Vessel } from ksp::vessel
+use { angle_to_360 } from std::utils
+use { sqrt } from core::math
+
+pub sync fn land_time_to_longitude(vessel: Vessel, longitude: float) -> float = {
+    const s_day = vessel.main_body.rotation_period
+    const k_ang_s = 360.0 / s_day
+    const p = vessel.orbit.period
+    const s_ang_s = (360.0 / p) - k_ang_s
+    const tgt_longitude = angle_to_360(longitude)
+    const ship_longitude = angle_to_360(vessel.geo_coordinates.longitude)
+    const d_longitude = tgt_longitude - ship_longitude
+
+    if(d_longitude < 0) {
+        (d_longitude + 360.0) / s_ang_s
+    } else {
+        d_longitude / s_ang_s
+    }
+}
+
+pub sync fn land_deorbit_delta_v(vessel : Vessel, alt : float) -> float = {
+    const mu = vessel.main_body.grav_parameter
+    const br = vessel.main_body.radius
+
+    const vom = vessel.orbital_velocity.magnitude
+    const r = br + vessel.altitude_sealevel
+    const ra = r
+    const v1 = vom
+    const sma1 = vessel.orbit.semi_major_axis
+
+    const r2 = br + vessel.orbit.periapsis
+    const sma2 = (alt + 2 * br + vessel.orbit.periapsis) / 2
+    const v2 = sqrt(vom * vom + (mu * (2.0/r2 - 2.0/r + 1.0/sma1 - 1.0/sma2)))
+
+    v2 - v1
+}

@@ -1,5 +1,6 @@
 ﻿using System;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
+using KSP.Sim.impl;
 
 namespace KontrolSystem.KSP.Runtime.Testing {
     public class MockBody : KSPOrbitModule.IBody {
@@ -111,6 +112,8 @@ namespace KontrolSystem.KSP.Runtime.Testing {
         public double AtmosphereDepth => atmosphereDepth;
 
         public KSPOrbitModule.IOrbit Orbit => orbit;
+        
+        public IGGuid UnderlyingId { get; }
 
         public double Radius => radius;
 

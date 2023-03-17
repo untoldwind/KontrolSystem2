@@ -1,5 +1,6 @@
 ﻿using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.TO2.Binding;
+using KSP.Sim.impl;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel {
     public partial class KSPVesselModule {
@@ -8,6 +9,8 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField] string Name { get; }
 
             [KSField] KSPOrbitModule.IOrbit Orbit { get; }
+            
+            IGGuid UnderlyingId { get; }
         }
     }
 }
