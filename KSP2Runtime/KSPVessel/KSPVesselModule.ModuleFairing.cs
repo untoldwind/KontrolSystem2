@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using KontrolSystem.TO2.Binding;
+﻿using KontrolSystem.TO2.Binding;
 using KSP.Game;
 using KSP.Modules;
 using KSP.Sim.impl;
@@ -30,6 +28,17 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             }
 
             [KSField] public bool IsDeployed => dataFairing.IsDeployed.GetValue();
+
+            [KSMethod] public bool PerformJettison() {
+
+                if (!GameManager.Instance.Game.SpaceSimulation.TryGetViewObject(part.SimulationObject,
+                        out var viewObject)) return false;
+
+                if (!viewObject.TryGetComponent<Module_Fairing>(out var moduleFairing)) return false;
+
+                moduleFairing.PerformJettison();
+                return dataFairing.IsDeployed.GetValue();
+            }
         }
     }
 }
