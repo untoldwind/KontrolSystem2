@@ -23,5 +23,6 @@ modules
 types
 operators
 special_types/index
+structs
 examples/index
 ```
