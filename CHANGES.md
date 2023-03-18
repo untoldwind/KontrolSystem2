@@ -1,5 +1,9 @@
 # Changes
 
+## 0.1.9.3 ->
+
+* Add API for coordinate system independent positions, velocities, vectors and rotations 
+
 ## 0.1.9.2 -> 0.1.9.3
 
 * Fix main window rescale on resize

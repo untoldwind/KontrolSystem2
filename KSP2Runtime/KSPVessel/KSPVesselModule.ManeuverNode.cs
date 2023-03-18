@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using KontrolSystem.KSP.Runtime.KSPMath;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
@@ -52,17 +53,36 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField]
             public Vector3d BurnVector {
                 get {
-                    KSPOrbitModule.IOrbit orbit = new OrbitWrapper(vesselAdapter.context, vesselAdapter.vessel.Orbit);
+                    KSPOrbitModule.IOrbit orbit = new OrbitWrapper(vesselAdapter.context, vesselAdapter.vessel.Orbiter.PatchedConicSolver.FindPatchContainingUT(maneuverNode.Time) ?? vesselAdapter.vessel.Orbit);
                     return orbit.RadialPlus(maneuverNode.Time) * maneuverNode.BurnVector.x +
                            orbit.NormalPlus(maneuverNode.Time) * maneuverNode.BurnVector.y +
                            orbit.Prograde(maneuverNode.Time) * maneuverNode.BurnVector.z;
                 }
                 set {
-                    KSPOrbitModule.IOrbit orbit = new OrbitWrapper(vesselAdapter.context, vesselAdapter.vessel.Orbit);
+                    KSPOrbitModule.IOrbit orbit = new OrbitWrapper(vesselAdapter.context, vesselAdapter.vessel.Orbiter.PatchedConicSolver.FindPatchContainingUT(maneuverNode.Time) ?? vesselAdapter.vessel.Orbit);
                     UpdateNode(
                         Vector3d.Dot(orbit.RadialPlus(maneuverNode.Time), value),
                         Vector3d.Dot(orbit.NormalPlus(maneuverNode.Time), value),
                         Vector3d.Dot(orbit.Prograde(maneuverNode.Time), value),
+                        maneuverNode.Time);
+                }
+            }
+
+            [KSField]
+            public VelocityAtPosition GlobalBurnVector {
+                get {
+                    KSPOrbitModule.IOrbit orbit = new OrbitWrapper(vesselAdapter.context, vesselAdapter.vessel.Orbiter.PatchedConicSolver.FindPatchContainingUT(maneuverNode.Time) ?? vesselAdapter.vessel.Orbit);
+                    return new VelocityAtPosition(new Velocity(orbit.ReferenceFrame.motionFrame, orbit.RadialPlus(maneuverNode.Time) * maneuverNode.BurnVector.x +
+                           orbit.NormalPlus(maneuverNode.Time) * maneuverNode.BurnVector.y +
+                           orbit.Prograde(maneuverNode.Time) * maneuverNode.BurnVector.z), orbit.GlobalPosition(maneuverNode.Time));
+                }
+                set {
+                    KSPOrbitModule.IOrbit orbit = new OrbitWrapper(vesselAdapter.context, vesselAdapter.vessel.Orbiter.PatchedConicSolver.FindPatchContainingUT(maneuverNode.Time) ?? vesselAdapter.vessel.Orbit);
+                    var local = orbit.ReferenceFrame.motionFrame.ToLocalVelocity(value.velocity, value.position);
+                    UpdateNode(
+                        Vector3d.Dot(orbit.RadialPlus(maneuverNode.Time), local),
+                        Vector3d.Dot(orbit.NormalPlus(maneuverNode.Time), local),
+                        Vector3d.Dot(orbit.Prograde(maneuverNode.Time), local),
                         maneuverNode.Time);
                 }
             }
