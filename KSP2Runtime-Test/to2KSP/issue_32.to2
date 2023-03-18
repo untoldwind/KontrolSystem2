@@ -1,0 +1,11 @@
+use { CONSOLE } from ksp::console
+
+test fn test_console_chain_call() -> Unit = {
+    let roll = getFloat()
+    CONSOLE.print_line(roll.to_string())
+    CONSOLE.print_line(getFloat().to_string())
+}
+
+fn getFloat() -> float = {
+    90.0
+}

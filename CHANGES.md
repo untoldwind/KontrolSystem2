@@ -5,6 +5,7 @@
 * Fix main window rescale
 * Improve error message on invalid number of method arguments
 * Add binding for decoupler and launch clamps
+* Fixed mixing async function results with sync methods (issue 32)
 
 ## 0.1.9 -> 0.1.9.2
 

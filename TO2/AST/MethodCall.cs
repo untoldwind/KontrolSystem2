@@ -82,6 +82,8 @@ namespace KontrolSystem.TO2.AST {
             IMethodInvokeEmitter methodInvoker = targetType.FindMethod(context.ModuleContext, methodName)
                 ?.Create(context, arguments.Select(arg => arg.ResultType(context)).ToList(), this);
 
+            target.Prepare(context);
+            
             if (methodInvoker == null || !methodInvoker.IsAsync || !context.IsAsync) return;
 
             EmitCode(context, false);
