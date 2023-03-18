@@ -64,9 +64,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
                 switch (process.State) {
                 case KontrolSystemProcessState.Outdated:
                 case KontrolSystemProcessState.Running:
-                    if (process.context?.markers != null)
-                        foreach (IMarker marker in process.context?.markers)
-                            marker.Update();
+                    process.context?.TriggerMarkerUpdate();
                     break;
                 }
             }
@@ -78,9 +76,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
                 switch (process.State) {
                 case KontrolSystemProcessState.Outdated:
                 case KontrolSystemProcessState.Running:
-                    if (process.context?.markers != null)
-                        foreach (IMarker marker in process.context?.markers)
-                            marker.OnRender();
+                    process.context?.TriggerMarkerRender();
                     break;
                 }
             }

@@ -52,14 +52,14 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
         public Vector3d SurfaceNormal(double lat, double lon) => body.GetSurfaceNVector(lat, lon);
 
         public Vector GlobalSurfaceNormal(double latitude, double longitude) => new Vector(body.transform.celestialFrame,
-           body.GetRelSurfaceNVector(latitude, longitude));
+           body.GetSurfaceNVector(latitude, longitude));
 
         public double TerrainHeight(double lat, double lon) => body.SurfaceProvider.GetTerrainAltitudeFromCenter(lat, lon) - body.radius;
 
         public Vector3d SurfacePosition(double latitude, double longitude, double altitude) =>
             body.GetWorldSurfacePosition(latitude, longitude, altitude, body.coordinateSystem);
 
-        public Position GlobalSurfacePosition(double latitude, double longitude, double altitude) => new Position(body.transform.celestialFrame, body.GetRelSurfacePosition(latitude, longitude, altitude));
+        public Position GlobalSurfacePosition(double latitude, double longitude, double altitude) => new Position(body.transform.celestialFrame, body.GetSurfaceNVector(latitude, longitude) * (body.radius + altitude));
 
         public KSPOrbitModule.GeoCoordinates GeoCoordinates(double latitude, double longitude) => new KSPOrbitModule.GeoCoordinates(this, latitude, longitude);
 

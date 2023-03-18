@@ -91,6 +91,8 @@ namespace KontrolSystem.SpaceWarpMod.Core {
 
         public double UniversalTime => Game.SpaceSimulation.UniverseModel.UniversalTime;
 
+        public VesselComponent ActiveVessel => gameInstance.ViewController.GetActiveSimVessel(true);
+        
         public KSPConsoleBuffer ConsoleBuffer => consoleBuffer;
 
         public KSPOrbitModule.IBody FindBody(string name) {
@@ -125,6 +127,26 @@ namespace KontrolSystem.SpaceWarpMod.Core {
             markers.Clear();
         }
 
+        public void TriggerMarkerUpdate() {
+            try {
+                ContextHolder.CurrentContext.Value = this;
+                foreach (IMarker marker in markers)
+                    marker.OnUpdate();
+            } finally {
+                ContextHolder.CurrentContext.Value = null;
+            }
+        }
+
+        public void TriggerMarkerRender() {
+            try {
+                ContextHolder.CurrentContext.Value = this;
+                foreach (IMarker marker in markers)
+                    marker.OnRender();
+            } finally {
+                ContextHolder.CurrentContext.Value = null;
+            }
+        }
+        
         public void HookAutopilot(VesselComponent vessel, FlightInputCallback autopilot) {
             LoggerAdapter.Instance.Debug($"Hook autopilot {autopilot} to {vessel.Name}");
             if (autopilotHooks.ContainsKey(vessel)) {

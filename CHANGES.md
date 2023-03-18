@@ -2,7 +2,8 @@
 
 ## 0.1.9.3 ->
 
-* Add API for coordinate system independent positions, velocities, vectors and rotations 
+* Add API for coordinate system independent positions, velocities, vectors and rotations
+* Debug vectors and ground markers
 
 ## 0.1.9.2 -> 0.1.9.3
 

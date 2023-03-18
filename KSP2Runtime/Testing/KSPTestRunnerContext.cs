@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 using KontrolSystem.KSP.Runtime.KSPConsole;
 using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
@@ -30,7 +29,7 @@ namespace KontrolSystem.KSP.Runtime.Testing {
         private KSPConsoleBuffer consoleBuffer = new KSPConsoleBuffer(50, 80);
 
         public GameInstance Game => throw new NotImplementedException("Game is no available in test-mode");
-
+        
         public GameMode GameMode => GameMode.Unknown;
 
         public KSPConsoleBuffer ConsoleBuffer => consoleBuffer;
@@ -52,6 +51,12 @@ namespace KontrolSystem.KSP.Runtime.Testing {
         }
 
         public void ClearMarkers() {
+        }
+
+        public void TriggerMarkerUpdate() {
+        }
+
+        public void TriggerMarkerRender() {
         }
 
         public void HookAutopilot(VesselComponent vessel, FlightInputCallback autopilot) {

@@ -1,4 +1,5 @@
 ﻿using KontrolSystem.TO2.Binding;
+using KSP.Sim;
 
 namespace KontrolSystem.KSP.Runtime.KSPOrbit {
     public partial class KSPOrbitModule {
@@ -20,10 +21,15 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
             [KSField] public Vector3d SurfaceNormal => body.SurfaceNormal(Latitude, Longitude);
 
+            [KSField] public Vector GlobalSurfaceNormal => body.GlobalSurfaceNormal(Latitude, Longitude);
+
             [KSField] public double TerrainHeight => body.TerrainHeight(Latitude, Longitude);
 
             [KSMethod]
             public Vector3d AltitudePosition(double altitude) => body.SurfacePosition(Latitude, Longitude, altitude);
+            
+            [KSMethod]
+            public Position GlobalAltitudePosition(double altitude) => body.GlobalSurfacePosition(Latitude, Longitude, altitude);
         }
     }
 }

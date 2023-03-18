@@ -495,6 +495,7 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
             }
 
             public void UpdateVectorRenders() {
+                /*
                 if (ShowFacingVectors) {
                     if (vForward == null) {
                         vForward = InitVectorRenderer(Color.red, 1);
@@ -686,7 +687,7 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
                         if (vTgtTorqueZ.Visible) vTgtTorqueZ.Visible = false;
                         vTgtTorqueZ = null;
                     }
-                }
+                }*/
             }
 
             public void PrintDebug() {
@@ -730,6 +731,7 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
                 */
             }
 
+            /*
             public KSPDebugModule.VectorRenderer InitVectorRenderer(Color c, double width) {
                 KSPDebugModule.VectorRenderer renderer = new KSPDebugModule.VectorRenderer(
                     () => Vector3d.zero,
@@ -739,6 +741,7 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
 
                 return renderer;
             }
+            */
         }
     }
 }

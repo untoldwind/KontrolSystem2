@@ -11,7 +11,8 @@ using UnityEngine;
 namespace KontrolSystem.KSP.Runtime {
     public interface IMarker {
         bool Visible { get; set; }
-        void Update();
+        void OnUpdate();
+
         void OnRender();
     }
 
@@ -19,6 +20,8 @@ namespace KontrolSystem.KSP.Runtime {
         GameInstance Game { get; }
 
         GameMode GameMode { get; }
+
+        VesselComponent ActiveVessel { get; }
 
         KSPConsoleBuffer ConsoleBuffer { get; }
 
@@ -36,6 +39,10 @@ namespace KontrolSystem.KSP.Runtime {
 
         void ClearMarkers();
 
+        void TriggerMarkerUpdate();
+
+        void TriggerMarkerRender();
+        
         void HookAutopilot(VesselComponent vessel, FlightInputCallback autopilot);
 
         void UnhookAutopilot(VesselComponent vessel, FlightInputCallback autopilot);

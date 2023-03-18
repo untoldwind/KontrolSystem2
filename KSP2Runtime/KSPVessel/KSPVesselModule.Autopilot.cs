@@ -45,6 +45,15 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             }
 
             [KSField]
+            public Vector GlobalTargetOrientation {
+                get {
+                    var sas = vesselAdapter.vessel.Autopilot?.SAS;
+                    return sas != null ? new Vector(sas.ReferenceFrame, sas.TargetOrientation) : vesselAdapter.GlobalFacing.Vector;
+                }
+                set => vesselAdapter.vessel.Autopilot?.SAS?.SetTargetOrientation(value, false);
+            }
+            
+            [KSField]
             public Direction LockDirection {
                 get {
                     var sas = vesselAdapter.vessel.Autopilot?.SAS;
@@ -53,6 +62,14 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 }
                 set => vesselAdapter.vessel.Autopilot?.SAS?.LockRotation(value.Rotation);
             }
-        }
+            
+            [KSField]
+            public RotationWrapper GlobalLockDirection {
+                get {
+                    var sas = vesselAdapter.vessel.Autopilot?.SAS;
+                    return sas != null ? new RotationWrapper(new Rotation(sas.ReferenceFrame, sas.LockedRotation)) : vesselAdapter.GlobalFacing;
+                }
+                set => vesselAdapter.vessel.Autopilot?.SAS?.LockRotation(value.Rotation);
+            }        }
     }
 }
