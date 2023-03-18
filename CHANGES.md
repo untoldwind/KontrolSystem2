@@ -3,6 +3,8 @@
 ## 0.1.9.2 -> 
 
 * Fix main window rescale
+* Improve error message on invalid number of method arguments
+* Add binding for decoupler and launch clamps
 
 ## 0.1.9 -> 0.1.9.2
 

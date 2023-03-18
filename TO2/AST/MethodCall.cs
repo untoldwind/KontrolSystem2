@@ -155,10 +155,20 @@ namespace KontrolSystem.TO2.AST {
                 return;
             }
 
+            if (arguments.Count > methodInvoker.Parameters.Count) {
+                context.AddError(new StructuralError(
+                    StructuralError.ErrorType.ArgumentMismatch,
+                    $"Function '{targetType.Name}.{methodName}' only allows {methodInvoker.Parameters.Count} arguments, {arguments.Count} where given",
+                    Start,
+                    End
+                ));
+                return;
+            }
+            
             if (methodInvoker.RequiredParameterCount() > arguments.Count) {
                 context.AddError(new StructuralError(
                     StructuralError.ErrorType.ArgumentMismatch,
-                    $"Method '{targetType.Name}.{methodName}' requires {methodInvoker.RequiredParameterCount()} arguments",
+                    $"Method '{targetType.Name}.{methodName}' requires {methodInvoker.RequiredParameterCount()} arguments, {arguments.Count} where given",
                     Start,
                     End
                 ));
