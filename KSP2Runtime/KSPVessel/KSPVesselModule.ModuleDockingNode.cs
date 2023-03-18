@@ -8,7 +8,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
         public class ModuleDockingNodeAdapter {
             private readonly PartComponent part;
             private readonly Data_DockingNode dataDockingNode;
-            
+
             public ModuleDockingNodeAdapter(PartComponent part, Data_DockingNode dataDockingNode) {
                 this.part = part;
                 this.dataDockingNode = dataDockingNode;
@@ -16,7 +16,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField]
             public bool IsDeployableDockingPort => dataDockingNode.IsDeployableDockingPort;
-            
+
             [KSField]
             public string DockingState => dataDockingNode.CurrentState.ToString();
         }

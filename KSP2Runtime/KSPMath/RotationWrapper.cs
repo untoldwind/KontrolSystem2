@@ -18,7 +18,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
         public RotationWrapper(Vector vector) {
             this.vector = Vector.normalize(vector);
             rotation = SimRotation.LookRotation(vector, new Vector(vector.coordinateSystem, Vector3d.up));
-            
+
         }
 
         public Vector Vector {

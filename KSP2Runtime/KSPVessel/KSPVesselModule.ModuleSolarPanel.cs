@@ -21,7 +21,8 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField] public double EnergyFlow => dataSolarPanel.EnergyFlow.GetValue();
 
-            [KSField] public Option<IBody> BlockingBody {
+            [KSField]
+            public Option<IBody> BlockingBody {
                 get {
                     string bodyName = dataSolarPanel.SimBlockingBody;
                     if (string.IsNullOrWhiteSpace(bodyName)) {

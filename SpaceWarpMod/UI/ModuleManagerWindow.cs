@@ -115,7 +115,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         void DrawAvailableModules() {
             var gameMode = GameModeAdapter.GameModeFromState(Game.GlobalGameState.GetState());
             var activeVessel = Game.ViewController.GetActiveSimVessel(true);
-            
+
             entryPointScrollPos = GUILayout.BeginScrollView(entryPointScrollPos, CommonStyles.Instance.panelSkin.scrollView,
                 GUILayout.MinWidth(360), GUILayout.MinHeight(350), GUILayout.MaxWidth(2000), GUILayout.MaxHeight(2000));
 

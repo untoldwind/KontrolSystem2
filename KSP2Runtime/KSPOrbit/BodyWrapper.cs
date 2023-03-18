@@ -25,9 +25,17 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
         public Vector3d AngularVelocity => body.celestialMotionFrame.ToLocalAngularVelocity(body.AngularVelocity);
 
+        public Position GlobalPosition => body.Position;
+
+        public AngularVelocity GlobalAngularVelocity => body.AngularVelocity;
+
         public Vector3d Up => body.transform.up.vector;
 
         public Vector3d Right => body.transform.right.vector;
+
+        public Vector GlobalUp => body.transform.celestialFrame.up;
+
+        public Vector GlobalRight => body.transform.celestialFrame.right;
 
         [KSField] public KSPOrbitModule.IOrbit Orbit => new OrbitWrapper(context, body.Orbit);
 
@@ -40,16 +48,21 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
         public ITransformFrame CelestialFrame => body.transform.celestialFrame;
 
         public ITransformFrame BodyFrame => body.transform.bodyFrame;
-        
+
         public Vector3d SurfaceNormal(double lat, double lon) => body.GetSurfaceNVector(lat, lon);
+
+        public Vector GlobalSurfaceNormal(double latitude, double longitude) => new Vector(body.transform.celestialFrame,
+           body.GetRelSurfaceNVector(latitude, longitude));
 
         public double TerrainHeight(double lat, double lon) => body.SurfaceProvider.GetTerrainAltitudeFromCenter(lat, lon) - body.radius;
 
         public Vector3d SurfacePosition(double latitude, double longitude, double altitude) =>
             body.GetWorldSurfacePosition(latitude, longitude, altitude, body.coordinateSystem);
 
+        public Position GlobalSurfacePosition(double latitude, double longitude, double altitude) => new Position(body.transform.celestialFrame, body.GetRelSurfacePosition(latitude, longitude, altitude));
+
         public KSPOrbitModule.GeoCoordinates GeoCoordinates(double latitude, double longitude) => new KSPOrbitModule.GeoCoordinates(this, latitude, longitude);
-        
+
         public KSPOrbitModule.IOrbit CreateOrbit(Vector3d position, Vector3d velocity, double ut) {
             PatchedConicsOrbit orbit = new PatchedConicsOrbit(body.universeModel);
 
@@ -57,7 +70,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
             return new OrbitWrapper(context, orbit);
         }
-        
-        public IGGuid UnderlyingId => body.SimulationObject.GlobalId;        
+
+        public IGGuid UnderlyingId => body.SimulationObject.GlobalId;
     }
 }

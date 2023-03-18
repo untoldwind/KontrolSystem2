@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using KontrolSystem.KSP.Runtime.KSPMath;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
 using KSP.Sim;
@@ -71,10 +72,10 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             Vector3d AbsolutePosition(double ut);
 
             [KSMethod(Description = "Get the absolute position at a given universal time `ut`")]
-            Position Position(double ut);
+            Position GlobalPosition(double ut);
 
             [KSMethod]
-            Vector Velocity(double ut);
+            VelocityAtPosition GlobalVelocity(double ut);
 
             [KSMethod]
             Vector3d RelativePosition(double ut);

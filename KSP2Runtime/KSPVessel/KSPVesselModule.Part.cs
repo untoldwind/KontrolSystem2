@@ -1,7 +1,9 @@
-﻿using KontrolSystem.KSP2.Runtime.KSPVessel;
+﻿using KontrolSystem.KSP.Runtime.KSPMath;
+using KontrolSystem.KSP2.Runtime.KSPVessel;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
 using KSP.Modules;
+using KSP.Sim;
 using KSP.Sim.DeltaV;
 using KSP.Sim.impl;
 
@@ -18,6 +20,10 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             }
 
             [KSField] public string PartName => part.PartName;
+
+            [KSField] public Position GlobalPosition => part.SimulationObject.Position;
+
+            [KSField] public RotationWrapper GlobalRotation => new RotationWrapper(part.SimulationObject.Rotation);
 
             [KSField] public bool IsEngine => part.IsPartEngine(out var _);
 

@@ -17,7 +17,7 @@ namespace KontrolSystem.KSP.Runtime {
 
     public interface IKSPContext : IContext {
         GameInstance Game { get; }
-        
+
         GameMode GameMode { get; }
 
         KSPConsoleBuffer ConsoleBuffer { get; }

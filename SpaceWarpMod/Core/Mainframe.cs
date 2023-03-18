@@ -54,7 +54,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
             Game.Messages.Subscribe<GameStateChangedMessage>(OnStateChange);
         }
 
-        public void Destroy() { 
+        public void Destroy() {
             Game.Messages.Unsubscribe<GameStateChangedMessage>(OnStateChange);
         }
 

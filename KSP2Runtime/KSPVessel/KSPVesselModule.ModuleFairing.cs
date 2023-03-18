@@ -23,13 +23,14 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                     return dataFairing.EjectionForce.GetValue();
                 }
                 set {
-                     dataFairing.EjectionForce.SetValue((float)value);
+                    dataFairing.EjectionForce.SetValue((float)value);
                 }
             }
 
             [KSField] public bool IsDeployed => dataFairing.IsDeployed.GetValue();
 
-            [KSMethod] public bool PerformJettison() {
+            [KSMethod]
+            public bool PerformJettison() {
 
                 if (!KSPContext.CurrentContext.Game.SpaceSimulation.TryGetViewObject(part.SimulationObject,
                         out var viewObject)) return false;

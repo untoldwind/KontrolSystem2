@@ -1,4 +1,5 @@
 ﻿using System;
+using KontrolSystem.KSP.Runtime.KSPMath;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.TO2.Runtime;
 using KSP.Sim;
@@ -55,7 +56,7 @@ namespace KontrolSystem.KSP.Runtime.Testing {
         public double MeanAnomalyAtEpoch => meanAnomalyAtEpoch;
 
         public double Period => period;
-        
+
         public ITransformFrame ReferenceFrame => KSPTesting.IDENTITY_COORDINATE_SYSTEM;
 
         public Vector3d OrbitNormal => -frameZ.normalized.SwapYAndZ;
@@ -320,13 +321,13 @@ namespace KontrolSystem.KSP.Runtime.Testing {
             return bodyPosition + RelativePosition(ut);
         }
 
-        public Position Position(double ut) {
-            Position bodyPosition = body.orbit?.Position(ut) ?? new Position(ReferenceFrame, Vector3d.zero);
+        public Position GlobalPosition(double ut) {
+            Position bodyPosition = body.orbit?.GlobalPosition(ut) ?? new Position(ReferenceFrame, Vector3d.zero);
 
             return bodyPosition + new Vector(ReferenceFrame, RelativePosition(ut));
         }
 
-        public Vector Velocity(double ut) => new Vector(ReferenceFrame, GetOrbitalVelocityAtUT(ut).SwapYAndZ);
+        public VelocityAtPosition GlobalVelocity(double ut) => new VelocityAtPosition(new Velocity(ReferenceFrame.motionFrame, GetOrbitalVelocityAtUT(ut).SwapYAndZ), GlobalPosition(ut));
 
         public Vector3d OrbitalVelocity(double ut) => GetOrbitalVelocityAtUT(ut).SwapYAndZ;
 

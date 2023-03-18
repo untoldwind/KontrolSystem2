@@ -83,7 +83,7 @@ namespace KontrolSystem.TO2.AST {
                 ?.Create(context, arguments.Select(arg => arg.ResultType(context)).ToList(), this);
 
             target.Prepare(context);
-            
+
             if (methodInvoker == null || !methodInvoker.IsAsync || !context.IsAsync) return;
 
             EmitCode(context, false);
@@ -166,7 +166,7 @@ namespace KontrolSystem.TO2.AST {
                 ));
                 return;
             }
-            
+
             if (methodInvoker.RequiredParameterCount() > arguments.Count) {
                 context.AddError(new StructuralError(
                     StructuralError.ErrorType.ArgumentMismatch,

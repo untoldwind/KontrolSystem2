@@ -8,7 +8,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
         public class ModuleAirIntakeAdapter {
             private readonly PartComponent part;
             private readonly Data_ResourceIntake dataResourceIntake;
-            
+
             public ModuleAirIntakeAdapter(PartComponent part, Data_ResourceIntake dataResourceIntake) {
                 this.part = part;
                 this.dataResourceIntake = dataResourceIntake;
@@ -16,7 +16,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField]
             public double ResourceUnits => dataResourceIntake.ResourceUnits;
-            
+
             [KSField]
             public bool Enabled => dataResourceIntake.ModuleEnabled;
         }

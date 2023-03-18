@@ -9,7 +9,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField] string Name { get; }
 
             [KSField] KSPOrbitModule.IOrbit Orbit { get; }
-            
+
             IGGuid UnderlyingId { get; }
         }
     }

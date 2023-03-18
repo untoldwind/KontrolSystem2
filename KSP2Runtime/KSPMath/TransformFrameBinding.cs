@@ -41,7 +41,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                 { "left", new BoundPropertyLikeFieldAccessFactory("left vector of the coordinate system", () => VectorBinding.VectorType, typeof(ITransformFrame), typeof(ICoordinateSystem).GetProperty("left") )},
             }
         );
-        
+
         public static Vector3d ToLocalVelocity(ITransformFrame frame, VelocityAtPosition velocity) => frame.motionFrame.ToLocalVelocity(velocity.velocity, velocity.position);
     }
 

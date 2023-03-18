@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime.KSPMath {
     public static class RotationBinding {
-        public static readonly BoundType RotationType = Direct.BindType("ksp::math", "GlobalRotation",
+        public static readonly BoundType RotationType = Direct.BindType("ksp::math", "GlobalDirection",
             "Represents the rotation from an initial coordinate system when looking down the z-axis and \"up\" being the y-axis",
             typeof(RotationWrapper),
             new OperatorCollection {
@@ -111,12 +111,12 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                 },
             });
 
-        public static RotationWrapper LookDirUp(Vector lookDirection, Vector upDirection) => RotationWrapper.LookRotation(lookDirection, upDirection);
+        public static RotationWrapper GlobalLookDirUp(Vector lookDirection, Vector upDirection) => RotationWrapper.LookRotation(lookDirection, upDirection);
 
-        public static RotationWrapper Euler(ITransformFrame frame, double x, double y, double z) => new RotationWrapper(new Rotation(frame, QuaternionD.Euler(x, y, z)));
+        public static RotationWrapper GlobalEuler(ITransformFrame frame, double x, double y, double z) => new RotationWrapper(new Rotation(frame, QuaternionD.Euler(x, y, z)));
 
-        public static RotationWrapper AngleAxis(double angle, Vector axis) => RotationWrapper.AngleAxis(angle, axis);
+        public static RotationWrapper GlobalAngleAxis(double angle, Vector axis) => RotationWrapper.AngleAxis(angle, axis);
 
-        public static RotationWrapper FromVectorToVector(Vector v1, Vector v2) => RotationWrapper.FromVectorToVector(v1, v2);
+        public static RotationWrapper GlobalFromVectorToVector(Vector v1, Vector v2) => RotationWrapper.FromVectorToVector(v1, v2);
     }
 }

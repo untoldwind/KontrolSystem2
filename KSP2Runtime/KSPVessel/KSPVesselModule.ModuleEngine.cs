@@ -42,7 +42,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField] public double MaxThrustOutputVac => dataEngine.MaxThrustOutputVac(true);
 
             [KSField] public double MaxThrustOutputAtm => dataEngine.MaxThrustOutputAtm();
-            
+
             [KSField]
             public EngineModeAdapter[] EngineModes => dataEngine.engineModes
                 .Select(engineMode => new EngineModeAdapter(engineMode)).ToArray();
@@ -54,8 +54,8 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSMethod]
             public bool ChangeMode(string name) {
                 if (part == null) return false;
-                
-                var idx =  Array.FindIndex( dataEngine.engineModes, engineMode => engineMode.engineID.Equals(name, StringComparison.InvariantCultureIgnoreCase));
+
+                var idx = Array.FindIndex(dataEngine.engineModes, engineMode => engineMode.engineID.Equals(name, StringComparison.InvariantCultureIgnoreCase));
 
                 if (idx < 0 || idx == dataEngine.currentEngineModeIndex) return false;
 
@@ -63,7 +63,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                         out var viewObject)) return false;
 
                 if (!viewObject.TryGetComponent<Module_Engine>(out var moduleEngine)) return false;
-                
+
                 moduleEngine.ChangeEngineMode(idx);
 
                 return true;

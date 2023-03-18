@@ -14,7 +14,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField]
             public ResourceDataAdapter[] List => resourceContainer.GetAllResourcesContainedData().Select(data => new ResourceDataAdapter(data)).ToArray();
-            
+
             [KSMethod]
             public void DumpAll() {
                 resourceContainer.DumpAllResources();
@@ -30,7 +30,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             }
 
             [KSField] public double CapacityUnits => resourceData.CapacityUnits;
-            
+
             [KSField] public double StoredUnits => resourceData.StoredUnits;
         }
     }

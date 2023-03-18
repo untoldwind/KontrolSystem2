@@ -9,11 +9,14 @@ using KontrolSystem.TO2.Runtime;
 using KSP.Game;
 using KSP.Messages;
 using KSP.Modules;
+using KSP.Sim;
 using KSP.Sim.DeltaV;
 using KSP.Sim.impl;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel {
     public partial class KSPVesselModule {
+        private static QuaternionD ControlFacingRotation = QuaternionD.Euler(270, 0, 0);
+
         [KSClass("Vessel",
             Description =
                 "Represents an in-game vessel, which might be a rocket, plane, rover ... or actually just a Kerbal in a spacesuite.")]
@@ -62,6 +65,18 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField] public KSPOrbitModule.IOrbit Orbit => new OrbitWrapper(context, vessel.Orbit);
 
+            [KSField] public ITransformFrame CelestialFrame => vessel.transform.celestialFrame;
+
+            [KSField] public ITransformFrame BodyFrame => vessel.transform.bodyFrame;
+
+            [KSField] public ITransformFrame ControlFrame => vessel.ControlTransform.bodyFrame;
+
+            [KSField] public Position GlobalPosition => vessel.SimulationObject.Position;
+
+            [KSField]
+            public VelocityAtPosition GlobalVelocity =>
+                new VelocityAtPosition(vessel.Velocity, vessel.SimulationObject.Position);
+
             [KSField] public Vector3d OrbitalVelocity => vessel.mainBody.coordinateSystem.ToLocalVector(vessel.OrbitalVelocity);
 
             [KSField] public Vector3d SurfaceVelocity => vessel.mainBody.coordinateSystem.ToLocalVector(vessel.SurfaceVelocity);
@@ -69,6 +84,8 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField] public double Mass => vessel.totalMass;
 
             [KSField("CoM")] public Vector3d CoM => vessel.mainBody.coordinateSystem.ToLocalPosition(vessel.CenterOfMass);
+
+            [KSField] public Vector3d global_center_of_mass => vessel.mainBody.coordinateSystem.ToLocalPosition(vessel.CenterOfMass);
 
             [KSField] public double OffsetGround => vessel.OffsetToGround;
 
@@ -86,12 +103,16 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField] public double AltitudeScenery => vessel.AltitudeFromScenery;
 
+            [KSField] public AngularVelocity GlobalAngularMomentum => vessel.angularMomentum;
+
+            [KSField] public AngularVelocity GlobalAngularVelocity => vessel.AngularVelocity;
+
             [KSField] public Vector3d AngularMomentum => vessel.mainBody.coordinateSystem.ToLocalVector(vessel.angularMomentum.relativeAngularVelocity);
 
             [KSField] public Vector3d AngularVelocity => vessel.mainBody.coordinateSystem.ToLocalVector(vessel.AngularVelocity.relativeAngularVelocity);
 
             [KSField] public double VerticalSpeed => vessel.VerticalSrfSpeed;
-            
+
             [KSField]
             public KSPOrbitModule.GeoCoordinates GeoCoordinates => new KSPOrbitModule.GeoCoordinates(MainBody, vessel.Latitude, vessel.Longitude);
 
@@ -102,6 +123,12 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField] public Vector3d North => vessel.mainBody.coordinateSystem.ToLocalVector(vessel.SimulationObject.Telemetry.HorizonNorth);
 
             [KSField] public Vector3d East => vessel.mainBody.coordinateSystem.ToLocalVector(vessel.SimulationObject.Telemetry.HorizonEast);
+
+            [KSField] public Vector GlobalUp => vessel.SimulationObject.Telemetry.HorizonUp;
+
+            [KSField] public Vector GlobalNorth => vessel.SimulationObject.Telemetry.HorizonNorth;
+
+            [KSField] public Vector GlobalEast => vessel.SimulationObject.Telemetry.HorizonEast;
 
             [KSField] public string Situation => vessel.Situation.ToString();
 
@@ -124,6 +151,9 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 }
             }
 
+            [KSField]
+            public RotationWrapper GlobalFacing => new RotationWrapper(new Rotation(vessel.ControlTransform.coordinateSystem, ControlFacingRotation));
+
             [KSField] public PartAdapter[] Parts => vessel.SimulationObject.PartOwner.Parts.Select(part => new PartAdapter(this, part)).ToArray();
 
             [KSField]
@@ -133,7 +163,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 }
                 return null;
             }).Where(intake => intake != null).ToArray();
-            
+
             [KSField]
             public ModuleEngineAdapter[] Engines => vessel.SimulationObject.PartOwner.Parts.Select(part => {
                 if (part.IsPartEngine(out Data_Engine data)) {
@@ -223,7 +253,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                     return new Vector3d(pitch, DirectBindingMath.ClampDegrees360(yaw), DirectBindingMath.ClampDegrees180(roll));
                 }
             }
-            
+
             [KSMethod]
             public KSPControlModule.SteeringManager SetSteering(Vector3d pitchYawRoll) =>
                 new KSPControlModule.SteeringManager(context, vessel, _ => pitchYawRoll);

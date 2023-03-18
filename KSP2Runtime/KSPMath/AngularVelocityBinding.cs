@@ -38,7 +38,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                         () => VectorBinding.VectorType,
                         () => new List<RealizedParameter> {new RealizedParameter("frame", TransformFrameBinding.TransformFrameType)}, false,
                         typeof(AngularVelocityBinding), typeof(AngularVelocityBinding).GetMethod("RelativeTo"))
-                }, 
+                },
             },
             new Dictionary<string, IFieldAccessFactory> { });
 

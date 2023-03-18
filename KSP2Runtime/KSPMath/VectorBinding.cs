@@ -106,7 +106,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                     new BoundMethodInvokeFactory("Exclude this from `other` vector.", true, () => VectorType,
                         () => new List<RealizedParameter> {new RealizedParameter("other", VectorType)}, false,
                         typeof(VectorBinding), typeof(VectorBinding).GetMethod("ExcludeFrom"))
-                }, 
+                },
             },
             new Dictionary<string, IFieldAccessFactory> {
                 {

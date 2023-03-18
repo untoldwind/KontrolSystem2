@@ -113,7 +113,7 @@ namespace KontrolSystem.KSP.Runtime.Testing {
         public double AtmosphereDepth => atmosphereDepth;
 
         public KSPOrbitModule.IOrbit Orbit => orbit;
-        
+
         public IGGuid UnderlyingId { get; }
 
         public double Radius => radius;
@@ -122,13 +122,21 @@ namespace KontrolSystem.KSP.Runtime.Testing {
 
         public Vector3d Position => Vector3d.zero;
 
+        public Position GlobalPosition => new Position(CelestialFrame, Vector3d.zero);
+
         public ITransformFrame CelestialFrame => KSPTesting.IDENTITY_COORDINATE_SYSTEM;
 
         public ITransformFrame BodyFrame => KSPTesting.IDENTITY_COORDINATE_SYSTEM;
 
+        public AngularVelocity GlobalAngularVelocity => new AngularVelocity(CelestialFrame.motionFrame, AngularVelocity);
+
         public Vector3d Up => Vector3d.up;
 
         public Vector3d Right => Vector3d.right;
+
+        public Vector GlobalUp => new Vector(CelestialFrame, Up);
+
+        public Vector GlobalRight => new Vector(CelestialFrame, Right);
 
         public Vector3d AngularVelocity => angularVelocity;
 
@@ -149,6 +157,9 @@ namespace KontrolSystem.KSP.Runtime.Testing {
             return new Vector3d(phi * Math.Cos(lon), z, phi * Math.Sin(lon));
         }
 
+        public Vector GlobalSurfaceNormal(double latitude, double longitude) =>
+            new Vector(CelestialFrame, SurfaceNormal(latitude, longitude));
+
         public double TerrainHeight(double lat, double lon) => 0.0;
 
         public double Latitude(Vector3d position) {
@@ -160,6 +171,9 @@ namespace KontrolSystem.KSP.Runtime.Testing {
             Vector3d normalized = position.normalized.SwapYAndZ;
             return Math.Atan2(normalized.y, normalized.x) * 180.0 / Math.PI;
         }
+
+        public Position GlobalSurfacePosition(double latitude, double longitude, double altitude) =>
+            new Position(CelestialFrame, SurfacePosition(latitude, longitude, altitude));
 
         public KSPOrbitModule.GeoCoordinates GeoCoordinates(double latitude, double longitude) =>
             new KSPOrbitModule.GeoCoordinates(this, latitude, longitude);
