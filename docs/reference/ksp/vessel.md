@@ -46,29 +46,6 @@ lock_direction | [ksp::math::Direction](/reference/ksp/math.md#direction) |
 mode | string | 
 target_orientation | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
 
-### EngineData
-
-
-
-#### Fields
-
-Name | Type | Description
---- | --- | ---
-current_engine_mode | [ksp::vessel::EngineMode](/reference/ksp/vessel.md#enginemode) | 
-current_throttle | float | 
-current_thrust | float | 
-engine_modes | [ksp::vessel::EngineMode](/reference/ksp/vessel.md#enginemode)[] | 
-has_ignited | bool | 
-is_flameout | bool | 
-is_operational | bool | 
-is_shutdown | bool | 
-is_staged | bool | 
-max_fuel_flow | float | 
-max_thrust_output_atm | float | 
-max_thrust_output_vac | float | 
-min_fuel_flow | float | 
-throttle_min | float | 
-
 ### EngineDeltaV
 
 
@@ -77,7 +54,7 @@ throttle_min | float |
 
 Name | Type | Description
 --- | --- | ---
-engine_data | [ksp::vessel::EngineData](/reference/ksp/vessel.md#enginedata) | 
+engine_module | [ksp::vessel::ModuleEngine](/reference/ksp/vessel.md#moduleengine) | 
 start_burn_stage | int | Number of the stage when engine is supposed to start 
 
 #### Methods
@@ -192,6 +169,162 @@ maneuvernode.remove ( ) -> Unit
 
 
 
+### ModuleAirIntake
+
+
+
+#### Fields
+
+Name | Type | Description
+--- | --- | ---
+enabled | bool | 
+resource_units | float | 
+
+### ModuleDecoupler
+
+
+
+#### Fields
+
+Name | Type | Description
+--- | --- | ---
+ejection_impulse | float | 
+is_decoupled | bool | 
+part_name | string | 
+
+#### Methods
+
+##### decouple
+
+```rust
+moduledecoupler.decouple ( ) -> bool
+```
+
+
+
+### ModuleDeployable
+
+
+
+#### Fields
+
+Name | Type | Description
+--- | --- | ---
+deploy_state | string | 
+extendable | bool | 
+part_name | string | 
+retractable | bool | 
+
+#### Methods
+
+##### set_extended
+
+```rust
+moduledeployable.set_extended ( extend : bool ) -> Unit
+```
+
+
+
+### ModuleDockingNode
+
+
+
+#### Fields
+
+Name | Type | Description
+--- | --- | ---
+docking_state | string | 
+is_deployable_docking_port | bool | 
+
+### ModuleEngine
+
+
+
+#### Fields
+
+Name | Type | Description
+--- | --- | ---
+current_engine_mode | [ksp::vessel::EngineMode](/reference/ksp/vessel.md#enginemode) | 
+current_throttle | float | 
+current_thrust | float | 
+engine_modes | [ksp::vessel::EngineMode](/reference/ksp/vessel.md#enginemode)[] | 
+has_ignited | bool | 
+is_flameout | bool | 
+is_operational | bool | 
+is_shutdown | bool | 
+is_staged | bool | 
+max_fuel_flow | float | 
+max_thrust_output_atm | float | 
+max_thrust_output_vac | float | 
+min_fuel_flow | float | 
+part_name | string | 
+throttle_min | float | 
+
+#### Methods
+
+##### change_mode
+
+```rust
+moduleengine.change_mode ( name : string ) -> bool
+```
+
+
+
+### ModuleFairing
+
+
+
+#### Fields
+
+Name | Type | Description
+--- | --- | ---
+ejection_force | float | 
+is_deployed | bool | 
+part_name | string | 
+
+#### Methods
+
+##### perform_jettison
+
+```rust
+modulefairing.perform_jettison ( ) -> bool
+```
+
+
+
+### ModuleLaunchClamp
+
+
+
+#### Fields
+
+Name | Type | Description
+--- | --- | ---
+is_released | bool | 
+part_name | string | 
+
+#### Methods
+
+##### release
+
+```rust
+modulelaunchclamp.release ( ) -> bool
+```
+
+
+
+### ModuleSolarPanel
+
+
+
+#### Fields
+
+Name | Type | Description
+--- | --- | ---
+blocking_body | Option&lt;[ksp::orbit::Body](/reference/ksp/orbit.md#body)> | 
+energy_flow | float | 
+part_name | string | 
+
 ### Part
 
 
@@ -200,10 +333,53 @@ maneuvernode.remove ( ) -> Unit
 
 Name | Type | Description
 --- | --- | ---
-engine_data | Option&lt;[ksp::vessel::EngineData](/reference/ksp/vessel.md#enginedata)> | 
+air_intake | Option&lt;[ksp::vessel::ModuleAirIntake](/reference/ksp/vessel.md#moduleairintake)> | 
+decoupler | Option&lt;[ksp::vessel::ModuleDecoupler](/reference/ksp/vessel.md#moduledecoupler)> | 
+deployable | Option&lt;[ksp::vessel::ModuleDeployable](/reference/ksp/vessel.md#moduledeployable)> | 
+docking_node | Option&lt;[ksp::vessel::ModuleDockingNode](/reference/ksp/vessel.md#moduledockingnode)> | 
+engine_module | Option&lt;[ksp::vessel::ModuleEngine](/reference/ksp/vessel.md#moduleengine)> | 
+fairing | Option&lt;[ksp::vessel::ModuleFairing](/reference/ksp/vessel.md#modulefairing)> | 
+is_decoupler | bool | 
+is_deployable | bool | 
 is_engine | bool | 
+is_fairing | bool | 
+is_launch_clamp | bool | 
 is_solar_panel | bool | 
+launch_clamp | Option&lt;[ksp::vessel::ModuleLaunchClamp](/reference/ksp/vessel.md#modulelaunchclamp)> | 
 part_name | string | 
+resources | [ksp::vessel::ResourceContainer](/reference/ksp/vessel.md#resourcecontainer) | 
+solar_panel | Option&lt;[ksp::vessel::ModuleSolarPanel](/reference/ksp/vessel.md#modulesolarpanel)> | 
+
+### ResourceContainer
+
+
+
+#### Fields
+
+Name | Type | Description
+--- | --- | ---
+list | [ksp::vessel::ResourceData](/reference/ksp/vessel.md#resourcedata)[] | 
+
+#### Methods
+
+##### dump_all
+
+```rust
+resourcecontainer.dump_all ( ) -> Unit
+```
+
+
+
+### ResourceData
+
+
+
+#### Fields
+
+Name | Type | Description
+--- | --- | ---
+capacity_units | float | 
+stored_units | float | 
 
 ### StageDeltaV
 
@@ -312,6 +488,7 @@ Represents an in-game vessel, which might be a rocket, plane, rover ... or actua
 Name | Type | Description
 --- | --- | ---
 actions | [ksp::vessel::ActionGroups](/reference/ksp/vessel.md#actiongroups) | 
+air_intakes | [ksp::vessel::ModuleAirIntake](/reference/ksp/vessel.md#moduleairintake)[] | 
 altitude_scenery | float | 
 altitude_sealevel | float | 
 altitude_terrain | float | 
@@ -323,8 +500,9 @@ available_thrust | float |
 CoM | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
 control_status | string | 
 delta_v | [ksp::vessel::VesselDeltaV](/reference/ksp/vessel.md#vesseldeltav) | 
+docking_nodes | [ksp::vessel::ModuleDockingNode](/reference/ksp/vessel.md#moduledockingnode)[] | 
 east | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
-engines | [ksp::vessel::EngineData](/reference/ksp/vessel.md#enginedata)[] | 
+engines | [ksp::vessel::ModuleEngine](/reference/ksp/vessel.md#moduleengine)[] | 
 facing | [ksp::math::Direction](/reference/ksp/math.md#direction) | 
 geo_coordinates | [ksp::orbit::GeoCoordinates](/reference/ksp/orbit.md#geocoordinates) | 
 heading | float | 
@@ -340,12 +518,15 @@ orbit | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit) |
 orbital_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
 parts | [ksp::vessel::Part](/reference/ksp/vessel.md#part)[] | 
 pitch_horizon_relative | float | 
+pitch_yaw_roll | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
 roll_horizon_relative | float | 
 situation | string | 
+solar_panels | [ksp::vessel::ModuleSolarPanel](/reference/ksp/vessel.md#modulesolarpanel)[] | 
 staging | [ksp::vessel::Staging](/reference/ksp/vessel.md#staging) | 
 surface_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
 target | Option&lt;[ksp::vessel::Targetable](/reference/ksp/vessel.md#targetable)> | 
 up | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
+vertical_speed | float | 
 vertical_surface_speed | float | 
 
 #### Methods

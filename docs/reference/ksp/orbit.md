@@ -14,11 +14,13 @@ Represents an in-game celestial body.
 
 Name | Type | Description
 --- | --- | ---
+angular_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | Angular velocity vector of the body 
 atmosphere_depth | float | Depth/height of the atmosphere if present. 
 grav_parameter | float | Standard gravitation parameter of the body. 
 has_atmosphere | bool | `true` if the celestial body has an atmosphere to deal with. 
 name | string | Name of the celestial body. 
 orbit | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit) | The orbit of the celestial body itself (around the parent body) 
+position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | The current position of the body 
 radius | float | Radius of the body at sea level 
 right | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
 rotation_period | float | Rotation period of the planet. 
@@ -36,6 +38,15 @@ body.create_orbit ( position : ksp::math::Vec3,
 ```
 
 Create a new orbit around this body starting at a given relative `position` and `velocity` at universal time `ut`
+
+
+##### geo_coordinates
+
+```rust
+body.geo_coordinates ( latitude : float,
+                       longitude : float ) -> ksp::orbit::GeoCoordinates
+```
+
 
 
 ##### surface_normal
