@@ -1,5 +1,7 @@
 ﻿using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
+using KSP.Sim;
+using KSP.Sim.impl;
 using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime.Testing {
@@ -18,5 +20,7 @@ namespace KontrolSystem.KSP.Runtime.Testing {
             if ((expected - actual).magnitude > delta)
                 throw new AssertException($"assert_vec3: {expected} != {actual}");
         }
+
+        [KSConstant("IDENTITY_COORDINATE_SYSTEM")] public static readonly ITransformFrame IDENTITY_COORDINATE_SYSTEM = new TransformModel("Ident").celestialFrame;
     }
 }

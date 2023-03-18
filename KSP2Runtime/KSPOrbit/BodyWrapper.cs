@@ -37,6 +37,10 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
         public double Radius => body.radius;
 
+        public ITransformFrame CelestialFrame => body.transform.celestialFrame;
+
+        public ITransformFrame BodyFrame => body.transform.bodyFrame;
+        
         public Vector3d SurfaceNormal(double lat, double lon) => body.GetSurfaceNVector(lat, lon);
 
         public double TerrainHeight(double lat, double lon) => body.SurfaceProvider.GetTerrainAltitudeFromCenter(lat, lon) - body.radius;

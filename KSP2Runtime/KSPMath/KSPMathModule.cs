@@ -2,6 +2,7 @@
 using KontrolSystem.TO2;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.AST;
+using KSP.Sim;
 using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime.KSPMath {
@@ -24,13 +25,25 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                 Vector2Binding.Vector2Type,
                 Vector3Binding.Vector3Type,
                 DirectionBinding.DirectionType,
-                Matrix2x2Binding.Matrix2x2Type
+                Matrix2x2Binding.Matrix2x2Type,
+                AngularVelocityBinding.AngularVelocityType,
+                PositionBinding.PositionType,
+                TransformFrameBinding.TransformFrameType,
+                VectorBinding.VectorType,
+                VelocityBinding.VelocityType,
+                RotationBinding.RotationType
             };
 
             BindingGenerator.RegisterTypeMapping(typeof(Vector2d), Vector2Binding.Vector2Type);
             BindingGenerator.RegisterTypeMapping(typeof(Vector3d), Vector3Binding.Vector3Type);
             BindingGenerator.RegisterTypeMapping(typeof(Direction), DirectionBinding.DirectionType);
             BindingGenerator.RegisterTypeMapping(typeof(Matrix2x2), Matrix2x2Binding.Matrix2x2Type);
+            BindingGenerator.RegisterTypeMapping(typeof(ITransformFrame), TransformFrameBinding.TransformFrameType);
+            BindingGenerator.RegisterTypeMapping(typeof(Position), PositionBinding.PositionType);
+            BindingGenerator.RegisterTypeMapping(typeof(Vector), VectorBinding.VectorType);
+            BindingGenerator.RegisterTypeMapping(typeof(VelocityAtPosition), VelocityBinding.VelocityType);
+            BindingGenerator.RegisterTypeMapping(typeof(AngularVelocity), AngularVelocityBinding.AngularVelocityType);
+            BindingGenerator.RegisterTypeMapping(typeof(RotationWrapper), RotationBinding.RotationType);
 
             List<CompiledKontrolConstant> constants = new List<CompiledKontrolConstant>();
 

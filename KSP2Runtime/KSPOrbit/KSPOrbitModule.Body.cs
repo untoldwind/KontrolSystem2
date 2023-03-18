@@ -1,5 +1,6 @@
 ﻿using KontrolSystem.KSP.Runtime.KSPVessel;
 using KontrolSystem.TO2.Binding;
+using KSP.Sim;
 
 namespace KontrolSystem.KSP.Runtime.KSPOrbit {
     public partial class KSPOrbitModule {
@@ -31,6 +32,10 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
             [KSField(Description = "The current position of the body")] Vector3d Position { get; }
             
+            [KSField] ITransformFrame CelestialFrame { get; }
+
+            [KSField] ITransformFrame BodyFrame { get; }
+
             [KSField(Description = "Angular velocity vector of the body")] Vector3d AngularVelocity { get; }
             
             [KSField] Vector3d Up { get; }

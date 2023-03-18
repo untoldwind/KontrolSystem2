@@ -1,5 +1,6 @@
 ﻿using System;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
+using KSP.Sim;
 using KSP.Sim.impl;
 
 namespace KontrolSystem.KSP.Runtime.Testing {
@@ -120,6 +121,10 @@ namespace KontrolSystem.KSP.Runtime.Testing {
         public double RotationPeriod => rotationPeriod;
 
         public Vector3d Position => Vector3d.zero;
+
+        public ITransformFrame CelestialFrame => KSPTesting.IDENTITY_COORDINATE_SYSTEM;
+
+        public ITransformFrame BodyFrame => KSPTesting.IDENTITY_COORDINATE_SYSTEM;
 
         public Vector3d Up => Vector3d.up;
 

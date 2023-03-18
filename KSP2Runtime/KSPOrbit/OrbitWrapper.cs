@@ -1,5 +1,6 @@
 ﻿using System;
 using KontrolSystem.TO2.Runtime;
+using KSP.Sim;
 using KSP.Sim.impl;
 
 namespace KontrolSystem.KSP.Runtime.KSPOrbit {
@@ -44,11 +45,17 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
         public double Period => orbit.period;
 
+        public ITransformFrame ReferenceFrame => orbit.ReferenceFrame;
+
         public Vector3d OrbitNormal => orbit.GetRelativeOrbitNormal().SwapYAndZ;
 
         public Vector3d RelativePosition(double ut) => orbit.GetRelativePositionAtUTZup(ut).SwapYAndZ;
 
+        public Position Position(double ut) => new Position(ReferenceFrame, RelativePosition(ut));
+
         public Vector3d AbsolutePosition(double ut) => orbit.referenceBody.localPosition + RelativePosition(ut);
+        
+        public Vector Velocity(double ut) => new Vector(ReferenceFrame, orbit.GetOrbitalVelocityAtUTZup(ut).SwapYAndZ);
 
         public Vector3d OrbitalVelocity(double ut) => orbit.GetOrbitalVelocityAtUTZup(ut).SwapYAndZ;
 
