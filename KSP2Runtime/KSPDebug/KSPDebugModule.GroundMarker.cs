@@ -48,7 +48,7 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                 
                 if (KSPContext.CurrentContext.Game.Map.TryGetMapCore(out MapCore mapCore) && mapCore.IsEnabled) {
                     var space = mapCore.map3D.GetSpaceProvider();
-                    radius = GeoCoordinates.Body.Radius / 50 / space.Map3DScaleInv;
+                    radius = 6000 / space.Map3DScaleInv;
 
                     localPos = space.TranslateSimPositionToMapPosition(position);
                     up = (space.TranslateSimPositionToMapPosition(position + surfaceNormal) - localPos).normalized;

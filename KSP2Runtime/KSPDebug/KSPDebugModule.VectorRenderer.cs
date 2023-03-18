@@ -61,7 +61,7 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                         if (line == null || hat == null) {
                             lineObj = new GameObject("vecdrawLine");
                             hatObj = new GameObject("vecdrawHat");
-                            
+
                             line = lineObj.AddComponent<LineRenderer>();
                             hat = hatObj.AddComponent<LineRenderer>();
 
@@ -157,19 +157,28 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                     Vector3d vector;
 
                     if (KSPContext.CurrentContext.Game.Map.TryGetMapCore(out MapCore mapCore) && mapCore.IsEnabled) {
-                        start = mapCore.map3D.GetSpaceProvider().TranslateSimPositionToMapPosition(startProvider());
-                        vector = mapCore.map3D.GetSpaceProvider().TranslateSimPositionToMapPosition(endProvider()) - start;
+                        var space = mapCore.map3D.GetSpaceProvider();
+
+                        start = space.TranslateSimPositionToMapPosition(startProvider());
+                        vector = space.TranslateSimPositionToMapPosition(endProvider()) - start;
+                        lineObj.layer = 27;
+                        labelObj.layer = 27;
+                        hatObj.layer = 27;
+                        mapWidthMult = 2000 / space.Map3DScaleInv;
                     } else {
                         var frame = KSPContext.CurrentContext.ActiveVessel.transform?.coordinateSystem;
                         start = frame.ToLocalPosition( startProvider());
                         vector = frame.ToLocalPosition(endProvider()) - start;
+                        lineObj.layer = 0;
+                        labelObj.layer = 0;
+                        hatObj.layer = 0;
                     }
                     
                     Vector3d point1 = mapLengthMult * start;
                     Vector3d point2 = mapLengthMult * (start + (Scale * 0.95 * vector));
                     Vector3d point3 = mapLengthMult * (start + (Scale * vector));
 
-                    label.fontSize = (int)(12.0 * (Width / 0.2) * Scale);
+                    label.fontSize = (int)(12.0 * (Width / 0.2) * Scale * mapWidthMult);
 
                     useWidth = (float)(Width * Scale * mapWidthMult);
 
