@@ -6,6 +6,7 @@
 * Improve error message on invalid number of method arguments
 * Add binding for decoupler and launch clamps
 * Fixed mixing async function results with sync methods (issue 32)
+* Add `pitch_yaw_roll` property to `vessel` reflecting the navball angles
 
 ## 0.1.9 -> 0.1.9.2
 

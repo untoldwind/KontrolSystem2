@@ -201,6 +201,29 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField]
             public double PitchHorizonRelative => vessel.Pitch_HorizonRelative;
 
+            [KSField]
+            public Vector3d PitchYawRoll {
+                get {
+                    QuaternionD vesselRotation = vessel.mainBody.coordinateSystem
+                        .ToLocalRotation(vessel.ControlTransform.bodyFrame, QuaternionD.identity);
+                    QuaternionD vesselFacing = QuaternionD.Inverse(QuaternionD.Euler(90, 0, 0) *
+                                                                   QuaternionD.Inverse(vesselRotation));
+                    var vesselUp = Up;
+                    var vesselForward = vesselFacing * Vector3d.forward;
+                    var facingUp = vesselFacing * Vector3d.up;
+                    var facingRight = vesselFacing * Vector3d.right;
+
+                    var roll = 90 - DirectBindingMath.AcosDeg(Vector3d.Dot(vesselUp, facingRight));
+                    var upAngles = DirectBindingMath.AcosDeg(Vector3d.Dot(vesselUp, facingUp));
+                    if (upAngles > 90) roll = 180 - roll;
+                    var yaw = DirectBindingMath.Atan2Deg(Vector3d.Dot(East, vesselForward),
+                        Vector3d.Dot(North, vesselForward));
+                    var pitch = 90 - DirectBindingMath.AcosDeg(Vector3d.Dot(vesselUp, vesselForward));
+
+                    return new Vector3d(pitch, DirectBindingMath.ClampDegrees360(yaw), DirectBindingMath.ClampDegrees180(roll));
+                }
+            }
+            
             [KSMethod]
             public KSPControlModule.SteeringManager SetSteering(Vector3d pitchYawRoll) =>
                 new KSPControlModule.SteeringManager(context, vessel, _ => pitchYawRoll);
