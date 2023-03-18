@@ -23,7 +23,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField]
             public ResourceContainerAdapter Resources => new ResourceContainerAdapter(part.PartResourceContainer);
-            
+
             [KSField]
             public Option<ModuleAirIntakeAdapter> AirIntake {
                 get {
@@ -45,7 +45,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                     return new Option<ModuleDockingNodeAdapter>();
                 }
             }
-            
+
             [KSField]
             public Option<ModuleEngineAdapter> EngineModule {
                 get {
@@ -69,7 +69,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                     return new Option<ModuleSolarPanelAdapter>();
                 }
             }
-            
+
             [KSField] public bool IsFairing => part.TryGetModuleData<PartComponentModule_Fairing, Data_Fairing>(out var _);
 
             [KSField]
@@ -93,6 +93,32 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                     }
 
                     return new Option<ModuleDeployableAdapter>();
+                }
+            }
+
+            [KSField] public bool IsDecoupler => part.IsPartDecoupler(out var _);
+
+            [KSField]
+            public Option<ModuleDecouplerAdapter> Decoupler {
+                get {
+                    if (part.IsPartDecoupler(out Data_Decouple data)) {
+                        return new Option<ModuleDecouplerAdapter>(new ModuleDecouplerAdapter(part, data));
+                    }
+
+                    return new Option<ModuleDecouplerAdapter>();
+                }
+            }
+
+            [KSField] public bool IsLaunchClamp => part.IsPartLaunchClamp(out var _);
+
+            [KSField]
+            public Option<ModuleLaunchClampAdapter> LaunchClamp {
+                get {
+                    if (part.IsPartLaunchClamp(out Data_GroundLaunchClamp data)) {
+                        return new Option<ModuleLaunchClampAdapter>(new ModuleLaunchClampAdapter(part, data));
+                    }
+
+                    return new Option<ModuleLaunchClampAdapter>();
                 }
             }
         }
