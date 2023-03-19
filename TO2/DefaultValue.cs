@@ -80,6 +80,8 @@ namespace KontrolSystem.TO2 {
 
         public StringDefaultValue(string value) => this.value = value;
 
+        public string Value => value;
+
         public void EmitCode(IBlockContext context) => context.IL.Emit(OpCodes.Ldstr, value);
     }
 
