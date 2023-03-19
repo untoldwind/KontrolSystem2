@@ -27,10 +27,10 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 }
             }
 
-            [KSField] public bool IsDeployed => dataFairing.IsDeployed.GetValue();
+            [KSField] public bool IsJettisoned => dataFairing.IsDeployed.GetValue();
 
             [KSMethod]
-            public bool PerformJettison() {
+            public bool Jettison() {
 
                 if (!KSPContext.CurrentContext.Game.SpaceSimulation.TryGetViewObject(part.SimulationObject,
                         out var viewObject)) return false;
