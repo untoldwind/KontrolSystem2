@@ -9,7 +9,7 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
         public static Material Colored {
             get {
                 if (_colored == null) {
-                    _colored = new Material(Shader.Find("Sprites/Default"));
+                    _colored = new Material(Shader.Find("Hidden/Internal-Colored"));
                 }
 
                 return _colored;

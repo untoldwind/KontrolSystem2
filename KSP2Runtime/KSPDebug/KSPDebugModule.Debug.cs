@@ -30,10 +30,10 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                   The vector may have a `label` at its mid-point.
                  "
             )]
-            public VectorRenderer AddVector(Func<Position> startProvider, Func<Position> endProvider,
+            public VectorRenderer AddVector(Func<Position> startProvider, Func<Vector> vectorProvider,
                 KSPConsoleModule.RgbaColor color, string label, double width) {
                 VectorRenderer renderer =
-                    new VectorRenderer(startProvider, endProvider, color, label, width, true);
+                    new VectorRenderer(startProvider, vectorProvider, color, label, width, true);
 
                 renderer.Visible = true;
                 KSPContext.CurrentContext.AddMarker(renderer);

@@ -28,6 +28,7 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
 
             private Func<Position> startProvider;
             private Func<Position> endProvider;
+            private Func<Vector> vectorProvider;
             
             private LineRenderer line;
             private LineRenderer hat;
@@ -42,15 +43,24 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
 
             private Vector3 labelLocation;
 
-            public VectorRenderer(Func<Position> startProvider, Func<Position> endProvider,
+            private VectorRenderer(Func<Position> startProvider, Func<Position> endProvider, Func<Vector> vectorProvider,
                 KSPConsoleModule.RgbaColor color, string label, double width, bool pointy) {
                 this.startProvider = startProvider;
                 this.endProvider = endProvider;
+                this.vectorProvider = vectorProvider;
                 Color = color;
                 Scale = 1.0;
                 Width = width;
                 Pointy = pointy;
                 labelStr = label;                
+            }
+            
+            public VectorRenderer(Func<Position> startProvider, Func<Position> endProvider,
+                KSPConsoleModule.RgbaColor color, string label, double width, bool pointy) : this(startProvider, endProvider, null, color, label, width, pointy) {
+            }
+
+            public VectorRenderer(Func<Position> startProvider, Func<Vector> vectorProvider,
+                KSPConsoleModule.RgbaColor color, string label, double width, bool pointy) : this(startProvider, null, vectorProvider, color, label, width, pointy) {
             }
 
             [KSField(Description = "Controls if the debug-vector is currently visible (initially `true`)")]
@@ -71,24 +81,9 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                             line.useWorldSpace = false;
                             hat.useWorldSpace = false;
                             
-                            // Note the Shader name string below comes from Kerbal's packaged shaders the
-                            // game ships with - there's many to choose from but they're not documented what
-                            // they are.  This was settled upon via trial and error:
-                            // Additionally, Note that in KSP 1.8 because of the Unity update, some of these
-                            // shaders Unity previously supplied were removed from Unity's DLLs.  SQUAD packaged them
-                            // inside its own DLLs in 1.8 for modders who had been using them.  But because of that,
-                            // mods have to use this different path to get to them:
-                            Shader vecShader = Shader.Find("Sprites/Default"); // for when KSP version is < 1.8
-                            if (vecShader != null) {
-                                line.material = new Material(vecShader);
-                                hat.material = new Material(vecShader);
-                            }
-
-                            // This is how font loading would work if other fonts were available in KSP:
-                            // Font lblFont = (Font)Resources.Load( "Arial", typeof(Font) );
-                            // SafeHouse.Logger.Log( "lblFont is " + (lblFont == null ? "null" : "not null") );
-                            // _label.font = lblFont;
-
+                            line.material = GLUtils.Colored;
+                            hat.material = GLUtils.Colored;
+                                
                             label.text = labelStr;
                             label.alignment = TextAlignment.Center;
 
@@ -141,42 +136,63 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                 set => startProvider = () => value;
             }
 
-
             [KSField(Description = "The current end position of the debugging vector.")]
             public Position End {
-                get => endProvider();
-                set => endProvider = () => value;
+                get => endProvider?.Invoke() ?? startProvider() + vectorProvider();
+                set { 
+                    endProvider = () => value;
+                    vectorProvider = null;
+                }
             }
-            
+
+            [KSMethod(Description = "Change the function providing the start position of the debug vector.")]
+            public void SetStartProvider(Func<Position> startProvider) {
+                this.startProvider = startProvider;
+            }
+
+            [KSMethod(Description = "Change the function providing the end position of the debug vector.")]
+            public void SetEndProvider(Func<Position> endProvider) {
+                this.endProvider = endProvider;
+                this.vectorProvider = null;
+            }
+
+            [KSMethod(Description = "Change the function providing the vector/direction of the debug vector.")]
+            public void SetVectorProvider(Func<Vector> vectorProvider) {
+                this.endProvider = null;
+                this.vectorProvider = vectorProvider;
+            }
+
             private void RenderPointCoords() {
                 if (line != null && hat != null) {
                     double mapLengthMult = 1.0; // for scaling when on map view.
                     double mapWidthMult = 1.0; // for scaling when on map view.
                     float useWidth;
-                    Vector3d start;
-                    Vector3d vector;
+                    Position start = startProvider();
+                    Position end = endProvider?.Invoke() ?? start + vectorProvider();
+                    Vector3d startLocal;
+                    Vector3d vectorLocal;
 
                     if (KSPContext.CurrentContext.Game.Map.TryGetMapCore(out MapCore mapCore) && mapCore.IsEnabled) {
                         var space = mapCore.map3D.GetSpaceProvider();
 
-                        start = space.TranslateSimPositionToMapPosition(startProvider());
-                        vector = space.TranslateSimPositionToMapPosition(endProvider()) - start;
+                        startLocal = space.TranslateSimPositionToMapPosition(start);
+                        vectorLocal = space.TranslateSimPositionToMapPosition(end) - startLocal;
                         lineObj.layer = 27;
                         labelObj.layer = 27;
                         hatObj.layer = 27;
                         mapWidthMult = 2000 / space.Map3DScaleInv;
                     } else {
                         var frame = KSPContext.CurrentContext.ActiveVessel.transform?.coordinateSystem;
-                        start = frame.ToLocalPosition( startProvider());
-                        vector = frame.ToLocalPosition(endProvider()) - start;
+                        startLocal = frame.ToLocalPosition(start);
+                        vectorLocal = frame.ToLocalPosition(end) - startLocal;
                         lineObj.layer = 0;
                         labelObj.layer = 0;
                         hatObj.layer = 0;
                     }
                     
-                    Vector3d point1 = mapLengthMult * start;
-                    Vector3d point2 = mapLengthMult * (start + (Scale * 0.95 * vector));
-                    Vector3d point3 = mapLengthMult * (start + (Scale * vector));
+                    Vector3d point1 = mapLengthMult * startLocal;
+                    Vector3d point2 = mapLengthMult * (startLocal + (Scale * 0.95 * vectorLocal));
+                    Vector3d point3 = mapLengthMult * (startLocal + (Scale * vectorLocal));
 
                     label.fontSize = (int)(12.0 * (Width / 0.2) * Scale * mapWidthMult);
 
