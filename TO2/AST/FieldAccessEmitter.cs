@@ -25,6 +25,8 @@ namespace KontrolSystem.TO2.AST {
 
         string Description { get; }
 
+        bool CanStore { get; }
+
         IFieldAccessEmitter Create(ModuleContext context);
 
         IFieldAccessFactory FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments);
@@ -43,6 +45,7 @@ namespace KontrolSystem.TO2.AST {
 
         public TO2Type DeclaredType => fieldType();
 
+        public bool CanStore => false;
 
         public IFieldAccessEmitter Create(ModuleContext context) => new InlineFieldAccessEmitter(fieldType(), opCodes);
 
@@ -107,6 +110,8 @@ namespace KontrolSystem.TO2.AST {
 
         public string Description => description;
 
+        public bool CanStore => !fieldInfos.Last().IsInitOnly;
+
         public IFieldAccessEmitter Create(ModuleContext context) =>
             new BoundFieldAccessEmitter(fieldType(), fieldTarget, fieldInfos);
 
@@ -148,7 +153,7 @@ namespace KontrolSystem.TO2.AST {
 
         public bool RequiresPtr => fieldTarget.IsValueType;
 
-        public bool CanStore => true;
+        public bool CanStore => !fieldInfos.Last().IsInitOnly;
 
         public void EmitLoad(IBlockContext context) {
             foreach (FieldInfo fieldInfo in fieldInfos)
@@ -205,6 +210,8 @@ namespace KontrolSystem.TO2.AST {
         public TO2Type DeclaredType => fieldType();
 
         public string Description => description;
+
+        public bool CanStore => setter != null;
 
         public IFieldAccessEmitter Create(ModuleContext context) =>
             new BoundPropertyLikeFieldAccessEmitter(fieldType(), methodTarget, getter, setter, opCodes);

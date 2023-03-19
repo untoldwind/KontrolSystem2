@@ -117,6 +117,8 @@ namespace KontrolSystem.TO2.AST {
             }
         }
 
+        public bool CanStore => false;
+        
         public IFieldAccessEmitter Create(ModuleContext context) {
             Type generateType = resultType.GeneratedType(context);
             switch (field) {

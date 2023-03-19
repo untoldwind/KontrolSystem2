@@ -61,6 +61,8 @@ namespace KontrolSystem.TO2.AST {
 
         public string Description => itemTypes[index].Description;
 
+        public bool CanStore => true;
+
         public IFieldAccessEmitter Create(ModuleContext context) {
             Type generateType = tupleType.GeneratedType(context);
             List<FieldInfo> fieldInfos = new List<FieldInfo>();
