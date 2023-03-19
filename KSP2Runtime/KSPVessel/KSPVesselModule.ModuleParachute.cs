@@ -33,7 +33,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             }
 
             [KSField]
-            public double MinAirPressure { //todo: clamp this setter
+            public double MinAirPressure {
                 get => dataParachute.minAirPressureToOpen.GetValue();
                 set => dataParachute.minAirPressureToOpen.SetValue(Mathf.Clamp((float)value, 0.01f, 0.75f));
             }
