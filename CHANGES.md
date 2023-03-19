@@ -4,6 +4,8 @@
 
 * Add API for coordinate system independent positions, velocities, vectors and rotations
 * Debug vectors and ground markers
+* More atmospheric telemetry data
+* Support for string arguments
 
 ## 0.1.9.2 -> 0.1.9.3
 
