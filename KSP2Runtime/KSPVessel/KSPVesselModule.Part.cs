@@ -127,6 +127,19 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                     return new Option<ModuleLaunchClampAdapter>();
                 }
             }
+
+            [KSField] public bool IsParachute => part.IsParachute(out var _);
+
+            [KSField]
+            public Option<ModuleParachuteAdapter> Parachute {
+                get {
+                    if (part.IsParachute(out Data_Parachute data)) {
+                        return new Option<ModuleParachuteAdapter>(new ModuleParachuteAdapter(part, data));
+                    }
+
+                    return new Option<ModuleParachuteAdapter>();
+                }
+            }
         }
     }
 }
