@@ -15,6 +15,14 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
             },
             new Dictionary<string, IMethodInvokeFactory> {
                 {
+                    "to_relative",
+                    new BoundMethodInvokeFactory("Get relative velocity to frame of reference", true,
+                        () => VectorBinding.VectorType,
+                        () => new List<RealizedParameter> {new RealizedParameter("frame", TransformFrameBinding.TransformFrameType)}, false,
+                        typeof(VelocityBinding), typeof(VelocityBinding).GetMethod("ToRelative"))
+                    
+                },
+                {
                     "to_local",
                     new BoundMethodInvokeFactory("Get local velocity in a frame of reference", true,
                         () => Vector3Binding.Vector3Type,
@@ -34,9 +42,20 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                         false, typeof(VelocityBinding), typeof(VelocityBinding).GetMethod("ToFixed"))
                 },
             },
-            new Dictionary<string, IFieldAccessFactory> { });
+            new Dictionary<string, IFieldAccessFactory> {
+                {
+                    "position",
+                    new BoundFieldAccessFactory("Position the velocity was measured at", () => PositionBinding.PositionType, typeof(VelocityAtPosition), typeof(VelocityAtPosition).GetField("position"))
+                },
+                {
+                    "vector",
+                    new BoundPropertyLikeFieldAccessFactory("Relative velocity vector", () => VectorBinding.VectorType, typeof(VelocityAtPosition), typeof(VelocityAtPosition).GetProperty("Vector"))
+                }
+            });
 
-        public static Vector3d ToLocal(VelocityAtPosition velocity, ITransformFrame frame) => frame.motionFrame.ToLocalVelocity(velocity.velocity, velocity.position);
+        public static Vector ToRelative(VelocityAtPosition velocity, ITransformFrame frame) => frame.motionFrame.ToRelativeVelocity(velocity.velocity, velocity.position);
+
+        public static Vector3d ToLocal(VelocityAtPosition velocity, ITransformFrame frame) => frame.ToLocalVector(frame.motionFrame.ToRelativeVelocity(velocity.velocity, velocity.position));
 
         public static string ToString(VelocityAtPosition velocity, ITransformFrame frame) => Vector3Binding.ToString(frame.motionFrame.ToLocalVelocity(velocity.velocity, velocity.position));
 
