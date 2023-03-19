@@ -50,7 +50,7 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
 
                 return groundMarker;
             }
-            
+
             [KSMethod(
                 Description = "Remove all markers from the game-scene."
             )]

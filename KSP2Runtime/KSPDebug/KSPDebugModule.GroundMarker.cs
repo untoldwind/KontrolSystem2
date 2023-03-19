@@ -38,7 +38,6 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
             }
 
             public void OnRender() {
-                bool map = false;
                 Vector surfaceNormal = GeoCoordinates.GlobalSurfaceNormal;
                 Position position = GeoCoordinates.GlobalAltitudePosition(GeoCoordinates.TerrainHeight);
                 Vector3d up;
@@ -74,19 +73,19 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                     localPos,
                     localPos + radius * (QuaternionD.AngleAxis(Rotation - 10, up) * north),
                     localPos + radius * (QuaternionD.AngleAxis(Rotation + 10, up) * north),
-                    color, GLUtils.Colored, map);
+                    color, GLUtils.Colored);
 
                 GLUtils.GLTriangle(camera,
                     localPos,
                     localPos + radius * (QuaternionD.AngleAxis(Rotation + 110, up) * north),
                     localPos + radius * (QuaternionD.AngleAxis(Rotation + 130, up) * north),
-                    color, GLUtils.Colored, map);
+                    color, GLUtils.Colored);
 
                 GLUtils.GLTriangle(camera,
                     localPos,
                     localPos + radius * (QuaternionD.AngleAxis(Rotation - 110, up) * north),
                     localPos + radius * (QuaternionD.AngleAxis(Rotation - 130, up) * north),
-                    color, GLUtils.Colored, map);
+                    color, GLUtils.Colored);
             }
         }
     }

@@ -16,37 +16,54 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
             }
         }
 
-        //Tests if body occludes worldPosition, from the perspective of the planetarium camera
-        // https://cesiumjs.org/2013/04/25/Horizon-culling/
-        public static bool IsOccluded(Vector3d worldPosition, Vector3d bodyPosition, double bodyRadius, Vector3d camPos) {
-            Vector3d vc = (bodyPosition - camPos) / (bodyRadius - 100);
-            Vector3d vt = (worldPosition - camPos) / (bodyRadius - 100);
-
-            double vtVc = Vector3d.Dot(vt, vc);
-
-            // In front of the horizon plane
-            if (vtVc < vc.sqrMagnitude - 1) return false;
-
-            return vtVc * vtVc / vt.sqrMagnitude > vc.sqrMagnitude - 1;
-        }
-
         public static void GLTriangle(Camera camera, Vector3d worldVertices1, Vector3d worldVertices2, Vector3d worldVertices3,
-            Color c, Material material, bool map) {
+            Color c, Material material) {
             GL.PushMatrix();
             material.SetPass(0);
             GL.LoadPixelMatrix();
             GL.Begin(GL.TRIANGLES);
             GL.Color(c);
-            GLVertex(camera, worldVertices1, map);
-            GLVertex(camera,worldVertices2, map);
-            GLVertex(camera, worldVertices3, map);
+            GLVertex(camera, worldVertices1);
+            GLVertex(camera,worldVertices2);
+            GLVertex(camera, worldVertices3);
             GL.End();
             GL.PopMatrix();
         }
 
-        public static void GLVertex(Camera camera, Vector3d worldPosition, bool map) {
+        public static void GLVertex(Camera camera, Vector3d worldPosition) {
             Vector3 screenPoint = camera.WorldToScreenPoint(worldPosition);
             GL.Vertex3(screenPoint.x, screenPoint.y, 0);
         }
+
+        public static void GLPixelLine(Camera camera, Vector3d worldPosition1, Vector3d worldPosition2) {
+            Vector3 screenPoint1 = camera.WorldToScreenPoint(worldPosition1);
+            Vector3 screenPoint2 = camera.WorldToScreenPoint(worldPosition2);
+
+            if (screenPoint1.z > 0 && screenPoint2.z > 0) {
+                GL.Vertex3(screenPoint1.x, screenPoint1.y, 0);
+                GL.Vertex3(screenPoint2.x, screenPoint2.y, 0);
+            }
+        }
+        
+        //If dashed = false, draws 0-1-2-3-4-5...
+        //If dashed = true, draws 0-1 2-3 4-5...
+        public static void DrawPath(Camera camera, Vector3d[] points, Color c,
+            Material material, bool dashed) {
+            GL.PushMatrix();
+            material.SetPass(0);
+            GL.LoadPixelMatrix();
+            GL.Begin(GL.LINES);
+            GL.Color(c);
+
+            Vector3d camPos = camera.transform.position;
+
+            int step = (dashed ? 2 : 1);
+            for (int i = 0; i < points.Length - 1; i += step) {
+                GLPixelLine(camera, points[i], points[i + 1]);
+            }
+
+            GL.End();
+            GL.PopMatrix();
+        }        
     }
 }
