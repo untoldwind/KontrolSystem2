@@ -82,6 +82,9 @@ namespace KontrolSystem.KSP.Runtime {
                     } else if (param.type == BuiltinType.Bool) {
                         var defaultValue = param.defaultValue as BoolDefaultValue;
                         return new EntrypointArgumentDescriptor(param.name, param.type, defaultValue?.Value ?? false);
+                    } else if (param.type == BuiltinType.String) {
+                        var defaultValue = param.defaultValue as StringDefaultValue;
+                        return new EntrypointArgumentDescriptor(param.name, param.type, defaultValue?.Value ?? string.Empty);
                     } else {
                         throw new Exception($"Parameter {param.name} unsupported type {param.type.Name}");
                     }
