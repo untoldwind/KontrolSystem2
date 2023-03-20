@@ -189,6 +189,9 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                         labelObj.layer = 0;
                         hatObj.layer = 0;
                     }
+                    Camera camera = KSPContext.CurrentContext.Game.SessionManager.GetMyActiveCamera();
+
+                    labelObj.transform.rotation = camera.transform.rotation;
                     
                     Vector3d point1 = mapLengthMult * startLocal;
                     Vector3d point2 = mapLengthMult * (startLocal + (Scale * 0.95 * vectorLocal));
