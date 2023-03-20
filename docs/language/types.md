@@ -114,7 +114,6 @@ is a record with three elements, where the first is an integer named `ra`, secon
 
 This way the example above may provide more details about the return value:
 
-```
 ```rust
 use { floor } from core::math
 
