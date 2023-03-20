@@ -63,7 +63,7 @@ is a local function `add_three` that takes an integer and two floats, adds them 
 
 NOTE: Adding an integer with a float is not allowed, i.e. the integer has to be explicitly converted to a float first via `.to_float()`. This prevents any ambiguity of implicit type conversion.
 
-## Lamdbas (anonymous functions)
+## Lambdas (anonymous functions)
 
 ### Basic syntax
 
