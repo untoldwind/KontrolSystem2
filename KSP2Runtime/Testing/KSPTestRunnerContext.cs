@@ -8,6 +8,7 @@ using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Runtime;
 using KSP.Game;
 using KSP.Sim.impl;
+using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime.Testing {
     public class KSPTestRunnerContext : TestRunnerContext, IKSPContext {
@@ -33,6 +34,8 @@ namespace KontrolSystem.KSP.Runtime.Testing {
         public GameMode GameMode => GameMode.Unknown;
 
         public KSPConsoleBuffer ConsoleBuffer => consoleBuffer;
+
+        public Font ConsoleFont(int fontSize) => null;
 
         public double UniversalTime => 0;
 

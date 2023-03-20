@@ -4,6 +4,7 @@ using KontrolSystem.TO2.Binding;
 using KSP.Game;
 using KSP.Map;
 using KSP.Sim;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -37,7 +38,7 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
             private GameObject hatObj;
             private GameObject labelObj;
 
-            private TextMesh label;
+            private TextMeshPro label;
 
             private string labelStr;
 
@@ -65,18 +66,18 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
 
             [KSField(Description = "Controls if the debug-vector is currently visible (initially `true`)")]
             public bool Visible {
-                get { return enable; }
+                get => enable;
                 set {
                     if (value) {
                         if (line == null || hat == null) {
-                            lineObj = new GameObject("vecdrawLine");
-                            hatObj = new GameObject("vecdrawHat");
+                            lineObj = new GameObject("KS2DebugVectorLine", typeof(LineRenderer));
+                            hatObj = new GameObject("KS2DebugVectorHat", typeof(LineRenderer));
 
-                            line = lineObj.AddComponent<LineRenderer>();
-                            hat = hatObj.AddComponent<LineRenderer>();
+                            line = lineObj.GetComponent<LineRenderer>();
+                            hat = hatObj.GetComponent<LineRenderer>();
 
-                            labelObj = new GameObject("vecdrawLabel", typeof(TextMesh));
-                            label = labelObj.GetComponent<TextMesh>();
+                            labelObj = new GameObject("KS2DebugVectorLabel", typeof(TextMeshPro));
+                            label = labelObj.GetComponent<TextMeshPro>();
 
                             line.useWorldSpace = false;
                             hat.useWorldSpace = false;
@@ -85,7 +86,11 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                             hat.material = GLUtils.Colored;
                                 
                             label.text = labelStr;
-                            label.alignment = TextAlignment.Center;
+                            label.horizontalAlignment = HorizontalAlignmentOptions.Center;
+                            label.verticalAlignment = VerticalAlignmentOptions.Middle;
+                            label.color = Color.Color;
+                            label.enableWordWrapping = false;
+                            label.lineSpacing = 1.0f;
 
                             RenderValues();
                         }
@@ -180,7 +185,7 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                         lineObj.layer = 27;
                         labelObj.layer = 27;
                         hatObj.layer = 27;
-                        mapWidthMult = 2000 / space.Map3DScaleInv;
+                        mapWidthMult = 1500 / space.Map3DScaleInv;
                     } else {
                         var frame = KSPContext.CurrentContext.ActiveVessel.transform?.coordinateSystem;
                         startLocal = frame.ToLocalPosition(start);
@@ -191,13 +196,11 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                     }
                     Camera camera = KSPContext.CurrentContext.Game.SessionManager.GetMyActiveCamera();
 
-                    labelObj.transform.rotation = camera.transform.rotation;
-                    
                     Vector3d point1 = mapLengthMult * startLocal;
                     Vector3d point2 = mapLengthMult * (startLocal + (Scale * 0.95 * vectorLocal));
                     Vector3d point3 = mapLengthMult * (startLocal + (Scale * vectorLocal));
-
-                    label.fontSize = (int)(12.0 * (Width / 0.2) * Scale * mapWidthMult);
+                    
+                    label.fontSize = (float)( 12.0 * Scale * mapWidthMult);
 
                     useWidth = (float)(Width * Scale * mapWidthMult);
 
@@ -218,6 +221,7 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                     // Put the label at the midpoint of the arrow:
                     labelLocation = (point1 + point3) / 2;
                     label.transform.position = labelLocation;
+                    label.transform.rotation = camera.transform.rotation;
                 }
             }            
 

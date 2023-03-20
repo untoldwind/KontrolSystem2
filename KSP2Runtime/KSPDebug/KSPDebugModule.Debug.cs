@@ -51,6 +51,17 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                 return groundMarker;
             }
 
+            [KSMethod]
+            public BillboardRenderer AddBillboard(Func<Position> positionProvider, Func<string> textProvider,
+                KSPConsoleModule.RgbaColor color, long fontSize) {
+                BillboardRenderer marker = new BillboardRenderer(positionProvider, textProvider,color, fontSize);
+                marker.Visible = true;
+                
+                KSPContext.CurrentContext.AddMarker(marker);
+
+                return marker;
+            }
+            
             [KSMethod(
                 Description = "Remove all markers from the game-scene."
             )]

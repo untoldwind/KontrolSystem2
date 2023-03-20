@@ -25,6 +25,8 @@ namespace KontrolSystem.KSP.Runtime {
 
         KSPConsoleBuffer ConsoleBuffer { get; }
 
+        Font ConsoleFont(int fontSize);
+
         double UniversalTime { get; }
 
         KSPOrbitModule.IBody FindBody(string name);

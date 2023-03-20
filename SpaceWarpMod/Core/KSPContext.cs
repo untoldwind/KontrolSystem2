@@ -6,6 +6,7 @@ using KontrolSystem.KSP.Runtime;
 using KontrolSystem.KSP.Runtime.KSPConsole;
 using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
+using KontrolSystem.SpaceWarpMod.UI;
 using KontrolSystem.TO2.Runtime;
 using KSP.Game;
 using KSP.Sim.impl;
@@ -89,6 +90,9 @@ namespace KontrolSystem.SpaceWarpMod.Core {
 
         public GameMode GameMode => GameModeAdapter.GameModeFromState(Game.GlobalGameState.GetState());
 
+        public Font ConsoleFont(int fontSize) => FontManager.Instance.GetSystemFontByNameAndSize(FontManager.DefaultConsoleFonts,
+            fontSize, true);
+        
         public double UniversalTime => Game.SpaceSimulation.UniverseModel.UniversalTime;
 
         public VesselComponent ActiveVessel => gameInstance.ViewController.GetActiveSimVessel(true);

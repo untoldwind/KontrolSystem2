@@ -30,11 +30,17 @@
         <Reference Include="UnityEngine.CoreModule">
             <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
         </Reference>
+        <Reference Include="UnityEngine.UI">
+            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\UnityEngine.UI.dll</HintPath>
+        </Reference>
         <Reference Include="UnityEngine.UIModule">
             <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\UnityEngine.UIModule.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine.TextRenderingModule">
             <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+        </Reference>
+        <Reference Include="Unity.TextMeshPro">
+            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\Unity.TextMeshPro.dll</HintPath>
         </Reference>
     </ItemGroup>
     <ItemGroup>
