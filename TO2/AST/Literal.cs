@@ -20,7 +20,7 @@ namespace KontrolSystem.TO2.AST {
         public override TO2Type ResultType(IBlockContext context) => BuiltinType.Bool;
 
         public override REPLValueFuture Eval(IREPLContext context) {
-            return new REPLValueFuture.Success(new REPLBool(value));
+            return REPLValueFuture.Success(new REPLBool(value));
         }
 
         public override void EmitCode(IBlockContext context, bool dropResult) {
@@ -47,7 +47,7 @@ namespace KontrolSystem.TO2.AST {
         }
 
         public override REPLValueFuture Eval(IREPLContext context) {
-            return new REPLValueFuture.Success(new REPLString(value));
+            return REPLValueFuture.Success(new REPLString(value));
         }
         
         public override void EmitCode(IBlockContext context, bool dropResult) {
@@ -71,7 +71,7 @@ namespace KontrolSystem.TO2.AST {
         }
 
         public override REPLValueFuture Eval(IREPLContext context) {
-            return new REPLValueFuture.Success(new REPLInt(value));
+            return REPLValueFuture.Success(new REPLInt(value));
         }
         
         public override void EmitCode(IBlockContext context, bool dropResult) {
@@ -95,7 +95,7 @@ namespace KontrolSystem.TO2.AST {
         public override TO2Type ResultType(IBlockContext context) => BuiltinType.Float;
 
         public override REPLValueFuture Eval(IREPLContext context) {
-            return new REPLValueFuture.Success(new REPLFloat(value));
+            return REPLValueFuture.Success(new REPLFloat(value));
         }
         
         public override void EmitCode(IBlockContext context, bool dropResult) {

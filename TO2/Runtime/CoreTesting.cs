@@ -10,6 +10,7 @@ namespace KontrolSystem.TO2.Runtime {
         private readonly ConcurrentQueue<string> messages = new ConcurrentQueue<string>();
         private Stopwatch timeStopwatch = Stopwatch.StartNew();
         private long timeoutMillis = 100;
+        private REPLModuleContext replModuleContext = new REPLModuleContext();
 
         protected int assertionsCount;
 
@@ -54,6 +55,8 @@ namespace KontrolSystem.TO2.Runtime {
         }
 
         public IContext CloneBackground(CancellationTokenSource token) => new BackgroundTestContext(this, token);
+
+        public REPLModuleContext REPLModuleContext => replModuleContext;
     }
 
     public class BackgroundTestContext : IContext {

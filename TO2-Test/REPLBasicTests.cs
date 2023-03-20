@@ -10,7 +10,8 @@ namespace KontrolSystem.TO2.Test {
         [Fact]
         public void TestSimpleExpressions() {
             Assert.Equal(1234,  RunExpression<long>(BuiltinType.Int, "1234"));
-            Assert.Equal(1234,  RunExpression<long>(BuiltinType.Int, "1234"));
+            Assert.Equal(3579,  RunExpression<long>(BuiltinType.Int, "1234 + 2345"));
+            Assert.Equal(-1111,  RunExpression<long>(BuiltinType.Int, "1234 - 2345"));
         }
         
         private T RunExpression<T>(TO2Type to2Type, string expression) {

@@ -11,16 +11,93 @@ namespace KontrolSystem.TO2.Runtime {
         }
 
         public TO2Type Type => to2Type;
+
+        public static REPLValueFuture Success(IREPLValue value) => new SuccessImpl(value);
+
+        public static REPLValueFuture Chain1(TO2Type resultType, REPLValueFuture first,
+            Func<IREPLValue, IREPLValue> map) => new Chain1Impl(resultType, first, map);
+
+        public static REPLValueFuture Chain2(TO2Type resultType, REPLValueFuture first, REPLValueFuture second,
+            Func<IREPLValue, IREPLValue, IREPLValue> map) => new Chain2Impl(resultType, first, second, map);
         
-        public class Success : REPLValueFuture {
+        internal class SuccessImpl : REPLValueFuture {
             private readonly IREPLValue value;
 
-            public Success(IREPLValue value) : base(value.Type) => this.value = value;
+            public SuccessImpl(IREPLValue value) : base(value.Type) => this.value = value;
 
             public override FutureResult<IREPLValue> PollValue() => new FutureResult<IREPLValue>(value);
         }
-    }
 
+        internal class Chain1Impl : REPLValueFuture {
+            private readonly REPLValueFuture first;
+            private IREPLValue firstResult;
+            private readonly Func<IREPLValue, IREPLValue> map;
+            private IREPLValue mapResult;
+
+            public Chain1Impl(TO2Type resultType, REPLValueFuture first, Func<IREPLValue, IREPLValue> map) : base(resultType) {
+                this.first = first;
+                this.map = map;
+            }
+            
+            public override FutureResult<IREPLValue> PollValue() {
+                if (firstResult == null) {
+                    var result = first.PollValue();
+                    if (result.IsReady) {
+                        firstResult = result.value;
+                    } else {
+                        return new FutureResult<IREPLValue>();
+                    }
+                }
+
+                if (mapResult == null) {
+                    mapResult = map.Invoke(firstResult);
+                }
+
+                return new FutureResult<IREPLValue>( mapResult);
+            }            
+        }
+
+        internal class Chain2Impl : REPLValueFuture {
+            private readonly REPLValueFuture first;
+            private IREPLValue firstResult;
+            private readonly REPLValueFuture second;
+            private IREPLValue secondResult;
+            private readonly Func<IREPLValue, IREPLValue, IREPLValue> map;
+            private IREPLValue mapResult;
+
+            public Chain2Impl(TO2Type resultType, REPLValueFuture first, REPLValueFuture second, Func<IREPLValue, IREPLValue, IREPLValue> map) : base(resultType) {
+                this.first = first;
+                this.second = second;
+                this.map = map;
+            }
+            
+            public override FutureResult<IREPLValue> PollValue() {
+                if (firstResult == null) {
+                    var result = first.PollValue();
+                    if (result.IsReady) {
+                        firstResult = result.value;
+                    } else {
+                        return new FutureResult<IREPLValue>();
+                    }
+                }
+                if (secondResult == null) {
+                    var result = second.PollValue();
+                    if (result.IsReady) {
+                        secondResult = result.value;
+                    } else {
+                        return new FutureResult<IREPLValue>();
+                    }
+                }
+
+                if (mapResult == null) {
+                    mapResult = map.Invoke(firstResult, secondResult);
+                }
+
+                return new FutureResult<IREPLValue>( mapResult);
+            }            
+        }
+    }
+    
     public interface IREPLValue {
         TO2Type Type { get; }
         

@@ -90,42 +90,19 @@ namespace KontrolSystem.TO2.AST {
         public override REPLValueFuture Eval(IREPLContext context) {
             var leftFuture = this.left.Eval(context);
             var rightFuture = this.right.Eval(context);
+
+            IOperatorEmitter leftEmitter = leftFuture.Type.AllowedSuffixOperators(context.REPLModuleContext)
+                .GetMatching(context.REPLModuleContext, op, rightFuture.Type);
+            IOperatorEmitter rightEmitter = rightFuture.Type.AllowedPrefixOperators(context.REPLModuleContext)
+                .GetMatching(context.REPLModuleContext, op, leftFuture.Type);
             
-            return new BinaryREPLFuture(leftFuture, rightFuture, op);
-        }
-
-        class BinaryREPLFuture : REPLValueFuture {
-            private readonly Future<IREPLValue> left;
-            private IREPLValue leftResult;
-            private readonly Future<IREPLValue> right;
-            private IREPLValue rightResult;
-            private readonly Operator op;
-
-            public BinaryREPLFuture(REPLValueFuture left, REPLValueFuture right, Operator op) : base(BuiltinType.Unit) {
-                this.left = left;
-                this.right = right;
-                this.op = op;
+            if (leftEmitter == null && rightEmitter == null) {
+                throw new REPLException(this, $"Cannot {op} a {leftFuture.Type} with a {rightFuture.Type}");
             }
 
-            public override FutureResult<IREPLValue> PollValue() {
-                if (leftResult == null) {
-                    var result = left.PollValue();
-                    if (result.IsReady) {
-                        leftResult = result.value;
-                    } else {
-                        return new FutureResult<IREPLValue>();
-                    }
-                }
-                if (rightResult == null) {
-                    var result = right.PollValue();
-                    if (result.IsReady) {
-                        rightResult = result.value;
-                    } else {
-                        return new FutureResult<IREPLValue>();
-                    }
-                }
-                return new FutureResult<IREPLValue>();
-            }
+            var opEmitter = leftEmitter ?? rightEmitter;
+            return REPLValueFuture.Chain2(opEmitter.ResultType, leftFuture, rightFuture,
+                (leftResult, rightResult) => opEmitter.Eval(this, leftResult, rightResult));
         }
     }
 }
