@@ -74,12 +74,12 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                         () => new List<RealizedParameter>() {new RealizedParameter("frame", TransformFrameBinding.TransformFrameType), new RealizedParameter("decimals", BuiltinType.Int)},
                         false, typeof(VectorBinding), typeof(VectorBinding).GetMethod("ToFixed"))
                 }, {
-                    "to_rotation",
+                    "to_direction",
                     new BoundMethodInvokeFactory("Convert the vector to a rotation/direction in space.",
                         true,
                         () => RotationBinding.RotationType,
                         () => new List<RealizedParameter>() { },
-                        false, typeof(VectorBinding), typeof(VectorBinding).GetMethod("ToRotation"))
+                        false, typeof(VectorBinding), typeof(VectorBinding).GetMethod("ToDirection"))
                 }, {
                     "cross",
                     new BoundMethodInvokeFactory("Calculate the cross/other product with `other` vector.", true,
@@ -131,7 +131,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
         public static string ToFixed(Vector v, ITransformFrame frame, long decimals) =>
             Vector3Binding.ToFixed(frame.ToLocalVector(v), decimals);
 
-        public static RotationWrapper ToRotation(Vector v) => new RotationWrapper(v);
+        public static RotationWrapper ToDirection(Vector v) => new RotationWrapper(v);
 
         public static Vector ExcludeFrom(Vector v, Vector other) {
             var otherLocal = v.coordinateSystem.ToLocalVector(other);

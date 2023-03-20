@@ -6,6 +6,8 @@
 * Debug vectors and ground markers
 * More atmospheric telemetry data
 * Support for string arguments
+* Add binding for parachutes
+* Add navball helper functions to `std::navball`
 
 ## 0.1.9.2 -> 0.1.9.3
 

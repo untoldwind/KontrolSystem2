@@ -1,0 +1,28 @@
+use { Vessel } from ksp::vessel
+use { Direction, GlobalDirection, Vec3, vec3 } from ksp::math
+use { acos_deg, atan2_deg } from core::math
+use { angle_to_360, angle_to_180 } from std::utils
+
+pub sync fn navball(vessel: Vessel, dir : Direction) -> Vec3 = {
+    let roll = 90.0 - acos_deg(vessel.up * dir.right_vector)
+    const up_angles = acos_deg(vessel.up * dir.up_vector)
+    
+    if (up_angles > 90) roll = 180 - roll
+
+    const yaw = atan2_deg(vessel.east *  dir.vector, vessel.north * dir.vector)
+    const pitch = 90 - acos_deg(vessel.up * dir.vector)
+
+    vec3(pitch, angle_to_360(yaw), angle_to_180(roll))
+}
+
+pub sync fn global_navball(vessel: Vessel, dir: GlobalDirection) -> Vec3 = {
+    let roll = 90.0 - acos_deg(vessel.global_up * dir.right_vector)
+    const up_angles = acos_deg(vessel.global_up * dir.up_vector)
+    
+    if (up_angles > 90) roll = 180 - roll
+
+    const yaw = atan2_deg(vessel.global_east *  dir.vector, vessel.global_north * dir.vector)
+    const pitch = 90 - acos_deg(vessel.global_up * dir.vector)
+
+    vec3(pitch, angle_to_360(yaw), angle_to_180(roll))
+}
