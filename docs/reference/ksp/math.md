@@ -11,15 +11,15 @@ Represents the rotation from an initial coordinate system when looking down the 
 
 #### Fields
 
-Name | Type | Description
---- | --- | ---
-euler | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | Euler angles in degree of the rotation
-pitch | float | Pitch in degree
-right_vector | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | Right vector of the rotation
-roll | float | Roll in degree
-up_vector | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | Up vector of the rotation
-vector | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | Fore vector of the rotation (i.e. looking/facing direction
-yaw | float | Yaw in degree
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+euler | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/W | Euler angles in degree of the rotation
+pitch | float | R/O | Pitch in degree
+right_vector | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Right vector of the rotation
+roll | float | R/O | Roll in degree
+up_vector | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Up vector of the rotation
+vector | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/W | Fore vector of the rotation (i.e. looking/facing direction
+yaw | float | R/O | Yaw in degree
 
 #### Methods
 
@@ -76,11 +76,11 @@ Represents the rotation from an initial coordinate system when looking down the 
 
 #### Fields
 
-Name | Type | Description
---- | --- | ---
-right_vector | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | Right vector of the rotation
-up_vector | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | Up vector of the rotation
-vector | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | Fore vector of the rotation (i.e. looking/facing direction
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+right_vector | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | Right vector of the rotation
+up_vector | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | Up vector of the rotation
+vector | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/W | Fore vector of the rotation (i.e. looking/facing direction
 
 #### Methods
 
@@ -186,11 +186,11 @@ Abstract vector in space that can be projected to a concrete 3-dimensional vecto
 
 #### Fields
 
-Name | Type | Description
---- | --- | ---
-magnitude | float | Magnitude/length of the vector
-normalized | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | Normalized vector (i.e. scaled to length 1)
-sqr_magnitude | float | Squared magnitude of the vector
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+magnitude | float | R/O | Magnitude/length of the vector
+normalized | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | Normalized vector (i.e. scaled to length 1)
+sqr_magnitude | float | R/O | Squared magnitude of the vector
 
 #### Methods
 
@@ -266,10 +266,10 @@ A velocity in space, that can be projected to a 3-dimensional vector in a specif
 
 #### Fields
 
-Name | Type | Description
---- | --- | ---
-position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | Position the velocity was measured at
-vector | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | Relative velocity vector
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | R/W | Position the velocity was measured at
+vector | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/W | Relative velocity vector
 
 #### Methods
 
@@ -312,14 +312,14 @@ A 2-dimensional matrix.
 
 #### Fields
 
-Name | Type | Description
---- | --- | ---
-a | float | a
-b | float | b
-c | float | c
-d | float | d
-determinant | float | Get determinant of matrix
-inverse | [ksp::math::Matrix2x2](/reference/ksp/math.md#matrix2x2) | Invert matrix
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+a | float | R/O | a
+b | float | R/O | b
+c | float | R/O | c
+d | float | R/O | d
+determinant | float | R/O | Get determinant of matrix
+inverse | [ksp::math::Matrix2x2](/reference/ksp/math.md#matrix2x2) | R/O | Invert matrix
 
 ### TransformFrame
 
@@ -327,14 +327,14 @@ Representation of a coordinate frame of reference
 
 #### Fields
 
-Name | Type | Description
---- | --- | ---
-back | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | backward vector of the coordinate system
-down | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | down vector of the coordinate system
-forward | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | forward vector of the coordinate system
-left | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | left vector of the coordinate system
-right | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | right vector of the coordinate system
-up | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | up vector of the coordinate system
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+back | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | backward vector of the coordinate system
+down | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | down vector of the coordinate system
+forward | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | forward vector of the coordinate system
+left | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | left vector of the coordinate system
+right | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | right vector of the coordinate system
+up | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | up vector of the coordinate system
 
 #### Methods
 
@@ -368,13 +368,13 @@ A 2-dimensional vector.
 
 #### Fields
 
-Name | Type | Description
---- | --- | ---
-magnitude | float | Magnitude/length of the vector
-normalized | [ksp::math::Vec2](/reference/ksp/math.md#vec2) | Normalized vector (i.e. scaled to length 1)
-sqr_magnitude | float | Squared magnitude of the vector
-x | float | x-coordinate
-y | float | y-coordinate
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+magnitude | float | R/O | Magnitude/length of the vector
+normalized | [ksp::math::Vec2](/reference/ksp/math.md#vec2) | R/O | Normalized vector (i.e. scaled to length 1)
+sqr_magnitude | float | R/O | Squared magnitude of the vector
+x | float | R/W | x-coordinate
+y | float | R/W | y-coordinate
 
 #### Methods
 
@@ -408,15 +408,15 @@ A 3-dimensional vector.
 
 #### Fields
 
-Name | Type | Description
---- | --- | ---
-magnitude | float | Magnitude/length of the vector
-normalized | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | Normalized vector (i.e. scaled to length 1)
-sqr_magnitude | float | Squared magnitude of the vector
-x | float | x-coordinate
-xzy | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | Swapped y- and z-coordinate
-y | float | y-coordinate
-z | float | z-coordinate
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+magnitude | float | R/O | Magnitude/length of the vector
+normalized | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Normalized vector (i.e. scaled to length 1)
+sqr_magnitude | float | R/O | Squared magnitude of the vector
+x | float | R/W | x-coordinate
+xzy | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Swapped y- and z-coordinate
+y | float | R/W | y-coordinate
+z | float | R/W | z-coordinate
 
 #### Methods
 

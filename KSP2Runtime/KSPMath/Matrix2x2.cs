@@ -4,7 +4,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
     //  [a    b]
     //  [c    d]
     public struct Matrix2x2 {
-        private readonly double a, b, c, d;
+        public readonly double a, b, c, d;
 
         public Matrix2x2(double a, double b, double c, double d) {
             this.a = a;

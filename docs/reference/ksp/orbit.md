@@ -12,26 +12,26 @@ Represents an in-game celestial body.
 
 #### Fields
 
-Name | Type | Description
---- | --- | ---
-angular_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | Angular velocity vector of the body 
-atmosphere_depth | float | Depth/height of the atmosphere if present. 
-body_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | 
-celestial_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | 
-global_angular_velocity | [ksp::math::GlobalAngularVelocity](/reference/ksp/math.md#globalangularvelocity) | Angular velocity vector of the body (coordinate system independent) 
-global_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | The current position of the body (coordinate system independent) 
-global_right | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | 
-global_up | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | 
-grav_parameter | float | Standard gravitation parameter of the body. 
-has_atmosphere | bool | `true` if the celestial body has an atmosphere to deal with. 
-name | string | Name of the celestial body. 
-orbit | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit) | The orbit of the celestial body itself (around the parent body) 
-position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | The current position of the body 
-radius | float | Radius of the body at sea level 
-right | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
-rotation_period | float | Rotation period of the planet. 
-SOI_radius | float | Radius of the sphere of influence of the body 
-up | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+angular_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Angular velocity vector of the body 
+atmosphere_depth | float | R/O | Depth/height of the atmosphere if present. 
+body_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/O | 
+celestial_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/O | 
+global_angular_velocity | [ksp::math::GlobalAngularVelocity](/reference/ksp/math.md#globalangularvelocity) | R/O | Angular velocity vector of the body (coordinate system independent) 
+global_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | R/O | The current position of the body (coordinate system independent) 
+global_right | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | 
+global_up | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | 
+grav_parameter | float | R/O | Standard gravitation parameter of the body. 
+has_atmosphere | bool | R/O | `true` if the celestial body has an atmosphere to deal with. 
+name | string | R/O | Name of the celestial body. 
+orbit | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit) | R/O | The orbit of the celestial body itself (around the parent body) 
+position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | The current position of the body 
+radius | float | R/O | Radius of the body at sea level 
+right | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
+rotation_period | float | R/O | Rotation period of the planet. 
+SOI_radius | float | R/O | Radius of the sphere of influence of the body 
+up | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
 
 #### Methods
 
@@ -110,14 +110,14 @@ body.terrain_height ( lat : float,
 
 #### Fields
 
-Name | Type | Description
---- | --- | ---
-body | [ksp::orbit::Body](/reference/ksp/orbit.md#body) | 
-global_surface_normal | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | 
-latitude | float | 
-longitude | float | 
-surface_normal | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
-terrain_height | float | 
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+body | [ksp::orbit::Body](/reference/ksp/orbit.md#body) | R/O | 
+global_surface_normal | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | 
+latitude | float | R/W | 
+longitude | float | R/W | 
+surface_normal | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
+terrain_height | float | R/O | 
 
 #### Methods
 
@@ -144,26 +144,26 @@ Represents an in-game orbit.
 
 #### Fields
 
-Name | Type | Description
---- | --- | ---
-apoapsis | float | Apoapsis of the orbit above sealevel of the `reference_body`. 
-apoapsis_radius | float | Radius of apoapsis of the orbit (i.e. from the center of the `reference_body') 
-argument_of_periapsis | float | Argument of periapsis of the orbit. 
-eccentricity | float | Eccentricity of the orbit. 
-end_ut | float | 
-epoch | float | Orbit epoch. 
-inclination | float | Inclination of the orbit in degree. 
-LAN | float | Longitude of ascending node of the orbit in degree 
-mean_anomaly_at_epoch | float | Mean anomaly of the orbit at `epoch` 
-mean_motion | float | Mean motion of the orbit. 
-orbit_normal | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | Normal vector perpendicular to orbital plane. 
-periapsis | float | Periapsis of the orbit above sealevel of the `reference_body` 
-periapsis_radius | float | Radius of periapsis of the orbit (i.e. from the center of the `reference_body') 
-period | float | Orbital period. 
-reference_body | [ksp::orbit::Body](/reference/ksp/orbit.md#body) | The celestial body the orbit is referenced on. 
-reference_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | 
-semi_major_axis | float | Semi major axis of the orbit. 
-start_ut | float | 
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+apoapsis | float | R/O | Apoapsis of the orbit above sealevel of the `reference_body`. 
+apoapsis_radius | float | R/O | Radius of apoapsis of the orbit (i.e. from the center of the `reference_body') 
+argument_of_periapsis | float | R/O | Argument of periapsis of the orbit. 
+eccentricity | float | R/O | Eccentricity of the orbit. 
+end_ut | float | R/O | 
+epoch | float | R/O | Orbit epoch. 
+inclination | float | R/O | Inclination of the orbit in degree. 
+LAN | float | R/O | Longitude of ascending node of the orbit in degree 
+mean_anomaly_at_epoch | float | R/O | Mean anomaly of the orbit at `epoch` 
+mean_motion | float | R/O | Mean motion of the orbit. 
+orbit_normal | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Normal vector perpendicular to orbital plane. 
+periapsis | float | R/O | Periapsis of the orbit above sealevel of the `reference_body` 
+periapsis_radius | float | R/O | Radius of periapsis of the orbit (i.e. from the center of the `reference_body') 
+period | float | R/O | Orbital period. 
+reference_body | [ksp::orbit::Body](/reference/ksp/orbit.md#body) | R/O | The celestial body the orbit is referenced on. 
+reference_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/O | 
+semi_major_axis | float | R/O | Semi major axis of the orbit. 
+start_ut | float | R/O | 
 
 #### Methods
 

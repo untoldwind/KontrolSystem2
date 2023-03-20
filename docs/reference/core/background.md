@@ -13,12 +13,12 @@ Represents a background task
 
 #### Fields
 
-Name | Type | Description
---- | --- | ---
-is_canceled | bool | Check if the task has been canceled 
-is_completed | bool | Check if the task is completed 
-is_success | bool | Check if the task is completed and has a value 
-result | T | Get the result of the task once completed 
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+is_canceled | bool | R/O | Check if the task has been canceled 
+is_completed | bool | R/O | Check if the task is completed 
+is_success | bool | R/O | Check if the task is completed and has a value 
+result | T | R/O | Get the result of the task once completed 
 
 #### Methods
 

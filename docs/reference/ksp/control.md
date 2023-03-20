@@ -11,12 +11,12 @@
 
 #### Fields
 
-Name | Type | Description
---- | --- | ---
-mean | float | 
-mean_diff | float | 
-sample_limit | int | 
-value_count | int | 
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+mean | float | R/W | 
+mean_diff | float | R/W | 
+sample_limit | int | R/W | 
+value_count | int | R/O | 
 
 #### Methods
 
@@ -43,24 +43,24 @@ movingaverage.update ( sampleTime : float,
 
 #### Fields
 
-Name | Type | Description
---- | --- | ---
-change_rate | float | 
-d_term | float | 
-error | float | 
-error_sum | float | 
-extra_unwind | bool | 
-i_term | float | 
-input | float | 
-kd | float | 
-ki | float | 
-kp | float | 
-last_sample_time | float | 
-max_output | float | 
-min_output | float | 
-output | float | 
-p_term | float | 
-setpoint | float | 
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+change_rate | float | R/W | 
+d_term | float | R/W | 
+error | float | R/W | 
+error_sum | float | R/W | 
+extra_unwind | bool | R/W | 
+i_term | float | R/W | 
+input | float | R/W | 
+kd | float | R/W | 
+ki | float | R/W | 
+kp | float | R/W | 
+last_sample_time | float | R/W | 
+max_output | float | R/W | 
+min_output | float | R/W | 
+output | float | R/W | 
+p_term | float | R/W | 
+setpoint | float | R/W | 
 
 #### Methods
 
@@ -87,9 +87,9 @@ pidloop.update ( sampleTime : float,
 
 #### Fields
 
-Name | Type | Description
---- | --- | ---
-translate | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+translate | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/W | 
 
 #### Methods
 
@@ -123,9 +123,9 @@ rcstranslatemanager.set_translate_provider ( newTranslateProvider : fn(float) ->
 
 #### Fields
 
-Name | Type | Description
---- | --- | ---
-pitch_yaw_roll | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+pitch_yaw_roll | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/W | 
 
 #### Methods
 
@@ -159,9 +159,9 @@ steeringmanager.set_pitch_yaw_roll_provider ( newPitchYawRollProvider : fn(float
 
 #### Fields
 
-Name | Type | Description
---- | --- | ---
-throttle | float | 
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+throttle | float | R/W | 
 
 #### Methods
 
@@ -195,12 +195,12 @@ throttlemanager.set_throttle_provider ( newThrottleProvider : fn(float) -> float
 
 #### Fields
 
-Name | Type | Description
---- | --- | ---
-i | float | 
-loop | [ksp::control::PIDLoop](/reference/ksp/control.md#pidloop) | 
-tr | float | 
-ts | float | 
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+i | float | R/W | 
+loop | [ksp::control::PIDLoop](/reference/ksp/control.md#pidloop) | R/W | 
+tr | float | R/W | 
+ts | float | R/W | 
 
 #### Methods
 
@@ -230,9 +230,9 @@ torquepi.update ( sampleTime : float,
 
 #### Fields
 
-Name | Type | Description
---- | --- | ---
-wheel_steer | float | 
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+wheel_steer | float | R/W | 
 
 #### Methods
 
@@ -266,9 +266,9 @@ wheelsteeringmanager.set_wheel_steer_provider ( newWheelSteerProvider : fn(float
 
 #### Fields
 
-Name | Type | Description
---- | --- | ---
-wheel_throttle | float | 
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+wheel_throttle | float | R/W | 
 
 #### Methods
 

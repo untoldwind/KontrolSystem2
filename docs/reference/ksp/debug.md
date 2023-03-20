@@ -69,15 +69,15 @@ Represents a debugging vector in the current scene.
 
 #### Fields
 
-Name | Type | Description
---- | --- | ---
-color | [ksp::console::RgbaColor](/reference/ksp/console.md#rgbacolor) | The color of the debugging vector 
-end | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | The current end position of the debugging vector. 
-pointy | bool | Controls if an arrow should be drawn at the end. 
-scale | float | 
-start | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | The current starting position of the debugging vector. 
-visible | bool | Controls if the debug-vector is currently visible (initially `true`) 
-width | float | The width of the debugging vector 
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+color | [ksp::console::RgbaColor](/reference/ksp/console.md#rgbacolor) | R/W | The color of the debugging vector 
+end | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | R/W | The current end position of the debugging vector. 
+pointy | bool | R/W | Controls if an arrow should be drawn at the end. 
+scale | float | R/W | 
+start | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | R/W | The current starting position of the debugging vector. 
+visible | bool | R/W | Controls if the debug-vector is currently visible (initially `true`) 
+width | float | R/W | The width of the debugging vector 
 
 #### Methods
 
@@ -115,12 +115,12 @@ Represents a ground marker on a given celestial body.
 
 #### Fields
 
-Name | Type | Description
---- | --- | ---
-color | [ksp::console::RgbaColor](/reference/ksp/console.md#rgbacolor) | The color of the ground marker vector 
-geo_coordinates | [ksp::orbit::GeoCoordinates](/reference/ksp/orbit.md#geocoordinates) | 
-rotation | float | 
-visible | bool | Controls if the ground marker is currently visible (initially `true`) 
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+color | [ksp::console::RgbaColor](/reference/ksp/console.md#rgbacolor) | R/W | The color of the ground marker vector 
+geo_coordinates | [ksp::orbit::GeoCoordinates](/reference/ksp/orbit.md#geocoordinates) | R/W | 
+rotation | float | R/W | 
+visible | bool | R/W | Controls if the ground marker is currently visible (initially `true`) 
 
 #### Methods
 

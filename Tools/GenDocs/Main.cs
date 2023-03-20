@@ -59,12 +59,13 @@ namespace KontrolSystem.GenDocs {
                         output.WriteLine("#### Fields");
                         output.WriteLine();
 
-                        output.WriteLine("Name | Type | Description");
-                        output.WriteLine("--- | --- | ---");
+                        output.WriteLine("Name | Type | Read-only | Description");
+                        output.WriteLine("--- | --- | --- | ---");
 
                         foreach (var (name, declaredType) in type.DeclaredFields.OrderBy(kv => kv.Key).Select(kv => (kv.Key, kv.Value))) {
+                            var ro = declaredType.CanStore ? "R/W" : "R/O"; 
                             output.WriteLine(
-                                $"{name} | {LinkType(declaredType.DeclaredType.Name)} | {declaredType.Description?.Replace("\n", " ")}");
+                                $"{name} | {LinkType(declaredType.DeclaredType.Name)} | {ro} | {declaredType.Description?.Replace("\n", " ")}");
                         }
                     }
 

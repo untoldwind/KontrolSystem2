@@ -16,10 +16,10 @@ Representation of a console
 
 #### Fields
 
-Name | Type | Description
---- | --- | ---
-cursor_col | int | 
-cursor_row | int | 
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+cursor_col | int | R/O | 
+cursor_row | int | R/O | 
 
 #### Methods
 
@@ -87,12 +87,12 @@ Interface color with alpha channel.
 
 #### Fields
 
-Name | Type | Description
---- | --- | ---
-alpha | float | 
-blue | float | 
-green | float | 
-red | float | 
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+alpha | float | R/O | 
+blue | float | R/O | 
+green | float | R/O | 
+red | float | R/O | 
 
 ## Constants
 

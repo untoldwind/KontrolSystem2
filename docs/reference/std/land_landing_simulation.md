@@ -11,20 +11,20 @@
 
 #### Fields
 
-Name | Type | Description
---- | --- | ---
-aerobraked_radius | float | 
-angular_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
-decel_radius | float | 
-epoch | float | 
-grav_parameter | float | 
-landing_radius | float | 
-lat0_lon0_at_start | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
-lat90_at_start | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
-lot0_lon90_at_start | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
-position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
-rotation_period | float | 
-speed_policy | [fn(ksp::math::Vec3, ksp::math::Vec3) -> float](/reference/fn(ksp/math_Vec3, ksp_math.md#vec3) -> float) | 
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+aerobraked_radius | float | R/W | 
+angular_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/W | 
+decel_radius | float | R/W | 
+epoch | float | R/W | 
+grav_parameter | float | R/W | 
+landing_radius | float | R/W | 
+lat0_lon0_at_start | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/W | 
+lat90_at_start | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/W | 
+lot0_lon90_at_start | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/W | 
+position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/W | 
+rotation_period | float | R/W | 
+speed_policy | [fn(ksp::math::Vec3, ksp::math::Vec3) -> float](/reference/fn(ksp/math_Vec3, ksp_math.md#vec3) -> float) | R/W | 
 
 #### Methods
 
@@ -95,18 +95,18 @@ bodyparameters.total_accel ( pos : ksp::math::Vec3,
 
 #### Fields
 
-Name | Type | Description
---- | --- | ---
-body | [std::land::landing_simulation::BodyParameters](/reference/std/land_landing_simulation.md#bodyparameters) | 
-deltav_expended | float | 
-dt | float | 
-max_thrust_accel | float | 
-min_dt | float | 
-start_dt | float | 
-steps | int | 
-t | float | 
-v | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
-x | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+body | [std::land::landing_simulation::BodyParameters](/reference/std/land_landing_simulation.md#bodyparameters) | R/W | 
+deltav_expended | float | R/W | 
+dt | float | R/W | 
+max_thrust_accel | float | R/W | 
+min_dt | float | R/W | 
+start_dt | float | R/W | 
+steps | int | R/W | 
+t | float | R/W | 
+v | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/W | 
+x | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/W | 
 
 #### Methods
 
@@ -165,13 +165,13 @@ reentrysimulation.run ( ) -> (brake_time : float, end_latitude : float, end_long
 
 #### Fields
 
-Name | Type | Description
---- | --- | ---
-brake_time | float | 
-end_latitude | float | 
-end_longitude | float | 
-end_time | float | 
-path | [ksp::math::Vec3](/reference/ksp/math.md#vec3)[] | 
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+brake_time | float | R/W | 
+end_latitude | float | R/W | 
+end_longitude | float | R/W | 
+end_time | float | R/W | 
+path | [ksp::math::Vec3](/reference/ksp/math.md#vec3)[] | R/W | 
 
 ## Functions
 
