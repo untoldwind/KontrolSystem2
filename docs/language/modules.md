@@ -1,6 +1,6 @@
 # Modules
 
-A modulo is just a TO2-file containing some public (`pub`) functions or types.
+A module is just a TO2-file containing some public (`pub`) functions or types.
 
 Currently all scripts are located in the plugin folder itself:
 `BepInEx/plugins/KontrolSystem2/to2`
