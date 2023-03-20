@@ -10,8 +10,12 @@ namespace KontrolSystem.TO2.Test {
         [Fact]
         public void TestSimpleExpressions() {
             Assert.Equal(1234,  RunExpression<long>(BuiltinType.Int, "1234"));
+            Assert.Equal(-1234,  RunExpression<long>(BuiltinType.Int, "-1234"));
             Assert.Equal(3579,  RunExpression<long>(BuiltinType.Int, "1234 + 2345"));
             Assert.Equal(-1111,  RunExpression<long>(BuiltinType.Int, "1234 - 2345"));
+            Assert.Equal(2893730,  RunExpression<long>(BuiltinType.Int, "1234 * 2345"));
+            Assert.Equal(195,  RunExpression<long>(BuiltinType.Int, "2345 / 12"));
+            Assert.Equal(5,  RunExpression<long>(BuiltinType.Int, "2345 % 12"));
         }
         
         private T RunExpression<T>(TO2Type to2Type, string expression) {
@@ -19,7 +23,7 @@ namespace KontrolSystem.TO2.Test {
 
             Assert.True(result.WasSuccessful);
 
-            var context = new TestRunnerContext();
+            var context = new REPLContext(new TestRunnerContext());
             var future = result.Value.Eval(context);
             
             for (int i = 0; i < 100; i++) {

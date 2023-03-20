@@ -19,7 +19,7 @@ namespace KontrolSystem.TO2.AST {
 
         public override TO2Type ResultType(IBlockContext context) => BuiltinType.Bool;
 
-        public override REPLValueFuture Eval(IREPLContext context) {
+        public override REPLValueFuture Eval(REPLContext context) {
             return REPLValueFuture.Success(new REPLBool(value));
         }
 
@@ -46,7 +46,7 @@ namespace KontrolSystem.TO2.AST {
         public override void Prepare(IBlockContext context) {
         }
 
-        public override REPLValueFuture Eval(IREPLContext context) {
+        public override REPLValueFuture Eval(REPLContext context) {
             return REPLValueFuture.Success(new REPLString(value));
         }
         
@@ -70,7 +70,7 @@ namespace KontrolSystem.TO2.AST {
         public override void Prepare(IBlockContext context) {
         }
 
-        public override REPLValueFuture Eval(IREPLContext context) {
+        public override REPLValueFuture Eval(REPLContext context) {
             return REPLValueFuture.Success(new REPLInt(value));
         }
         
@@ -94,7 +94,7 @@ namespace KontrolSystem.TO2.AST {
 
         public override TO2Type ResultType(IBlockContext context) => BuiltinType.Float;
 
-        public override REPLValueFuture Eval(IREPLContext context) {
+        public override REPLValueFuture Eval(REPLContext context) {
             return REPLValueFuture.Success(new REPLFloat(value));
         }
         

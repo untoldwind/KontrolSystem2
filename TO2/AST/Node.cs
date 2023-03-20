@@ -12,7 +12,7 @@ namespace KontrolSystem.TO2.AST {
             End = end;
         }
 
-        public virtual REPLValueFuture Eval(IREPLContext context) {
+        public virtual REPLValueFuture Eval(REPLContext context) {
             // TODO: Remove this
             throw new NotImplementedException();
         }

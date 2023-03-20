@@ -87,14 +87,14 @@ namespace KontrolSystem.TO2.AST {
             if (dropResult) context.IL.Emit(OpCodes.Pop);
         }
 
-        public override REPLValueFuture Eval(IREPLContext context) {
+        public override REPLValueFuture Eval(REPLContext context) {
             var leftFuture = this.left.Eval(context);
             var rightFuture = this.right.Eval(context);
 
-            IOperatorEmitter leftEmitter = leftFuture.Type.AllowedSuffixOperators(context.REPLModuleContext)
-                .GetMatching(context.REPLModuleContext, op, rightFuture.Type);
-            IOperatorEmitter rightEmitter = rightFuture.Type.AllowedPrefixOperators(context.REPLModuleContext)
-                .GetMatching(context.REPLModuleContext, op, leftFuture.Type);
+            IOperatorEmitter leftEmitter = leftFuture.Type.AllowedSuffixOperators(context.replModuleContext)
+                .GetMatching(context.replModuleContext, op, rightFuture.Type);
+            IOperatorEmitter rightEmitter = rightFuture.Type.AllowedPrefixOperators(context.replModuleContext)
+                .GetMatching(context.replModuleContext, op, leftFuture.Type);
             
             if (leftEmitter == null && rightEmitter == null) {
                 throw new REPLException(this, $"Cannot {op} a {leftFuture.Type} with a {rightFuture.Type}");

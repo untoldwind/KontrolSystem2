@@ -16,7 +16,7 @@ namespace KontrolSystem.TO2.AST {
                 allowedPrefixOperators = new OperatorCollection {
                     {
                         Operator.Neg,
-                        new DirectOperatorEmitter(() => Unit, () => Int, REPLBool.Neq, OpCodes.Neg)
+                        new DirectOperatorEmitter(() => Unit, () => Int, REPLInt.Neg, OpCodes.Neg)
                     },
                 };
                 allowedSuffixOperators = new OperatorCollection {
