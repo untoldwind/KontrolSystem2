@@ -124,6 +124,9 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                 }
             }
             
+            [KSMethod]
+            public void Remove() => KSPContext.CurrentContext.RemoveMarker(this);
+            
             public void OnUpdate() {
                 if (line == null || hat == null) return;
                 if (!enable) return;

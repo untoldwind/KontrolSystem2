@@ -61,6 +61,16 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
 
                 return marker;
             }
+
+            [KSMethod]
+            public PathRenderer AddPath(Position[] path, KSPConsoleModule.RgbaColor color, double width) {
+                PathRenderer pathMarker = new PathRenderer(path, color, width);
+                pathMarker.Visible = true;
+
+                KSPContext.CurrentContext.AddMarker(pathMarker);
+
+                return pathMarker;
+            }            
             
             [KSMethod(
                 Description = "Remove all markers from the game-scene."
