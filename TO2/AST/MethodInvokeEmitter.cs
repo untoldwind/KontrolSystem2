@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using KontrolSystem.TO2.Generator;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     public interface IMethodInvokeEmitter {
@@ -16,6 +17,8 @@ namespace KontrolSystem.TO2.AST {
         bool IsAsync { get; }
 
         void EmitCode(IBlockContext context);
+        
+        REPLValueFuture Eval(Node node, IREPLValue[] targetWithArguments);
     }
 
     public static class MethodInvokeEmitterExtensions {
@@ -41,17 +44,21 @@ namespace KontrolSystem.TO2.AST {
         IMethodInvokeFactory FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments);
     }
 
+    public delegate REPLValueFuture REPLMethodCall(Node node, IREPLValue[] targetWithArguments);
+    
     public class InlineMethodInvokeFactory : IMethodInvokeFactory {
         private readonly Func<RealizedType> resultType;
         private readonly OpCode[] opCodes;
+        private readonly REPLMethodCall methodCall;
         public bool IsConst { get; }
         public string Description { get; }
 
         public InlineMethodInvokeFactory(string description, Func<RealizedType> returnType, bool isConst,
-            params OpCode[] opCodes) {
+            REPLMethodCall methodCall, params OpCode[] opCodes) {
             Description = description;
             resultType = returnType;
             IsConst = isConst;
+            this.methodCall = methodCall;
             this.opCodes = opCodes;
         }
 
@@ -64,7 +71,7 @@ namespace KontrolSystem.TO2.AST {
         public List<FunctionParameter> DeclaredParameters => new List<FunctionParameter>();
 
         public IMethodInvokeEmitter Create(IBlockContext context, List<TO2Type> arguments, Node node) =>
-            new InlineMethodInvokeEmitter(resultType(), new List<RealizedParameter>(), opCodes);
+            new InlineMethodInvokeEmitter(resultType(), new List<RealizedParameter>(), methodCall, opCodes);
 
         public IMethodInvokeFactory
             FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) => this;
@@ -72,14 +79,17 @@ namespace KontrolSystem.TO2.AST {
 
     public class InlineMethodInvokeEmitter : IMethodInvokeEmitter {
         private readonly OpCode[] opCodes;
+        private readonly REPLMethodCall methodCall;
+        
         public RealizedType ResultType { get; }
 
         public List<RealizedParameter> Parameters { get; }
 
-        public InlineMethodInvokeEmitter(RealizedType returnType, List<RealizedParameter> parameters,
+        public InlineMethodInvokeEmitter(RealizedType returnType, List<RealizedParameter> parameters,  REPLMethodCall methodCall,
             params OpCode[] opCodes) {
             ResultType = returnType;
             Parameters = parameters;
+            this.methodCall = methodCall;
             this.opCodes = opCodes;
         }
 
@@ -93,6 +103,8 @@ namespace KontrolSystem.TO2.AST {
                 context.IL.Emit(opCode);
             }
         }
+
+        public REPLValueFuture Eval(Node node, IREPLValue[] targetWithArguments) => methodCall(node, targetWithArguments);
     }
 
     public class BoundMethodInvokeFactory : IMethodInvokeFactory {
@@ -197,6 +209,13 @@ namespace KontrolSystem.TO2.AST {
             if (methodInfo.IsVirtual) context.IL.EmitCall(OpCodes.Callvirt, methodInfo, Parameters.Count + 1);
             else context.IL.EmitCall(OpCodes.Call, methodInfo, Parameters.Count + 1);
             if (methodInfo.ReturnType == typeof(void)) context.IL.Emit(OpCodes.Ldnull);
+        }
+
+        public REPLValueFuture Eval(Node node, IREPLValue[] targetWithArguments) {
+            var result = methodInfo.IsStatic ? methodInfo.Invoke(null, targetWithArguments.Select(a => a.Value).ToArray()) :
+                methodInfo.Invoke(targetWithArguments[0].Value, targetWithArguments.Skip(1).Select(a => a.Value).ToArray());
+
+            return IsAsync ?  REPLValueFuture.Wrap(ResultType, result as IAnyFuture) : REPLValueFuture.Success(ResultType.REPLCast(result));
         }
     }
 }

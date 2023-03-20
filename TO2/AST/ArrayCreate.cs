@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection.Emit;
 using KontrolSystem.TO2.Generator;
 using KontrolSystem.Parsing;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     public class ArrayCreate : Expression {
@@ -92,6 +95,33 @@ namespace KontrolSystem.TO2.AST {
                 else if (elementType == BuiltinType.Float) context.IL.Emit(OpCodes.Stelem_R8);
                 else context.IL.Emit(OpCodes.Stelem, elementType.GeneratedType(context.ModuleContext));
             }
+        }
+
+        public override REPLValueFuture Eval(REPLContext context) {
+            var expressionFutures = Elements.Select(p => p.Eval(context)).ToArray();
+            var elementType = ElementType ?? expressionFutures.FirstOrDefault(e => e.Type != BuiltinType.Unit)?.Type;
+
+            if (elementType == null) {
+                throw new REPLException(this, "Unable to infer type of array. Please add some type hint");
+            }
+
+            for (int i = 0; i < expressionFutures.Length; i++) {
+                if (!elementType.IsAssignableFrom(context.replModuleContext, expressionFutures[i].Type)) {
+                    throw new REPLException(this,
+                        $"Element {i} is of type {expressionFutures[i].Type}, expected {elementType}");
+                }
+            }
+
+            var resultType = new ArrayType(elementType);
+            var generatedElementType = elementType.GeneratedType(context.replModuleContext);
+
+            return REPLValueFuture.ChainN(resultType, expressionFutures,
+                values => {
+                    var destinationArray = Array.CreateInstance(generatedElementType, values.Length);
+                    for(int i = 0; i < values.Length; i++)
+                        destinationArray.SetValue(values[i].Value, i);
+                    return REPLValueFuture.Success(new REPLAny(resultType, destinationArray));
+                });
         }
     }
 }

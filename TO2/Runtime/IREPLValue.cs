@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing.Drawing2D;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.AST;
 
@@ -14,18 +15,39 @@ namespace KontrolSystem.TO2.Runtime {
 
         public static REPLValueFuture Success(IREPLValue value) => new SuccessImpl(value);
 
+        public static REPLValueFuture Wrap(TO2Type resultType, IAnyFuture future) => new WrapImpl(resultType, future);
+
         public static REPLValueFuture Chain1(TO2Type resultType, REPLValueFuture first,
             Func<IREPLValue, IREPLValue> map) => new Chain1Impl(resultType, first, map);
 
         public static REPLValueFuture Chain2(TO2Type resultType, REPLValueFuture first, REPLValueFuture second,
             Func<IREPLValue, IREPLValue, IREPLValue> map) => new Chain2Impl(resultType, first, second, map);
 
+        public static REPLValueFuture ChainN(TO2Type resultType, REPLValueFuture[] futures,
+            Func<IREPLValue[], REPLValueFuture> map) => new ChainNImpl(resultType, futures, map);
+        
         internal class SuccessImpl : REPLValueFuture {
             private readonly IREPLValue value;
 
             public SuccessImpl(IREPLValue value) : base(value.Type) => this.value = value;
 
             public override FutureResult<IREPLValue> PollValue() => new FutureResult<IREPLValue>(value);
+        }
+        
+        internal class WrapImpl : REPLValueFuture {
+            private readonly IAnyFuture future;
+
+            public WrapImpl(TO2Type resultType, IAnyFuture future) : base(resultType) => this.future = future;
+
+            public override FutureResult<IREPLValue> PollValue() {
+                var result = future.Poll();
+
+                if (result.IsReady) {
+                    return new FutureResult<IREPLValue>(to2Type.REPLCast(result.ValueObject));
+                } else {
+                    return new FutureResult<IREPLValue>();
+                }
+            }
         }
 
         internal class Chain1Impl : REPLValueFuture {
@@ -91,6 +113,49 @@ namespace KontrolSystem.TO2.Runtime {
 
                 if (mapResult == null) {
                     mapResult = map.Invoke(firstResult, secondResult);
+                }
+
+                return new FutureResult<IREPLValue>(mapResult);
+            }
+        }
+
+        internal class ChainNImpl : REPLValueFuture {
+            private readonly REPLValueFuture[] futures;
+            private readonly IREPLValue[] results;
+            private readonly Func<IREPLValue[], REPLValueFuture> map;
+            private REPLValueFuture mapFuture;
+            private IREPLValue mapResult;
+            
+            public ChainNImpl(TO2Type resultType, REPLValueFuture[] futures, Func<IREPLValue[], REPLValueFuture> map) : base(resultType) {
+                this.futures = futures;
+                this.results = new IREPLValue[this.futures.Length];
+                this.map = map;
+            }
+
+            public override FutureResult<IREPLValue> PollValue() {
+                for (int i = 0; i < futures.Length; i++) {
+                    if (results[i] == null) {
+                        var result = futures[i].PollValue();
+                        if (result.IsReady) {
+                            results[i] = result.value;
+                        } else {
+                            return new FutureResult<IREPLValue>();
+                        }
+                    }
+                }
+
+                if (mapFuture == null) {
+                    mapFuture = map.Invoke(results);
+                }
+                
+                if (mapResult == null) {
+                    var result = mapFuture.PollValue();
+
+                    if (result.IsReady) {
+                        mapResult = result.value;
+                    } else {
+                        return new FutureResult<IREPLValue>();
+                    }
                 }
 
                 return new FutureResult<IREPLValue>(mapResult);
@@ -414,7 +479,7 @@ namespace KontrolSystem.TO2.Runtime {
             this.stringValue = stringValue;
         }
 
-        public TO2Type Type => BuiltinType.Float;
+        public TO2Type Type => BuiltinType.String;
 
         public object Value => stringValue;
     }

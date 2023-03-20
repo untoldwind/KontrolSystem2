@@ -23,6 +23,12 @@ namespace KontrolSystem.TO2.Test {
             Assert.Equal(3579, RunExpression<long>(BuiltinType.Int, "const a = 1234\nconst b = 2345\na + b"));  
         }
 
+        [Fact]
+        public void TestArrays() {
+            Assert.Equal("[1, 2, 3, 4]", RunExpression<string>(BuiltinType.String, "[1, 2, 3, 4].to_string()"));
+            Assert.Equal("[4, 3, 2, 1]", RunExpression<string>(BuiltinType.String, "[1, 2, 3, 4].reverse().to_string()"));
+        }
+
         private T RunExpression<T>(TO2Type to2Type, string expression) {
             var result = TO2ParserREPL.REPLItems.TryParse(expression);
 
