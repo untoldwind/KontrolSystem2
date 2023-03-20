@@ -31,6 +31,281 @@ direction.to_string ( ) -> string
 
 Convert the direction to string
 
+### GlobalAngularVelocity
+
+An angular velocity in space, that can be projected to a 3-dimensional vector in a specific frame of reference
+
+#### Methods
+
+##### relative_to
+
+```rust
+globalangularvelocity.relative_to ( frame : ksp::math::TransformFrame ) -> ksp::math::GlobalVector
+```
+
+Get relative angular velocity to a frame of reference
+
+##### to_fixed
+
+```rust
+globalangularvelocity.to_fixed ( frame : ksp::math::TransformFrame,
+                                 decimals : int ) -> string
+```
+
+Convert angular velocity to string with fixed number of `decimals` in a given coordinate system.
+
+##### to_local
+
+```rust
+globalangularvelocity.to_local ( frame : ksp::math::TransformFrame ) -> ksp::math::Vec3
+```
+
+Get local angular velocity in a frame of reference
+
+##### to_string
+
+```rust
+globalangularvelocity.to_string ( frame : ksp::math::TransformFrame ) -> string
+```
+
+Convert angular velocity to string in a given coordinate system.
+
+### GlobalDirection
+
+Represents the rotation from an initial coordinate system when looking down the z-axis and "up" being the y-axis
+
+#### Fields
+
+Name | Type | Description
+--- | --- | ---
+right_vector | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | Right vector of the rotation
+up_vector | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | Up vector of the rotation
+vector | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | Fore vector of the rotation (i.e. looking/facing direction
+
+#### Methods
+
+##### euler
+
+```rust
+globaldirection.euler ( frame : ksp::math::TransformFrame ) -> ksp::math::Vec3
+```
+
+Get euler angles in a specific coordinate system
+
+##### pitch
+
+```rust
+globaldirection.pitch ( frame : ksp::math::TransformFrame ) -> float
+```
+
+Get pitch angle in a specific coordinate system
+
+##### roll
+
+```rust
+globaldirection.roll ( frame : ksp::math::TransformFrame ) -> float
+```
+
+Get roll angle in a specific coordinate system
+
+##### to_string
+
+```rust
+globaldirection.to_string ( frame : ksp::math::TransformFrame ) -> string
+```
+
+Convert the direction to string
+
+##### yaw
+
+```rust
+globaldirection.yaw ( frame : ksp::math::TransformFrame ) -> float
+```
+
+Get yaw angle in a specific coordinate system
+
+### GlobalPosition
+
+A position in space that can be projected to a 3-dimensional vector in a specific coordinate system
+
+#### Methods
+
+##### distance
+
+```rust
+globalposition.distance ( other : ksp::math::GlobalPosition ) -> float
+```
+
+Calculate the distance of `other` position.
+
+##### distance_sqr
+
+```rust
+globalposition.distance_sqr ( other : ksp::math::GlobalPosition ) -> float
+```
+
+Calculate the squared distance of `other` position.
+
+##### lerp_to
+
+```rust
+globalposition.lerp_to ( other : ksp::math::GlobalPosition,
+                         t : float ) -> ksp::math::GlobalPosition
+```
+
+Linear interpolate position between this and `other` position, where `t = 0.0` is this and `t = 1.0` is `other`.
+
+##### to_fixed
+
+```rust
+globalposition.to_fixed ( frame : ksp::math::TransformFrame,
+                          decimals : int ) -> string
+```
+
+Convert the vector to string with fixed number of `decimals` in a given coordinate system.
+
+##### to_local
+
+```rust
+globalposition.to_local ( frame : ksp::math::TransformFrame ) -> ksp::math::Vec3
+```
+
+Get local vector in a coordinate system
+
+##### to_string
+
+```rust
+globalposition.to_string ( frame : ksp::math::TransformFrame ) -> string
+```
+
+Convert vector to string in a given coordinate system.
+
+### GlobalVector
+
+Abstract vector in space that can be projected to a concrete 3-dimensional vector in a specific coordinate system
+
+#### Fields
+
+Name | Type | Description
+--- | --- | ---
+magnitude | float | Magnitude/length of the vector
+normalized | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | Normalized vector (i.e. scaled to length 1)
+sqr_magnitude | float | Squared magnitude of the vector
+
+#### Methods
+
+##### cross
+
+```rust
+globalvector.cross ( other : ksp::math::GlobalVector ) -> ksp::math::GlobalVector
+```
+
+Calculate the cross/other product with `other` vector.
+
+##### dot
+
+```rust
+globalvector.dot ( other : ksp::math::GlobalVector ) -> float
+```
+
+Calculate the dot/inner product with `other` vector.
+
+##### exclude_from
+
+```rust
+globalvector.exclude_from ( other : ksp::math::GlobalVector ) -> ksp::math::GlobalVector
+```
+
+Exclude this from `other` vector.
+
+##### lerp_to
+
+```rust
+globalvector.lerp_to ( other : ksp::math::GlobalVector,
+                       t : float ) -> ksp::math::GlobalVector
+```
+
+Linear interpolate position between this and `other` vector, where `t = 0.0` is this and `t = 1.0` is `other`.
+
+##### to_direction
+
+```rust
+globalvector.to_direction ( ) -> ksp::math::GlobalDirection
+```
+
+Convert the vector to a rotation/direction in space.
+
+##### to_fixed
+
+```rust
+globalvector.to_fixed ( frame : ksp::math::TransformFrame,
+                        decimals : int ) -> string
+```
+
+Convert the vector to string with fixed number of `decimals` in a given coordinate system.
+
+##### to_local
+
+```rust
+globalvector.to_local ( frame : ksp::math::TransformFrame ) -> ksp::math::Vec3
+```
+
+Get local vector in a coordinate system
+
+##### to_string
+
+```rust
+globalvector.to_string ( frame : ksp::math::TransformFrame ) -> string
+```
+
+Convert vector to string in a given coordinate system.
+
+### GlobalVelocity
+
+A velocity in space, that can be projected to a 3-dimensional vector in a specific frame of reference
+
+#### Fields
+
+Name | Type | Description
+--- | --- | ---
+position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | Position the velocity was measured at
+vector | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | Relative velocity vector
+
+#### Methods
+
+##### to_fixed
+
+```rust
+globalvelocity.to_fixed ( frame : ksp::math::TransformFrame,
+                          decimals : int ) -> string
+```
+
+Convert the vector to string with fixed number of `decimals` in a given coordinate system.
+
+##### to_local
+
+```rust
+globalvelocity.to_local ( frame : ksp::math::TransformFrame ) -> ksp::math::Vec3
+```
+
+Get local velocity in a frame of reference
+
+##### to_relative
+
+```rust
+globalvelocity.to_relative ( frame : ksp::math::TransformFrame ) -> ksp::math::GlobalVector
+```
+
+Get relative velocity to frame of reference
+
+##### to_string
+
+```rust
+globalvelocity.to_string ( frame : ksp::math::TransformFrame ) -> string
+```
+
+Convert vector to string in a given coordinate system.
+
 ### Matrix2x2
 
 A 2-dimensional matrix.
@@ -45,6 +320,47 @@ c | float | c
 d | float | d
 determinant | float | Get determinant of matrix
 inverse | [ksp::math::Matrix2x2](/reference/ksp/math.md#matrix2x2) | Invert matrix
+
+### TransformFrame
+
+Representation of a coordinate frame of reference
+
+#### Fields
+
+Name | Type | Description
+--- | --- | ---
+back | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | backward vector of the coordinate system
+down | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | down vector of the coordinate system
+forward | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | forward vector of the coordinate system
+left | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | left vector of the coordinate system
+right | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | right vector of the coordinate system
+up | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | up vector of the coordinate system
+
+#### Methods
+
+##### to_local_position
+
+```rust
+transformframe.to_local_position ( position : ksp::math::GlobalPosition ) -> ksp::math::Vec3
+```
+
+Get local coordinates of a position
+
+##### to_local_vector
+
+```rust
+transformframe.to_local_vector ( vector : ksp::math::GlobalVector ) -> ksp::math::Vec3
+```
+
+Get local coordinates of a vector
+
+##### to_local_velocity
+
+```rust
+transformframe.to_local_velocity ( velocity : ksp::math::GlobalVelocity ) -> ksp::math::Vec3
+```
+
+Get local coordinates of a velocity
 
 ### Vec2
 
@@ -177,6 +493,22 @@ vec3.to_fixed ( decimals : int ) -> string
 
 Convert the vector to string with fixed number of `decimals`.
 
+##### to_global
+
+```rust
+vec3.to_global ( frame : ksp::math::TransformFrame ) -> ksp::math::GlobalVector
+```
+
+Associate this vector with a coordinate system
+
+##### to_position
+
+```rust
+vec3.to_position ( frame : ksp::math::TransformFrame ) -> ksp::math::GlobalPosition
+```
+
+Consider this vector as position in a coordinate system
+
 ##### to_string
 
 ```rust
@@ -224,6 +556,44 @@ pub sync fn from_vector_to_vector ( v1 : ksp::math::Vec3,
 ```
 
 Create a Direction to rotate from one vector to another
+
+### global_angle_axis
+
+```rust
+pub sync fn global_angle_axis ( angle : float,
+                                axis : ksp::math::GlobalVector ) -> ksp::math::GlobalDirection
+```
+
+Create a Direction from a given axis with rotation angle in degree
+
+### global_euler
+
+```rust
+pub sync fn global_euler ( frame : ksp::math::TransformFrame,
+                           x : float,
+                           y : float,
+                           z : float ) -> ksp::math::GlobalDirection
+```
+
+Create a Direction from euler angles in degree
+
+### global_from_vector_to_vector
+
+```rust
+pub sync fn global_from_vector_to_vector ( v1 : ksp::math::GlobalVector,
+                                           v2 : ksp::math::GlobalVector ) -> ksp::math::GlobalDirection
+```
+
+Create a Direction to rotate from one vector to another
+
+### global_look_dir_up
+
+```rust
+pub sync fn global_look_dir_up ( lookDirection : ksp::math::GlobalVector,
+                                 upDirection : ksp::math::GlobalVector ) -> ksp::math::GlobalDirection
+```
+
+Create a Direction from a fore-vector and an up-vector
 
 ### look_dir_up
 

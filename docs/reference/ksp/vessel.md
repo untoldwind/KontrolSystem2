@@ -42,6 +42,8 @@ solar_panels | bool |
 Name | Type | Description
 --- | --- | ---
 enabled | bool | 
+global_lock_direction | [ksp::math::GlobalDirection](/reference/ksp/math.md#globaldirection) | 
+global_target_orientation | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | 
 lock_direction | [ksp::math::Direction](/reference/ksp/math.md#direction) | 
 mode | string | 
 target_orientation | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
@@ -154,6 +156,7 @@ burn_duration | float |
 burn_vector | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
 ETA | float | 
 expected_orbit | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit) | 
+global_burn_vector | [ksp::math::GlobalVelocity](/reference/ksp/math.md#globalvelocity) | 
 normal | float | 
 prograde | float | 
 radial_out | float | 
@@ -279,15 +282,15 @@ moduleengine.change_mode ( name : string ) -> bool
 Name | Type | Description
 --- | --- | ---
 ejection_force | float | 
-is_deployed | bool | 
+is_jettisoned | bool | 
 part_name | string | 
 
 #### Methods
 
-##### perform_jettison
+##### jettison
 
 ```rust
-modulefairing.perform_jettison ( ) -> bool
+modulefairing.jettison ( ) -> bool
 ```
 
 
@@ -309,6 +312,47 @@ part_name | string |
 
 ```rust
 modulelaunchclamp.release ( ) -> bool
+```
+
+
+
+### ModuleParachute
+
+
+
+#### Fields
+
+Name | Type | Description
+--- | --- | ---
+armed | bool | 
+chute_safety | string | 
+deploy_altitude | float | 
+deploy_mode | string | 
+deploy_state | string | 
+min_air_pressure | float | 
+
+#### Methods
+
+##### cut
+
+```rust
+moduleparachute.cut ( ) -> bool
+```
+
+
+
+##### deploy
+
+```rust
+moduleparachute.deploy ( ) -> bool
+```
+
+
+
+##### repack
+
+```rust
+moduleparachute.repack ( ) -> bool
 ```
 
 
@@ -339,13 +383,17 @@ deployable | Option&lt;[ksp::vessel::ModuleDeployable](/reference/ksp/vessel.md#
 docking_node | Option&lt;[ksp::vessel::ModuleDockingNode](/reference/ksp/vessel.md#moduledockingnode)> | 
 engine_module | Option&lt;[ksp::vessel::ModuleEngine](/reference/ksp/vessel.md#moduleengine)> | 
 fairing | Option&lt;[ksp::vessel::ModuleFairing](/reference/ksp/vessel.md#modulefairing)> | 
+global_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | 
+global_rotation | [ksp::math::GlobalDirection](/reference/ksp/math.md#globaldirection) | 
 is_decoupler | bool | 
 is_deployable | bool | 
 is_engine | bool | 
 is_fairing | bool | 
 is_launch_clamp | bool | 
+is_parachute | bool | 
 is_solar_panel | bool | 
 launch_clamp | Option&lt;[ksp::vessel::ModuleLaunchClamp](/reference/ksp/vessel.md#modulelaunchclamp)> | 
+parachute | Option&lt;[ksp::vessel::ModuleParachute](/reference/ksp/vessel.md#moduleparachute)> | 
 part_name | string | 
 resources | [ksp::vessel::ResourceContainer](/reference/ksp/vessel.md#resourcecontainer) | 
 solar_panel | Option&lt;[ksp::vessel::ModuleSolarPanel](/reference/ksp/vessel.md#modulesolarpanel)> | 
@@ -497,17 +545,31 @@ angular_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) |
 atmosphere_density | float | 
 autopilot | [ksp::vessel::Autopilot](/reference/ksp/vessel.md#autopilot) | 
 available_thrust | float | 
+body_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | 
+celestial_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | 
 CoM | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
+control_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | 
 control_status | string | 
 delta_v | [ksp::vessel::VesselDeltaV](/reference/ksp/vessel.md#vesseldeltav) | 
 docking_nodes | [ksp::vessel::ModuleDockingNode](/reference/ksp/vessel.md#moduledockingnode)[] | 
+dynamic_pressure_kpa | float | 
 east | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
 engines | [ksp::vessel::ModuleEngine](/reference/ksp/vessel.md#moduleengine)[] | 
 facing | [ksp::math::Direction](/reference/ksp/math.md#direction) | 
 geo_coordinates | [ksp::orbit::GeoCoordinates](/reference/ksp/orbit.md#geocoordinates) | 
+global_angular_momentum | [ksp::math::GlobalAngularVelocity](/reference/ksp/math.md#globalangularvelocity) | 
+global_angular_velocity | [ksp::math::GlobalAngularVelocity](/reference/ksp/math.md#globalangularvelocity) | 
+global_center_of_mass | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
+global_east | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | 
+global_facing | [ksp::math::GlobalDirection](/reference/ksp/math.md#globaldirection) | 
+global_north | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | 
+global_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | 
+global_up | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | 
+global_velocity | [ksp::math::GlobalVelocity](/reference/ksp/math.md#globalvelocity) | 
 heading | float | 
 horizontal_surface_speed | float | 
 is_active | bool | 
+mach_number | float | 
 main_body | [ksp::orbit::Body](/reference/ksp/orbit.md#body) | 
 maneuver | [ksp::vessel::Maneuver](/reference/ksp/vessel.md#maneuver) | 
 mass | float | 
@@ -522,7 +584,9 @@ pitch_yaw_roll | [ksp::math::Vec3](/reference/ksp/math.md#vec3) |
 roll_horizon_relative | float | 
 situation | string | 
 solar_panels | [ksp::vessel::ModuleSolarPanel](/reference/ksp/vessel.md#modulesolarpanel)[] | 
+sound_speed | float | 
 staging | [ksp::vessel::Staging](/reference/ksp/vessel.md#staging) | 
+static_pressure_kpa | float | 
 surface_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
 target | Option&lt;[ksp::vessel::Targetable](/reference/ksp/vessel.md#targetable)> | 
 up | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 

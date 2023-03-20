@@ -16,6 +16,12 @@ Name | Type | Description
 --- | --- | ---
 angular_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | Angular velocity vector of the body 
 atmosphere_depth | float | Depth/height of the atmosphere if present. 
+body_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | 
+celestial_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | 
+global_angular_velocity | [ksp::math::GlobalAngularVelocity](/reference/ksp/math.md#globalangularvelocity) | Angular velocity vector of the body (coordinate system independent) 
+global_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | The current position of the body (coordinate system independent) 
+global_right | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | 
+global_up | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | 
 grav_parameter | float | Standard gravitation parameter of the body. 
 has_atmosphere | bool | `true` if the celestial body has an atmosphere to deal with. 
 name | string | Name of the celestial body. 
@@ -49,6 +55,26 @@ body.geo_coordinates ( latitude : float,
 
 
 
+##### global_surface_normal
+
+```rust
+body.global_surface_normal ( latitude : float,
+                             longitude : float ) -> ksp::math::GlobalVector
+```
+
+Get the surface normal at a `latitude` and `longitude` (i.e. the vector pointing up at this geo coordinate, coordinate system independent)
+
+
+##### global_surface_position
+
+```rust
+body.global_surface_position ( latitude : float,
+                               longitude : float,
+                               altitude : float ) -> ksp::math::GlobalPosition
+```
+
+
+
 ##### surface_normal
 
 ```rust
@@ -56,7 +82,7 @@ body.surface_normal ( latitude : float,
                       longitude : float ) -> ksp::math::Vec3
 ```
 
-Get the surface normal at a `latitude` and `longitude` (i.e. the vector pointing up at this geo coordinate
+Get the surface normal at a `latitude` and `longitude` (i.e. the vector pointing up at this geo coordinate)
 
 
 ##### surface_position
@@ -87,6 +113,7 @@ body.terrain_height ( lat : float,
 Name | Type | Description
 --- | --- | ---
 body | [ksp::orbit::Body](/reference/ksp/orbit.md#body) | 
+global_surface_normal | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | 
 latitude | float | 
 longitude | float | 
 surface_normal | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | 
@@ -98,6 +125,14 @@ terrain_height | float |
 
 ```rust
 geocoordinates.altitude_position ( altitude : float ) -> ksp::math::Vec3
+```
+
+
+
+##### global_altitude_position
+
+```rust
+geocoordinates.global_altitude_position ( altitude : float ) -> ksp::math::GlobalPosition
 ```
 
 
@@ -126,6 +161,7 @@ periapsis | float | Periapsis of the orbit above sealevel of the `reference_body
 periapsis_radius | float | Radius of periapsis of the orbit (i.e. from the center of the `reference_body') 
 period | float | Orbital period. 
 reference_body | [ksp::orbit::Body](/reference/ksp/orbit.md#body) | The celestial body the orbit is referenced on. 
+reference_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | 
 semi_major_axis | float | Semi major axis of the orbit. 
 start_ut | float | 
 
@@ -152,6 +188,23 @@ orbit.get_eccentric_anomaly_at_true_anomaly ( trueAnomaly : float ) -> float
 
 ```rust
 orbit.get_mean_anomaly_at_eccentric_anomaly ( ecc : float ) -> float
+```
+
+
+
+##### global_position
+
+```rust
+orbit.global_position ( ut : float ) -> ksp::math::GlobalPosition
+```
+
+Get the absolute position at a given universal time `ut`
+
+
+##### global_velocity
+
+```rust
+orbit.global_velocity ( ut : float ) -> ksp::math::GlobalVelocity
 ```
 
 
