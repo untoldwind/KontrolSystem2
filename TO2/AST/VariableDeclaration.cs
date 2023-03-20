@@ -121,7 +121,7 @@ namespace KontrolSystem.TO2.AST {
         public override REPLValueFuture Eval(REPLContext context) {
             var expressionFuture = this.expression.Eval(context);
             TO2Type variableType = declaration.IsInferred ? expressionFuture.Type : declaration.type;
-            
+
             if (context.FindVariable(declaration.target) != null) {
                 throw new REPLException(this, $"Variable '{declaration.target}' already declared in this scope");
             }
@@ -130,10 +130,17 @@ namespace KontrolSystem.TO2.AST {
                 throw new REPLException(this,
                     $"Variable '{declaration.target}' is of type {variableType} but is initialized with {expressionFuture.Type}");
             }
-            
+
             var variable = context.DeclaredVariable(declaration.target, isConst, variableType.UnderlyingType(context.replModuleContext));
-            
-            return REPLValueFuture.Chain1(variableType, expressionFuture, value => value);
+            var assign = variable.declaredType.AssignFrom(context.replModuleContext, expressionFuture.Type);
+
+            return REPLValueFuture.Chain1(variableType, expressionFuture, value => {
+                var converted = assign.EvalConvert(this, value);
+
+                variable.value = converted;
+
+                return converted;
+            });
         }
     }
 }

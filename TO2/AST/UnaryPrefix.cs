@@ -53,13 +53,13 @@ namespace KontrolSystem.TO2.AST {
 
             if (dropResult) context.IL.Emit(OpCodes.Pop);
         }
-        
+
         public override REPLValueFuture Eval(REPLContext context) {
             var rightFuture = this.right.Eval(context);
 
             IOperatorEmitter operatorEmitter = rightFuture.Type.AllowedPrefixOperators(context.replModuleContext)
                 .GetMatching(context.replModuleContext, op, BuiltinType.Unit);
-            
+
             if (operatorEmitter == null) {
                 throw new REPLException(this, $"Prefix {op} on a {rightFuture.Type} is undefined");
             }

@@ -53,19 +53,19 @@ namespace KontrolSystem.TO2.AST {
 
             if (dropResult) context.IL.Emit(OpCodes.Pop);
         }
-        
+
         public override REPLValueFuture Eval(REPLContext context) {
             var leftFuture = this.left.Eval(context);
 
             IOperatorEmitter operatorEmitter = leftFuture.Type.AllowedSuffixOperators(context.replModuleContext)
                 .GetMatching(context.replModuleContext, op, BuiltinType.Unit);
-            
+
             if (operatorEmitter == null) {
                 throw new REPLException(this, $"Suffix {op} on a {leftFuture.Type} is undefined");
             }
 
             return REPLValueFuture.Chain1(operatorEmitter.ResultType, leftFuture,
                 leftResult => operatorEmitter.Eval(this, leftResult, null));
-        }        
+        }
     }
 }

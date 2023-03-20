@@ -28,16 +28,16 @@ namespace KontrolSystem.TO2.Parser {
                 .Between(Char('{').Then(WhiteSpaces0), WhiteSpaces0.Then(Char('}')))
         );
 
-        private static readonly Parser<UseDeclaration> UseNamesDeclaration = Seq(
+        public static readonly Parser<UseDeclaration> UseNamesDeclaration = Seq(
             UseKeyword.Then(UseNames), FormKeyword.Then(IdentifierPath)
         ).Map((decl, start, end) =>
             new UseDeclaration(decl.Item1, decl.Item2, start, end));
 
-        private static readonly Parser<UseDeclaration> UseAliasDeclaration = Seq(
+        public static readonly Parser<UseDeclaration> UseAliasDeclaration = Seq(
             UseKeyword.Then(IdentifierPath), AsKeyword.Then(Identifier)
         ).Map((decl, start, end) => new UseDeclaration(decl.Item1, decl.Item2, start, end));
 
-        private static readonly Parser<TypeAlias> TypeAlias = Seq(
+        public static readonly Parser<TypeAlias> TypeAlias = Seq(
             DescriptionComment, WhiteSpaces0.Then(Opt(PubKeyword)), TypeKeyword.Then(Identifier),
             WhiteSpaces0.Then(Char('=')).Then(WhiteSpaces0).Then(TypeRef)
         ).Map((items, start, end) =>

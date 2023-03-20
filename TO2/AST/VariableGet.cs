@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection.Emit;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     public class VariableGet : Expression, IAssignContext {
@@ -116,5 +117,15 @@ namespace KontrolSystem.TO2.AST {
         private IKontrolFunction ReferencedFunction(ModuleContext context) => moduleName != null
             ? context.FindModule(moduleName)?.FindFunction(name)
             : context.mappedFunctions.Get(name);
+
+        public override REPLValueFuture Eval(REPLContext context) {
+            var variable = context.FindVariable(name);
+
+            if (variable != null) {
+                return REPLValueFuture.Success(variable.value);
+            }
+
+            throw new REPLException(this, $"No local variable, constant or function '{name}'");
+        }
     }
 }

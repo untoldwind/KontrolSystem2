@@ -82,7 +82,7 @@ namespace KontrolSystem.TO2.AST {
 
             return resolvedType ?? BuiltinType.Unit;
         }
-        
+
         public override void EmitCode(IBlockContext context, bool dropResult) {
             FunctionType lambdaType = ResultType(context) as FunctionType;
 

@@ -127,7 +127,7 @@ namespace KontrolSystem.TO2.AST {
             public override IOperatorCollection AllowedPrefixOperators(ModuleContext context) => allowedPrefixOperators;
 
             public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) => allowedSuffixOperators;
-            
+
             public override IREPLValue REPLCast(object value) => new REPLInt((long)value);
         }
 
@@ -141,6 +141,13 @@ namespace KontrolSystem.TO2.AST {
             }
 
             public void EmitConvert(IBlockContext context) => context.IL.Emit(OpCodes.Conv_R8);
+
+            public IREPLValue EvalConvert(Node node, IREPLValue value) {
+                if (value is REPLInt i) {
+                    return new REPLFloat(i.intValue);
+                }
+                throw new REPLException(node, $"Expected int value: {value.Type.Name}");
+            }
         }
     }
 }

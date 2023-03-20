@@ -15,12 +15,12 @@ namespace KontrolSystem.TO2.Runtime {
 
         public REPLVariable DeclaredVariable(string name, bool isConst, TO2Type declaredType) {
             var variable = new REPLVariable(name, isConst, declaredType);
-            
+
             localVariables.Add(name, variable);
 
             return variable;
-        } 
-        
+        }
+
         public class REPLVariable {
             public readonly string name;
             public readonly bool isConst;
@@ -32,6 +32,6 @@ namespace KontrolSystem.TO2.Runtime {
                 this.isConst = isConst;
                 this.declaredType = declaredType;
             }
-        } 
+        }
     }
 }

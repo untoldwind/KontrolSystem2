@@ -62,7 +62,7 @@ namespace KontrolSystem.TO2.AST {
             public override IOperatorCollection AllowedPrefixOperators(ModuleContext context) => allowedPrefixOperators;
 
             public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) => allowedSuffixOperators;
-            
+
             public override IREPLValue REPLCast(object value) => new REPLBool((bool)value);
         }
     }

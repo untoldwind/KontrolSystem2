@@ -49,7 +49,7 @@ namespace KontrolSystem.TO2.AST {
         public override REPLValueFuture Eval(REPLContext context) {
             return REPLValueFuture.Success(new REPLString(value));
         }
-        
+
         public override void EmitCode(IBlockContext context, bool dropResult) {
             if (!dropResult) context.IL.Emit(OpCodes.Ldstr, value);
         }
@@ -73,7 +73,7 @@ namespace KontrolSystem.TO2.AST {
         public override REPLValueFuture Eval(REPLContext context) {
             return REPLValueFuture.Success(new REPLInt(value));
         }
-        
+
         public override void EmitCode(IBlockContext context, bool dropResult) {
             if (!dropResult) context.IL.Emit(OpCodes.Ldc_I8, value);
         }
@@ -97,7 +97,7 @@ namespace KontrolSystem.TO2.AST {
         public override REPLValueFuture Eval(REPLContext context) {
             return REPLValueFuture.Success(new REPLFloat(value));
         }
-        
+
         public override void EmitCode(IBlockContext context, bool dropResult) {
             if (!dropResult) context.IL.Emit(OpCodes.Ldc_R8, value);
         }

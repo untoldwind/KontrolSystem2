@@ -41,7 +41,7 @@ namespace KontrolSystem.TO2.AST {
     }
 
     public delegate IREPLValue REPLOperator(Node node, IREPLValue left, IREPLValue right);
-    
+
     public interface IOperatorEmitter {
         TO2Type ResultType { get; }
         TO2Type OtherType { get; }

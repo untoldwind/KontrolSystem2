@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection.Emit;
 using KontrolSystem.TO2.Generator;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     public abstract partial class BuiltinType {
@@ -32,6 +33,8 @@ namespace KontrolSystem.TO2.AST {
                     context.IL.Emit(OpCodes.Pop);
                 context.IL.Emit(OpCodes.Ldnull);
             }
+
+            public IREPLValue EvalConvert(Node node, IREPLValue value) => REPLUnit.INSTANCE;
         }
     }
 }

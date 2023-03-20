@@ -118,7 +118,7 @@ namespace KontrolSystem.TO2.AST {
         }
 
         public bool CanStore => false;
-        
+
         public IFieldAccessEmitter Create(ModuleContext context) {
             Type generateType = resultType.GeneratedType(context);
             switch (field) {
@@ -183,6 +183,11 @@ namespace KontrolSystem.TO2.AST {
             value.EmitLoad(context);
             context.IL.Emit(OpCodes.Stfld, generatedType.GetField("value"));
             someResult.EmitLoad(context);
+        }
+
+        public IREPLValue EvalConvert(Node node, IREPLValue value) {
+            // TODO remove this
+            throw new NotImplementedException();
         }
     }
 

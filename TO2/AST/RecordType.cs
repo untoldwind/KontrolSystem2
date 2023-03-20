@@ -130,6 +130,11 @@ namespace KontrolSystem.TO2.AST {
             someResult.EmitLoad(context);
         }
 
+        public IREPLValue EvalConvert(Node node, IREPLValue value) {
+            // TODO remove this
+            throw new NotImplementedException();
+        }
+
         protected abstract void EmitAssignToPtr(IBlockContext context, IBlockVariable tempSource);
     }
 }

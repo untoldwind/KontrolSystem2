@@ -9,37 +9,46 @@ namespace KontrolSystem.TO2.Test {
     public class REPLBasicTests {
         [Fact]
         public void TestSimpleExpressions() {
-            Assert.Equal(1234,  RunExpression<long>(BuiltinType.Int, "1234"));
-            Assert.Equal(-1234,  RunExpression<long>(BuiltinType.Int, "-1234"));
-            Assert.Equal(3579,  RunExpression<long>(BuiltinType.Int, "1234 + 2345"));
-            Assert.Equal(-1111,  RunExpression<long>(BuiltinType.Int, "1234 - 2345"));
-            Assert.Equal(2893730,  RunExpression<long>(BuiltinType.Int, "1234 * 2345"));
-            Assert.Equal(195,  RunExpression<long>(BuiltinType.Int, "2345 / 12"));
-            Assert.Equal(5,  RunExpression<long>(BuiltinType.Int, "2345 % 12"));
+            Assert.Equal(1234, RunExpression<long>(BuiltinType.Int, "1234"));
+            Assert.Equal(-1234, RunExpression<long>(BuiltinType.Int, "-1234"));
+            Assert.Equal(3579, RunExpression<long>(BuiltinType.Int, "1234 + 2345"));
+            Assert.Equal(-1111, RunExpression<long>(BuiltinType.Int, "1234 - 2345"));
+            Assert.Equal(2893730, RunExpression<long>(BuiltinType.Int, "1234 * 2345"));
+            Assert.Equal(195, RunExpression<long>(BuiltinType.Int, "2345 / 12"));
+            Assert.Equal(5, RunExpression<long>(BuiltinType.Int, "2345 % 12"));
         }
-        
+
+        [Fact]
+        public void TestVariables() {
+            Assert.Equal(3579, RunExpression<long>(BuiltinType.Int, "const a = 1234\nconst b = 2345\na + b"));  
+        }
+
         private T RunExpression<T>(TO2Type to2Type, string expression) {
-            var result = TO2ParserExpressions.Expression.TryParse(expression);
+            var result = TO2ParserREPL.REPLItems.TryParse(expression);
 
             Assert.True(result.WasSuccessful);
 
             var context = new REPLContext(new TestRunnerContext());
-            var future = result.Value.Eval(context);
-            
-            for (int i = 0; i < 100; i++) {
+            var pollCount = 0;
+            IREPLValue lastValue = REPLUnit.INSTANCE;
+
+            foreach (var item in result.Value) {
+                var future = item.Eval(context);
                 var futureResult = future.PollValue();
 
-                if (futureResult.IsReady) {
-                    var replValue = futureResult.value;
-                    
-                    Assert.Equal(to2Type, replValue.Type);
-                    Assert.True(replValue.Value is T);
-
-                    return (T)replValue.Value;
+                while (!futureResult.IsReady) {
+                    pollCount++;
+                    if(pollCount > 100) throw new FailException("No result after 100 tries");
+                    futureResult = future.PollValue();
                 }
-            }
 
-            throw new FailException("No result after 100 tries");
+                lastValue = futureResult.value;
+            }
+            
+            Assert.Equal(to2Type, lastValue.Type);
+            Assert.True(lastValue.Value is T);
+
+            return (T)lastValue.Value;
         }
     }
 }

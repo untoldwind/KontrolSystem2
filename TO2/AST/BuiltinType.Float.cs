@@ -155,7 +155,7 @@ namespace KontrolSystem.TO2.AST {
 
             // Fallback if framework is (slightly) incompatible
             public static bool IsFiniteWrapper(double d) => !Double.IsInfinity(d);
-            
+
             public override IREPLValue REPLCast(object value) => new REPLFloat((double)value);
         }
     }

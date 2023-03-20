@@ -13,7 +13,7 @@ namespace KontrolSystem.TO2.Parser {
 
         private static readonly Parser<bool> LetOrConst = Alt(LetKeyword.To(false), ConstKeyword.To(true));
 
-        private static readonly Parser<IBlockItem> VariableDeclaration = Seq(
+        public static readonly Parser<IBlockItem> VariableDeclaration = Seq(
             LetOrConst, WhiteSpaces1.Then(Alt(
                 DeclarationParameter.Map(item => (true, new List<DeclarationParameter> { item })),
                 Delimited1(DeclarationParameterOrPlaceholder, CommaDelimiter)

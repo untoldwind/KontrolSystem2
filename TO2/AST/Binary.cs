@@ -95,7 +95,7 @@ namespace KontrolSystem.TO2.AST {
                 .GetMatching(context.replModuleContext, op, rightFuture.Type);
             IOperatorEmitter rightEmitter = rightFuture.Type.AllowedPrefixOperators(context.replModuleContext)
                 .GetMatching(context.replModuleContext, op, leftFuture.Type);
-            
+
             if (leftEmitter == null && rightEmitter == null) {
                 throw new REPLException(this, $"Cannot {op} a {leftFuture.Type} with a {rightFuture.Type}");
             }

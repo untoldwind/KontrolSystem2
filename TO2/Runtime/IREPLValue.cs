@@ -19,7 +19,7 @@ namespace KontrolSystem.TO2.Runtime {
 
         public static REPLValueFuture Chain2(TO2Type resultType, REPLValueFuture first, REPLValueFuture second,
             Func<IREPLValue, IREPLValue, IREPLValue> map) => new Chain2Impl(resultType, first, second, map);
-        
+
         internal class SuccessImpl : REPLValueFuture {
             private readonly IREPLValue value;
 
@@ -38,7 +38,7 @@ namespace KontrolSystem.TO2.Runtime {
                 this.first = first;
                 this.map = map;
             }
-            
+
             public override FutureResult<IREPLValue> PollValue() {
                 if (firstResult == null) {
                     var result = first.PollValue();
@@ -53,8 +53,8 @@ namespace KontrolSystem.TO2.Runtime {
                     mapResult = map.Invoke(firstResult);
                 }
 
-                return new FutureResult<IREPLValue>( mapResult);
-            }            
+                return new FutureResult<IREPLValue>(mapResult);
+            }
         }
 
         internal class Chain2Impl : REPLValueFuture {
@@ -70,7 +70,7 @@ namespace KontrolSystem.TO2.Runtime {
                 this.second = second;
                 this.map = map;
             }
-            
+
             public override FutureResult<IREPLValue> PollValue() {
                 if (firstResult == null) {
                     var result = first.PollValue();
@@ -93,30 +93,41 @@ namespace KontrolSystem.TO2.Runtime {
                     mapResult = map.Invoke(firstResult, secondResult);
                 }
 
-                return new FutureResult<IREPLValue>( mapResult);
-            }            
+                return new FutureResult<IREPLValue>(mapResult);
+            }
         }
     }
-    
+
     public interface IREPLValue {
         TO2Type Type { get; }
-        
+
         object Value { get; }
+    }
+
+    public class REPLUnit : IREPLValue {
+        public static REPLUnit INSTANCE = new REPLUnit();
+
+        private REPLUnit() {
+        }
+
+        public TO2Type Type => BuiltinType.Unit;
+
+        public object Value => null;
     }
 
     public struct REPLBool : IREPLValue {
         public readonly bool boolValue;
-        
-        public REPLBool( bool boolValue) {
+
+        public REPLBool(bool boolValue) {
             this.boolValue = boolValue;
         }
 
         public TO2Type Type => BuiltinType.Bool;
-        
+
         public object Value => boolValue;
 
         public static IREPLValue Not(Node node, IREPLValue other, IREPLValue _) {
-            if(other is REPLBool b) {
+            if (other is REPLBool b) {
                 return new REPLBool(!b.boolValue);
             }
 
@@ -124,67 +135,67 @@ namespace KontrolSystem.TO2.Runtime {
         }
 
         public static IREPLValue Eq(Node node, IREPLValue left, IREPLValue right) {
-            if(left is REPLBool lb && right is REPLBool rb) {
+            if (left is REPLBool lb && right is REPLBool rb) {
                 return new REPLBool(lb.boolValue == rb.boolValue);
             }
 
             throw new REPLException(node, $"Can not preform boolean eq on non-boolean: {left.Type.Name} {right.Type.Name}");
         }
-        
+
         public static IREPLValue Neq(Node node, IREPLValue left, IREPLValue right) {
-            if(left is REPLBool lb && right is REPLBool rb) {
+            if (left is REPLBool lb && right is REPLBool rb) {
                 return new REPLBool(lb.boolValue != rb.boolValue);
             }
 
             throw new REPLException(node, $"Can not preform boolean neq on non-boolean: {left.Type.Name} {right.Type.Name}");
         }
-        
+
         public static IREPLValue And(Node node, IREPLValue left, IREPLValue right) {
-            if(left is REPLBool lb && right is REPLBool rb) {
+            if (left is REPLBool lb && right is REPLBool rb) {
                 return new REPLBool(lb.boolValue && rb.boolValue);
             }
 
             throw new REPLException(node, $"Can not preform boolean and on non-boolean: {left.Type.Name} {right.Type.Name}");
         }
-        
+
         public static IREPLValue Or(Node node, IREPLValue left, IREPLValue right) {
-            if(left is REPLBool lb && right is REPLBool rb) {
+            if (left is REPLBool lb && right is REPLBool rb) {
                 return new REPLBool(lb.boolValue || rb.boolValue);
             }
 
             throw new REPLException(node, $"Can not preform boolean or on non-boolean: {left.Type.Name} {right.Type.Name}");
         }
     }
-    
+
     public struct REPLInt : IREPLValue {
         public readonly long intValue;
-        
+
         public REPLInt(long intValue) {
             this.intValue = intValue;
         }
 
         public TO2Type Type => BuiltinType.Int;
-        
+
         public object Value => intValue;
-        
+
         public static IREPLValue Neg(Node node, IREPLValue other, IREPLValue _) {
-            if(other is REPLInt i) {
+            if (other is REPLInt i) {
                 return new REPLInt(-i.intValue);
             }
 
             throw new REPLException(node, $"Can not preform int neg on non-int: {other.Type.Name}");
         }
-        
+
         public static IREPLValue Add(Node node, IREPLValue left, IREPLValue right) {
-            if(left is REPLInt li && right is REPLInt ri) {
+            if (left is REPLInt li && right is REPLInt ri) {
                 return new REPLInt(li.intValue + ri.intValue);
             }
 
             throw new REPLException(node, $"Can not preform int add on non-int: {left.Type.Name} {right.Type.Name}");
         }
-        
+
         public static IREPLValue Sub(Node node, IREPLValue left, IREPLValue right) {
-            if(left is REPLInt li && right is REPLInt ri) {
+            if (left is REPLInt li && right is REPLInt ri) {
                 return new REPLInt(li.intValue - ri.intValue);
             }
 
@@ -192,23 +203,23 @@ namespace KontrolSystem.TO2.Runtime {
         }
 
         public static IREPLValue Mul(Node node, IREPLValue left, IREPLValue right) {
-            if(left is REPLInt li && right is REPLInt ri) {
+            if (left is REPLInt li && right is REPLInt ri) {
                 return new REPLInt(li.intValue * ri.intValue);
             }
 
             throw new REPLException(node, $"Can not preform int mul on non-int: {left.Type.Name} {right.Type.Name}");
         }
-        
+
         public static IREPLValue Div(Node node, IREPLValue left, IREPLValue right) {
-            if(left is REPLInt li && right is REPLInt ri) {
+            if (left is REPLInt li && right is REPLInt ri) {
                 return new REPLInt(li.intValue / ri.intValue);
             }
 
             throw new REPLException(node, $"Can not preform int div on non-int: {left.Type.Name} {right.Type.Name}");
         }
-        
+
         public static IREPLValue Rem(Node node, IREPLValue left, IREPLValue right) {
-            if(left is REPLInt li && right is REPLInt ri) {
+            if (left is REPLInt li && right is REPLInt ri) {
                 return new REPLInt(li.intValue % ri.intValue);
             }
 
@@ -216,7 +227,7 @@ namespace KontrolSystem.TO2.Runtime {
         }
 
         public static IREPLValue BitOr(Node node, IREPLValue left, IREPLValue right) {
-            if(left is REPLInt li && right is REPLInt ri) {
+            if (left is REPLInt li && right is REPLInt ri) {
                 return new REPLInt(li.intValue | ri.intValue);
             }
 
@@ -224,15 +235,15 @@ namespace KontrolSystem.TO2.Runtime {
         }
 
         public static IREPLValue BitAnd(Node node, IREPLValue left, IREPLValue right) {
-            if(left is REPLInt li && right is REPLInt ri) {
+            if (left is REPLInt li && right is REPLInt ri) {
                 return new REPLInt(li.intValue & ri.intValue);
             }
 
             throw new REPLException(node, $"Can not preform int bit and on non-int: {left.Type.Name} {right.Type.Name}");
         }
-        
+
         public static IREPLValue BitXor(Node node, IREPLValue left, IREPLValue right) {
-            if(left is REPLInt li && right is REPLInt ri) {
+            if (left is REPLInt li && right is REPLInt ri) {
                 return new REPLInt(li.intValue ^ ri.intValue);
             }
 
@@ -240,15 +251,15 @@ namespace KontrolSystem.TO2.Runtime {
         }
 
         public static IREPLValue Eq(Node node, IREPLValue left, IREPLValue right) {
-            if(left is REPLInt li && right is REPLInt ri) {
+            if (left is REPLInt li && right is REPLInt ri) {
                 return new REPLBool(li.intValue == ri.intValue);
             }
 
             throw new REPLException(node, $"Can not preform int eq on non-int: {left.Type.Name} {right.Type.Name}");
         }
-        
+
         public static IREPLValue Neq(Node node, IREPLValue left, IREPLValue right) {
-            if(left is REPLInt li && right is REPLInt ri) {
+            if (left is REPLInt li && right is REPLInt ri) {
                 return new REPLBool(li.intValue != ri.intValue);
             }
 
@@ -256,67 +267,67 @@ namespace KontrolSystem.TO2.Runtime {
         }
 
         public static IREPLValue Gt(Node node, IREPLValue left, IREPLValue right) {
-            if(left is REPLInt li && right is REPLInt ri) {
+            if (left is REPLInt li && right is REPLInt ri) {
                 return new REPLBool(li.intValue > ri.intValue);
             }
 
             throw new REPLException(node, $"Can not preform int gt on non-int: {left.Type.Name} {right.Type.Name}");
         }
-        
+
         public static IREPLValue Geq(Node node, IREPLValue left, IREPLValue right) {
-            if(left is REPLInt li && right is REPLInt ri) {
+            if (left is REPLInt li && right is REPLInt ri) {
                 return new REPLBool(li.intValue >= ri.intValue);
             }
 
             throw new REPLException(node, $"Can not preform int geq on non-int: {left.Type.Name} {right.Type.Name}");
-        }        
+        }
 
         public static IREPLValue Lt(Node node, IREPLValue left, IREPLValue right) {
-            if(left is REPLInt li && right is REPLInt ri) {
+            if (left is REPLInt li && right is REPLInt ri) {
                 return new REPLBool(li.intValue < ri.intValue);
             }
 
             throw new REPLException(node, $"Can not preform int lt on non-int: {left.Type.Name} {right.Type.Name}");
         }
-        
+
         public static IREPLValue Leq(Node node, IREPLValue left, IREPLValue right) {
-            if(left is REPLInt li && right is REPLInt ri) {
+            if (left is REPLInt li && right is REPLInt ri) {
                 return new REPLBool(li.intValue <= ri.intValue);
             }
 
             throw new REPLException(node, $"Can not preform int leq on non-int: {left.Type.Name} {right.Type.Name}");
-        }        
+        }
     }
 
     public struct REPLFloat : IREPLValue {
         public readonly double floatValue;
-        
+
         public REPLFloat(double floatValue) {
             this.floatValue = floatValue;
         }
 
         public TO2Type Type => BuiltinType.Float;
-        
+
         public object Value => floatValue;
-        
+
         public static IREPLValue Neg(Node node, IREPLValue other, IREPLValue _) {
-            if(other is REPLFloat f) {
+            if (other is REPLFloat f) {
                 return new REPLFloat(-f.floatValue);
             }
 
             throw new REPLException(node, $"Can not preform float neg on non-float: {other.Type.Name}");
         }
-        
+
         public static IREPLValue Add(Node node, IREPLValue left, IREPLValue right) {
-            if(left is REPLFloat lf && right is REPLFloat rf) {
+            if (left is REPLFloat lf && right is REPLFloat rf) {
                 return new REPLFloat(lf.floatValue + rf.floatValue);
             }
 
             throw new REPLException(node, $"Can not preform int add on non-int: {left.Type.Name} {right.Type.Name}");
         }
-        
+
         public static IREPLValue Sub(Node node, IREPLValue left, IREPLValue right) {
-            if(left is REPLFloat lf && right is REPLFloat rf) {
+            if (left is REPLFloat lf && right is REPLFloat rf) {
                 return new REPLFloat(lf.floatValue - rf.floatValue);
             }
 
@@ -324,23 +335,23 @@ namespace KontrolSystem.TO2.Runtime {
         }
 
         public static IREPLValue Mul(Node node, IREPLValue left, IREPLValue right) {
-            if(left is REPLFloat lf && right is REPLFloat rf) {
+            if (left is REPLFloat lf && right is REPLFloat rf) {
                 return new REPLFloat(lf.floatValue * rf.floatValue);
             }
 
             throw new REPLException(node, $"Can not preform int mul on non-int: {left.Type.Name} {right.Type.Name}");
         }
-        
+
         public static IREPLValue Div(Node node, IREPLValue left, IREPLValue right) {
-            if(left is REPLFloat lf && right is REPLFloat rf) {
+            if (left is REPLFloat lf && right is REPLFloat rf) {
                 return new REPLFloat(lf.floatValue / rf.floatValue);
             }
 
             throw new REPLException(node, $"Can not preform int div on non-int: {left.Type.Name} {right.Type.Name}");
         }
-        
+
         public static IREPLValue Rem(Node node, IREPLValue left, IREPLValue right) {
-            if(left is REPLFloat lf && right is REPLFloat rf) {
+            if (left is REPLFloat lf && right is REPLFloat rf) {
                 return new REPLFloat(lf.floatValue % rf.floatValue);
             }
 
@@ -348,15 +359,15 @@ namespace KontrolSystem.TO2.Runtime {
         }
 
         public static IREPLValue Eq(Node node, IREPLValue left, IREPLValue right) {
-            if(left is REPLFloat lf && right is REPLFloat rf) {
+            if (left is REPLFloat lf && right is REPLFloat rf) {
                 return new REPLBool(lf.floatValue == rf.floatValue);
             }
 
             throw new REPLException(node, $"Can not preform int eq on non-int: {left.Type.Name} {right.Type.Name}");
         }
-        
+
         public static IREPLValue Neq(Node node, IREPLValue left, IREPLValue right) {
-            if(left is REPLFloat lf && right is REPLFloat rf) {
+            if (left is REPLFloat lf && right is REPLFloat rf) {
                 return new REPLBool(lf.floatValue != rf.floatValue);
             }
 
@@ -364,47 +375,47 @@ namespace KontrolSystem.TO2.Runtime {
         }
 
         public static IREPLValue Gt(Node node, IREPLValue left, IREPLValue right) {
-            if(left is REPLFloat lf && right is REPLFloat rf) {
+            if (left is REPLFloat lf && right is REPLFloat rf) {
                 return new REPLBool(lf.floatValue > rf.floatValue);
             }
 
             throw new REPLException(node, $"Can not preform int gt on non-int: {left.Type.Name} {right.Type.Name}");
         }
-        
+
         public static IREPLValue Geq(Node node, IREPLValue left, IREPLValue right) {
-            if(left is REPLFloat lf && right is REPLFloat rf) {
+            if (left is REPLFloat lf && right is REPLFloat rf) {
                 return new REPLBool(lf.floatValue >= rf.floatValue);
             }
 
             throw new REPLException(node, $"Can not preform int geq on non-int: {left.Type.Name} {right.Type.Name}");
-        }        
+        }
 
         public static IREPLValue Lt(Node node, IREPLValue left, IREPLValue right) {
-            if(left is REPLFloat lf && right is REPLFloat rf) {
+            if (left is REPLFloat lf && right is REPLFloat rf) {
                 return new REPLBool(lf.floatValue < rf.floatValue);
             }
 
             throw new REPLException(node, $"Can not preform int lt on non-int: {left.Type.Name} {right.Type.Name}");
         }
-        
+
         public static IREPLValue Leq(Node node, IREPLValue left, IREPLValue right) {
-            if(left is REPLFloat lf && right is REPLFloat rf) {
+            if (left is REPLFloat lf && right is REPLFloat rf) {
                 return new REPLBool(lf.floatValue <= rf.floatValue);
             }
 
             throw new REPLException(node, $"Can not preform int leq on non-int: {left.Type.Name} {right.Type.Name}");
-        }        
+        }
     }
-    
+
     public struct REPLString : IREPLValue {
         public readonly string stringValue;
-        
+
         public REPLString(string stringValue) {
             this.stringValue = stringValue;
         }
 
         public TO2Type Type => BuiltinType.Float;
-        
+
         public object Value => stringValue;
     }
 
@@ -416,9 +427,9 @@ namespace KontrolSystem.TO2.Runtime {
             this.type = type;
             this.anyValue = anyValue;
         }
-        
+
         public TO2Type Type => type;
-        
+
         public object Value => anyValue;
     }
 }

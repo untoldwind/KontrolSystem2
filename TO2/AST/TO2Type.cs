@@ -94,7 +94,7 @@ namespace KontrolSystem.TO2.AST {
             RealizedType concreteType) => Enumerable.Empty<(string name, RealizedType type)>();
 
         public virtual IREPLValue REPLCast(object value) => new REPLAny(this, value);
-        
+
         public override string ToString() => Name;
     }
 

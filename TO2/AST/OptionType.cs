@@ -177,6 +177,11 @@ namespace KontrolSystem.TO2.AST {
             context.IL.Emit(OpCodes.Stfld, generatedType.GetField("value"));
             someResult.EmitLoad(context);
         }
+
+        public IREPLValue EvalConvert(Node node, IREPLValue value) {
+            // TODO remove this
+            throw new NotImplementedException();
+        }
     }
 
     internal class OptionBitOrOperator : IOperatorEmitter {
