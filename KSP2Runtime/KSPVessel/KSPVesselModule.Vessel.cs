@@ -85,7 +85,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField("CoM")] public Vector3d CoM => vessel.mainBody.coordinateSystem.ToLocalPosition(vessel.CenterOfMass);
 
-            [KSField] public Vector3d global_center_of_mass => vessel.mainBody.coordinateSystem.ToLocalPosition(vessel.CenterOfMass);
+            [KSField] public Position GlobalCenterOfMass => vessel.CenterOfMass;
 
             [KSField] public double OffsetGround => vessel.OffsetToGround;
 

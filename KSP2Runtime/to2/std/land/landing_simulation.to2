@@ -1,12 +1,13 @@
 use { Vessel } from ksp::vessel
 use { Body, Orbit } from ksp::orbit
 use { SpeedPolicy } from std::land::speed_policy
-use { Vec3, vec3 } from ksp::math
+use { Vec3, vec3, GlobalPosition, TransformFrame } from ksp::math
 use { sqrt, PI, max, min, asin_deg, atan2_deg } from core::math
 use { angle_to_180 } from std::utils
 use { current_time } from ksp::game
 
 pub struct BodyParameters(body : Body, decel_end_altitude_asl : float, landing_altitude_asl : float, speed_policy : SpeedPolicy) {
+    celestial_frame : TransformFrame = body.celestial_frame
     position : Vec3 = body.position
     angular_velocity : Vec3 = body.angular_velocity
     aerobraked_radius : float = body.radius + (if(body.has_atmosphere) body.atmosphere_depth else 0)
@@ -76,7 +77,7 @@ impl BodyParameters {
 }
 
 pub type ReentryTrajectory = (
-    path : Vec3[], 
+    path : GlobalPosition[], 
     brake_time : float,
     end_time : float,
     end_latitude : float,
@@ -124,18 +125,19 @@ impl ReentrySimulation {
     }
     
     sync fn run(self) -> ReentryTrajectory = {
+        const frame = self.body.celestial_frame
         const brake_time = self.t
         const max_t = self.t + 2 * PI * sqrt(self.x.magnitude ^ 3.0 / self.body.grav_parameter)
-        let builder : ArrayBuilder<Vec3> = ArrayBuilder(100)
+        let builder : ArrayBuilder<GlobalPosition> = ArrayBuilder(100)
         
-        builder.append(self.x + self.body.position)
+        builder.append(self.x.to_position(frame))
         
         while(self.t < max_t && self.steps < 50000) {
             if(self.landed() || self.escaping()) break
             
             self.bs34_step()
             self.limit_speed()
-            builder.append(self.x + self.body.position)
+            builder.append(self.x.to_position(frame))
         }
         const (latitude, longitude) = self.body.surface_position(self.x, self.t)
         

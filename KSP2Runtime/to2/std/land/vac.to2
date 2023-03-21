@@ -1,6 +1,6 @@
 use { Vessel, MODE_AUTOPILOT, MODE_STABILITYASSIST } from ksp::vessel
 use { GeoCoordinates } from ksp::orbit
-use { CONSOLE } from ksp::console
+use { CONSOLE, RED, BLUE, GREEN, WHITE } from ksp::console
 use { Vec3, vec3, vec2, from_vector_to_vector, angle_axis, matrix2x2, look_dir_up } from ksp::math
 use { sin_deg, cos_deg, clamp, max, min, sqrt, PI } from core::math
 use { angle_to_360, ship_is_facing } from std::utils
@@ -12,10 +12,23 @@ use { init_simulation, ReentryTrajectory, ReentrySimulation } from std::land::la
 use { safe_speed_policy, SpeedPolicy } from std::land::speed_policy
 use { pid_loop } from ksp::control
 use { warp_to } from ksp::game::warp
+use { DEBUG } from ksp::debug
+
+const DEBUGGING : bool = false
 
 pub fn vac_land(vessel : Vessel, landing_side : GeoCoordinates, land_stage : int) -> Result<Unit, string> = {
     CONSOLE.print_line("=== vac_land ===")
-    
+
+    if(DEBUGGING) {
+        DEBUG.clear_markers()
+        DEBUG.add_ground_marker(landing_side, GREEN, 0)
+        DEBUG.add_billboard(fn() -> vessel.global_position + 10 * vessel.global_facing.right_vector, fn() -> 
+            "Vel surface: " + vessel.surface_velocity.magnitude.to_fixed(2) + 
+            " m/s\nAlt terrain: " + vessel.altitude_terrain.to_fixed(2) + 
+            " m\nLatitude   : " + vessel.geo_coordinates.latitude.to_fixed(2) +
+            "\nLongitude  : " + vessel.geo_coordinates.longitude.to_fixed(2), WHITE, 8)
+    }
+
     if(vessel.situation == "Orbiting") {
         vac_land_prepare_deorbit(vessel, landing_side)
         sleep(1.0)
@@ -99,10 +112,15 @@ pub fn vac_land_course_correct(vessel : Vessel, simulation : ReentrySimulation, 
     CONSOLE.move_cursor(console_row + 2, 0)
 
     const last_result = Cell(initial_result)
-    let last_prediction = vessel.main_body.geo_coordinates(last_result.value.end_latitude, last_result.value.end_longitude)
-
+    const last_prediction = Cell(vessel.main_body.geo_coordinates(last_result.value.end_latitude, last_result.value.end_longitude))
+    let trajectory_debug = if(DEBUGGING) DEBUG.add_path(last_result.value.path, RED, 1)
     const last_correction = Cell(course_correction(vessel, current_time(), last_result.value, landing_site, true)?)
-    
+    let prediction_debug = if(DEBUGGING) DEBUG.add_ground_marker(last_prediction.value, RED, 60)
+    let values_debug = if(DEBUGGING) DEBUG.add_billboard(fn() -> vessel.global_position + 10 * vessel.global_facing.up_vector, fn() -> 
+        "vac_land_course_correct\nCorrection        : " + last_correction.value.magnitude.to_fixed(2) +
+        "\nPredicted distance: " + (last_prediction.value.altitude_position(0) -  landing_site.altitude_position(0)).magnitude.to_fixed(2),
+        WHITE, 8)
+
     vessel.actions.rcs = false
 
     vessel.autopilot.enabled = true
@@ -117,11 +135,11 @@ pub fn vac_land_course_correct(vessel : Vessel, simulation : ReentrySimulation, 
     simulation.reset(vessel, current_time())
     let update_run = background::run(fn() -> simulation.run())
     
-    while(last_result.value.brake_time > current_time() + 20 && (last_prediction.altitude_position(0) -  landing_site.altitude_position(0)).magnitude > 500) {
+    while(last_result.value.brake_time > current_time() + 20 && (last_prediction.value.altitude_position(0) -  landing_site.altitude_position(0)).magnitude > 500) {
         vessel.autopilot.target_orientation = last_correction.value.to_direction().vector
         
         if(last_correction.value.magnitude < 0.5) {
-            CONSOLE.print_line("Coorection to subtle, warp half way through")
+            CONSOLE.print_line("Correction too subtle, warp half way through")
 
             throttle.release()
 
@@ -141,20 +159,28 @@ pub fn vac_land_course_correct(vessel : Vessel, simulation : ReentrySimulation, 
 
         if(update_run.is_completed) {
             last_result.value = update_run.result
-            last_prediction = vessel.main_body.geo_coordinates(last_result.value.end_latitude, last_result.value.end_longitude)
+            if(DEBUGGING) trajectory_debug.value.path = last_result.value.path
+            last_prediction.value = vessel.main_body.geo_coordinates(last_result.value.end_latitude, last_result.value.end_longitude)
+            if(DEBUGGING) prediction_debug.value.geo_coordinates = last_prediction.value
             last_correction.value = course_correction(vessel, current_time(), last_result.value, landing_site, true)?
             
             simulation.reset(vessel, current_time())
             update_run = background::run(fn() -> simulation.run())
         }
         CONSOLE.print_at(console_row    , 0, "Correction:         " + last_correction.value.magnitude.to_fixed(2))
-        CONSOLE.print_at(console_row + 1, 0, "Predicted distance: " + (last_prediction.altitude_position(0) -  landing_site.altitude_position(0)).magnitude.to_fixed(2))
+        CONSOLE.print_at(console_row + 1, 0, "Predicted distance: " + (last_prediction.value.altitude_position(0) -  landing_site.altitude_position(0)).magnitude.to_fixed(2))
 
         sleep(0.2)
     }
     
     throttle.release()
-    
+
+    if(DEBUGGING) {
+        trajectory_debug.value.remove()
+        prediction_debug.value.remove()
+        values_debug.value.remove()
+    }
+
     last_result.value
 }
 
@@ -186,18 +212,26 @@ pub fn vac_deceleration_burn(vessel : Vessel, simulation : ReentrySimulation, in
 
     const last_correction = Cell(course_correction(vessel, current_time(), last_result.value, landing_site, false)?)
 
+    let trajectory_debug = if(DEBUGGING) DEBUG.add_path(last_result.value.path, RED, 1)
+    let prediction_debug = if(DEBUGGING) DEBUG.add_ground_marker(vessel.main_body.geo_coordinates(last_result.value.end_latitude, last_result.value.end_longitude), RED, 60)
+    const desired_speed = Cell(0.0)
+    let values_debug = if(DEBUGGING) DEBUG.add_billboard(fn() -> vessel.global_position + 10 * vessel.global_facing.up_vector, fn() -> 
+        "vac_deceleration_burn\nCorrection   : " + last_correction.value.magnitude.to_fixed(2) +
+        "\nDesired speed: " + desired_speed.value.to_fixed(2),
+        WHITE, 8)
+
     simulation.reset(vessel, current_time())
     let update_run = background::run(fn() -> simulation.run())
     const throttle_pid = pid_loop(0.04, 0.001, 0.01, 0, 1)
     const throttle = vessel.manage_throttle(fn(deltaT) -> {
-        let desired_speed : float = speed_policy(vessel.CoM - vessel.main_body.position, vessel.surface_velocity)
+        desired_speed.value = speed_policy(vessel.CoM - vessel.main_body.position, vessel.surface_velocity)
 
-        if(desired_speed.is_nan || desired_speed < 0) desired_speed = 0
+        if(desired_speed.value.is_nan || desired_speed.value < 0) desired_speed.value = 0
         
         CONSOLE.print_at(console_row    , 0, "Vessel speed:     " + vessel.surface_velocity.magnitude.to_fixed(2))
-        CONSOLE.print_at(console_row + 1, 0, "Target Speed:     " + desired_speed.to_fixed(2))
+        CONSOLE.print_at(console_row + 1, 0, "Target Speed:     " + desired_speed.value.to_fixed(2))
         
-        throttle_pid.update(current_time(), desired_speed - vessel.surface_velocity.magnitude)
+        throttle_pid.update(current_time(), desired_speed.value - vessel.surface_velocity.magnitude)
     })
     
     while(vessel.altitude_terrain > 500) {
@@ -211,6 +245,8 @@ pub fn vac_deceleration_burn(vessel : Vessel, simulation : ReentrySimulation, in
         
         if(update_run.is_completed) {
             last_result.value = update_run.result
+            if(DEBUGGING) trajectory_debug.value.path = last_result.value.path
+            if(DEBUGGING) prediction_debug.value.geo_coordinates = vessel.main_body.geo_coordinates(last_result.value.end_latitude, last_result.value.end_longitude)
             last_correction.value = course_correction(vessel, current_time(), last_result.value, landing_site, false)?
             
             simulation.reset(vessel, current_time())
@@ -219,7 +255,13 @@ pub fn vac_deceleration_burn(vessel : Vessel, simulation : ReentrySimulation, in
         
         sleep(0.3)
     }
-        
+
+    if(DEBUGGING) {
+        trajectory_debug.value.remove()
+        prediction_debug.value.remove()
+        values_debug.value.remove()        
+    }
+
     throttle.release()
 }
 

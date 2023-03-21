@@ -61,6 +61,9 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                     enable = value;
                 }
             }
+            
+            [KSMethod]
+            public void Remove() => KSPContext.CurrentContext.RemoveMarker(this);
 
             public void OnUpdate() {
                 if (billboard != null) {
@@ -90,7 +93,7 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
             public void OnRender() {
             }
 
-            private static string TextWrap(string text) => $"<mspace=1em><mark=#10101040>{text}</mark></mspace>";
+            private static string TextWrap(string text) => $"<mspace=0.7em><mark=#10101040><align=left>{text}</align></mark></mspace>";
         }
     }
 }
