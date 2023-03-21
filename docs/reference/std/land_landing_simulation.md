@@ -15,6 +15,7 @@ Name | Type | Read-only | Description
 --- | --- | --- | ---
 aerobraked_radius | float | R/W | 
 angular_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/W | 
+celestial_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/W | 
 decel_radius | float | R/W | 
 epoch | float | R/W | 
 grav_parameter | float | R/W | 
@@ -154,7 +155,7 @@ reentrysimulation.reset ( vessel : ksp::vessel::Vessel,
 ##### run
 
 ```rust
-reentrysimulation.run ( ) -> (brake_time : float, end_latitude : float, end_longitude : float, end_time : float, path : ksp::math::Vec3[])
+reentrysimulation.run ( ) -> (brake_time : float, end_latitude : float, end_longitude : float, end_time : float, path : ksp::math::GlobalPosition[])
 ```
 
 
@@ -171,7 +172,7 @@ brake_time | float | R/W |
 end_latitude | float | R/W | 
 end_longitude | float | R/W | 
 end_time | float | R/W | 
-path | [ksp::math::Vec3](/reference/ksp/math.md#vec3)[] | R/W | 
+path | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition)[] | R/W | 
 
 ## Functions
 

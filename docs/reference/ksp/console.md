@@ -103,6 +103,7 @@ CONSOLE | ksp::console::Console | Main console
 CYAN | ksp::console::RgbaColor | Color cyan 
 GREEN | ksp::console::RgbaColor | Color green 
 RED | ksp::console::RgbaColor | Color red 
+WHITE | ksp::console::RgbaColor | Color red 
 YELLOW | ksp::console::RgbaColor | Color yellow 
 
 

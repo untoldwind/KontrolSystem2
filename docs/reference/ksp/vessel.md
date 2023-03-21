@@ -559,7 +559,7 @@ facing | [ksp::math::Direction](/reference/ksp/math.md#direction) | R/O |
 geo_coordinates | [ksp::orbit::GeoCoordinates](/reference/ksp/orbit.md#geocoordinates) | R/O | 
 global_angular_momentum | [ksp::math::GlobalAngularVelocity](/reference/ksp/math.md#globalangularvelocity) | R/O | 
 global_angular_velocity | [ksp::math::GlobalAngularVelocity](/reference/ksp/math.md#globalangularvelocity) | R/O | 
-global_center_of_mass | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
+global_center_of_mass | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | R/O | 
 global_east | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | 
 global_facing | [ksp::math::GlobalDirection](/reference/ksp/math.md#globaldirection) | R/O | 
 global_north | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | 

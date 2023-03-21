@@ -13,6 +13,17 @@ Collection of debug helper
 
 #### Methods
 
+##### add_billboard
+
+```rust
+debug.add_billboard ( positionProvider : fn() -> ksp::math::GlobalPosition,
+                      textProvider : fn() -> string,
+                      color : ksp::console::RgbaColor,
+                      fontSize : int ) -> ksp::debug::DebugBillboard
+```
+
+
+
 ##### add_ground_marker
 
 ```rust
@@ -35,6 +46,16 @@ debug.add_line ( startProvider : fn() -> ksp::math::GlobalPosition,
 
 Draws a line from `start` to `end` with a specified `color` and `width` in the current game scene.
 The line may have a `label` at its mid-point.
+
+
+
+##### add_path
+
+```rust
+debug.add_path ( path : ksp::math::GlobalPosition[],
+                 color : ksp::console::RgbaColor,
+                 width : float ) -> ksp::debug::DebugPath
+```
 
 
 
@@ -62,6 +83,53 @@ debug.clear_markers ( ) -> Unit
 Remove all markers from the game-scene.
 
 
+### DebugBillboard
+
+Represents a ground marker on a given celestial body.
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+color | [ksp::console::RgbaColor](/reference/ksp/console.md#rgbacolor) | R/W | The color of the billboard text 
+font_size | int | R/W | 
+visible | bool | R/W | Controls if the billboard is currently visible (initially `true`) 
+
+#### Methods
+
+##### remove
+
+```rust
+debugbillboard.remove ( ) -> Unit
+```
+
+
+
+### DebugPath
+
+Represents a debugging path in the current scene.
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+color | [ksp::console::RgbaColor](/reference/ksp/console.md#rgbacolor) | R/W | The color of the debugging path 
+path | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition)[] | R/W | 
+visible | bool | R/W | Controls if the debug path is currently visible (initially `true`) 
+width | float | R/W | The width of the debugging path 
+
+#### Methods
+
+##### remove
+
+```rust
+debugpath.remove ( ) -> Unit
+```
+
+
+
 ### DebugVector
 
 Represents a debugging vector in the current scene.
@@ -80,6 +148,14 @@ visible | bool | R/W | Controls if the debug-vector is currently visible (initia
 width | float | R/W | The width of the debugging vector 
 
 #### Methods
+
+##### remove
+
+```rust
+debugvector.remove ( ) -> Unit
+```
+
+
 
 ##### set_end_provider
 

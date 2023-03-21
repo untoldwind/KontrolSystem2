@@ -18,7 +18,7 @@ pub fn vac_break_zero ( vessel : ksp::vessel::Vessel ) -> Unit
 ```rust
 pub fn vac_deceleration_burn ( vessel : ksp::vessel::Vessel,
                                simulation : std::land::landing_simulation::ReentrySimulation,
-                               initial_result : (brake_time : float, end_latitude : float, end_longitude : float, end_time : float, path : ksp::math::Vec3[]),
+                               initial_result : (brake_time : float, end_latitude : float, end_longitude : float, end_time : float, path : ksp::math::GlobalPosition[]),
                                landing_site : ksp::orbit::GeoCoordinates,
                                speed_policy : fn(ksp::math::Vec3, ksp::math::Vec3) -> float ) -> Result<Unit, string>
 ```
@@ -40,8 +40,8 @@ pub fn vac_land ( vessel : ksp::vessel::Vessel,
 ```rust
 pub fn vac_land_course_correct ( vessel : ksp::vessel::Vessel,
                                  simulation : std::land::landing_simulation::ReentrySimulation,
-                                 initial_result : (brake_time : float, end_latitude : float, end_longitude : float, end_time : float, path : ksp::math::Vec3[]),
-                                 landing_site : ksp::orbit::GeoCoordinates ) -> Result<(brake_time : float, end_latitude : float, end_longitude : float, end_time : float, path : ksp::math::Vec3[]), string>
+                                 initial_result : (brake_time : float, end_latitude : float, end_longitude : float, end_time : float, path : ksp::math::GlobalPosition[]),
+                                 landing_site : ksp::orbit::GeoCoordinates ) -> Result<(brake_time : float, end_latitude : float, end_longitude : float, end_time : float, path : ksp::math::GlobalPosition[]), string>
 ```
 
 
