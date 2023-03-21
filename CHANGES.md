@@ -1,5 +1,10 @@
 # Changes
 
+## 0.2.0.1 -> 0.2.0.2
+
+* Add debug billboards
+* Add debug paths
+
 ## 0.1.9.3 -> 0.2.0.1
 
 * Add API for coordinate system independent positions, velocities, vectors and rotations
