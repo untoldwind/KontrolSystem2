@@ -98,7 +98,7 @@ namespace KontrolSystem.TO2.AST {
                 throw new REPLException(this, $"Type '{targetFuture.Type.Name}' does not have a field '{fieldName}'");
             }
             
-            return REPLValueFuture.Chain1(targetFuture.Type, targetFuture, target => fieldAccess.Eval(this, target));            
+            return REPLValueFuture.Chain1(targetFuture.Type, targetFuture, target => fieldAccess.EvalGet(this, target));            
         }
     }
 }

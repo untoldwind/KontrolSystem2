@@ -1,6 +1,7 @@
 ﻿using System.Reflection.Emit;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     public class Break : Expression {
@@ -30,6 +31,8 @@ namespace KontrolSystem.TO2.AST {
             context.IL.Emit(context.InnerLoop.Value.end.isShort ? OpCodes.Br_S : OpCodes.Br,
                 context.InnerLoop.Value.end);
         }
+
+        public override REPLValueFuture Eval(REPLContext context) => REPLValueFuture.Success(REPLBreak.INSTANCE);
     }
 
     public class Continue : Expression {
@@ -59,5 +62,7 @@ namespace KontrolSystem.TO2.AST {
             context.IL.Emit(context.InnerLoop.Value.start.isShort ? OpCodes.Br_S : OpCodes.Br,
                 context.InnerLoop.Value.start);
         }
+        
+        public override REPLValueFuture Eval(REPLContext context) => REPLValueFuture.Success(REPLContinue.INSTANCE);
     }
 }
