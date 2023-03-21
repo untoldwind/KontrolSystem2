@@ -21,6 +21,8 @@ namespace KontrolSystem.TO2.Test {
         [Fact]
         public void TestVariables() {
             Assert.Equal(3579, RunExpression<long>(BuiltinType.Int, "const a = 1234\nconst b = 2345\na + b"));  
+            Assert.Equal(2345, RunExpression<long>(BuiltinType.Int, "let a = 1234\na = 2345\na"));  
+            Assert.Equal(3579, RunExpression<long>(BuiltinType.Int, "let a = 1234\na += 2345\na"));  
         }
 
         [Fact]
