@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
+using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
 using KontrolSystem.TO2.Runtime;
 
@@ -103,11 +104,11 @@ namespace KontrolSystem.TO2.AST {
                     {
                         "to_bool",
                         new InlineFieldAccessFactory("Value converted to bool (0 -> false, != 0 -> true)",
-                            () => Bool, OpCodes.Conv_I4)
+                            () => Bool, REPLInt.ToBool,  OpCodes.Conv_I4)
                     }, {
                         "to_float",
                         new InlineFieldAccessFactory("Value converted to float", () => Float,
-                            OpCodes.Conv_R8)
+                            REPLInt.ToFloat, OpCodes.Conv_R8)
                     }, {
                         "abs",
                         new BoundPropertyLikeFieldAccessFactory("Absolute value", () => Int, typeof(Math),
@@ -128,7 +129,14 @@ namespace KontrolSystem.TO2.AST {
 
             public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) => allowedSuffixOperators;
 
-            public override IREPLValue REPLCast(object value) => new REPLInt((long)value);
+            public override IREPLValue REPLCast(object value) {
+                if(value is long l)
+                    return new REPLInt(l);
+                if(value is int i)
+                    return new REPLInt(i);
+
+                throw new REPLException(new Position("Intern"), new Position("Intern"), $"{value.GetType()} can not be cast to REPLInt");
+            }
         }
 
         private class IntToFloatAssign : IAssignEmitter {

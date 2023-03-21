@@ -47,11 +47,11 @@ namespace KontrolSystem.TO2.AST {
                     {
                         "to_int",
                         new InlineFieldAccessFactory("Value converted to integer (false -> 0, true -> 1)",
-                            () => Int, OpCodes.Conv_I8)
+                            () => Int, REPLBool.ToInt, OpCodes.Conv_I8)
                     }, {
                         "to_float",
                         new InlineFieldAccessFactory("Value converted to float (false -> 0.0, true -> 1.0)",
-                            () => Float, OpCodes.Conv_R8)
+                            () => Float, REPLBool.ToFloat, OpCodes.Conv_R8)
                     },
                 };
             }

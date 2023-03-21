@@ -109,7 +109,7 @@ namespace KontrolSystem.TO2.AST {
                     {
                         "to_int",
                         new InlineFieldAccessFactory("Value converted to int (will be truncated as necessary)",
-                            () => Int, OpCodes.Conv_I8)
+                            () => Int, REPLFloat.ToInt, OpCodes.Conv_I8)
                     }, {
                         "abs",
                         new BoundPropertyLikeFieldAccessFactory("Absolute value", () => Float, typeof(Math),

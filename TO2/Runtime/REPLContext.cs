@@ -10,14 +10,16 @@ namespace KontrolSystem.TO2.Runtime {
         public readonly REPLModuleContext replModuleContext;
         public readonly REPLBlockContext replBlockContext;
         public readonly Dictionary<string, REPLVariable> localVariables = new Dictionary<string, REPLVariable>();
+        public readonly VariableResolver externalVariables;
 
-        public REPLContext(IContext runtimeContext) {
+        public REPLContext(IContext runtimeContext, REPLModuleContext replModuleContext = null, VariableResolver externalVariables = null) {
             this.runtimeContext = runtimeContext;
-            replModuleContext = new REPLModuleContext();
+            this.replModuleContext = replModuleContext ?? new REPLModuleContext();
             replBlockContext = new REPLBlockContext(replModuleContext);
+            this.externalVariables = externalVariables;
         }
 
-        public REPLVariable FindVariable(string name) => localVariables.Get(name);
+        public REPLVariable FindVariable(string name) => localVariables.Get(name) ?? externalVariables?.Invoke(name);
 
         public REPLVariable DeclaredVariable(string name, bool isConst, TO2Type declaredType) {
             var variable = new REPLVariable(name, isConst, declaredType);
@@ -27,6 +29,12 @@ namespace KontrolSystem.TO2.Runtime {
             return variable;
         }
 
+        public REPLContext CreateChildContext() {
+            return new REPLContext(runtimeContext, replModuleContext, FindVariable);
+        }
+        
+        public delegate REPLVariable VariableResolver(string name);
+        
         public class REPLVariable {
             public readonly string name;
             public readonly bool isConst;

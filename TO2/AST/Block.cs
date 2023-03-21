@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     public interface IBlockItem {
@@ -19,6 +21,8 @@ namespace KontrolSystem.TO2.AST {
         TO2Type ResultType(IBlockContext context);
 
         void EmitCode(IBlockContext context, bool dropResult);
+
+        REPLValueFuture Eval(REPLContext context);
     }
 
     public interface IVariableRef {
@@ -125,6 +129,44 @@ namespace KontrolSystem.TO2.AST {
             }
 
             return this;
+        }
+        
+        public override REPLValueFuture Eval(REPLContext context) {
+            bool childScope = parentContainer == null || parentContainer is Block;
+            REPLContext effectiveContext = context;
+
+            if (childScope) {
+                effectiveContext = context.CreateChildContext();
+            }
+
+            return new REPLBlockEval(ResultType(context.replBlockContext), effectiveContext, items);
+        }
+
+        internal class REPLBlockEval : REPLValueFuture {
+            private readonly REPLContext context;
+            private readonly IEnumerator<IBlockItem> items;
+            private REPLValueFuture lastFuture;
+            private IREPLValue lastResult = REPLUnit.INSTANCE;
+
+            public REPLBlockEval(TO2Type to2Type, REPLContext context, List<IBlockItem> items) : base(to2Type) {
+                this.context = context;
+                this.items = items.Where(item => !item.IsComment).GetEnumerator();
+            }
+
+            public override FutureResult<IREPLValue> PollValue() {
+                if (lastFuture == null) {
+                    if (!items.MoveNext()) return new FutureResult<IREPLValue>(lastResult);
+                    lastFuture = items.Current.Eval(context);
+                }
+                var result = lastFuture.PollValue();
+                if (!result.IsReady) return new FutureResult<IREPLValue>();
+                if (result.value.IsBreak || result.value.IsContinue || result.value.IsReturn)
+                    return new FutureResult<IREPLValue>(result.value);
+                lastFuture = null;
+                lastResult = result.value;
+
+                return new FutureResult<IREPLValue>();
+            }
         }
     }
 }

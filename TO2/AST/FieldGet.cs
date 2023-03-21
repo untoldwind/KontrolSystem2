@@ -1,5 +1,7 @@
-﻿using KontrolSystem.Parsing;
+﻿using System;
+using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     public class FieldGet : Expression, IAssignContext {
@@ -85,6 +87,18 @@ namespace KontrolSystem.TO2.AST {
             if (context.HasErrors) return;
 
             fieldAccess.EmitPtr(context);
+        }
+        
+        public override REPLValueFuture Eval(REPLContext context) {
+            var targetFuture = target.Eval(context);
+            IFieldAccessEmitter fieldAccess =
+                targetFuture.Type.FindField(context.replModuleContext, fieldName)?.Create(context.replModuleContext);
+
+            if (fieldAccess == null) {
+                throw new REPLException(this, $"Type '{targetFuture.Type.Name}' does not have a field '{fieldName}'");
+            }
+            
+            return REPLValueFuture.Chain1(targetFuture.Type, targetFuture, target => fieldAccess.Eval(this, target));            
         }
     }
 }

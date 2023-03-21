@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Linq;
 using KontrolSystem.TO2.Generator;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     public interface IFieldAccessEmitter {
@@ -18,6 +19,8 @@ namespace KontrolSystem.TO2.AST {
         void EmitPtr(IBlockContext context);
 
         void EmitStore(IBlockContext context);
+
+        IREPLValue Eval(Node node, IREPLValue target);
     }
 
     public interface IFieldAccessFactory {
@@ -32,14 +35,18 @@ namespace KontrolSystem.TO2.AST {
         IFieldAccessFactory FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments);
     }
 
+    public delegate IREPLValue REPLFieldAccess(Node node, IREPLValue target);
+    
     public class InlineFieldAccessFactory : IFieldAccessFactory {
         private readonly Func<RealizedType> fieldType;
+        private readonly REPLFieldAccess replFieldAccess;
         private readonly OpCode[] opCodes;
         public string Description { get; }
 
-        public InlineFieldAccessFactory(string description, Func<RealizedType> fieldType, params OpCode[] opCodes) {
+        public InlineFieldAccessFactory(string description, Func<RealizedType> fieldType, REPLFieldAccess replFieldAccess, params OpCode[] opCodes) {
             Description = description;
             this.fieldType = fieldType;
+            this.replFieldAccess = replFieldAccess;
             this.opCodes = opCodes;
         }
 
@@ -47,18 +54,20 @@ namespace KontrolSystem.TO2.AST {
 
         public bool CanStore => false;
 
-        public IFieldAccessEmitter Create(ModuleContext context) => new InlineFieldAccessEmitter(fieldType(), opCodes);
+        public IFieldAccessEmitter Create(ModuleContext context) => new InlineFieldAccessEmitter(fieldType(), replFieldAccess, opCodes);
 
         public IFieldAccessFactory
             FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) => this;
     }
 
     public class InlineFieldAccessEmitter : IFieldAccessEmitter {
+        private readonly REPLFieldAccess replFieldAccess;
         private readonly OpCode[] loadOpCodes;
         public RealizedType FieldType { get; }
 
-        public InlineFieldAccessEmitter(RealizedType fieldType, OpCode[] loadOpCodes) {
+        public InlineFieldAccessEmitter(RealizedType fieldType, REPLFieldAccess replFieldAccess, OpCode[] loadOpCodes) {
             FieldType = fieldType;
+            this.replFieldAccess = replFieldAccess;
             this.loadOpCodes = loadOpCodes;
         }
 
@@ -82,6 +91,8 @@ namespace KontrolSystem.TO2.AST {
 
         public void EmitStore(IBlockContext context) {
         }
+
+        public IREPLValue Eval(Node node, IREPLValue target) => replFieldAccess(node, target);
     }
 
     public class BoundFieldAccessFactory : IFieldAccessFactory {
@@ -173,6 +184,16 @@ namespace KontrolSystem.TO2.AST {
             }
 
             context.IL.Emit(OpCodes.Stfld, fieldInfos[fieldCount - 1]);
+        }
+
+        public IREPLValue Eval(Node node, IREPLValue target) {
+            object current = target.Value;
+
+            foreach (var fieldInfo in fieldInfos) {
+                current = fieldInfo.GetValue(current);
+            }
+
+            return FieldType.REPLCast(current);
         }
     }
 
@@ -288,6 +309,14 @@ namespace KontrolSystem.TO2.AST {
 
         public void EmitStore(IBlockContext context) {
             context.IL.EmitCall(getter.IsVirtual ? OpCodes.Callvirt : OpCodes.Call, setter, 2);
+        }
+
+        public IREPLValue Eval(Node node, IREPLValue target) {
+            var result = getter.IsStatic
+                ? getter.Invoke(null, new object[] { target.Value })
+                : getter.Invoke(target.Value, Array.Empty<object>());
+
+            return FieldType.REPLCast(result);
         }
     }
 }

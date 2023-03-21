@@ -29,6 +29,19 @@ namespace KontrolSystem.TO2.Test {
         public void TestArrays() {
             Assert.Equal("[1, 2, 3, 4]", RunExpression<string>(BuiltinType.String, "[1, 2, 3, 4].to_string()"));
             Assert.Equal("[4, 3, 2, 1]", RunExpression<string>(BuiltinType.String, "[1, 2, 3, 4].reverse().to_string()"));
+            Assert.Equal(4, RunExpression<long>(BuiltinType.Int, "[1, 2, 3, 4].length"));
+        }
+
+        [Fact]
+        public void TestStrings() {
+            Assert.Equal(5, RunExpression<long>(BuiltinType.Int, "\"Hallo\".length"));    
+        }
+        
+        [Fact]
+        public void TestBlock() {
+            Assert.Equal(3579, RunExpression<long>(BuiltinType.Int, "const a = { let b = 1234\nb += 2345\nb }\na"));
+            var exception = Assert.Throws<REPLException>(() => RunExpression<long>(BuiltinType.Int, "const a = { let b = 1234\nb += 2345\nb }\nb"));
+            Assert.Equal("No local variable, constant or function 'b'", exception.message);
         }
 
         private T RunExpression<T>(TO2Type to2Type, string expression) {

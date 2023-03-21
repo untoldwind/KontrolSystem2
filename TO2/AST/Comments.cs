@@ -2,6 +2,7 @@
 using System.Linq;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     public class LineComment : IBlockItem, IModuleItem {
@@ -29,6 +30,8 @@ namespace KontrolSystem.TO2.AST {
 
         public void EmitCode(IBlockContext context, bool dropResult) {
         }
+
+        public REPLValueFuture Eval(REPLContext context) => REPLValueFuture.Success(REPLUnit.INSTANCE);
 
         public IEnumerable<StructuralError> TryDeclareTypes(ModuleContext context) =>
             Enumerable.Empty<StructuralError>();

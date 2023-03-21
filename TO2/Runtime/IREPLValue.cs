@@ -167,6 +167,12 @@ namespace KontrolSystem.TO2.Runtime {
         TO2Type Type { get; }
 
         object Value { get; }
+        
+        bool IsBreak { get; }
+        
+        bool IsContinue { get; }
+        
+        bool IsReturn { get; }
     }
 
     public class REPLUnit : IREPLValue {
@@ -178,8 +184,64 @@ namespace KontrolSystem.TO2.Runtime {
         public TO2Type Type => BuiltinType.Unit;
 
         public object Value => null;
+
+        public bool IsBreak => false;
+        
+        public bool IsContinue => false;
+
+        public bool IsReturn => false;
     }
 
+    public class REPLBreak : IREPLValue {
+        public static REPLBreak INSTANCE = new REPLBreak();
+
+        private REPLBreak() {
+        }
+
+        public TO2Type Type => BuiltinType.Unit;
+
+        public object Value => null;
+        
+        public bool IsBreak => true;
+        
+        public bool IsContinue => false;
+        
+        public bool IsReturn => false;
+    }
+    
+    public class REPLContinue : IREPLValue {
+        public static REPLContinue INSTANCE = new REPLContinue();
+
+        private REPLContinue() {
+        }
+
+        public TO2Type Type => BuiltinType.Unit;
+
+        public object Value => null;
+        
+        public bool IsBreak => false;
+        
+        public bool IsContinue => true;
+        
+        public bool IsReturn => false;
+    }
+    
+    public class REPLReturn : IREPLValue {
+        public readonly IREPLValue returnValue;
+
+        public REPLReturn(IREPLValue returnValue) => this.returnValue = returnValue;
+
+        public TO2Type Type => returnValue.Type;
+
+        public object Value => returnValue.Value;
+        
+        public bool IsBreak => false;
+        
+        public bool IsContinue => false;
+
+        public bool IsReturn => true;
+    }
+    
     public struct REPLBool : IREPLValue {
         public readonly bool boolValue;
 
@@ -190,6 +252,12 @@ namespace KontrolSystem.TO2.Runtime {
         public TO2Type Type => BuiltinType.Bool;
 
         public object Value => boolValue;
+        
+        public bool IsBreak => false;
+        
+        public bool IsContinue => false;
+        
+        public bool IsReturn => false;
 
         public static IREPLValue Not(Node node, IREPLValue other, IREPLValue _) {
             if (other is REPLBool b) {
@@ -230,6 +298,23 @@ namespace KontrolSystem.TO2.Runtime {
 
             throw new REPLException(node, $"Can not preform boolean or on non-boolean: {left.Type.Name} {right.Type.Name}");
         }
+
+        public static IREPLValue ToInt(Node node, IREPLValue target) {
+            if (target is REPLBool b) {
+                return new REPLInt(b.boolValue ? 1 : 0);
+            }
+
+            throw new REPLException(node, $"Can not preform to_int on non-boolean: {target.Type.Name}");
+        }
+        
+        public static IREPLValue ToFloat(Node node, IREPLValue target) {
+            if (target is REPLBool b) {
+                return new REPLFloat(b.boolValue ? 1 : 0);
+            }
+
+            throw new REPLException(node, $"Can not preform to_float on non-boolean: {target.Type.Name}");
+        }
+
     }
 
     public struct REPLInt : IREPLValue {
@@ -243,6 +328,12 @@ namespace KontrolSystem.TO2.Runtime {
 
         public object Value => intValue;
 
+        public bool IsBreak => false;
+        
+        public bool IsContinue => false;
+
+        public bool IsReturn => false;
+        
         public static IREPLValue Neg(Node node, IREPLValue other, IREPLValue _) {
             if (other is REPLInt i) {
                 return new REPLInt(-i.intValue);
@@ -362,6 +453,22 @@ namespace KontrolSystem.TO2.Runtime {
 
             throw new REPLException(node, $"Can not preform int leq on non-int: {left.Type.Name} {right.Type.Name}");
         }
+
+        public static IREPLValue ToBool(Node node, IREPLValue target) {
+            if (target is REPLInt i) {
+                return new REPLBool(i.intValue != 0);
+            }
+
+            throw new REPLException(node, $"Can not preform to_bool on non-integer: {target.Type.Name}");
+        }
+
+        public static IREPLValue ToFloat(Node node, IREPLValue target) {
+            if (target is REPLInt i) {
+                return new REPLFloat(i.intValue);
+            }
+
+            throw new REPLException(node, $"Can not preform to_float on non-integer: {target.Type.Name}");
+        }
     }
 
     public struct REPLFloat : IREPLValue {
@@ -374,7 +481,13 @@ namespace KontrolSystem.TO2.Runtime {
         public TO2Type Type => BuiltinType.Float;
 
         public object Value => floatValue;
+        
+        public bool IsBreak => false;
 
+        public bool IsContinue => false;
+
+        public bool IsReturn => false;
+        
         public static IREPLValue Neg(Node node, IREPLValue other, IREPLValue _) {
             if (other is REPLFloat f) {
                 return new REPLFloat(-f.floatValue);
@@ -470,6 +583,14 @@ namespace KontrolSystem.TO2.Runtime {
 
             throw new REPLException(node, $"Can not preform int leq on non-int: {left.Type.Name} {right.Type.Name}");
         }
+        
+        public static IREPLValue ToInt(Node node, IREPLValue target) {
+            if (target is REPLFloat f) {
+                return new REPLInt((long)f.floatValue);
+            }
+
+            throw new REPLException(node, $"Can not preform to_int on non-float: {target.Type.Name}");
+        }
     }
 
     public struct REPLString : IREPLValue {
@@ -482,6 +603,12 @@ namespace KontrolSystem.TO2.Runtime {
         public TO2Type Type => BuiltinType.String;
 
         public object Value => stringValue;
+        
+        public bool IsBreak => false;
+        
+        public bool IsContinue => false;
+        
+        public bool IsReturn => false;
     }
 
     public struct REPLAny : IREPLValue {
@@ -496,5 +623,11 @@ namespace KontrolSystem.TO2.Runtime {
         public TO2Type Type => type;
 
         public object Value => anyValue;
+        
+        public bool IsBreak => false;
+        
+        public bool IsContinue => false;
+        
+        public bool IsReturn => false;
     }
 }
