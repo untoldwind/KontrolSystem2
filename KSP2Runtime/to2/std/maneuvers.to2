@@ -12,7 +12,7 @@ use { CONSOLE } from ksp::console
 /// to a (mostly) circular orbit at the next apoapsis (if `orbit` is elliplic) 
 /// or periapsis (if `orbit` is hyperbolic).
 pub sync fn circularize_orbit(orbit : Orbit) -> Result<(delta_v: Vec3, UT: float), string> = {
-    const UT = if(orbit.eccentricity < 1) orbit.next_apoapsis_time()? else orbit.next_periapsis_time()
+    const UT = if(orbit.eccentricity < 1) orbit.next_apoapsis_time().value else orbit.next_periapsis_time()
 
     (delta_v: circularize_orbit_at(orbit, UT), UT: UT)
 }
@@ -74,13 +74,13 @@ pub sync fn change_periapsis(orbit : Orbit, UT : float, periapsis_radius : float
 pub sync fn change_apoapsis(orbit : Orbit, UT : float, apoapsis_radius : float) -> Result<Vec3, string> = {
     const radius = orbit.radius(UT)
     const new_apoapsis_radius = if(new_apoapsis_radius > 0) math::max(apoapsis_radius, radius + 1) else apoapsis_radius
-    const raising = new_apoapsis_radius > orbit.apoapsis_radius
+    const raising = new_apoapsis_radius > orbit.apoapsis_radius.ok_or("Can not change apoapsis of hyperbolic orbit")?
     const burn_direction = if(raising) orbit.horizontal(UT) else -orbit.horizontal(UT)
 
     const delta_v = regula_falsi_solve(fn(delta_v) -> {
         const expected_radius = orbit.perturbed_orbit(UT, delta_v * burn_direction).apoapsis_radius
         
-        if(expected_radius.is_finite) expected_radius - new_apoapsis_radius else -new_apoapsis_radius
+        if(expected_radius.defined && expected_radius.value.is_finite) expected_radius.value - new_apoapsis_radius else -new_apoapsis_radius
     }, 0, 10, 0.1, 1000)
 
     if(delta_v.is_finite) Ok(delta_v * burn_direction) else Err("change_apoapsis: Unable to change apoapsis to " + apoapsis_radius.to_string())

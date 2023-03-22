@@ -330,10 +330,12 @@ sync fn course_correction(vessel : Vessel, UT : float, prediction : ReentryTraje
     const end_radius = vessel.main_body.radius + prediction_site.terrain_height + 500
     const actual_landing_position = prediction_site.altitude_position(end_radius) - vessel.main_body.position
     
-    if(end_radius > vessel.orbit.apoapsis_radius) return vec3(0,0,0)
+    const vessel_apoapsis_radius = vessel.orbit.apoapsis_radius.ok_or("Vessel orbit is hyperbolic")?
     
-    const orbit_landing_time = if(vessel.orbit.periapsis_radius < end_radius && vessel.orbit.apoapsis_radius > end_radius) 
-            vessel.orbit.next_time_of_radius(UT, end_radius)?
+    if(end_radius > vessel_apoapsis_radius) return vec3(0,0,0)
+    
+    const orbit_landing_time = if(vessel.orbit.periapsis_radius < end_radius && vessel_apoapsis_radius > end_radius) 
+            vessel.orbit.next_time_of_radius(UT, end_radius).ok_or("Radius is never achieved")?
         else
             vessel.orbit.next_periapsis_time(UT)
     const orbit_landing_position = vessel.orbit.relative_position(orbit_landing_time)
@@ -345,7 +347,7 @@ sync fn course_correction(vessel : Vessel, UT : float, prediction : ReentryTraje
     ]
     const deltas = directions.map(fn(perturbation) -> {
         const perturbed_orbit = vessel.orbit.perturbed_orbit(UT, perturbation)
-        const perturbed_landing_time = if(perturbed_orbit.periapsis_radius < end_radius && vessel.orbit.apoapsis_radius > end_radius) 
+        const perturbed_landing_time = if(perturbed_orbit.periapsis_radius < end_radius && vessel_apoapsis_radius > end_radius) 
                 perturbed_orbit.next_time_of_radius(UT, end_radius).value
             else
                 perturbed_orbit.next_periapsis_time(UT)

@@ -30,9 +30,9 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             [KSField(Description = "Rotation period of the planet.")]
             double RotationPeriod { get; }
 
-            [KSField] ITransformFrame CelestialFrame { get; }
+            [KSField(Description = "The celestial/non-rotating reference frame of the body.")] ITransformFrame CelestialFrame { get; }
 
-            [KSField] ITransformFrame BodyFrame { get; }
+            [KSField(Description = "The body/rotating reference frame of the body.")] ITransformFrame BodyFrame { get; }
 
             [KSField(Description = "The current position of the body")] Vector3d Position { get; }
 
@@ -42,13 +42,13 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
             [KSField(Description = "Angular velocity vector of the body (coordinate system independent)")] AngularVelocity GlobalAngularVelocity { get; }
 
-            [KSField] Vector3d Up { get; }
+            [KSField(Description = "Up vector of the body in its celestial frame")] Vector3d Up { get; }
 
-            [KSField] Vector3d Right { get; }
+            [KSField(Description = "Right vector of the body in its celestial frame")] Vector3d Right { get; }
 
-            [KSField] Vector GlobalUp { get; }
+            [KSField(Description = "Up vector of the body (coordinate system independent)")] Vector GlobalUp { get; }
 
-            [KSField] Vector GlobalRight { get; }
+            [KSField(Description = "Right vector of the body (coordinate system independent)")] Vector GlobalRight { get; }
 
             [KSMethod(Description = "Get the surface normal at a `latitude` and `longitude` (i.e. the vector pointing up at this geo coordinate)")]
             Vector3d SurfaceNormal(double latitude, double longitude);
@@ -56,16 +56,16 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             [KSMethod(Description = "Get the surface normal at a `latitude` and `longitude` (i.e. the vector pointing up at this geo coordinate, coordinate system independent)")]
             Vector GlobalSurfaceNormal(double latitude, double longitude);
 
-            [KSMethod]
-            double TerrainHeight(double lat, double lon);
+            [KSMethod(Description = "Height of the terrain relative to sea-level a a `latitude` and `longitude`")]
+            double TerrainHeight(double latitude, double longitude);
 
-            [KSMethod]
+            [KSMethod(Description = "Position of a `latitude` and `longitude` at an altitude relative to sea-level in the celestial frame of the body")]
             Vector3d SurfacePosition(double latitude, double longitude, double altitude);
 
-            [KSMethod]
+            [KSMethod(Description = "Position of a `latitude` and `longitude` at an altitude relative to sea-level (coordinate system independent)")]
             Position GlobalSurfacePosition(double latitude, double longitude, double altitude);
 
-            [KSMethod] GeoCoordinates GeoCoordinates(double latitude, double longitude);
+            [KSMethod(Description = "Get `GeoCoordinates` struct representing a `latitude` and `longitude` of the body")] GeoCoordinates GeoCoordinates(double latitude, double longitude);
 
             [KSMethod(Description =
                 "Create a new orbit around this body starting at a given relative `position` and `velocity` at universal time `ut`")]
