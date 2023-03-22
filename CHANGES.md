@@ -10,6 +10,7 @@ Minor breaking changes to `ksp::orbit::Orbit`:
 * `orbit.next_apoapsis_time()` and `orbit.next_time_of_radius()` now also return `Option<float>` to be consistent
 * `orbit.u_t_at_mean_anomaly()` has been renamed to `orbit.ut_at_mean_anomaly()`
 * Removed `orbit.absolute_position(ut)` as it was misleading. Use `orbit.global_position(ut)` instead.
+* Fix orientation of the `orbit.normal`
 
 ## 0.2.0.1 -> 0.2.0.2
 

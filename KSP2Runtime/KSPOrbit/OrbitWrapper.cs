@@ -1,5 +1,6 @@
 ﻿using System;
 using KontrolSystem.KSP.Runtime.KSPMath;
+using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
 using KSP.Sim;
 using KSP.Sim.impl;
@@ -48,7 +49,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
         public ITransformFrame ReferenceFrame => orbit.ReferenceFrame;
 
-        public Vector3d OrbitNormal => orbit.GetRelativeOrbitNormal().SwapYAndZ;
+        public Vector3d OrbitNormal => -orbit.GetRelativeOrbitNormal().SwapYAndZ;
 
         public Vector3d RelativePosition(double ut) => orbit.GetRelativePositionAtUTZup(ut).SwapYAndZ;
 
@@ -135,6 +136,10 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             return Math.Abs(1.0 /
                             (1.0 / Period - sign * 1.0 / other.Period)); //period after which the phase angle repeats
         }
+
+        public Vector3d RelativeAscendingNode => orbit.GetRelativeANVector().SwapYAndZ;
+
+        public Vector3d RelativeEccentricityVector => orbit.GetRelativeEccVector().SwapYAndZ;
 
         public string ToString() => KSPOrbitModule.OrbitToString(this);
 

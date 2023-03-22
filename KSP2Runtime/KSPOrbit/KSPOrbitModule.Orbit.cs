@@ -158,6 +158,12 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
                  not really periodic at all.")]
             double SynodicPeriod(IOrbit other);
 
+            [KSField(Description = "Get the relative position of the ascending node.")]
+            Vector3d RelativeAscendingNode { get; }
+            
+            [KSField(Description = "Get the relative eccentricity vector.")]
+            Vector3d RelativeEccentricityVector { get; }
+            
             [KSMethod(Description = "Convert orbital parameters to string.")]
             string ToString();
 

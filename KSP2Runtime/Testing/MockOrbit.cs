@@ -442,6 +442,10 @@ namespace KontrolSystem.KSP.Runtime.Testing {
                             (1.0 / Period - sign * 1.0 / other.Period)); //period after which the phase angle repeats
         }
 
+        public Vector3d RelativeAscendingNode => Quaternion.AngleAxis(-(float)lan, Vector3d.up) * Vector3d.right;
+
+        public Vector3d RelativeEccentricityVector => eccVec;
+
         public Option<Vector3d> RelativePositionApoapsis {
             get => ApoapsisRadius.Map(apr => {
                 Vector3d vectorToAn = Quaternion.AngleAxis(-(float)lan, Vector3d.up) * Vector3d.right;
