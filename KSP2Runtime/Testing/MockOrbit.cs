@@ -479,7 +479,7 @@ namespace KontrolSystem.KSP.Runtime.Testing {
                 return (360 - angleFromPe) * DirectBindingMath.DegToRad;
             }
         }
-
+        
         public double AscendingNodeTrueAnomaly(KSPOrbitModule.IOrbit b) {
             Vector3d vectorToAn = Vector3d.Cross(OrbitNormal, b.OrbitNormal);
             return TrueAnomalyFromVector(vectorToAn);

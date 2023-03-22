@@ -139,7 +139,8 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
             [KSMethod(Description = @"Get the true anomaly of a radius.
                 If the radius is below the periapsis the true anomaly of the periapsis will be returned.
-                If it is above the apoapsis the true anomaly of the apoapsis is returned.")]
+                If it is above the apoapsis the true anomaly of the apoapsis is returned.
+                The returned value is always between 0 and 2pi.")]
             double TrueAnomalyAtRadius(double radius);
 
             [KSMethod(Description = @"Finds the next time at which the orbiting object will achieve a given `radius` from center of the body
@@ -157,6 +158,12 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
                  and for high eccentricities and/or large relative inclinations, the relative motion is
                  not really periodic at all.")]
             double SynodicPeriod(IOrbit other);
+            
+            [KSMethod(Description = @"Converts a relative direction, into a true anomaly.
+                The vector is projected into the orbital plane and then the true anomaly is
+                computed as the angle this vector makes with the vector pointing to the periapsis.
+                The returned value is always between 0 and 2pi.")]
+            double TrueAnomalyFromVector(Vector3d vec);
 
             [KSField(Description = "Get the relative position of the ascending node.")]
             Vector3d RelativeAscendingNode { get; }

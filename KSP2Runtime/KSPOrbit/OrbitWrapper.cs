@@ -54,7 +54,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
         public Vector3d RelativePosition(double ut) => orbit.GetRelativePositionAtUTZup(ut).SwapYAndZ;
 
         public Vector3d RelativePositionForTrueAnomaly(double trueAnomaly) =>
-            orbit.GetRelativePositionFromTrueAnomaly(trueAnomaly);
+            orbit.GetRelativePositionFromTrueAnomaly(trueAnomaly * DirectBindingMath.DegToRad);
         
         public Position GlobalPosition(double ut) => new Position(ReferenceFrame, RelativePosition(ut));
 
@@ -137,6 +137,24 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
                             (1.0 / Period - sign * 1.0 / other.Period)); //period after which the phase angle repeats
         }
 
+        public double TrueAnomalyFromVector(Vector3d vec) {
+            Vector3d oNormal = OrbitNormal;
+            Vector3d projected = Vector3d.Exclude(oNormal, vec.normalized);
+            Vector3d vectorToPe = RelativeEccentricityVector;
+            double angleFromPe = Vector3d.Angle(vectorToPe, projected);
+
+            //If the vector points to the infalling part of the orbit then we need to do 360 minus the
+            //angle from Pe to get the true anomaly. Test this by taking the the cross product of the
+            //orbit normal and vector to the periapsis. This gives a vector that points to center of the
+            //outgoing side of the orbit. If vectorToAN is more than 90 degrees from this vector, it occurs
+            //during the infalling part of the orbit.
+            if (Math.Abs(Vector3d.Angle(projected, Vector3d.Cross(oNormal, vectorToPe))) < 90) {
+                return angleFromPe * DirectBindingMath.DegToRad;
+            } else {
+                return (360 - angleFromPe) * DirectBindingMath.DegToRad;
+            }
+        }
+        
         public Vector3d RelativeAscendingNode => orbit.GetRelativeANVector().SwapYAndZ;
 
         public Vector3d RelativeEccentricityVector => orbit.GetRelativeEccVector().SwapYAndZ;
