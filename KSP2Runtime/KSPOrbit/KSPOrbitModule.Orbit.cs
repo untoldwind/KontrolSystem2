@@ -106,7 +106,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
                 For hyperbolic orbits, the value can be any number.")]
             double MeanAnomalyAtUt(double ut);
 
-            [KSMethod(Description = @"The next time at which the orbiting object will reach the given mean anomaly.
+            [KSMethod("ut_at_mean_anomaly", Description = @"The next time at which the orbiting object will reach the given mean anomaly.
                 For elliptical orbits, this will be a time between UT and UT + o.period.
                 For hyperbolic orbits, this can be any time, including a time in the past, if the given mean anomaly occurred in the past")]
             double UTAtMeanAnomaly(double meanAnomaly, double ut);
