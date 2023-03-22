@@ -1,5 +1,17 @@
 # Changes
 
+## 0.2.0.2 ->
+
+Minor breaking changes to `ksp::orbit::Orbit`:
+* `orbit.apoapsis` and `orbit.apoapsis_radius` are now `Option<float>` instead of just `float`
+  * This is because apoapsis of a hyperbolic orbit is pretty much undefined.
+  * If you are sure that you are only dealing with elliptic orbits, you can just replace `orbit.apoapsis` with `orbit.apoapsis.value` in your code.
+  * This might by a small inconvenience, but should be an incentive to check for the `eccentricy` in your calculations
+* `orbit.next_apoapsis_time()` and `orbit.next_time_of_radius()` now also return `Option<float>` to be consistent
+* `orbit.u_t_at_mean_anomaly()` has been renamed to `orbit.ut_at_mean_anomaly()`
+* Removed `orbit.absolute_position(ut)` as it was misleading. Use `orbit.global_position(ut)` instead.
+* Fix orientation of the `orbit.normal`
+
 ## 0.2.0.1 -> 0.2.0.2
 
 * Add debug billboards
