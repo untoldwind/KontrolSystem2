@@ -52,9 +52,9 @@ namespace KontrolSystem.TO2.AST {
 
         public override bool IsAssignableFrom(ModuleContext context, TO2Type otherType) {
             if (otherType.UnderlyingType(context) is OptionType otherOption)
-                return elementType.IsAssignableFrom(context, otherOption.elementType);
+                return elementType == otherOption.elementType || elementType.IsAssignableFrom(context, otherOption.elementType);
 
-            return elementType.IsAssignableFrom(context, otherType);
+            return elementType == otherType || elementType.IsAssignableFrom(context, otherType);
         }
 
         public override IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) {

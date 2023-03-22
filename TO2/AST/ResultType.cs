@@ -50,10 +50,10 @@ namespace KontrolSystem.TO2.AST {
 
         public override bool IsAssignableFrom(ModuleContext context, TO2Type otherType) {
             if (otherType.UnderlyingType(context) is ResultType otherResultType)
-                return successType.IsAssignableFrom(context, otherResultType.successType) &&
-                       errorType.IsAssignableFrom(context, otherResultType.errorType);
+                return (successType == otherResultType.successType || successType.IsAssignableFrom(context, otherResultType.successType)) &&
+                       (errorType == otherResultType.errorType || errorType.IsAssignableFrom(context, otherResultType.errorType));
 
-            return successType.IsAssignableFrom(context, otherType);
+            return successType == otherType || successType.IsAssignableFrom(context, otherType);
         }
 
         public override IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) {
