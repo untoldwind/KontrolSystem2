@@ -12,6 +12,13 @@ Minor breaking changes to `ksp::orbit::Orbit`:
 * Removed `orbit.absolute_position(ut)` as it was misleading. Use `orbit.global_position(ut)` instead.
 * Fix orientation of the `orbit.normal`
 
+Other fixes:
+* Fixed access to struct field from async function (issue #47)
+* CRITICAL: Fixed endless loop in IsAssignableFrom lookup (issue #51 ... may crash the game)
+* Prevent the creation of multiple `ThrottleManager` for the same vessel (issue #37)
+* Minor: Allow whitespace in `impl fn` (issue #49)
+* Minor: Allow comments in record/tuple type declarations (issue #50)
+
 ## 0.2.0.1 -> 0.2.0.2
 
 * Add debug billboards
