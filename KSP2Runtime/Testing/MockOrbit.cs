@@ -224,9 +224,9 @@ namespace KontrolSystem.KSP.Runtime.Testing {
         public Vector3d GetRelativePositionAtUT(double ut) => GetPositionAtOrbitTime(GetOrbitTimeAtUT(ut));
 
         public Vector3d GetPositionAtOrbitTime(double orbitTime) =>
-            GetPositionForTrueAnomaly(GetTrueAnomalyAtOrbitTime(orbitTime));
+            RelativePositionForTrueAnomaly(GetTrueAnomalyAtOrbitTime(orbitTime));
 
-        public Vector3d GetPositionForTrueAnomaly(double trueAnomaly) {
+        public Vector3d RelativePositionForTrueAnomaly(double trueAnomaly) {
             double x = Math.Cos(trueAnomaly);
             double y = Math.Sin(trueAnomaly);
             double r = semiMajorAxis * (1.0 - eccentricity * eccentricity) / (1.0 + eccentricity * x);
@@ -314,13 +314,7 @@ namespace KontrolSystem.KSP.Runtime.Testing {
                 return 2.0 * Math.Atan2(Math.Sqrt(eccentricity + 1.0) * y, Math.Sqrt(eccentricity - 1.0) * x);
             }
         }
-
-        public Vector3d AbsolutePosition(double ut) {
-            Vector3d bodyPosition = body.orbit?.AbsolutePosition(ut) ?? Vector3d.zero;
-
-            return bodyPosition + RelativePosition(ut);
-        }
-
+        
         public Position GlobalPosition(double ut) {
             Position bodyPosition = body.orbit?.GlobalPosition(ut) ?? new Position(ReferenceFrame, Vector3d.zero);
 

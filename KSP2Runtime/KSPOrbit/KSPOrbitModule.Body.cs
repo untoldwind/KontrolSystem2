@@ -1,4 +1,5 @@
-﻿using KontrolSystem.KSP.Runtime.KSPVessel;
+﻿using KontrolSystem.KSP.Runtime.KSPMath;
+using KontrolSystem.KSP.Runtime.KSPVessel;
 using KontrolSystem.TO2.Binding;
 using KSP.Sim;
 
@@ -70,6 +71,10 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             [KSMethod(Description =
                 "Create a new orbit around this body starting at a given relative `position` and `velocity` at universal time `ut`")]
             IOrbit CreateOrbit(Vector3d position, Vector3d velocity, double ut);
+            
+            [KSMethod(Description =
+                "Create a new orbit around this body starting at a given a coordinate independent `velocity` at universal time `ut`")]
+            IOrbit GlobalCreateOrbit(VelocityAtPosition velocity, double ut);
         }
     }
 }

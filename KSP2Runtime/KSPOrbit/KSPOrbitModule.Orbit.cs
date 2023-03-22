@@ -65,21 +65,21 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             [KSField(Description = "Normal vector perpendicular to orbital plane.")]
             Vector3d OrbitNormal { get; }
 
-            [KSMethod]
+            [KSMethod(Description = "Get the relative orbital velocity at a given universal time `ut`")]
             Vector3d OrbitalVelocity(double ut);
-
-            [KSMethod(Description = "Get the absolute position at a given universal time `ut`")]
-            Vector3d AbsolutePosition(double ut);
 
             [KSMethod(Description = "Get the absolute position at a given universal time `ut`")]
             Position GlobalPosition(double ut);
 
-            [KSMethod]
+            [KSMethod(Description = "Get the coordinate independent velocity at a given universal time `ut`")]
             VelocityAtPosition GlobalVelocity(double ut);
 
-            [KSMethod]
+            [KSMethod(Description = "Get relative position at a given universal time `ut`")]
             Vector3d RelativePosition(double ut);
 
+            [KSMethod(Description = "Get relative position for a given `trueAnomaly`")] 
+            Vector3d RelativePositionForTrueAnomaly(double trueAnomaly);
+                
             [KSMethod(Description = "The relative prograde vector at a given universal time `ut`")]
             Vector3d Prograde(double ut);
 
@@ -89,13 +89,13 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             [KSMethod(Description = "The relative radial-plus vector at a given universal time `ut`")]
             Vector3d RadialPlus(double ut);
 
-            [KSMethod(Description = "Relative up vector of the orbit")]
+            [KSMethod(Description = "Relative up vector of the orbit at a given universal time `ut`")]
             Vector3d Up(double ut);
 
             [KSMethod(Description = "Get the orbital radius (distance from center of body) at a given universal time `ut`")]
             double Radius(double ut);
 
-            [KSMethod]
+            [KSMethod(Description = "Relative horizontal vector at a given universal time `ut`")]
             Vector3d Horizontal(double ut);
 
             [KSMethod(Description = "Returns a new Orbit object that represents the result of applying a given relative `deltaV` to o at `ut`.")]

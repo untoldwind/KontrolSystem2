@@ -9,6 +9,7 @@ Minor breaking changes to `ksp::orbit::Orbit`:
   * This might by a small inconvenience, but should be an incentive to check for the `eccentricy` in your calculations
 * `orbit.next_apoapsis_time()` and `orbit.next_time_of_radius()` now also return `Option<float>` to be consistent
 * `orbit.u_t_at_mean_anomaly()` has been renamed to `orbit.ut_at_mean_anomaly()`
+* Removed `orbit.absolute_position(ut)` as it was misleading. Use `orbit.global_position(ut)` instead.
 
 ## 0.2.0.1 -> 0.2.0.2
 

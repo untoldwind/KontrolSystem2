@@ -52,8 +52,9 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
         public Vector3d RelativePosition(double ut) => orbit.GetRelativePositionAtUTZup(ut).SwapYAndZ;
 
-        public Vector3d AbsolutePosition(double ut) => orbit.referenceBody.localPosition + RelativePosition(ut);
-
+        public Vector3d RelativePositionForTrueAnomaly(double trueAnomaly) =>
+            orbit.GetRelativePositionFromTrueAnomaly(trueAnomaly);
+        
         public Position GlobalPosition(double ut) => new Position(ReferenceFrame, RelativePosition(ut));
 
         public VelocityAtPosition GlobalVelocity(double ut) => new VelocityAtPosition(new Velocity(ReferenceFrame.motionFrame, orbit.GetOrbitalVelocityAtUTZup(ut).SwapYAndZ), GlobalPosition(ut));
@@ -74,7 +75,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
         public KSPOrbitModule.IOrbit PerturbedOrbit(double ut, Vector3d dV) =>
             ReferenceBody.CreateOrbit(RelativePosition(ut), OrbitalVelocity(ut) + dV, ut);
-
+        
         public double MeanAnomalyAtUt(double ut) {
             double ret = (orbit.ObTAtEpoch + (ut - orbit.epoch)) * orbit.meanMotion;
 

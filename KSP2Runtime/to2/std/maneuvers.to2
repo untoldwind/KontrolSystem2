@@ -221,7 +221,7 @@ pub sync fn next_closest_approach_time(start : Orbit, target : Orbit, UT : float
        
       for (i in 0..num_divisions) {
         const t = min_time + i * dt
-        const distance = (start.absolute_position(t) - target.absolute_position(t)).magnitude
+        const distance = (start.global_position(t) - target.global_position(t)).magnitude
         
         if (distance < closest_approach_distance) {
           closest_approach_distance = distance
