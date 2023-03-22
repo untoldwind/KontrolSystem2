@@ -55,7 +55,7 @@ namespace KontrolSystem.TO2.Parser {
 
         public static readonly Parser<MethodDeclaration> MethodDeclaration = Seq(
             DescriptionComment, Opt(WhiteSpaces0.Then(SyncKeyword)), WhiteSpaces0.Then(FnKeyword).Then(Identifier),
-            MethodSelfParams, MethodParameters,
+            WhiteSpaces0.Then(MethodSelfParams), MethodParameters,
             WhiteSpaces0.Then(Tag("->")).Then(WhiteSpaces0).Then(TypeRef),
             WhiteSpaces0.Then(Char('=')).Then(WhiteSpaces0).Then(Expression)
         ).Map((items, start, end) =>

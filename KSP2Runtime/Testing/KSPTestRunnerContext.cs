@@ -62,10 +62,15 @@ namespace KontrolSystem.KSP.Runtime.Testing {
         public void TriggerMarkerRender() {
         }
 
-        public void HookAutopilot(VesselComponent vessel, FlightInputCallback autopilot) {
+        public bool TryFindAutopilot<T>(VesselComponent vessel, out T autopilot) where T : IKSPAutopilot {
+            autopilot = default;
+            return false;
         }
 
-        public void UnhookAutopilot(VesselComponent vessel, FlightInputCallback autopilot) {
+        public void HookAutopilot(VesselComponent vessel, IKSPAutopilot autopilot) {
+        }
+
+        public void UnhookAutopilot(VesselComponent vessel, IKSPAutopilot autopilot) {
         }
 
         public void UnhookAllAutopilots(VesselComponent vessel) {

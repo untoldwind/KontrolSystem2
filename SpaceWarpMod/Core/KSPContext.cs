@@ -16,23 +16,35 @@ using UnityEngine;
 namespace KontrolSystem.SpaceWarpMod.Core {
     internal class AutopilotHooks {
         private readonly IKSPContext context;
-        internal readonly List<FlightInputCallback> autopilots = new List<FlightInputCallback>();
+        internal readonly List<IKSPAutopilot> autopilots = new List<IKSPAutopilot>();
 
         internal AutopilotHooks(IKSPContext context) => this.context = context;
 
-        internal void Add(FlightInputCallback autopilot) {
+        internal void Add(IKSPAutopilot autopilot) {
             if (!autopilots.Contains(autopilot)) autopilots.Add(autopilot);
         }
 
-        internal bool Remove(FlightInputCallback autopilot) => autopilots.Remove(autopilot);
+        internal bool Remove(IKSPAutopilot autopilot) => autopilots.Remove(autopilot);
 
         internal bool IsEmpty => autopilots.Count == 0;
 
+        internal bool TryFindAutopilot<T>(out T autopilot) where T : IKSPAutopilot {
+            foreach (var item in autopilots) {
+                if (item is T t) {
+                    autopilot = t;
+                    return true;
+                }
+            }
+
+            autopilot = default;
+            return false;
+        }
+        
         internal void RunAutopilots(ref FlightCtrlState state, float deltaTime) {
             try {
                 ContextHolder.CurrentContext.Value = context;
-                foreach (FlightInputCallback autopilot in autopilots)
-                    autopilot(ref state, deltaTime);
+                foreach (IKSPAutopilot autopilot in autopilots)
+                    autopilot.UpdateAutopilot(ref state, deltaTime);
             } finally {
                 ContextHolder.CurrentContext.Value = null;
             }
@@ -150,8 +162,17 @@ namespace KontrolSystem.SpaceWarpMod.Core {
                 ContextHolder.CurrentContext.Value = null;
             }
         }
+
+        public bool TryFindAutopilot<T>(VesselComponent vessel, out T autopilot) where T : IKSPAutopilot {
+            if (autopilotHooks.ContainsKey(vessel)) {
+                return autopilotHooks[vessel].TryFindAutopilot(out autopilot);
+            }
+
+            autopilot = default;
+            return false;
+        }
         
-        public void HookAutopilot(VesselComponent vessel, FlightInputCallback autopilot) {
+        public void HookAutopilot(VesselComponent vessel, IKSPAutopilot autopilot) {
             LoggerAdapter.Instance.Debug($"Hook autopilot {autopilot} to {vessel.Name}");
             if (autopilotHooks.ContainsKey(vessel)) {
                 autopilotHooks[vessel].Add(autopilot);
@@ -167,7 +188,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
             }
         }
 
-        public void UnhookAutopilot(VesselComponent vessel, FlightInputCallback autopilot) {
+        public void UnhookAutopilot(VesselComponent vessel, IKSPAutopilot autopilot) {
             if (!autopilotHooks.ContainsKey(vessel)) return;
 
             LoggerAdapter.Instance.Debug($"Unhook autopilot {autopilot} to {vessel.Name}");

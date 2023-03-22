@@ -10,6 +10,15 @@ pub fn pick_t0 (common: Common) -> float = {
     common.i0.to_float + 5.0
 }
 
+pub struct Named(name: string) {
+    name : string = name
+}
+impl Named {
+    fn get_name (self) -> string = {
+        return self.name
+    }
+}
+
 test fn test_issue_47() -> Unit = {
     let common = Common(1234)
     
