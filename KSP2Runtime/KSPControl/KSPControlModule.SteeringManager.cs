@@ -9,18 +9,11 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
     public partial class KSPControlModule {
 
         [KSClass("SteeringManager")]
-        public class SteeringManager {
-            private readonly IKSPContext context;
-            private readonly VesselComponent vessel;
+        public class SteeringManager : BaseAutopilot {
             private Func<double, Vector3d> pitchYawRollProvider;
-            private bool suspended;
 
-            public SteeringManager(IKSPContext context, VesselComponent vessel, Func<double, Vector3d> pitchYawRollProvider) {
-                this.context = context;
-                this.vessel = vessel;
+            public SteeringManager(IKSPContext context, VesselComponent vessel, Func<double, Vector3d> pitchYawRollProvider) : base(context, vessel) {
                 this.pitchYawRollProvider = pitchYawRollProvider;
-
-                this.context.HookAutopilot(this.vessel, UpdateAutopilot);
             }
 
             [KSField]
@@ -32,24 +25,8 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
             [KSMethod]
             public void SetPitchYawRollProvider(Func<double, Vector3d> newPitchYawRollProvider) =>
                 pitchYawRollProvider = newPitchYawRollProvider;
-
-            [KSMethod]
-            public Future<object> Release() {
-                suspended = true;
-                context.NextYield = new WaitForFixedUpdate();
-                context.OnNextYieldOnce = () => {
-                    context.UnhookAutopilot(vessel, UpdateAutopilot);
-                };
-                return new Future.Success<object>(null);
-            }
-
-            [KSMethod]
-            public void Resume() {
-                suspended = false;
-                context.HookAutopilot(vessel, UpdateAutopilot);
-            }
-
-            public void UpdateAutopilot(ref FlightCtrlState c, float deltaT) {
+            
+            public override void UpdateAutopilot(ref FlightCtrlState c, float deltaT) {
                 Vector3d translate = suspended ? Vector3d.zero : pitchYawRollProvider(deltaT);
                 c.pitch = (float)DirectBindingMath.Clamp(translate.x, -1, 1);
                 c.yaw = (float)DirectBindingMath.Clamp(translate.y, -1, 1);

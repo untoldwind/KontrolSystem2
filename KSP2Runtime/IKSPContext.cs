@@ -3,6 +3,7 @@ using KontrolSystem.TO2.Runtime;
 using KontrolSystem.KSP.Runtime.KSPConsole;
 using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
+using KontrolSystem.TO2.Binding;
 using KSP.Game;
 using KSP.Sim.impl;
 using KSP.Sim.State;
@@ -14,6 +15,10 @@ namespace KontrolSystem.KSP.Runtime {
         void OnUpdate();
 
         void OnRender();
+    }
+
+    public interface IKSPAutopilot {
+        void UpdateAutopilot(ref FlightCtrlState st, float deltaTime);
     }
 
     public interface IKSPContext : IContext {
@@ -44,10 +49,12 @@ namespace KontrolSystem.KSP.Runtime {
         void TriggerMarkerUpdate();
 
         void TriggerMarkerRender();
-        
-        void HookAutopilot(VesselComponent vessel, FlightInputCallback autopilot);
 
-        void UnhookAutopilot(VesselComponent vessel, FlightInputCallback autopilot);
+        bool TryFindAutopilot<T>(VesselComponent vessel, out T autopilot) where T: IKSPAutopilot;
+        
+        void HookAutopilot(VesselComponent vessel, IKSPAutopilot autopilot);
+
+        void UnhookAutopilot(VesselComponent vessel, IKSPAutopilot autopilot);
 
         void UnhookAllAutopilots(VesselComponent vessel);
     }

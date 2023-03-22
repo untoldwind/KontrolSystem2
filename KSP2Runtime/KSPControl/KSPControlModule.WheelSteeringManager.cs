@@ -8,19 +8,11 @@ using UnityEngine;
 namespace KontrolSystem.KSP.Runtime.KSPControl {
     public partial class KSPControlModule {
         [KSClass("WheelSteeringManager")]
-        public class WheelSteeringManager {
-            private readonly IKSPContext context;
-            private readonly VesselComponent vessel;
-            private bool suspended;
+        public class WheelSteeringManager : BaseAutopilot {
             private Func<double, double> wheelSteerProvider;
 
-            public WheelSteeringManager(IKSPContext context, VesselComponent vessel, Func<double, double> wheelSteerProvider) {
-                this.context = context;
-                this.vessel = vessel;
+            public WheelSteeringManager(IKSPContext context, VesselComponent vessel, Func<double, double> wheelSteerProvider) : base(context, vessel) {
                 this.wheelSteerProvider = wheelSteerProvider;
-
-                this.context.HookAutopilot(this.vessel, UpdateAutopilot);
-                suspended = false;
             }
 
             [KSField]
@@ -32,23 +24,7 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
             [KSMethod]
             public void SetWheelSteerProvider(Func<double, double> newWheelSteerProvider) => wheelSteerProvider = newWheelSteerProvider;
 
-            [KSMethod]
-            public Future<object> Release() {
-                suspended = true;
-                context.NextYield = new WaitForFixedUpdate();
-                context.OnNextYieldOnce = () => {
-                    context.UnhookAutopilot(vessel, UpdateAutopilot);
-                };
-                return new Future.Success<object>(null);
-            }
-
-            [KSMethod]
-            public void Resume() {
-                suspended = false;
-                context.HookAutopilot(vessel, UpdateAutopilot);
-            }
-
-            public void UpdateAutopilot(ref FlightCtrlState c, float deltaT) {
+            public override void UpdateAutopilot(ref FlightCtrlState c, float deltaT) {
                 if (suspended) {
                     c.wheelSteer = 0;
                 } else {

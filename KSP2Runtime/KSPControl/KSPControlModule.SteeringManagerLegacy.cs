@@ -16,7 +16,7 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
         // For the most part this is a rip-off from KOS
         // ... maybe outdated now since it is possible to set target orientation on SAS itself
         //[KSClass("SteeringManager")]
-        public class SteeringManagerLegacy {
+        public class SteeringManagerLegacy : IKSPAutopilot {
             private const double Epsilon = 1e-16;
             private const double RenderMultiplier = 50;
 
@@ -143,7 +143,7 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
 
                 ResetToDefault();
 
-                this.context.HookAutopilot(this.vessel.vessel, UpdateAutopilot);
+                this.context.HookAutopilot(this.vessel.vessel, this);
             }
 
             [KSField]
@@ -175,10 +175,14 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
                 directionProvider = newDirectionProvider;
 
             [KSMethod]
-            public void Release() => context.UnhookAutopilot(vessel.vessel, UpdateAutopilot);
+            public Future<object> Release() {
+                context.UnhookAutopilot(vessel.vessel, this);
+
+                return new Future.Success<object>(null);
+            }
 
             [KSMethod]
-            public void Resume() => context.HookAutopilot(this.vessel.vessel, UpdateAutopilot);
+            public void Resume() => context.HookAutopilot(this.vessel.vessel, this);
 
             [KSMethod]
             public void ResetToDefault() {
