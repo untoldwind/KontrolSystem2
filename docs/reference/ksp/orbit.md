@@ -56,6 +56,16 @@ body.geo_coordinates ( latitude : float,
 Get `GeoCoordinates` struct representing a `latitude` and `longitude` of the body
 
 
+##### global_create_orbit
+
+```rust
+body.global_create_orbit ( velocity : ksp::math::GlobalVelocity,
+                           ut : float ) -> ksp::orbit::Orbit
+```
+
+Create a new orbit around this body starting at a given a coordinate independent `velocity` at universal time `ut`
+
+
 ##### global_surface_normal
 
 ```rust
@@ -166,19 +176,12 @@ periapsis_radius | float | R/O | Radius of periapsis of the orbit (i.e. from the
 period | float | R/O | Orbital period. 
 reference_body | [ksp::orbit::Body](/reference/ksp/orbit.md#body) | R/O | The celestial body the orbit is referenced on. 
 reference_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/O | Reference frame of the orbit. All relative vectors are in this frame. 
+relative_ascending_node | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get the relative position of the ascending node. 
+relative_eccentricity_vector | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get the relative eccentricity vector. 
 semi_major_axis | float | R/O | Semi major axis of the orbit. 
 start_ut | float | R/O | Universal time of the start of the orbit, in case it is an orbit-patch 
 
 #### Methods
-
-##### absolute_position
-
-```rust
-orbit.absolute_position ( ut : float ) -> ksp::math::Vec3
-```
-
-Get the absolute position at a given universal time `ut`
-
 
 ##### get_eccentric_anomaly_at_true_anomaly
 
@@ -217,6 +220,7 @@ Get the absolute position at a given universal time `ut`
 orbit.global_velocity ( ut : float ) -> ksp::math::GlobalVelocity
 ```
 
+Get the coordinate independent velocity at a given universal time `ut`
 
 
 ##### horizontal
@@ -225,6 +229,7 @@ orbit.global_velocity ( ut : float ) -> ksp::math::GlobalVelocity
 orbit.horizontal ( ut : float ) -> ksp::math::Vec3
 ```
 
+Relative horizontal vector at a given universal time `ut`
 
 
 ##### mean_anomaly_at_ut
@@ -294,6 +299,7 @@ The relative normal-plus vector at a given universal time `ut`
 orbit.orbital_velocity ( ut : float ) -> ksp::math::Vec3
 ```
 
+Get the relative orbital velocity at a given universal time `ut`
 
 
 ##### perturbed_orbit
@@ -339,6 +345,16 @@ Get the orbital radius (distance from center of body) at a given universal time 
 orbit.relative_position ( ut : float ) -> ksp::math::Vec3
 ```
 
+Get relative position at a given universal time `ut`
+
+
+##### relative_position_for_true_anomaly
+
+```rust
+orbit.relative_position_for_true_anomaly ( trueAnomaly : float ) -> ksp::math::Vec3
+```
+
+Get relative position for a given `trueAnomaly`
 
 
 ##### synodic_period
@@ -391,18 +407,19 @@ orbit.true_anomaly_at_radius ( radius : float ) -> float
 Get the true anomaly of a radius.
 If the radius is below the periapsis the true anomaly of the periapsis will be returned.
 If it is above the apoapsis the true anomaly of the apoapsis is returned.
+The returned value is always between 0 and 2pi.
 
 
-##### u_t_at_mean_anomaly
+##### true_anomaly_from_vector
 
 ```rust
-orbit.u_t_at_mean_anomaly ( meanAnomaly : float,
-                            ut : float ) -> float
+orbit.true_anomaly_from_vector ( vec : ksp::math::Vec3 ) -> float
 ```
 
-The next time at which the orbiting object will reach the given mean anomaly.
-For elliptical orbits, this will be a time between UT and UT + o.period.
-For hyperbolic orbits, this can be any time, including a time in the past, if the given mean anomaly occurred in the past
+Converts a relative direction, into a true anomaly.
+The vector is projected into the orbital plane and then the true anomaly is
+computed as the angle this vector makes with the vector pointing to the periapsis.
+The returned value is always between 0 and 2pi.
 
 
 ##### up
@@ -411,7 +428,19 @@ For hyperbolic orbits, this can be any time, including a time in the past, if th
 orbit.up ( ut : float ) -> ksp::math::Vec3
 ```
 
-Relative up vector of the orbit
+Relative up vector of the orbit at a given universal time `ut`
+
+
+##### ut_at_mean_anomaly
+
+```rust
+orbit.ut_at_mean_anomaly ( meanAnomaly : float,
+                           ut : float ) -> float
+```
+
+The next time at which the orbiting object will reach the given mean anomaly.
+For elliptical orbits, this will be a time between UT and UT + o.period.
+For hyperbolic orbits, this can be any time, including a time in the past, if the given mean anomaly occurred in the past
 
 
 ## Functions
