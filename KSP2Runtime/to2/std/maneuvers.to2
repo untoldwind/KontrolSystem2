@@ -17,6 +17,14 @@ pub sync fn circularize_orbit(orbit : Orbit) -> Result<(delta_v: Vec3, UT: float
     (delta_v: circularize_orbit_at(orbit, UT), UT: UT)
 }
 
+/// Calculate the required delta-v and time to change the given `orbit`
+/// to a (mostly) circular orbit at the next periapsis
+pub sync fn circularize_orbit_pe(orbit : Orbit) -> Result<(delta_v: Vec3, UT: float), string> = {
+    const UT = orbit.next_periapsis_time()
+
+    (delta_v: circularize_orbit_at(orbit, UT), UT: UT)
+}
+
 /// Calculate the required delta-v to change the given `orbit`
 /// to a (mostly) circular orbit at a given universal time `UT`.
 pub sync fn circularize_orbit_at(orbit : Orbit, UT : float) -> Vec3 = {

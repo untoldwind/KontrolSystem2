@@ -8,13 +8,13 @@ use { estimate_burn_time, exec_next_node } from std::vac
 use { circularize_orbit } from std::maneuvers
 
 /// Automatically launch a rocket from an atmosphere to a circular orbit.
-pub fn atmo_launch(vessel: Vessel, target_apoapsis: float, heading: float) -> Result<Unit, string> = {
+pub fn atmo_launch(vessel: Vessel, target_apoapsis: float, heading: float, low_turn: float = 0.007, high_turn: float = 0.7) -> Result<Unit, string> = {
     vessel.actions.light = true
 
     vessel.autopilot.enabled = true
     vessel.autopilot.mode = MODE_AUTOPILOT
     
-    atmo_launch_ascent(vessel, target_apoapsis, heading)
+    atmo_launch_ascent(vessel, target_apoapsis, heading, low_turn, high_turn)
 
     const (delta_v, UT) = circularize_orbit(vessel.orbit)?
 
@@ -30,14 +30,14 @@ pub fn atmo_launch(vessel: Vessel, target_apoapsis: float, heading: float) -> Re
 ///
 /// Note: The rocket will not end up in a stable orbit and most likely crash if no further action
 /// is taken.
-pub fn atmo_launch_ascent(vessel: Vessel, target_apoapsis: float, heading: float) -> Unit = {
+pub fn atmo_launch_ascent(vessel: Vessel, target_apoapsis: float, heading: float, low_turn: float = 0.007, high_turn: float = 0.7) -> Unit = {
     CONSOLE.print_line("=== Start: atmo_launch_ascent ===")
     const console_row = CONSOLE.cursor_row
     CONSOLE.move_cursor(console_row + 2, 0)
     
  	// Starting/ending height of gravity turn
-    const launch_gt0 = vessel.main_body.atmosphere_depth * 0.007
-    const launch_gt1 = vessel.main_body.atmosphere_depth * 0.7
+    const launch_gt0 = vessel.main_body.atmosphere_depth * low_turn
+    const launch_gt1 = vessel.main_body.atmosphere_depth * high_turn
 
     const throttle_manager = vessel.manage_throttle(fn(deltaT) -> {
         const atmPct = vessel.altitude_sealevel / (vessel.main_body.atmosphere_depth + 1)
