@@ -2,6 +2,6 @@ use { Vessel } from ksp::vessel
 use { CONSOLE } from ksp::console
 use { atmo_launch } from std::atmo
 
-pub fn main_flight(vessel: Vessel, target_apoapsis: int = 100000) -> Result<Unit, string> = {
-    atmo_launch(vessel, target_apoapsis, 90)?
+pub fn main_flight(vessel: Vessel, target_apoapsis: int = 100000, low_turn: float = 0.007, high_turn: float = 0.7) -> Result<Unit, string> = {
+    atmo_launch(vessel, target_apoapsis, 90, low_turn, high_turn)?
 }

@@ -1,6 +1,10 @@
 # Changes
 
-## 0.2.0.2 ->
+## 0.2.1 ->
+
+* Make low and high gravity turn parameters tweakable in `launch_rocket.to2`
+
+## 0.2.0.2 -> 0.2.1
 
 Minor breaking changes to `ksp::orbit::Orbit`:
 * `orbit.apoapsis` and `orbit.apoapsis_radius` are now `Option<float>` instead of just `float`
