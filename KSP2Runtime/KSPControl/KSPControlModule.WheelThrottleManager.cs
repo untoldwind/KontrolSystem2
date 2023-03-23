@@ -8,19 +8,11 @@ using UnityEngine;
 namespace KontrolSystem.KSP.Runtime.KSPControl {
     public partial class KSPControlModule {
         [KSClass("WheelThrottleManager")]
-        public class WheelThrottleManager {
-            private readonly IKSPContext context;
-            private readonly VesselComponent vessel;
-            private bool suspended;
+        public class WheelThrottleManager : BaseAutopilot {
             private Func<double, double> wheelThrottleProvider;
 
-            public WheelThrottleManager(IKSPContext context, VesselComponent vessel, Func<double, double> wheelThrottleProvider) {
-                this.context = context;
-                this.vessel = vessel;
+            public WheelThrottleManager(IKSPContext context, VesselComponent vessel, Func<double, double> wheelThrottleProvider) : base(context, vessel) {
                 this.wheelThrottleProvider = wheelThrottleProvider;
-
-                this.context.HookAutopilot(this.vessel, UpdateAutopilot);
-                suspended = false;
             }
 
             [KSField]
@@ -31,24 +23,8 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
 
             [KSMethod]
             public void SetWheelThrottleProvider(Func<double, double> newWheelThrottleProvider) => wheelThrottleProvider = newWheelThrottleProvider;
-
-            [KSMethod]
-            public Future<object> Release() {
-                suspended = true;
-                context.NextYield = new WaitForFixedUpdate();
-                context.OnNextYieldOnce = () => {
-                    context.UnhookAutopilot(vessel, UpdateAutopilot);
-                };
-                return new Future.Success<object>(null);
-            }
-
-            [KSMethod]
-            public void Resume() {
-                suspended = false;
-                context.HookAutopilot(vessel, UpdateAutopilot);
-            }
-
-            public void UpdateAutopilot(ref FlightCtrlState c, float deltaT) {
+            
+            public override void UpdateAutopilot(ref FlightCtrlState c, float deltaT) {
                 if (suspended) {
                     c.mainThrottle = 0;
                 } else {

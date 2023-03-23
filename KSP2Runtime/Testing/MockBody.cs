@@ -1,4 +1,5 @@
 ﻿using System;
+using KontrolSystem.KSP.Runtime.KSPMath;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KSP.Sim;
 using KSP.Sim.impl;
@@ -189,6 +190,11 @@ namespace KontrolSystem.KSP.Runtime.Testing {
 
         public KSPOrbitModule.IOrbit CreateOrbit(Vector3d relPos, Vector3d vel, double ut) {
             return new MockOrbit(this, relPos.SwapYAndZ, vel.SwapYAndZ, ut);
+        }
+
+        public KSPOrbitModule.IOrbit GlobalCreateOrbit(VelocityAtPosition velocity, double ut) {
+            return new MockOrbit(this, CelestialFrame.ToLocalPosition(velocity.position),
+                CelestialFrame.motionFrame.ToLocalVelocity(velocity.velocity, velocity.position), ut);
         }
 
         public KSPOrbitModule.IOrbit CreateOrbitFromParameters(double inclination, double eccentricity,

@@ -1,4 +1,5 @@
-﻿using KontrolSystem.KSP.Runtime.KSPVessel;
+﻿using KontrolSystem.KSP.Runtime.KSPMath;
+using KontrolSystem.KSP.Runtime.KSPVessel;
 using KontrolSystem.TO2.Binding;
 using KSP.Sim;
 using KSP.Sim.impl;
@@ -67,6 +68,14 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             PatchedConicsOrbit orbit = new PatchedConicsOrbit(body.universeModel);
 
             orbit.UpdateFromStateVectors(new Position(body.SimulationObject.transform.celestialFrame, position), new Velocity(body.SimulationObject.transform.celestialFrame.motionFrame, velocity), body, ut);
+
+            return new OrbitWrapper(context, orbit);
+        }
+
+        public KSPOrbitModule.IOrbit GlobalCreateOrbit(VelocityAtPosition velocity, double ut) {
+            PatchedConicsOrbit orbit = new PatchedConicsOrbit(body.universeModel);
+            
+            orbit.UpdateFromStateVectors(velocity.position, velocity.velocity, body, ut);
 
             return new OrbitWrapper(context, orbit);
         }

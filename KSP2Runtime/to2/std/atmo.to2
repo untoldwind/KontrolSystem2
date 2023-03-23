@@ -47,7 +47,7 @@ pub fn atmo_launch_ascent(vessel: Vessel, target_apoapsis: float, heading: float
         const throttle = if(spd > cutoff) {
             1.0 - max(0.1, ((spd - cutoff) / cutoff))
         } else {
-            const apoPercent = vessel.orbit.apoapsis / target_apoapsis
+            const apoPercent = vessel.orbit.apoapsis.value / target_apoapsis
             const apoCompensation = if(apoPercent > 0.9) (apoPercent - 0.9) * 10 else 0.0
             1.0 - clamp(apoCompensation, 0, 0.5)
         }
@@ -61,7 +61,7 @@ pub fn atmo_launch_ascent(vessel: Vessel, target_apoapsis: float, heading: float
     CONSOLE.print_line("Launch: Trigger initial stage")
     vessel.staging.next()
 
-    while(vessel.orbit.apoapsis < target_apoapsis) {
+    while(vessel.orbit.apoapsis.value < target_apoapsis) {
         const gtPct = clamp((vessel.altitude_sealevel - launch_gt0) / (launch_gt1 - launch_gt0), 0, 1)
         const pitch = acos_deg(gtPct)
 

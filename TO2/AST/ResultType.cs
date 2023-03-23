@@ -10,7 +10,6 @@ namespace KontrolSystem.TO2.AST {
     public class ResultType : RealizedType {
         public readonly TO2Type successType;
         public readonly TO2Type errorType;
-        private Type generatedType;
         private readonly OperatorCollection allowedSuffixOperators;
         public override Dictionary<string, IFieldAccessFactory> DeclaredFields { get; }
 
@@ -35,7 +34,7 @@ namespace KontrolSystem.TO2.AST {
         public override RealizedType UnderlyingType(ModuleContext context) =>
             new ResultType(successType.UnderlyingType(context), errorType.UnderlyingType(context));
 
-        public override Type GeneratedType(ModuleContext context) => generatedType ??= DeriveType(context);
+        public override Type GeneratedType(ModuleContext context) => DeriveType(context);
 
         public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) => allowedSuffixOperators;
 
@@ -50,10 +49,10 @@ namespace KontrolSystem.TO2.AST {
 
         public override bool IsAssignableFrom(ModuleContext context, TO2Type otherType) {
             if (otherType.UnderlyingType(context) is ResultType otherResultType)
-                return successType.IsAssignableFrom(context, otherResultType.successType) &&
-                       errorType.IsAssignableFrom(context, otherResultType.errorType);
+                return (successType == otherResultType.successType || successType.IsAssignableFrom(context, otherResultType.successType)) &&
+                       (errorType == otherResultType.errorType || errorType.IsAssignableFrom(context, otherResultType.errorType));
 
-            return successType.IsAssignableFrom(context, otherType);
+            return successType == otherType || successType.IsAssignableFrom(context, otherType);
         }
 
         public override IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) {

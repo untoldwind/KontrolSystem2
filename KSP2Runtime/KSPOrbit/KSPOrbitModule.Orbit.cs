@@ -14,20 +14,20 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             [KSField(Description = "The celestial body the orbit is referenced on.")]
             IBody ReferenceBody { get; }
 
-            [KSField]
+            [KSField(Description = "Universal time of the start of the orbit, in case it is an orbit-patch")]
             public double StartUt { get; }
 
-            [KSField]
+            [KSField(Description = "Universal time of the start of the orbit, in case it is an orbit-patch")]
             public double EndUt { get; }
 
-            [KSField(Description = "Apoapsis of the orbit above sealevel of the `reference_body`.")]
-            double Apoapsis { get; }
+            [KSField(Description = "Apoapsis of the orbit above sealevel of the `reference_body`. Is not defined for a hyperbolic orbit")]
+            Option<double> Apoapsis { get; }
 
             [KSField(Description = "Periapsis of the orbit above sealevel of the `reference_body`")]
             double Periapsis { get; }
 
-            [KSField(Description = "Radius of apoapsis of the orbit (i.e. from the center of the `reference_body')")]
-            double ApoapsisRadius { get; }
+            [KSField(Description = "Radius of apoapsis of the orbit (i.e. from the center of the `reference_body'). Is not defined for a hyperbolic orbit")]
+            Option<double> ApoapsisRadius { get; }
 
             [KSField(Description = "Radius of periapsis of the orbit (i.e. from the center of the `reference_body')")]
             double PeriapsisRadius { get; }
@@ -59,147 +59,122 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             [KSField(Description = "Orbital period.")]
             double Period { get; }
 
-            [KSField]
+            [KSField(Description = "Reference frame of the orbit. All relative vectors are in this frame.")]
             public ITransformFrame ReferenceFrame { get; }
 
             [KSField(Description = "Normal vector perpendicular to orbital plane.")]
             Vector3d OrbitNormal { get; }
 
-            [KSMethod]
+            [KSMethod(Description = "Get the relative orbital velocity at a given universal time `ut`")]
             Vector3d OrbitalVelocity(double ut);
-
-            [KSMethod(Description = "Get the absolute position at a given universal time `ut`")]
-            Vector3d AbsolutePosition(double ut);
 
             [KSMethod(Description = "Get the absolute position at a given universal time `ut`")]
             Position GlobalPosition(double ut);
 
-            [KSMethod]
+            [KSMethod(Description = "Get the coordinate independent velocity at a given universal time `ut`")]
             VelocityAtPosition GlobalVelocity(double ut);
 
-            [KSMethod]
+            [KSMethod(Description = "Get relative position at a given universal time `ut`")]
             Vector3d RelativePosition(double ut);
 
-            [KSMethod]
+            [KSMethod(Description = "Get relative position for a given `trueAnomaly`")] 
+            Vector3d RelativePositionForTrueAnomaly(double trueAnomaly);
+                
+            [KSMethod(Description = "The relative prograde vector at a given universal time `ut`")]
             Vector3d Prograde(double ut);
 
-            [KSMethod]
+            [KSMethod(Description = "The relative normal-plus vector at a given universal time `ut`")]
             Vector3d NormalPlus(double ut);
 
-            [KSMethod]
+            [KSMethod(Description = "The relative radial-plus vector at a given universal time `ut`")]
             Vector3d RadialPlus(double ut);
 
-            [KSMethod]
+            [KSMethod(Description = "Relative up vector of the orbit at a given universal time `ut`")]
             Vector3d Up(double ut);
 
-            [KSMethod]
+            [KSMethod(Description = "Get the orbital radius (distance from center of body) at a given universal time `ut`")]
             double Radius(double ut);
 
-            [KSMethod]
+            [KSMethod(Description = "Relative horizontal vector at a given universal time `ut`")]
             Vector3d Horizontal(double ut);
 
-            /// <summary>
-            /// Returns a new Orbit object that represents the result of applying a given dV to o at UT
-            /// </summary>
-            [KSMethod]
+            [KSMethod(Description = "Returns a new Orbit object that represents the result of applying a given relative `deltaV` to o at `ut`.")]
             IOrbit PerturbedOrbit(double ut, Vector3d dV);
 
-            /// <summary>
-            /// The mean anomaly of the orbit.
-            /// For elliptical orbits, the value return is always between 0 and 2pi
-            /// For hyperbolic orbits, the value can be any number.
-            /// </summary>
-            [KSMethod]
+            [KSMethod(Description = @"The mean anomaly of the orbit.
+                For elliptical orbits, the value return is always between 0 and 2pi.
+                For hyperbolic orbits, the value can be any number.")]
             double MeanAnomalyAtUt(double ut);
 
-            /// <summary>
-            /// The next time at which the orbiting object will reach the given mean anomaly.
-            /// For elliptical orbits, this will be a time between UT and UT + o.period
-            /// For hyperbolic orbits, this can be any time, including a time in the past, if
-            /// the given mean anomaly occurred in the past
-            /// </summary>
-            [KSMethod]
+            [KSMethod("ut_at_mean_anomaly", Description = @"The next time at which the orbiting object will reach the given mean anomaly.
+                For elliptical orbits, this will be a time between UT and UT + o.period.
+                For hyperbolic orbits, this can be any time, including a time in the past, if the given mean anomaly occurred in the past")]
             double UTAtMeanAnomaly(double meanAnomaly, double ut);
 
-            /// <summary>
-            /// Converts an eccentric anomaly into a mean anomaly.
-            /// For an elliptical orbit, the returned value is between 0 and 2pi
-            /// For a hyperbolic orbit, the returned value is any number
-            /// </summary>
-            [KSMethod]
+            [KSMethod(Description = @"Converts an eccentric anomaly into a mean anomaly.
+                For an elliptical orbit, the returned value is between 0 and 2pi.
+                For a hyperbolic orbit, the returned value is any number.")]
             double GetMeanAnomalyAtEccentricAnomaly(double ecc);
 
-            /// <summary>
-            /// Converts a true anomaly into an eccentric anomaly.
-            /// For elliptical orbits this returns a value between 0 and 2pi
-            /// For hyperbolic orbits the returned value can be any number.
-            /// NOTE: For a hyperbolic orbit, if a true anomaly is requested that does not exist (a true anomaly
-            /// past the true anomaly of the asymptote) then an ArgumentException is thrown
-            /// </summary>
-            [KSMethod]
+            [KSMethod(Description = @"Converts a true anomaly into an eccentric anomaly.
+                For elliptical orbits this returns a value between 0 and 2pi.
+                For hyperbolic orbits the returned value can be any number.")]
             double GetEccentricAnomalyAtTrueAnomaly(double trueAnomaly);
 
-            /// <summary>
-            /// Next time of a certain true anomly.
-            /// NOTE: this function can throw an ArgumentException, if o is a hyperbolic orbit with an eccentricity
-            /// large enough that it never attains the given true anomaly.
-            /// </summary>
-            [KSMethod]
-            double TimeOfTrueAnomaly(double trueAnomaly, double ut);
+            [KSMethod(Description = @"Next time of a certain true anomaly after a given universal time `ut`. 
+                If `ut` is omitted the current time will be used")]
+            double TimeOfTrueAnomaly(double trueAnomaly, Option<double> maybeUt = new Option<double>());
 
-            /// <summary>
-            /// The next time at which the orbiting object will be at periapsis.
-            /// For elliptical orbits, this will be between UT and UT + Period.
-            /// For hyperbolic orbits, this can be any time, including a time in the past,
-            /// if the periapsis is in the past.
-            /// </summary>
-            [KSMethod]
+            [KSMethod(Description = @"The next time at which the orbiting object will be at periapsis after a given universal time `ut`.
+                If `ut` is omitted the current time will be used.
+                For elliptical orbits, this will be between `ut` and `ut` + Period.
+                For hyperbolic orbits, this can be any time, including a time in the past, if the periapsis is in the past.")]
             double NextPeriapsisTime(Option<double> ut = new Option<double>());
 
-            /// <summary>
-            /// Returns the next time at which the orbiting object will be at apoapsis.
-            /// For elliptical orbits, this is a time between UT and UT + period.
-            /// For hyperbolic orbits, this throws an ArgumentException.
-            /// </summary>
-            [KSMethod]
-            Result<double, string> NextApoapsisTime(Option<double> ut = new Option<double>());
+            [KSMethod(Description = @"Returns the next time at which the orbiting object will be at apoapsis after a given universal time `ut`.
+                If `ut` is omitted the current time will be used.
+                For elliptical orbits, this will be between `ut` and `ut` + Period.
+                For hyperbolic orbits, this is undefined.")]
+            Option<double> NextApoapsisTime(Option<double> ut = new Option<double>());
 
-            /// <summary>
-            /// Get the true anomaly of a radius.
-            /// If the radius is below the periapsis the true anomaly of the periapsis
-            /// with be returned. If it is above the apoapsis the true anomaly of the
-            /// apoapsis is returned.
-            /// </summary>
-            [KSMethod]
+            [KSMethod(Description = @"Get the true anomaly of a radius.
+                If the radius is below the periapsis the true anomaly of the periapsis will be returned.
+                If it is above the apoapsis the true anomaly of the apoapsis is returned.
+                The returned value is always between 0 and 2pi.")]
             double TrueAnomalyAtRadius(double radius);
 
-            /// <summary>
-            /// Finds the next time at which the orbiting object will achieve a given radius
-            /// from the center of the primary.
-            /// If the given radius is impossible for this orbit, an ArgumentException is thrown.
-            /// For elliptical orbits this will be a time between UT and UT + period
-            /// For hyperbolic orbits this can be any time. If the given radius will be achieved
-            /// in the future then the next time at which that radius will be achieved will be returned.
-            /// If the given radius was only achieved in the past, then there are no guarantees
-            /// about which of the two times in the past will be returned.
-            /// </summary>
-            [KSMethod]
-            Result<double, string> NextTimeOfRadius(double ut, double radius);
+            [KSMethod(Description = @"Finds the next time at which the orbiting object will achieve a given `radius` from center of the body
+                after a given universal time `ut`.
+                This will be undefined if the specified `radius` is impossible for this orbit, otherwise:
+                For elliptical orbits this will be a time between `ut` and `ut` + period.
+                For hyperbolic orbits this can be any time. If the given radius will be achieved
+                in the future then the next time at which that radius will be achieved will be returned.
+                If the given radius was only achieved in the past, then there are no guarantees
+                about which of the two times in the past will be returned.")]
+            Option<double> NextTimeOfRadius(double ut, double radius);
 
-            /// <summary>
-            /// Computes the period of the phase angle between orbiting objects a and b.
-            /// This only really makes sense for approximately circular orbits in similar planes.
-            /// For noncircular orbits the time variation of the phase angle is only "quasiperiodic"
-            /// and for high eccentricities and/or large relative inclinations, the relative motion is
-            /// not really periodic at all.
-            /// </summary>
-            [KSMethod]
+            [KSMethod(Description = @"Computes the period of the phase angle between orbiting objects of this orbit and and `other` orbit.
+                 For noncircular orbits the time variation of the phase angle is only quasiperiodic
+                 and for high eccentricities and/or large relative inclinations, the relative motion is
+                 not really periodic at all.")]
             double SynodicPeriod(IOrbit other);
+            
+            [KSMethod(Description = @"Converts a relative direction, into a true anomaly.
+                The vector is projected into the orbital plane and then the true anomaly is
+                computed as the angle this vector makes with the vector pointing to the periapsis.
+                The returned value is always between 0 and 2pi.")]
+            double TrueAnomalyFromVector(Vector3d vec);
 
-            [KSMethod]
+            [KSField(Description = "Get the relative position of the ascending node.")]
+            Vector3d RelativeAscendingNode { get; }
+            
+            [KSField(Description = "Get the relative eccentricity vector.")]
+            Vector3d RelativeEccentricityVector { get; }
+            
+            [KSMethod(Description = "Convert orbital parameters to string.")]
             string ToString();
 
-            [KSMethod]
+            [KSMethod(Description = "Convert orbital parameter to string using specified number of `decimals`")]
             string ToFixed(long decimals);
         }
 

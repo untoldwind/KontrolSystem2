@@ -20,6 +20,10 @@ namespace KontrolSystem.TO2.Parser {
 
         public static readonly Parser<string> ConstKeyword = Tag("const");
 
+        public static readonly Parser<LineComment> LineComment =
+            CharsExcept0("\r\n").Map((comment, start, end) => new LineComment(comment, start, end))
+                .Between(WhiteSpaces0.Then(Tag("//")), PeekLineEnd);
+        
         public static readonly Parser<char> CommaDelimiter = Char(',').Between(WhiteSpaces0, WhiteSpaces0);
 
         public static readonly Parser<string> Identifier = Recognize(
@@ -41,12 +45,12 @@ namespace KontrolSystem.TO2.Parser {
             WhiteSpaces0.Then(Tag("->")).Then(WhiteSpaces0).Then(TypeRef)
         ).Map(items => new FunctionType(false, items.Item1, items.Item2));
 
-        private static readonly Parser<TO2Type> TupleType = DelimitedN_M(2, null, TypeRef, CommaDelimiter, "<type>")
-            .Between(Char('(').Then(WhiteSpaces0), WhiteSpaces0.Then(Char(')'))).Map(items => new TupleType(items));
-
-        private static readonly Parser<TO2Type> RecordType =
-            Delimited1(Seq(Identifier, TypeSpec), CommaDelimiter, "<identifier : type>")
-                .Between(Char('(').Then(WhiteSpaces0), WhiteSpaces0.Then(Char(')')))
+        private static readonly Parser<TO2Type> TupleType = DelimitedN_M(2, null, Opt(LineComment.Then(WhiteSpaces0)).Then(TypeRef), CommaDelimiter, "<type>")
+            .Between(Char('(').Then(WhiteSpaces0), Opt(LineComment).Then(WhiteSpaces0).Then(Char(')'))).Map(items => new TupleType(items));
+        
+        public static readonly Parser<TO2Type> RecordType =
+            Delimited1(Opt(LineComment.Then(WhiteSpaces0)).Then(Seq(Identifier, TypeSpec)), CommaDelimiter, "<identifier : type>")
+                .Between(Char('(').Then(WhiteSpaces0),  Opt(LineComment).Then(WhiteSpaces0).Then(Char(')')))
                 .Map(items => new RecordTupleType(items));
 
         private static readonly Parser<TO2Type> TypeReference = Seq(
@@ -81,11 +85,7 @@ namespace KontrolSystem.TO2.Parser {
             DeclarationParameter,
             Char('_').Map(_ => new DeclarationParameter())
         );
-
-        public static readonly Parser<LineComment> LineComment =
-            CharsExcept0("\r\n").Map((comment, start, end) => new LineComment(comment, start, end))
-                .Between(WhiteSpaces0.Then(Tag("//")), PeekLineEnd);
-
+        
         public static readonly Parser<string> DescriptionComment =
             Many0(CharsExcept0("\r\n").Map(s => s.Trim()).Between(WhiteSpaces0.Then(Tag("///")), PeekLineEnd))
                 .Map(lines => String.Join("\n", lines));

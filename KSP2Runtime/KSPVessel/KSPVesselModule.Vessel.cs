@@ -263,44 +263,94 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             }
 
             [KSMethod]
-            public KSPControlModule.SteeringManager SetSteering(Vector3d pitchYawRoll) =>
-                new KSPControlModule.SteeringManager(context, vessel, _ => pitchYawRoll);
+            public KSPControlModule.SteeringManager SetSteering(Vector3d pitchYawRoll) {
+                if (context.TryFindAutopilot(vessel, out KSPControlModule.SteeringManager steeringManager)) {
+                    steeringManager.PitchYawRoll = pitchYawRoll;
+                    return steeringManager;
+                }
+                return new KSPControlModule.SteeringManager(context, vessel, _ => pitchYawRoll);
+            }
 
             [KSMethod]
-            public KSPControlModule.SteeringManager ManageSteering(Func<double, Vector3d> pitchYawRollProvider) =>
-                new KSPControlModule.SteeringManager(context, vessel, pitchYawRollProvider);
+            public KSPControlModule.SteeringManager ManageSteering(Func<double, Vector3d> pitchYawRollProvider) {
+                if (context.TryFindAutopilot(vessel, out KSPControlModule.SteeringManager steeringManager)) {
+                    steeringManager.SetPitchYawRollProvider(pitchYawRollProvider);
+                    return steeringManager;
+                }
+                return new KSPControlModule.SteeringManager(context, vessel, pitchYawRollProvider);
+            }
 
             [KSMethod]
-            public KSPControlModule.ThrottleManager SetThrottle(double throttle) =>
-                new KSPControlModule.ThrottleManager(context, vessel, _ => throttle);
+            public KSPControlModule.ThrottleManager SetThrottle(double throttle) {
+                if (context.TryFindAutopilot(vessel, out KSPControlModule.ThrottleManager throttleManager)) {
+                    throttleManager.Throttle = throttle;
+                    return throttleManager;
+                }
+                return new KSPControlModule.ThrottleManager(context, vessel, _ => throttle);
+            }
 
             [KSMethod]
-            public KSPControlModule.ThrottleManager ManageThrottle(Func<double, double> throttleProvider) =>
-                new KSPControlModule.ThrottleManager(context, vessel, throttleProvider);
+            public KSPControlModule.ThrottleManager ManageThrottle(Func<double, double> throttleProvider) {
+                if (context.TryFindAutopilot(vessel, out KSPControlModule.ThrottleManager throttleManager)) {
+                    throttleManager.SetThrottleProvider(throttleProvider);
+                    return throttleManager;
+                }
+                return new KSPControlModule.ThrottleManager(context, vessel, throttleProvider);
+            }
 
             [KSMethod]
-            public KSPControlModule.RCSTranslateManager SetRcsTranslate(Vector3d translate) =>
-                new KSPControlModule.RCSTranslateManager(context, vessel, _ => translate);
+            public KSPControlModule.RCSTranslateManager SetRcsTranslate(Vector3d translate) {
+                if (context.TryFindAutopilot(vessel, out KSPControlModule.RCSTranslateManager rcsTranslateManager)) {
+                    rcsTranslateManager.Translate = translate;
+                    return rcsTranslateManager;
+                }
+                return new KSPControlModule.RCSTranslateManager(context, vessel, _ => translate);
+            }
 
             [KSMethod]
-            public KSPControlModule.RCSTranslateManager ManageRcsTranslate(Func<double, Vector3d> translateProvider) =>
-                new KSPControlModule.RCSTranslateManager(context, vessel, translateProvider);
+            public KSPControlModule.RCSTranslateManager ManageRcsTranslate(Func<double, Vector3d> translateProvider) {
+                if (context.TryFindAutopilot(vessel, out KSPControlModule.RCSTranslateManager rcsTranslateManager)) {
+                    rcsTranslateManager.SetTranslateProvider(translateProvider);
+                    return rcsTranslateManager;
+                }
+                return new KSPControlModule.RCSTranslateManager(context, vessel, translateProvider);
+            }
 
             [KSMethod]
-            public KSPControlModule.WheelSteeringManager SetWheelSteering(double wheelSteering) =>
-                new KSPControlModule.WheelSteeringManager(context, vessel, _ => wheelSteering);
+            public KSPControlModule.WheelSteeringManager SetWheelSteering(double wheelSteering) {
+                if (context.TryFindAutopilot(vessel, out KSPControlModule.WheelSteeringManager wheelSteeringManager)) {
+                    wheelSteeringManager.WheelSteer = wheelSteering;
+                    return wheelSteeringManager;
+                }
+                return new KSPControlModule.WheelSteeringManager(context, vessel, _ => wheelSteering);
+            }
 
             [KSMethod]
-            public KSPControlModule.WheelSteeringManager ManageWheelSteering(Func<double, double> wheelSteeringProvider) =>
-                new KSPControlModule.WheelSteeringManager(context, vessel, wheelSteeringProvider);
+            public KSPControlModule.WheelSteeringManager ManageWheelSteering(Func<double, double> wheelSteeringProvider) {
+                if (context.TryFindAutopilot(vessel, out KSPControlModule.WheelSteeringManager wheelSteeringManager)) {
+                    wheelSteeringManager.SetWheelSteerProvider(wheelSteeringProvider);
+                    return wheelSteeringManager;
+                }
+                return new KSPControlModule.WheelSteeringManager(context, vessel, wheelSteeringProvider);
+            }
 
             [KSMethod]
-            public KSPControlModule.WheelThrottleManager SetWheelThrottle(double wheelThrottle) =>
-                new KSPControlModule.WheelThrottleManager(context, vessel, _ => wheelThrottle);
+            public KSPControlModule.WheelThrottleManager SetWheelThrottle(double wheelThrottle) {
+                if (context.TryFindAutopilot(vessel, out KSPControlModule.WheelThrottleManager wheelThrottleManager)) {
+                    wheelThrottleManager.WheelThrottle = wheelThrottle;
+                    return wheelThrottleManager;
+                }
+                return new KSPControlModule.WheelThrottleManager(context, vessel, _ => wheelThrottle);
+            }
 
             [KSMethod]
-            public KSPControlModule.WheelThrottleManager ManageWheelThrottle(Func<double, double> wheelThrottleProvider) =>
-                new KSPControlModule.WheelThrottleManager(context, vessel, wheelThrottleProvider);
+            public KSPControlModule.WheelThrottleManager ManageWheelThrottle(Func<double, double> wheelThrottleProvider) {
+                if (context.TryFindAutopilot(vessel, out KSPControlModule.WheelThrottleManager wheelThrottleManager)) {
+                    wheelThrottleManager.SetWheelThrottleProvider(wheelThrottleProvider);
+                    return wheelThrottleManager;
+                }
+                return new KSPControlModule.WheelThrottleManager(context, vessel, wheelThrottleProvider);
+            }
 
             [KSMethod]
             public void ReleaseControl() => context.UnhookAllAutopilots(vessel);

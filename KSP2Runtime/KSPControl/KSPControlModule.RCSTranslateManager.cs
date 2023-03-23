@@ -1,7 +1,6 @@
 ﻿using System;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
-using KSP.Api;
 using KSP.Sim.impl;
 using KSP.Sim.State;
 using UnityEngine;
@@ -9,18 +8,11 @@ using UnityEngine;
 namespace KontrolSystem.KSP.Runtime.KSPControl {
     public partial class KSPControlModule {
         [KSClass("RCSTranslateManager")]
-        public class RCSTranslateManager {
-            private readonly IKSPContext context;
-            private readonly VesselComponent vessel;
+        public class RCSTranslateManager : BaseAutopilot {
             private Func<double, Vector3d> translateProvider;
-            private bool suspended;
 
-            public RCSTranslateManager(IKSPContext context, VesselComponent vessel, Func<double, Vector3d> translateProvider) {
-                this.context = context;
-                this.vessel = vessel;
+            public RCSTranslateManager(IKSPContext context, VesselComponent vessel, Func<double, Vector3d> translateProvider) : base(context, vessel) {
                 this.translateProvider = translateProvider;
-
-                this.context.HookAutopilot(this.vessel, UpdateAutopilot);
             }
 
             [KSField]
@@ -32,24 +24,8 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
             [KSMethod]
             public void SetTranslateProvider(Func<double, Vector3d> newTranslateProvider) =>
                 translateProvider = newTranslateProvider;
-
-            [KSMethod]
-            public Future<object> Release() {
-                suspended = true;
-                context.NextYield = new WaitForFixedUpdate();
-                context.OnNextYieldOnce = () => {
-                    context.UnhookAutopilot(vessel, UpdateAutopilot);
-                };
-                return new Future.Success<object>(null);
-            }
-
-            [KSMethod]
-            public void Resume() {
-                suspended = false;
-                context.HookAutopilot(vessel, UpdateAutopilot);
-            }
-
-            public void UpdateAutopilot(ref FlightCtrlState c, float deltaT) {
+            
+            public override void UpdateAutopilot(ref FlightCtrlState c, float deltaT) {
                 Vector3d translate = suspended ? Vector3d.zero : translateProvider(deltaT);
                 c.X = (float)DirectBindingMath.Clamp(translate.x, -1, 1);
                 c.Y = (float)DirectBindingMath.Clamp(translate.y, -1, 1);
