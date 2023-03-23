@@ -1,4 +1,5 @@
-﻿using KontrolSystem.Parsing;
+﻿using System.Linq;
+using KontrolSystem.Parsing;
 using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Parser;
 using KontrolSystem.TO2.Runtime;
@@ -31,10 +32,16 @@ namespace KontrolSystem.TO2.Test {
             Assert.Equal("[4, 3, 2, 1]", RunExpression<string>(BuiltinType.String, "[1, 2, 3, 4].reverse().to_string()"));
             Assert.Equal(4, RunExpression<long>(BuiltinType.Int, "[1, 2, 3, 4].length"));
 
-            Assert.Equal(0, RunExpression<long>(BuiltinType.Int, @"
+            Assert.Equal("[1, 2, 3, 4, 5, 6, 7, 8, 9]", RunExpression<string>(BuiltinType.String, @"
                 let build : ArrayBuilder<int> = ArrayBuilder(100)
+                let i : int = 0
 
-                build.result().length
+                while (i < 10) {
+                    i = i + 1
+                    build += i
+                }
+
+                build.result().to_string()
             "));
         }
 
@@ -53,19 +60,16 @@ namespace KontrolSystem.TO2.Test {
         public void TestBlock() {
             Assert.Equal(3579, RunExpression<long>(BuiltinType.Int, "const a = { let b = 1234\nb += 2345\nb }\na"));
             var exception = Assert.Throws<REPLException>(() => RunExpression<long>(BuiltinType.Int, "const a = { let b = 1234\nb += 2345\nb }\nb"));
-            Assert.Equal("No local variable, constant or function 'b'", exception.message);
+            Assert.Equal("<inline>(4, 1): No local variable, constant or function 'b'", exception.Message);
         }
 
         private T RunExpression<T>(TO2Type to2Type, string expression) {
-            var result = TO2ParserREPL.REPLItems.TryParse(expression);
-
-            Assert.True(result.WasSuccessful);
+            var result = TO2ParserREPL.REPLItems.Parse(expression);
 
             var context = new REPLContext(new TestRunnerContext());
             var pollCount = 0;
-            IREPLValue lastValue = REPLUnit.INSTANCE;
 
-            foreach (var item in result.Value) {
+            foreach (var item in result.Where(i => !(i is IBlockItem))) {
                 var future = item.Eval(context);
                 var futureResult = future.PollValue();
 
@@ -74,14 +78,23 @@ namespace KontrolSystem.TO2.Test {
                     if(pollCount > 100) throw new FailException("No result after 100 tries");
                     futureResult = future.PollValue();
                 }
-
-                lastValue = futureResult.value;
             }
             
-            Assert.Equal(to2Type, lastValue.Type);
-            Assert.True(lastValue.Value is T);
+            var mainBlock = new Block(result.OfType<IBlockItem>().ToList());
+            var mainFuture = mainBlock.Eval(context);
+            var mainFutureResult = mainFuture.PollValue();
 
-            return (T)lastValue.Value;
+            while (!mainFutureResult.IsReady) {
+                pollCount++;
+                if(pollCount > 100) throw new FailException("No result after 100 tries");
+                mainFutureResult = mainFuture.PollValue();
+            }
+            
+            
+            Assert.Equal(to2Type, mainFutureResult.value.Type);
+            Assert.True(mainFutureResult.value.Value is T);
+
+            return (T)mainFutureResult.value.Value;
         }
     }
 }

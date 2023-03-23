@@ -6,19 +6,20 @@ namespace KontrolSystem.TO2.Runtime {
     public class REPLException : Exception {
         public readonly Position start;
         public readonly Position end;
-        public readonly string message;
 
-        public REPLException(Node node, string message) {
+        public REPLException(string message) : base(message) {
+            start = new Position();
+            end = new Position();
+        }
+
+        public REPLException(Node node, string message): base($"{node?.Start}: {message}") {
             start = node.Start;
             end = node.End;
-            this.message = message;
         }
 
-        public REPLException(Position start, Position end, string message) {
+        public REPLException(Position start, Position end, string message): base($"{start}: {message}") {
             this.start = start;
             this.end = end;
-            this.message = message;
         }
-
     }
 }

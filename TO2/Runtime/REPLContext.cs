@@ -63,7 +63,7 @@ namespace KontrolSystem.TO2.Runtime {
         }
 
         public ModuleContext ModuleContext => moduleContext;
-        public MethodBuilder MethodBuilder => throw new REPLException(null, "No method builder");
+        public MethodBuilder MethodBuilder => throw new REPLException( "No method builder");
         public IILEmitter IL { get; }
         public TO2Type ExpectedReturn => BuiltinType.Unit;
 
@@ -75,23 +75,23 @@ namespace KontrolSystem.TO2.Runtime {
 
         public List<StructuralError> AllErrors => errors;
         
-        public IBlockContext CreateChildContext() => throw new REPLException(null, "Child block context");
+        public IBlockContext CreateChildContext() => throw new REPLException( "Child block context");
 
-        public IBlockContext CreateLoopContext(LabelRef start, LabelRef end) =>  throw new REPLException(null, "Loop block context");
+        public IBlockContext CreateLoopContext(LabelRef start, LabelRef end) =>  throw new REPLException( "Loop block context");
 
-        public IBlockContext CloneCountingContext() => throw new REPLException(null, "No counting context");
+        public IBlockContext CloneCountingContext() => throw new REPLException( "No counting context");
 
-        public (LabelRef start, LabelRef end)? InnerLoop => throw new REPLException(null, "No inner loop");
+        public (LabelRef start, LabelRef end)? InnerLoop => throw new REPLException( "No inner loop");
         
-        public IBlockVariable FindVariable(string name) => throw new REPLException(null, "No block variables");
+        public IBlockVariable FindVariable(string name) => throw new REPLException( "No block variables");
 
-        public ITempBlockVariable MakeTempVariable(RealizedType to2Type) => throw new REPLException(null, "No temp block variables");
+        public ITempBlockVariable MakeTempVariable(RealizedType to2Type) => throw new REPLException("No temp block variables");
 
-        public ILocalRef DeclareHiddenLocal(Type rawType) => throw new REPLException(null, "No hidden local");
+        public ILocalRef DeclareHiddenLocal(Type rawType) => throw new REPLException("No hidden local");
 
-        public IBlockVariable DeclaredVariable(string name, bool isConst, RealizedType to2Type) => throw new REPLException(null, "No declare block variables");
+        public IBlockVariable DeclaredVariable(string name, bool isConst, RealizedType to2Type) => throw new REPLException("No declare block variables");
 
-        public void RegisterAsyncResume(TO2Type returnType) => throw new REPLException(null, "No async resume");
+        public void RegisterAsyncResume(TO2Type returnType) => throw new REPLException( "No async resume");
     }
 }
 

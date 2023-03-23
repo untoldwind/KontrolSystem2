@@ -33,12 +33,12 @@ namespace KontrolSystem.TO2.Parser {
             return new ReturnEmpty(start, end) as Expression;
         });
 
-        private static readonly Parser<Expression> WhileExpression = Seq(
+        internal static readonly Parser<Expression> WhileExpression = Seq(
             Tag("while").Then(WhiteSpaces0).Then(Char('(')).Then(WhiteSpaces0).Then(Expression),
             WhiteSpaces0.Then(Char(')')).Then(WhiteSpaces0).Then(Expression)
         ).Map((items, start, end) => new While(items.Item1, items.Item2, start, end));
 
-        private static readonly Parser<Expression> ForInExpression = Seq(
+        internal static readonly Parser<Expression> ForInExpression = Seq(
             Tag("for").Then(WhiteSpaces0).Then(Char('(')).Then(WhiteSpaces0).Then(Alt(
                 DeclarationParameter.Map(item => (true, new List<DeclarationParameter> { item })),
                 Delimited1(DeclarationParameterOrPlaceholder, CommaDelimiter)

@@ -17,6 +17,8 @@ namespace KontrolSystem.TO2.Parser {
             FunctionDeclaration,
             TypeAlias,
             Expression,
+            WhileExpression,
+            ForInExpression,
             VariableDeclaration.Map(item => item as Node)
         ));
 

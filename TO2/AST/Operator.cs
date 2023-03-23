@@ -145,7 +145,7 @@ namespace KontrolSystem.TO2.AST {
         }
 
         public IREPLValue Eval(Node node, IREPLValue left, IREPLValue right) {
-            var result = methodInfo.Invoke(null, new object[] { left, right });
+            var result = methodInfo.Invoke(null, new object[] { left.Value, right.Value });
 
             return ResultType.REPLCast(result);
         }
