@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     public struct ILCount {
@@ -124,5 +126,7 @@ namespace KontrolSystem.TO2.AST {
 
         public override void EmitStore(IBlockContext context, IBlockVariable variable, bool dropResult) =>
             expression.EmitStore(context, variable, dropResult);
+        
+        public override REPLValueFuture Eval(REPLContext context) => expression.Eval(context);
     }
 }

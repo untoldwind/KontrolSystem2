@@ -611,6 +611,24 @@ namespace KontrolSystem.TO2.Runtime {
         public bool IsReturn => false;
     }
 
+    public struct REPLRange : IREPLValue {
+        public readonly Range rangeValue;
+
+        public REPLRange(Range rangeValue) {
+            this.rangeValue = rangeValue;
+        }
+        
+        public TO2Type Type => BuiltinType.Range;
+        
+        public object Value => rangeValue;
+        
+        public bool IsBreak => false;
+        
+        public bool IsContinue => false;
+        
+        public bool IsReturn => false;
+    }
+    
     public struct REPLAny : IREPLValue {
         public readonly TO2Type type;
         public readonly object anyValue;

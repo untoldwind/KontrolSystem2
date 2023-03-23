@@ -73,5 +73,23 @@ namespace KontrolSystem.TO2.AST {
 
             if (!dropResult) variable.EmitLoad(context);
         }
+        
+        public override REPLValueFuture Eval(REPLContext context) {
+            var fromFuture = from.Eval(context);
+            var toFuture = to.Eval(context);
+
+            if (!BuiltinType.Int.IsAssignableFrom(context.replModuleContext, fromFuture.Type) ||
+                !BuiltinType.Int.IsAssignableFrom(context.replModuleContext, toFuture.Type)) {
+                throw new REPLException(this, "Range can only be created from int values");
+            }
+
+            return REPLValueFuture.Chain2(BuiltinType.Range, fromFuture, toFuture, (from, to) => {
+                if (from is REPLInt ifrom && to is REPLInt ito) {
+                    return new REPLRange(new Range(ifrom.intValue, inclusive ? ito.intValue + 1 : ito.intValue));
+                }
+
+                throw new REPLException(this, $"Can create range from non-integers");
+            });
+        }
     }
 }

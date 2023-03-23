@@ -15,7 +15,7 @@ namespace KontrolSystem.TO2.Runtime {
         public REPLContext(IContext runtimeContext, REPLModuleContext replModuleContext = null, VariableResolver externalVariables = null) {
             this.runtimeContext = runtimeContext;
             this.replModuleContext = replModuleContext ?? new REPLModuleContext();
-            replBlockContext = new REPLBlockContext(replModuleContext);
+            replBlockContext = new REPLBlockContext(this.replModuleContext);
             this.externalVariables = externalVariables;
         }
 

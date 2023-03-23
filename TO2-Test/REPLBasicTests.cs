@@ -30,11 +30,23 @@ namespace KontrolSystem.TO2.Test {
             Assert.Equal("[1, 2, 3, 4]", RunExpression<string>(BuiltinType.String, "[1, 2, 3, 4].to_string()"));
             Assert.Equal("[4, 3, 2, 1]", RunExpression<string>(BuiltinType.String, "[1, 2, 3, 4].reverse().to_string()"));
             Assert.Equal(4, RunExpression<long>(BuiltinType.Int, "[1, 2, 3, 4].length"));
+
+            Assert.Equal(0, RunExpression<long>(BuiltinType.Int, @"
+                let build : ArrayBuilder<int> = ArrayBuilder(100)
+
+                build.result().length
+            "));
         }
 
         [Fact]
         public void TestStrings() {
             Assert.Equal(5, RunExpression<long>(BuiltinType.Int, "\"Hallo\".length"));    
+        }
+
+        [Fact]
+        public void TestRange() {
+            Assert.Equal(5, RunExpression<long>(BuiltinType.Int, "(0..5).length"));   
+            Assert.Equal(6, RunExpression<long>(BuiltinType.Int, "(0...5).length"));   
         }
         
         [Fact]
