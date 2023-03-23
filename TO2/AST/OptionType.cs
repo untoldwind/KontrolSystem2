@@ -9,7 +9,6 @@ using KontrolSystem.TO2.Runtime;
 namespace KontrolSystem.TO2.AST {
     public class OptionType : RealizedType {
         public readonly TO2Type elementType;
-        private Type generatedType;
         private readonly OperatorCollection allowedSuffixOperators;
         public override Dictionary<string, IMethodInvokeFactory> DeclaredMethods { get; }
         public override Dictionary<string, IFieldAccessFactory> DeclaredFields { get; }
@@ -38,7 +37,7 @@ namespace KontrolSystem.TO2.AST {
         public override RealizedType UnderlyingType(ModuleContext context) =>
             new OptionType(elementType.UnderlyingType(context));
 
-        public override Type GeneratedType(ModuleContext context) => generatedType ??= DeriveType(context);
+        public override Type GeneratedType(ModuleContext context) => DeriveType(context);
 
         public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) => allowedSuffixOperators;
 

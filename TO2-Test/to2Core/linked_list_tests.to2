@@ -1,0 +1,24 @@
+use * from core::testing
+
+struct StringList(item: string, pn:  Option<StringList>) {
+    item: string = item
+    next:  Option<StringList> = pn
+}
+
+test fn test_linked_ist() -> Unit = {
+    let list = StringList("Start", None())
+    
+    for(i in 0..10) {
+        list = StringList(i.to_string(), list)
+    }
+    
+    let out = list.item
+    
+    while(list.next.defined) {
+        list = list.next.value     
+        out += "|"
+        out += list.item
+    }
+    
+    assert_string("9|8|7|6|5|4|3|2|1|0|Start", out)
+}
