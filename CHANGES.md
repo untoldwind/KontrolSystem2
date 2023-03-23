@@ -3,6 +3,7 @@
 ## 0.2.1 ->
 
 * Make low and high gravity turn parameters tweakable in `launch_rocket.to2`
+* Add `circularize_orbit_pe` to std-lib 
 
 ## 0.2.0.2 -> 0.2.1
 
