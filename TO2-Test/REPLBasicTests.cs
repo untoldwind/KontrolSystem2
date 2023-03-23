@@ -32,7 +32,7 @@ namespace KontrolSystem.TO2.Test {
             Assert.Equal("[4, 3, 2, 1]", RunExpression<string>(BuiltinType.String, "[1, 2, 3, 4].reverse().to_string()"));
             Assert.Equal(4, RunExpression<long>(BuiltinType.Int, "[1, 2, 3, 4].length"));
 
-            Assert.Equal("[1, 2, 3, 4, 5, 6, 7, 8, 9]", RunExpression<string>(BuiltinType.String, @"
+            Assert.Equal("[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]", RunExpression<string>(BuiltinType.String, @"
                 let build : ArrayBuilder<int> = ArrayBuilder(100)
                 let i : int = 0
 
@@ -42,6 +42,17 @@ namespace KontrolSystem.TO2.Test {
                 }
 
                 build.result().to_string()
+            "));
+            
+            Assert.Equal("|10|9|8|7|6|5|4|3|2|1|", RunExpression<string>(BuiltinType.String, @"
+                let out = ""|""
+
+                for(i in [1, 2, 3, 4, 5, 6 , 7, 8, 9, 10].reverse()) {
+                    out += i.to_string()
+                    out += ""|""
+                }
+
+                out
             "));
         }
 
@@ -54,6 +65,16 @@ namespace KontrolSystem.TO2.Test {
         public void TestRange() {
             Assert.Equal(5, RunExpression<long>(BuiltinType.Int, "(0..5).length"));   
             Assert.Equal(6, RunExpression<long>(BuiltinType.Int, "(0...5).length"));   
+            
+            Assert.Equal("[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]", RunExpression<string>(BuiltinType.String, @"
+                let build : ArrayBuilder<int> = ArrayBuilder(100)
+
+                for(i in 0..10) {
+                    build += i + 1
+                }
+
+                build.result().to_string()
+            "));
         }
         
         [Fact]

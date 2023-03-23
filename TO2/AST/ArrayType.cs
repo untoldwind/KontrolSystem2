@@ -130,6 +130,13 @@ namespace KontrolSystem.TO2.AST {
             
             throw new REPLException(node, $"Get array length from a non-array: {target.Type.Name}");
         }
+        
+        public override IREPLValue REPLCast(object value) {
+            if(value is Array a)
+                return new REPLArray(this, a);
+
+            throw new REPLException(new Position("Intern"), new Position("Intern"), $"{value.GetType()} can not be cast to REPLArray");
+        }
     }
 
     public class ArrayForInSource : IForInSource {

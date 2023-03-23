@@ -120,7 +120,7 @@ namespace KontrolSystem.TO2.AST {
                     var destinationArray = Array.CreateInstance(generatedElementType, values.Length);
                     for(int i = 0; i < values.Length; i++)
                         destinationArray.SetValue(values[i].Value, i);
-                    return REPLValueFuture.Success(new REPLAny(resultType, destinationArray));
+                    return REPLValueFuture.Success(new REPLArray(resultType, destinationArray));
                 });
         }
     }

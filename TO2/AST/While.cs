@@ -138,6 +138,7 @@ namespace KontrolSystem.TO2.AST {
             private readonly Expression condition;
             private readonly Expression loopExpression;
             private REPLValueFuture conditionFuture;
+            private IREPLValue conditionResult;
             private REPLValueFuture loopExpressionFuture;
 
             public REPLWhileFuture(REPLContext context, Expression condition, Expression loopExpression) : base(BuiltinType.Unit) {
@@ -148,17 +149,21 @@ namespace KontrolSystem.TO2.AST {
 
             public override FutureResult<IREPLValue> PollValue() {
                 conditionFuture ??= condition.Eval(context);
-                var conditionResult = conditionFuture.PollValue();
 
-                if (!conditionResult.IsReady) return new FutureResult<IREPLValue>();
+                if (conditionResult == null) {
+                    var result = conditionFuture.PollValue();
 
-                if (conditionResult.value is REPLBool b) {
+                    if (!result.IsReady) return new FutureResult<IREPLValue>();
+
+                    conditionResult = result.value;
+                }
+
+                if (conditionResult is REPLBool b) {
                     if(!b.boolValue) return new FutureResult<IREPLValue>(REPLUnit.INSTANCE);
                 } else {
                     throw new REPLException(condition, "Condition of while is not a boolean");
                 }
 
-                conditionFuture = null;
                 loopExpressionFuture ??= loopExpression.Eval(context);
                 var loopExpressionResult = loopExpressionFuture.PollValue();
                 
@@ -167,6 +172,8 @@ namespace KontrolSystem.TO2.AST {
                 if(loopExpressionResult.value.IsBreak) return new FutureResult<IREPLValue>(REPLUnit.INSTANCE);
                 if(loopExpressionResult.value.IsReturn) return new FutureResult<IREPLValue>(loopExpressionResult.value);
                 loopExpressionFuture = null;
+                conditionFuture = null;
+                conditionResult = null;
                 
                 return new FutureResult<IREPLValue>();
             }

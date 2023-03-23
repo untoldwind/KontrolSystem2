@@ -173,6 +173,14 @@ namespace KontrolSystem.TO2.Runtime {
         bool IsContinue { get; }
         
         bool IsReturn { get; }
+
+        IREPLForInSource ForInSource();
+    }
+
+    public interface IREPLForInSource {
+        TO2Type ElementType { get; }
+
+        IREPLValue Next();
     }
 
     public class REPLUnit : IREPLValue {
@@ -190,6 +198,8 @@ namespace KontrolSystem.TO2.Runtime {
         public bool IsContinue => false;
 
         public bool IsReturn => false;
+
+        public IREPLForInSource ForInSource() => null;
     }
 
     public class REPLBreak : IREPLValue {
@@ -207,6 +217,8 @@ namespace KontrolSystem.TO2.Runtime {
         public bool IsContinue => false;
         
         public bool IsReturn => false;
+        
+        public IREPLForInSource ForInSource() => null;
     }
     
     public class REPLContinue : IREPLValue {
@@ -224,6 +236,8 @@ namespace KontrolSystem.TO2.Runtime {
         public bool IsContinue => true;
         
         public bool IsReturn => false;
+        
+        public IREPLForInSource ForInSource() => null;
     }
     
     public class REPLReturn : IREPLValue {
@@ -240,6 +254,8 @@ namespace KontrolSystem.TO2.Runtime {
         public bool IsContinue => false;
 
         public bool IsReturn => true;
+        
+        public IREPLForInSource ForInSource() => null;
     }
     
     public struct REPLBool : IREPLValue {
@@ -258,6 +274,8 @@ namespace KontrolSystem.TO2.Runtime {
         public bool IsContinue => false;
         
         public bool IsReturn => false;
+
+        public IREPLForInSource ForInSource() => null;
 
         public static IREPLValue Not(Node node, IREPLValue other, IREPLValue _) {
             if (other is REPLBool b) {
@@ -333,7 +351,9 @@ namespace KontrolSystem.TO2.Runtime {
         public bool IsContinue => false;
 
         public bool IsReturn => false;
-        
+
+        public IREPLForInSource ForInSource() => null;
+
         public static IREPLValue Neg(Node node, IREPLValue other, IREPLValue _) {
             if (other is REPLInt i) {
                 return new REPLInt(-i.intValue);
@@ -487,7 +507,9 @@ namespace KontrolSystem.TO2.Runtime {
         public bool IsContinue => false;
 
         public bool IsReturn => false;
-        
+
+        public IREPLForInSource ForInSource() => null;
+
         public static IREPLValue Neg(Node node, IREPLValue other, IREPLValue _) {
             if (other is REPLFloat f) {
                 return new REPLFloat(-f.floatValue);
@@ -609,6 +631,52 @@ namespace KontrolSystem.TO2.Runtime {
         public bool IsContinue => false;
         
         public bool IsReturn => false;
+        
+        public IREPLForInSource ForInSource() => null;
+    }
+
+    public struct REPLArray : IREPLValue {
+        public readonly Array arrayValue;
+        public readonly ArrayType arrayType;
+
+        public REPLArray(ArrayType arrayType, Array arrayValue) {
+            this.arrayType = arrayType;
+            this.arrayValue = arrayValue;
+        }
+        
+        public TO2Type Type => arrayType;
+        
+        public object Value => arrayValue;
+        
+        public bool IsBreak => false;
+        
+        public bool IsContinue => false;
+        
+        public bool IsReturn => false;
+        
+        public IREPLForInSource ForInSource() => new REPLArrayForInSource(arrayValue, arrayType);
+    }
+
+    public class REPLArrayForInSource : IREPLForInSource {
+        private readonly Array arrayValue;
+        private readonly ArrayType arrayType;
+        private int nextIdx;
+
+        public REPLArrayForInSource(Array arrayValue, ArrayType arrayType) {
+            this.arrayValue = arrayValue;
+            this.arrayType = arrayType;
+            nextIdx = 0;
+        }
+
+        public TO2Type ElementType => arrayType.ElementType;
+        
+        public IREPLValue Next() {
+            if (nextIdx >= arrayValue.Length) return null;
+
+            var current = arrayValue.GetValue(nextIdx);
+            nextIdx++;
+            return arrayType.ElementType.REPLCast(current);
+        }
     }
 
     public struct REPLRange : IREPLValue {
@@ -627,8 +695,30 @@ namespace KontrolSystem.TO2.Runtime {
         public bool IsContinue => false;
         
         public bool IsReturn => false;
+        
+        public IREPLForInSource ForInSource() => new REPLRangeForInSource(rangeValue.from, rangeValue.to);
     }
-    
+
+    public class REPLRangeForInSource : IREPLForInSource {
+        private long next;
+        private readonly long to;
+
+        public REPLRangeForInSource(long next, long to) {
+            this.next = next;
+            this.to = to;
+        }
+
+        public TO2Type ElementType => BuiltinType.Int;
+        
+        public IREPLValue Next() {
+            if (next >= to) return null;
+            
+            var current = next;
+            next++;
+            return new REPLInt(current);
+        }
+    }
+
     public struct REPLAny : IREPLValue {
         public readonly TO2Type type;
         public readonly object anyValue;
@@ -647,5 +737,7 @@ namespace KontrolSystem.TO2.Runtime {
         public bool IsContinue => false;
         
         public bool IsReturn => false;
+        
+        public IREPLForInSource ForInSource() => null;
     }
 }
