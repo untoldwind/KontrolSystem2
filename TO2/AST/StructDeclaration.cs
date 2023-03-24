@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     public readonly struct StructField {
@@ -111,6 +112,10 @@ namespace KontrolSystem.TO2.AST {
             }
 
             context.IL.EmitReturn(type);
+        }
+
+        public override REPLValueFuture Eval(REPLContext context) {
+            throw new NotSupportedException("Structs are not supported in REPL mode");
         }
     }
 

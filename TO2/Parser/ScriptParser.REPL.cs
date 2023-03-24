@@ -14,7 +14,6 @@ namespace KontrolSystem.TO2.Parser {
         private static readonly Parser<Node> REPLItem = Opt(LineComment).Then(Alt<Node>(
             UseNamesDeclaration,
             UseAliasDeclaration,
-            FunctionDeclaration,
             TypeAlias,
             Expression,
             WhileExpression,

@@ -185,7 +185,6 @@ namespace KontrolSystem.TO2.AST {
         }
 
         public IREPLValue EvalConvert(Node node, IREPLValue value) {
-            // TODO remove this
             throw new NotImplementedException();
         }
     }

@@ -27,6 +27,10 @@ namespace KontrolSystem.TO2.AST {
         }
 
         public override string ToString() => $"{name} : {type}";
+        
+        public override REPLValueFuture Eval(REPLContext context) {
+            throw new NotSupportedException("Function are not supported in REPL mode");
+        }
     }
 
     public class FunctionDeclaration : Node, IModuleItem, IVariableContainer {
@@ -123,6 +127,10 @@ namespace KontrolSystem.TO2.AST {
                 MethodParameter.EmitLoadArg(context.IL, idx);
             context.IL.EmitNew(OpCodes.Newobj, asyncClass.Value.constructor, parameters.Count);
             context.IL.EmitReturn(asyncClass.Value.type);
+        }
+        
+        public override REPLValueFuture Eval(REPLContext context) {
+            throw new NotSupportedException("Function are not supported in REPL mode");
         }
     }
 }

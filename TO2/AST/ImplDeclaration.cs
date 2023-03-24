@@ -2,6 +2,7 @@
 using System.Linq;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     public class ImplDeclaration : Node, IModuleItem {
@@ -52,5 +53,9 @@ namespace KontrolSystem.TO2.AST {
 
         public IEnumerable<StructuralError> TryImportFunctions(ModuleContext context) =>
             Enumerable.Empty<StructuralError>();
+
+        public override REPLValueFuture Eval(REPLContext context) {
+            throw new System.NotSupportedException("Structs are not supported in REPL mode");
+        }
     }
 }
