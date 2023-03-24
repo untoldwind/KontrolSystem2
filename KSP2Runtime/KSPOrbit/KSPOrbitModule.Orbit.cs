@@ -59,7 +59,9 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             [KSField(Description = "Orbital period.")]
             double Period { get; }
 
-            [KSField(Description = "Reference frame of the orbit. All relative vectors are in this frame.")]
+            [KSField(Description = @"Internal reference frame of the orbit.
+                This might be useful to compare numbers. 
+                Note: All relative vectors are in the celestial frame of the `reference_body` which might be different!")]
             public ITransformFrame ReferenceFrame { get; }
 
             [KSField(Description = "Normal vector perpendicular to orbital plane.")]
@@ -79,7 +81,10 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
             [KSMethod(Description = "Get relative position for a given `trueAnomaly`")] 
             Vector3d RelativePositionForTrueAnomaly(double trueAnomaly);
-                
+
+            [KSMethod(Description = "Get the coordinate independent position for a given `trueAnomaly`")]
+            public Position GlobalPositionForTrueAnomaly(double trueAnomaly);
+            
             [KSMethod(Description = "The relative prograde vector at a given universal time `ut`")]
             Vector3d Prograde(double ut);
 

@@ -49,22 +49,26 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
         public ITransformFrame ReferenceFrame => orbit.ReferenceFrame;
 
-        public Vector3d OrbitNormal => -orbit.GetRelativeOrbitNormal().SwapYAndZ;
+        public Vector3d OrbitNormal => orbit.referenceBody.transform.celestialFrame.ToLocalPosition(orbit.ReferenceFrame, -orbit.GetRelativeOrbitNormal().SwapYAndZ);
 
-        public Vector3d RelativePosition(double ut) => orbit.GetRelativePositionAtUTZup(ut).SwapYAndZ;
+        public Vector3d RelativePosition(double ut) => orbit.referenceBody.transform.celestialFrame.ToLocalPosition(orbit.ReferenceFrame, orbit.GetRelativePositionAtUTZup(ut).SwapYAndZ);
 
         public Vector3d RelativePositionForTrueAnomaly(double trueAnomaly) =>
-            orbit.GetRelativePositionFromTrueAnomaly(trueAnomaly * DirectBindingMath.DegToRad);
+            orbit.referenceBody.transform.celestialFrame.ToLocalPosition(orbit.ReferenceFrame, orbit.GetRelativePositionFromTrueAnomaly(trueAnomaly * DirectBindingMath.DegToRad));
+
+        public Position GlobalPositionForTrueAnomaly(double trueAnomaly) =>
+            new Position(ReferenceFrame,
+                orbit.GetRelativePositionFromTrueAnomaly(trueAnomaly * DirectBindingMath.DegToRad));
         
-        public Position GlobalPosition(double ut) => new Position(ReferenceFrame, RelativePosition(ut));
+        public Position GlobalPosition(double ut) => new Position(ReferenceFrame, orbit.GetRelativePositionAtUTZup(ut).SwapYAndZ);
 
         public VelocityAtPosition GlobalVelocity(double ut) => new VelocityAtPosition(new Velocity(ReferenceFrame.motionFrame, orbit.GetOrbitalVelocityAtUTZup(ut).SwapYAndZ), GlobalPosition(ut));
 
-        public Vector3d OrbitalVelocity(double ut) => orbit.GetOrbitalVelocityAtUTZup(ut).SwapYAndZ;
+        public Vector3d OrbitalVelocity(double ut) => orbit.referenceBody.transform.celestialFrame.ToLocalPosition(orbit.ReferenceFrame, orbit.GetOrbitalVelocityAtUTZup(ut).SwapYAndZ);
 
         public Vector3d Prograde(double ut) => OrbitalVelocity(ut).normalized;
 
-        public Vector3d NormalPlus(double ut) => orbit.GetRelativeOrbitNormal().SwapYAndZ.normalized;
+        public Vector3d NormalPlus(double ut) => orbit.referenceBody.transform.celestialFrame.ToLocalPosition(orbit.ReferenceFrame, orbit.GetRelativeOrbitNormal().SwapYAndZ.normalized);
 
         public Vector3d RadialPlus(double ut) => Vector3d.Exclude(Prograde(ut), Up(ut)).normalized;
 
@@ -155,9 +159,9 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             }
         }
         
-        public Vector3d RelativeAscendingNode => orbit.GetRelativeANVector().SwapYAndZ;
+        public Vector3d RelativeAscendingNode => orbit.referenceBody.transform.celestialFrame.ToLocalPosition(orbit.ReferenceFrame, orbit.GetRelativeANVector().SwapYAndZ);
 
-        public Vector3d RelativeEccentricityVector => orbit.GetRelativeEccVector().SwapYAndZ;
+        public Vector3d RelativeEccentricityVector => orbit.referenceBody.transform.celestialFrame.ToLocalPosition(orbit.ReferenceFrame, orbit.GetRelativeEccVector().SwapYAndZ);
 
         public string ToString() => KSPOrbitModule.OrbitToString(this);
 
