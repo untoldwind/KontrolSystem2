@@ -27,6 +27,10 @@ namespace KontrolSystem.TO2.Runtime {
             Func<IREPLValue, IREPLValue, IREPLValue> map) => new ChainNImpl(resultType,
             new REPLValueFuture[] { first, second }, results => Success(map(results[0], results[1])));
 
+        public static REPLValueFuture Chain2(TO2Type resultType, REPLValueFuture first, REPLValueFuture second,
+            Func<IREPLValue, IREPLValue, REPLValueFuture> map) => new ChainNImpl(resultType,
+            new REPLValueFuture[] { first, second }, results => map(results[0], results[1]));
+
         public static REPLValueFuture ChainN(TO2Type resultType, REPLValueFuture[] futures,
             Func<IREPLValue[], REPLValueFuture> map) => new ChainNImpl(resultType, futures, map);
 

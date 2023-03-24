@@ -196,10 +196,21 @@ namespace KontrolSystem.TO2.AST {
             if (!fieldAccess.FieldType.IsAssignableFrom(context.replModuleContext, valueFuture.Type)) {
                 throw new REPLException(this,$"Type '{targetFuture.Type.Name}' field '{fieldName}' is of type {fieldAccess.FieldType} but is assigned to {valueFuture.Type}");
             }
+            
+            if (target is IAssignContext assignContext) {
+                if (fieldAccess.RequiresPtr && assignContext.IsConst(context.replBlockContext)) {
+                    throw new REPLException(this,
+                        $"Type '{targetFuture.Type.Name}' field '{fieldName}' can not be set on a read-only variable");
+                }
+            } else {
+                throw new REPLException(this,
+                    $"Field assign '{targetFuture.Type.Name}'.'{fieldName}' on invalid target expression");
+            }
+            
             var assign = fieldAccess.FieldType.AssignFrom(context.replModuleContext, valueFuture.Type);
             
             if (op == Operator.Assign) {
-                return REPLValueFuture.Chain2(targetFuture.Type, targetFuture, valueFuture,
+                return REPLValueFuture.Chain2(fieldAccess.FieldType, targetFuture, valueFuture,
                     (target, value) => {
                         var converted = assign.EvalConvert(this, value);
 
@@ -214,7 +225,7 @@ namespace KontrolSystem.TO2.AST {
                 throw new REPLException(this, $"Type '{targetFuture.Type.Name}' field '{fieldName}': Cannot {op} a {fieldAccess.FieldType} with a {valueFuture.Type}");
             }
             
-            return REPLValueFuture.Chain2(targetFuture.Type, targetFuture, valueFuture,
+            return REPLValueFuture.Chain2(fieldAccess.FieldType, targetFuture, valueFuture,
                 (target, value) => {
                     var prevValue = fieldAccess.EvalGet(this, target);
                     var converted = assign.EvalConvert(this, operatorEmitter.Eval(this, prevValue, value));

@@ -1,6 +1,7 @@
 ﻿using System.Reflection.Emit;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     public class IndexAssign : Expression {
@@ -150,5 +151,54 @@ namespace KontrolSystem.TO2.AST {
                 }
             }
         }
+        public override REPLValueFuture Eval(REPLContext context) {
+            var targetFuture = target.Eval(context);
+            var valueFuture = expression.Eval(context);
+            
+            IIndexAccessEmitter indexAccess = targetFuture.Type.AllowedIndexAccess(context.replModuleContext, indexSpec);
+
+            if (indexAccess == null) {
+                throw new REPLException(this, $"Type '{targetFuture.Type.Name}' does not support access by index");
+            }
+
+            if (target is IAssignContext assignContext) {
+                if (assignContext.IsConst(context.replBlockContext)) {
+                    throw new REPLException(this,
+                        $"Type '{targetFuture.Type.Name}' elements can not be set on a read-only variable");
+                }
+            } else {
+                throw new REPLException(this,
+                    $"Index assign '{targetFuture.Type.Name}'.'{indexSpec}' on invalid target expression");
+            }
+
+            if (!indexAccess.TargetType.IsAssignableFrom(context.replModuleContext, valueFuture.Type)) {
+                throw new REPLException(this,$"Type '{targetFuture.Type.Name}' element is of type {indexAccess.TargetType} but is assigned to {valueFuture.Type}");
+            }
+
+            var assign = indexAccess.TargetType.AssignFrom(context.replModuleContext, valueFuture.Type);
+
+            if (op == Operator.Assign) {
+                return REPLValueFuture.Chain2(indexAccess.TargetType, targetFuture, valueFuture,
+                    (target, value) => {
+                        var converted = assign.EvalConvert(this, value);
+
+                        return indexAccess.EvalAssign(this, context, target, converted);
+                    });
+            }
+            
+            IOperatorEmitter operatorEmitter =  indexAccess.TargetType.AllowedSuffixOperators(context.replModuleContext)
+                .GetMatching(context.replModuleContext, op, valueFuture.Type);
+
+            if (operatorEmitter == null) {
+                throw new REPLException(this, $"Index assign '{targetFuture.Type.Name}'.'{indexSpec}': Cannot {op} a {indexAccess.TargetType} with a {valueFuture.Type}");
+            }
+
+            return REPLValueFuture.Chain2(indexAccess.TargetType, targetFuture, valueFuture,
+                (target, value) => indexAccess.EvalGet(this, context, target).Then(indexAccess.TargetType,
+                        prevValue => {
+                            var converted = assign.EvalConvert(this, operatorEmitter.Eval(this, prevValue, value));
+                            return indexAccess.EvalAssign(this, context, target, converted);
+                        }));
+        }        
     }
 }

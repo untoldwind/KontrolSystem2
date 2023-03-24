@@ -15,14 +15,14 @@ namespace KontrolSystem.TO2.Runtime {
         public REPLContext(IContext runtimeContext, REPLModuleContext replModuleContext = null, VariableResolver externalVariables = null) {
             this.runtimeContext = runtimeContext;
             this.replModuleContext = replModuleContext ?? new REPLModuleContext();
-            replBlockContext = new REPLBlockContext(this.replModuleContext);
+            replBlockContext = new REPLBlockContext(this.replModuleContext, FindVariable);
             this.externalVariables = externalVariables;
         }
 
         public REPLVariable FindVariable(string name) => localVariables.Get(name) ?? externalVariables?.Invoke(name);
 
         public REPLVariable DeclaredVariable(string name, bool isConst, TO2Type declaredType) {
-            var variable = new REPLVariable(name, isConst, declaredType);
+            var variable = new REPLVariable(name, isConst, declaredType.UnderlyingType(replModuleContext));
 
             localVariables.Add(name, variable);
 
@@ -35,17 +35,29 @@ namespace KontrolSystem.TO2.Runtime {
         
         public delegate REPLVariable VariableResolver(string name);
         
-        public class REPLVariable {
+        public class REPLVariable : IBlockVariable {
             public readonly string name;
             public readonly bool isConst;
-            public readonly TO2Type declaredType;
+            public readonly RealizedType declaredType;
             public IREPLValue value;
 
-            public REPLVariable(string name, bool isConst, TO2Type declaredType) {
+            public REPLVariable(string name, bool isConst, RealizedType declaredType) {
                 this.name = name;
                 this.isConst = isConst;
                 this.declaredType = declaredType;
             }
+
+            public string Name => name;
+
+            public RealizedType Type => declaredType;
+
+            public bool IsConst => isConst;
+            
+            public void EmitLoad(IBlockContext context) => throw new REPLException("No code generation");
+
+            public void EmitLoadPtr(IBlockContext context) => throw new REPLException("No code generation");
+
+            public void EmitStore(IBlockContext context) => throw new REPLException("No code generation");
         }
     }
     
@@ -53,12 +65,16 @@ namespace KontrolSystem.TO2.Runtime {
 
     }
 
+    public delegate IBlockVariable VariableLookup(string name);
+
     public class REPLBlockContext : IBlockContext {
         private readonly REPLModuleContext moduleContext;
         private readonly List<StructuralError> errors;
+        private readonly VariableLookup variableLookup;
 
-        public REPLBlockContext(REPLModuleContext moduleContext) {
+        public REPLBlockContext(REPLModuleContext moduleContext, VariableLookup variableLookup) {
             this.moduleContext = moduleContext;
+            this.variableLookup = variableLookup;
             errors = new List<StructuralError>();
         }
 
@@ -82,8 +98,8 @@ namespace KontrolSystem.TO2.Runtime {
         public IBlockContext CloneCountingContext() => throw new REPLException( "No counting context");
 
         public (LabelRef start, LabelRef end)? InnerLoop => throw new REPLException( "No inner loop");
-        
-        public IBlockVariable FindVariable(string name) => throw new REPLException( "No block variables");
+
+        public IBlockVariable FindVariable(string name) => variableLookup(name);
 
         public ITempBlockVariable MakeTempVariable(RealizedType to2Type) => throw new REPLException("No temp block variables");
 

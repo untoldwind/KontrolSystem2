@@ -55,6 +55,14 @@ namespace KontrolSystem.TO2.Test {
 
                 out
             "));
+            
+            Assert.Equal("[1, 2, 9, 4]", RunExpression<string>(BuiltinType.String, @"
+                let a = [1, 2, 3, 4]
+
+                a[2] += 6
+
+                a.to_string()
+            "));
         }
 
         [Fact]
