@@ -1,5 +1,7 @@
-﻿using KontrolSystem.TO2.Generator;
+﻿using System;
+using KontrolSystem.TO2.Generator;
 using KontrolSystem.Parsing;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     public class IndexGet : Expression, IAssignContext {
@@ -75,6 +77,17 @@ namespace KontrolSystem.TO2.AST {
             if (context.HasErrors) return;
 
             indexAccess.EmitPtr(context);
+        }
+        
+        public override REPLValueFuture Eval(REPLContext context) {
+            var targetFuture = target.Eval(context);
+            IIndexAccessEmitter indexAccess = targetFuture.Type.AllowedIndexAccess(context.replModuleContext, indexSpec);
+            
+            if (indexAccess == null) {
+                throw new REPLException(this, $"Type '{targetFuture.Type.Name}' does not support access by index");
+            }
+
+            return targetFuture.Then(indexAccess.TargetType, target => indexAccess.EvalGet(this, context, target));
         }
     }
 }

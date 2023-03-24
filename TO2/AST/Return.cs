@@ -88,7 +88,7 @@ namespace KontrolSystem.TO2.AST {
         }
 
         public override REPLValueFuture Eval(REPLContext context) {
-            return REPLValueFuture.Chain1(BuiltinType.Unit, returnValue.Eval(context), value => new REPLReturn(value));
+            return returnValue.Eval(context).Then(BuiltinType.Unit, value => new REPLReturn(value));
         }
     }
 }

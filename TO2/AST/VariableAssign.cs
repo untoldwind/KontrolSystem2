@@ -116,7 +116,7 @@ namespace KontrolSystem.TO2.AST {
             var assign = variable.declaredType.AssignFrom(context.replModuleContext, expressionFuture.Type);
 
             if (op == Operator.Assign) {
-                return REPLValueFuture.Chain1(variable.declaredType, expressionFuture, value => {
+                return expressionFuture.Then(variable.declaredType, value => {
                     var converted = assign.EvalConvert(this, value);
 
                     variable.value = converted;
@@ -131,7 +131,7 @@ namespace KontrolSystem.TO2.AST {
                 throw new REPLException(this, $"Cannot {op} a {variable.declaredType} with a {expressionFuture.Type}");
             }
             
-            return REPLValueFuture.Chain1(variable.declaredType, expressionFuture, value => {
+            return expressionFuture.Then(variable.declaredType, value => {
                 var converted = assign.EvalConvert(this, operatorEmitter.Eval(this, variable.value, value));
 
                 variable.value = converted;

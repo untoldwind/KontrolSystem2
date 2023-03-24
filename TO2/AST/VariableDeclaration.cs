@@ -137,7 +137,7 @@ namespace KontrolSystem.TO2.AST {
             var variable = context.DeclaredVariable(declaration.target, isConst, variableType.UnderlyingType(context.replModuleContext));
             var assign = variable.declaredType.AssignFrom(context.replModuleContext, expressionFuture.Type);
 
-            return REPLValueFuture.Chain1(variableType, expressionFuture, value => {
+            return expressionFuture.Then(variableType, value => {
                 var converted = assign.EvalConvert(this, value);
 
                 variable.value = converted;

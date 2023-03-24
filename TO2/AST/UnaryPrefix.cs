@@ -64,7 +64,7 @@ namespace KontrolSystem.TO2.AST {
                 throw new REPLException(this, $"Prefix {op} on a {rightFuture.Type} is undefined");
             }
 
-            return REPLValueFuture.Chain1(operatorEmitter.ResultType, rightFuture,
+            return rightFuture.Then(operatorEmitter.ResultType,
                  rightResult => operatorEmitter.Eval(this, rightResult, null));
         }
     }
