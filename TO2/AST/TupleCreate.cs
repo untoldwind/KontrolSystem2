@@ -4,6 +4,7 @@ using System;
 using System.Reflection.Emit;
 using KontrolSystem.TO2.Generator;
 using KontrolSystem.Parsing;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     public class TupleCreate : Expression {
@@ -122,5 +123,9 @@ namespace KontrolSystem.TO2.AST {
 
         private TupleType DeriveType(IBlockContext context) =>
             resultType ??= new TupleType(items.Select(item => item.ResultType(context)).ToList());
+
+        public override REPLValueFuture Eval(REPLContext context) {
+            throw new REPLException(this, "Not supported in REPL mode");
+        }
     }
 }

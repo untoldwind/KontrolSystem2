@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     public class UseDeclaration : Node, IModuleItem {
@@ -103,6 +104,41 @@ namespace KontrolSystem.TO2.AST {
             }
 
             return errors;
+        }
+
+        public override REPLValueFuture Eval(REPLContext context) {
+            IKontrolModule module = context.replModuleContext.FindModule(fromModule);
+
+            if (module == null)
+                throw new REPLException(this, $"Module '{fromModule}' not found");
+            if (alias != null) {
+                context.replModuleContext.moduleAliases.Add(alias, fromModule);
+            } else {
+                foreach (string name in (names ?? module.AllTypeNames)) {
+                    TO2Type type = module.FindType(name);
+
+                    if (type != null) context.replModuleContext.mappedTypes.Add(name, type);
+                }
+            }
+            foreach (string name in names ?? module.AllConstantNames) {
+                IKontrolConstant constant = module.FindConstant(name);
+
+                if (constant != null) context.replModuleContext.mappedConstants.Add(name, constant);
+            }
+
+            foreach (string name in names ?? module.AllFunctionNames) {
+                if (context.replModuleContext.mappedConstants.ContainsKey(name)) continue;
+
+                IKontrolFunction function = module.FindFunction(name);
+
+                if (function != null) {
+                    context.replModuleContext.mappedFunctions.Add(name, function);
+                } else if (!context.replModuleContext.mappedTypes.ContainsKey(name)) {
+                    throw new REPLException(this, $"Module '{fromModule}' does not have public member '{name}''");
+                }
+            }
+            
+            return REPLValueFuture.Success(REPLUnit.INSTANCE);
         }
     }
 }

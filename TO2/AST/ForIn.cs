@@ -187,9 +187,9 @@ namespace KontrolSystem.TO2.AST {
                         if(!variableType.IsAssignableFrom(context.replModuleContext, source.ElementType))
                             throw new REPLException(sourceExpression,
                             $"{sourceFuture.Type} has elements of type {source.ElementType}, expected {variableType}");
-                        variable = context.DeclaredVariable(variableName, true, variableType);
+                        variable = context.DeclaredVariable(variableName, true, variableType.UnderlyingType(context.replModuleContext));
                     } else {
-                        variable = context.DeclaredVariable(variableName, true, source.ElementType);
+                        variable = context.DeclaredVariable(variableName, true, source.ElementType.UnderlyingType(context.replModuleContext));
                     }
                 }
 

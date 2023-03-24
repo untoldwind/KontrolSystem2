@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.AST;
+using KontrolSystem.TO2.Generator;
 using KontrolSystem.TO2.Parser;
 using KontrolSystem.TO2.Runtime;
 using Xunit;
@@ -130,13 +131,27 @@ namespace KontrolSystem.TO2.Test {
 
                 a
             "));
-            
+        }
+
+        [Fact]
+        public void TestUse() {
+            Assert.Equal(0.5, RunExpression<double>(BuiltinType.Float, @"
+                use { cos_deg } from core::math
+
+                cos_deg(60)
+            "), 5);
+
+            Assert.Equal(1, RunExpression<double>(BuiltinType.Float, @"
+                use { log, E } from core::math
+
+                log(E)
+            "), 5);
         }
 
         private T RunExpression<T>(TO2Type to2Type, string expression) {
             var result = TO2ParserREPL.REPLItems.Parse(expression);
-
-            var context = new REPLContext(new TestRunnerContext());
+            var registry = KontrolRegistry.CreateCore();
+            var context = new REPLContext(registry, new TestRunnerContext());
             var pollCount = 0;
 
             foreach (var item in result.Where(i => !(i is IBlockItem))) {

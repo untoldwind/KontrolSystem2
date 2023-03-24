@@ -105,8 +105,7 @@ namespace KontrolSystem.TO2.AST {
             this;
 
         public IREPLValue Eval(Node node, IREPLValue left, IREPLValue right) {
-            // TODO fix this
-            throw new NotImplementedException();
+            throw new REPLException(node, "Not supported in REPL mode");
         }
 
         // ---------------- IAssignEmitter -----------------
@@ -131,8 +130,7 @@ namespace KontrolSystem.TO2.AST {
         }
 
         public IREPLValue EvalConvert(Node node, IREPLValue value) {
-            // TODO remove this
-            throw new NotImplementedException();
+            throw new REPLException(node, "Not supported in REPL mode");
         }
 
         protected abstract void EmitAssignToPtr(IBlockContext context, IBlockVariable tempSource);

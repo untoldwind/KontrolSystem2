@@ -3,6 +3,7 @@ using System.Reflection.Emit;
 using System.Linq;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     public class TupleDeconstructDeclaration : Node, IBlockItem {
@@ -169,6 +170,10 @@ namespace KontrolSystem.TO2.AST {
             declaration.IsPlaceholder
                 ? Enumerable.Empty<IVariableRef>()
                 : new TupleVariableRef(itemIdx, declaration, expression).Yield());
+
+        public override REPLValueFuture Eval(REPLContext context) {
+            throw new REPLException(this, "Not supported in REPL mode");
+        }
     }
 
     public class TupleVariableRef : IVariableRef {

@@ -2,6 +2,7 @@
 using System.Linq;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     public interface IUnapplyEmitter {
@@ -69,5 +70,9 @@ namespace KontrolSystem.TO2.AST {
         }
 
         public override void Prepare(IBlockContext context) => expression.Prepare(context);
+        
+        public override REPLValueFuture Eval(REPLContext context) {
+            throw new REPLException(this, "Not supported in REPL mode");
+        }
     }
 }

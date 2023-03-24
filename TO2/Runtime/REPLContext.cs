@@ -12,17 +12,20 @@ namespace KontrolSystem.TO2.Runtime {
         public readonly Dictionary<string, REPLVariable> localVariables = new Dictionary<string, REPLVariable>();
         public readonly VariableResolver externalVariables;
 
-        public REPLContext(IContext runtimeContext, REPLModuleContext replModuleContext = null, VariableResolver externalVariables = null) {
+        public REPLContext(KontrolRegistry registry, IContext runtimeContext) : this(runtimeContext, new REPLModuleContext(new Context(registry))) {
+        }
+        
+        public REPLContext(IContext runtimeContext, REPLModuleContext replModuleContext , VariableResolver externalVariables = null) {
             this.runtimeContext = runtimeContext;
-            this.replModuleContext = replModuleContext ?? new REPLModuleContext();
+            this.replModuleContext = replModuleContext;
             replBlockContext = new REPLBlockContext(this.replModuleContext, FindVariable);
             this.externalVariables = externalVariables;
         }
 
         public REPLVariable FindVariable(string name) => localVariables.Get(name) ?? externalVariables?.Invoke(name);
 
-        public REPLVariable DeclaredVariable(string name, bool isConst, TO2Type declaredType) {
-            var variable = new REPLVariable(name, isConst, declaredType.UnderlyingType(replModuleContext));
+        public REPLVariable DeclaredVariable(string name, bool isConst, RealizedType declaredType) {
+            var variable = new REPLVariable(name, isConst, declaredType);
 
             localVariables.Add(name, variable);
 
@@ -62,7 +65,8 @@ namespace KontrolSystem.TO2.Runtime {
     }
     
     public class REPLModuleContext : ModuleContext {
-
+        public REPLModuleContext(Context rootContext) : base(rootContext, "repl") {
+        }
     }
 
     public delegate IBlockVariable VariableLookup(string name);

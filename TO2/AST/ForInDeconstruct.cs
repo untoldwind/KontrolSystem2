@@ -2,6 +2,7 @@
 using System.Reflection.Emit;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     public class ForInDeconstruct : Expression, IVariableContainer {
@@ -343,6 +344,10 @@ namespace KontrolSystem.TO2.AST {
             }
 
             return variables;
+        }
+
+        public override REPLValueFuture Eval(REPLContext context) {
+            throw new REPLException(this, "Not supported in REPL mode");
         }
     }
 }

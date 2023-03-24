@@ -2,6 +2,7 @@
 using System.Linq;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     public class ConstDeclaration : Node, IModuleItem {
@@ -35,5 +36,29 @@ namespace KontrolSystem.TO2.AST {
 
         public IEnumerable<StructuralError> TryVerifyFunctions(ModuleContext context) =>
             Enumerable.Empty<StructuralError>();
+
+        public override REPLValueFuture Eval(REPLContext context) {
+            var expressionFuture = this.expression.Eval(context);
+
+            if (context.FindVariable(name) != null) {
+                throw new REPLException(this, $"Variable '{name}' already declared in this scope");
+            }
+
+            if (!type.IsAssignableFrom(context.replModuleContext, expressionFuture.Type)) {
+                throw new REPLException(this,
+                    $"Variable '{name}' is of type {expressionFuture.Type} but is initialized with {expressionFuture.Type}");
+            }
+
+            var variable = context.DeclaredVariable(name, true, type.UnderlyingType(context.replModuleContext));
+            var assign = variable.declaredType.AssignFrom(context.replModuleContext, expressionFuture.Type);
+
+            return expressionFuture.Then(BuiltinType.Unit, value => {
+                var converted = assign.EvalConvert(this, value);
+
+                variable.value = converted;
+
+                return converted;
+            });
+        }
     }
 }
