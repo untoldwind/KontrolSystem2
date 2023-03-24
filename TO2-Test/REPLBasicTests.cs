@@ -84,6 +84,46 @@ namespace KontrolSystem.TO2.Test {
             Assert.Equal("<inline>(4, 1): No local variable, constant or function 'b'", exception.Message);
         }
 
+        [Fact]
+        public void TestIf() {
+            Assert.Equal(1, RunExpression<long>(BuiltinType.Int, @"
+                let a = 0
+                let b = 10
+
+                if(b < 20) {
+                    a += 1
+                }
+
+                a
+            "));
+            
+            Assert.Equal(1, RunExpression<long>(BuiltinType.Int, @"
+                let a = 0
+                let b = 10
+
+                if(b < 20) {
+                    a += 1
+                } else {
+                    a -= 1
+                }
+
+                a
+            "));
+            Assert.Equal(-1, RunExpression<long>(BuiltinType.Int, @"
+                let a = 0
+                let b = 10
+
+                if(b > 20) {
+                    a += 1
+                } else {
+                    a -= 1
+                }
+
+                a
+            "));
+            
+        }
+
         private T RunExpression<T>(TO2Type to2Type, string expression) {
             var result = TO2ParserREPL.REPLItems.Parse(expression);
 

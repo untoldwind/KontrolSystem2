@@ -185,7 +185,9 @@ namespace KontrolSystem.TO2.AST {
         }
 
         public IREPLValue EvalConvert(Node node, IREPLValue value) {
-            throw new NotImplementedException();
+            if (value.Type == resultType) return value;
+
+            return new REPLAny(resultType, Result.Ok<object, object>(resultType.successType.REPLCast(value.Value)));
         }
     }
 
@@ -267,8 +269,13 @@ namespace KontrolSystem.TO2.AST {
             this;
 
         public IREPLValue Eval(Node node, IREPLValue left, IREPLValue right) {
-            // TOOD fix this
-            throw new NotImplementedException();
+            if (left.Type is ResultType lrt && left.Value is IAnyResult lr) {
+                return lr.Success
+                    ? lrt.successType.REPLCast(lr.ValueObject)
+                    : new REPLReturn(lrt.errorType.REPLCast(lr.ErrorObject));
+            }
+
+            throw new REPLException(node, $"Expected {left.Type} to be a result");
         }
     }
 
