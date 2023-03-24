@@ -233,6 +233,8 @@ namespace KontrolSystem.KSP.Runtime.Testing {
             return r * (frameX * x + frameY * y);
         }
 
+        public Position GlobalPositionForTrueAnomaly(double trueAnomaly) => new Position(ReferenceFrame, RelativePositionForTrueAnomaly(trueAnomaly));
+
         public Vector3d GetOrbitalVelocityAtUT(double ut) => GetOrbitalVelocityAtOrbitTime(GetOrbitTimeAtUT(ut));
 
         public Vector3d GetOrbitalVelocityAtOrbitTime(double orbitTime) =>
