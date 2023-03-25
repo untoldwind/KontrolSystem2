@@ -1,12 +1,12 @@
 use * from core::testing
 
-pub struct MyStruct(something: string) {
-    something: string = something
+pub struct MyStruct(base: float) {
+    base: float = base
 }
 
 impl MyStruct {
     fn s1(self, task: fn (float) -> float) -> float = {
-        let dt = 0.0
+        let dt = 1.0
         dt = task(dt)
         dt
     }
@@ -19,16 +19,16 @@ impl MyStruct {
     }
 }
 
-sync fn f1(f: float) -> float = { 1.0 }
-sync fn f2(c: MyStruct) -> float = { 1.0 }
+sync fn f1(f: float) -> float = { f + 1.0 }
+sync fn f2(c: MyStruct) -> float = { c.base + 1.0 }
 
 test fn test_issue_55() -> Unit = {
-    const common : MyStruct = MyStruct("something")
+    const common : MyStruct = MyStruct(10.0)
 
-    common.s1(fn (f) -> f1(f))
-    common.s2(fn (f) -> f2(f))
+    assert_float(2.0, common.s1(fn (f) -> f1(f)))
+    assert_float(11.0, common.s2(fn (f) -> f2(f)))
 
     // These next two lines appear to be equivalent.
-    common.s1(f1)
-    common.s2(f2)
+    assert_float(2.0, common.s1(f1))
+    assert_float(11.0, common.s2(f2))
 }

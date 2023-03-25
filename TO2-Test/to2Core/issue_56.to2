@@ -1,0 +1,41 @@
+use * from core::testing
+
+pub struct Sequencer(last: Option<SeqNode>) {
+    last: Option<SeqNode> = last
+}
+
+pub struct SeqNode(next: Option<SeqNode>) {
+    next: Option<SeqNode> = next
+}
+
+impl Sequencer {
+    fn show_bug(self) -> Unit = {
+        const seq : Sequencer = self
+
+
+        const last : Option<SeqNode> = seq.last
+
+        // Attempting to use "last.defined" triggers an error:
+        //
+        // ERROR:  [(0, 0)] Unknown Error
+        //     Specified method is not supported.
+
+//// Uncomment the next line to trigger the error.
+        if (last.defined) { }
+
+
+    }
+}
+
+test fn test_issue_56() -> Unit = {
+    const seq : Sequencer = Sequencer(None())
+
+
+    const last : Option<SeqNode> = seq.last
+
+    // This is the same code as above, but when we do it here,
+    // we do NOT get an error.
+
+    assert_false(last.defined)
+
+}
