@@ -2,7 +2,7 @@
 
 use { Vessel } from ksp::vessel
 use { Orbit, Body } from ksp::orbit
-use { Vec3 } from ksp::math
+use { Vec3, GlobalVector } from ksp::math
 use { cos_deg, atan2_deg } from core::math
 
 
@@ -12,6 +12,13 @@ use { cos_deg, atan2_deg } from core::math
 /// * `max_angular_velocity` sets a limit how much the `vessel` may still be turning
 pub sync fn ship_is_facing(vessel : Vessel, desired_facing : Vec3, max_deviation_degrees : float, max_angular_velocity : float) -> bool = 
     desired_facing.normalized * vessel.facing.vector.normalized >= cos_deg(max_deviation_degrees) && vessel.angular_velocity.magnitude < max_angular_velocity
+
+/// Determine if `vessel` is facing a given direction. (Coordinate independent version)
+///
+/// * `max_deviation_degrees` sets a limit how many degrees the angle may differ
+/// * `max_angular_velocity` sets a limit how much the `vessel` may still be turning
+pub sync fn global_ship_is_facing(vessel : Vessel, desired_facing : GlobalVector, max_deviation_degrees : float, max_angular_velocity : float) -> bool = 
+    desired_facing.normalized * vessel.global_facing.vector.normalized >= cos_deg(max_deviation_degrees) && vessel.angular_velocity.magnitude < max_angular_velocity
 
 /// Removes all maneuvering nodes from the flight plan of a `vessel`.
 pub sync fn remove_all_nodes(vessel : Vessel) -> Unit = {
