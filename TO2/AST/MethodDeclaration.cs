@@ -43,7 +43,7 @@ namespace KontrolSystem.TO2.AST {
         }
 
         public IMethodInvokeFactory CreateInvokeFactory() {
-            syncBlockContext ??= new SyncBlockContext(structType, isConst, isAsync, name, declaredReturn, parameters);
+            syncBlockContext ??= new SyncBlockContext(structType, isConst, isAsync, structType.Name.ToUpper() + "_" + name, declaredReturn, parameters);
 
             return new BoundMethodInvokeFactory(
                 description,
@@ -62,7 +62,7 @@ namespace KontrolSystem.TO2.AST {
                     new List<FunctionParameter> { new FunctionParameter("self", structType) };
                 effectiveParameters.AddRange(parameters);
 
-                asyncClass ??= AsyncClass.Create(syncBlockContext, name, declaredReturn, effectiveParameters,
+                asyncClass ??= AsyncClass.Create(syncBlockContext, structType.Name.ToUpper() + "_" + name, declaredReturn, effectiveParameters,
                     expression);
 
                 for (int idx = 0; idx < effectiveParameters.Count; idx++)

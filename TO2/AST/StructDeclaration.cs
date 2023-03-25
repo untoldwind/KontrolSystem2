@@ -120,7 +120,7 @@ namespace KontrolSystem.TO2.AST {
     }
 
     public class StructTypeAliasDelegate : TO2Type {
-        private readonly ModuleContext declaredModule;
+        public readonly ModuleContext declaredModule;
         public readonly ModuleContext structContext;
         private readonly List<StructField> fields;
         public override string Name { get; }

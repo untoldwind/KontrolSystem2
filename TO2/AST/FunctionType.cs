@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using KontrolSystem.TO2.Generator;
 using KontrolSystem.Parsing;
 
@@ -28,11 +29,17 @@ namespace KontrolSystem.TO2.AST {
 
         public override Type GeneratedType(ModuleContext context) {
             if (generatedType == null) {
-                generatedType =
+                var cacheable = !(returnType.GeneratedType(context) is TypeBuilder) &&
+                               !parameterTypes.Exists(p => p.GeneratedType(context) is TypeBuilder);
+                var runtimeType =
                     (Type.GetType($"System.Func`{parameterTypes.Count + 1}") ??
                      throw new ArgumentException($"No type System.Func`{parameterTypes.Count + 1}")).MakeGenericType(
                         parameterTypes
                             .Concat(returnType.Yield()).Select(p => p.GeneratedType(context)).ToArray());
+
+                if (cacheable) generatedType = runtimeType;
+
+                return runtimeType;
             }
 
             return generatedType;

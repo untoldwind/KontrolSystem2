@@ -1,0 +1,34 @@
+use * from core::testing
+
+pub struct MyStruct(something: string) {
+    something: string = something
+}
+
+impl MyStruct {
+    fn s1(self, task: fn (float) -> float) -> float = {
+        let dt = 0.0
+        dt = task(dt)
+        dt
+    }
+    fn s2(self, task: fn (MyStruct) -> float) -> float = {
+        let dt = 0.0
+
+        dt = task(self) // UNCOMMENT HERE TO TRIGGER THE MESSAGE
+
+        dt
+    }
+}
+
+sync fn f1(f: float) -> float = { 1.0 }
+sync fn f2(c: MyStruct) -> float = { 1.0 }
+
+test fn test_issue_55() -> Unit = {
+    const common : MyStruct = MyStruct("something")
+
+    common.s1(fn (f) -> f1(f))
+    common.s2(fn (f) -> f2(f))
+
+    // These next two lines appear to be equivalent.
+    common.s1(f1)
+    common.s2(f2)
+}

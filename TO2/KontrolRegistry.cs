@@ -79,12 +79,12 @@ namespace KontrolSystem.TO2 {
             }
 
             foreach (DeclaredKontrolModule declared in declaredModules) {
-                // ... so that we should now be able to infer all types
-                ModuleGenerator.VerifyFunctions(declared);
+                ModuleGenerator.CompileStructs(declared);
             }
 
             foreach (DeclaredKontrolModule declared in declaredModules) {
-                ModuleGenerator.CompileStructs(declared);
+                // ... so that we should now be able to infer all types
+                ModuleGenerator.VerifyFunctions(declared);
             }
 
             foreach (DeclaredKontrolModule declared in declaredModules) {
