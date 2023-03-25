@@ -10,7 +10,9 @@
 ```rust
 pub fn atmo_launch ( vessel : ksp::vessel::Vessel,
                      target_apoapsis : float,
-                     heading : float ) -> Result<Unit, string>
+                     heading : float,
+                     low_turn : float,
+                     high_turn : float ) -> Result<Unit, string>
 ```
 
 Automatically launch a rocket from an atmosphere to a circular orbit.
@@ -20,7 +22,9 @@ Automatically launch a rocket from an atmosphere to a circular orbit.
 ```rust
 pub fn atmo_launch_ascent ( vessel : ksp::vessel::Vessel,
                             target_apoapsis : float,
-                            heading : float ) -> Unit
+                            heading : float,
+                            low_turn : float,
+                            high_turn : float ) -> Unit
 ```
 
 Perform a rocket launch ascent from an atmosphere.

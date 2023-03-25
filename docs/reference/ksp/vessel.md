@@ -158,6 +158,7 @@ ETA | float | R/W |
 expected_orbit | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit) | R/O | 
 global_burn_vector | [ksp::math::GlobalVelocity](/reference/ksp/math.md#globalvelocity) | R/W | 
 normal | float | R/W | 
+orbit_patch | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit) | R/O | 
 prograde | float | R/W | 
 radial_out | float | R/W | 
 time | float | R/W | 

@@ -175,7 +175,7 @@ periapsis | float | R/O | Periapsis of the orbit above sealevel of the `referenc
 periapsis_radius | float | R/O | Radius of periapsis of the orbit (i.e. from the center of the `reference_body') 
 period | float | R/O | Orbital period. 
 reference_body | [ksp::orbit::Body](/reference/ksp/orbit.md#body) | R/O | The celestial body the orbit is referenced on. 
-reference_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/O | Reference frame of the orbit. All relative vectors are in this frame. 
+reference_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/O | Internal reference frame of the orbit. This might be useful to compare numbers. Note: All relative vectors are in the celestial frame of the `reference_body` which might be different! 
 relative_ascending_node | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get the relative position of the ascending node. 
 relative_eccentricity_vector | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get the relative eccentricity vector. 
 semi_major_axis | float | R/O | Semi major axis of the orbit. 
@@ -212,6 +212,15 @@ orbit.global_position ( ut : float ) -> ksp::math::GlobalPosition
 ```
 
 Get the absolute position at a given universal time `ut`
+
+
+##### global_position_for_true_anomaly
+
+```rust
+orbit.global_position_for_true_anomaly ( trueAnomaly : float ) -> ksp::math::GlobalPosition
+```
+
+Get the coordinate independent position for a given `trueAnomaly`
 
 
 ##### global_velocity

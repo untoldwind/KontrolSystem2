@@ -87,6 +87,15 @@ pub sync fn circularize_orbit_at ( orbit : ksp::orbit::Orbit,
 Calculate the required delta-v to change the given `orbit`
 to a (mostly) circular orbit at a given universal time `UT`.
 
+### circularize_orbit_pe
+
+```rust
+pub sync fn circularize_orbit_pe ( orbit : ksp::orbit::Orbit ) -> Result<(delta_v : ksp::math::Vec3, UT : float), string>
+```
+
+Calculate the required delta-v and time to change the given `orbit`
+to a (mostly) circular orbit at the next periapsis
+
 ### course_correction_body
 
 ```rust
