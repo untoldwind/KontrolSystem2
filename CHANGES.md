@@ -4,6 +4,9 @@
 
 * Make low and high gravity turn parameters tweakable in `launch_rocket.to2`
 * Add `circularize_orbit_pe` to std-lib 
+* Ensure that orbit relative coordinates are in main bodies reference frame (#54)
+* Use coordinate independent vectors to check ship alignment in `exec_next_node` 
+  * Also adding `global_ship_is_facing` helper to `std::utils`
 
 ## 0.2.0.2 -> 0.2.1
 
