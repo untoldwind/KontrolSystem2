@@ -5,12 +5,12 @@ use { sleep, current_time } from ksp::game
 use { estimate_burn_time } from std::vac
 use { remove_all_nodes } from std::utils
 
-pub fn main_flight(vessel: Vessel) -> Result<Unit, string> = {
+pub fn main_flight(vessel: Vessel, max_rotations : float = 2.0) -> Result<Unit, string> = {
     CONSOLE.clear()
 
     let ut = current_time()
 
-    let (delta_v, UT) = bi_impulsive_transfer(vessel.orbit, vessel.target.ok_or("No Target")?.orbit, ut, ut + 3600)?
+    let (delta_v, UT) = bi_impulsive_transfer(vessel.orbit, vessel.target.ok_or("No Target")?.orbit, ut, ut + vessel.orbit.period * max_rotations)?
 
     CONSOLE.print_line("Intercept: " + delta_v.to_string() + " " + UT.to_string())
 

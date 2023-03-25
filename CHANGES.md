@@ -1,12 +1,14 @@
 # Changes
 
-## 0.2.1 ->
+## 0.2.1 -> 0.2.2
 
 * Make low and high gravity turn parameters tweakable in `launch_rocket.to2`
 * Add `circularize_orbit_pe` to std-lib 
 * Ensure that orbit relative coordinates are in main bodies reference frame (#54)
 * Use coordinate independent vectors to check ship alignment in `exec_next_node` 
   * Also adding `global_ship_is_facing` helper to `std::utils`
+* Fix struct type as type parameter issue (#55 + #56)
+* Base the search interval of the `intercept` script on orbit period to make it more useful in interplanetary transitions
 
 ## 0.2.0.2 -> 0.2.1
 

@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace KontrolSystem.SpaceWarpMod {
 
-    [BepInPlugin("com.github.untoldwind.KontrolSystem2", "KontrolSystem2", "0.2.1")]
+    [BepInPlugin("com.github.untoldwind.KontrolSystem2", "KontrolSystem2", "0.2.2")]
     [BepInDependency(SpaceWarpPlugin.ModGuid, SpaceWarpPlugin.ModVer)]
     public class KontrolSystemMod : BaseSpaceWarpPlugin {
         private ModuleManagerWindow moduleManagerWindow;

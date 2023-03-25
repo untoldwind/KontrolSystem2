@@ -51,6 +51,9 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             }
 
             [KSField]
+            public KSPOrbitModule.IOrbit OrbitPatch => new OrbitWrapper(vesselAdapter.context, vesselAdapter.vessel.Orbiter.PatchedConicSolver.FindPatchContainingUT(maneuverNode.Time) ?? vesselAdapter.vessel.Orbit);
+
+            [KSField]
             public Vector3d BurnVector {
                 get {
                     KSPOrbitModule.IOrbit orbit = new OrbitWrapper(vesselAdapter.context, vesselAdapter.vessel.Orbiter.PatchedConicSolver.FindPatchContainingUT(maneuverNode.Time) ?? vesselAdapter.vessel.Orbit);
@@ -72,13 +75,13 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             public VelocityAtPosition GlobalBurnVector {
                 get {
                     KSPOrbitModule.IOrbit orbit = new OrbitWrapper(vesselAdapter.context, vesselAdapter.vessel.Orbiter.PatchedConicSolver.FindPatchContainingUT(maneuverNode.Time) ?? vesselAdapter.vessel.Orbit);
-                    return new VelocityAtPosition(new Velocity(orbit.ReferenceFrame.motionFrame, orbit.RadialPlus(maneuverNode.Time) * maneuverNode.BurnVector.x +
-                           orbit.NormalPlus(maneuverNode.Time) * maneuverNode.BurnVector.y +
-                           orbit.Prograde(maneuverNode.Time) * maneuverNode.BurnVector.z), orbit.GlobalPosition(maneuverNode.Time));
+                    return new VelocityAtPosition(new Velocity(orbit.ReferenceBody.CelestialFrame.motionFrame, orbit.RadialPlus(maneuverNode.Time) * maneuverNode.BurnVector.x +
+                        orbit.NormalPlus(maneuverNode.Time) * maneuverNode.BurnVector.y +
+                        orbit.Prograde(maneuverNode.Time) * maneuverNode.BurnVector.z), orbit.GlobalPosition(maneuverNode.Time));
                 }
                 set {
                     KSPOrbitModule.IOrbit orbit = new OrbitWrapper(vesselAdapter.context, vesselAdapter.vessel.Orbiter.PatchedConicSolver.FindPatchContainingUT(maneuverNode.Time) ?? vesselAdapter.vessel.Orbit);
-                    var local = orbit.ReferenceFrame.motionFrame.ToLocalVelocity(value.velocity, value.position);
+                    var local = orbit.ReferenceBody.CelestialFrame.motionFrame.ToLocalVelocity(value.velocity, value.position);
                     UpdateNode(
                         Vector3d.Dot(orbit.RadialPlus(maneuverNode.Time), local),
                         Vector3d.Dot(orbit.NormalPlus(maneuverNode.Time), local),

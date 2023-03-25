@@ -44,8 +44,8 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSMethod]
             public Result<ManeuverNodeAdapter, string> AddBurnVector(double ut, Vector3d burnVector) {
+                KSPOrbitModule.IOrbit orbit = new OrbitWrapper(vesselAdapter.context, vesselAdapter.vessel.Orbiter.PatchedConicSolver.FindPatchContainingUT(ut) ?? vesselAdapter.vessel.Orbit);
                 ManeuverNodeData maneuverNodeData = new ManeuverNodeData(vesselAdapter.vessel.GlobalId, false, ut);
-                KSPOrbitModule.IOrbit orbit = new OrbitWrapper(vesselAdapter.context, vesselAdapter.vessel.Orbit);
 
                 maneuverNodeData.BurnVector = new Vector3d(
                     Vector3d.Dot(orbit.RadialPlus(ut), burnVector),
