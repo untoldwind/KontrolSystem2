@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using KontrolSystem.TO2.Generator;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     /// <summary>
@@ -91,6 +92,8 @@ namespace KontrolSystem.TO2.AST {
 
         public virtual IEnumerable<(string name, RealizedType type)> InferGenericArgument(ModuleContext context,
             RealizedType concreteType) => Enumerable.Empty<(string name, RealizedType type)>();
+
+        public virtual IREPLValue REPLCast(object value) => new REPLAny(this, value);
 
         public override string ToString() => Name;
     }

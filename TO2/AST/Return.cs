@@ -1,6 +1,7 @@
 ﻿using System.Reflection.Emit;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     public class ReturnEmpty : Expression {
@@ -34,6 +35,10 @@ namespace KontrolSystem.TO2.AST {
             }
 
             context.IL.EmitReturn(context.MethodBuilder.ReturnType);
+        }
+
+        public override REPLValueFuture Eval(REPLContext context) {
+            return REPLValueFuture.Success(new REPLReturn(REPLUnit.INSTANCE));
         }
     }
 
@@ -80,6 +85,10 @@ namespace KontrolSystem.TO2.AST {
             }
 
             context.IL.EmitReturn(context.MethodBuilder.ReturnType);
+        }
+
+        public override REPLValueFuture Eval(REPLContext context) {
+            return returnValue.Eval(context).Then(BuiltinType.Unit, value => new REPLReturn(value));
         }
     }
 }

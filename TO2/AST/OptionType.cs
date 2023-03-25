@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using KontrolSystem.TO2.Generator;
 using KontrolSystem.TO2.Runtime;
+using Option = KontrolSystem.Parsing.Option;
 
 namespace KontrolSystem.TO2.AST {
     public class OptionType : RealizedType {
@@ -176,6 +177,12 @@ namespace KontrolSystem.TO2.AST {
             context.IL.Emit(OpCodes.Stfld, generatedType.GetField("value"));
             someResult.EmitLoad(context);
         }
+
+        public IREPLValue EvalConvert(Node node, IREPLValue value) {
+            if (value.Type == optionType) return value;
+
+            return new REPLAny(optionType, Option.Some(optionType.elementType.REPLCast(value.Value))); 
+        }
     }
 
     internal class OptionBitOrOperator : IOperatorEmitter {
@@ -238,6 +245,14 @@ namespace KontrolSystem.TO2.AST {
 
         public IOperatorEmitter FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) =>
             this;
+
+        public IREPLValue Eval(Node node, IREPLValue left, IREPLValue right) {
+            if (left.Type is OptionType lot && left.Value is IAnyOption lo) {
+                return lot.elementType.REPLCast(lo.Defined ? lo.ValueObject : right);
+            }
+
+            throw new REPLException(node, $"Expected {left.Type} to be an option");
+        }
     }
 
     internal class OptionUnwrapOperator : IOperatorEmitter {
@@ -303,6 +318,16 @@ namespace KontrolSystem.TO2.AST {
 
         public IOperatorEmitter FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) =>
             this;
+
+        public IREPLValue Eval(Node node, IREPLValue left, IREPLValue right) {
+            if (left.Type is OptionType lot && left.Value is IAnyOption lo) {
+                return lo.Defined
+                    ? lot.elementType.REPLCast(lo.ValueObject)
+                    : new REPLReturn(new REPLAny(lot, Option.None<object>()));
+            }
+
+            throw new REPLException(node, $"Expected {left.Type} to be an option");
+        }
     }
 
     internal class OptionMapFactory : IMethodInvokeFactory {

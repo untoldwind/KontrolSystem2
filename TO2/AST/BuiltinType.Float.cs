@@ -17,72 +17,72 @@ namespace KontrolSystem.TO2.AST {
                 allowedPrefixOperators = new OperatorCollection {
                     {
                         Operator.Neg,
-                        new DirectOperatorEmitter(() => Unit, () => Float, OpCodes.Neg)
+                        new DirectOperatorEmitter(() => Unit, () => Float, REPLFloat.Neg, OpCodes.Neg)
                     }, {
                         Operator.Add,
-                        new DirectOperatorEmitter(() => Float, () => Float, OpCodes.Add)
+                        new DirectOperatorEmitter(() => Float, () => Float, REPLFloat.Add, OpCodes.Add)
                     }, {
                         Operator.Sub,
-                        new DirectOperatorEmitter(() => Float, () => Float, OpCodes.Sub)
+                        new DirectOperatorEmitter(() => Float, () => Float, REPLFloat.Sub, OpCodes.Sub)
                     }, {
                         Operator.Mul,
-                        new DirectOperatorEmitter(() => Float, () => Float, OpCodes.Mul)
+                        new DirectOperatorEmitter(() => Float, () => Float, REPLFloat.Mul, OpCodes.Mul)
                     }, {
                         Operator.Div,
-                        new DirectOperatorEmitter(() => Float, () => Float, OpCodes.Div)
+                        new DirectOperatorEmitter(() => Float, () => Float, REPLFloat.Div, OpCodes.Div)
                     },
                 };
                 allowedSuffixOperators = new OperatorCollection {
                     {
                         Operator.Add,
-                        new DirectOperatorEmitter(() => Float, () => Float, OpCodes.Add)
+                        new DirectOperatorEmitter(() => Float, () => Float, REPLFloat.Add, OpCodes.Add)
                     }, {
                         Operator.AddAssign,
-                        new DirectOperatorEmitter(() => Float, () => Float, OpCodes.Add)
+                        new DirectOperatorEmitter(() => Float, () => Float, REPLFloat.Add, OpCodes.Add)
                     }, {
                         Operator.Sub,
-                        new DirectOperatorEmitter(() => Float, () => Float, OpCodes.Sub)
+                        new DirectOperatorEmitter(() => Float, () => Float, REPLFloat.Sub, OpCodes.Sub)
                     }, {
                         Operator.SubAssign,
-                        new DirectOperatorEmitter(() => Float, () => Float, OpCodes.Sub)
+                        new DirectOperatorEmitter(() => Float, () => Float, REPLFloat.Sub, OpCodes.Sub)
                     }, {
                         Operator.Mul,
-                        new DirectOperatorEmitter(() => Float, () => Float, OpCodes.Mul)
+                        new DirectOperatorEmitter(() => Float, () => Float, REPLFloat.Mul, OpCodes.Mul)
                     }, {
                         Operator.MulAssign,
-                        new DirectOperatorEmitter(() => Float, () => Float, OpCodes.Mul)
+                        new DirectOperatorEmitter(() => Float, () => Float, REPLFloat.Mul, OpCodes.Mul)
                     }, {
                         Operator.Div,
-                        new DirectOperatorEmitter(() => Float, () => Float, OpCodes.Div)
+                        new DirectOperatorEmitter(() => Float, () => Float, REPLFloat.Div, OpCodes.Div)
                     }, {
                         Operator.DivAssign,
-                        new DirectOperatorEmitter(() => Float, () => Float, OpCodes.Div)
+                        new DirectOperatorEmitter(() => Float, () => Float, REPLFloat.Div, OpCodes.Div)
                     }, {
                         Operator.Mod,
-                        new DirectOperatorEmitter(() => Float, () => Float, OpCodes.Rem)
+                        new DirectOperatorEmitter(() => Float, () => Float, REPLFloat.Rem, OpCodes.Rem)
                     }, {
                         Operator.ModAssign,
-                        new DirectOperatorEmitter(() => Float, () => Float, OpCodes.Rem)
+                        new DirectOperatorEmitter(() => Float, () => Float, REPLFloat.Rem, OpCodes.Rem)
                     }, {
                         Operator.Eq,
-                        new DirectOperatorEmitter(() => Float, () => Bool, OpCodes.Ceq)
+                        new DirectOperatorEmitter(() => Float, () => Bool, REPLFloat.Eq, OpCodes.Ceq)
                     }, {
                         Operator.NotEq,
-                        new DirectOperatorEmitter(() => Float, () => Bool, OpCodes.Ceq,
+                        new DirectOperatorEmitter(() => Float, () => Bool, REPLFloat.Neq, OpCodes.Ceq,
                             OpCodes.Ldc_I4_0, OpCodes.Ceq)
                     }, {
                         Operator.Gt,
-                        new DirectOperatorEmitter(() => Float, () => BuiltinType.Bool, OpCodes.Cgt)
+                        new DirectOperatorEmitter(() => Float, () => BuiltinType.Bool, REPLFloat.Gt, OpCodes.Cgt)
                     }, {
                         Operator.Lt,
-                        new DirectOperatorEmitter(() => Float, () => BuiltinType.Bool, OpCodes.Clt)
+                        new DirectOperatorEmitter(() => Float, () => BuiltinType.Bool, REPLFloat.Lt, OpCodes.Clt)
                     }, {
                         Operator.Ge,
-                        new DirectOperatorEmitter(() => Float, () => BuiltinType.Bool, OpCodes.Clt,
+                        new DirectOperatorEmitter(() => Float, () => BuiltinType.Bool, REPLFloat.Geq, OpCodes.Clt,
                             OpCodes.Ldc_I4_0, OpCodes.Ceq)
                     }, {
                         Operator.Le,
-                        new DirectOperatorEmitter(() => Float, () => BuiltinType.Bool, OpCodes.Cgt,
+                        new DirectOperatorEmitter(() => Float, () => BuiltinType.Bool, REPLFloat.Leq, OpCodes.Cgt,
                             OpCodes.Ldc_I4_0, OpCodes.Ceq)
                     },
                     {
@@ -109,7 +109,7 @@ namespace KontrolSystem.TO2.AST {
                     {
                         "to_int",
                         new InlineFieldAccessFactory("Value converted to int (will be truncated as necessary)",
-                            () => Int, OpCodes.Conv_I8)
+                            () => Int, REPLFloat.ToInt, OpCodes.Conv_I8)
                     }, {
                         "abs",
                         new BoundPropertyLikeFieldAccessFactory("Absolute value", () => Float, typeof(Math),
@@ -155,6 +155,8 @@ namespace KontrolSystem.TO2.AST {
 
             // Fallback if framework is (slightly) incompatible
             public static bool IsFiniteWrapper(double d) => !Double.IsInfinity(d);
+
+            public override IREPLValue REPLCast(object value) => new REPLFloat((double)value);
         }
     }
 }

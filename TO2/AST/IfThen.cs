@@ -4,6 +4,8 @@ using System.Linq;
 using System.Reflection.Emit;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
+using KontrolSystem.TO2.Runtime;
+using Option = KontrolSystem.Parsing.Option;
 
 namespace KontrolSystem.TO2.AST {
     public class IfThen : Expression, IVariableContainer {
@@ -129,6 +131,55 @@ namespace KontrolSystem.TO2.AST {
                 thenContext.IL.MarkLabel(ifEnd);
 
                 tempResult.EmitLoad(thenContext);
+            }
+        }
+        
+        public override REPLValueFuture Eval(REPLContext context) {
+            if (condition.ResultType(context.replBlockContext) != BuiltinType.Bool) {
+                throw new REPLException(this, "Condition of if is not a boolean");
+            }
+
+            TO2Type thenResultType = thenExpression.ResultType(context.replBlockContext);
+
+            return new REPLIfThenFuture(thenResultType, context, condition, thenExpression);
+        }
+
+        internal class REPLIfThenFuture : REPLValueFuture {
+            private readonly REPLContext context;
+            private readonly Expression condition;
+            private REPLValueFuture conditionFuture;
+            private IREPLValue conditionResult;
+            private readonly Expression thenExpression;
+            private REPLValueFuture thenFuture;
+
+            public REPLIfThenFuture(TO2Type to2Type, REPLContext context, Expression condition, Expression thenExpression) : base(new OptionType(to2Type)) {
+                this.context = context;
+                this.condition = condition;
+                this.thenExpression = thenExpression;
+            }
+
+            public override FutureResult<IREPLValue> PollValue() {
+                conditionFuture ??= condition.Eval(context);
+                if (conditionResult == null) {
+                    var result = conditionFuture.PollValue();
+
+                    if (!result.IsReady) return new FutureResult<IREPLValue>();
+
+                    conditionResult = result.value;
+                }
+
+                if (conditionResult is REPLBool b) {
+                    if(!b.boolValue) return new FutureResult<IREPLValue>(new REPLAny(Type, Option.None<object>()));
+                } else {
+                    throw new REPLException(condition, "Condition of if is not a boolean");
+                }
+
+                thenFuture ??= thenExpression.Eval(context);
+
+                var thenResult = thenFuture.PollValue();
+                if (!thenResult.IsReady) return new FutureResult<IREPLValue>();
+
+                return new FutureResult<IREPLValue>(new REPLAny(Type, Option.Some(thenResult.value)));
             }
         }
     }
@@ -265,5 +316,65 @@ namespace KontrolSystem.TO2.AST {
             if (!dropResult) thenType.AssignFrom(context.ModuleContext, elseType).EmitConvert(context);
             context.IL.MarkLabel(elseEnd);
         }
+        
+        public override REPLValueFuture Eval(REPLContext context) {
+            if (condition.ResultType(context.replBlockContext) != BuiltinType.Bool) {
+                throw new REPLException(this, "Condition of if is not a boolean");
+            }
+
+            TO2Type thenResultType = thenExpression.ResultType(context.replBlockContext);
+
+            return new REPLIfThenElseFuture(thenResultType, context, condition, thenExpression, elseExpression);
+        }
+
+        internal class REPLIfThenElseFuture : REPLValueFuture {
+            private readonly REPLContext context;
+            private readonly Expression condition;
+            private REPLValueFuture conditionFuture;
+            private IREPLValue conditionResult;
+            private readonly Expression thenExpression;
+            private REPLValueFuture thenFuture;
+            private readonly Expression elseExpression;
+            private REPLValueFuture elseFuture;
+
+            public REPLIfThenElseFuture(TO2Type to2Type, REPLContext context, Expression condition, Expression thenExpression, Expression elseExpression) : base(new OptionType(to2Type)) {
+                this.context = context;
+                this.condition = condition;
+                this.thenExpression = thenExpression;
+                this.elseExpression = elseExpression;
+            }
+
+            public override FutureResult<IREPLValue> PollValue() {
+                conditionFuture ??= condition.Eval(context);
+                if (conditionResult == null) {
+                    var result = conditionFuture.PollValue();
+
+                    if (!result.IsReady) return new FutureResult<IREPLValue>();
+
+                    conditionResult = result.value;
+                }
+
+                if (conditionResult is REPLBool b) {
+                    if (b.boolValue) {
+                        thenFuture ??= thenExpression.Eval(context);
+
+                        var thenResult = thenFuture.PollValue();
+                        if (!thenResult.IsReady) return new FutureResult<IREPLValue>();
+
+                        return new FutureResult<IREPLValue>(new REPLAny(Type, Option.Some(thenResult.value)));
+                    }
+
+                    elseFuture ??= elseExpression.Eval(context);
+
+                    var elseResult = elseFuture.PollValue();
+                    if (!elseResult.IsReady) return new FutureResult<IREPLValue>();
+
+                    return new FutureResult<IREPLValue>(new REPLAny(Type, Option.Some(elseResult.value)));
+                }
+
+                throw new REPLException(condition, "Condition of if is not a boolean");
+
+            }
+        }        
     }
 }

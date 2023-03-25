@@ -29,7 +29,7 @@ namespace KontrolSystem.KSP.Runtime.Testing {
 
         private KSPConsoleBuffer consoleBuffer = new KSPConsoleBuffer(50, 80);
 
-        public GameInstance Game => throw new NotImplementedException("Game is no available in test-mode");
+        public GameInstance Game => throw new NotSupportedException("Game is no available in test-mode");
         
         public GameMode GameMode => GameMode.Unknown;
 

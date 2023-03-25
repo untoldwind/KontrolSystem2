@@ -120,6 +120,8 @@ namespace KontrolSystem.TO2.AST {
             public override Type GeneratedType(ModuleContext context) => typeof(string);
 
             public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) => allowedOperators;
+
+            public override IREPLValue REPLCast(object value) => new REPLString((string)value);
         }
     }
 }

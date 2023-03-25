@@ -5,6 +5,7 @@ using System.Reflection.Emit;
 using System.Linq;
 using KontrolSystem.TO2.Generator;
 using KontrolSystem.Parsing;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     internal readonly struct LambdaClass {
@@ -188,5 +189,10 @@ namespace KontrolSystem.TO2.AST {
         private List<FunctionParameter> FixedParameters(FunctionType lambdaType) =>
             parameters.Zip(lambdaType.parameterTypes, (p, f) => new FunctionParameter(p.name, p.type ?? f))
                 .ToList();
+
+        public override REPLValueFuture Eval(REPLContext context) {
+            throw new NotSupportedException("Lambda are not supported in REPL mode");
+        }
+        
     }
 }

@@ -99,7 +99,7 @@ namespace KontrolSystem.TO2 {
         public bool IsAsync => to2Function.isAsync;
 
         public object Invoke(IContext context, params object[] args) =>
-            throw new NotImplementedException($"Function {to2Function.name} not yet compiled");
+            throw new NotSupportedException($"Function {to2Function.name} not yet compiled");
     }
 
     public class DeclaredKontrolStructConstructor : IKontrolFunction {
@@ -131,6 +131,6 @@ namespace KontrolSystem.TO2 {
         public bool IsAsync => false;
 
         public object Invoke(IContext context, params object[] args) =>
-            throw new NotImplementedException($"Function {to2Struct.name} not yet compiled");
+            throw new NotSupportedException($"Function {to2Struct.name} not yet compiled");
     }
 }

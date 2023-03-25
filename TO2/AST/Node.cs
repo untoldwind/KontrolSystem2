@@ -1,4 +1,6 @@
-﻿using KontrolSystem.Parsing;
+﻿using System;
+using KontrolSystem.Parsing;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     public abstract class Node {
@@ -9,5 +11,7 @@ namespace KontrolSystem.TO2.AST {
             Start = start;
             End = end;
         }
+
+        public abstract REPLValueFuture Eval(REPLContext context);
     }
 }

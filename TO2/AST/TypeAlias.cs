@@ -3,6 +3,7 @@ using System.Linq;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
 using System;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     public class TypeAlias : Node, IModuleItem {
@@ -46,6 +47,14 @@ namespace KontrolSystem.TO2.AST {
 
         public IEnumerable<StructuralError> TryVerifyFunctions(ModuleContext context) {
             return Enumerable.Empty<StructuralError>();
+        }
+
+        public override REPLValueFuture Eval(REPLContext context) {
+            if (context.replModuleContext.mappedTypes.ContainsKey(name))
+                throw new REPLException(this, $"Type with name {name} already defined");
+            context.replModuleContext.mappedTypes.Add(name, type);
+
+            return REPLValueFuture.Success(REPLUnit.INSTANCE);
         }
     }
 

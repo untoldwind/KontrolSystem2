@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using KontrolSystem.TO2.Generator;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     public abstract class RecordType : RealizedType {
@@ -103,6 +104,10 @@ namespace KontrolSystem.TO2.AST {
         public IOperatorEmitter FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) =>
             this;
 
+        public IREPLValue Eval(Node node, IREPLValue left, IREPLValue right) {
+            throw new REPLException(node, "Not supported in REPL mode");
+        }
+
         // ---------------- IAssignEmitter -----------------
         public void EmitAssign(IBlockContext context, IBlockVariable variable, Expression expression, bool dropResult) {
             using ITempBlockVariable valueTemp = context.MakeTempVariable(sourceType);
@@ -122,6 +127,10 @@ namespace KontrolSystem.TO2.AST {
             someResult.EmitLoadPtr(context);
             EmitAssignToPtr(context, valueTemp);
             someResult.EmitLoad(context);
+        }
+
+        public IREPLValue EvalConvert(Node node, IREPLValue value) {
+            throw new REPLException(node, "Not supported in REPL mode");
         }
 
         protected abstract void EmitAssignToPtr(IBlockContext context, IBlockVariable tempSource);

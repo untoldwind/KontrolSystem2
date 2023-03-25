@@ -1,6 +1,7 @@
 ﻿using System.Reflection.Emit;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     public class BinaryBool : Expression {
@@ -81,6 +82,39 @@ namespace KontrolSystem.TO2.AST {
 
             right.EmitCode(context, dropResult);
             context.IL.MarkLabel(skipRight);
+        }
+
+        public override REPLValueFuture Eval(REPLContext context) {
+            TO2Type leftType = left.ResultType(context.replBlockContext);
+            TO2Type rightType = right.ResultType(context.replBlockContext);
+
+            if (leftType != BuiltinType.Bool)
+                throw new REPLException(left, "Expected boolean");
+            if (rightType != BuiltinType.Bool)
+                throw new REPLException(right, "Expected boolean");
+
+            switch (op) {
+            case Operator.BoolAnd:
+                return left.Eval(context).Then(BuiltinType.Bool, leftValue => {
+                    if (leftValue is REPLBool b) {
+                        if (b.boolValue)
+                            return right.Eval(context);
+                        return REPLValueFuture.Success(new REPLBool(false));
+                    }
+                    throw new REPLException(left, "Expected boolean");
+                });
+            case Operator.BoolOr:
+                return left.Eval(context).Then(BuiltinType.Bool, leftValue => {
+                    if (leftValue is REPLBool b) {
+                        if (!b.boolValue)
+                            return REPLValueFuture.Success(new REPLBool(false));
+                        return right.Eval(context);
+                    }
+                    throw new REPLException(left, "Expected boolean");
+                });
+            default:
+                throw new REPLException(this, $"Invalid boolean operator {op}");
+            }
         }
     }
 }

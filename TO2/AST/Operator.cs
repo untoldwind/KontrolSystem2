@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
+using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     public enum Operator {
@@ -38,6 +40,8 @@ namespace KontrolSystem.TO2.AST {
         Unwrap // ?
     }
 
+    public delegate IREPLValue REPLOperator(Node node, IREPLValue left, IREPLValue right);
+
     public interface IOperatorEmitter {
         TO2Type ResultType { get; }
         TO2Type OtherType { get; }
@@ -49,17 +53,21 @@ namespace KontrolSystem.TO2.AST {
         void EmitAssign(IBlockContext context, IBlockVariable variable, Node target);
 
         IOperatorEmitter FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments);
+
+        IREPLValue Eval(Node node, IREPLValue left, IREPLValue right);
     }
 
     public class DirectOperatorEmitter : IOperatorEmitter {
         private readonly Func<TO2Type> otherTypeFactory;
         private readonly Func<TO2Type> resultTypeFactory;
         private readonly OpCode[] opCodes;
+        private readonly REPLOperator replOperator;
 
         public DirectOperatorEmitter(Func<TO2Type> otherTypeFactory, Func<TO2Type> resultTypeFactory,
-            params OpCode[] opCodes) {
+            REPLOperator replOperator, params OpCode[] opCodes) {
             this.otherTypeFactory = otherTypeFactory;
             this.resultTypeFactory = resultTypeFactory;
+            this.replOperator = replOperator;
             this.opCodes = opCodes;
         }
 
@@ -82,6 +90,8 @@ namespace KontrolSystem.TO2.AST {
 
         public IOperatorEmitter FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) =>
             this;
+
+        public IREPLValue Eval(Node node, IREPLValue left, IREPLValue right) => replOperator(node, left, right);
     }
 
     public class StaticMethodOperatorEmitter : IOperatorEmitter {
@@ -132,6 +142,12 @@ namespace KontrolSystem.TO2.AST {
             }
 
             return this;
+        }
+
+        public IREPLValue Eval(Node node, IREPLValue left, IREPLValue right) {
+            var result = methodInfo.Invoke(null, new object[] { left.Value, right.Value });
+
+            return ResultType.REPLCast(result);
         }
     }
 }

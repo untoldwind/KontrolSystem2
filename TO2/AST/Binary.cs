@@ -1,6 +1,7 @@
 ﻿using System.Reflection.Emit;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     public class Binary : Expression {
@@ -84,6 +85,24 @@ namespace KontrolSystem.TO2.AST {
             else rightEmitter.EmitCode(context, this);
 
             if (dropResult) context.IL.Emit(OpCodes.Pop);
+        }
+
+        public override REPLValueFuture Eval(REPLContext context) {
+            var leftFuture = this.left.Eval(context);
+            var rightFuture = this.right.Eval(context);
+
+            IOperatorEmitter leftEmitter = leftFuture.Type.AllowedSuffixOperators(context.replModuleContext)
+                .GetMatching(context.replModuleContext, op, rightFuture.Type);
+            IOperatorEmitter rightEmitter = rightFuture.Type.AllowedPrefixOperators(context.replModuleContext)
+                .GetMatching(context.replModuleContext, op, leftFuture.Type);
+
+            if (leftEmitter == null && rightEmitter == null) {
+                throw new REPLException(this, $"Cannot {op} a {leftFuture.Type} with a {rightFuture.Type}");
+            }
+
+            var opEmitter = leftEmitter ?? rightEmitter;
+            return REPLValueFuture.Chain2(opEmitter.ResultType, leftFuture, rightFuture,
+                (leftResult, rightResult) => opEmitter.Eval(this, leftResult, rightResult));
         }
     }
 }

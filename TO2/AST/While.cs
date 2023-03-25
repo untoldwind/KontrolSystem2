@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection.Emit;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     public class While : Expression, IVariableContainer {
@@ -123,6 +124,59 @@ namespace KontrolSystem.TO2.AST {
 
             loopContext.IL.MarkLabel(whileEnd);
             if (!dropResult) context.IL.Emit(OpCodes.Ldnull);
+        }
+        
+        public override REPLValueFuture Eval(REPLContext context) {
+            if (condition.ResultType(context.replBlockContext) != BuiltinType.Bool) {
+                throw new REPLException(this, "Condition of while is not a boolean");
+            }
+            return new REPLWhileFuture(context.CreateChildContext(), condition, loopExpression);
+        }
+
+        internal class REPLWhileFuture : REPLValueFuture {
+            private readonly REPLContext context;
+            private readonly Expression condition;
+            private readonly Expression loopExpression;
+            private REPLValueFuture conditionFuture;
+            private IREPLValue conditionResult;
+            private REPLValueFuture loopExpressionFuture;
+
+            public REPLWhileFuture(REPLContext context, Expression condition, Expression loopExpression) : base(BuiltinType.Unit) {
+                this.context = context;
+                this.condition = condition;
+                this.loopExpression = loopExpression;
+            }
+
+            public override FutureResult<IREPLValue> PollValue() {
+                conditionFuture ??= condition.Eval(context);
+
+                if (conditionResult == null) {
+                    var result = conditionFuture.PollValue();
+
+                    if (!result.IsReady) return new FutureResult<IREPLValue>();
+
+                    conditionResult = result.value;
+                }
+
+                if (conditionResult is REPLBool b) {
+                    if(!b.boolValue) return new FutureResult<IREPLValue>(REPLUnit.INSTANCE);
+                } else {
+                    throw new REPLException(condition, "Condition of while is not a boolean");
+                }
+
+                loopExpressionFuture ??= loopExpression.Eval(context);
+                var loopExpressionResult = loopExpressionFuture.PollValue();
+                
+                if(!loopExpressionResult.IsReady) return new FutureResult<IREPLValue>();
+                
+                if(loopExpressionResult.value.IsBreak) return new FutureResult<IREPLValue>(REPLUnit.INSTANCE);
+                if(loopExpressionResult.value.IsReturn) return new FutureResult<IREPLValue>(loopExpressionResult.value);
+                loopExpressionFuture = null;
+                conditionFuture = null;
+                conditionResult = null;
+                
+                return new FutureResult<IREPLValue>();
+            }
         }
     }
 }

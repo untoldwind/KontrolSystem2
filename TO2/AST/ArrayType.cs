@@ -80,7 +80,7 @@ namespace KontrolSystem.TO2.AST {
                 {
                     "length",
                     new InlineFieldAccessFactory("Length of the array, i.e. number of elements in the array.",
-                        () => BuiltinType.Int, OpCodes.Ldlen, OpCodes.Conv_I8)
+                        () => BuiltinType.Int, ArrayType.REPLArrayLength, OpCodes.Ldlen, OpCodes.Conv_I8)
                 }
             };
         }
@@ -121,6 +121,21 @@ namespace KontrolSystem.TO2.AST {
             ArrayType concreteArray = concreteType as ArrayType;
             if (concreteArray == null) return Enumerable.Empty<(string name, RealizedType type)>();
             return ElementType.InferGenericArgument(context, concreteArray.ElementType.UnderlyingType(context));
+        }
+
+        public static IREPLValue REPLArrayLength(Node node, IREPLValue target) {
+            if (target.Value is Array a) {
+                return new REPLInt(a.Length);
+            }
+            
+            throw new REPLException(node, $"Get array length from a non-array: {target.Type.Name}");
+        }
+        
+        public override IREPLValue REPLCast(object value) {
+            if(value is Array a)
+                return new REPLArray(this, a);
+
+            throw new REPLException(new Position("Intern"), new Position("Intern"), $"{value.GetType()} can not be cast to REPLArray");
         }
     }
 

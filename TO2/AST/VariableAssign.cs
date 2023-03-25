@@ -1,5 +1,7 @@
-﻿using KontrolSystem.Parsing;
+﻿using System;
+using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     public class VariableAssign : Expression {
@@ -100,5 +102,42 @@ namespace KontrolSystem.TO2.AST {
             blockVariable.Type.AssignFrom(context.ModuleContext, valueType)
                 .EmitAssign(context, blockVariable, expression, dropResult);
         }
+        
+        public override REPLValueFuture Eval(REPLContext context) {
+            var variable = context.FindVariable(name);
+
+            if (variable == null) {
+                throw new REPLException(this, $"No local variable '{name}'");
+            } 
+            if (variable.isConst) {
+                throw new REPLException(this, $"Local variable '{name}' is read-only (const)");
+            }
+            var expressionFuture = this.expression.Eval(context);
+            var assign = variable.declaredType.AssignFrom(context.replModuleContext, expressionFuture.Type);
+
+            if (op == Operator.Assign) {
+                return expressionFuture.Then(variable.declaredType, value => {
+                    var converted = assign.EvalConvert(this, value);
+
+                    variable.value = converted;
+
+                    return converted;
+                });
+            } 
+            IOperatorEmitter operatorEmitter = variable.declaredType.AllowedSuffixOperators(context.replModuleContext)
+                .GetMatching(context.replModuleContext, op, expressionFuture.Type);
+
+            if (operatorEmitter == null) {
+                throw new REPLException(this, $"Cannot {op} a {variable.declaredType} with a {expressionFuture.Type}");
+            }
+            
+            return expressionFuture.Then(variable.declaredType, value => {
+                var converted = assign.EvalConvert(this, operatorEmitter.Eval(this, variable.value, value));
+
+                variable.value = converted;
+
+                return converted;
+            });
+        }        
     }
 }

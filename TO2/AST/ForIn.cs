@@ -1,6 +1,8 @@
-﻿using System.Reflection.Emit;
+﻿using System;
+using System.Reflection.Emit;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     public class ForIn : Expression, IVariableContainer {
@@ -138,6 +140,79 @@ namespace KontrolSystem.TO2.AST {
                 opCodes = countingContext.IL.ILSize,
                 stack = countingContext.IL.StackCount
             };
+        }
+        
+        public override REPLValueFuture Eval(REPLContext context) {
+            if (context.FindVariable(variableName) != null)
+                throw new REPLException(this, $"Variable '{variableName}' already declared in this scope");
+
+            return new REPLForInFuture(context.CreateChildContext(), variableName, variableType, sourceExpression, loopExpression);
+        }
+
+        internal class REPLForInFuture : REPLValueFuture {
+            private readonly REPLContext context;
+            private readonly string variableName;
+            private readonly TO2Type variableType;
+            private REPLContext.REPLVariable variable;
+            private readonly Expression sourceExpression;
+            private REPLValueFuture sourceFuture;
+            private IREPLForInSource source;
+            private IREPLValue current;
+            private readonly Expression loopExpression;
+            private REPLValueFuture loopExpressionFuture;
+            
+            public REPLForInFuture(REPLContext context, string variableName, TO2Type variableType, Expression sourceExpression, Expression loopExpression) : base(BuiltinType.Unit) {
+                this.context = context;
+                this.variableName = variableName;
+                this.variableType = variableType;
+                this.sourceExpression = sourceExpression;
+                this.loopExpression = loopExpression;
+            }
+
+            public override FutureResult<IREPLValue> PollValue() {
+                sourceFuture ??= sourceExpression.Eval(context);
+                if (source == null) {
+                    var sourceResult = sourceFuture.PollValue();
+
+                    if (!sourceResult.IsReady) return new FutureResult<IREPLValue>();
+
+                    source = sourceResult.value.ForInSource();
+
+                    if (source == null) {
+                        throw new REPLException(sourceExpression,
+                            $"{sourceFuture.Type} cannot be use as for ... in source");
+                    }
+
+                    if (variableType != null) {
+                        if(!variableType.IsAssignableFrom(context.replModuleContext, source.ElementType))
+                            throw new REPLException(sourceExpression,
+                            $"{sourceFuture.Type} has elements of type {source.ElementType}, expected {variableType}");
+                        variable = context.DeclaredVariable(variableName, true, variableType.UnderlyingType(context.replModuleContext));
+                    } else {
+                        variable = context.DeclaredVariable(variableName, true, source.ElementType.UnderlyingType(context.replModuleContext));
+                    }
+                }
+
+                if (current == null) {
+                    current = source.Next();
+                    
+                    if(current == null) return new FutureResult<IREPLValue>(REPLUnit.INSTANCE);
+
+                    variable.value = variable.declaredType.REPLCast(current.Value);
+                } 
+
+                loopExpressionFuture ??= loopExpression.Eval(context);
+                var loopExpressionResult = loopExpressionFuture.PollValue();
+                
+                if(!loopExpressionResult.IsReady) return new FutureResult<IREPLValue>();
+                
+                if(loopExpressionResult.value.IsBreak) return new FutureResult<IREPLValue>(REPLUnit.INSTANCE);
+                if(loopExpressionResult.value.IsReturn) return new FutureResult<IREPLValue>(loopExpressionResult.value);
+                loopExpressionFuture = null;
+                current = null;
+                
+                return new FutureResult<IREPLValue>();
+            }
         }
     }
 }

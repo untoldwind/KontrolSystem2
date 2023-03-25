@@ -1,6 +1,7 @@
 ﻿using System.Reflection.Emit;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     public class UnarySuffix : Expression {
@@ -51,6 +52,20 @@ namespace KontrolSystem.TO2.AST {
             operatorEmitter.EmitCode(context, this);
 
             if (dropResult) context.IL.Emit(OpCodes.Pop);
+        }
+
+        public override REPLValueFuture Eval(REPLContext context) {
+            var leftFuture = this.left.Eval(context);
+
+            IOperatorEmitter operatorEmitter = leftFuture.Type.AllowedSuffixOperators(context.replModuleContext)
+                .GetMatching(context.replModuleContext, op, BuiltinType.Unit);
+
+            if (operatorEmitter == null) {
+                throw new REPLException(this, $"Suffix {op} on a {leftFuture.Type} is undefined");
+            }
+
+            return leftFuture.Then(operatorEmitter.ResultType,
+                leftResult => operatorEmitter.Eval(this, leftResult, null));
         }
     }
 }
