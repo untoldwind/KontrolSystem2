@@ -41,7 +41,7 @@ namespace KontrolSystem.TO2.Runtime {
 
             public override FutureResult<IREPLValue> PollValue() => new FutureResult<IREPLValue>(value);
         }
-        
+
         internal class WrapImpl : REPLValueFuture {
             private readonly IAnyFuture future;
 
@@ -64,7 +64,7 @@ namespace KontrolSystem.TO2.Runtime {
             private readonly Func<IREPLValue[], REPLValueFuture> map;
             private REPLValueFuture mapFuture;
             private IREPLValue mapResult;
-            
+
             public ChainNImpl(TO2Type resultType, REPLValueFuture[] futures, Func<IREPLValue[], REPLValueFuture> map) : base(resultType) {
                 this.futures = futures;
                 this.results = new IREPLValue[this.futures.Length];
@@ -86,7 +86,7 @@ namespace KontrolSystem.TO2.Runtime {
                 if (mapFuture == null) {
                     mapFuture = map.Invoke(results);
                 }
-                
+
                 if (mapResult == null) {
                     var result = mapFuture.PollValue();
 
@@ -106,11 +106,11 @@ namespace KontrolSystem.TO2.Runtime {
         TO2Type Type { get; }
 
         object Value { get; }
-        
+
         bool IsBreak { get; }
-        
+
         bool IsContinue { get; }
-        
+
         bool IsReturn { get; }
 
         IREPLForInSource ForInSource();
@@ -133,7 +133,7 @@ namespace KontrolSystem.TO2.Runtime {
         public object Value => null;
 
         public bool IsBreak => false;
-        
+
         public bool IsContinue => false;
 
         public bool IsReturn => false;
@@ -150,16 +150,16 @@ namespace KontrolSystem.TO2.Runtime {
         public TO2Type Type => BuiltinType.Unit;
 
         public object Value => null;
-        
+
         public bool IsBreak => true;
-        
+
         public bool IsContinue => false;
-        
+
         public bool IsReturn => false;
-        
+
         public IREPLForInSource ForInSource() => null;
     }
-    
+
     public class REPLContinue : IREPLValue {
         public static REPLContinue INSTANCE = new REPLContinue();
 
@@ -169,16 +169,16 @@ namespace KontrolSystem.TO2.Runtime {
         public TO2Type Type => BuiltinType.Unit;
 
         public object Value => null;
-        
+
         public bool IsBreak => false;
-        
+
         public bool IsContinue => true;
-        
+
         public bool IsReturn => false;
-        
+
         public IREPLForInSource ForInSource() => null;
     }
-    
+
     public class REPLReturn : IREPLValue {
         public readonly IREPLValue returnValue;
 
@@ -187,16 +187,16 @@ namespace KontrolSystem.TO2.Runtime {
         public TO2Type Type => returnValue.Type;
 
         public object Value => returnValue.Value;
-        
+
         public bool IsBreak => false;
-        
+
         public bool IsContinue => false;
 
         public bool IsReturn => true;
-        
+
         public IREPLForInSource ForInSource() => null;
     }
-    
+
     public struct REPLBool : IREPLValue {
         public readonly bool boolValue;
 
@@ -207,11 +207,11 @@ namespace KontrolSystem.TO2.Runtime {
         public TO2Type Type => BuiltinType.Bool;
 
         public object Value => boolValue;
-        
+
         public bool IsBreak => false;
-        
+
         public bool IsContinue => false;
-        
+
         public bool IsReturn => false;
 
         public IREPLForInSource ForInSource() => null;
@@ -263,7 +263,7 @@ namespace KontrolSystem.TO2.Runtime {
 
             throw new REPLException(node, $"Can not preform to_int on non-boolean: {target.Type.Name}");
         }
-        
+
         public static IREPLValue ToFloat(Node node, IREPLValue target) {
             if (target is REPLBool b) {
                 return new REPLFloat(b.boolValue ? 1 : 0);
@@ -286,7 +286,7 @@ namespace KontrolSystem.TO2.Runtime {
         public object Value => intValue;
 
         public bool IsBreak => false;
-        
+
         public bool IsContinue => false;
 
         public bool IsReturn => false;
@@ -440,7 +440,7 @@ namespace KontrolSystem.TO2.Runtime {
         public TO2Type Type => BuiltinType.Float;
 
         public object Value => floatValue;
-        
+
         public bool IsBreak => false;
 
         public bool IsContinue => false;
@@ -544,7 +544,7 @@ namespace KontrolSystem.TO2.Runtime {
 
             throw new REPLException(node, $"Can not preform int leq on non-int: {left.Type.Name} {right.Type.Name}");
         }
-        
+
         public static IREPLValue ToInt(Node node, IREPLValue target) {
             if (target is REPLFloat f) {
                 return new REPLInt((long)f.floatValue);
@@ -564,13 +564,13 @@ namespace KontrolSystem.TO2.Runtime {
         public TO2Type Type => BuiltinType.String;
 
         public object Value => stringValue;
-        
+
         public bool IsBreak => false;
-        
+
         public bool IsContinue => false;
-        
+
         public bool IsReturn => false;
-        
+
         public IREPLForInSource ForInSource() => null;
     }
 
@@ -582,17 +582,17 @@ namespace KontrolSystem.TO2.Runtime {
             this.arrayType = arrayType;
             this.arrayValue = arrayValue;
         }
-        
+
         public TO2Type Type => arrayType;
-        
+
         public object Value => arrayValue;
-        
+
         public bool IsBreak => false;
-        
+
         public bool IsContinue => false;
-        
+
         public bool IsReturn => false;
-        
+
         public IREPLForInSource ForInSource() => new REPLArrayForInSource(arrayValue, arrayType);
     }
 
@@ -608,7 +608,7 @@ namespace KontrolSystem.TO2.Runtime {
         }
 
         public TO2Type ElementType => arrayType.ElementType;
-        
+
         public IREPLValue Next() {
             if (nextIdx >= arrayValue.Length) return null;
 
@@ -624,17 +624,17 @@ namespace KontrolSystem.TO2.Runtime {
         public REPLRange(Range rangeValue) {
             this.rangeValue = rangeValue;
         }
-        
+
         public TO2Type Type => BuiltinType.Range;
-        
+
         public object Value => rangeValue;
-        
+
         public bool IsBreak => false;
-        
+
         public bool IsContinue => false;
-        
+
         public bool IsReturn => false;
-        
+
         public IREPLForInSource ForInSource() => new REPLRangeForInSource(rangeValue.from, rangeValue.to);
     }
 
@@ -648,10 +648,10 @@ namespace KontrolSystem.TO2.Runtime {
         }
 
         public TO2Type ElementType => BuiltinType.Int;
-        
+
         public IREPLValue Next() {
             if (next >= to) return null;
-            
+
             var current = next;
             next++;
             return new REPLInt(current);
@@ -670,13 +670,13 @@ namespace KontrolSystem.TO2.Runtime {
         public TO2Type Type => type;
 
         public object Value => anyValue;
-        
+
         public bool IsBreak => false;
-        
+
         public bool IsContinue => false;
-        
+
         public bool IsReturn => false;
-        
+
         public IREPLForInSource ForInSource() => null;
     }
 }

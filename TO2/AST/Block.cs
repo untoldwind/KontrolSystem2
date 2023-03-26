@@ -21,7 +21,7 @@ namespace KontrolSystem.TO2.AST {
         TO2Type ResultType(IBlockContext context);
 
         void Prepare(IBlockContext context);
-        
+
         void EmitCode(IBlockContext context, bool dropResult);
 
         REPLValueFuture Eval(REPLContext context);
@@ -109,8 +109,8 @@ namespace KontrolSystem.TO2.AST {
                 for (int i = 0; i < len - 1; i++) {
                     IBlockItem item = nonComments[i];
                     try {
-                        if(effectiveContext.IsAsync) item.Prepare(effectiveContext);
-                        
+                        if (effectiveContext.IsAsync) item.Prepare(effectiveContext);
+
                         item.EmitCode(effectiveContext, true);
                     } catch (CodeGenerationException e) {
                         context.AddError(new StructuralError(StructuralError.ErrorType.CoreGeneration, e.Message, item.Start, item.End));
@@ -134,7 +134,7 @@ namespace KontrolSystem.TO2.AST {
 
             return this;
         }
-        
+
         public override REPLValueFuture Eval(REPLContext context) {
             bool childScope = parentContainer == null || parentContainer is Block;
             REPLContext effectiveContext = context;

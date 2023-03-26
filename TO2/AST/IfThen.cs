@@ -133,7 +133,7 @@ namespace KontrolSystem.TO2.AST {
                 tempResult.EmitLoad(thenContext);
             }
         }
-        
+
         public override REPLValueFuture Eval(REPLContext context) {
             if (condition.ResultType(context.replBlockContext) != BuiltinType.Bool) {
                 throw new REPLException(this, "Condition of if is not a boolean");
@@ -169,7 +169,7 @@ namespace KontrolSystem.TO2.AST {
                 }
 
                 if (conditionResult is REPLBool b) {
-                    if(!b.boolValue) return new FutureResult<IREPLValue>(new REPLAny(Type, Option.None<object>()));
+                    if (!b.boolValue) return new FutureResult<IREPLValue>(new REPLAny(Type, Option.None<object>()));
                 } else {
                     throw new REPLException(condition, "Condition of if is not a boolean");
                 }
@@ -316,7 +316,7 @@ namespace KontrolSystem.TO2.AST {
             if (!dropResult) thenType.AssignFrom(context.ModuleContext, elseType).EmitConvert(context);
             context.IL.MarkLabel(elseEnd);
         }
-        
+
         public override REPLValueFuture Eval(REPLContext context) {
             if (condition.ResultType(context.replBlockContext) != BuiltinType.Bool) {
                 throw new REPLException(this, "Condition of if is not a boolean");
@@ -375,6 +375,6 @@ namespace KontrolSystem.TO2.AST {
                 throw new REPLException(condition, "Condition of if is not a boolean");
 
             }
-        }        
+        }
     }
 }

@@ -48,18 +48,18 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         }
 
         class BoolListElement : ArgumentListElement {
-            public BoolListElement(EntrypointArgumentDescriptor descriptor) : base(descriptor) {}
+            public BoolListElement(EntrypointArgumentDescriptor descriptor) : base(descriptor) { }
 
             public override void Draw() {
-                Value = GUILayout.Toggle((bool) Value, "", GUILayout.MinWidth(100));
+                Value = GUILayout.Toggle((bool)Value, "", GUILayout.MinWidth(100));
             }
         }
 
         class StringListElement : ArgumentListElement {
-            public StringListElement(EntrypointArgumentDescriptor descriptor) : base(descriptor) {}
+            public StringListElement(EntrypointArgumentDescriptor descriptor) : base(descriptor) { }
 
             public override void Draw() {
-                Value = GUILayout.TextField((string) Value, GUILayout.MinWidth(100));
+                Value = GUILayout.TextField((string)Value, GUILayout.MinWidth(100));
             }
         }
 
@@ -77,8 +77,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                     return new BoolListElement(arg);
                 } else if (arg.Type == BuiltinType.String) {
                     return new StringListElement(arg);
-                } 
-                else {
+                } else {
                     throw new Exception($"Invalid Process Argument Type {arg.Type.Name}");
                 }
             }

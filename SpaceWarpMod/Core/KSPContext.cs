@@ -39,7 +39,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
             autopilot = default;
             return false;
         }
-        
+
         internal void RunAutopilots(ref FlightCtrlState state, float deltaTime) {
             try {
                 ContextHolder.CurrentContext.Value = context;
@@ -104,11 +104,11 @@ namespace KontrolSystem.SpaceWarpMod.Core {
 
         public Font ConsoleFont(int fontSize) => FontManager.Instance.GetSystemFontByNameAndSize(FontManager.DefaultConsoleFonts,
             fontSize, true);
-        
+
         public double UniversalTime => Game.SpaceSimulation.UniverseModel.UniversalTime;
 
         public VesselComponent ActiveVessel => gameInstance.ViewController.GetActiveSimVessel(true);
-        
+
         public KSPConsoleBuffer ConsoleBuffer => consoleBuffer;
 
         public KSPOrbitModule.IBody FindBody(string name) {
@@ -171,7 +171,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
             autopilot = default;
             return false;
         }
-        
+
         public void HookAutopilot(VesselComponent vessel, IKSPAutopilot autopilot) {
             LoggerAdapter.Instance.Debug($"Hook autopilot {autopilot} to {vessel.Name}");
             if (autopilotHooks.ContainsKey(vessel)) {

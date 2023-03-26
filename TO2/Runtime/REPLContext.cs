@@ -14,8 +14,8 @@ namespace KontrolSystem.TO2.Runtime {
 
         public REPLContext(KontrolRegistry registry, IContext runtimeContext) : this(runtimeContext, new REPLModuleContext(new Context(registry))) {
         }
-        
-        public REPLContext(IContext runtimeContext, REPLModuleContext replModuleContext , VariableResolver externalVariables = null) {
+
+        public REPLContext(IContext runtimeContext, REPLModuleContext replModuleContext, VariableResolver externalVariables = null) {
             this.runtimeContext = runtimeContext;
             this.replModuleContext = replModuleContext;
             replBlockContext = new REPLBlockContext(this.replModuleContext, FindVariable);
@@ -35,9 +35,9 @@ namespace KontrolSystem.TO2.Runtime {
         public REPLContext CreateChildContext() {
             return new REPLContext(runtimeContext, replModuleContext, FindVariable);
         }
-        
+
         public delegate REPLVariable VariableResolver(string name);
-        
+
         public class REPLVariable : IBlockVariable {
             public readonly string name;
             public readonly bool isConst;
@@ -55,7 +55,7 @@ namespace KontrolSystem.TO2.Runtime {
             public RealizedType Type => declaredType;
 
             public bool IsConst => isConst;
-            
+
             public void EmitLoad(IBlockContext context) => throw new REPLException("No code generation");
 
             public void EmitLoadPtr(IBlockContext context) => throw new REPLException("No code generation");
@@ -63,7 +63,7 @@ namespace KontrolSystem.TO2.Runtime {
             public void EmitStore(IBlockContext context) => throw new REPLException("No code generation");
         }
     }
-    
+
     public class REPLModuleContext : ModuleContext {
         public REPLModuleContext(Context rootContext) : base(rootContext, "repl") {
         }
@@ -83,7 +83,7 @@ namespace KontrolSystem.TO2.Runtime {
         }
 
         public ModuleContext ModuleContext => moduleContext;
-        public MethodBuilder MethodBuilder => throw new REPLException( "No method builder");
+        public MethodBuilder MethodBuilder => throw new REPLException("No method builder");
         public IILEmitter IL { get; }
         public TO2Type ExpectedReturn => BuiltinType.Unit;
 
@@ -94,14 +94,14 @@ namespace KontrolSystem.TO2.Runtime {
         public bool HasErrors => errors.Count > 0;
 
         public List<StructuralError> AllErrors => errors;
-        
-        public IBlockContext CreateChildContext() => throw new REPLException( "Child block context");
 
-        public IBlockContext CreateLoopContext(LabelRef start, LabelRef end) =>  throw new REPLException( "Loop block context");
+        public IBlockContext CreateChildContext() => throw new REPLException("Child block context");
 
-        public IBlockContext CloneCountingContext() => throw new REPLException( "No counting context");
+        public IBlockContext CreateLoopContext(LabelRef start, LabelRef end) => throw new REPLException("Loop block context");
 
-        public (LabelRef start, LabelRef end)? InnerLoop => throw new REPLException( "No inner loop");
+        public IBlockContext CloneCountingContext() => throw new REPLException("No counting context");
+
+        public (LabelRef start, LabelRef end)? InnerLoop => throw new REPLException("No inner loop");
 
         public IBlockVariable FindVariable(string name) => variableLookup(name);
 
@@ -111,7 +111,7 @@ namespace KontrolSystem.TO2.Runtime {
 
         public IBlockVariable DeclaredVariable(string name, bool isConst, RealizedType to2Type) => throw new REPLException("No declare block variables");
 
-        public void RegisterAsyncResume(TO2Type returnType) => throw new REPLException( "No async resume");
+        public void RegisterAsyncResume(TO2Type returnType) => throw new REPLException("No async resume");
     }
 }
 

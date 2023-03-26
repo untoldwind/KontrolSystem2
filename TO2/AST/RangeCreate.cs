@@ -73,7 +73,7 @@ namespace KontrolSystem.TO2.AST {
 
             if (!dropResult) variable.EmitLoad(context);
         }
-        
+
         public override REPLValueFuture Eval(REPLContext context) {
             var fromFuture = from.Eval(context);
             var toFuture = to.Eval(context);

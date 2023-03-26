@@ -14,9 +14,9 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
             protected BaseAutopilot(IKSPContext context, VesselComponent vessel) {
                 this.context = context;
                 this.vessel = vessel;
-                
+
                 suspended = false;
-                
+
                 this.context.HookAutopilot(this.vessel, this);
             }
 

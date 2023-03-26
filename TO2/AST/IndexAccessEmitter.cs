@@ -14,9 +14,9 @@ namespace KontrolSystem.TO2.AST {
         void EmitPtr(IBlockContext context);
 
         void EmitStore(IBlockContext context, Action<IBlockContext> emitValue);
-        
+
         REPLValueFuture EvalGet(Node node, REPLContext context, IREPLValue target);
-        
+
         REPLValueFuture EvalAssign(Node node, REPLContext context, IREPLValue target, IREPLValue value);
     }
 
@@ -101,14 +101,14 @@ namespace KontrolSystem.TO2.AST {
 
         public REPLValueFuture EvalGet(Node node, REPLContext context, IREPLValue target) {
             var indexFuture = indexExpression.Eval(context);
-            
+
             if (!BuiltinType.Int.IsAssignableFrom(context.replModuleContext, indexFuture.Type)) {
                 throw new REPLException(node, $"Index has to be of type {BuiltinType.Int}");
             }
 
             if (target.Type is ArrayType at && target.Value is Array a) {
                 var indexAssign = BuiltinType.Int.AssignFrom(context.replModuleContext, indexFuture.Type);
-                
+
                 return indexFuture.Then(at.ElementType, i => at.ElementType.REPLCast(a.GetValue(((REPLInt)indexAssign.EvalConvert(node, i)).intValue)));
             }
 

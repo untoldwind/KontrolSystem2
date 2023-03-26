@@ -24,7 +24,7 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
             GL.Begin(GL.TRIANGLES);
             GL.Color(c);
             GLVertex(camera, worldVertices1);
-            GLVertex(camera,worldVertices2);
+            GLVertex(camera, worldVertices2);
             GLVertex(camera, worldVertices3);
             GL.End();
             GL.PopMatrix();
@@ -44,7 +44,7 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                 GL.Vertex3(screenPoint2.x, screenPoint2.y, 0);
             }
         }
-        
+
         //If dashed = false, draws 0-1-2-3-4-5...
         //If dashed = true, draws 0-1 2-3 4-5...
         public static void DrawPath(Camera camera, Vector3d[] points, Color c,
@@ -64,6 +64,6 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
 
             GL.End();
             GL.PopMatrix();
-        }        
+        }
     }
 }

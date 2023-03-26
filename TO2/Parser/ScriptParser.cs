@@ -25,7 +25,7 @@ namespace KontrolSystem.TO2.Parser {
                 .Between(WhiteSpaces0.Then(Tag("//")), PeekLineEnd);
 
         public static readonly Parser<List<LineComment>> LineComments = Delimited0(LineComment, WhiteSpaces0);
-        
+
         public static readonly Parser<char> CommaDelimiter = Char(',').Between(WhiteSpaces0, WhiteSpaces0);
 
         public static readonly Parser<string> Identifier = Recognize(
@@ -49,10 +49,10 @@ namespace KontrolSystem.TO2.Parser {
 
         private static readonly Parser<TO2Type> TupleType = DelimitedN_M(2, null, Opt(LineComment.Then(WhiteSpaces0)).Then(TypeRef), CommaDelimiter, "<type>")
             .Between(Char('(').Then(WhiteSpaces0), LineComments.Then(WhiteSpaces0).Then(Char(')'))).Map(items => new TupleType(items));
-        
+
         public static readonly Parser<TO2Type> RecordType =
             Delimited1(Opt(LineComment.Then(WhiteSpaces0)).Then(Seq(Identifier, TypeSpec)), CommaDelimiter, "<identifier : type>")
-                .Between(Char('(').Then(WhiteSpaces0),  LineComments.Then(WhiteSpaces0).Then(Char(')')))
+                .Between(Char('(').Then(WhiteSpaces0), LineComments.Then(WhiteSpaces0).Then(Char(')')))
                 .Map(items => new RecordTupleType(items));
 
         private static readonly Parser<TO2Type> TypeReference = Seq(
@@ -87,7 +87,7 @@ namespace KontrolSystem.TO2.Parser {
             DeclarationParameter,
             Char('_').Map(_ => new DeclarationParameter())
         );
-        
+
         public static readonly Parser<string> DescriptionComment =
             Many0(CharsExcept0("\r\n").Map(s => s.Trim()).Between(WhiteSpaces0.Then(Tag("///")), PeekLineEnd))
                 .Map(lines => String.Join("\n", lines));

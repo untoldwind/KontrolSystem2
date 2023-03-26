@@ -295,7 +295,7 @@ namespace KontrolSystem.TO2.AST {
         public override REPLValueFuture Eval(REPLContext context) {
             var targetFuture = target.Eval(context);
             var argumentFutures = arguments.Select(p => p.Eval(context)).ToList();
-            
+
             IMethodInvokeFactory method = targetFuture.Type.FindMethod(context.replModuleContext, methodName);
 
             if (method != null) {
@@ -304,7 +304,7 @@ namespace KontrolSystem.TO2.AST {
                 if (context.replBlockContext.HasErrors) {
                     throw new REPLException(this, context.replBlockContext.AllErrors.First().message);
                 }
-                
+
                 if (arguments.Count > methodInvoker.Parameters.Count) {
                     throw new REPLException(this, $"Function '{targetFuture.Type.Name}.{methodName}' only allows {methodInvoker.Parameters.Count} arguments, {arguments.Count} where given");
                 }
@@ -312,14 +312,14 @@ namespace KontrolSystem.TO2.AST {
                 if (methodInvoker.RequiredParameterCount() > arguments.Count) {
                     throw new REPLException(this, $"Method '{targetFuture.Type.Name}.{methodName}' requires {methodInvoker.RequiredParameterCount()} arguments, {arguments.Count} where given");
                 }
-                
+
                 for (int i = 0; i < arguments.Count; i++) {
                     TO2Type argumentType = argumentFutures[i].Type;
                     if (!methodInvoker.Parameters[i].type.IsAssignableFrom(context.replModuleContext, argumentType)) {
-                        throw new REPLException(this,$"Argument {methodInvoker.Parameters[i].name} of '{targetFuture.Type.Name}.{methodName}' has to be a {methodInvoker.Parameters[i].type}, but got {argumentType}");
+                        throw new REPLException(this, $"Argument {methodInvoker.Parameters[i].name} of '{targetFuture.Type.Name}.{methodName}' has to be a {methodInvoker.Parameters[i].type}, but got {argumentType}");
                     }
                 }
-                
+
                 argumentFutures.Insert(0, targetFuture);
 
                 return REPLValueFuture.ChainN(methodInvoker.ResultType, argumentFutures.ToArray(),

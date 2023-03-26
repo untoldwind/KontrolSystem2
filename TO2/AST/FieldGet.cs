@@ -88,7 +88,7 @@ namespace KontrolSystem.TO2.AST {
 
             fieldAccess.EmitPtr(context);
         }
-        
+
         public override REPLValueFuture Eval(REPLContext context) {
             var targetFuture = target.Eval(context);
             IFieldAccessEmitter fieldAccess =
@@ -97,8 +97,8 @@ namespace KontrolSystem.TO2.AST {
             if (fieldAccess == null) {
                 throw new REPLException(this, $"Type '{targetFuture.Type.Name}' does not have a field '{fieldName}'");
             }
-            
-            return targetFuture.Then(targetFuture.Type, target => fieldAccess.EvalGet(this, target));            
+
+            return targetFuture.Then(targetFuture.Type, target => fieldAccess.EvalGet(this, target));
         }
     }
 }

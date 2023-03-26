@@ -125,7 +125,7 @@ namespace KontrolSystem.TO2.AST {
             loopContext.IL.MarkLabel(whileEnd);
             if (!dropResult) context.IL.Emit(OpCodes.Ldnull);
         }
-        
+
         public override REPLValueFuture Eval(REPLContext context) {
             if (condition.ResultType(context.replBlockContext) != BuiltinType.Bool) {
                 throw new REPLException(this, "Condition of while is not a boolean");
@@ -159,22 +159,22 @@ namespace KontrolSystem.TO2.AST {
                 }
 
                 if (conditionResult is REPLBool b) {
-                    if(!b.boolValue) return new FutureResult<IREPLValue>(REPLUnit.INSTANCE);
+                    if (!b.boolValue) return new FutureResult<IREPLValue>(REPLUnit.INSTANCE);
                 } else {
                     throw new REPLException(condition, "Condition of while is not a boolean");
                 }
 
                 loopExpressionFuture ??= loopExpression.Eval(context);
                 var loopExpressionResult = loopExpressionFuture.PollValue();
-                
-                if(!loopExpressionResult.IsReady) return new FutureResult<IREPLValue>();
-                
-                if(loopExpressionResult.value.IsBreak) return new FutureResult<IREPLValue>(REPLUnit.INSTANCE);
-                if(loopExpressionResult.value.IsReturn) return new FutureResult<IREPLValue>(loopExpressionResult.value);
+
+                if (!loopExpressionResult.IsReady) return new FutureResult<IREPLValue>();
+
+                if (loopExpressionResult.value.IsBreak) return new FutureResult<IREPLValue>(REPLUnit.INSTANCE);
+                if (loopExpressionResult.value.IsReturn) return new FutureResult<IREPLValue>(loopExpressionResult.value);
                 loopExpressionFuture = null;
                 conditionFuture = null;
                 conditionResult = null;
-                
+
                 return new FutureResult<IREPLValue>();
             }
         }

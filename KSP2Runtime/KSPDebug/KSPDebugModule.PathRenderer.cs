@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using KontrolSystem.KSP.Runtime.KSPConsole;
 using KontrolSystem.TO2.Binding;
@@ -21,13 +21,13 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
             [KSField] public Position[] Path { get; set; }
 
             private bool enable;
-            
+
             private LineRenderer line;
 
             private GameObject lineObj;
-            
+
             public PathRenderer(Position[] path, KSPConsoleModule.RgbaColor color, double width) {
-                Path = path;                
+                Path = path;
                 Color = color;
                 Width = width;
             }
@@ -37,13 +37,13 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                 get => enable;
                 set {
                     if (value) {
-                        if (line == null ) {
+                        if (line == null) {
                             lineObj = new GameObject("KS2DebugPath", typeof(LineRenderer));
 
                             line = lineObj.GetComponent<LineRenderer>();
 
                             line.useWorldSpace = false;
-                            
+
                             line.material = GLUtils.Colored;
 
                             RenderValues();
@@ -63,14 +63,14 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                     enable = value;
                 }
             }
-            
+
             [KSMethod]
             public void Remove() => KSPContext.CurrentContext.RemoveMarker(this);
 
             public void OnUpdate() {
                 if (line == null) return;
                 if (!enable) return;
-                
+
                 RenderPointCoords();
                 LabelPlacement();
             }
@@ -79,16 +79,16 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
             }
 
             private void RenderPointCoords() {
-                if (line != null ) {
+                if (line != null) {
                     double mapLengthMult = 1.0; // for scaling when on map view.
                     double mapWidthMult = 1.0; // for scaling when on map view.
                     float useWidth;
                     Position[] positions = Path;
                     int nStep = Math.Max(1, positions.Length / 100);
-                    
+
                     Vector3d[] points;
-                    
-                    
+
+
                     if (KSPContext.CurrentContext.Game.Map.TryGetMapCore(out MapCore mapCore) && mapCore.IsEnabled) {
                         var space = mapCore.map3D.GetSpaceProvider();
 
@@ -100,10 +100,10 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                         points = Path.Where((x, i) => i % nStep == 0).Select(p => frame.ToLocalPosition(p)).ToArray();
                         lineObj.layer = 0;
                     }
-                    
+
                     useWidth = (float)(Width * mapWidthMult);
 
-                    
+
                     // Position the arrow line:
                     line.positionCount = points.Length;
                     line.startWidth = useWidth;
@@ -112,7 +112,7 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                         line.SetPosition(i, points[i]);
                     }
                 }
-            }            
+            }
 
             public void RenderColor() {
                 Color c1 = Color.Color;
@@ -128,16 +128,16 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                     line.endColor = c2;
                 }
             }
-            
+
             public void RenderValues() {
                 RenderPointCoords();
                 RenderColor();
                 LabelPlacement();
             }
-            
+
             private void LabelPlacement() {
-                
-            }            
+
+            }
         }
     }
 }

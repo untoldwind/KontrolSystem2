@@ -135,11 +135,11 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField] public double StaticPressureKpa => vessel.StaticPressure_kPa;
 
             [KSField] public double DynamicPressureKpa => vessel.DynamicPressure_kPa;
-            
+
             [KSField] public double SoundSpeed => vessel.SoundSpeed;
 
             [KSField] public double MachNumber => vessel.MachNumber;
-            
+
             [KSMethod]
             public Direction HeadingDirection(double degreesFromNorth, double pitchAboveHorizon, double roll) {
                 QuaternionD q = QuaternionD.LookRotation(North, Up);

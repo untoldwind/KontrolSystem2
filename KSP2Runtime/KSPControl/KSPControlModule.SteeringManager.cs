@@ -25,7 +25,7 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
             [KSMethod]
             public void SetPitchYawRollProvider(Func<double, Vector3d> newPitchYawRollProvider) =>
                 pitchYawRollProvider = newPitchYawRollProvider;
-            
+
             public override void UpdateAutopilot(ref FlightCtrlState c, float deltaT) {
                 Vector3d translate = suspended ? Vector3d.zero : pitchYawRollProvider(deltaT);
                 c.pitch = (float)DirectBindingMath.Clamp(translate.x, -1, 1);

@@ -79,12 +79,12 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             [KSMethod(Description = "Get relative position at a given universal time `ut`")]
             Vector3d RelativePosition(double ut);
 
-            [KSMethod(Description = "Get relative position for a given `trueAnomaly`")] 
+            [KSMethod(Description = "Get relative position for a given `trueAnomaly`")]
             Vector3d RelativePositionForTrueAnomaly(double trueAnomaly);
 
             [KSMethod(Description = "Get the coordinate independent position for a given `trueAnomaly`")]
             public Position GlobalPositionForTrueAnomaly(double trueAnomaly);
-            
+
             [KSMethod(Description = "The relative prograde vector at a given universal time `ut`")]
             Vector3d Prograde(double ut);
 
@@ -163,7 +163,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
                  and for high eccentricities and/or large relative inclinations, the relative motion is
                  not really periodic at all.")]
             double SynodicPeriod(IOrbit other);
-            
+
             [KSMethod(Description = @"Converts a relative direction, into a true anomaly.
                 The vector is projected into the orbital plane and then the true anomaly is
                 computed as the angle this vector makes with the vector pointing to the periapsis.
@@ -172,10 +172,10 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
             [KSField(Description = "Get the relative position of the ascending node.")]
             Vector3d RelativeAscendingNode { get; }
-            
+
             [KSField(Description = "Get the relative eccentricity vector.")]
             Vector3d RelativeEccentricityVector { get; }
-            
+
             [KSMethod(Description = "Convert orbital parameters to string.")]
             string ToString();
 

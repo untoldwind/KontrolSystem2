@@ -177,26 +177,26 @@ namespace KontrolSystem.TO2.AST {
                 }
             }
         }
-        
+
         public override REPLValueFuture Eval(REPLContext context) {
             var targetFuture = target.Eval(context);
             var valueFuture = expression.Eval(context);
-            
+
             IFieldAccessEmitter fieldAccess =
                 targetFuture.Type.FindField(context.replModuleContext, fieldName)?.Create(context.replModuleContext);
 
             if (fieldAccess == null) {
                 throw new REPLException(this, $"Type '{targetFuture.Type.Name}' does not have a field '{fieldName}'");
             }
-            
+
             if (!fieldAccess.CanStore) {
                 throw new REPLException(this, $"Type '{targetFuture.Type.Name}' field '{fieldName}' is read-only");
             }
-            
+
             if (!fieldAccess.FieldType.IsAssignableFrom(context.replModuleContext, valueFuture.Type)) {
-                throw new REPLException(this,$"Type '{targetFuture.Type.Name}' field '{fieldName}' is of type {fieldAccess.FieldType} but is assigned to {valueFuture.Type}");
+                throw new REPLException(this, $"Type '{targetFuture.Type.Name}' field '{fieldName}' is of type {fieldAccess.FieldType} but is assigned to {valueFuture.Type}");
             }
-            
+
             if (target is IAssignContext assignContext) {
                 if (fieldAccess.RequiresPtr && assignContext.IsConst(context.replBlockContext)) {
                     throw new REPLException(this,
@@ -206,9 +206,9 @@ namespace KontrolSystem.TO2.AST {
                 throw new REPLException(this,
                     $"Field assign '{targetFuture.Type.Name}'.'{fieldName}' on invalid target expression");
             }
-            
+
             var assign = fieldAccess.FieldType.AssignFrom(context.replModuleContext, valueFuture.Type);
-            
+
             if (op == Operator.Assign) {
                 return REPLValueFuture.Chain2(fieldAccess.FieldType, targetFuture, valueFuture,
                     (target, value) => {
@@ -217,14 +217,14 @@ namespace KontrolSystem.TO2.AST {
                         return fieldAccess.EvalAssign(this, target, converted);
                     });
             }
-            
+
             IOperatorEmitter operatorEmitter = fieldAccess.FieldType.AllowedSuffixOperators(context.replModuleContext)
                 .GetMatching(context.replModuleContext, op, valueFuture.Type);
 
             if (operatorEmitter == null) {
                 throw new REPLException(this, $"Type '{targetFuture.Type.Name}' field '{fieldName}': Cannot {op} a {fieldAccess.FieldType} with a {valueFuture.Type}");
             }
-            
+
             return REPLValueFuture.Chain2(fieldAccess.FieldType, targetFuture, valueFuture,
                 (target, value) => {
                     var prevValue = fieldAccess.EvalGet(this, target);

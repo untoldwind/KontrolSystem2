@@ -24,7 +24,7 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
             [KSMethod]
             public void SetTranslateProvider(Func<double, Vector3d> newTranslateProvider) =>
                 translateProvider = newTranslateProvider;
-            
+
             public override void UpdateAutopilot(ref FlightCtrlState c, float deltaT) {
                 Vector3d translate = suspended ? Vector3d.zero : translateProvider(deltaT);
                 c.X = (float)DirectBindingMath.Clamp(translate.x, -1, 1);

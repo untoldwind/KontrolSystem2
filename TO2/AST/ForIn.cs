@@ -141,7 +141,7 @@ namespace KontrolSystem.TO2.AST {
                 stack = countingContext.IL.StackCount
             };
         }
-        
+
         public override REPLValueFuture Eval(REPLContext context) {
             if (context.FindVariable(variableName) != null)
                 throw new REPLException(this, $"Variable '{variableName}' already declared in this scope");
@@ -160,7 +160,7 @@ namespace KontrolSystem.TO2.AST {
             private IREPLValue current;
             private readonly Expression loopExpression;
             private REPLValueFuture loopExpressionFuture;
-            
+
             public REPLForInFuture(REPLContext context, string variableName, TO2Type variableType, Expression sourceExpression, Expression loopExpression) : base(BuiltinType.Unit) {
                 this.context = context;
                 this.variableName = variableName;
@@ -184,7 +184,7 @@ namespace KontrolSystem.TO2.AST {
                     }
 
                     if (variableType != null) {
-                        if(!variableType.IsAssignableFrom(context.replModuleContext, source.ElementType))
+                        if (!variableType.IsAssignableFrom(context.replModuleContext, source.ElementType))
                             throw new REPLException(sourceExpression,
                             $"{sourceFuture.Type} has elements of type {source.ElementType}, expected {variableType}");
                         variable = context.DeclaredVariable(variableName, true, variableType.UnderlyingType(context.replModuleContext));
@@ -195,22 +195,22 @@ namespace KontrolSystem.TO2.AST {
 
                 if (current == null) {
                     current = source.Next();
-                    
-                    if(current == null) return new FutureResult<IREPLValue>(REPLUnit.INSTANCE);
+
+                    if (current == null) return new FutureResult<IREPLValue>(REPLUnit.INSTANCE);
 
                     variable.value = variable.declaredType.REPLCast(current.Value);
-                } 
+                }
 
                 loopExpressionFuture ??= loopExpression.Eval(context);
                 var loopExpressionResult = loopExpressionFuture.PollValue();
-                
-                if(!loopExpressionResult.IsReady) return new FutureResult<IREPLValue>();
-                
-                if(loopExpressionResult.value.IsBreak) return new FutureResult<IREPLValue>(REPLUnit.INSTANCE);
-                if(loopExpressionResult.value.IsReturn) return new FutureResult<IREPLValue>(loopExpressionResult.value);
+
+                if (!loopExpressionResult.IsReady) return new FutureResult<IREPLValue>();
+
+                if (loopExpressionResult.value.IsBreak) return new FutureResult<IREPLValue>(REPLUnit.INSTANCE);
+                if (loopExpressionResult.value.IsReturn) return new FutureResult<IREPLValue>(loopExpressionResult.value);
                 loopExpressionFuture = null;
                 current = null;
-                
+
                 return new FutureResult<IREPLValue>();
             }
         }

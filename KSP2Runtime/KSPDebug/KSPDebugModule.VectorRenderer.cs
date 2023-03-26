@@ -30,7 +30,7 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
             private Func<Position> startProvider;
             private Func<Position> endProvider;
             private Func<Vector> vectorProvider;
-            
+
             private LineRenderer line;
             private LineRenderer hat;
 
@@ -53,9 +53,9 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                 Scale = 1.0;
                 Width = width;
                 Pointy = pointy;
-                labelStr = label;                
+                labelStr = label;
             }
-            
+
             public VectorRenderer(Func<Position> startProvider, Func<Position> endProvider,
                 KSPConsoleModule.RgbaColor color, string label, double width, bool pointy) : this(startProvider, endProvider, null, color, label, width, pointy) {
             }
@@ -81,10 +81,10 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
 
                             line.useWorldSpace = false;
                             hat.useWorldSpace = false;
-                            
+
                             line.material = GLUtils.Colored;
                             hat.material = GLUtils.Colored;
-                                
+
                             label.text = labelStr;
                             label.horizontalAlignment = HorizontalAlignmentOptions.Center;
                             label.verticalAlignment = VerticalAlignmentOptions.Middle;
@@ -123,14 +123,14 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                     enable = value;
                 }
             }
-            
+
             [KSMethod]
             public void Remove() => KSPContext.CurrentContext.RemoveMarker(this);
-            
+
             public void OnUpdate() {
                 if (line == null || hat == null) return;
                 if (!enable) return;
-                
+
                 RenderPointCoords();
                 LabelPlacement();
             }
@@ -147,7 +147,7 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
             [KSField(Description = "The current end position of the debugging vector.")]
             public Position End {
                 get => endProvider?.Invoke() ?? startProvider() + vectorProvider();
-                set { 
+                set {
                     endProvider = () => value;
                     vectorProvider = null;
                 }
@@ -202,8 +202,8 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                     Vector3d point1 = mapLengthMult * startLocal;
                     Vector3d point2 = mapLengthMult * (startLocal + (Scale * 0.95 * vectorLocal));
                     Vector3d point3 = mapLengthMult * (startLocal + (Scale * vectorLocal));
-                    
-                    label.fontSize = (float)( 12.0 * Scale * mapWidthMult);
+
+                    label.fontSize = (float)(12.0 * Scale * mapWidthMult);
 
                     useWidth = (float)(Width * Scale * mapWidthMult);
 
@@ -226,7 +226,7 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                     label.transform.position = labelLocation;
                     label.transform.rotation = camera.transform.rotation;
                 }
-            }            
+            }
 
             public void RenderColor() {
                 Color c1 = Color.Color;
@@ -246,16 +246,16 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                     label.color = lCol; // The label does not have the fade effect.
                 }
             }
-            
+
             public void RenderValues() {
                 RenderPointCoords();
                 RenderColor();
                 LabelPlacement();
             }
-            
+
             private void LabelPlacement() {
-                
-            }            
+
+            }
         }
     }
 }

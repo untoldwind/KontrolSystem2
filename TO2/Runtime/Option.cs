@@ -3,7 +3,7 @@
 namespace KontrolSystem.TO2.Runtime {
     public interface IAnyOption {
         bool Defined { get; }
-        
+
         object ValueObject { get; }
     }
 
@@ -19,7 +19,7 @@ namespace KontrolSystem.TO2.Runtime {
         public bool Defined => defined;
 
         public object ValueObject => value;
-        
+
         public Option<U> Map<U>(Func<T, U> mapper) => defined ? new Option<U>(mapper(value)) : new Option<U>();
 
         public Option<U> Then<U>(Func<T, Option<U>> mapper) => defined ? mapper(value) : new Option<U>();

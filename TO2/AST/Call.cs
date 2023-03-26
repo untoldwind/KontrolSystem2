@@ -350,10 +350,10 @@ namespace KontrolSystem.TO2.AST {
                 return parameterTypes[argumentIdx].FillGenerics(context.ModuleContext, inferred);
             };
         }
-        
+
         public override REPLValueFuture Eval(REPLContext context) {
             var argumentFutures = arguments.Select(p => p.Eval(context)).ToList();
-            
+
             IKontrolFunction function = ReferencedFunction(context.replModuleContext);
 
             if (function == null) {
@@ -387,14 +387,14 @@ namespace KontrolSystem.TO2.AST {
                     throw new REPLException(this,
                         $"Argument {function.Parameters[i].name} of '{FullName}' has to be a {genericParameters[i].type}, but {argumentType} was given");
                 }
-            }            
+            }
 
             return REPLValueFuture.ChainN(genericResult, argumentFutures.ToArray(),
                 arguments => {
                     var result = genericMethod.Invoke(null, arguments.Select(a => a.Value).ToArray());
 
-                    return function.IsAsync ?  REPLValueFuture.Wrap(genericResult, result as IAnyFuture) : REPLValueFuture.Success(genericResult.REPLCast(result));
+                    return function.IsAsync ? REPLValueFuture.Wrap(genericResult, result as IAnyFuture) : REPLValueFuture.Success(genericResult.REPLCast(result));
                 });
-        }        
+        }
     }
 }

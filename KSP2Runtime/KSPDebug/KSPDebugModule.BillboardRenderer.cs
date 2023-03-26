@@ -14,10 +14,10 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
         public class BillboardRenderer : IMarker {
             [KSField(Description = "The color of the billboard text")]
             public KSPConsoleModule.RgbaColor Color { get; set; }
-            
+
             [KSField]
             public long FontSize { get; set; }
-            
+
             private bool enable;
 
             private Func<Position> positionProvider;
@@ -57,11 +57,11 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                             billboard = null;
                         }
                     }
-                    
+
                     enable = value;
                 }
             }
-            
+
             [KSMethod]
             public void Remove() => KSPContext.CurrentContext.RemoveMarker(this);
 

@@ -26,7 +26,7 @@ namespace KontrolSystem.TO2.Test {
             Assert.Equal("", result.Remaining.ToString());
             Assert.Equal("_12ab", result.Value);
         }
-        
+
         [Fact]
         public void TestRecordDecl() {
             var result = TO2ParserCommon.RecordType.TryParse("(a: int, b: float)");
@@ -37,13 +37,13 @@ namespace KontrolSystem.TO2.Test {
                 a: int, b: float)");
 
             Assert.True(result.WasSuccessful);
-            
+
             result = TO2ParserCommon.RecordType.TryParse(@"(  // First line comment
                 a: int,  // second line comment 
                 b: float)");
 
             Assert.True(result.WasSuccessful);
-            
+
             result = TO2ParserCommon.RecordType.TryParse(@"(  // First line comment
                 a: int,  // second line comment 
                 b: float // last line comment

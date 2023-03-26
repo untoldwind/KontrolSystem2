@@ -3,10 +3,10 @@
         bool Success { get; }
 
         object ValueObject { get; }
-        
+
         string ErrorString { get; }
-        
-        object ErrorObject { get;  }
+
+        object ErrorObject { get; }
     }
 
     public struct Result<T, E> : IAnyResult {
@@ -23,7 +23,7 @@
         public bool Success => success;
 
         public object ValueObject => value;
-        
+
         public string ErrorString => error?.ToString();
 
         public object ErrorObject => error;

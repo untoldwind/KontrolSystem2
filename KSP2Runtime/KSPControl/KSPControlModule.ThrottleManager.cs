@@ -23,7 +23,7 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
 
             [KSMethod]
             public void SetThrottleProvider(Func<double, double> newThrottleProvider) => throttleProvider = newThrottleProvider;
-            
+
             public override void UpdateAutopilot(ref FlightCtrlState c, float deltaT) {
                 if (suspended) {
                     c.mainThrottle = 0;

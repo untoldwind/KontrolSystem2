@@ -70,7 +70,7 @@ namespace KontrolSystem.TO2.AST {
         }
 
         public override void Prepare(IBlockContext context) => expression.Prepare(context);
-        
+
         public override REPLValueFuture Eval(REPLContext context) {
             throw new REPLException(this, "Not supported in REPL mode");
         }

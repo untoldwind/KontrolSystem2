@@ -44,7 +44,7 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                 Vector3d bodyUp;
                 Vector3d localPos;
                 double radius;
-                
+
                 if (KSPContext.CurrentContext.Game.Map.TryGetMapCore(out MapCore mapCore) && mapCore.IsEnabled) {
                     var space = mapCore.map3D.GetSpaceProvider();
                     radius = 6000 / space.Map3DScaleInv;
@@ -61,14 +61,14 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                 }
 
                 Camera camera = KSPContext.CurrentContext.Game.SessionManager.GetMyActiveCamera();
-                
+
                 Color color = Color.Color;
                 Vector3d camPos = camera.transform.position;
 
-//                if (GLUtils.IsOccluded(center, localPos, GeoCoordinates.Body.Radius, camPos)) return;
+                //                if (GLUtils.IsOccluded(center, localPos, GeoCoordinates.Body.Radius, camPos)) return;
 
                 Vector3d north = Vector3d.Exclude(up, bodyUp).normalized;
-                
+
                 GLUtils.GLTriangle(camera,
                     localPos,
                     localPos + radius * (QuaternionD.AngleAxis(Rotation - 10, up) * north),

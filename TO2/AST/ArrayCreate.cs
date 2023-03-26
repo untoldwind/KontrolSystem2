@@ -118,7 +118,7 @@ namespace KontrolSystem.TO2.AST {
             return REPLValueFuture.ChainN(resultType, expressionFutures,
                 values => {
                     var destinationArray = Array.CreateInstance(generatedElementType, values.Length);
-                    for(int i = 0; i < values.Length; i++)
+                    for (int i = 0; i < values.Length; i++)
                         destinationArray.SetValue(values[i].Value, i);
                     return REPLValueFuture.Success(new REPLArray(resultType, destinationArray));
                 });

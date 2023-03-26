@@ -27,7 +27,7 @@ namespace KontrolSystem.TO2.AST {
         }
 
         public TO2Type ResultType(IBlockContext context) => BuiltinType.Unit;
-        
+
         public void Prepare(IBlockContext context) {
         }
 

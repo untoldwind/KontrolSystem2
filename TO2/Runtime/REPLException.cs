@@ -12,12 +12,12 @@ namespace KontrolSystem.TO2.Runtime {
             end = new Position();
         }
 
-        public REPLException(Node node, string message): base($"{node?.Start}: {message}") {
+        public REPLException(Node node, string message) : base($"{node?.Start}: {message}") {
             start = node.Start;
             end = node.End;
         }
 
-        public REPLException(Position start, Position end, string message): base($"{start}: {message}") {
+        public REPLException(Position start, Position end, string message) : base($"{start}: {message}") {
             this.start = start;
             this.end = end;
         }

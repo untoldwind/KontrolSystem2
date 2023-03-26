@@ -21,12 +21,12 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
         public double EndUt => orbit.EndUT;
 
-        public Option<double> Apoapsis => orbit.eccentricity < 1 ?  Option.Some(orbit.ApoapsisArl) : Option.None<double>();
+        public Option<double> Apoapsis => orbit.eccentricity < 1 ? Option.Some(orbit.ApoapsisArl) : Option.None<double>();
 
         public double Periapsis => orbit.PeriapsisArl;
 
         public Option<double> ApoapsisRadius => orbit.eccentricity < 1 ? Option.Some(orbit.Apoapsis) : Option.None<double>();
-        
+
         public double PeriapsisRadius => orbit.Periapsis;
 
         public double SemiMajorAxis => orbit.SemiMinorAxis;
@@ -59,7 +59,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
         public Position GlobalPositionForTrueAnomaly(double trueAnomaly) =>
             new Position(ReferenceFrame,
                 orbit.GetRelativePositionFromTrueAnomaly(trueAnomaly * DirectBindingMath.DegToRad));
-        
+
         public Position GlobalPosition(double ut) => new Position(ReferenceFrame, orbit.GetRelativePositionAtUTZup(ut).SwapYAndZ);
 
         public VelocityAtPosition GlobalVelocity(double ut) => new VelocityAtPosition(new Velocity(ReferenceFrame.motionFrame, orbit.GetOrbitalVelocityAtUTZup(ut).SwapYAndZ), GlobalPosition(ut));
@@ -80,7 +80,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
         public KSPOrbitModule.IOrbit PerturbedOrbit(double ut, Vector3d dV) =>
             ReferenceBody.CreateOrbit(RelativePosition(ut), OrbitalVelocity(ut) + dV, ut);
-        
+
         public double MeanAnomalyAtUt(double ut) {
             double ret = (orbit.ObTAtEpoch + (ut - orbit.epoch)) * orbit.meanMotion;
 
@@ -102,7 +102,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             double ut = maybeUt.GetValueOrDefault(context.UniversalTime);
             return UTAtMeanAnomaly(GetMeanAnomalyAtEccentricAnomaly(GetEccentricAnomalyAtTrueAnomaly(trueAnomaly)), ut);
         }
-        
+
         public double NextPeriapsisTime(Option<double> maybeUt = new Option<double>()) {
             double ut = maybeUt.GetValueOrDefault(context.UniversalTime);
             if (orbit.eccentricity < 1) {
@@ -124,7 +124,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
         public double TrueAnomalyAtRadius(double radius) => orbit.TrueAnomalyAtRadius(radius);
 
         public Option<double> NextTimeOfRadius(double ut, double radius) {
-            if (radius < orbit.Periapsis || (orbit.eccentricity < 1 && radius > orbit.Apoapsis)) 
+            if (radius < orbit.Periapsis || (orbit.eccentricity < 1 && radius > orbit.Apoapsis))
                 return Option.None<double>();
 
             double trueAnomaly1 = orbit.TrueAnomalyAtRadius(radius);
@@ -158,7 +158,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
                 return (360 - angleFromPe) * DirectBindingMath.DegToRad;
             }
         }
-        
+
         public Vector3d RelativeAscendingNode => orbit.referenceBody.transform.celestialFrame.ToLocalPosition(orbit.ReferenceFrame, orbit.GetRelativeANVector().SwapYAndZ);
 
         public Vector3d RelativeEccentricityVector => orbit.referenceBody.transform.celestialFrame.ToLocalPosition(orbit.ReferenceFrame, orbit.GetRelativeEccVector().SwapYAndZ);

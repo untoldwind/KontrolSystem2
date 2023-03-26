@@ -22,9 +22,9 @@ namespace KontrolSystem.TO2.Test {
 
         [Fact]
         public void TestVariables() {
-            Assert.Equal(3579, RunExpression<long>(BuiltinType.Int, "const a = 1234\nconst b = 2345\na + b"));  
-            Assert.Equal(2345, RunExpression<long>(BuiltinType.Int, "let a = 1234\na = 2345\na"));  
-            Assert.Equal(3579, RunExpression<long>(BuiltinType.Int, "let a = 1234\na += 2345\na"));  
+            Assert.Equal(3579, RunExpression<long>(BuiltinType.Int, "const a = 1234\nconst b = 2345\na + b"));
+            Assert.Equal(2345, RunExpression<long>(BuiltinType.Int, "let a = 1234\na = 2345\na"));
+            Assert.Equal(3579, RunExpression<long>(BuiltinType.Int, "let a = 1234\na += 2345\na"));
         }
 
         [Fact]
@@ -45,7 +45,7 @@ namespace KontrolSystem.TO2.Test {
 
                 build.result().to_string()
             "));
-            
+
             Assert.Equal("|10|9|8|7|6|5|4|3|2|1|", RunExpression<string>(BuiltinType.String, @"
                 let out = ""|""
 
@@ -56,7 +56,7 @@ namespace KontrolSystem.TO2.Test {
 
                 out
             "));
-            
+
             Assert.Equal("[1, 2, 9, 4]", RunExpression<string>(BuiltinType.String, @"
                 let a = [1, 2, 3, 4]
 
@@ -68,14 +68,14 @@ namespace KontrolSystem.TO2.Test {
 
         [Fact]
         public void TestStrings() {
-            Assert.Equal(5, RunExpression<long>(BuiltinType.Int, "\"Hallo\".length"));    
+            Assert.Equal(5, RunExpression<long>(BuiltinType.Int, "\"Hallo\".length"));
         }
 
         [Fact]
         public void TestRange() {
-            Assert.Equal(5, RunExpression<long>(BuiltinType.Int, "(0..5).length"));   
-            Assert.Equal(6, RunExpression<long>(BuiltinType.Int, "(0...5).length"));   
-            
+            Assert.Equal(5, RunExpression<long>(BuiltinType.Int, "(0..5).length"));
+            Assert.Equal(6, RunExpression<long>(BuiltinType.Int, "(0...5).length"));
+
             Assert.Equal("[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]", RunExpression<string>(BuiltinType.String, @"
                 let build : ArrayBuilder<int> = ArrayBuilder(100)
 
@@ -86,7 +86,7 @@ namespace KontrolSystem.TO2.Test {
                 build.result().to_string()
             "));
         }
-        
+
         [Fact]
         public void TestBlock() {
             Assert.Equal(3579, RunExpression<long>(BuiltinType.Int, "const a = { let b = 1234\nb += 2345\nb }\na"));
@@ -106,7 +106,7 @@ namespace KontrolSystem.TO2.Test {
 
                 a
             "));
-            
+
             Assert.Equal(1, RunExpression<long>(BuiltinType.Int, @"
                 let a = 0
                 let b = 10
@@ -160,22 +160,22 @@ namespace KontrolSystem.TO2.Test {
 
                 while (!futureResult.IsReady) {
                     pollCount++;
-                    if(pollCount > 100) throw new FailException("No result after 100 tries");
+                    if (pollCount > 100) throw new FailException("No result after 100 tries");
                     futureResult = future.PollValue();
                 }
             }
-            
+
             var mainBlock = new Block(result.OfType<IBlockItem>().ToList());
             var mainFuture = mainBlock.Eval(context);
             var mainFutureResult = mainFuture.PollValue();
 
             while (!mainFutureResult.IsReady) {
                 pollCount++;
-                if(pollCount > 100) throw new FailException("No result after 100 tries");
+                if (pollCount > 100) throw new FailException("No result after 100 tries");
                 mainFutureResult = mainFuture.PollValue();
             }
-            
-            
+
+
             Assert.Equal(to2Type, mainFutureResult.value.Type);
             Assert.True(mainFutureResult.value.Value is T);
 

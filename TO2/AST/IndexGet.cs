@@ -78,11 +78,11 @@ namespace KontrolSystem.TO2.AST {
 
             indexAccess.EmitPtr(context);
         }
-        
+
         public override REPLValueFuture Eval(REPLContext context) {
             var targetFuture = target.Eval(context);
             IIndexAccessEmitter indexAccess = targetFuture.Type.AllowedIndexAccess(context.replModuleContext, indexSpec);
-            
+
             if (indexAccess == null) {
                 throw new REPLException(this, $"Type '{targetFuture.Type.Name}' does not support access by index");
             }

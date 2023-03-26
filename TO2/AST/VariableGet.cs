@@ -124,7 +124,7 @@ namespace KontrolSystem.TO2.AST {
             if (variable != null) {
                 return REPLValueFuture.Success(variable.value);
             }
-            
+
             IKontrolConstant constant = ReferencedConstant(context.replModuleContext);
 
             if (constant != null) {

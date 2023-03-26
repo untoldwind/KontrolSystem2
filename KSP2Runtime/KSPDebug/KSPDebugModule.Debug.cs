@@ -24,7 +24,7 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
 
                 return renderer;
             }
-            
+
             [KSMethod(Description =
                 @"Draws a `vector` positioned at `start` with a specified `color` and `width` in the current game scene.
                   The vector may have a `label` at its mid-point.
@@ -40,7 +40,7 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
 
                 return renderer;
             }
-            
+
             [KSMethod]
             public GroundMarker AddGroundMarker(KSPOrbitModule.GeoCoordinates geoCoordinates,
                 KSPConsoleModule.RgbaColor color, double rotation) {
@@ -54,9 +54,9 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
             [KSMethod]
             public BillboardRenderer AddBillboard(Func<Position> positionProvider, Func<string> textProvider,
                 KSPConsoleModule.RgbaColor color, long fontSize) {
-                BillboardRenderer marker = new BillboardRenderer(positionProvider, textProvider,color, fontSize);
+                BillboardRenderer marker = new BillboardRenderer(positionProvider, textProvider, color, fontSize);
                 marker.Visible = true;
-                
+
                 KSPContext.CurrentContext.AddMarker(marker);
 
                 return marker;
@@ -70,8 +70,8 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                 KSPContext.CurrentContext.AddMarker(pathMarker);
 
                 return pathMarker;
-            }            
-            
+            }
+
             [KSMethod(
                 Description = "Remove all markers from the game-scene."
             )]

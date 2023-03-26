@@ -126,7 +126,7 @@ namespace KontrolSystem.TO2.AST {
 
         public override void EmitStore(IBlockContext context, IBlockVariable variable, bool dropResult) =>
             expression.EmitStore(context, variable, dropResult);
-        
+
         public override REPLValueFuture Eval(REPLContext context) => expression.Eval(context);
     }
 }

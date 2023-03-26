@@ -181,7 +181,7 @@ namespace KontrolSystem.TO2.AST {
         public IREPLValue EvalConvert(Node node, IREPLValue value) {
             if (value.Type == optionType) return value;
 
-            return new REPLAny(optionType, Option.Some(optionType.elementType.REPLCast(value.Value))); 
+            return new REPLAny(optionType, Option.Some(optionType.elementType.REPLCast(value.Value)));
         }
     }
 

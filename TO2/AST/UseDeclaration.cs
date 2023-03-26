@@ -137,7 +137,7 @@ namespace KontrolSystem.TO2.AST {
                     throw new REPLException(this, $"Module '{fromModule}' does not have public member '{name}''");
                 }
             }
-            
+
             return REPLValueFuture.Success(REPLUnit.INSTANCE);
         }
     }

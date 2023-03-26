@@ -21,7 +21,7 @@ namespace KontrolSystem.TO2.AST {
         void EmitStore(IBlockContext context);
 
         IREPLValue EvalGet(Node node, IREPLValue target);
-        
+
         IREPLValue EvalAssign(Node node, IREPLValue target, IREPLValue value);
     }
 
@@ -38,7 +38,7 @@ namespace KontrolSystem.TO2.AST {
     }
 
     public delegate IREPLValue REPLFieldAccess(Node node, IREPLValue target);
-    
+
     public class InlineFieldAccessFactory : IFieldAccessFactory {
         private readonly Func<RealizedType> fieldType;
         private readonly REPLFieldAccess replFieldAccess;
@@ -95,7 +95,7 @@ namespace KontrolSystem.TO2.AST {
         }
 
         public IREPLValue EvalGet(Node node, IREPLValue target) => replFieldAccess(node, target);
-        
+
         public IREPLValue EvalAssign(Node node, IREPLValue target, IREPLValue value) => throw new REPLException(node, "Field assign not supported");
     }
 
@@ -199,7 +199,7 @@ namespace KontrolSystem.TO2.AST {
 
             return FieldType.REPLCast(current);
         }
-        
+
         public IREPLValue EvalAssign(Node node, IREPLValue target, IREPLValue value) {
             var fieldCount = fieldInfos.Count;
             object current = target.Value;
@@ -207,7 +207,7 @@ namespace KontrolSystem.TO2.AST {
             foreach (var fieldInfo in fieldInfos.Take(fieldCount - 1)) {
                 current = fieldInfo.GetValue(current);
             }
-            
+
             fieldInfos[fieldCount - 1].SetValue(current, value.Value);
 
             return FieldType.REPLCast(value.Value);
@@ -337,7 +337,7 @@ namespace KontrolSystem.TO2.AST {
         }
 
         public IREPLValue EvalAssign(Node node, IREPLValue target, IREPLValue value) {
-            if(setter == null)
+            if (setter == null)
                 throw new REPLException(node, "Field assign not supported");
 
             if (setter.IsStatic)

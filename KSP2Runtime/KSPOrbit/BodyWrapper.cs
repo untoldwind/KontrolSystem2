@@ -74,7 +74,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
         public KSPOrbitModule.IOrbit GlobalCreateOrbit(VelocityAtPosition velocity, double ut) {
             PatchedConicsOrbit orbit = new PatchedConicsOrbit(body.universeModel);
-            
+
             orbit.UpdateFromStateVectors(velocity.position, velocity.velocity, body, ut);
 
             return new OrbitWrapper(context, orbit);

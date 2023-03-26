@@ -17,7 +17,7 @@ namespace KontrolSystem.TO2.AST {
         bool IsAsync { get; }
 
         void EmitCode(IBlockContext context);
-        
+
         REPLValueFuture Eval(Node node, IREPLValue[] targetWithArguments);
     }
 
@@ -45,7 +45,7 @@ namespace KontrolSystem.TO2.AST {
     }
 
     public delegate REPLValueFuture REPLMethodCall(Node node, IREPLValue[] targetWithArguments);
-    
+
     public class InlineMethodInvokeFactory : IMethodInvokeFactory {
         private readonly Func<RealizedType> resultType;
         private readonly OpCode[] opCodes;
@@ -80,12 +80,12 @@ namespace KontrolSystem.TO2.AST {
     public class InlineMethodInvokeEmitter : IMethodInvokeEmitter {
         private readonly OpCode[] opCodes;
         private readonly REPLMethodCall methodCall;
-        
+
         public RealizedType ResultType { get; }
 
         public List<RealizedParameter> Parameters { get; }
 
-        public InlineMethodInvokeEmitter(RealizedType returnType, List<RealizedParameter> parameters,  REPLMethodCall methodCall,
+        public InlineMethodInvokeEmitter(RealizedType returnType, List<RealizedParameter> parameters, REPLMethodCall methodCall,
             params OpCode[] opCodes) {
             ResultType = returnType;
             Parameters = parameters;
@@ -215,7 +215,7 @@ namespace KontrolSystem.TO2.AST {
             var result = methodInfo.IsStatic ? methodInfo.Invoke(null, targetWithArguments.Select(a => a.Value).ToArray()) :
                 methodInfo.Invoke(targetWithArguments[0].Value, targetWithArguments.Skip(1).Select(a => a.Value).ToArray());
 
-            return IsAsync ?  REPLValueFuture.Wrap(ResultType, result as IAnyFuture) : REPLValueFuture.Success(ResultType.REPLCast(result));
+            return IsAsync ? REPLValueFuture.Wrap(ResultType, result as IAnyFuture) : REPLValueFuture.Success(ResultType.REPLCast(result));
         }
     }
 }

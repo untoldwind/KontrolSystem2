@@ -62,7 +62,7 @@ namespace KontrolSystem.TO2.AST {
             context.IL.Emit(context.InnerLoop.Value.start.isShort ? OpCodes.Br_S : OpCodes.Br,
                 context.InnerLoop.Value.start);
         }
-        
+
         public override REPLValueFuture Eval(REPLContext context) => REPLValueFuture.Success(REPLContinue.INSTANCE);
     }
 }

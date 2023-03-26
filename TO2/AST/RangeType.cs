@@ -42,7 +42,7 @@ namespace KontrolSystem.TO2.AST {
         public override IIndexAccessEmitter AllowedIndexAccess(ModuleContext context, IndexSpec indexSpec) => null;
 
         public override IForInSource ForInSource(ModuleContext context, TO2Type typeHint) => new RangeForInSource();
-        
+
         public override IREPLValue REPLCast(object value) => new REPLRange((Range)value);
     }
 

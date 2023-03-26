@@ -30,10 +30,10 @@ namespace KontrolSystem.KSP.Runtime.Testing {
         public double StartUt => 0;
         public double EndUt => 0;
 
-        public Option<double> Apoapsis => ApoapsisRadius.Map(apr => apr - body.radius );
+        public Option<double> Apoapsis => ApoapsisRadius.Map(apr => apr - body.radius);
         public double Periapsis => PeriapsisRadius - body.radius;
 
-        public Option<double> ApoapsisRadius => eccentricity < 1 ? Option.Some( (1.0 + eccentricity) * semiMajorAxis) : Option.None<double>();
+        public Option<double> ApoapsisRadius => eccentricity < 1 ? Option.Some((1.0 + eccentricity) * semiMajorAxis) : Option.None<double>();
 
         public double PeriapsisRadius => (1.0 - eccentricity) * semiMajorAxis;
 
@@ -316,7 +316,7 @@ namespace KontrolSystem.KSP.Runtime.Testing {
                 return 2.0 * Math.Atan2(Math.Sqrt(eccentricity + 1.0) * y, Math.Sqrt(eccentricity - 1.0) * x);
             }
         }
-        
+
         public Position GlobalPosition(double ut) {
             Position bodyPosition = body.orbit?.GlobalPosition(ut) ?? new Position(ReferenceFrame, Vector3d.zero);
 
@@ -481,7 +481,7 @@ namespace KontrolSystem.KSP.Runtime.Testing {
                 return (360 - angleFromPe) * DirectBindingMath.DegToRad;
             }
         }
-        
+
         public double AscendingNodeTrueAnomaly(KSPOrbitModule.IOrbit b) {
             Vector3d vectorToAn = Vector3d.Cross(OrbitNormal, b.OrbitNormal);
             return TrueAnomalyFromVector(vectorToAn);

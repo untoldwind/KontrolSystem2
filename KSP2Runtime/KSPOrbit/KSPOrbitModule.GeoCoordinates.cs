@@ -27,7 +27,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
             [KSMethod]
             public Vector3d AltitudePosition(double altitude) => body.SurfacePosition(Latitude, Longitude, altitude);
-            
+
             [KSMethod]
             public Position GlobalAltitudePosition(double altitude) => body.GlobalSurfacePosition(Latitude, Longitude, altitude);
         }

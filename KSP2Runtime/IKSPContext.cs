@@ -50,8 +50,8 @@ namespace KontrolSystem.KSP.Runtime {
 
         void TriggerMarkerRender();
 
-        bool TryFindAutopilot<T>(VesselComponent vessel, out T autopilot) where T: IKSPAutopilot;
-        
+        bool TryFindAutopilot<T>(VesselComponent vessel, out T autopilot) where T : IKSPAutopilot;
+
         void HookAutopilot(VesselComponent vessel, IKSPAutopilot autopilot);
 
         void UnhookAutopilot(VesselComponent vessel, IKSPAutopilot autopilot);

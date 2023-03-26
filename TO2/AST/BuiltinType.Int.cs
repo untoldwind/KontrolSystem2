@@ -130,9 +130,9 @@ namespace KontrolSystem.TO2.AST {
             public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) => allowedSuffixOperators;
 
             public override IREPLValue REPLCast(object value) {
-                if(value is long l)
+                if (value is long l)
                     return new REPLInt(l);
-                if(value is int i)
+                if (value is int i)
                     return new REPLInt(i);
 
                 throw new REPLException(new Position("Intern"), new Position("Intern"), $"{value.GetType()} can not be cast to REPLInt");

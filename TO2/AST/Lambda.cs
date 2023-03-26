@@ -193,6 +193,6 @@ namespace KontrolSystem.TO2.AST {
         public override REPLValueFuture Eval(REPLContext context) {
             throw new NotSupportedException("Lambda are not supported in REPL mode");
         }
-        
+
     }
 }

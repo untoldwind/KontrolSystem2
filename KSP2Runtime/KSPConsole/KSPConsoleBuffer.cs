@@ -30,16 +30,16 @@ namespace KontrolSystem.KSP.Runtime.KSPConsole {
 
         public string ContentAsString() {
             if (line.Length == 0) return "";
-            
+
             int endIdx = line.Length - 1;
 
-            for (; endIdx >= 0 && (line[endIdx] == ' ' || line[endIdx] == 0); endIdx--);
+            for (; endIdx >= 0 && (line[endIdx] == ' ' || line[endIdx] == 0); endIdx--) ;
 
             return new String(line, 0, endIdx + 1);
         }
-        
+
         public override string ToString() => new string(line);
-        
+
     }
 
     public class KSPConsoleBuffer {
