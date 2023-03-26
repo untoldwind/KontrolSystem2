@@ -79,16 +79,16 @@
       </ProjectReference>
     </ItemGroup>
     <ItemGroup>
-        <GFXFiles Include="GFX\**\*.png" />
+        <AssetFiles Include="Assets\**\*.bundle" />
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="GFX" />
+      <Folder Include="Assets" />
     </ItemGroup>
     <Target Name="CopyFiles" AfterTargets="Build">
         <Copy SourceFiles="../bin/$(Configuration)/KontrolSystemSpaceWarpMod.dll" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2" />
         <Copy SourceFiles="icon.png" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2/assets/images" />
         <Copy SourceFiles="swinfo.json" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2" />
-        <Copy SourceFiles="@(GFXFiles)" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2/assets/images" />
+        <Copy SourceFiles="@(AssetFiles)" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2/assets/bundles" />
     </Target>
     <Target Name="Test">
     </Target>
