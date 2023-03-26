@@ -101,10 +101,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         public GameInstance Game => gameInstance;
 
         public GameMode GameMode => GameModeAdapter.GameModeFromState(Game.GlobalGameState.GetState());
-
-        public Font ConsoleFont(int fontSize) => FontManager.Instance.GetSystemFontByNameAndSize(FontManager.DefaultConsoleFonts,
-            fontSize, true);
-
+        
         public double UniversalTime => Game.SpaceSimulation.UniverseModel.UniversalTime;
 
         public VesselComponent ActiveVessel => gameInstance.ViewController.GetActiveSimVessel(true);

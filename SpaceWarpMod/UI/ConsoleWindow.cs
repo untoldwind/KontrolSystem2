@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using KontrolSystem.KSP.Runtime.KSPConsole;
+using SpaceWarp.API.Assets;
 using UnityEngine;
 
 namespace KontrolSystem.SpaceWarpMod.UI {
@@ -49,9 +50,8 @@ namespace KontrolSystem.SpaceWarpMod.UI {
 
             terminalLetterSkin = BuildPanelSkin();
             terminalLetterSkin.label.fontSize = 12;
-            terminalLetterSkin.label.font =
-                FontManager.Instance.GetSystemFontByNameAndSize(FontManager.DefaultConsoleFonts,
-                    terminalLetterSkin.label.fontSize, true);
+            terminalLetterSkin.label.font = AssetManager.GetAsset<Font>($"kontrolsystem2/kontrolsystem2/fonts/jetbrainsmono-regular.ttf");
+
             LoggerAdapter.Instance.Debug($"Console font: {terminalLetterSkin.label.font}");
 
             CharacterInfo chInfo;
