@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.SpaceWarpMod.Core;
 using KontrolSystem.TO2;
@@ -173,6 +174,8 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             GUILayout.BeginVertical();
 
             if (GUILayout.Button(Mainframe.Instance.Rebooting ? "Rebooting..." : "Reboot")) OnReboot();
+            GUILayout.Space(20);
+            if (GUILayout.Button("Copy")) OnCopyErrors();
             GUILayout.FlexibleSpace();
             if (GUILayout.Button("Close")) Close();
 
@@ -241,6 +244,20 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             }
         }
 
+        private void OnCopyErrors() {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append($"Rebooted in {Mainframe.Instance.LastRebootTime}\n");
+            if (!Mainframe.Instance.LastErrors.Any()) {
+                sb.Append("\nNo errors\n");
+            } else {
+                foreach (MainframeError error in Mainframe.Instance.LastErrors) {
+                    sb.Append($"\nERROR: [{error.position}] {error.errorType}\n{error.message}\n");
+                }
+            }
+
+            GUIUtility.systemCopyBuffer = sb.ToString();
+        }
 
         void OnReboot() {
             Mainframe.Instance.Reboot(ConfigAdapter.Instance);

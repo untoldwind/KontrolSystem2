@@ -67,6 +67,12 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                 consoleBuffer?.Clear();
             }
 
+            if (windowRect.width > 200 && consoleBuffer != null) {
+                if (GUI.Button(new Rect(80, windowRect.height - 30, 50, 25), "Copy")) {
+                    GUIUtility.systemCopyBuffer = consoleBuffer.ContentAsString();
+                }
+            }
+
             GUI.Label(new Rect(15, 28, windowRect.width - 30, windowRect.height - 63), "", terminalImageStyle);
 
             GUI.BeginGroup(new Rect(28, 48, (consoleBuffer?.VisibleCols ?? 1) * fontCharWidth + 2,

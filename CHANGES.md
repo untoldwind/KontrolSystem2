@@ -1,5 +1,10 @@
 # Changes
 
+## 0.2.2 ->
+
+* Fix comments in struct-impl (#57)
+* Add "Copy to clipboard" to reboot errors and and console window
+
 ## 0.2.1 -> 0.2.2
 
 * Make low and high gravity turn parameters tweakable in `launch_rocket.to2`

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace KontrolSystem.KSP.Runtime.KSPConsole {
     public struct ConsoleLine {
@@ -27,7 +28,18 @@ namespace KontrolSystem.KSP.Runtime.KSPConsole {
             return true;
         }
 
+        public string ContentAsString() {
+            if (line.Length == 0) return "";
+            
+            int endIdx = line.Length - 1;
+
+            for (; endIdx >= 0 && (line[endIdx] == ' ' || line[endIdx] == 0); endIdx--);
+
+            return new String(line, 0, endIdx + 1);
+        }
+        
         public override string ToString() => new string(line);
+        
     }
 
     public class KSPConsoleBuffer {
@@ -157,6 +169,19 @@ namespace KontrolSystem.KSP.Runtime.KSPConsole {
 
                 cursorLine = topLine;
                 for (int i = 0; i < CursorRow && cursorLine.Next != null; i++) cursorLine = cursorLine.Next;
+            }
+        }
+
+        public string ContentAsString() {
+            lock (consoleLock) {
+                StringBuilder sb = new StringBuilder();
+
+                foreach (var line in bufferLines) {
+                    sb.Append(line.ContentAsString());
+                    sb.Append("\n");
+                }
+
+                return sb.ToString();
             }
         }
 
