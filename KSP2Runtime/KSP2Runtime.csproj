@@ -36,6 +36,9 @@
         <Reference Include="UnityEngine.UIModule">
             <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\UnityEngine.UIModule.dll</HintPath>
         </Reference>
+        <Reference Include="UnityEngine.TextCoreModule">
+            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\UnityEngine.TextCoreModule.dll</HintPath>
+        </Reference>
         <Reference Include="UnityEngine.TextRenderingModule">
             <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
         </Reference>
