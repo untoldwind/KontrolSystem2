@@ -10,12 +10,15 @@ sync fn do_calc(d : int , e : int, calc : fn(int, int) -> int) -> int = {
 
 sync fn do_calc_float(a : float, calc : fn(float) -> float) -> float = calc(a * a)
 
+sync fn fancy(a : int, b : int) -> int = 2 * a + 3 * b
+
 test sync fn test_simple_lambda() -> Unit = {
     const lambda1 = fn(a : int, b: int) -> a + b
     const lambda2 = fn(a : int, b: int) -> a - b
 
     assert_int(126, do_calc(12, 34, lambda1))
     assert_int(-78, do_calc(12, 34, lambda2))
+    assert_int(354, do_calc(12, 34, fancy))
     assert_int(1234, lambda1(1200, 34))
     assert_int(1200, lambda2(1234, 34))
 }

@@ -18,7 +18,7 @@ namespace KontrolSystem.TO2.AST {
             this.returnType = returnType;
         }
 
-        public override string Name => $"fn({String.Join(", ", parameterTypes)}) -> {returnType}";
+        public override string Name => $"{(isAsync ? "" : "sync ")}fn({String.Join(", ", parameterTypes)}) -> {returnType}";
 
         public override bool IsValid(ModuleContext context) =>
             returnType.IsValid(context) && parameterTypes.All(t => t.IsValid(context));
@@ -44,6 +44,15 @@ namespace KontrolSystem.TO2.AST {
 
             return generatedType;
         }
+
+        public override bool IsAssignableFrom(ModuleContext context, TO2Type otherType) {
+            if (otherType.UnderlyingType(context) is FunctionType otherFunctionType) {
+                return !otherFunctionType.isAsync && GeneratedType(context).IsAssignableFrom(otherType.GeneratedType(context));
+            }
+            
+            return false;
+        }
+
 
         public override IOperatorCollection AllowedPrefixOperators(ModuleContext context) => BuiltinType.NoOperators;
 
