@@ -1,6 +1,6 @@
 # Changes
 
-## 0.2.2 ->
+## 0.2.2 -> 0.2.3
 
 * Fix comments in struct-impl (#57)
 * Add "Copy to clipboard" to reboot errors and and console window
