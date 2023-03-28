@@ -48,8 +48,8 @@
         <Reference Include="UnityEngine.TextRenderingModule">
             <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
         </Reference>
-        <Reference Include="UnityEngine.UIElementsModule">
-            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
+        <Reference Include="UnityEngine.UIModule">
+            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\UnityEngine.UIModule.dll</HintPath>
         </Reference>
         <Reference Include="Newtonsoft.Json">
             <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\Newtonsoft.Json.dll</HintPath>

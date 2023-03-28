@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using KontrolSystem.KSP.Runtime.KSPGame;
+using KontrolSystem.KSP.Runtime.KSPUI;
 using KontrolSystem.SpaceWarpMod.Core;
 using KontrolSystem.TO2;
 using KSP.Game;
@@ -266,6 +267,10 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         }
 
         protected override void OnOpen() {
+            var factory = new UIFactory(GFXAdapter.GetTexture("window_sprite"));
+
+            factory.CreateWindow(Game.UI.GetRootCanvas(), new Rect(400, 600, 600, 400));
+            
             if (!Mainframe.Instance.Initialized) {
                 LoggerAdapter.Instance.Debug("Lazy Initialize KontrolSystemMod");
                 Mainframe.Instance.Reboot(ConfigAdapter.Instance);

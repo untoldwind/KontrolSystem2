@@ -59,7 +59,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                 .RequestCharactersInTexture("X"); // Make sure the char in the font is lazy-loaded by Unity.
             terminalLetterSkin.label.font.GetCharacterInfo('X', out chInfo);
             fontCharWidth = chInfo.advance;
-            fontCharHeight = terminalLetterSkin.label.fontSize;
+            fontCharHeight = terminalLetterSkin.label.fontSize + 2;
             LoggerAdapter.Instance.Debug($"Font metrics: {fontCharWidth} x {fontCharHeight}");
         }
 
