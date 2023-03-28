@@ -1,4 +1,6 @@
 using System;
+using AwesomeTechnologies.Utility.Quadtree;
+using KontrolSystem.KSP.Runtime.KSPMath;
 using TMPro;
 using UnityEngine;
 
@@ -12,7 +14,7 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
             textFont = font;
             colored = new Material(Shader.Find("Hidden/Internal-Colored"));
             colored.hideFlags = HideFlags.HideAndDontSave;
-            textColored = new Material(Shader.Find("TextMeshPro/Distance Field"));
+            textColored = new Material(Shader.Find("TextMeshPro/Distance Field Overlay"));
             textColored.hideFlags = HideFlags.HideAndDontSave;
             textColored.SetTexture("_MainTex", textFont.atlasTexture);
         }
@@ -81,33 +83,35 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
                 GL.End();
             }
 
-            public void DrawText(Vector2 pos, string text, float size, Color color) {
+            public void DrawText(Vector2 pos, string text, float size, float degrees, Color color) {
                 textColored.SetPass(0);
                 GL.Begin(GL.QUADS);
                 GL.Color(color);
-                var x = pos.x;
-                var y = pos.y;
+                var pivot = new Vector3(pos.x, pos.y);
+                var x = 0.0f;
+                var y = 0.0f;
                 var atlasWidth = (float)textFont.atlasWidth;
                 var atlasHeight = (float)textFont.atlasHeight;
                 var scale = size / textFont.faceInfo.pointSize;
+                var rotation = Quaternion.Euler(Vector3.forward * degrees);
                 for (int i = 0; i < text.Length; i++) {
                     var glyph = textFont.characterLookupTable[text[i]]?.glyph;
 
                     if (glyph == null) continue;
 
                     GL.TexCoord2(glyph.glyphRect.x / atlasWidth, (glyph.glyphRect.y + glyph.glyphRect.height) / atlasHeight);
-                    GL.MultiTexCoord2(1, 0, 1.0f);
-                    GL.Vertex3(x , y - scale * glyph.metrics.horizontalBearingY, 0);
+                    GL.MultiTexCoord2(1, 0, -0.1f);
+                    GL.Vertex(pivot + rotation * new Vector3( x , y - scale * glyph.metrics.horizontalBearingY, 0));
                     GL.TexCoord2(glyph.glyphRect.x / atlasWidth, glyph.glyphRect.y / atlasHeight);
-                    GL.MultiTexCoord2(1, 0, 1.0f);
-                    GL.Vertex3(x, y + scale * (glyph.metrics.height - glyph.metrics.horizontalBearingY), 0);
+                    GL.MultiTexCoord2(1, 0, -0.1f);
+                    GL.Vertex(pivot +rotation * new Vector3(x, y + scale * (glyph.metrics.height - glyph.metrics.horizontalBearingY), 0));
                     GL.TexCoord2((glyph.glyphRect.x + glyph.glyphRect.width) / atlasWidth, glyph.glyphRect.y / atlasHeight);
-                    GL.MultiTexCoord2(1, 0, 1.0f);
-                    GL.Vertex3(x + scale * glyph.metrics.width, y + scale * (glyph.metrics.height - glyph.metrics.horizontalBearingY), 0);
+                    GL.MultiTexCoord2(1, 0, -0.1f);
+                    GL.Vertex(pivot +rotation * new Vector3(x + scale * glyph.metrics.width, y + scale * (glyph.metrics.height - glyph.metrics.horizontalBearingY), 0));
                     GL.TexCoord2((glyph.glyphRect.x + glyph.glyphRect.width) / atlasWidth,
                         (glyph.glyphRect.y + glyph.glyphRect.height) / atlasHeight);
-                    GL.MultiTexCoord2(1, 0, 1.0f);
-                    GL.Vertex3(x + scale * glyph.metrics.width, y - scale * glyph.metrics.horizontalBearingY, 0);
+                    GL.MultiTexCoord2(1, 0, -0.1f);
+                    GL.Vertex(pivot + rotation * new Vector3(x + scale * glyph.metrics.width, y - scale * glyph.metrics.horizontalBearingY, 0));
 
                     x += scale * glyph.metrics.horizontalAdvance;
                 }
@@ -115,23 +119,46 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
                 GL.End();
             }
 
-            public Vector2 TextSize(string text, float size)
+            public Rect TextSize(string text, float size, float degrees)
             {
                 var x = 0.0f;
                 var y = 0.0f;
                 var scale = size / textFont.faceInfo.pointSize;
-                
+                var rotation = Quaternion.Euler(Vector3.forward * degrees);
+                var rect = new Rect(0, 0, 0, 0);
+
                 for (int i = 0; i < text.Length; i++) {
                     var glyph = textFont.characterLookupTable[text[i]]?.glyph;
 
                     if (glyph == null) continue;
-                    y = Math.Max(y, scale * (glyph.metrics.height - glyph.metrics.horizontalBearingY));
+                    
+                    var v = rotation * new Vector3( x , y - scale * glyph.metrics.horizontalBearingY, 0);
+                    rect.xMin = Math.Min(rect.xMin, v.x);
+                    rect.yMin = Math.Min(rect.yMin, v.y);
+                    rect.xMax = Math.Max(rect.xMax, v.x);
+                    rect.yMax = Math.Max(rect.yMax, v.y);
+                    v = rotation * new Vector3(x, y + scale * (glyph.metrics.height - glyph.metrics.horizontalBearingY), 0);
+                    rect.xMin = Math.Min(rect.xMin, v.x);
+                    rect.yMin = Math.Min(rect.yMin, v.y);
+                    rect.xMax = Math.Max(rect.xMax, v.x);
+                    rect.yMax = Math.Max(rect.yMax, v.y);
+                    v = rotation * new Vector3(x + scale * glyph.metrics.width, y + scale * (glyph.metrics.height - glyph.metrics.horizontalBearingY), 0);
+                    rect.xMin = Math.Min(rect.xMin, v.x);
+                    rect.yMin = Math.Min(rect.yMin, v.y);
+                    rect.xMax = Math.Max(rect.xMax, v.x);
+                    rect.yMax = Math.Max(rect.yMax, v.y);
+                    v = rotation * new Vector3(x + scale * glyph.metrics.width, y - scale * glyph.metrics.horizontalBearingY, 0);
+                    rect.xMin = Math.Min(rect.xMin, v.x);
+                    rect.yMin = Math.Min(rect.yMin, v.y);
+                    rect.xMax = Math.Max(rect.xMax, v.x);
+                    rect.yMax = Math.Max(rect.yMax, v.y);
+
                     x += scale * glyph.metrics.horizontalAdvance;
                 }
 
-                return new Vector2(x, y);
+                return rect;
             }
-            
+
             public void Dispose()
             {
                 GL.PopMatrix();
