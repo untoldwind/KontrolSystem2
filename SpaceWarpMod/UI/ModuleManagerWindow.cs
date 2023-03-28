@@ -272,22 +272,19 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         private TimeSeriesWindow timeSeriesWindow;
         
         protected override void OnOpen() {
-            UnityEngine.Debug.Log("Opening");
             if (timeSeriesWindow == null) {
-                UnityEngine.Debug.Log("Why");
                 GLUIDrawer.Initialize(AssetManager.GetAsset<TMP_FontAsset>($"kontrolsystem2/kontrolsystem2/fonts/jetbrainsmono-regular-extendedascii.asset"));
                 var timeSeriesCollection = new TimeSeriesCollection();
                 var timeSeries = new KSPTelemetryModule.TimeSeries("Cos", 0.0f, 0.1f);
                 for (int i = 0; i < 20000; i++)
                 {
-                    timeSeries.AddData(i * 0.1f, Math.Cos(i * 0.2f * Math.PI / 5000.0));
+                    timeSeries.AddData(i * 0.1f, Math.Cos(i * 0.2f * Math.PI / 2000.0));
                 }
                 timeSeriesCollection.AddTimeSeries(timeSeries);
 
                 timeSeriesWindow = gameObject.AddComponent<TimeSeriesWindow>();
                 timeSeriesWindow.ConnectTo(timeSeriesCollection);
                 timeSeriesWindow.Open();
-                UnityEngine.Debug.Log("Opened");
             }    
             if (!Mainframe.Instance.Initialized) {
                 LoggerAdapter.Instance.Debug("Lazy Initialize KontrolSystemMod");

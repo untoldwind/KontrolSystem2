@@ -9,17 +9,17 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
         public struct TimeSeriesBucket {
             public int count;
             public double min;
-            public double mean;
+            public double avg;
             public double max;
 
             internal void AddData(double value) {
                 if (count == 0) {
                     count = 1;
-                    min = mean = max = value;
+                    min = avg = max = value;
                 } else {
                     min = Math.Min(min, value);
                     max = Math.Max(max, value);
-                    mean = (mean * count + value) / (count + 1); 
+                    avg = (avg * count + value) / (count + 1); 
                     count++;
                 }
             }
@@ -100,14 +100,14 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
                     var oldIdx = i * factor;
                     var combined = buckets[oldIdx];
 
-                    for (int j = 1; j < factor; j++) {
+                    for (int j = 1; j < factor && oldIdx + j < buckets.Length; j++) {
                         if (combined.count == 0) {
                             combined = buckets[oldIdx + j];
                         } else if (buckets[oldIdx + j].count > 0) {
                             combined.min = Math.Min(combined.min, buckets[oldIdx + j].min);
                             combined.max = Math.Max(combined.max, buckets[oldIdx + j].max);
-                            combined.mean = (combined.mean * combined.count + buckets[oldIdx + j].mean * buckets[oldIdx + j].count) /
-                                            (combined.count + buckets[oldIdx + j].count);
+                            combined.avg = (combined.avg * combined.count + buckets[oldIdx + j].avg * buckets[oldIdx + j].count) /
+                                           (combined.count + buckets[oldIdx + j].count);
                             combined.count += buckets[oldIdx + j].count;
                         }    
                     }

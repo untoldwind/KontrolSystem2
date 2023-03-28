@@ -83,40 +83,56 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
                 GL.End();
             }
 
-            public void DrawText(Vector2 pos, string text, float size, float degrees, Color color) {
-                textColored.SetPass(0);
+            public void LineTube(Vector3[] errors, Color color) {
+                colored.SetPass(0);
                 GL.Begin(GL.QUADS);
                 GL.Color(color);
-                var pivot = new Vector3(pos.x, pos.y);
+                for (int i = 0; i < errors.Length - 1; i++) {
+                    GL.Vertex3(errors[i].x, errors[i].y, 0);
+                    GL.Vertex3(errors[i].x, errors[i].z, 0);
+                    GL.Vertex3(errors[i+1].x, errors[i+1].z, 0);
+                    GL.Vertex3(errors[i+1].x, errors[i+1].y, 0);
+                }
+                GL.End();
+            }
+            
+            public void DrawText(Vector2 pos, string text, float size, float degrees, Color color) {
+                var scale = size / textFont.faceInfo.pointSize;
+                textColored.SetFloat("_ScaleX", scale);
+                textColored.SetFloat("_ScaleY", scale);
+                textColored.SetPass(0);
+                GL.PushMatrix();
+                GL.MultMatrix( Matrix4x4.Translate(new Vector3(pos.x, pos.y)) * Matrix4x4.Scale(new Vector3(scale, scale)) * Matrix4x4.Rotate(Quaternion.Euler(Vector3.forward * degrees)));
+                GL.Begin(GL.QUADS);
+                GL.Color(color);
                 var x = 0.0f;
                 var y = 0.0f;
                 var atlasWidth = (float)textFont.atlasWidth;
                 var atlasHeight = (float)textFont.atlasHeight;
-                var scale = size / textFont.faceInfo.pointSize;
-                var rotation = Quaternion.Euler(Vector3.forward * degrees);
                 for (int i = 0; i < text.Length; i++) {
                     var glyph = textFont.characterLookupTable[text[i]]?.glyph;
 
                     if (glyph == null) continue;
 
                     GL.TexCoord2(glyph.glyphRect.x / atlasWidth, (glyph.glyphRect.y + glyph.glyphRect.height) / atlasHeight);
-                    GL.MultiTexCoord2(1, 0, -0.1f);
-                    GL.Vertex(pivot + rotation * new Vector3( x , y - scale * glyph.metrics.horizontalBearingY, 0));
+                    GL.MultiTexCoord2(1, 0, -0.4f);
+                    GL.Vertex3(x , y - glyph.metrics.horizontalBearingY, 0);
                     GL.TexCoord2(glyph.glyphRect.x / atlasWidth, glyph.glyphRect.y / atlasHeight);
-                    GL.MultiTexCoord2(1, 0, -0.1f);
-                    GL.Vertex(pivot +rotation * new Vector3(x, y + scale * (glyph.metrics.height - glyph.metrics.horizontalBearingY), 0));
+                    GL.MultiTexCoord2(1, 0, -0.4f);
+                    GL.Vertex3(x, y + (glyph.metrics.height - glyph.metrics.horizontalBearingY), 0);
                     GL.TexCoord2((glyph.glyphRect.x + glyph.glyphRect.width) / atlasWidth, glyph.glyphRect.y / atlasHeight);
-                    GL.MultiTexCoord2(1, 0, -0.1f);
-                    GL.Vertex(pivot +rotation * new Vector3(x + scale * glyph.metrics.width, y + scale * (glyph.metrics.height - glyph.metrics.horizontalBearingY), 0));
+                    GL.MultiTexCoord2(1, 0, -0.4f);
+                    GL.Vertex3(x + glyph.metrics.width, y +(glyph.metrics.height - glyph.metrics.horizontalBearingY), 0);
                     GL.TexCoord2((glyph.glyphRect.x + glyph.glyphRect.width) / atlasWidth,
                         (glyph.glyphRect.y + glyph.glyphRect.height) / atlasHeight);
-                    GL.MultiTexCoord2(1, 0, -0.1f);
-                    GL.Vertex(pivot + rotation * new Vector3(x + scale * glyph.metrics.width, y - scale * glyph.metrics.horizontalBearingY, 0));
+                    GL.MultiTexCoord2(1, 0, -0.4f);
+                    GL.Vertex3(x + glyph.metrics.width, y - glyph.metrics.horizontalBearingY, 0);
 
-                    x += scale * glyph.metrics.horizontalAdvance;
+                    x += glyph.metrics.horizontalAdvance;
                 }
 
                 GL.End();
+                GL.PopMatrix();
             }
 
             public Rect TextSize(string text, float size, float degrees)

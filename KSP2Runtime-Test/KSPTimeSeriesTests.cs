@@ -31,10 +31,42 @@ namespace KontrolSystem.KSP.Runtime.Test {
                 Assert.True(bucket.count > 0);
                 Assert.True(bucket.min <= refValue);
                 Assert.True(bucket.max >= refValue);
-                Assert.True(bucket.mean >= bucket.min);
-                Assert.True(bucket.mean <= bucket.max);
+                Assert.True(bucket.avg >= bucket.min);
+                Assert.True(bucket.avg <= bucket.max);
                 Assert.True(bucket.max - bucket.min < 0.01);
             }
+        }
+
+        [Fact]
+        public void TestFillErrors() {
+            var timeSeries2 = new KSPTelemetryModule.TimeSeries("Errors", 0.0, 0.1);
+            timeSeries2.AddData(0, 0.5);
+            timeSeries2.AddData(0, 0.7);
+            timeSeries2.AddData(500, 0.3);
+            timeSeries2.AddData(500, 0.8);
+            timeSeries2.AddData(1500, 0.3);
+            timeSeries2.AddData(1500, 0.4);
+            timeSeries2.AddData(2000, 0.8);
+            timeSeries2.AddData(2000, 0.9);
+            var buckets = timeSeries2.Values;
+            
+            Assert.True(buckets.Length == 4);
+            Assert.Equal(buckets[0].Item1, 0.0);
+            Assert.Equal(buckets[0].Item2.avg, 0.6, 6);
+            Assert.Equal(buckets[0].Item2.min, 0.5, 6);
+            Assert.Equal(buckets[0].Item2.max, 0.7, 6);
+            Assert.Equal(buckets[1].Item1, 500.0);
+            Assert.Equal(buckets[1].Item2.avg, 0.55, 6);
+            Assert.Equal(buckets[1].Item2.min, 0.3, 6);
+            Assert.Equal(buckets[1].Item2.max, 0.8, 6);
+            Assert.Equal(buckets[2].Item1, 1500.0);
+            Assert.Equal(buckets[2].Item2.avg, 0.35, 6);
+            Assert.Equal(buckets[2].Item2.min, 0.3, 6);
+            Assert.Equal(buckets[2].Item2.max, 0.4, 6);
+            Assert.Equal(buckets[3].Item1, 2000.0);
+            Assert.Equal(buckets[3].Item2.avg, 0.85, 6);
+            Assert.Equal(buckets[3].Item2.min, 0.8, 6);
+            Assert.Equal(buckets[3].Item2.max, 0.9, 6);
         }
     }
 }
