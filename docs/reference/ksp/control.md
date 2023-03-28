@@ -112,7 +112,7 @@ rcstranslatemanager.resume ( ) -> Unit
 ##### set_translate_provider
 
 ```rust
-rcstranslatemanager.set_translate_provider ( newTranslateProvider : fn(float) -> ksp::math::Vec3 ) -> Unit
+rcstranslatemanager.set_translate_provider ( newTranslateProvider : sync fn(float) -> ksp::math::Vec3 ) -> Unit
 ```
 
 
@@ -148,7 +148,7 @@ steeringmanager.resume ( ) -> Unit
 ##### set_pitch_yaw_roll_provider
 
 ```rust
-steeringmanager.set_pitch_yaw_roll_provider ( newPitchYawRollProvider : fn(float) -> ksp::math::Vec3 ) -> Unit
+steeringmanager.set_pitch_yaw_roll_provider ( newPitchYawRollProvider : sync fn(float) -> ksp::math::Vec3 ) -> Unit
 ```
 
 
@@ -184,7 +184,7 @@ throttlemanager.resume ( ) -> Unit
 ##### set_throttle_provider
 
 ```rust
-throttlemanager.set_throttle_provider ( newThrottleProvider : fn(float) -> float ) -> Unit
+throttlemanager.set_throttle_provider ( newThrottleProvider : sync fn(float) -> float ) -> Unit
 ```
 
 
@@ -255,7 +255,7 @@ wheelsteeringmanager.resume ( ) -> Unit
 ##### set_wheel_steer_provider
 
 ```rust
-wheelsteeringmanager.set_wheel_steer_provider ( newWheelSteerProvider : fn(float) -> float ) -> Unit
+wheelsteeringmanager.set_wheel_steer_provider ( newWheelSteerProvider : sync fn(float) -> float ) -> Unit
 ```
 
 
@@ -291,7 +291,7 @@ wheelthrottlemanager.resume ( ) -> Unit
 ##### set_wheel_throttle_provider
 
 ```rust
-wheelthrottlemanager.set_wheel_throttle_provider ( newWheelThrottleProvider : fn(float) -> float ) -> Unit
+wheelthrottlemanager.set_wheel_throttle_provider ( newWheelThrottleProvider : sync fn(float) -> float ) -> Unit
 ```
 
 

@@ -27,7 +27,7 @@ Stop execution of given number of seconds (factions of a seconds are supported a
 ### wait_until
 
 ```rust
-pub fn wait_until ( predicate : fn() -> bool ) -> Unit
+pub fn wait_until ( predicate : sync fn() -> bool ) -> Unit
 ```
 
 Stop execution until a given condition is met.
@@ -36,7 +36,7 @@ Stop execution until a given condition is met.
 ### wait_while
 
 ```rust
-pub fn wait_while ( predicate : fn() -> bool ) -> Unit
+pub fn wait_while ( predicate : sync fn() -> bool ) -> Unit
 ```
 
 Stop execution as long as a given condition is met.

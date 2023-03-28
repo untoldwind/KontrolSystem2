@@ -609,7 +609,7 @@ vessel.heading_direction ( degreesFromNorth : float,
 ##### manage_rcs_translate
 
 ```rust
-vessel.manage_rcs_translate ( translateProvider : fn(float) -> ksp::math::Vec3 ) -> ksp::control::RCSTranslateManager
+vessel.manage_rcs_translate ( translateProvider : sync fn(float) -> ksp::math::Vec3 ) -> ksp::control::RCSTranslateManager
 ```
 
 
@@ -617,7 +617,7 @@ vessel.manage_rcs_translate ( translateProvider : fn(float) -> ksp::math::Vec3 )
 ##### manage_steering
 
 ```rust
-vessel.manage_steering ( pitchYawRollProvider : fn(float) -> ksp::math::Vec3 ) -> ksp::control::SteeringManager
+vessel.manage_steering ( pitchYawRollProvider : sync fn(float) -> ksp::math::Vec3 ) -> ksp::control::SteeringManager
 ```
 
 
@@ -625,7 +625,7 @@ vessel.manage_steering ( pitchYawRollProvider : fn(float) -> ksp::math::Vec3 ) -
 ##### manage_throttle
 
 ```rust
-vessel.manage_throttle ( throttleProvider : fn(float) -> float ) -> ksp::control::ThrottleManager
+vessel.manage_throttle ( throttleProvider : sync fn(float) -> float ) -> ksp::control::ThrottleManager
 ```
 
 
@@ -633,7 +633,7 @@ vessel.manage_throttle ( throttleProvider : fn(float) -> float ) -> ksp::control
 ##### manage_wheel_steering
 
 ```rust
-vessel.manage_wheel_steering ( wheelSteeringProvider : fn(float) -> float ) -> ksp::control::WheelSteeringManager
+vessel.manage_wheel_steering ( wheelSteeringProvider : sync fn(float) -> float ) -> ksp::control::WheelSteeringManager
 ```
 
 
@@ -641,7 +641,7 @@ vessel.manage_wheel_steering ( wheelSteeringProvider : fn(float) -> float ) -> k
 ##### manage_wheel_throttle
 
 ```rust
-vessel.manage_wheel_throttle ( wheelThrottleProvider : fn(float) -> float ) -> ksp::control::WheelThrottleManager
+vessel.manage_wheel_throttle ( wheelThrottleProvider : sync fn(float) -> float ) -> ksp::control::WheelThrottleManager
 ```
 
 

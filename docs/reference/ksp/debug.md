@@ -16,8 +16,8 @@ Collection of debug helper
 ##### add_billboard
 
 ```rust
-debug.add_billboard ( positionProvider : fn() -> ksp::math::GlobalPosition,
-                      textProvider : fn() -> string,
+debug.add_billboard ( positionProvider : sync fn() -> ksp::math::GlobalPosition,
+                      textProvider : sync fn() -> string,
                       color : ksp::console::RgbaColor,
                       fontSize : int ) -> ksp::debug::DebugBillboard
 ```
@@ -37,8 +37,8 @@ debug.add_ground_marker ( geoCoordinates : ksp::orbit::GeoCoordinates,
 ##### add_line
 
 ```rust
-debug.add_line ( startProvider : fn() -> ksp::math::GlobalPosition,
-                 endProvider : fn() -> ksp::math::GlobalPosition,
+debug.add_line ( startProvider : sync fn() -> ksp::math::GlobalPosition,
+                 endProvider : sync fn() -> ksp::math::GlobalPosition,
                  color : ksp::console::RgbaColor,
                  label : string,
                  width : float ) -> ksp::debug::DebugVector
@@ -62,8 +62,8 @@ debug.add_path ( path : ksp::math::GlobalPosition[],
 ##### add_vector
 
 ```rust
-debug.add_vector ( startProvider : fn() -> ksp::math::GlobalPosition,
-                   vectorProvider : fn() -> ksp::math::GlobalVector,
+debug.add_vector ( startProvider : sync fn() -> ksp::math::GlobalPosition,
+                   vectorProvider : sync fn() -> ksp::math::GlobalVector,
                    color : ksp::console::RgbaColor,
                    label : string,
                    width : float ) -> ksp::debug::DebugVector
@@ -160,7 +160,7 @@ debugvector.remove ( ) -> Unit
 ##### set_end_provider
 
 ```rust
-debugvector.set_end_provider ( endProvider : fn() -> ksp::math::GlobalPosition ) -> Unit
+debugvector.set_end_provider ( endProvider : sync fn() -> ksp::math::GlobalPosition ) -> Unit
 ```
 
 Change the function providing the end position of the debug vector.
@@ -169,7 +169,7 @@ Change the function providing the end position of the debug vector.
 ##### set_start_provider
 
 ```rust
-debugvector.set_start_provider ( startProvider : fn() -> ksp::math::GlobalPosition ) -> Unit
+debugvector.set_start_provider ( startProvider : sync fn() -> ksp::math::GlobalPosition ) -> Unit
 ```
 
 Change the function providing the start position of the debug vector.
@@ -178,7 +178,7 @@ Change the function providing the start position of the debug vector.
 ##### set_vector_provider
 
 ```rust
-debugvector.set_vector_provider ( vectorProvider : fn() -> ksp::math::GlobalVector ) -> Unit
+debugvector.set_vector_provider ( vectorProvider : sync fn() -> ksp::math::GlobalVector ) -> Unit
 ```
 
 Change the function providing the vector/direction of the debug vector.

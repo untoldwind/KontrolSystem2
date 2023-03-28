@@ -20,7 +20,7 @@ pub fn vac_deceleration_burn ( vessel : ksp::vessel::Vessel,
                                simulation : std::land::landing_simulation::ReentrySimulation,
                                initial_result : (brake_time : float, end_latitude : float, end_longitude : float, end_time : float, path : ksp::math::GlobalPosition[]),
                                landing_site : ksp::orbit::GeoCoordinates,
-                               speed_policy : fn(ksp::math::Vec3, ksp::math::Vec3) -> float ) -> Result<Unit, string>
+                               speed_policy : sync fn(ksp::math::Vec3, ksp::math::Vec3) -> float ) -> Result<Unit, string>
 ```
 
 

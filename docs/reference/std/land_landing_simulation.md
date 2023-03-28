@@ -25,7 +25,7 @@ lat90_at_start | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/W |
 lot0_lon90_at_start | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/W | 
 position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/W | 
 rotation_period | float | R/W | 
-speed_policy | [fn(ksp::math::Vec3, ksp::math::Vec3) -> float](/reference/fn(ksp/math_Vec3, ksp_math.md#vec3) -> float) | R/W | 
+speed_policy | [sync fn(ksp::math::Vec3, ksp::math::Vec3) -> float](/reference/sync fn(ksp/math_Vec3, ksp_math.md#vec3) -> float) | R/W | 
 
 #### Methods
 
@@ -186,7 +186,7 @@ pub sync fn init_simulation ( vessel : ksp::vessel::Vessel,
                               min_dt : float,
                               max_thrust_accel : float,
                               landing_altitude_asl : float,
-                              speed_policy : fn(ksp::math::Vec3, ksp::math::Vec3) -> float ) -> std::land::landing_simulation::ReentrySimulation
+                              speed_policy : sync fn(ksp::math::Vec3, ksp::math::Vec3) -> float ) -> std::land::landing_simulation::ReentrySimulation
 ```
 
 
