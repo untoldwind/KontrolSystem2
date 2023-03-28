@@ -3,6 +3,7 @@ using KontrolSystem.TO2.Runtime;
 using KontrolSystem.KSP.Runtime.KSPConsole;
 using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
+using KontrolSystem.KSP.Runtime.KSPTelemetry;
 using KontrolSystem.TO2.Binding;
 using KSP.Game;
 using KSP.Sim.impl;
@@ -29,6 +30,8 @@ namespace KontrolSystem.KSP.Runtime {
         VesselComponent ActiveVessel { get; }
 
         KSPConsoleBuffer ConsoleBuffer { get; }
+        
+        TimeSeriesCollection TimeSeriesCollection { get; }
         
         double UniversalTime { get; }
 

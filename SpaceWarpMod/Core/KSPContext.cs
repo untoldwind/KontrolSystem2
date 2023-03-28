@@ -6,6 +6,7 @@ using KontrolSystem.KSP.Runtime;
 using KontrolSystem.KSP.Runtime.KSPConsole;
 using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
+using KontrolSystem.KSP.Runtime.KSPTelemetry;
 using KontrolSystem.SpaceWarpMod.UI;
 using KontrolSystem.TO2.Runtime;
 using KSP.Game;
@@ -53,6 +54,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
     public class KSPContext : IKSPContext {
         private readonly GameInstance gameInstance;
         private readonly KSPConsoleBuffer consoleBuffer;
+        private readonly TimeSeriesCollection timeSeriesCollection;
         private object nextYield;
         private Action onNextYieldOnce;
         private readonly Stopwatch timeStopwatch;
@@ -61,9 +63,10 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         private readonly Dictionary<VesselComponent, AutopilotHooks> autopilotHooks;
         private readonly List<BackgroundKSPContext> childContexts;
 
-        public KSPContext(GameInstance gameInstance, KSPConsoleBuffer consoleBuffer) {
+        public KSPContext(GameInstance gameInstance, KSPConsoleBuffer consoleBuffer, TimeSeriesCollection timeSeriesCollection) {
             this.gameInstance = gameInstance;
             this.consoleBuffer = consoleBuffer;
+            this.timeSeriesCollection = timeSeriesCollection;
             markers = new List<IMarker>();
             autopilotHooks = new Dictionary<VesselComponent, AutopilotHooks>();
             nextYield = new WaitForFixedUpdate();
@@ -107,6 +110,8 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         public VesselComponent ActiveVessel => gameInstance.ViewController.GetActiveSimVessel(true);
 
         public KSPConsoleBuffer ConsoleBuffer => consoleBuffer;
+
+        public TimeSeriesCollection TimeSeriesCollection => timeSeriesCollection;
 
         public KSPOrbitModule.IBody FindBody(string name) {
             var body = Game.ViewController.GetBodyByName(name);

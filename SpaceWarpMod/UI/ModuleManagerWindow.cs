@@ -80,7 +80,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             GUILayout.FlexibleSpace();
             if (GUILayout.Button("Console")) {
                 // ReSharper disable once Unity.NoNullPropagation
-                consoleWindow?.AttachTo(Mainframe.Instance.ConsoleBuffer);
+                consoleWindow?.AttachTo(Mainframe.Instance.ConsoleBuffer, Mainframe.Instance.TimeSeriesCollection);
                 // ReSharper disable once Unity.NoNullPropagation
                 consoleWindow?.Toggle();
             }

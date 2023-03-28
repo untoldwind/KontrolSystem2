@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using KontrolSystem.KSP.Runtime;
 using KontrolSystem.KSP.Runtime.KSPConsole;
 using KontrolSystem.KSP.Runtime.KSPGame;
+using KontrolSystem.KSP.Runtime.KSPTelemetry;
 using KontrolSystem.Parsing;
 using KontrolSystem.SpaceWarpMod.Utils;
 using KontrolSystem.TO2;
@@ -39,9 +40,13 @@ namespace KontrolSystem.SpaceWarpMod.Core {
 
         readonly KSPConsoleBuffer consoleBuffer = new KSPConsoleBuffer(40, 50);
 
+        private readonly TimeSeriesCollection timeSeriesCollection = new TimeSeriesCollection();
+
         public bool Initialized => state != null;
 
         public KSPConsoleBuffer ConsoleBuffer => consoleBuffer;
+
+        public TimeSeriesCollection TimeSeriesCollection => timeSeriesCollection;
 
         public bool Rebooting => rebooting;
         public TimeSpan LastRebootTime => state?.bootTime ?? TimeSpan.Zero;
@@ -164,7 +169,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         public bool StartProcess(KontrolSystemProcess process, VesselComponent vessel, object[] arguments = null) {
             switch (process.State) {
             case KontrolSystemProcessState.Available:
-                KSPContext context = new KSPContext(Game, consoleBuffer);
+                KSPContext context = new KSPContext(Game, consoleBuffer, timeSeriesCollection);
                 Entrypoint entrypoint = process.EntrypointFor(context.GameMode, context);
                 if (entrypoint == null) return false;
                 arguments ??= process.EntrypointArgumentDescriptors(context.GameMode).Select(arg => arg.DefaultValue).ToArray();

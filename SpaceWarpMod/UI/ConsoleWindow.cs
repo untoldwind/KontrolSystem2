@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using KontrolSystem.KSP.Runtime.KSPConsole;
+using KontrolSystem.KSP.Runtime.KSPTelemetry;
 using SpaceWarp.API.Assets;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         private GUIStyle terminalFrameActiveStyle;
         private GUISkin terminalLetterSkin;
         private KSPConsoleBuffer consoleBuffer;
+        private TimeSeriesCollection timeSeriesCollection;
         private int fontCharWidth;
         private int fontCharHeight;
 
@@ -27,8 +29,9 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             else Close();
         }
 
-        public void AttachTo(KSPConsoleBuffer consoleBuffer) {
+        public void AttachTo(KSPConsoleBuffer consoleBuffer, TimeSeriesCollection timeSeriesCollection) {
             this.consoleBuffer = consoleBuffer;
+            this.timeSeriesCollection = timeSeriesCollection;
             if (this.consoleBuffer == null) return;
 
             windowRect = new Rect(windowRect.xMin, windowRect.yMin, this.consoleBuffer.VisibleCols * fontCharWidth + 65,
@@ -67,7 +70,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             LoggerAdapter.Instance.Debug($"Submitted: {expression}");
             consoleBuffer?.PrintLine($"$> {expression}");
             try {
-                var result = Utils.Expression.Run(expression, consoleBuffer);
+                var result = Utils.Expression.Run(expression, consoleBuffer, timeSeriesCollection);
                 consoleBuffer?.PrintLine($"{result ?? "null"}");
                 return true;
             } catch (Exception e) {
