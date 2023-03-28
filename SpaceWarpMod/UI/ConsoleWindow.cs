@@ -17,6 +17,10 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         private int fontCharWidth;
         private int fontCharHeight;
 
+        private string replText = "";
+
+        public event Action OnCloseClicked;
+
         public void Toggle() {
             if (!isOpen) Open();
             else Close();
@@ -27,7 +31,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             if (this.consoleBuffer == null) return;
 
             windowRect = new Rect(windowRect.xMin, windowRect.yMin, this.consoleBuffer.VisibleCols * fontCharWidth + 65,
-                this.consoleBuffer.VisibleRows * fontCharHeight + 108);
+                this.consoleBuffer.VisibleRows * fontCharHeight + 140);
         }
 
         // --------------------- MonoBehaviour callbacks ------------------------
@@ -59,8 +63,28 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             LoggerAdapter.Instance.Debug($"Font metrics: {fontCharWidth} x {fontCharHeight}");
         }
 
+        public bool Submit(string expression) {
+            LoggerAdapter.Instance.Debug($"Submitted: {expression}");
+            consoleBuffer?.PrintLine($"$> {expression}");
+            try {
+                var result = Utils.Expression.Run(expression, consoleBuffer);
+                consoleBuffer?.PrintLine($"{result ?? "null"}");
+                return true;
+            } catch (Exception e) {
+                consoleBuffer?.PrintLine($"{e}");
+            }
+            return false;
+        }
+
         protected override void DrawWindow(int windowId) {
             GUI.color = Color;
+
+            replText = GUI.TextField(new Rect(15, windowRect.height - 70, windowRect.width - 75, 25), replText);
+            if (GUI.Button(new Rect(windowRect.width - 45, windowRect.height - 70, 30, 25), CommonStyles.Instance.startButtonTexture)) {
+                if (Submit(replText)) {
+                    replText = "";
+                }
+            }
 
             if (GUI.Button(new Rect(windowRect.width - 75, windowRect.height - 30, 50, 25), "Close")) Close();
             if (GUI.Button(new Rect(15, windowRect.height - 30, 50, 25), "Clear")) {
@@ -73,7 +97,18 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                 }
             }
 
-            GUI.Label(new Rect(15, 28, windowRect.width - 30, windowRect.height - 63), "", terminalImageStyle);
+            if (windowRect.width > 400) {
+                string label = Game.Input.asset.enabled ? "Disable Game Input" : "Enable Game Input";
+                if (GUI.Button(new Rect(145, windowRect.height - 30, 175, 25), label)) {
+                    if (Game.Input.asset.enabled) {
+                        Game.Input.Disable();
+                    } else {
+                        Game.Input.Enable();
+                    }
+                }
+            }
+
+            GUI.Label(new Rect(15, 28, windowRect.width - 30, windowRect.height - 105), "", terminalImageStyle);
 
             GUI.BeginGroup(new Rect(28, 48, (consoleBuffer?.VisibleCols ?? 1) * fontCharWidth + 2,
                 (consoleBuffer?.VisibleRows ?? 1) * fontCharHeight +
@@ -92,14 +127,14 @@ namespace KontrolSystem.SpaceWarpMod.UI {
 
             GUI.EndGroup();
 
-            GUI.Label(new Rect(15, 28, windowRect.width - 30, windowRect.height - 63), "", terminalFrameStyle);
+            GUI.Label(new Rect(15, 28, windowRect.width - 30, windowRect.height - 105), "", terminalFrameStyle);
 
             GUI.Label(new Rect(windowRect.width / 2 - 40, windowRect.height - 16, 100, 10),
                 (consoleBuffer?.VisibleCols ?? 1) + "x" + (consoleBuffer?.VisibleRows ?? 1));
         }
 
         protected override void OnResize(Rect newWindowRect) {
-            consoleBuffer?.Resize((int)((newWindowRect.height - 108) / fontCharHeight),
+            consoleBuffer?.Resize((int)((newWindowRect.height - 140) / fontCharHeight),
                 (int)((newWindowRect.width - 65) / fontCharWidth));
         }
 
@@ -142,6 +177,10 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             theSkin.button.margin = new RectOffset(0, 0, 0, 0);
 
             return theSkin;
+        }
+
+        protected override void OnClose() {
+            OnCloseClicked();
         }
     }
 }

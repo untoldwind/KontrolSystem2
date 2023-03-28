@@ -35,6 +35,8 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             Title.image = CommonStyles.Instance.stateInactiveTexture;
 
             consoleWindow = gameObject.AddComponent<ConsoleWindow>();
+            consoleWindow.OnCloseClicked += OnConsoleWindowClose;
+
             scriptSettingsWindow = gameObject.AddComponent<ProcessArgumentsWindow>();
         }
 
@@ -297,6 +299,12 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         public void CloseEditorWindow(EditorWindow editorWindow) {
             editorWindows.Remove(editorWindow);
             Destroy(editorWindow);
+            if (editorWindows.Count == 0 && !Game.Input.asset.enabled && !consoleWindow.IsOpen) {
+                Game.Input.Enable();
+            }
+        }
+
+        public void OnConsoleWindowClose() {
             if (editorWindows.Count == 0 && !Game.Input.asset.enabled) {
                 Game.Input.Enable();
             }
