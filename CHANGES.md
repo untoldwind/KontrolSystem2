@@ -5,6 +5,7 @@
 * Fix comments in struct-impl (#57)
 * Add "Copy to clipboard" to reboot errors and and console window
 * Closed a backdoor allowing async functions to be injected into sync functions (with somewhat erratic results)
+* Added an early version of run-command to the console-window
 
 ## 0.2.1 -> 0.2.2
 
