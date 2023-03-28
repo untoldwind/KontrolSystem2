@@ -8,7 +8,7 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
         private static TMP_FontAsset textFont;
         private static Material textColored;
 
-        private static void Initialize(TMP_FontAsset font) {
+        public static void Initialize(TMP_FontAsset font) {
             textFont = font;
             colored = new Material(Shader.Find("Hidden/Internal-Colored"));
             colored.hideFlags = HideFlags.HideAndDontSave;

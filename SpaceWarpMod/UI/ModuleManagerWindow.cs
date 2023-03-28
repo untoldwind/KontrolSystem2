@@ -269,7 +269,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         protected override void OnOpen() {
             var factory = new UIFactory(GFXAdapter.GetTexture("window_sprite"));
 
-            factory.CreateWindow(Game.UI.GetRootCanvas(), new Rect(400, 600, 600, 400));
+            factory.CreateWindow(Game.UI.GetPopupCanvas(), new Rect(400, 600, 600, 400));
             
             if (!Mainframe.Instance.Initialized) {
                 LoggerAdapter.Instance.Debug("Lazy Initialize KontrolSystemMod");

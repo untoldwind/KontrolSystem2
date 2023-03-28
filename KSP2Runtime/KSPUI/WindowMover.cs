@@ -6,9 +6,11 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
         private RectTransform uiPanelTransform;
 
         private RectTransform canvasTransform;
-    
-        private Vector2 mousePointerOffset = Vector2.zero;
-    
+
+        private Vector2 currentPointerPosition;
+
+        private Vector2 previousPointerPosition;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -17,23 +19,20 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             uiPanelTransform = transform as RectTransform;        
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
-
         public void OnDrag(PointerEventData eventData) {
-            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasTransform, eventData.position, eventData.pressEventCamera, out var localPoint))
+            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasTransform, eventData.position, eventData.pressEventCamera, out currentPointerPosition))
             {
-                uiPanelTransform.localPosition = localPoint - mousePointerOffset;
+                Vector2 vector = currentPointerPosition - previousPointerPosition;
+                uiPanelTransform.localPosition += new Vector3(vector.x, vector.y);
+                previousPointerPosition = currentPointerPosition;
             }
+            UnityEngine.Debug.Log($"{canvasTransform.rect} {uiPanelTransform.rect} {uiPanelTransform.localPosition}");
         }
     
         public void OnPointerDown(PointerEventData data)
         {
             uiPanelTransform.SetAsLastSibling();
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(uiPanelTransform, data.position, data.pressEventCamera, out mousePointerOffset);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasTransform, data.position, data.pressEventCamera, out previousPointerPosition);
         }
     }
 }

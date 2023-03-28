@@ -68,9 +68,9 @@ Material:
     - _OutlineWidth: 0
     - _PerspectiveFilter: 0.875
     - _Reflectivity: 10
-    - _ScaleRatioA: 1
-    - _ScaleRatioB: 1
-    - _ScaleRatioC: 1
+    - _ScaleRatioA: 0.8333333
+    - _ScaleRatioB: 0.6770833
+    - _ScaleRatioC: 0.6770833
     - _ScaleX: 1
     - _ScaleY: 1
     - _ShaderFlags: 0
@@ -93,6 +93,7 @@ Material:
     - _WeightNormal: 0
     m_Colors:
     - _ClipRect: {r: -32767, g: -32767, b: 32767, a: 32767}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EnvMatrixRotation: {r: 0, g: 0, b: 0, a: 0}
     - _FaceColor: {r: 1, g: 1, b: 1, a: 1}
     - _GlowColor: {r: 0, g: 1, b: 0, a: 0.5}
@@ -162,9 +163,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
   m_Name: Unifont-ExtendedAscii
   m_EditorClassIdentifier: 
-  hashCode: 0
+  hashCode: 1417703258
   material: {fileID: -4830834095147305107}
-  materialHashCode: 0
+  materialHashCode: 844793402
   m_Version: 1.1.0
   m_SourceFontFileGUID: fb2e0a7009fe38e009b775b5b1464eea
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: fb2e0a7009fe38e009b775b5b1464eea, type: 3}
