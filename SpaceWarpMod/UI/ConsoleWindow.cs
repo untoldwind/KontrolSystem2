@@ -52,8 +52,8 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             terminalFrameActiveStyle = Create9SliceStyle(terminalFrameActiveImage);
 
             terminalLetterSkin = BuildPanelSkin();
-            terminalLetterSkin.label.fontSize = 12;
-            terminalLetterSkin.label.font = AssetManager.GetAsset<Font>($"kontrolsystem2/kontrolsystem2/fonts/jetbrainsmono-regular.ttf");
+            terminalLetterSkin.label.fontSize = ConfigAdapter.Instance.ConsoleFontSize;
+            terminalLetterSkin.label.font = ConfigAdapter.Instance.ConsoleFont;
 
             LoggerAdapter.Instance.Debug($"Console font: {terminalLetterSkin.label.font}");
 

@@ -65,7 +65,6 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
                 }
             }
 
-            [KSField]
             public (double, TimeSeriesBucket)[] Values {
                 get {
                     lock (seriesLock) {
@@ -76,6 +75,7 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
             
             [KSMethod]
             public bool AddData(double ut, double value) {
+                if (Double.IsNaN(value) || Double.IsInfinity(value)) return false;
                 lock (seriesLock) {
                     if (ut < start) return false;
 

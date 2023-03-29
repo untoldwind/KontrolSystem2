@@ -32,5 +32,31 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
                 }
             }
         }
+
+        public KSPTelemetryModule.TimeSeries GetTimeSeries(string name) {
+            lock (collectionLock) {
+                return timeSeriesList.FirstOrDefault(t => t.Name == name);
+            }
+        }
+
+        public bool RemoveTimeSeries(string name) {
+            lock (collectionLock) {
+                var existing = timeSeriesList.FirstOrDefault(t => t.Name == name);
+
+                if (existing != null) {
+                    timeSeriesList.Remove(existing);
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+        public void RemoveAll() {
+            lock (collectionLock) {
+                timeSeriesList.Clear();
+            }
+        }
+
     }
 }

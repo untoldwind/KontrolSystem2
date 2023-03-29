@@ -24,6 +24,8 @@ namespace KontrolSystem.KSP.Runtime {
                 BindingGenerator.BindModule(typeof(KSPVessel.KSPVesselModule)));
             registry.RegisterModule(
                 BindingGenerator.BindModule(typeof(KSPDebug.KSPDebugModule)));
+            registry.RegisterModule(
+                BindingGenerator.BindModule(typeof(KSPTelemetry.KSPTelemetryModule)));
             /*            registry.RegisterModule(BindingGenerator.BindModule(typeof(KSPUI.KSPUIModule)));
                         
                         registry.RegisterModule(BindingGenerator.BindModule(typeof(KSPResource.KSPResourceModule)));

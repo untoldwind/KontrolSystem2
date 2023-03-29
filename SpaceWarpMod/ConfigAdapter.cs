@@ -18,6 +18,8 @@ namespace KontrolSystem.SpaceWarpMod {
         internal ConfigEntry<bool> enableHotkey;
         internal ConfigEntry<string> stdLibPath;
         internal ConfigEntry<string> localLibPath;
+        internal ConfigEntry<MonospaceFont> consoleFont;
+        internal ConfigEntry<int> consoleFontSize;
         internal ConfigEntry<MonospaceFont> graphFont;
 
         internal ConfigAdapter(PluginInfo pluginInfo, ConfigFile config) {
@@ -27,6 +29,9 @@ namespace KontrolSystem.SpaceWarpMod {
                 "Path of the standard library");
             localLibPath = config.Bind("Paths", "localLibPath", Path.Combine(Path.GetDirectoryName(pluginInfo.Location), "to2Local"),
                 "Path of the local user library");
+            consoleFont = config.Bind("Font", "consoleFont", MonospaceFont.JetBrainsMono,
+                "Font to use in console window");
+            consoleFontSize = config.Bind("Font", "consoleFontSize", 12, "Size of the console font");
             graphFont = config.Bind("Fonts", "graphFont", MonospaceFont.JetBrainsMono, "Font to use in graphs");
         }
         
@@ -38,6 +43,19 @@ namespace KontrolSystem.SpaceWarpMod {
 
         public bool HotKeyEnabled => enableHotkey.Value;
 
+        public int ConsoleFontSize => consoleFontSize.Value;
+
+        public Font ConsoleFont {
+            get {
+                switch (consoleFont.Value) {
+                    case MonospaceFont.Unifont:
+                        return AssetManager.GetAsset<Font>("kontrolsystem2/kontrolsystem2/fonts/unifont.ttf");
+                    default:
+                        return AssetManager.GetAsset<Font>("kontrolsystem2/kontrolsystem2/fonts/jetbrainsmono-regular.ttf");
+                }
+            }
+        }
+        
         public static ConfigAdapter Instance { get; private set; }
 
         public Texture2D WindowsBackground => AssetManager.GetAsset<Texture2D>($"kontrolsystem2/kontrolsystem2/gfx/window_sprite.png");
@@ -52,7 +70,7 @@ namespace KontrolSystem.SpaceWarpMod {
                 }
             }
         }
-
+        
         internal static void Init(PluginInfo pluginInfo, ConfigFile config) {
             Instance = new ConfigAdapter(pluginInfo, config);
         }

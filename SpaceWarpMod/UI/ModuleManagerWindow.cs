@@ -84,6 +84,13 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                 // ReSharper disable once Unity.NoNullPropagation
                 consoleWindow?.Toggle();
             }
+
+            GUILayout.Space(20);
+            if (GUILayout.Button("Telemetry")) {
+                OpenTelemetryWindow();
+            }
+            GUILayout.Space(20);
+            
             if (GUILayout.Button("New Module")) {
                 OpenEditorWindow();
             }
@@ -269,25 +276,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             Mainframe.Instance.Reboot(ConfigAdapter.Instance);
         }
 
-        private TimeSeriesWindow timeSeriesWindow;
-        private UGUIResizableWindow resizableWindow;
-        
         protected override void OnOpen() {
-            if (timeSeriesWindow == null) {
-                var timeSeries = new KSPTelemetryModule.TimeSeries("Cos", 0.0f, 0.1f);
-                for (int i = 0; i < 20000; i++)
-                {
-                    timeSeries.AddData(i * 0.1f, Math.Cos(i * 0.2f * Math.PI / 2000.0));
-                }
-                Mainframe.Instance.TimeSeriesCollection.AddTimeSeries(timeSeries);
-
-                timeSeriesWindow = gameObject.AddComponent<TimeSeriesWindow>();
-                timeSeriesWindow.ConnectTo(Mainframe.Instance.TimeSeriesCollection);
-                timeSeriesWindow.Open();
-            }
-
-            resizableWindow ??= new UGUIResizableWindow(Game.UI.GetPopupCanvas(), new Rect(300, 500, 400, 300));
-            
             if (!Mainframe.Instance.Initialized) {
                 LoggerAdapter.Instance.Debug("Lazy Initialize KontrolSystemMod");
                 Mainframe.Instance.Reboot(ConfigAdapter.Instance);
@@ -326,6 +315,17 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             }
         }
 
+        public void OpenTelemetryWindow() {
+            TelemetryWindow telemetryWindow = gameObject.AddComponent<TelemetryWindow>();
+            telemetryWindow.ConnectTo(Mainframe.Instance.TimeSeriesCollection);
+            telemetryWindow.OnCloseClicked += () => CloseTelemetryWindow(telemetryWindow);
+            telemetryWindow.Open();
+        }
+
+        public void CloseTelemetryWindow(TelemetryWindow telemetryWindow) {
+            Destroy(telemetryWindow);
+        }
+        
         public void OnConsoleWindowClose() {
             if (editorWindows.Count == 0 && !Game.Input.asset.enabled) {
                 Game.Input.Enable();

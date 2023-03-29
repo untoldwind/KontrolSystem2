@@ -6,12 +6,14 @@ using KontrolSystem.KSP.Runtime.KSPTelemetry;
 using UnityEngine;
 
 namespace KontrolSystem.SpaceWarpMod.UI {
-    public class TimeSeriesWindow : ResizableWindow {
+    public class TelemetryWindow : ResizableWindow {
         private GLUIDrawer drawer;
         private TimeSeriesCollection timeSeriesCollection;
-        private List<KSPTelemetryModule.TimeSeries> selectedTimeSeries = new List<KSPTelemetryModule.TimeSeries>();
+        private List<string> selectedTimeSeriesNames = new List<string>();
         private Vector2 timeSeriesScrollPos;
 
+        public event Action OnCloseClicked;
+        
         private static Color[] colors =
         {
             Color.yellow,
@@ -22,7 +24,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         };
         
         public void Awake() {
-            Initialize($"TimeSeries", new Rect(200, 50, 600, 400), 400, 300, false);
+            Initialize("TimeSeries", new Rect(200, 50, 600, 400), 400, 300, false);
 
             drawer = new GLUIDrawer(600, 400);
         }
@@ -30,17 +32,31 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         public void ConnectTo(TimeSeriesCollection timeSeriesCollection)
         {
             this.timeSeriesCollection = timeSeriesCollection;
-            this.selectedTimeSeries.Clear();
+            this.selectedTimeSeriesNames.Clear();
         }
 
         protected override void DrawWindow(int windowId) {
+            GUILayout.BeginVertical();
+
             GUILayout.BeginHorizontal();
 
             DrawTimeSeriesGraph();
 
             DrawTimeSeriesSelect();
-
+            
             GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            
+            GUILayout.FlexibleSpace();
+
+            if (GUILayout.Button("Close")) {
+                OnCloseClicked();
+            }
+            
+            GUILayout.EndHorizontal();
+
+            GUILayout.EndVertical();
         }
         
         private void DrawTimeSeriesSelect() {
@@ -49,16 +65,21 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             timeSeriesScrollPos = GUILayout.BeginScrollView(timeSeriesScrollPos, GUILayout.MinWidth(200));
             GUILayout.BeginVertical();
 
-            if (timeSeriesCollection != null)
-            {
-                foreach (var timeSeries in timeSeriesCollection.AllTimeSeries)
-                {
-                    if (GUILayout.Toggle(selectedTimeSeries.Contains(timeSeries), timeSeries.Name)) {
-                        if(!selectedTimeSeries.Contains(timeSeries)) selectedTimeSeries.Add(timeSeries);
+            if (timeSeriesCollection != null) {
+                foreach (var timeSeries in timeSeriesCollection.AllTimeSeries) {
+                    GUILayout.BeginHorizontal();
+                    if (GUILayout.Toggle(selectedTimeSeriesNames.Contains(timeSeries.Name), timeSeries.Name)) {
+                        if(!selectedTimeSeriesNames.Contains(timeSeries.Name)) selectedTimeSeriesNames.Add(timeSeries.Name);
                     }
                     else {
-                        selectedTimeSeries.Remove(timeSeries);
+                        selectedTimeSeriesNames.Remove(timeSeries.Name);
                     }
+                    GUILayout.FlexibleSpace();
+                    if (GUILayout.Button("X")) {
+                        timeSeriesCollection.RemoveTimeSeries(timeSeries.Name);
+                        selectedTimeSeriesNames.Remove(timeSeries.Name);
+                    }
+                    GUILayout.EndHorizontal();
                 }
             }
 
@@ -90,10 +111,12 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         private void DrawGraph() {
             using (var draw = drawer.Draw())
             {
-                if (selectedTimeSeries.Count == 0) {
+                if (selectedTimeSeriesNames.Count == 0) {
                     draw.DrawText(new Vector2(draw.Width /2, draw.Height /2 ), "No data", 50, new Vector2(0.5f, 0.5f),0, Color.yellow);
                 }
                 else {
+                    var selectedTimeSeries =
+                        timeSeriesCollection.AllTimeSeries.Where(t => selectedTimeSeriesNames.Contains(t.Name));
                     var offsetTop = 2;
                     var offsetBottom = 18;
                     var offsetLeft = 18;

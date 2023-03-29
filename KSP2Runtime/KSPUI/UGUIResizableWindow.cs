@@ -38,7 +38,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             resizerTransform.sizeDelta = new Vector2(30, 30);
             var imageResizer = resizer.GetComponent<Image>();
             imageResizer.color = Color.clear;
-            resizer.AddComponent<UGUIDragHandler>().Init(canvasTransform, OnResize);
+            resizer.AddComponent<UGUIDragHandler>().Init(windowTransform, OnResize);
         }
 
         public void Close() {
