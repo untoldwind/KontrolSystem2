@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using KontrolSystem.KSP.Runtime.KSPTelemetry;
 using UnityEngine;
@@ -11,6 +12,8 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         private TimeSeriesCollection timeSeriesCollection;
         private List<string> selectedTimeSeriesNames = new List<string>();
         private Vector2 timeSeriesScrollPos;
+        private bool showSave;
+        private string saveFileName;
 
         public event Action OnCloseClicked;
         
@@ -47,6 +50,11 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
+
+            if (GUILayout.Button("Save")) {
+                showSave = !showSave;
+                saveFileName = Path.Combine(ConfigAdapter.Instance.LocalLibPath, $"TimeSeries-{(long)Game.SpaceSimulation.UniverseModel.UniversalTime}.json");
+            }
             
             GUILayout.FlexibleSpace();
 
@@ -55,6 +63,19 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             }
             
             GUILayout.EndHorizontal();
+
+            if (showSave) {
+                GUILayout.BeginHorizontal();
+
+                saveFileName = GUILayout.TextField(saveFileName, GUILayout.MinWidth(200), GUILayout.MaxWidth(2000), GUILayout.ExpandWidth(true));
+
+                if (GUILayout.Button("Save")) {
+                    timeSeriesCollection.SaveJson(saveFileName);
+                    showSave = !showSave;
+                }
+                
+                GUILayout.EndHorizontal();
+            }
 
             GUILayout.EndVertical();
         }

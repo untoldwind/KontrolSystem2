@@ -26,5 +26,10 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
         public static void RemoveAllTimeSeries() {
             KSPContext.CurrentContext.TimeSeriesCollection.RemoveAll();
         }
+
+        [KSFunction]
+        public static void SaveTimeSeries(string filename) {
+            KSPContext.CurrentContext.TimeSeriesCollection.SaveJson(filename);
+        }
     }
 }
