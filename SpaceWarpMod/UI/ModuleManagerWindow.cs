@@ -274,16 +274,15 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         protected override void OnOpen() {
             if (timeSeriesWindow == null) {
                 GLUIDrawer.Initialize(AssetManager.GetAsset<TMP_FontAsset>($"kontrolsystem2/kontrolsystem2/fonts/jetbrainsmono-regular-extendedascii.asset"));
-                var timeSeriesCollection = new TimeSeriesCollection();
                 var timeSeries = new KSPTelemetryModule.TimeSeries("Cos", 0.0f, 0.1f);
                 for (int i = 0; i < 20000; i++)
                 {
                     timeSeries.AddData(i * 0.1f, Math.Cos(i * 0.2f * Math.PI / 2000.0));
                 }
-                timeSeriesCollection.AddTimeSeries(timeSeries);
+                Mainframe.Instance.TimeSeriesCollection.AddTimeSeries(timeSeries);
 
                 timeSeriesWindow = gameObject.AddComponent<TimeSeriesWindow>();
-                timeSeriesWindow.ConnectTo(timeSeriesCollection);
+                timeSeriesWindow.ConnectTo(Mainframe.Instance.TimeSeriesCollection);
                 timeSeriesWindow.Open();
             }    
             if (!Mainframe.Instance.Initialized) {

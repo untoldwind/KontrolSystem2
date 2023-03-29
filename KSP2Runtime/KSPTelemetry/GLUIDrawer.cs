@@ -59,6 +59,7 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
                 GL.Clear(false, true, Color.black);
                 GL.PushMatrix();
                 GL.LoadPixelMatrix(0, width, height, 0);
+                GL.MultMatrix(Matrix4x4.Translate(new Vector3(0, height)) * Matrix4x4.Scale(new Vector3(1, -1)) );
             }
 
             public int Width => width;
@@ -68,47 +69,47 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
             public void Polygon(Vector2[] points, Color color, bool closed = false)
             {
                 colored.SetPass(0);
-                GL.Begin(GL.LINES);
+                GL.Begin(GL.LINE_STRIP);
                 GL.Color(color);
-                for (int i = 0; i < points.Length - 1; i++) {
+                for (int i = 0; i < points.Length; i++) {
                     GL.Vertex3(points[i].x, points[i].y, 0);
-                    GL.Vertex3(points[i+1].x, points[i+1].y, 0);
                 }
 
                 if (closed) {
-                    GL.Vertex3(points[points.Length - 1].x, points[points.Length - 1].y, 0);
                     GL.Vertex3(points[0].x, points[0].y, 0);
-                    
                 }
                 GL.End();
             }
 
             public void LineTube(Vector3[] errors, Color color) {
                 colored.SetPass(0);
-                GL.Begin(GL.QUADS);
+                GL.Begin(GL.TRIANGLE_STRIP);
                 GL.Color(color);
-                for (int i = 0; i < errors.Length - 1; i++) {
+                for (int i = 0; i < errors.Length; i++) {
                     GL.Vertex3(errors[i].x, errors[i].y, 0);
                     GL.Vertex3(errors[i].x, errors[i].z, 0);
-                    GL.Vertex3(errors[i+1].x, errors[i+1].z, 0);
-                    GL.Vertex3(errors[i+1].x, errors[i+1].y, 0);
                 }
                 GL.End();
             }
             
-            public void DrawText(Vector2 pos, string text, float size, float degrees, Color color) {
-                var scale = size / textFont.faceInfo.pointSize;
+            public void DrawText(Vector2 pos, string text, float size, Vector2 pivot, float degrees, Color color)
+            {
+                var textSize = TextSize(text, size);
+                var lineHeight = textFont.faceInfo.lineHeight;
+                var scale = size / lineHeight;
                 textColored.SetFloat("_ScaleX", scale);
                 textColored.SetFloat("_ScaleY", scale);
                 textColored.SetPass(0);
                 GL.PushMatrix();
-                GL.MultMatrix( Matrix4x4.Translate(new Vector3(pos.x, pos.y)) * Matrix4x4.Scale(new Vector3(scale, scale)) * Matrix4x4.Rotate(Quaternion.Euler(Vector3.forward * degrees)));
+
+                GL.MultMatrix( Matrix4x4.Translate(new Vector3( pos.x, height - pos.y)) * Matrix4x4.Scale(new Vector3(scale, -scale)) * Matrix4x4.Rotate(Quaternion.Euler(Vector3.forward * degrees)) * Matrix4x4.Translate(new Vector3(- pivot.x * textSize.x / scale, -pivot.y * textSize.y / scale)));
                 GL.Begin(GL.QUADS);
                 GL.Color(color);
-                var x = 0.0f;
-                var y = 0.0f;
                 var atlasWidth = (float)textFont.atlasWidth;
                 var atlasHeight = (float)textFont.atlasHeight;
+                var baseLine = (float)textFont.faceInfo.baseline;
+                var x = 0.0f;
+                var y = baseLine - textFont.faceInfo.descentLine;
                 for (int i = 0; i < text.Length; i++) {
                     var glyph = textFont.characterLookupTable[text[i]]?.glyph;
 
@@ -116,17 +117,17 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
 
                     GL.TexCoord2(glyph.glyphRect.x / atlasWidth, (glyph.glyphRect.y + glyph.glyphRect.height) / atlasHeight);
                     GL.MultiTexCoord2(1, 0, -0.4f);
-                    GL.Vertex3(x , y - glyph.metrics.horizontalBearingY, 0);
+                    GL.Vertex3(x + glyph.metrics.horizontalBearingX , y + glyph.metrics.horizontalBearingY, 0);
                     GL.TexCoord2(glyph.glyphRect.x / atlasWidth, glyph.glyphRect.y / atlasHeight);
                     GL.MultiTexCoord2(1, 0, -0.4f);
-                    GL.Vertex3(x, y + (glyph.metrics.height - glyph.metrics.horizontalBearingY), 0);
+                    GL.Vertex3(x + glyph.metrics.horizontalBearingX, y - glyph.metrics.height + glyph.metrics.horizontalBearingY, 0);
                     GL.TexCoord2((glyph.glyphRect.x + glyph.glyphRect.width) / atlasWidth, glyph.glyphRect.y / atlasHeight);
                     GL.MultiTexCoord2(1, 0, -0.4f);
-                    GL.Vertex3(x + glyph.metrics.width, y +(glyph.metrics.height - glyph.metrics.horizontalBearingY), 0);
+                    GL.Vertex3(x + glyph.metrics.horizontalBearingX + glyph.metrics.width, y - glyph.metrics.height + glyph.metrics.horizontalBearingY, 0);
                     GL.TexCoord2((glyph.glyphRect.x + glyph.glyphRect.width) / atlasWidth,
                         (glyph.glyphRect.y + glyph.glyphRect.height) / atlasHeight);
                     GL.MultiTexCoord2(1, 0, -0.4f);
-                    GL.Vertex3(x + glyph.metrics.width, y - glyph.metrics.horizontalBearingY, 0);
+                    GL.Vertex3(x + glyph.metrics.horizontalBearingX + glyph.metrics.width, y + glyph.metrics.horizontalBearingY, 0);
 
                     x += glyph.metrics.horizontalAdvance;
                 }
@@ -135,44 +136,21 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
                 GL.PopMatrix();
             }
 
-            public Rect TextSize(string text, float size, float degrees)
+            public Vector2 TextSize(string text, float size)
             {
+                var lineHeight = textFont.faceInfo.lineHeight;
+                var scale = size / lineHeight;
                 var x = 0.0f;
-                var y = 0.0f;
-                var scale = size / textFont.faceInfo.pointSize;
-                var rotation = Quaternion.Euler(Vector3.forward * degrees);
-                var rect = new Rect(0, 0, 0, 0);
 
                 for (int i = 0; i < text.Length; i++) {
                     var glyph = textFont.characterLookupTable[text[i]]?.glyph;
 
                     if (glyph == null) continue;
-                    
-                    var v = rotation * new Vector3( x , y - scale * glyph.metrics.horizontalBearingY, 0);
-                    rect.xMin = Math.Min(rect.xMin, v.x);
-                    rect.yMin = Math.Min(rect.yMin, v.y);
-                    rect.xMax = Math.Max(rect.xMax, v.x);
-                    rect.yMax = Math.Max(rect.yMax, v.y);
-                    v = rotation * new Vector3(x, y + scale * (glyph.metrics.height - glyph.metrics.horizontalBearingY), 0);
-                    rect.xMin = Math.Min(rect.xMin, v.x);
-                    rect.yMin = Math.Min(rect.yMin, v.y);
-                    rect.xMax = Math.Max(rect.xMax, v.x);
-                    rect.yMax = Math.Max(rect.yMax, v.y);
-                    v = rotation * new Vector3(x + scale * glyph.metrics.width, y + scale * (glyph.metrics.height - glyph.metrics.horizontalBearingY), 0);
-                    rect.xMin = Math.Min(rect.xMin, v.x);
-                    rect.yMin = Math.Min(rect.yMin, v.y);
-                    rect.xMax = Math.Max(rect.xMax, v.x);
-                    rect.yMax = Math.Max(rect.yMax, v.y);
-                    v = rotation * new Vector3(x + scale * glyph.metrics.width, y - scale * glyph.metrics.horizontalBearingY, 0);
-                    rect.xMin = Math.Min(rect.xMin, v.x);
-                    rect.yMin = Math.Min(rect.yMin, v.y);
-                    rect.xMax = Math.Max(rect.xMax, v.x);
-                    rect.yMax = Math.Max(rect.yMax, v.y);
 
                     x += scale * glyph.metrics.horizontalAdvance;
                 }
 
-                return rect;
+                return new Vector2(x, size);
             }
 
             public void Dispose()

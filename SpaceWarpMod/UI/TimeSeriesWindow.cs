@@ -91,8 +91,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             using (var draw = drawer.Draw())
             {
                 if (selectedTimeSeries.Count == 0) {
-                    var textSize = draw.TextSize("No data", 20, 0);
-                    draw.DrawText(new Vector2(draw.Width /2 + (textSize.x - textSize.width) / 2, draw.Height /2 - (textSize.height - textSize.y) / 2 ), "No data", 20, 0, Color.yellow);
+                    draw.DrawText(new Vector2(draw.Width /2, draw.Height /2 ), "No data", 50, new Vector2(0.5f, 0.5f),0, Color.yellow);
                 }
                 else {
                     var offsetTop = 2;
@@ -105,9 +104,8 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                     var endUT = selectedTimeSeries.Max(t => t.EndUt);
                     var endUTStr = endUT.ToString("F2", CultureInfo.InvariantCulture);;
                     
-                    draw.DrawText(new Vector2(offsetLeft, draw.Height - 1), startUTStr, 14, 0, Color.white);
-                    var endUTSize = draw.TextSize(endUTStr, 14, 0);
-                    draw.DrawText(new Vector2(draw.Width - offsetRight - endUTSize.width, draw.Height - 1), endUTStr, 14, 0, Color.white);
+                    draw.DrawText(new Vector2(offsetLeft, 1), startUTStr, 16, new Vector2(0,0), 0, Color.white);
+                    draw.DrawText(new Vector2(draw.Width - offsetRight, 1), endUTStr, 16, new Vector2(1,0), 0, Color.white);
 
                     var allValues = selectedTimeSeries.Select(t => t.Values).ToArray();
                     var min = allValues.SelectMany(value => value).Min(v => v.Item2.min);
@@ -115,17 +113,16 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                     var max = allValues.SelectMany(value => value).Max(v => v.Item2.max);
                     var maxStr = max.ToString("F3", CultureInfo.InvariantCulture);
                     
-                    draw.DrawText(new Vector2(offsetLeft - 4, draw.Height - offsetBottom), minStr, 14, -90, Color.white);
-                    var maxSize = draw.TextSize(maxStr, 14, -90);
-                    draw.DrawText(new Vector2(offsetLeft - 4, offsetTop + maxSize.height), maxStr, 14, -90, Color.white);
+                    draw.DrawText(new Vector2(offsetLeft - 2, offsetBottom), minStr, 16, new Vector2(0, 0), 90, Color.white);
+                    draw.DrawText(new Vector2(offsetLeft - 2, draw.Height - offsetTop), maxStr, 16, new Vector2(1,0), 90, Color.white);
 
                     var xScale = (endUT - startUT) / (draw.Width - offsetLeft - offsetRight); 
                     var yScale = (max - min) / (draw.Height - offsetBottom - offsetTop);
                     
                     if (min < 0 && max > 0) {
                         draw.Polygon(new Vector2[] {
-                            new Vector2(offsetLeft,  draw.Height - offsetBottom - (float)((0 - min) / yScale)), 
-                            new Vector2(draw.Width - offsetRight,  draw.Height - offsetBottom - (float)((0 - min) / yScale))
+                            new Vector2(offsetLeft,  (float)((0 - min) / yScale) + offsetBottom), 
+                            new Vector2(draw.Width - offsetRight,  (float)((0 - min) / yScale) + offsetBottom)
                         }, Color.gray);                        
                     }
 
@@ -134,19 +131,19 @@ namespace KontrolSystem.SpaceWarpMod.UI {
 
                         draw.LineTube(allValues[i].Select(i =>
                             new Vector3((float)((i.Item1 - startUT) / xScale) + offsetLeft,
-                                draw.Height - offsetBottom - (float)((i.Item2.min - min) / yScale),
-                                draw.Height - offsetBottom - (float)((i.Item2.max - min) / yScale))).ToArray(), new Color(color.r, color.g, color.b, 0.5f));
+                                (float)((i.Item2.min - min) / yScale) + offsetBottom,
+                                (float)((i.Item2.max - min) / yScale) + offsetBottom)).ToArray(), new Color(color.r, color.g, color.b, 0.5f));
 
                         draw.Polygon(allValues[i].Select(i =>
                             new Vector2((float)((i.Item1 - startUT) / xScale) + offsetLeft,
-                                draw.Height - offsetBottom - (float)((i.Item2.avg - min) / yScale))).ToArray(), color);
+                                (float)((i.Item2.avg - min) / yScale) + offsetBottom)).ToArray(), color);
                     }
                     
                     draw.Polygon(new Vector2[] {
-                        new Vector2(offsetLeft, draw.Height - offsetBottom), 
-                        new Vector2(offsetLeft, offsetTop ),
-                        new Vector2(draw.Width - offsetRight, offsetTop),
-                        new Vector2(draw.Width - offsetRight, draw.Height - offsetBottom)
+                        new Vector2(offsetLeft, offsetBottom), 
+                        new Vector2(offsetLeft, draw.Height - offsetTop ),
+                        new Vector2(draw.Width - offsetRight, draw.Height - offsetTop),
+                        new Vector2(draw.Width - offsetRight, offsetBottom)
                     }, Color.white, true);
                 }
             }
