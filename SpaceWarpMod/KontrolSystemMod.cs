@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using BepInEx;
+using KontrolSystem.KSP.Runtime.KSPUI;
 using KontrolSystem.SpaceWarpMod.UI;
 using KSP.Game;
 using SpaceWarp;
@@ -22,19 +23,14 @@ namespace KontrolSystem.SpaceWarpMod {
 
         public void Awake() {
             ConfigAdapter.Init(Info, Config);
-            
         }
 
         public override void OnInitialized() {
             LoggerAdapter.Instance.Backend = Logger;
             LoggerAdapter.Instance.Info("Initialize KontrolSystemMod");
 
-            LoggerAdapter.Instance.Info($"Shader1: {Shader.Find("TextMeshPro/Distance Field")}");
-            LoggerAdapter.Instance.Info($"Shader2: {Shader.Find("TextMeshPro/Distance Field (Surface)")}");
-            LoggerAdapter.Instance.Info($"Shader3: {Shader.Find("TextMeshPro/Distance Field Overlay")}");
-            LoggerAdapter.Instance.Info($"Shader4: {Shader.Find("TextMeshPro/Distance Field SSD")}");
-            LoggerAdapter.Instance.Info($"Shader4: {Shader.Find("TextMeshPro/Sprite")}");
-
+            
+            UIFactory.Init(ConfigAdapter.Instance);
             CommonStyles.Init(Skins.ConsoleSkin, Instantiate(Skins.ConsoleSkin));
 
             moduleManagerWindow ??= gameObject.AddComponent<ModuleManagerWindow>();

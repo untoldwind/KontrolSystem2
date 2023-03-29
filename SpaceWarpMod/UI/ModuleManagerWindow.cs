@@ -270,10 +270,10 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         }
 
         private TimeSeriesWindow timeSeriesWindow;
+        private UGUIResizableWindow resizableWindow;
         
         protected override void OnOpen() {
             if (timeSeriesWindow == null) {
-                GLUIDrawer.Initialize(AssetManager.GetAsset<TMP_FontAsset>($"kontrolsystem2/kontrolsystem2/fonts/jetbrainsmono-regular-extendedascii.asset"));
                 var timeSeries = new KSPTelemetryModule.TimeSeries("Cos", 0.0f, 0.1f);
                 for (int i = 0; i < 20000; i++)
                 {
@@ -284,7 +284,10 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                 timeSeriesWindow = gameObject.AddComponent<TimeSeriesWindow>();
                 timeSeriesWindow.ConnectTo(Mainframe.Instance.TimeSeriesCollection);
                 timeSeriesWindow.Open();
-            }    
+            }
+
+            resizableWindow ??= new UGUIResizableWindow(Game.UI.GetPopupCanvas(), new Rect(300, 500, 400, 300));
+            
             if (!Mainframe.Instance.Initialized) {
                 LoggerAdapter.Instance.Debug("Lazy Initialize KontrolSystemMod");
                 Mainframe.Instance.Reboot(ConfigAdapter.Instance);
