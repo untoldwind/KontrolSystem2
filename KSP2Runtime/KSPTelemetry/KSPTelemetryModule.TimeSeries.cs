@@ -41,13 +41,13 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
                 this.start = start;
             }
             
-            [KSField]
+            [KSField(Description = "Name of the time series. Has to be unique.")]
             public string Name { get; set; }
 
-            [KSField]
+            [KSField(Description = "Start time of the time series.")]
             public double StartUt => start;
 
-            [KSField]
+            [KSField(Description = "End time of the time series. This will increase when data is added.")]
             public double EndUt {
                 get {
                     lock (seriesLock) {
@@ -56,7 +56,10 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
                 }
             }
 
-            [KSField]
+            [KSField(Description = @"
+                Current time resolution of the time series.
+                This will increase the longer `end_ut - start_ut` gets to prevent accumulation of too much data.
+            ")]
             public double Resolution {
                 get {
                     lock (seriesLock) {
@@ -73,7 +76,7 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
                 }
             }
             
-            [KSMethod]
+            [KSMethod(Description = "Add a data `value` at time `ut`.")]
             public bool AddData(double ut, double value) {
                 if (Double.IsNaN(value) || Double.IsInfinity(value)) return false;
                 lock (seriesLock) {

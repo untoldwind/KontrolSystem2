@@ -46,12 +46,13 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField(Description = "The name of the vessel.")]
             public string Name => vessel.Name;
 
-            [KSField] public bool IsActive => vessel.SimulationObject.IsActiveVessel;
+            [KSField(Description = "Check if the vessel is currently active.")] 
+            public bool IsActive => vessel.SimulationObject.IsActiveVessel;
 
             [KSField]
             public string ControlStatus => vessel.ControlStatus.ToString();
 
-            [KSField] public ManeuverAdapter Maneuver => maneuver;
+            [KSField(Description = "")] public ManeuverAdapter Maneuver => maneuver;
 
             [KSField] public ActionGroupsAdapter Actions => actions;
 
@@ -61,31 +62,42 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField] public StagingAdapter Staging => staging;
 
-            [KSField] public KSPOrbitModule.IBody MainBody => new BodyWrapper(context, vessel.mainBody);
+            [KSField(Description = "The main body of the current SOI the vessel is in.")] 
+            public KSPOrbitModule.IBody MainBody => new BodyWrapper(context, vessel.mainBody);
 
-            [KSField] public KSPOrbitModule.IOrbit Orbit => new OrbitWrapper(context, vessel.Orbit);
+            [KSField(Description = "Current orbit or orbit patch of the vessel.")] 
+            public KSPOrbitModule.IOrbit Orbit => new OrbitWrapper(context, vessel.Orbit);
 
-            [KSField] public ITransformFrame CelestialFrame => vessel.transform.celestialFrame;
+            [KSField(Description = "The celestial/non-rotating reference frame of the vessel.")] 
+            public ITransformFrame CelestialFrame => vessel.transform.celestialFrame;
 
-            [KSField] public ITransformFrame BodyFrame => vessel.transform.bodyFrame;
+            [KSField(Description = "The body/rotating reference frame of the vessel.")] 
+            public ITransformFrame BodyFrame => vessel.transform.bodyFrame;
 
-            [KSField] public ITransformFrame ControlFrame => vessel.ControlTransform.bodyFrame;
+            [KSField(Description = "Reference frame for the current control position.")] 
+            public ITransformFrame ControlFrame => vessel.ControlTransform.bodyFrame;
 
-            [KSField] public Position GlobalPosition => vessel.SimulationObject.Position;
+            [KSField(Description = "Coordinate independent position of the vessel.")] 
+            public Position GlobalPosition => vessel.SimulationObject.Position;
 
-            [KSField]
+            [KSField(Description = "Get the coordinate independent velocity of the vessel.")]
             public VelocityAtPosition GlobalVelocity =>
                 new VelocityAtPosition(vessel.Velocity, vessel.SimulationObject.Position);
 
-            [KSField] public Vector3d OrbitalVelocity => vessel.mainBody.coordinateSystem.ToLocalVector(vessel.OrbitalVelocity);
+            [KSField(Description = "Orbital velocity of the vessel relative to the main body.")] 
+            public Vector3d OrbitalVelocity => vessel.mainBody.coordinateSystem.ToLocalVector(vessel.OrbitalVelocity);
 
-            [KSField] public Vector3d SurfaceVelocity => vessel.mainBody.coordinateSystem.ToLocalVector(vessel.SurfaceVelocity);
+            [KSField(Description = "Surface velocity of the vessel relative to the main body.")] 
+            public Vector3d SurfaceVelocity => vessel.mainBody.coordinateSystem.ToLocalVector(vessel.SurfaceVelocity);
 
-            [KSField] public double Mass => vessel.totalMass;
+            [KSField(Description = "Total mass of the vessel.")] 
+            public double Mass => vessel.totalMass;
 
-            [KSField("CoM")] public Vector3d CoM => vessel.mainBody.coordinateSystem.ToLocalPosition(vessel.CenterOfMass);
+            [KSField("CoM", Description = "Position of the center of mass of the vessel.")] 
+            public Vector3d CoM => vessel.mainBody.coordinateSystem.ToLocalPosition(vessel.CenterOfMass);
 
-            [KSField] public Position GlobalCenterOfMass => vessel.CenterOfMass;
+            [KSField(Description = "Coordinate independent position of the center of mass.")]
+            public Position GlobalCenterOfMass => vessel.CenterOfMass;
 
             [KSField] public double OffsetGround => vessel.OffsetToGround;
 

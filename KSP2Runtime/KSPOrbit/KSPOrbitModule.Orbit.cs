@@ -70,7 +70,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             [KSMethod(Description = "Get the relative orbital velocity at a given universal time `ut`")]
             Vector3d OrbitalVelocity(double ut);
 
-            [KSMethod(Description = "Get the absolute position at a given universal time `ut`")]
+            [KSMethod(Description = "Get the coordinate independent position at a given universal time `ut`")]
             Position GlobalPosition(double ut);
 
             [KSMethod(Description = "Get the coordinate independent velocity at a given universal time `ut`")]
