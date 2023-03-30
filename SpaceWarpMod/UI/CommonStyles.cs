@@ -8,6 +8,8 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         public readonly GUIStyle headingLabelStyle;
         public readonly Texture2D startButtonTexture;
         public readonly Texture2D stopButtonTexture;
+        public readonly Texture2D upButtonTexture;
+        public readonly Texture2D downButtonTexture;
         public readonly Texture2D stateActiveTexture;
         public readonly Texture2D stateInactiveTexture;
         public readonly Texture2D stateErrorTexture;
@@ -37,6 +39,8 @@ namespace KontrolSystem.SpaceWarpMod.UI {
 
             startButtonTexture = GetTexture("start");
             stopButtonTexture = GetTexture("stop");
+            upButtonTexture = GetTexture("up");
+            downButtonTexture = GetTexture("down");
             stateActiveTexture = GetTexture("state_active");
             stateInactiveTexture = GetTexture("state_inactive");
             stateErrorTexture = GetTexture("state_error");
