@@ -81,7 +81,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             LoggerAdapter.Instance.Debug($"Submitted: {expression}");
             consoleBuffer?.PrintLine($"$> {expression}");
             try {
-                var result = Utils.Expression.Run(expression, consoleBuffer, timeSeriesCollection);
+                var result = Utils.Expression.Run(expression);
                 if (result != null) {
                     consoleBuffer?.PrintLine($"{result}");
                 }
