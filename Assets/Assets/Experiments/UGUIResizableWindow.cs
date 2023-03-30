@@ -8,7 +8,7 @@ namespace Experiments {
         private readonly RectTransform canvasTransform;
 
         public UGUIResizableWindow(Canvas canvas, Rect initialRect) {
-            window = DefaultControls.CreatePanel(UIFactory.Instance.resources);
+            window = new GameObject("ResizeableWindow", typeof(Image));
             canvasTransform = (RectTransform)canvas.transform;
             windowTransform = (RectTransform)window.transform;
             windowTransform.SetParent(canvasTransform);
@@ -16,31 +16,51 @@ namespace Experiments {
             windowTransform.anchorMin = new Vector2(0, 1);
             windowTransform.anchorMax = new Vector2(0, 1);
             windowTransform.pivot = new Vector2(0, 1);
-            windowTransform.localScale = new Vector3(1, 1, 1);
 
             if (canvas.worldCamera != null && RectTransformUtility.ScreenPointToLocalPointInRectangle((RectTransform)canvas.transform, new Vector3(initialRect.x, initialRect.y), canvas.worldCamera, out var localPoint)) {
-                window.transform.localPosition = localPoint;
+                windowTransform.localPosition = localPoint;
             } else {
-                window.transform.position = new Vector3(initialRect.x, initialRect.y);
+                windowTransform.position = new Vector3(initialRect.x, initialRect.y);
             }
-            var image = window.GetComponent<Image>();
-            image.sprite = UIFactory.Instance.windowBackground;
-            image.color = Color.white;
+            var windowBackground = window.GetComponent<Image>();
+            windowBackground.sprite = UIFactory.Instance.windowBackground;
+            windowBackground.type = Image.Type.Sliced;
+            windowBackground.color = Color.white;
             window.AddComponent<UGUIDragHandler>().Init(canvasTransform, OnMove, OnFocus);
 
-            var resizer = DefaultControls.CreatePanel(UIFactory.Instance.resources);
+            var resizer = new GameObject("Resizer", typeof(Image));
             RectTransform resizerTransform = (RectTransform)resizer.transform;
             resizerTransform.SetParent(window.transform);
             resizerTransform.anchorMin = new Vector2(1, 0);
             resizerTransform.anchorMax = new Vector2(1, 0);
             resizerTransform.pivot = new Vector2(1, 0);
             resizerTransform.localScale = new Vector3(1, 1, 1);
-            resizerTransform.localPosition = new Vector3(0,0);
             resizerTransform.anchoredPosition = new Vector3(0, 0);
             resizerTransform.sizeDelta = new Vector2(30, 30);
             var imageResizer = resizer.GetComponent<Image>();
             imageResizer.color = Color.clear;
-            resizer.AddComponent<UGUIDragHandler>().Init(canvasTransform, OnResize);
+            resizer.AddComponent<UGUIDragHandler>().Init(windowTransform, OnResize);
+            
+            var closeButton = new GameObject("CloseButton", typeof(Image), typeof(Button));
+            RectTransform closeButtonTransform = (RectTransform)closeButton.transform;
+            closeButtonTransform.SetParent(window.transform);
+            closeButtonTransform.anchorMin = new Vector2(1, 1);
+            closeButtonTransform.anchorMax = new Vector2(1, 1);
+            closeButtonTransform.pivot = new Vector2(1, 1);
+            closeButtonTransform.localPosition = new Vector3(0,0);
+            closeButtonTransform.anchoredPosition = new Vector3(-3, -3);
+            closeButtonTransform.sizeDelta = new Vector2(30, 30);
+            var closeButtonImage = closeButton.GetComponent<Image>();
+            closeButtonImage.sprite = UIFactory.Instance.windowCloseButton;
+            closeButtonImage.type = Image.Type.Sliced;
+            closeButtonImage.color = Color.white;
+            var closeButtonButton = closeButton.GetComponent<Button>();
+            var closeButtonColors = closeButtonButton.colors;
+            closeButtonColors.normalColor = new Color(0.5f, 0.5234f, 0.5976f);
+            closeButtonColors.highlightedColor = new Color(0.5195f, 0.0508f, 0);
+            closeButtonColors.pressedColor = new Color(0.7f, 0.0508f, 0);
+            closeButtonButton.colors = closeButtonColors;
+            closeButtonButton.onClick.AddListener(Close);
         }
 
         public void Close() {

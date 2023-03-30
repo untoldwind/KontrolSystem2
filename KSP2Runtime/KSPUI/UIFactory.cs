@@ -8,11 +8,14 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
     public interface UIAssetsProvider {
         Texture2D WindowsBackground { get; }
         
+        Texture2D WindowCloseButton { get; }
+        
         TMP_FontAsset GraphFontAsset { get; }
     }
     
     public class UIFactory {
         internal readonly Sprite windowBackground;
+        internal readonly Sprite windowCloseButton;
         internal readonly DefaultControls.Resources resources;
 
         public static UIFactory Instance { get; private set; }
@@ -23,8 +26,9 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
         }
         
         internal UIFactory(UIAssetsProvider uiAssetsProvider) {
-            this.windowBackground = Make9TileSprite(uiAssetsProvider.WindowsBackground, new Vector4(30, 30, 30, 30));
-            this.resources = new DefaultControls.Resources();
+            windowBackground = Make9TileSprite(uiAssetsProvider.WindowsBackground, new Vector4(30, 30, 30, 30));
+            windowCloseButton = Make9TileSprite(uiAssetsProvider.WindowCloseButton, new Vector4(4, 4, 4, 4));
+            resources = new DefaultControls.Resources();
         }
 
         internal Sprite Make9TileSprite(Texture2D texture, Vector4 border) {

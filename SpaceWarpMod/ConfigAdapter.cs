@@ -59,6 +59,8 @@ namespace KontrolSystem.SpaceWarpMod {
         public static ConfigAdapter Instance { get; private set; }
 
         public Texture2D WindowsBackground => AssetManager.GetAsset<Texture2D>($"kontrolsystem2/kontrolsystem2/gfx/window_sprite.png");
+        
+        public Texture2D WindowCloseButton => AssetManager.GetAsset<Texture2D>($"kontrolsystem2/kontrolsystem2/gfx/close_button.png");
 
         public TMP_FontAsset GraphFontAsset {
             get {
