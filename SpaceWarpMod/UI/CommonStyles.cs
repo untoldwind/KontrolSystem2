@@ -42,14 +42,10 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             stateActiveTexture = GFXAdapter.GetTexture("state_active");
             stateInactiveTexture = GFXAdapter.GetTexture("state_inactive");
             stateErrorTexture = GFXAdapter.GetTexture("state_error");
-            upButtonTexture = GetTexture("up");
-            downButtonTexture = GetTexture("down");
+            upButtonTexture = GFXAdapter.GetTexture("up");
+            downButtonTexture = GFXAdapter.GetTexture("down");
         }
-
-        internal static Texture2D GetTexture(string name) {
-            return AssetManager.GetAsset<Texture2D>($"KontrolSystem2/images/{name}.png");
-        }
-
+        
         public static CommonStyles Instance;
 
         internal static void Init(GUISkin baseSkin, GUISkin skin) {

@@ -7,5 +7,9 @@ namespace KontrolSystem.SpaceWarpMod {
         internal static Texture2D GetTexture(string name) {
             return AssetManager.GetAsset<Texture2D>($"kontrolsystem2/kontrolsystem2/gfx/{name}.png");
         }
+
+        internal static Texture2D GetTextureFromImage(string name) {
+            return AssetManager.GetAsset<Texture2D>($"KontrolSystem2/images/{name}.png");
+        }
     }
 }

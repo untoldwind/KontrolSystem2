@@ -84,6 +84,7 @@
     </ItemGroup>
     <ItemGroup>
         <AssetFiles Include="Assets\**\*.bundle" />
+        <GFXFiles Include="GFX\**\*.png" />
     </ItemGroup>
     <ItemGroup>
       <Folder Include="Assets" />
@@ -93,6 +94,7 @@
         <Copy SourceFiles="icon.png" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2/assets/images" />
         <Copy SourceFiles="swinfo.json" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2" />
         <Copy SourceFiles="@(AssetFiles)" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2/assets/bundles" />
+        <Copy SourceFiles="@(GFXFiles)" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2/assets/images" />
     </Target>
     <Target Name="Test">
     </Target>
