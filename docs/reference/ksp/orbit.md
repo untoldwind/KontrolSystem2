@@ -211,7 +211,7 @@ For a hyperbolic orbit, the returned value is any number.
 orbit.global_position ( ut : float ) -> ksp::math::GlobalPosition
 ```
 
-Get the absolute position at a given universal time `ut`
+Get the coordinate independent position at a given universal time `ut`
 
 
 ##### global_position_for_true_anomaly
@@ -461,4 +461,14 @@ For hyperbolic orbits, this can be any time, including a time in the past, if th
 pub sync fn find_body ( name : string ) -> Result<ksp::orbit::Body, string>
 ```
 
+Find a body by name.
+
+
+### galactic_origin
+
+```rust
+pub sync fn galactic_origin ( ) -> ksp::math::TransformFrame
+```
+
+Get the galactic celestial frame.
 

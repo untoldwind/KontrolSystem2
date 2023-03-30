@@ -28,6 +28,7 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
         [KSClass("TimeSeries")]
         public class TimeSeries {
             private readonly TimeSeriesBucket[] buckets;
+            private readonly string name;
             private readonly double start;
             private int lastBucketIdx;
             private double resolution;
@@ -37,12 +38,12 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
                 buckets = new TimeSeriesBucket[NUM_BUCKETS];
                 resolution = initialResolution;
                 lastBucketIdx = -1;
-                Name = name;
+                this.name = name;
                 this.start = start;
             }
-            
+
             [KSField(Description = "Name of the time series. Has to be unique.")]
-            public string Name { get; set; }
+            public string Name => name;
 
             [KSField(Description = "Start time of the time series.")]
             public double StartUt => start;

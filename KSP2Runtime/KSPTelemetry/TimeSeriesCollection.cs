@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
     public class TimeSeriesCollection {
-        private static int MAX_NUM_TIMESERIES = 10;
+        private static int MAX_NUM_TIMESERIES = 20;
         private static LinkedList<KSPTelemetryModule.TimeSeries> timeSeriesList;
         private readonly object collectionLock = new object();
 
