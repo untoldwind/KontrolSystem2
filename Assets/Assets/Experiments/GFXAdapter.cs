@@ -16,6 +16,6 @@ namespace Experiments {
         public Texture2D WindowsBackground => GetTexture("window_sprite");
 
         public TMP_FontAsset GraphFontAsset =>
-            AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Fonts/JetBrainsMono-Regular-ExtendedAscii.asset");
+            Resources.Load<TMP_FontAsset>("Fonts & Materials/LiberationSans SDF");
     }
 }
