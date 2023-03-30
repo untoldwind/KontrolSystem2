@@ -1,7 +1,8 @@
-﻿using System.IO;
+﻿using System;
 using BepInEx;
 using KontrolSystem.KSP.Runtime.KSPUI;
 using KontrolSystem.SpaceWarpMod.UI;
+using KontrolSystem.TO2.Runtime;
 using KSP.Game;
 using SpaceWarp;
 using SpaceWarp.API.Assets;
@@ -18,6 +19,8 @@ namespace KontrolSystem.SpaceWarpMod {
     public class KontrolSystemMod : BaseSpaceWarpPlugin {
         private ModuleManagerWindow moduleManagerWindow;
 
+        public static KontrolSystemMod Instance { get; set; }
+
         private static GameState[] InvalidStates = new GameState[]
             { GameState.Invalid, GameState.Flag, GameState.Loading, GameState.PhotoMode, GameState.WarmUpLoading, GameState.MainMenu, GameState.TrainingCenter };
 
@@ -26,6 +29,9 @@ namespace KontrolSystem.SpaceWarpMod {
         }
 
         public override void OnInitialized() {
+
+            Instance = this;
+
             LoggerAdapter.Instance.Backend = Logger;
             LoggerAdapter.Instance.Info("Initialize KontrolSystemMod");
 
@@ -47,6 +53,15 @@ namespace KontrolSystem.SpaceWarpMod {
                 !InvalidStates.Contains(Game.GlobalGameState.GetState())) {
                 moduleManagerWindow.Toggle();
             }
+        }
+
+        /// <summary>
+        /// Submits an expression to be evaluated in the console window.
+        /// </summary>
+        /// <param name="expression">The expression to evaluate.</param>
+        /// <returns>An object containing the result or an Exception.</returns>
+        public Result<object, Exception> Submit(string expression) {
+            return moduleManagerWindow.Submit(expression);
         }
     }
 }

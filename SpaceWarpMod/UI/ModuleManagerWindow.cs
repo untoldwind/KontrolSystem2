@@ -8,6 +8,7 @@ using KontrolSystem.KSP.Runtime.KSPTelemetry;
 using KontrolSystem.KSP.Runtime.KSPUI;
 using KontrolSystem.SpaceWarpMod.Core;
 using KontrolSystem.TO2;
+using KontrolSystem.TO2.Runtime;
 using KSP.Game;
 using KSP.Messages;
 using KSP.Sim.impl;
@@ -338,6 +339,10 @@ namespace KontrolSystem.SpaceWarpMod.UI {
 
         private void OnEscapeMenuClosed(MessageCenterMessage message) {
             hideAllWindows = false; // Temporary fix for windows hiding main menu
+        }
+
+        public Result<object, Exception> Submit(string expression) {
+            return consoleWindow.Submit(expression);
         }
     }
 }

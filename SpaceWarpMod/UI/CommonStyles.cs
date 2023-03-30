@@ -8,6 +8,8 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         public readonly GUIStyle headingLabelStyle;
         public readonly Texture2D startButtonTexture;
         public readonly Texture2D stopButtonTexture;
+        public readonly Texture2D upButtonTexture;
+        public readonly Texture2D downButtonTexture;
         public readonly Texture2D stateActiveTexture;
         public readonly Texture2D stateInactiveTexture;
         public readonly Texture2D stateErrorTexture;
@@ -40,6 +42,12 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             stateActiveTexture = GFXAdapter.GetTexture("state_active");
             stateInactiveTexture = GFXAdapter.GetTexture("state_inactive");
             stateErrorTexture = GFXAdapter.GetTexture("state_error");
+            upButtonTexture = GetTexture("up");
+            downButtonTexture = GetTexture("down");
+        }
+
+        internal static Texture2D GetTexture(string name) {
+            return AssetManager.GetAsset<Texture2D>($"KontrolSystem2/images/{name}.png");
         }
 
         public static CommonStyles Instance;
