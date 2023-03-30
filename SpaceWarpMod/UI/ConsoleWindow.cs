@@ -1,13 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using KontrolSystem.KSP.Runtime.KSPConsole;
+using KontrolSystem.TO2.Runtime;
+using SpaceWarp.API.UI;
 using UnityEngine;
+using static KontrolSystem.KSP.Runtime.KSPOrbit.KSPOrbitModule;
 
 namespace KontrolSystem.SpaceWarpMod.UI {
     public class ConsoleWindow : ResizableWindow {
         private static readonly Color Color = new Color(1f, 1f, 1f, 1.1f); // opaque window color when focused
         private static readonly Color BgColor = new Color(0.0f, 0.0f, 0.0f, 1.0f); // black background of terminal
         private static readonly Color TextColor = new Color(0.5f, 1.0f, 0.5f, 1.0f); // font color on terminal
+
+        private static readonly GUIStyle tinyButtonStyle = new GUIStyle(Skins.ConsoleSkin.button) {
+            padding = new RectOffset(0, 0, 0, 0)
+        };
 
         private GUIStyle terminalImageStyle;
         private GUIStyle terminalFrameStyle;
@@ -20,6 +28,9 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         private string replText = "";
 
         public event Action OnCloseClicked;
+
+        public List<string> commandHistory = new List<string>();
+        public int commandHistoryIndex = 0; // a value of commandHistory.Count indicates that we're not reading from the command history
 
         public void Toggle() {
             if (!isOpen) Open();
@@ -63,17 +74,28 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             LoggerAdapter.Instance.Debug($"Font metrics: {fontCharWidth} x {fontCharHeight}");
         }
 
-        public bool Submit(string expression) {
+        public Result<object, Exception> Submit(string expression) {
             LoggerAdapter.Instance.Debug($"Submitted: {expression}");
             consoleBuffer?.PrintLine($"$> {expression}");
             try {
-                var result = Utils.Expression.Run(expression, consoleBuffer);
-                consoleBuffer?.PrintLine($"{result ?? "null"}");
-                return true;
+                object result = Utils.Expression.Run(expression);
+                if (result != null) {
+                    consoleBuffer?.PrintLine($"{result}");
+                }
+                return Result.Ok<object, Exception>(result);
             } catch (Exception e) {
                 consoleBuffer?.PrintLine($"{e}");
+                return Result.Err<object, Exception>(e);
             }
-            return false;
+        }
+
+        private void UpdateCommandHistory() {
+            if (commandHistoryIndex >= 0 && commandHistoryIndex < commandHistory.Count) {
+                replText = commandHistory[commandHistoryIndex];
+            } else {
+                replText = "";
+            }
+            LoggerAdapter.Instance.Info($"Command history: {string.Join(", ", commandHistory)} ({commandHistory.Count} command(s)); Command history index: {commandHistoryIndex}; REPL text: {replText}");
         }
 
         protected override void DrawWindow(int windowId) {
@@ -81,10 +103,27 @@ namespace KontrolSystem.SpaceWarpMod.UI {
 
             replText = GUI.TextField(new Rect(15, windowRect.height - 70, windowRect.width - 75, 25), replText);
             if (GUI.Button(new Rect(windowRect.width - 45, windowRect.height - 70, 30, 25), CommonStyles.Instance.startButtonTexture)) {
-                if (Submit(replText)) {
-                    replText = "";
+                if (!string.IsNullOrWhiteSpace(replText)) {
+                    commandHistory.Add(replText);
                 }
+                Submit(replText);
+                commandHistoryIndex = commandHistory.Count;
+                UpdateCommandHistory();
             }
+
+            GUI.enabled = commandHistoryIndex > 0;
+            if (GUI.Button(new Rect(windowRect.width - 58, windowRect.height - 70, 12, 12), CommonStyles.Instance.upButtonTexture, tinyButtonStyle)) {
+                commandHistoryIndex--;
+                UpdateCommandHistory();
+            }
+
+            GUI.enabled = commandHistoryIndex < commandHistory.Count;
+            if (GUI.Button(new Rect(windowRect.width - 58, windowRect.height - 57, 12, 12), CommonStyles.Instance.downButtonTexture, tinyButtonStyle)) {
+                commandHistoryIndex++;
+                UpdateCommandHistory();
+            }
+
+            GUI.enabled = true;
 
             if (GUI.Button(new Rect(windowRect.width - 75, windowRect.height - 30, 50, 25), "Close")) Close();
             if (GUI.Button(new Rect(15, windowRect.height - 30, 50, 25), "Clear")) {
