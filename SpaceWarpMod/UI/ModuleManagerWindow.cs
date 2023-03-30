@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using KontrolSystem.KSP.Runtime.KSPGame;
+using KontrolSystem.KSP.Runtime.KSPTelemetry;
+using KontrolSystem.KSP.Runtime.KSPUI;
 using KontrolSystem.SpaceWarpMod.Core;
 using KontrolSystem.TO2;
 using KontrolSystem.TO2.Runtime;
@@ -11,6 +13,8 @@ using KSP.Game;
 using KSP.Messages;
 using KSP.Sim.impl;
 using KSP.UI.Binding;
+using SpaceWarp.API.Assets;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -77,10 +81,17 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             GUILayout.FlexibleSpace();
             if (GUILayout.Button("Console")) {
                 // ReSharper disable once Unity.NoNullPropagation
-                consoleWindow?.AttachTo(Mainframe.Instance.ConsoleBuffer);
+                consoleWindow?.AttachTo(Mainframe.Instance.ConsoleBuffer, Mainframe.Instance.TimeSeriesCollection);
                 // ReSharper disable once Unity.NoNullPropagation
                 consoleWindow?.Toggle();
             }
+
+            GUILayout.Space(20);
+            if (GUILayout.Button("Telemetry")) {
+                OpenTelemetryWindow();
+            }
+            GUILayout.Space(20);
+            
             if (GUILayout.Button("New Module")) {
                 OpenEditorWindow();
             }
@@ -305,6 +316,17 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             }
         }
 
+        public void OpenTelemetryWindow() {
+            TelemetryWindow telemetryWindow = gameObject.AddComponent<TelemetryWindow>();
+            telemetryWindow.ConnectTo(Mainframe.Instance.TimeSeriesCollection);
+            telemetryWindow.OnCloseClicked += () => CloseTelemetryWindow(telemetryWindow);
+            telemetryWindow.Open();
+        }
+
+        public void CloseTelemetryWindow(TelemetryWindow telemetryWindow) {
+            Destroy(telemetryWindow);
+        }
+        
         public void OnConsoleWindowClose() {
             if (editorWindows.Count == 0 && !Game.Input.asset.enabled) {
                 Game.Input.Enable();

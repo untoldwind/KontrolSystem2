@@ -36,11 +36,20 @@
         <Reference Include="UnityEngine.UIModule">
             <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\UnityEngine.UIModule.dll</HintPath>
         </Reference>
+        <Reference Include="UnityEngine.TextCoreModule">
+            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\UnityEngine.TextCoreModule.dll</HintPath>
+        </Reference>
         <Reference Include="UnityEngine.TextRenderingModule">
             <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
         </Reference>
         <Reference Include="Unity.TextMeshPro">
             <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\Unity.TextMeshPro.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.InputLegacyModule">
+            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
+        </Reference>
+        <Reference Include="Newtonsoft.Json">
+            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\Newtonsoft.Json.dll</HintPath>
         </Reference>
     </ItemGroup>
     <ItemGroup>

@@ -1,0 +1,3 @@
+Additional images not yet part of asset bundle can be added here.
+
+Use `GFXAdapter.GetTextureFromImage` to load.

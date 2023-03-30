@@ -4,6 +4,7 @@ using System.Linq;
 using KontrolSystem.KSP.Runtime.KSPConsole;
 using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
+using KontrolSystem.KSP.Runtime.KSPTelemetry;
 using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Runtime;
 using KSP.Game;
@@ -28,6 +29,7 @@ namespace KontrolSystem.KSP.Runtime.Testing {
         }.ToDictionary(body => body.Name);
 
         private KSPConsoleBuffer consoleBuffer = new KSPConsoleBuffer(50, 80);
+        private TimeSeriesCollection timeSeriesCollection = new TimeSeriesCollection();
 
         public GameInstance Game => throw new NotSupportedException("Game is no available in test-mode");
 
@@ -35,6 +37,8 @@ namespace KontrolSystem.KSP.Runtime.Testing {
 
         public KSPConsoleBuffer ConsoleBuffer => consoleBuffer;
 
+        public TimeSeriesCollection TimeSeriesCollection => timeSeriesCollection;
+        
         public Font ConsoleFont(int fontSize) => null;
 
         public double UniversalTime => 0;

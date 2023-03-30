@@ -1,5 +1,6 @@
 ﻿using System;
 using BepInEx;
+using KontrolSystem.KSP.Runtime.KSPUI;
 using KontrolSystem.SpaceWarpMod.UI;
 using KontrolSystem.TO2.Runtime;
 using KSP.Game;
@@ -13,7 +14,7 @@ using UnityEngine;
 
 namespace KontrolSystem.SpaceWarpMod {
 
-    [BepInPlugin("com.github.untoldwind.KontrolSystem2", "KontrolSystem2", "0.2.3")]
+    [BepInPlugin("com.github.untoldwind.KontrolSystem2", "KontrolSystem2", "0.3.0.0")]
     [BepInDependency(SpaceWarpPlugin.ModGuid, SpaceWarpPlugin.ModVer)]
     public class KontrolSystemMod : BaseSpaceWarpPlugin {
         private ModuleManagerWindow moduleManagerWindow;
@@ -32,8 +33,10 @@ namespace KontrolSystem.SpaceWarpMod {
             Instance = this;
 
             LoggerAdapter.Instance.Backend = Logger;
-            LoggerAdapter.Instance.Debug("Initialize KontrolSystemMod");
+            LoggerAdapter.Instance.Info("Initialize KontrolSystemMod");
 
+            
+            UIFactory.Init(ConfigAdapter.Instance);
             CommonStyles.Init(Skins.ConsoleSkin, Instantiate(Skins.ConsoleSkin));
 
             moduleManagerWindow ??= gameObject.AddComponent<ModuleManagerWindow>();

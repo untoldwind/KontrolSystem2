@@ -37,19 +37,15 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                 padding = new RectOffset(2, 2, 2, 2)
             };
 
-            startButtonTexture = GetTexture("start");
-            stopButtonTexture = GetTexture("stop");
-            upButtonTexture = GetTexture("up");
-            downButtonTexture = GetTexture("down");
-            stateActiveTexture = GetTexture("state_active");
-            stateInactiveTexture = GetTexture("state_inactive");
-            stateErrorTexture = GetTexture("state_error");
+            startButtonTexture = GFXAdapter.GetTexture("start");
+            stopButtonTexture = GFXAdapter.GetTexture("stop");
+            stateActiveTexture = GFXAdapter.GetTexture("state_active");
+            stateInactiveTexture = GFXAdapter.GetTexture("state_inactive");
+            stateErrorTexture = GFXAdapter.GetTexture("state_error");
+            upButtonTexture = GFXAdapter.GetTexture("up");
+            downButtonTexture = GFXAdapter.GetTexture("down");
         }
-
-        internal static Texture2D GetTexture(string name) {
-            return AssetManager.GetAsset<Texture2D>($"KontrolSystem2/images/{name}.png");
-        }
-
+        
         public static CommonStyles Instance;
 
         internal static void Init(GUISkin baseSkin, GUISkin skin) {

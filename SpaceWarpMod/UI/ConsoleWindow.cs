@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using KontrolSystem.KSP.Runtime.KSPConsole;
+using KontrolSystem.KSP.Runtime.KSPTelemetry;
+using SpaceWarp.API.Assets;
 using KontrolSystem.TO2.Runtime;
 using SpaceWarp.API.UI;
 using UnityEngine;
@@ -22,6 +24,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         private GUIStyle terminalFrameActiveStyle;
         private GUISkin terminalLetterSkin;
         private KSPConsoleBuffer consoleBuffer;
+        private TimeSeriesCollection timeSeriesCollection;
         private int fontCharWidth;
         private int fontCharHeight;
 
@@ -37,8 +40,9 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             else Close();
         }
 
-        public void AttachTo(KSPConsoleBuffer consoleBuffer) {
+        public void AttachTo(KSPConsoleBuffer consoleBuffer, TimeSeriesCollection timeSeriesCollection) {
             this.consoleBuffer = consoleBuffer;
+            this.timeSeriesCollection = timeSeriesCollection;
             if (this.consoleBuffer == null) return;
 
             windowRect = new Rect(windowRect.xMin, windowRect.yMin, this.consoleBuffer.VisibleCols * fontCharWidth + 65,
@@ -59,10 +63,9 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             terminalFrameActiveStyle = Create9SliceStyle(terminalFrameActiveImage);
 
             terminalLetterSkin = BuildPanelSkin();
-            terminalLetterSkin.label.fontSize = 12;
-            terminalLetterSkin.label.font =
-                FontManager.Instance.GetSystemFontByNameAndSize(FontManager.DefaultConsoleFonts,
-                    terminalLetterSkin.label.fontSize, true);
+            terminalLetterSkin.label.fontSize = ConfigAdapter.Instance.ConsoleFontSize;
+            terminalLetterSkin.label.font = ConfigAdapter.Instance.ConsoleFont;
+
             LoggerAdapter.Instance.Debug($"Console font: {terminalLetterSkin.label.font}");
 
             CharacterInfo chInfo;
@@ -70,7 +73,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                 .RequestCharactersInTexture("X"); // Make sure the char in the font is lazy-loaded by Unity.
             terminalLetterSkin.label.font.GetCharacterInfo('X', out chInfo);
             fontCharWidth = chInfo.advance;
-            fontCharHeight = terminalLetterSkin.label.fontSize;
+            fontCharHeight = terminalLetterSkin.label.fontSize + 2;
             LoggerAdapter.Instance.Debug($"Font metrics: {fontCharWidth} x {fontCharHeight}");
         }
 
@@ -78,7 +81,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             LoggerAdapter.Instance.Debug($"Submitted: {expression}");
             consoleBuffer?.PrintLine($"$> {expression}");
             try {
-                object result = Utils.Expression.Run(expression);
+                var result = Utils.Expression.Run(expression);
                 if (result != null) {
                     consoleBuffer?.PrintLine($"{result}");
                 }
