@@ -77,6 +77,9 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField(Description = "Reference frame for the current control position.")] 
             public ITransformFrame ControlFrame => vessel.ControlTransform.bodyFrame;
 
+            [KSField(Description = "Reference frame for the horizon at the current position of the vessel.")]
+            public ITransformFrame HorizonFrame => vessel.SimulationObject.Telemetry.HorizonFrame;
+            
             [KSField(Description = "Coordinate independent position of the vessel.")] 
             public Position GlobalPosition => vessel.SimulationObject.Position;
 
@@ -151,7 +154,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField] public double SoundSpeed => vessel.SoundSpeed;
 
             [KSField] public double MachNumber => vessel.MachNumber;
-
+            
             [KSMethod]
             public Direction HeadingDirection(double degreesFromNorth, double pitchAboveHorizon, double roll) {
                 QuaternionD q = QuaternionD.LookRotation(North, Up);
