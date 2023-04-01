@@ -62,6 +62,20 @@ autopilotmode.to_string ( ) -> string
 
 String representation of the number
 
+### DeltaVSituation
+
+Vessel situation for delta-v calculation
+
+#### Methods
+
+##### to_string
+
+```rust
+deltavsituation.to_string ( ) -> string
+```
+
+String representation of the number
+
 ### EngineDeltaV
 
 
@@ -78,7 +92,7 @@ start_burn_stage | int | R/O | Number of the stage when engine is supposed to st
 ##### get_ISP
 
 ```rust
-enginedeltav.get_ISP ( situation : string ) -> float
+enginedeltav.get_ISP ( situation : ksp::vessel::DeltaVSituation ) -> float
 ```
 
 Estimated ISP of the engine in a given `situation`
@@ -87,7 +101,7 @@ Estimated ISP of the engine in a given `situation`
 ##### get_thrust
 
 ```rust
-enginedeltav.get_thrust ( situation : string ) -> float
+enginedeltav.get_thrust ( situation : ksp::vessel::DeltaVSituation ) -> float
 ```
 
 Estimated thrust of the engine in a given `situation`
@@ -96,7 +110,7 @@ Estimated thrust of the engine in a given `situation`
 ##### get_thrust_vector
 
 ```rust
-enginedeltav.get_thrust_vector ( situation : string ) -> ksp::math::Vec3
+enginedeltav.get_thrust_vector ( situation : ksp::vessel::DeltaVSituation ) -> ksp::math::Vec3
 ```
 
 Estimated thrust vector of the engine in a given `situation`
@@ -368,10 +382,10 @@ modulelaunchclamp.release ( ) -> bool
 Name | Type | Read-only | Description
 --- | --- | --- | ---
 armed | bool | R/W | 
-chute_safety | string | R/O | 
+chute_safety | [ksp::vessel::ParachuteSafeStates](/reference/ksp/vessel.md#parachutesafestates) | R/O | 
 deploy_altitude | float | R/W | 
-deploy_mode | string | R/W | 
-deploy_state | string | R/O | 
+deploy_mode | [ksp::vessel::ParachuteDeployMode](/reference/ksp/vessel.md#parachutedeploymode) | R/W | 
+deploy_state | [ksp::vessel::ParachuteDeployState](/reference/ksp/vessel.md#parachutedeploystate) | R/O | 
 min_air_pressure | float | R/W | 
 
 #### Methods
@@ -411,6 +425,48 @@ Name | Type | Read-only | Description
 blocking_body | Option&lt;[ksp::orbit::Body](/reference/ksp/orbit.md#body)> | R/O | 
 energy_flow | float | R/O | 
 part_name | string | R/O | 
+
+### ParachuteDeployMode
+
+Parachute deploy mode
+
+#### Methods
+
+##### to_string
+
+```rust
+parachutedeploymode.to_string ( ) -> string
+```
+
+String representation of the number
+
+### ParachuteDeployState
+
+Parachute deploy state
+
+#### Methods
+
+##### to_string
+
+```rust
+parachutedeploystate.to_string ( ) -> string
+```
+
+String representation of the number
+
+### ParachuteSafeStates
+
+Parachute deploy safe states
+
+#### Methods
+
+##### to_string
+
+```rust
+parachutesafestates.to_string ( ) -> string
+```
+
+String representation of the number
 
 ### Part
 
@@ -494,7 +550,7 @@ start_mass | float | R/O | Start mass of the stage.
 ##### get_deltav
 
 ```rust
-stagedeltav.get_deltav ( situation : string ) -> float
+stagedeltav.get_deltav ( situation : ksp::vessel::DeltaVSituation ) -> float
 ```
 
 Estimated delta-v of the stage in a given `situation`
@@ -503,7 +559,7 @@ Estimated delta-v of the stage in a given `situation`
 ##### get_ISP
 
 ```rust
-stagedeltav.get_ISP ( situation : string ) -> float
+stagedeltav.get_ISP ( situation : ksp::vessel::DeltaVSituation ) -> float
 ```
 
 Estimated ISP of the stage in a given `situation`
@@ -512,7 +568,7 @@ Estimated ISP of the stage in a given `situation`
 ##### get_thrust
 
 ```rust
-stagedeltav.get_thrust ( situation : string ) -> float
+stagedeltav.get_thrust ( situation : ksp::vessel::DeltaVSituation ) -> float
 ```
 
 Estimated thrust of the stage in a given `situation`
@@ -521,7 +577,7 @@ Estimated thrust of the stage in a given `situation`
 ##### get_TWR
 
 ```rust
-stagedeltav.get_TWR ( situation : string ) -> float
+stagedeltav.get_TWR ( situation : ksp::vessel::DeltaVSituation ) -> float
 ```
 
 Estimated TWR of the stage in a given `situation`
@@ -820,9 +876,21 @@ MODE_RADIAL_OUT | ksp::vessel::AutopilotMode |
 MODE_RETROGRADE | ksp::vessel::AutopilotMode | 
 MODE_STABILITY_ASSIST | ksp::vessel::AutopilotMode | 
 MODE_TARGET | ksp::vessel::AutopilotMode | 
-SITUATION_ALTITUDE | string | Used for delta-v calculation at the current altitude. 
-SITUATION_SEALEVEL | string | Used for delta-v calculation at sea level of the current body. 
-SITUATION_VACUUM | string | Used for delta-v calculation in vacuum. 
+PARACHUTE_MODE_IMMEDIATE | ksp::vessel::ParachuteDeployMode | 
+PARACHUTE_MODE_RISKY | ksp::vessel::ParachuteDeployMode | 
+PARACHUTE_MODE_SAFE | ksp::vessel::ParachuteDeployMode | 
+PARACHUTE_SAFETY_NONE | ksp::vessel::ParachuteSafeStates | 
+PARACHUTE_SAFETY_RISKY | ksp::vessel::ParachuteSafeStates | 
+PARACHUTE_SAFETY_SAFE | ksp::vessel::ParachuteSafeStates | 
+PARACHUTE_SAFETY_UNSAFE | ksp::vessel::ParachuteSafeStates | 
+PARACHUTE_STATE_ARMED | ksp::vessel::ParachuteDeployState | 
+PARACHUTE_STATE_CUT | ksp::vessel::ParachuteDeployState | 
+PARACHUTE_STATE_DEPLOYED | ksp::vessel::ParachuteDeployState | 
+PARACHUTE_STATE_SEMIDEPLOYED | ksp::vessel::ParachuteDeployState | 
+PARACHUTE_STATE_STOWED | ksp::vessel::ParachuteDeployState | 
+SITUATION_ALTITUDE | ksp::vessel::DeltaVSituation | 
+SITUATION_SEA_LEVEL | ksp::vessel::DeltaVSituation | 
+SITUATION_VACCUM | ksp::vessel::DeltaVSituation | 
 
 
 ## Functions

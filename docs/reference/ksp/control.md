@@ -197,7 +197,7 @@ throttlemanager.set_throttle_provider ( newThrottleProvider : sync fn(float) -> 
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
-i | float | R/W | 
+I | float | R/W | 
 loop | [ksp::control::PIDLoop](/reference/ksp/control.md#pidloop) | R/W | 
 tr | float | R/W | 
 ts | float | R/W | 

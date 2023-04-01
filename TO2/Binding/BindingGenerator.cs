@@ -157,7 +157,8 @@ namespace KontrolSystem.TO2.Binding {
             List<IKontrolConstant> constants = new List<IKontrolConstant>();
             
             for (int i = 0; i < names.Length; i++) {
-                constants.Add(new EnumKontrolConstant(constantPrefix + ToSnakeCase((string)names.GetValue(i)).ToUpperInvariant(), enumType, (int)values.GetValue(i)));    
+                int value = (int) Convert.ChangeType(values.GetValue(i), typeof(int));
+                constants.Add(new EnumKontrolConstant(constantPrefix + ToSnakeCase((string)names.GetValue(i)).ToUpperInvariant(), enumType, value));    
             }
 
             return constants;
@@ -216,7 +217,7 @@ namespace KontrolSystem.TO2.Binding {
             }
         }
 
-        public static string ToSnakeCase(string name) => String
+        public static string ToSnakeCase(string name) => name.All(ch => char.IsUpper(ch)) ? name : String
             .Concat(name.Select((x, i) => i > 0 && char.IsUpper(x) ? "_" + x.ToString() : x.ToString())).ToLower();
 
         private static string NormalizeDescription(string description) {

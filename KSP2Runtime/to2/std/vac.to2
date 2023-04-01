@@ -1,4 +1,4 @@
-use { Vessel, SITUATION_VACUUM, MODE_MANEUVER, MODE_STABILITY_ASSIST } from ksp::vessel
+use { Vessel, SITUATION_VACCUM, MODE_MANEUVER, MODE_STABILITY_ASSIST } from ksp::vessel
 use { look_dir_up } from ksp::math
 use core::math as math
 use { CONSOLE } from ksp::console
@@ -106,8 +106,8 @@ pub sync fn estimate_burn_time(vessel : Vessel, delta_v : float, stage_delay : f
         if(!maybe_stage_info.defined) continue
 
         const stage_info = maybe_stage_info.value
-        const stage_deltav = stage_info.get_deltav(SITUATION_VACUUM)
-        const stage_thrust = stage_info.get_thrust(SITUATION_VACUUM)
+        const stage_deltav = stage_info.get_deltav(SITUATION_VACCUM)
+        const stage_thrust = stage_info.get_thrust(SITUATION_VACCUM)
 
         if(stage_deltav <= 0.0 || stage_thrust <= 0.0) {
             // This stage has to be skipped, i.e. it will be necessary to stage twice

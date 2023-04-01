@@ -43,27 +43,26 @@ namespace KontrolSystem.TO2 {
 
     public class EnumKontrolConstant : IKontrolConstant {
         public string Name { get; }
+
+        private BoundEnumType enumType;
+        private readonly int value;
         
-        public TO2Type Type { get; }
+        public EnumKontrolConstant(string name, BoundEnumType type, int value) {
+            Name = name;
+            enumType = type;
+            this.value = value;
+        }
+
+        public TO2Type Type => enumType;
 
         public string Description => "";
 
-        private readonly int value;
-        
-        public EnumKontrolConstant(string name, TO2Type type, int value) {
-            Name = name;
-            Type = type;
-            this.value = value;
-        }
         
         public void EmitLoad(IBlockContext context) {
             context.IL.Emit(OpCodes.Ldc_I4, value);
         }
 
-        public IREPLValue REPLValue() {
-            throw new System.NotImplementedException();
-        }
-
+        public IREPLValue REPLValue() => new REPLAny(Type, Enum.ToObject(enumType.enumType, value));
     }
 
     public class DeclaredKontrolConstant : IKontrolConstant {
