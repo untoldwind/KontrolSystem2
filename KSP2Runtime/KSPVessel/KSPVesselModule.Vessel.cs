@@ -157,9 +157,8 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             
             [KSMethod]
             public Direction HeadingDirection(double degreesFromNorth, double pitchAboveHorizon, double roll) {
-                QuaternionD q = QuaternionD.LookRotation(North, Up);
-                q *= QuaternionD.Euler(-pitchAboveHorizon, degreesFromNorth, 0);
-                q *= QuaternionD.Euler(0, 0, roll);
+                var q = vessel.mainBody.coordinateSystem.ToLocalRotation(HorizonFrame,
+                    QuaternionD.Euler(-pitchAboveHorizon, degreesFromNorth, roll));
                 return new Direction(q);
             }
 
@@ -173,7 +172,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                     return new Direction(vesselFacing);
                 }
             }
-
+            
             [KSField]
             public RotationWrapper GlobalFacing => new RotationWrapper(new Rotation(vessel.ControlTransform.coordinateSystem, ControlFacingRotation));
 
@@ -247,36 +246,18 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                     return thrust;
                 }
             }
-
-            [KSField]
-            public double RollHorizonRelative => vessel.Roll_HorizonRelative;
-
-            [KSField]
-            public double PitchHorizonRelative => vessel.Pitch_HorizonRelative;
-
+            
             [KSField]
             public Vector3d PitchYawRoll {
                 get {
-                    QuaternionD vesselRotation = vessel.mainBody.coordinateSystem
-                        .ToLocalRotation(vessel.ControlTransform.bodyFrame, QuaternionD.identity);
-                    QuaternionD vesselFacing = QuaternionD.Inverse(QuaternionD.Euler(90, 0, 0) *
-                                                                   QuaternionD.Inverse(vesselRotation));
-                    var vesselUp = Up;
-                    var vesselForward = vesselFacing * Vector3d.forward;
-                    var facingUp = vesselFacing * Vector3d.up;
-                    var facingRight = vesselFacing * Vector3d.right;
+                    QuaternionD vesselHorizon = HorizonFrame.ToLocalRotation(vessel.ControlTransform.Rotation) *
+                                                ControlFacingRotation;
+                    var euler = vesselHorizon.eulerAngles;
 
-                    var roll = 90 - DirectBindingMath.AcosDeg(Vector3d.Dot(vesselUp, facingRight));
-                    var upAngles = DirectBindingMath.AcosDeg(Vector3d.Dot(vesselUp, facingUp));
-                    if (upAngles > 90) roll = 180 - roll;
-                    var yaw = DirectBindingMath.Atan2Deg(Vector3d.Dot(East, vesselForward),
-                        Vector3d.Dot(North, vesselForward));
-                    var pitch = 90 - DirectBindingMath.AcosDeg(Vector3d.Dot(vesselUp, vesselForward));
-
-                    return new Vector3d(pitch, DirectBindingMath.ClampDegrees360(yaw), DirectBindingMath.ClampDegrees180(roll));
+                    return new Vector3d(DirectBindingMath.ClampDegrees180(-euler.x), DirectBindingMath.ClampDegrees360(euler.y), DirectBindingMath.ClampDegrees180(euler.z));
                 }
             }
-
+            
             [KSMethod]
             public KSPControlModule.SteeringManager SetSteering(Vector3d pitchYawRoll) {
                 if (context.TryFindAutopilot(vessel, out KSPControlModule.SteeringManager steeringManager)) {

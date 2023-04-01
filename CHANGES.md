@@ -1,5 +1,15 @@
 # Changes
 
+## 0.3.1 ->
+
+* Cleanup calculation of `vessel.pitch_yaw_roll`
+* Fix calculation of `vessel.heading_direction()`
+* Remove `vessel.pitch_horizon_relative` and `vessel.roll_horizon_relative` as say were misleading and did not create "valid" results
+
+## 0.2.3 -> 0.3.1
+
+* Telemetry
+
 ## 0.2.2 -> 0.2.3
 
 * Fix comments in struct-impl (#57)

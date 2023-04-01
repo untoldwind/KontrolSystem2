@@ -6,14 +6,14 @@ pub fn main_flight(vessel: Vessel) -> Result<Unit, string> = {
     let isActive = true
     let checkpointArrived = false
     let margin = 7
-    let targetRoll = vessel.roll_horizon_relative
+    let targetRoll = vessel.pitch_yaw_roll.z
     let checkpoint = (targetRoll + 180) % 360
     while (isActive) {
         CONSOLE.clear()
         if (checkpointArrived) CONSOLE.print_line("Checkpoint")
         roll(vessel)
-        if ((minAngleDif(targetRoll, vessel.roll_horizon_relative) < margin) && checkpointArrived) isActive = false
-        if (minAngleDif(checkpoint, vessel.roll_horizon_relative) < margin) checkpointArrived = true
+        if ((minAngleDif(targetRoll, vessel.pitch_yaw_roll.z) < margin) && checkpointArrived) isActive = false
+        if (minAngleDif(checkpoint, vessel.pitch_yaw_roll.z) < margin) checkpointArrived = true
     }
 }
 
