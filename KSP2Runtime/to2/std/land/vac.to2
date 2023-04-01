@@ -1,4 +1,4 @@
-use { Vessel, MODE_AUTOPILOT, MODE_STABILITYASSIST } from ksp::vessel
+use { Vessel, MODE_AUTOPILOT, MODE_STABILITY_ASSIST } from ksp::vessel
 use { GeoCoordinates } from ksp::orbit
 use { CONSOLE, RED, BLUE, GREEN, WHITE } from ksp::console
 use { Vec3, vec3, vec2, from_vector_to_vector, angle_axis, matrix2x2, look_dir_up } from ksp::math
@@ -321,7 +321,7 @@ pub fn vac_touchdown(vessel : Vessel) -> Unit = {
 
     throttle.release()
 
-    vessel.autopilot.mode = MODE_STABILITYASSIST
+    vessel.autopilot.mode = MODE_STABILITY_ASSIST
     vessel.actions.rcs = true
 }
 

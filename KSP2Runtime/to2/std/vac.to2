@@ -1,4 +1,4 @@
-use { Vessel, SITUATION_VACUUM, MODE_MANEUVER, MODE_STABILITYASSIST } from ksp::vessel
+use { Vessel, SITUATION_VACUUM, MODE_MANEUVER, MODE_STABILITY_ASSIST } from ksp::vessel
 use { look_dir_up } from ksp::math
 use core::math as math
 use { CONSOLE } from ksp::console
@@ -83,7 +83,7 @@ pub fn exec_next_node(vessel : Vessel) -> Result<Unit, string> = {
     
     node.remove()
 
-    vessel.autopilot.mode = MODE_STABILITYASSIST
+    vessel.autopilot.mode = MODE_STABILITY_ASSIST
 }
 
 /// Estimate the required burn time for a desired `delta_v` in vacuum.

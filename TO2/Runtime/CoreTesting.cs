@@ -18,13 +18,13 @@ namespace KontrolSystem.TO2.Runtime {
         protected int yieldCount;
 
         public ITO2Logger Logger => this;
-        
+
         public bool IsBackground => false;
 
         public int AssertionsCount => assertionsCount;
 
         public int StackCallCount => stackCallCount;
-        
+
         public int YieldCount => yieldCount;
 
         public IEnumerable<string> Messages => messages;

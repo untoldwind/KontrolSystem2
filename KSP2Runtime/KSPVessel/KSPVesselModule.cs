@@ -2,29 +2,17 @@
 using KSP.Sim.DeltaV;
 using KSP.Sim.State;
 using System;
+using System.Collections.Generic;
+using KontrolSystem.TO2;
+using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Runtime;
-using KSP.Game;
-using KSP.Sim.impl;
+using KSP.Sim;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel {
     [KSModule("ksp::vessel",
         Description = "Collection of types and functions to get information and control in-game vessels."
     )]
     public partial class KSPVesselModule {
-
-        [KSConstant("MODE_STABILITYASSIST")] public static readonly string ModeStabilityAssist = "STABILITYASSIST";
-        [KSConstant("MODE_PROGRADE")] public static readonly string ModePrograde = "PROGRADE";
-        [KSConstant("MODE_RETROGRADE")] public static readonly string ModeRetrograde = "RETROGRADE";
-        [KSConstant("MODE_NORMAL")] public static readonly string ModeNormal = "NORMAL";
-        [KSConstant("MODE_ANTINORMAL")] public static readonly string ModeAntiNormal = "ANTINORMAL";
-        [KSConstant("MODE_RADIALIN")] public static readonly string ModeRadialIn = "RADIALIN";
-        [KSConstant("MODE_RADIALOUT")] public static readonly string ModeRadialOut = "RADIALOUT";
-        [KSConstant("MODE_TARGET")] public static readonly string ModeTarget = "TARGET";
-        [KSConstant("MODE_ANTITARGET")] public static readonly string ModeAntiTarget = "ANTITARGET";
-        [KSConstant("MODE_MANEUVER")] public static readonly string ModeManeuver = "MANEUVER";
-        [KSConstant("MODE_NAVIGATION")] public static readonly string ModeNavigation = "NAVIGATION";
-        [KSConstant("MODE_AUTOPILOT")] public static readonly string ModeAutopilot = "AUTOPILOT";
-
         [KSConstant("SITUATION_SEALEVEL",
             Description = "Used for delta-v calculation at sea level of the current body.")]
         public static readonly string SituationSealevel = "SEALEVEL";
@@ -45,9 +33,14 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 .OkOr("No active vessel");
         }
 
-        public static void DirectBindings() {
+        public static (IEnumerable<RealizedType>, IEnumerable<IKontrolConstant>) DirectBindings() {
+            var autopilotModeType =  new BoundEnumType("ksp::vessel", "AutopilotMode",
+                "Vessel autopilot (SAS) mode", typeof(AutopilotMode));
+            var autopilotConstants = BindingGenerator.RegisterEnumTypeMapping(autopilotModeType, "MODE_");
             BindingGenerator.RegisterTypeMapping(typeof(FlightCtrlState),
                 FlightCtrlStateBinding.FlightCtrlStateType);
+
+            return (new RealizedType[] { autopilotModeType, FlightCtrlStateBinding.FlightCtrlStateType }, autopilotConstants);
         }
 
         internal static DeltaVSituationOptions SituationFromString(string situation) {

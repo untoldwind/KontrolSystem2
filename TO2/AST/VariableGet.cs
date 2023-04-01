@@ -62,7 +62,7 @@ namespace KontrolSystem.TO2.AST {
             if (constant != null) {
                 if (dropResult) return;
 
-                context.IL.Emit(OpCodes.Ldsfld, constant.RuntimeField);
+                constant.EmitLoad(context);
                 return;
             }
 
@@ -128,7 +128,7 @@ namespace KontrolSystem.TO2.AST {
             IKontrolConstant constant = ReferencedConstant(context.replModuleContext);
 
             if (constant != null) {
-                return REPLValueFuture.Success(constant.Type.REPLCast(constant.RuntimeField.GetValue(null)));
+                return REPLValueFuture.Success(constant.REPLValue());
             }
 
             throw new REPLException(this, $"No local variable, constant or function '{name}'");

@@ -5,7 +5,7 @@ using KontrolSystem.TO2.Binding;
 namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
     public partial class KSPTelemetryModule {
         private static int NUM_BUCKETS = 5000;
-        
+
         public struct TimeSeriesBucket {
             public int count;
             public double min;
@@ -19,12 +19,12 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
                 } else {
                     min = Math.Min(min, value);
                     max = Math.Max(max, value);
-                    avg = (avg * count + value) / (count + 1); 
+                    avg = (avg * count + value) / (count + 1);
                     count++;
                 }
             }
         }
-        
+
         [KSClass("TimeSeries")]
         public class TimeSeries {
             private readonly TimeSeriesBucket[] buckets;
@@ -76,7 +76,7 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
                     }
                 }
             }
-            
+
             [KSMethod(Description = "Add a data `value` at time `ut`.")]
             public bool AddData(double ut, double value) {
                 if (Double.IsNaN(value) || Double.IsInfinity(value)) return false;
@@ -113,19 +113,19 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
                             combined.avg = (combined.avg * combined.count + buckets[oldIdx + j].avg * buckets[oldIdx + j].count) /
                                            (combined.count + buckets[oldIdx + j].count);
                             combined.count += buckets[oldIdx + j].count;
-                        }    
+                        }
                     }
-                    
+
                     buckets[i] = combined;
                 }
 
                 for (int i = newLastBucketIdx + 1; i <= lastBucketIdx; i++) {
                     buckets[i].count = 0;
                 }
-                
+
                 lastBucketIdx = newLastBucketIdx;
                 resolution *= factor;
-                
+
                 return bucketIdx / factor;
             }
         }

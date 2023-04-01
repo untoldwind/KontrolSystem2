@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using AwesomeTechnologies.Utility.Quadtree;
 using KontrolSystem.KSP.Runtime.KSPMath;
 using TMPro;
@@ -21,15 +21,12 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
 
         private RenderTexture _renderTexture;
 
-        public GLUIDrawer(int initialWidth, int initialHeight)
-        {
+        public GLUIDrawer(int initialWidth, int initialHeight) {
             _renderTexture = new RenderTexture(initialWidth, initialHeight, 0);
         }
 
-        public void Resize(int width, int height)
-        {
-            if (width != _renderTexture.width || height != _renderTexture.height)
-            {
+        public void Resize(int width, int height) {
+            if (width != _renderTexture.width || height != _renderTexture.height) {
                 _renderTexture.Release();
                 _renderTexture.width = width;
                 _renderTexture.height = height;
@@ -39,35 +36,31 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
         public Texture Texture => _renderTexture;
 
         public GLUIDraw Draw() => new GLUIDraw(_renderTexture);
-        
-        public void Dispose()
-        {
+
+        public void Dispose() {
             _renderTexture.Release();
         }
-        
-        public class GLUIDraw : IDisposable
-        {
+
+        public class GLUIDraw : IDisposable {
             private readonly int width;
             private readonly int height;
-            
-            internal GLUIDraw(RenderTexture renderTexture)
-            {
+
+            internal GLUIDraw(RenderTexture renderTexture) {
                 width = renderTexture.width;
                 height = renderTexture.height;
                 RenderTexture.active = renderTexture;
-                
+
                 GL.Clear(false, true, Color.black);
                 GL.PushMatrix();
                 GL.LoadPixelMatrix(0, width, height, 0);
-                GL.MultMatrix(Matrix4x4.Translate(new Vector3(0, height)) * Matrix4x4.Scale(new Vector3(1, -1)) );
+                GL.MultMatrix(Matrix4x4.Translate(new Vector3(0, height)) * Matrix4x4.Scale(new Vector3(1, -1)));
             }
 
             public int Width => width;
 
             public int Height => height;
 
-            public void Polygon(Vector2[] points, Color color, bool closed = false)
-            {
+            public void Polygon(Vector2[] points, Color color, bool closed = false) {
                 colored.SetPass(0);
                 GL.Begin(GL.LINE_STRIP);
                 GL.Color(color);
@@ -91,9 +84,8 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
                 }
                 GL.End();
             }
-            
-            public void DrawText(Vector2 pos, string text, float size, Vector2 pivot, float degrees, Color color)
-            {
+
+            public void DrawText(Vector2 pos, string text, float size, Vector2 pivot, float degrees, Color color) {
                 var textSize = TextSize(text, size);
                 var lineHeight = textFont.faceInfo.lineHeight;
                 var scale = size / lineHeight;
@@ -102,7 +94,7 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
                 textColored.SetPass(0);
                 GL.PushMatrix();
 
-                GL.MultMatrix( Matrix4x4.Translate(new Vector3( pos.x, height - pos.y)) * Matrix4x4.Scale(new Vector3(scale, -scale)) * Matrix4x4.Rotate(Quaternion.Euler(Vector3.forward * degrees)) * Matrix4x4.Translate(new Vector3(- pivot.x * textSize.x / scale, -pivot.y * textSize.y / scale)));
+                GL.MultMatrix(Matrix4x4.Translate(new Vector3(pos.x, height - pos.y)) * Matrix4x4.Scale(new Vector3(scale, -scale)) * Matrix4x4.Rotate(Quaternion.Euler(Vector3.forward * degrees)) * Matrix4x4.Translate(new Vector3(-pivot.x * textSize.x / scale, -pivot.y * textSize.y / scale)));
                 GL.Begin(GL.QUADS);
                 GL.Color(color);
                 var atlasWidth = (float)textFont.atlasWidth;
@@ -117,7 +109,7 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
 
                     GL.TexCoord2(glyph.glyphRect.x / atlasWidth, (glyph.glyphRect.y + glyph.glyphRect.height) / atlasHeight);
                     GL.MultiTexCoord2(1, 0, -0.4f);
-                    GL.Vertex3(x + glyph.metrics.horizontalBearingX , y + glyph.metrics.horizontalBearingY, 0);
+                    GL.Vertex3(x + glyph.metrics.horizontalBearingX, y + glyph.metrics.horizontalBearingY, 0);
                     GL.TexCoord2(glyph.glyphRect.x / atlasWidth, glyph.glyphRect.y / atlasHeight);
                     GL.MultiTexCoord2(1, 0, -0.4f);
                     GL.Vertex3(x + glyph.metrics.horizontalBearingX, y - glyph.metrics.height + glyph.metrics.horizontalBearingY, 0);
@@ -136,8 +128,7 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
                 GL.PopMatrix();
             }
 
-            public Vector2 TextSize(string text, float size)
-            {
+            public Vector2 TextSize(string text, float size) {
                 var lineHeight = textFont.faceInfo.lineHeight;
                 var scale = size / lineHeight;
                 var x = 0.0f;
@@ -153,8 +144,7 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
                 return new Vector2(x, size);
             }
 
-            public void Dispose()
-            {
+            public void Dispose() {
                 GL.PopMatrix();
                 RenderTexture.active = null;
             }

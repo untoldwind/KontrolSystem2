@@ -76,7 +76,7 @@ namespace KontrolSystem.TO2.AST {
             List<FunctionParameter> effectiveParameters =
                 new List<FunctionParameter> { new FunctionParameter("self", structType) };
             effectiveParameters.AddRange(parameters);
-            
+
             ILChunks.GenerateFunctionEnter(syncBlockContext, structType.Name + "." + name, effectiveParameters);
 
             if (isAsync) {

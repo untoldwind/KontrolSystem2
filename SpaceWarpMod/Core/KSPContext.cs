@@ -53,7 +53,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
     }
     public class KSPContext : IKSPContext {
         internal static readonly int MAX_CALL_STACK = 100;
-        
+
         private readonly GameInstance gameInstance;
         private readonly KSPConsoleBuffer consoleBuffer;
         private readonly TimeSeriesCollection timeSeriesCollection;
@@ -119,7 +119,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         public GameInstance Game => gameInstance;
 
         public GameMode GameMode => GameModeAdapter.GameModeFromState(Game.GlobalGameState.GetState());
-        
+
         public double UniversalTime => Game.SpaceSimulation.UniverseModel.UniversalTime;
 
         public VesselComponent ActiveVessel => gameInstance.ViewController.GetActiveSimVessel(true);
@@ -251,7 +251,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         private readonly CancellationTokenSource token;
         private readonly List<BackgroundKSPContext> childContexts;
         private int stackCallCount = 0;
-        
+
         public BackgroundKSPContext(KSPConsoleBuffer consoleBuffer, CancellationTokenSource token) {
             this.consoleBuffer = consoleBuffer;
             this.token = token;
@@ -266,7 +266,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
 
         public void ResetTimeout() {
         }
-        
+
         public IContext CloneBackground(CancellationTokenSource token) {
             var childContext = new BackgroundKSPContext(consoleBuffer, token);
 
@@ -289,7 +289,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
                 throw new StackOverflowException($"Exceed stack count: {KSPContext.MAX_CALL_STACK}");
             }
         }
-        
+
         public void FunctionLeave() {
             Interlocked.Decrement(ref stackCallCount);
         }

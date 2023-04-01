@@ -91,7 +91,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
                 OpenTelemetryWindow();
             }
             GUILayout.Space(20);
-            
+
             if (GUILayout.Button("New Module")) {
                 OpenEditorWindow();
             }
@@ -326,7 +326,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
         public void CloseTelemetryWindow(TelemetryWindow telemetryWindow) {
             Destroy(telemetryWindow);
         }
-        
+
         public void OnConsoleWindowClose() {
             if (editorWindows.Count == 0 && !Game.Input.asset.enabled) {
                 Game.Input.Enable();

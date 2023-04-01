@@ -45,8 +45,22 @@ enabled | bool | R/W |
 global_lock_direction | [ksp::math::GlobalDirection](/reference/ksp/math.md#globaldirection) | R/W | 
 global_target_orientation | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/W | 
 lock_direction | [ksp::math::Direction](/reference/ksp/math.md#direction) | R/W | 
-mode | string | R/W | 
+mode | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/W | 
 target_orientation | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/W | 
+
+### AutopilotMode
+
+Vessel autopilot (SAS) mode
+
+#### Methods
+
+##### to_string
+
+```rust
+autopilotmode.to_string ( ) -> string
+```
+
+String representation of the number
 
 ### EngineDeltaV
 
@@ -103,6 +117,34 @@ max_thrust | float | R/O |
 min_thrust | float | R/O | 
 name | string | R/O | 
 throttle_locked | bool | R/O | 
+
+### FlightCtrlState
+
+Current state of the (pilots) flight controls.
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+breaks | bool | R/W | Brakes
+gear_down | bool | R/W | Gear down
+gear_up | bool | R/W | Gear up
+kill_rot | bool | R/W | Kill rotation
+main_throttle | float | R/W | Setting for the main throttle (0 - 1)
+pitch | float | R/W | Setting for pitch rotation (-1 - 1)
+pitch_trim | float | R/W | Current trim value for pitch
+roll | float | R/W | Setting for roll rotation (-1 - 1)
+roll_trim | float | R/W | Current trim value for roll
+stage | bool | R/W | Stage
+wheel_steer | float | R/W | Setting for wheel steering (-1 - 1, applied to Rovers)
+wheel_steer_trim | float | R/W | Current trim value for wheel steering
+wheel_throttle | float | R/W | Setting for wheel throttle (0 - 1, applied to Rovers)
+wheel_throttle_trim | float | R/W | Current trim value for wheel throttle
+x | float | R/W | Setting for x-translation (-1 - 1)
+y | float | R/W | Setting for y-translation (-1 - 1)
+yaw | float | R/W | Setting for yaw rotation (-1 - 1)
+yaw_trim | float | R/W | Current trim value for yaw
+z | float | R/W | Setting for z-translation (-1 - 1)
 
 ### Maneuver
 
@@ -568,6 +610,7 @@ global_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposit
 global_up | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | 
 global_velocity | [ksp::math::GlobalVelocity](/reference/ksp/math.md#globalvelocity) | R/O | Get the coordinate independent velocity of the vessel. 
 heading | float | R/O | 
+horizon_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/O | Reference frame for the horizon at the current position of the vessel. 
 horizontal_surface_speed | float | R/O | 
 is_active | bool | R/O | Check if the vessel is currently active. 
 mach_number | float | R/O | 
@@ -580,9 +623,7 @@ offset_ground | float | R/O |
 orbit | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit) | R/O | Current orbit or orbit patch of the vessel. 
 orbital_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Orbital velocity of the vessel relative to the main body. 
 parts | [ksp::vessel::Part](/reference/ksp/vessel.md#part)[] | R/O | 
-pitch_horizon_relative | float | R/O | 
 pitch_yaw_roll | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
-roll_horizon_relative | float | R/O | 
 situation | string | R/O | 
 solar_panels | [ksp::vessel::ModuleSolarPanel](/reference/ksp/vessel.md#modulesolarpanel)[] | R/O | 
 sound_speed | float | R/O | 
@@ -767,18 +808,18 @@ Get delta-v information for a specific `stage` of the vessel, if existent.
 
 Name | Type | Description
 --- | --- | ---
-MODE_ANTINORMAL | string | 
-MODE_ANTITARGET | string | 
-MODE_AUTOPILOT | string | 
-MODE_MANEUVER | string | 
-MODE_NAVIGATION | string | 
-MODE_NORMAL | string | 
-MODE_PROGRADE | string | 
-MODE_RADIALIN | string | 
-MODE_RADIALOUT | string | 
-MODE_RETROGRADE | string | 
-MODE_STABILITYASSIST | string | 
-MODE_TARGET | string | 
+MODE_ANTI_TARGET | ksp::vessel::AutopilotMode | 
+MODE_ANTINORMAL | ksp::vessel::AutopilotMode | 
+MODE_AUTOPILOT | ksp::vessel::AutopilotMode | 
+MODE_MANEUVER | ksp::vessel::AutopilotMode | 
+MODE_NAVIGATION | ksp::vessel::AutopilotMode | 
+MODE_NORMAL | ksp::vessel::AutopilotMode | 
+MODE_PROGRADE | ksp::vessel::AutopilotMode | 
+MODE_RADIAL_IN | ksp::vessel::AutopilotMode | 
+MODE_RADIAL_OUT | ksp::vessel::AutopilotMode | 
+MODE_RETROGRADE | ksp::vessel::AutopilotMode | 
+MODE_STABILITY_ASSIST | ksp::vessel::AutopilotMode | 
+MODE_TARGET | ksp::vessel::AutopilotMode | 
 SITUATION_ALTITUDE | string | Used for delta-v calculation at the current altitude. 
 SITUATION_SEALEVEL | string | Used for delta-v calculation at sea level of the current body. 
 SITUATION_VACUUM | string | Used for delta-v calculation in vacuum. 

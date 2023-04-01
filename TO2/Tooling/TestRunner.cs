@@ -17,14 +17,14 @@ namespace KontrolSystem.TO2.Tooling {
 
                 switch (testReturn) {
                 case bool booleanResult when !booleanResult:
-                    return new TestResult(module.Name + "::" + testFunction.Name, testContext.AssertionsCount, 
-                        testContext.StackCallCount,"Returned false", testContext.Messages);
+                    return new TestResult(module.Name + "::" + testFunction.Name, testContext.AssertionsCount,
+                        testContext.StackCallCount, "Returned false", testContext.Messages);
                 case IAnyOption option when !option.Defined:
                     return new TestResult(module.Name + "::" + testFunction.Name, testContext.AssertionsCount,
-                        testContext.StackCallCount,"Returned None", testContext.Messages);
+                        testContext.StackCallCount, "Returned None", testContext.Messages);
                 case IAnyResult result when !result.Success:
                     return new TestResult(module.Name + "::" + testFunction.Name, testContext.AssertionsCount,
-                        testContext.StackCallCount,$"Returned Err({result.ErrorString})", testContext.Messages);
+                        testContext.StackCallCount, $"Returned Err({result.ErrorString})", testContext.Messages);
                 case IAnyFuture future:
                     ContextHolder.CurrentContext.Value = testContext;
                     for (int i = 0; i < 100; i++) {
@@ -37,7 +37,7 @@ namespace KontrolSystem.TO2.Tooling {
                     }
 
                     return new TestResult(module.Name + "::" + testFunction.Name, testContext.AssertionsCount,
-                        testContext.StackCallCount,"Future did not become ready", testContext.Messages);
+                        testContext.StackCallCount, "Future did not become ready", testContext.Messages);
                 default:
                     return new TestResult(module.Name + "::" + testFunction.Name, testContext.AssertionsCount,
                         testContext.StackCallCount, testContext.Messages);

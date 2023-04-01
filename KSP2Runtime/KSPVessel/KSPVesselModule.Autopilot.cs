@@ -25,13 +25,9 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             }
 
             [KSField]
-            public string Mode {
-                get => vesselAdapter.vessel.AutopilotStatus.Mode.ToString();
-                set {
-                    if (Enum.TryParse(value, true, out AutopilotMode mode)) {
-                        vesselAdapter.vessel.SetAutopilotMode(mode);
-                    }
-                }
+            public AutopilotMode Mode {
+                get => vesselAdapter.vessel.AutopilotStatus.Mode;
+                set => vesselAdapter.vessel.SetAutopilotMode(value);
             }
 
             [KSField]

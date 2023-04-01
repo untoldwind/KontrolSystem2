@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace KontrolSystem.KSP.Runtime.KSPUI {
@@ -40,14 +40,14 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             var imageResizer = resizer.GetComponent<Image>();
             imageResizer.color = Color.clear;
             resizer.AddComponent<UGUIDragHandler>().Init(windowTransform, OnResize);
-            
+
             var closeButton = new GameObject("CloseButton", typeof(Image), typeof(Button));
             RectTransform closeButtonTransform = (RectTransform)closeButton.transform;
             closeButtonTransform.SetParent(window.transform);
             closeButtonTransform.anchorMin = new Vector2(1, 1);
             closeButtonTransform.anchorMax = new Vector2(1, 1);
             closeButtonTransform.pivot = new Vector2(1, 1);
-            closeButtonTransform.localPosition = new Vector3(0,0);
+            closeButtonTransform.localPosition = new Vector3(0, 0);
             closeButtonTransform.anchoredPosition = new Vector3(-3, -3);
             closeButtonTransform.sizeDelta = new Vector2(30, 30);
             var closeButtonImage = closeButton.GetComponent<Image>();
@@ -60,7 +60,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             closeButtonColors.highlightedColor = new Color(0.5195f, 0.0508f, 0);
             closeButtonColors.pressedColor = new Color(0.7f, 0.0508f, 0);
             closeButtonButton.colors = closeButtonColors;
-            closeButtonButton.onClick.AddListener(Close);         
+            closeButtonButton.onClick.AddListener(Close);
         }
 
         public void Close() {
@@ -70,11 +70,11 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
         protected void OnFocus() {
             windowTransform.SetAsLastSibling();
         }
-        
+
         protected void OnMove(Vector2 delta) {
             windowTransform.localPosition += new Vector3(delta.x, delta.y);
         }
-        
+
         protected void OnResize(Vector2 delta) {
             windowTransform.sizeDelta += new Vector2(delta.x, -delta.y);
         }

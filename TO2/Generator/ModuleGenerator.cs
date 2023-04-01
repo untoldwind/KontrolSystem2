@@ -36,7 +36,7 @@ namespace KontrolSystem.TO2.Generator {
                         ? FieldAttributes.Public | FieldAttributes.Static
                         : FieldAttributes.Private | FieldAttributes.Static);
                 DeclaredKontrolConstant declaredConstant =
-                    new DeclaredKontrolConstant(declaredModule, constant, runtimeField);
+                    new DeclaredKontrolConstant(constant, runtimeField);
 
                 if (moduleContext.mappedConstants.ContainsKey(declaredConstant.Name))
                     throw new CompilationErrorException(new List<StructuralError> {

@@ -1,5 +1,5 @@
 
-use { Vessel, MODE_AUTOPILOT, MODE_PROGRADE, MODE_STABILITYASSIST } from ksp::vessel
+use { Vessel, MODE_AUTOPILOT, MODE_PROGRADE, MODE_STABILITY_ASSIST } from ksp::vessel
 use { trigger_staging } from std::staging
 use { sleep, wait_until } from ksp::game
 use { acos_deg, max, clamp } from core::math

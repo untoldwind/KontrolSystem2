@@ -19,7 +19,7 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
             var timeSeries = KSPContext.CurrentContext.TimeSeriesCollection.GetTimeSeries(name);
             return timeSeries != null ? Option.Some<TimeSeries>(timeSeries) : Option.None<TimeSeries>();
         }
-        
+
         [KSFunction(Description = "Remove a time series by name.")]
         public static bool RemoveTimeSeries(string name) {
             return KSPContext.CurrentContext.TimeSeriesCollection.RemoveTimeSeries(name);
