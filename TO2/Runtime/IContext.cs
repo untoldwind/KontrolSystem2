@@ -9,6 +9,10 @@ namespace KontrolSystem.TO2.Runtime {
 
         void ResetTimeout();
 
+        void FunctionEnter(string name, object[] arguments);
+
+        void FunctionLeave();
+        
         bool IsBackground { get; }
 
         IContext CloneBackground(CancellationTokenSource token);
@@ -28,6 +32,12 @@ namespace KontrolSystem.TO2.Runtime {
         public void ResetTimeout() {
         }
 
+        public void FunctionEnter(string name, object[] arguments) {
+        }
+
+        public void FunctionLeave() {
+        }
+
         public bool IsBackground => background;
 
         public IContext CloneBackground(CancellationTokenSource token) => new EmptyContext(true);
@@ -39,6 +49,18 @@ namespace KontrolSystem.TO2.Runtime {
         public static void CheckTimeout() {
             IContext context = CurrentContext.Value;
             if (context != null) context.CheckTimeout();
+            else throw new ArgumentException("Running out of context");
+        }
+
+        public static void FunctionEnter(string name, object[] arguments) {
+            IContext context = CurrentContext.Value;
+            if (context != null) context.FunctionEnter(name, arguments);
+            else throw new ArgumentException("Running out of context");
+        }
+
+        public static void FunctionLeave() {
+            IContext context = CurrentContext.Value;
+            if (context != null) context.FunctionLeave();
             else throw new ArgumentException("Running out of context");
         }
     }

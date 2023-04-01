@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using KontrolSystem.TO2.Binding;
 
@@ -10,17 +11,20 @@ namespace KontrolSystem.TO2.Runtime {
         private readonly ConcurrentQueue<string> messages = new ConcurrentQueue<string>();
         private Stopwatch timeStopwatch = Stopwatch.StartNew();
         private long timeoutMillis = 100;
+        private int stackCallCount = 0;
 
         protected int assertionsCount;
 
         protected int yieldCount;
 
         public ITO2Logger Logger => this;
-
+        
         public bool IsBackground => false;
 
         public int AssertionsCount => assertionsCount;
 
+        public int StackCallCount => stackCallCount;
+        
         public int YieldCount => yieldCount;
 
         public IEnumerable<string> Messages => messages;
@@ -53,6 +57,14 @@ namespace KontrolSystem.TO2.Runtime {
             timeStopwatch.Start();
         }
 
+        public void FunctionEnter(string name, object[] arguments) {
+            Interlocked.Increment(ref stackCallCount);
+        }
+
+        public void FunctionLeave() {
+            Interlocked.Decrement(ref stackCallCount);
+        }
+
         public IContext CloneBackground(CancellationTokenSource token) => new BackgroundTestContext(this, token);
     }
 
@@ -72,6 +84,12 @@ namespace KontrolSystem.TO2.Runtime {
         public void CheckTimeout() => token.Token.ThrowIfCancellationRequested();
 
         public void ResetTimeout() {
+        }
+
+        public void FunctionEnter(string name, object[] arguments) {
+        }
+
+        public void FunctionLeave() {
         }
 
         public IContext CloneBackground(CancellationTokenSource newToken) =>

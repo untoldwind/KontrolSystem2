@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace KontrolSystem.TO2.Tooling {
     public interface ITestReporter {
@@ -32,6 +33,9 @@ namespace KontrolSystem.TO2.Tooling {
                 output(message);
             switch (testResult.state) {
             case TestResultState.Success:
+                if (testResult.stackCount != 0) {
+                    errors.Add(testResult);
+                }
                 output(
                     $"  {(testResult.testName + " ").PadRight(60, '.')} Success ({testResult.successfulAssertions} assertions)");
                 break;

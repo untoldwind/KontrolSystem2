@@ -51,6 +51,7 @@ namespace KontrolSystem.TO2.AST {
 
             asyncContext.IL.EmitNew(OpCodes.Newobj,
                 asyncContext.MethodBuilder.ReturnType.GetConstructor(new[] { typeParameter }));
+            ILChunks.GenerateFunctionLeave(asyncContext);
             asyncContext.IL.EmitReturn(asyncContext.MethodBuilder.ReturnType);
 
             // Apply state
@@ -111,7 +112,6 @@ namespace KontrolSystem.TO2.AST {
             constructorEmitter.Emit(OpCodes.Ldarg_0);
             constructorEmitter.Emit(OpCodes.Ldc_I4_0);
             constructorEmitter.Emit(OpCodes.Stfld, asyncContext.stateField);
-
             constructorEmitter.EmitReturn(typeof(void));
 
             return new AsyncClass(asyncModuleContext.typeBuilder, constructorBuilder);

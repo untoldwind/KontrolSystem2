@@ -5,6 +5,7 @@
 * Cleanup calculation of `vessel.pitch_yaw_roll`
 * Fix calculation of `vessel.heading_direction()`
 * Remove `vessel.pitch_horizon_relative` and `vessel.roll_horizon_relative` as say were misleading and did not create "valid" results
+* Added check for stack overflow of scripts
 
 ## 0.2.3 -> 0.3.1
 

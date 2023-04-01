@@ -52,6 +52,8 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         }
     }
     public class KSPContext : IKSPContext {
+        internal static readonly int MAX_CALL_STACK = 100;
+        
         private readonly GameInstance gameInstance;
         private readonly KSPConsoleBuffer consoleBuffer;
         private readonly TimeSeriesCollection timeSeriesCollection;
@@ -62,6 +64,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         internal readonly List<IMarker> markers;
         private readonly Dictionary<VesselComponent, AutopilotHooks> autopilotHooks;
         private readonly List<BackgroundKSPContext> childContexts;
+        private int stackCallCount = 0;
 
         public KSPContext(GameInstance gameInstance, KSPConsoleBuffer consoleBuffer, TimeSeriesCollection timeSeriesCollection) {
             this.gameInstance = gameInstance;
@@ -74,6 +77,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
             timeStopwatch = Stopwatch.StartNew();
             timeoutMillis = 100;
         }
+
 
         public bool IsBackground => false;
         public ITO2Logger Logger => LoggerAdapter.Instance;
@@ -91,6 +95,17 @@ namespace KontrolSystem.SpaceWarpMod.Core {
             }
             timeStopwatch.Reset();
             timeStopwatch.Start();
+        }
+
+
+        public void FunctionEnter(string name, object[] arguments) {
+            if (Interlocked.Increment(ref stackCallCount) > MAX_CALL_STACK) {
+                throw new StackOverflowException($"Exceed stack count: {MAX_CALL_STACK}");
+            }
+        }
+
+        public void FunctionLeave() {
+            Interlocked.Decrement(ref stackCallCount);
         }
 
         public IContext CloneBackground(CancellationTokenSource token) {
@@ -235,7 +250,8 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         private readonly KSPConsoleBuffer consoleBuffer;
         private readonly CancellationTokenSource token;
         private readonly List<BackgroundKSPContext> childContexts;
-
+        private int stackCallCount = 0;
+        
         public BackgroundKSPContext(KSPConsoleBuffer consoleBuffer, CancellationTokenSource token) {
             this.consoleBuffer = consoleBuffer;
             this.token = token;
@@ -250,7 +266,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
 
         public void ResetTimeout() {
         }
-
+        
         public IContext CloneBackground(CancellationTokenSource token) {
             var childContext = new BackgroundKSPContext(consoleBuffer, token);
 
@@ -267,6 +283,15 @@ namespace KontrolSystem.SpaceWarpMod.Core {
             foreach (var childContext in childContexts) {
                 childContext.Cleanup();
             }
+        }
+        public void FunctionEnter(string name, object[] arguments) {
+            if (Interlocked.Increment(ref stackCallCount) > KSPContext.MAX_CALL_STACK) {
+                throw new StackOverflowException($"Exceed stack count: {KSPContext.MAX_CALL_STACK}");
+            }
+        }
+        
+        public void FunctionLeave() {
+            Interlocked.Decrement(ref stackCallCount);
         }
     }
 }

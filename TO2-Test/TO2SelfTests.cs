@@ -34,6 +34,7 @@ namespace KontrolSystem.TO2.Test {
                 var testContext = new TestRunnerContext();
                 kontrolModule.FindFunction("test_asserts").Invoke(testContext);
 
+                Assert.Equal(0, testContext.StackCallCount);
                 Assert.Equal(9, testContext.AssertionsCount);
             } catch (CompilationErrorException e) {
                 foreach (var error in e.errors) {
@@ -61,6 +62,7 @@ namespace KontrolSystem.TO2.Test {
                 kontrolModule.FindFunction("test_basic_callback")
                     .Invoke(testContext, new System.Func<long, string>(demo_target));
 
+                Assert.Equal(0, testContext.StackCallCount);
                 Assert.Equal(2, testContext.AssertionsCount);
             } catch (CompilationErrorException e) {
                 foreach (var error in e.errors) {

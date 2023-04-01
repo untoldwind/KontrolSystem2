@@ -28,7 +28,11 @@ namespace KontrolSystem.TO2.AST {
             this.isConst = isConst;
             this.parameters = parameters;
             this.declaredReturn = declaredReturn;
-            this.expression = expression;
+            if (expression is Block b) {
+                this.expression = b.CollapseFinalReturn();
+            } else {
+                this.expression = expression;
+            }
             this.expression.VariableContainer = this;
             this.expression.TypeHint = context => this.declaredReturn.UnderlyingType(context.ModuleContext);
         }
@@ -57,22 +61,6 @@ namespace KontrolSystem.TO2.AST {
         }
 
         public IEnumerable<StructuralError> EmitCode() {
-            if (isAsync) {
-                List<FunctionParameter> effectiveParameters =
-                    new List<FunctionParameter> { new FunctionParameter("self", structType) };
-                effectiveParameters.AddRange(parameters);
-
-                asyncClass ??= AsyncClass.Create(syncBlockContext, structType.Name.ToUpper() + "_" + name, declaredReturn, effectiveParameters,
-                    expression);
-
-                for (int idx = 0; idx < effectiveParameters.Count; idx++)
-                    MethodParameter.EmitLoadArg(syncBlockContext.IL, idx);
-                syncBlockContext.IL.EmitNew(OpCodes.Newobj, asyncClass.Value.constructor, effectiveParameters.Count);
-                syncBlockContext.IL.EmitReturn(asyncClass.Value.type);
-
-                return Enumerable.Empty<StructuralError>();
-            }
-
             TO2Type valueType = expression.ResultType(syncBlockContext);
             if (declaredReturn != BuiltinType.Unit &&
                 !declaredReturn.IsAssignableFrom(syncBlockContext.ModuleContext, valueType)) {
@@ -85,7 +73,26 @@ namespace KontrolSystem.TO2.AST {
                 return syncBlockContext.AllErrors;
             }
 
+            List<FunctionParameter> effectiveParameters =
+                new List<FunctionParameter> { new FunctionParameter("self", structType) };
+            effectiveParameters.AddRange(parameters);
+            
+            ILChunks.GenerateFunctionEnter(syncBlockContext, structType.Name + "." + name, effectiveParameters);
+
+            if (isAsync) {
+                asyncClass ??= AsyncClass.Create(syncBlockContext, structType.Name.ToUpper() + "_" + name, declaredReturn, effectiveParameters,
+                    expression);
+
+                for (int idx = 0; idx < effectiveParameters.Count; idx++)
+                    MethodParameter.EmitLoadArg(syncBlockContext.IL, idx);
+                syncBlockContext.IL.EmitNew(OpCodes.Newobj, asyncClass.Value.constructor, effectiveParameters.Count);
+                syncBlockContext.IL.EmitReturn(asyncClass.Value.type);
+
+                return Enumerable.Empty<StructuralError>();
+            }
+
             expression.EmitCode(syncBlockContext, declaredReturn == BuiltinType.Unit);
+
             if (!syncBlockContext.HasErrors && declaredReturn != BuiltinType.Unit)
                 declaredReturn.AssignFrom(syncBlockContext.ModuleContext, expression.ResultType(syncBlockContext))
                     .EmitConvert(syncBlockContext);
@@ -93,6 +100,7 @@ namespace KontrolSystem.TO2.AST {
                 syncBlockContext.IL.Emit(OpCodes.Ldnull);
             }
 
+            ILChunks.GenerateFunctionLeave(syncBlockContext);
             syncBlockContext.IL.EmitReturn(syncBlockContext.MethodBuilder.ReturnType);
 
             return syncBlockContext.AllErrors;

@@ -104,19 +104,23 @@ namespace KontrolSystem.TO2.AST {
                 ));
                 return;
             }
-
+            
+            ILChunks.GenerateFunctionEnter(context, name, parameters);
+            
             if (isAsync) EmitCodeAsync(context);
             else EmitCodeSync(context);
         }
 
         private void EmitCodeSync(IBlockContext context) {
             expression.EmitCode(context, declaredReturn == BuiltinType.Unit);
+
             if (!context.HasErrors && declaredReturn != BuiltinType.Unit)
                 declaredReturn.AssignFrom(context.ModuleContext, expression.ResultType(context)).EmitConvert(context);
             else if (declaredReturn == BuiltinType.Unit) {
                 context.IL.Emit(OpCodes.Ldnull);
             }
 
+            ILChunks.GenerateFunctionLeave(context);
             context.IL.EmitReturn(context.MethodBuilder.ReturnType);
         }
 

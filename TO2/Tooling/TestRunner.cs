@@ -17,14 +17,14 @@ namespace KontrolSystem.TO2.Tooling {
 
                 switch (testReturn) {
                 case bool booleanResult when !booleanResult:
-                    return new TestResult(module.Name + "::" + testFunction.Name, testContext.AssertionsCount,
-                        "Returned false", testContext.Messages);
+                    return new TestResult(module.Name + "::" + testFunction.Name, testContext.AssertionsCount, 
+                        testContext.StackCallCount,"Returned false", testContext.Messages);
                 case IAnyOption option when !option.Defined:
                     return new TestResult(module.Name + "::" + testFunction.Name, testContext.AssertionsCount,
-                        "Returned None", testContext.Messages);
+                        testContext.StackCallCount,"Returned None", testContext.Messages);
                 case IAnyResult result when !result.Success:
                     return new TestResult(module.Name + "::" + testFunction.Name, testContext.AssertionsCount,
-                        $"Returned Err({result.ErrorString})", testContext.Messages);
+                        testContext.StackCallCount,$"Returned Err({result.ErrorString})", testContext.Messages);
                 case IAnyFuture future:
                     ContextHolder.CurrentContext.Value = testContext;
                     for (int i = 0; i < 100; i++) {
@@ -33,21 +33,21 @@ namespace KontrolSystem.TO2.Tooling {
                         IAnyFutureResult result = future.Poll();
                         if (result.IsReady)
                             return new TestResult(module.Name + "::" + testFunction.Name, testContext.AssertionsCount,
-                                testContext.Messages);
+                                testContext.StackCallCount, testContext.Messages);
                     }
 
                     return new TestResult(module.Name + "::" + testFunction.Name, testContext.AssertionsCount,
-                        "Future did not become ready", testContext.Messages);
+                        testContext.StackCallCount,"Future did not become ready", testContext.Messages);
                 default:
                     return new TestResult(module.Name + "::" + testFunction.Name, testContext.AssertionsCount,
-                        testContext.Messages);
+                        testContext.StackCallCount, testContext.Messages);
                 }
             } catch (AssertException e) {
-                return new TestResult(module.Name + "::" + testFunction.Name, testContext.AssertionsCount, e.Message,
+                return new TestResult(module.Name + "::" + testFunction.Name, testContext.AssertionsCount, testContext.StackCallCount, e.Message,
                     testContext.Messages);
             } catch (Exception e) {
                 Console.Error.WriteLine(e);
-                return new TestResult(module.Name + "::" + testFunction.Name, testContext.AssertionsCount, e,
+                return new TestResult(module.Name + "::" + testFunction.Name, testContext.AssertionsCount, testContext.StackCallCount, e,
                     testContext.Messages);
             } finally {
                 ContextHolder.CurrentContext.Value = null;

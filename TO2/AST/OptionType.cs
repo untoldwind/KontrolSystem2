@@ -300,6 +300,7 @@ namespace KontrolSystem.TO2.AST {
                         context.MethodBuilder.ReturnType.GetConstructor(new[] { noneType }));
                 }
 
+                ILChunks.GenerateFunctionLeave(context);
                 context.IL.EmitReturn(context.MethodBuilder.ReturnType);
 
                 context.IL.MarkLabel(onSuccess);

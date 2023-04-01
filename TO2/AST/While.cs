@@ -113,7 +113,7 @@ namespace KontrolSystem.TO2.AST {
             loopContext.IL.Emit(OpCodes.Brfalse, skipCheck);
             loopContext.IL.Emit(OpCodes.Ldc_I4_0);
             loopCounter.EmitStore(loopContext);
-            context.IL.EmitCall(OpCodes.Call, typeof(Runtime.ContextHolder).GetMethod("CheckTimeout"), 0);
+            ILChunks.GenerateCheckTimeout(context);
             loopContext.IL.MarkLabel(skipCheck);
 
             loopExpression.EmitCode(loopContext, true);

@@ -34,6 +34,7 @@ namespace KontrolSystem.TO2.AST {
                     context.MethodBuilder.ReturnType.GetConstructor(new[] { typeof(object) }));
             }
 
+            ILChunks.GenerateFunctionLeave(context);
             context.IL.EmitReturn(context.MethodBuilder.ReturnType);
         }
 
@@ -84,6 +85,7 @@ namespace KontrolSystem.TO2.AST {
                         {returnType.GeneratedType(context.ModuleContext)}));
             }
 
+            ILChunks.GenerateFunctionLeave(context);
             context.IL.EmitReturn(context.MethodBuilder.ReturnType);
         }
 

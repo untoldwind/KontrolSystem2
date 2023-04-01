@@ -228,6 +228,7 @@ namespace KontrolSystem.TO2.AST {
             using (ITempLocalRef tempError =
                 context.IL.TempLocal(expectedReturn.errorType.GeneratedType(context.ModuleContext))) {
                 Type errorResultType = expectedReturn.GeneratedType(context.ModuleContext);
+                
                 using (ITempLocalRef errorResult = context.IL.TempLocal(errorResultType)) {
                     context.IL.Emit(OpCodes.Ldfld, generatedType.GetField("error"));
                     tempError.EmitStore(context);
@@ -247,6 +248,7 @@ namespace KontrolSystem.TO2.AST {
                             context.MethodBuilder.ReturnType.GetConstructor(new[] { errorResultType }));
                     }
 
+                    ILChunks.GenerateFunctionLeave(context);
                     context.IL.EmitReturn(context.MethodBuilder.ReturnType);
                 }
             }
