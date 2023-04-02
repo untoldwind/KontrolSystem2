@@ -160,7 +160,7 @@ namespace KontrolSystem.TO2.Generator {
                 try {
                     function.to2Function.EmitCode(methodContext);
                 } catch (CompilationErrorException e) {
-                    errors.AddRange(e.errors);                    
+                    errors.AddRange(e.errors);
                 }
                 errors.AddRange(methodContext.AllErrors);
             }

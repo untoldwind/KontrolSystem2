@@ -24,7 +24,7 @@ namespace KontrolSystem.TO2.AST {
             DeclaredMethods = new Dictionary<string, IMethodInvokeFactory>() {
                 { "to_string", new BoundMethodInvokeFactory("String representation of the number",
                     true, () => BuiltinType.String, () => new List<RealizedParameter>(), false,
-                    enumType, enumType.GetMethod("ToString", Type.EmptyTypes )) }
+                    enumType, enumType.GetMethod("ToString", Type.EmptyTypes ), null, true) }
             };
             allowedSuffixOperators = new OperatorCollection() {
                 {
@@ -69,10 +69,12 @@ namespace KontrolSystem.TO2.AST {
 
         public override Dictionary<string, IFieldAccessFactory> DeclaredFields { get; }
 
+        public override Dictionary<string, IMethodInvokeFactory> DeclaredMethods { get; }
+
         public BoundEnumConstType(BoundEnumType boundEnumType) {
             this.boundEnumType = boundEnumType;
 
-            DeclaredFields = new Dictionary<string, IFieldAccessFactory>();
+            var declaredFields = new Dictionary<string, IFieldAccessFactory>();
 
             var names = Enum.GetNames(boundEnumType.enumType);
             var values = Enum.GetValues(boundEnumType.enumType);
@@ -80,8 +82,14 @@ namespace KontrolSystem.TO2.AST {
             for (int i = 0; i < names.Length; i++) {
                 int value = (int)Convert.ChangeType(values.GetValue(i), typeof(int));
 
-                DeclaredFields.Add((string)names.GetValue(i), new EnumConstantFieldAccessFactory(boundEnumType, value));
+                declaredFields.Add((string)names.GetValue(i), new EnumConstantFieldAccessFactory(boundEnumType, value));
             }
+
+            DeclaredFields = declaredFields;
+
+            DeclaredMethods = new Dictionary<string, IMethodInvokeFactory>() {
+                { "from_string", new EnumFromStringMethodFactory(boundEnumType) }
+            };
         }
 
         public override string Name {
@@ -107,6 +115,14 @@ namespace KontrolSystem.TO2.AST {
         public override RealizedType UnderlyingType(ModuleContext context) => this;
 
         public override Type GeneratedType(ModuleContext context) => typeof(object);
+
+        public static Option<T> FromString<T>(string value) where T : struct {
+            if (Enum.TryParse<T>(value, true, out var e)) {
+                return Option.Some(e);
+            }
+
+            return Option.None<T>();
+        }
     }
 
     internal class EnumConstantFieldAccessFactory : IFieldAccessFactory {
@@ -149,6 +165,10 @@ namespace KontrolSystem.TO2.AST {
         }
 
         public void EmitPtr(IBlockContext context) {
+            var tmp = context.MakeTempVariable(boundEnumType);
+            context.IL.Emit(OpCodes.Ldc_I4, value);
+            tmp.EmitStore(context);
+            tmp.EmitLoadPtr(context);
         }
 
         public void EmitStore(IBlockContext context) {
@@ -159,5 +179,59 @@ namespace KontrolSystem.TO2.AST {
 
         public IREPLValue EvalAssign(Node node, IREPLValue target, IREPLValue value) =>
             throw new REPLException(node, "Field assign not supported");
+    }
+
+    internal class EnumFromStringMethodFactory : IMethodInvokeFactory {
+        private readonly BoundEnumType boundEnumType;
+
+        public EnumFromStringMethodFactory(BoundEnumType boundEnumType) {
+            this.boundEnumType = boundEnumType;
+        }
+
+        public bool IsConst => true;
+
+        public TypeHint ReturnHint => context => new OptionType(boundEnumType);
+
+        public TypeHint ArgumentHint(int argumentIdx) => context => BuiltinType.String;
+
+        public string Description => "Parse from string";
+
+        public TO2Type DeclaredReturn => new OptionType(boundEnumType);
+
+        public List<FunctionParameter> DeclaredParameters => new List<FunctionParameter>() {
+            new FunctionParameter("value", BuiltinType.String)
+        };
+
+        public IMethodInvokeEmitter Create(IBlockContext context, List<TO2Type> arguments, Node node) =>
+            new EnumFromStringMethodEmitter(boundEnumType);
+
+        public IMethodInvokeFactory
+            FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) => this;
+    }
+
+    internal class EnumFromStringMethodEmitter : IMethodInvokeEmitter {
+        private readonly BoundEnumType boundEnumType;
+
+        public EnumFromStringMethodEmitter(BoundEnumType boundEnumType) {
+            this.boundEnumType = boundEnumType;
+        }
+
+        public RealizedType ResultType => new OptionType(boundEnumType);
+
+        public List<RealizedParameter> Parameters => new List<RealizedParameter>() {
+            new RealizedParameter("value", BuiltinType.String)
+        };
+
+        public bool RequiresPtr => false;
+
+        public bool IsAsync => false;
+
+        public void EmitCode(IBlockContext context) {
+            context.IL.EmitCall(OpCodes.Call, typeof(BoundEnumConstType).GetMethod("FromString").MakeGenericMethod(boundEnumType.enumType), 1);
+        }
+
+        public REPLValueFuture Eval(Node node, IREPLValue[] targetWithArguments) {
+            throw new NotImplementedException();
+        }
     }
 }

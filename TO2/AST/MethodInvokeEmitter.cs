@@ -116,10 +116,11 @@ namespace KontrolSystem.TO2.AST {
         private readonly MethodInfo methodInfo;
         private readonly Type methodTarget;
         private readonly Func<ModuleContext, IEnumerable<(string name, RealizedType type)>> targetTypeArguments;
+        private readonly bool constrained;
 
         public BoundMethodInvokeFactory(string description, bool isConst, Func<RealizedType> resultType,
             Func<List<RealizedParameter>> parameters, bool isAsync, Type methodTarget, MethodInfo methodInfo,
-            Func<ModuleContext, IEnumerable<(string name, RealizedType type)>> targetTypeArguments = null) {
+            Func<ModuleContext, IEnumerable<(string name, RealizedType type)>> targetTypeArguments = null, bool constrained = false) {
             Description = description;
             IsConst = isConst;
             this.resultType = resultType;
@@ -130,6 +131,7 @@ namespace KontrolSystem.TO2.AST {
             this.methodTarget = methodTarget;
             this.isAsync = isAsync;
             this.targetTypeArguments = targetTypeArguments;
+            this.constrained = constrained;
         }
 
         public TypeHint ReturnHint => _ => resultType();
@@ -156,7 +158,7 @@ namespace KontrolSystem.TO2.AST {
 
             if (context.HasErrors) return null;
 
-            return new BoundMethodInvokeEmitter(genericResult, genericParameters, isAsync, methodTarget, genericMethod);
+            return new BoundMethodInvokeEmitter(genericResult, genericParameters, isAsync, methodTarget, genericMethod, constrained);
         }
 
         public IMethodInvokeFactory FillGenerics(ModuleContext context,
@@ -189,25 +191,29 @@ namespace KontrolSystem.TO2.AST {
     public class BoundMethodInvokeEmitter : IMethodInvokeEmitter {
         private readonly MethodInfo methodInfo;
         private readonly Type methodTarget;
+        private readonly bool constrained;
         public RealizedType ResultType { get; }
         public List<RealizedParameter> Parameters { get; }
         public bool IsAsync { get; }
 
         public BoundMethodInvokeEmitter(RealizedType resultType, List<RealizedParameter> parameters, bool isAsync,
-            Type methodTarget, MethodInfo methodInfo) {
+            Type methodTarget, MethodInfo methodInfo, bool constrained = false) {
             ResultType = resultType;
             Parameters = parameters;
             this.methodInfo = methodInfo;
             this.methodTarget = methodTarget;
             this.IsAsync = isAsync;
+            this.constrained = constrained;
         }
 
         public bool RequiresPtr =>
             methodTarget.IsValueType && (methodInfo.CallingConvention & CallingConventions.HasThis) != 0;
 
         public void EmitCode(IBlockContext context) {
-            if (methodInfo.IsVirtual) context.IL.EmitCall(OpCodes.Callvirt, methodInfo, Parameters.Count + 1);
-            else context.IL.EmitCall(OpCodes.Call, methodInfo, Parameters.Count + 1);
+            if (methodInfo.IsVirtual) {
+                if (constrained) context.IL.Emit(OpCodes.Constrained, methodTarget);
+                context.IL.EmitCall(OpCodes.Callvirt, methodInfo, Parameters.Count + 1);
+            } else context.IL.EmitCall(OpCodes.Call, methodInfo, Parameters.Count + 1);
             if (methodInfo.ReturnType == typeof(void)) context.IL.Emit(OpCodes.Ldnull);
         }
 
