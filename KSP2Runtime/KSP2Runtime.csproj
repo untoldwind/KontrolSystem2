@@ -3,7 +3,7 @@
     <PropertyGroup>
         <ProjectGuid>{A2AACC87-5749-4E7E-9CF1-311AE2406092}</ProjectGuid>
         <OutputType>Library</OutputType>
-        <RootNamespace>KontrolSystem.KSP2.Runtime</RootNamespace>
+        <RootNamespace>KontrolSystem.KSP.Runtime</RootNamespace>
         <AssemblyName>KontrolSystemKSP2Runtime</AssemblyName>
         <TargetFramework>net472</TargetFramework>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
@@ -44,6 +44,9 @@
         </Reference>
         <Reference Include="Unity.TextMeshPro">
             <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\Unity.TextMeshPro.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.IMGUIModule">
+            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine.InputLegacyModule">
             <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>

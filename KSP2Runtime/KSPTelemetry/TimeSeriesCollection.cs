@@ -3,12 +3,14 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
+using UnityEngine.Events;
 
 namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
     public class TimeSeriesCollection {
         private static int MAX_NUM_TIMESERIES = 20;
         private static LinkedList<KSPTelemetryModule.TimeSeries> timeSeriesList;
         private readonly object collectionLock = new object();
+        public UnityEvent changed = new UnityEvent();
 
         public TimeSeriesCollection() {
             timeSeriesList = new LinkedList<KSPTelemetryModule.TimeSeries>();
@@ -26,6 +28,7 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
                     timeSeriesList.AddLast(timeSeries);
                 }
             }
+            changed.Invoke();
         }
 
         public KSPTelemetryModule.TimeSeries[] AllTimeSeries {
@@ -43,22 +46,26 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
         }
 
         public bool RemoveTimeSeries(string name) {
+            bool removed;
             lock (collectionLock) {
                 var existing = timeSeriesList.FirstOrDefault(t => t.Name == name);
 
                 if (existing != null) {
                     timeSeriesList.Remove(existing);
-                    return true;
+                    removed = true;
+                } else {
+                    removed = false;
                 }
-
-                return false;
             }
+            changed.Invoke();
+            return removed;
         }
 
         public void RemoveAll() {
             lock (collectionLock) {
                 timeSeriesList.Clear();
             }
+            changed.Invoke();
         }
 
         public async void SaveJson(string filename) {

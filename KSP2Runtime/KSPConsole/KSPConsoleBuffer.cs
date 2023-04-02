@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine.Events;
 
 namespace KontrolSystem.KSP.Runtime.KSPConsole {
     public struct ConsoleLine {
@@ -57,6 +58,8 @@ namespace KontrolSystem.KSP.Runtime.KSPConsole {
 
         private readonly object consoleLock = new object();
 
+        public UnityEvent changed = new UnityEvent();
+
         public KSPConsoleBuffer(int visibleRows, int visibleCols, int maxLineLength = 1000, int maxLines = 2000) {
             bufferLines = new LinkedList<ConsoleLine>();
             this.VisibleRows = Math.Max(visibleRows, 1);
@@ -99,9 +102,8 @@ namespace KontrolSystem.KSP.Runtime.KSPConsole {
 
                 CursorCol = CursorRow = 0;
                 cursorLine = topLine;
-
-                //                Print("Kontrol System\n--------------\n");
             }
+            changed.Invoke();
         }
 
         public void Print(string message) => PrintLines(message.Split(LineSeparators, StringSplitOptions.None));
@@ -112,6 +114,7 @@ namespace KontrolSystem.KSP.Runtime.KSPConsole {
             lock (consoleLock) {
                 bufferLines.FirstOrDefault(line => line.lineNumber == row).Clear();
             }
+            changed.Invoke();
         }
 
         private void PrintLines(string[] lines) {
@@ -134,6 +137,7 @@ namespace KontrolSystem.KSP.Runtime.KSPConsole {
                     }
                 }
             }
+            changed.Invoke();
         }
 
         public void MoveCursor(int row, int col) {
