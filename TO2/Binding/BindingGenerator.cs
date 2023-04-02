@@ -37,7 +37,7 @@ namespace KontrolSystem.TO2.Binding {
                         if (nested.GetCustomAttribute<KSClass>() != null) types.Add(BindType(ksModule.Name, nested));
                     }
 
-                    foreach (RealizedType type in types) if(type is BoundType boundType) LinkType(boundType);
+                    foreach (RealizedType type in types) if (type is BoundType boundType) LinkType(boundType);
 
                     foreach (FieldInfo field in runtimeType.GetFields(BindingFlags.Public | BindingFlags.Static)) {
                         KSConstant ksConstant = field.GetCustomAttribute<KSConstant>();
@@ -150,23 +150,18 @@ namespace KontrolSystem.TO2.Binding {
         }
 
         public static (IEnumerable<RealizedType>, IEnumerable<IKontrolConstant>) RegisterEnumTypeMappings(
-            string modulePrefix, IEnumerable<(string localName, string description, Type enumType, string constantPrefix)> enums) {
+            string modulePrefix, IEnumerable<(string localName, string description, Type enumType)> enums) {
             List<RealizedType> types = new List<RealizedType>();
             List<IKontrolConstant> constants = new List<IKontrolConstant>();
 
-            foreach (var (localName, description, enumType, constantPrefix) in enums) {
+            foreach (var (localName, description, enumType) in enums) {
                 var boundEnumType = new BoundEnumType(modulePrefix, localName, description, enumType);
-                var names = Enum.GetNames(enumType);
-                var values = Enum.GetValues(enumType);
 
                 RegisterTypeMapping(enumType, boundEnumType);
                 types.Add(boundEnumType);
-                
-                for (int i = 0; i < names.Length; i++) {
-                    int value = (int) Convert.ChangeType(values.GetValue(i), typeof(int));
-                    constants.Add(new EnumKontrolConstant(constantPrefix + ToSnakeCase((string)names.GetValue(i)).ToUpperInvariant(), boundEnumType, value));    
-                }
-                
+                var boundEnumConstants = new BoundEnumConstType(boundEnumType);
+                types.Add(boundEnumConstants);
+                constants.Add(new EnumKontrolConstant(localName, boundEnumConstants));
             }
 
             return (types, constants);

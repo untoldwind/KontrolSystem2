@@ -25,7 +25,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField]
             public Data_Parachute.DeployMode DeployMode {
                 get => dataParachute.DeploymentMode.GetValue();
-                set =>  dataParachute.DeploymentMode.SetValue(value);
+                set => dataParachute.DeploymentMode.SetValue(value);
             }
 
             [KSField]

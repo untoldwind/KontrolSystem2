@@ -59,7 +59,7 @@ namespace KontrolSystem.TO2 {
             this.testFunctions = testFunctions;
             this.types = types.ToDictionary(t => t.alias, t => t.type);
 
-//            foreach (CompiledKontrolConstant constant in compiledKontrolConstants) constant.Module = this;
+            //            foreach (CompiledKontrolConstant constant in compiledKontrolConstants) constant.Module = this;
             foreach (CompiledKontrolFunction function in compiledKontrolFunctions) function.Module = this;
             foreach (CompiledKontrolFunction function in testFunctions) function.Module = this;
         }

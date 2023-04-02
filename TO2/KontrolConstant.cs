@@ -12,7 +12,7 @@ namespace KontrolSystem.TO2 {
         string Description { get; }
 
         TO2Type Type { get; }
-        
+
         void EmitLoad(IBlockContext context);
 
         IREPLValue REPLValue();
@@ -22,7 +22,7 @@ namespace KontrolSystem.TO2 {
         public string Name { get; }
         public string Description { get; }
         public TO2Type Type { get; }
-        
+
         private readonly FieldInfo runtimeField;
 
         public CompiledKontrolConstant(string name, string description, TO2Type type, FieldInfo runtimeField) {
@@ -33,7 +33,7 @@ namespace KontrolSystem.TO2 {
         }
 
         public void EmitLoad(IBlockContext context) {
-            context.IL.Emit(OpCodes.Ldsfld, runtimeField);  
+            context.IL.Emit(OpCodes.Ldsfld, runtimeField);
         }
 
         public IREPLValue REPLValue() {
@@ -44,25 +44,22 @@ namespace KontrolSystem.TO2 {
     public class EnumKontrolConstant : IKontrolConstant {
         public string Name { get; }
 
-        private BoundEnumType enumType;
-        private readonly int value;
-        
-        public EnumKontrolConstant(string name, BoundEnumType type, int value) {
+        private BoundEnumConstType enumType;
+
+        public EnumKontrolConstant(string name, BoundEnumConstType type) {
             Name = name;
             enumType = type;
-            this.value = value;
         }
 
         public TO2Type Type => enumType;
 
         public string Description => "";
 
-        
+
         public void EmitLoad(IBlockContext context) {
-            context.IL.Emit(OpCodes.Ldc_I4, value);
         }
 
-        public IREPLValue REPLValue() => new REPLAny(Type, Enum.ToObject(enumType.enumType, value));
+        public IREPLValue REPLValue() => REPLUnit.INSTANCE;
     }
 
     public class DeclaredKontrolConstant : IKontrolConstant {
@@ -73,19 +70,19 @@ namespace KontrolSystem.TO2 {
             this.to2Constant = to2Constant;
             this.runtimeField = runtimeField;
         }
-        
+
         public string Name => to2Constant.name;
 
         public string Description => to2Constant.description;
 
         public TO2Type Type => to2Constant.type;
-        
+
         public bool IsPublic => to2Constant.isPublic;
-        
+
         public void EmitLoad(IBlockContext context) {
-            context.IL.Emit(OpCodes.Ldsfld, runtimeField);  
+            context.IL.Emit(OpCodes.Ldsfld, runtimeField);
         }
-        
+
         public IREPLValue REPLValue() {
             return Type.REPLCast(runtimeField.GetValue(null));
         }

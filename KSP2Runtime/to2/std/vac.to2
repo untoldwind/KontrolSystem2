@@ -1,4 +1,4 @@
-use { Vessel, DELTAV_VACCUM, MODE_MANEUVER, MODE_STABILITY_ASSIST } from ksp::vessel
+use { Vessel, AutopilotMode, DeltaVSituation } from ksp::vessel
 use { look_dir_up } from ksp::math
 use core::math as math
 use { CONSOLE } from ksp::console
@@ -18,7 +18,7 @@ pub fn exec_next_node(vessel : Vessel) -> Result<Unit, string> = {
     const node = vessel.maneuver.next_node()?
     
     vessel.autopilot.enabled = true
-    vessel.autopilot.mode = MODE_MANEUVER
+    vessel.autopilot.mode = AutopilotMode.Maneuver
     
     const frame = vessel.main_body.celestial_frame
     const target_orbit = node.expected_orbit
@@ -33,7 +33,7 @@ pub fn exec_next_node(vessel : Vessel) -> Result<Unit, string> = {
     CONSOLE.print_at(console_row + 1, 0, "Warping to maneuver node")
     
     warp_to(node.time - 10)
-    vessel.autopilot.mode = MODE_MANEUVER  // SAS mode resets after warp
+    vessel.autopilot.mode = AutopilotMode.Maneuver  // SAS mode resets after warp
     
     wait_until(fn() -> node.ETA <= 0.5)
 
@@ -83,7 +83,7 @@ pub fn exec_next_node(vessel : Vessel) -> Result<Unit, string> = {
     
     node.remove()
 
-    vessel.autopilot.mode = MODE_STABILITY_ASSIST
+    vessel.autopilot.mode = AutopilotMode.StabilityAssist
 }
 
 /// Estimate the required burn time for a desired `delta_v` in vacuum.
@@ -106,8 +106,8 @@ pub sync fn estimate_burn_time(vessel : Vessel, delta_v : float, stage_delay : f
         if(!maybe_stage_info.defined) continue
 
         const stage_info = maybe_stage_info.value
-        const stage_deltav = stage_info.get_deltav(DELTAV_VACCUM)
-        const stage_thrust = stage_info.get_thrust(DELTAV_VACCUM)
+        const stage_deltav = stage_info.get_deltav(DeltaVSituation.Vaccum)
+        const stage_thrust = stage_info.get_thrust(DeltaVSituation.Vaccum)
 
         if(stage_deltav <= 0.0 || stage_thrust <= 0.0) {
             // This stage has to be skipped, i.e. it will be necessary to stage twice

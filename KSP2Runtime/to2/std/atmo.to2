@@ -1,5 +1,5 @@
 
-use { Vessel, MODE_AUTOPILOT, MODE_PROGRADE, MODE_STABILITY_ASSIST } from ksp::vessel
+use { Vessel, AutopilotMode } from ksp::vessel
 use { trigger_staging } from std::staging
 use { sleep, wait_until } from ksp::game
 use { acos_deg, max, clamp } from core::math
@@ -12,7 +12,7 @@ pub fn atmo_launch(vessel: Vessel, target_apoapsis: float, heading: float, low_t
     vessel.actions.light = true
 
     vessel.autopilot.enabled = true
-    vessel.autopilot.mode = MODE_AUTOPILOT
+    vessel.autopilot.mode = AutopilotMode.Autopilot
     
     atmo_launch_ascent(vessel, target_apoapsis, heading, low_turn, high_turn)
 
@@ -77,8 +77,8 @@ pub fn atmo_launch_ascent(vessel: Vessel, target_apoapsis: float, heading: float
     }
 
     throttle_manager.release()
-
-    vessel.autopilot.mode = MODE_PROGRADE
+        
+    vessel.autopilot.mode = AutopilotMode.Prograde
     
     wait_until(fn() -> vessel.altitude_sealevel > vessel.main_body.atmosphere_depth * 0.9)
     

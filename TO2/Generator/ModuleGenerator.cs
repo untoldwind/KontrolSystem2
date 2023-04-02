@@ -157,7 +157,11 @@ namespace KontrolSystem.TO2.Generator {
             foreach (DeclaredKontrolFunction function in declaredModule.declaredFunctions) {
                 IBlockContext methodContext = function.methodContext;
 
-                function.to2Function.EmitCode(methodContext);
+                try {
+                    function.to2Function.EmitCode(methodContext);
+                } catch (CompilationErrorException e) {
+                    errors.AddRange(e.errors);                    
+                }
                 errors.AddRange(methodContext.AllErrors);
             }
 

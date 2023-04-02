@@ -30,14 +30,14 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
         public static (IEnumerable<RealizedType>, IEnumerable<IKontrolConstant>) DirectBindings() {
             var (enumTypes, enumConstants) = BindingGenerator.RegisterEnumTypeMappings("ksp::vessel",
                 new[] {
-                    ("AutopilotMode", "Vessel autopilot (SAS) mode", typeof(AutopilotMode), "MODE_"),
-                    ("DeltaVSituation", "Vessel situation for delta-v calculation", typeof(DeltaVSituationOptions), "DELTAV_"),
-                    ("ParachuteDeployState", "Parachute deploy state", typeof(Data_Parachute.DeploymentStates), "PARACHUTE_STATE_"),
-                    ("ParachuteDeployMode", "Parachute deploy mode", typeof(Data_Parachute.DeployMode), "PARACHUTE_MODE_"),
-                    ("ParachuteSafeStates", "Parachute safe states", typeof(Data_Parachute.DeploymentSafeStates), "PARACHUTE_SAFE_"),
-                    ("EngineType", "Engine types", typeof(EngineType), "ENGINE_TYPE_"),
-                    ("VesselSituation", "Vessel situation", typeof(VesselSituations), "SITUATION_"),
-                    ("VesselControlState", "Vessel control state", typeof(VesselControlState), "CONTROL_"),
+                    ("AutopilotMode", "Vessel autopilot (SAS) mode", typeof(AutopilotMode)),
+                    ("DeltaVSituation", "Vessel situation for delta-v calculation", typeof(DeltaVSituationOptions)),
+                    ("ParachuteDeployState", "Parachute deploy state", typeof(Data_Parachute.DeploymentStates)),
+                    ("ParachuteDeployMode", "Parachute deploy mode", typeof(Data_Parachute.DeployMode)),
+                    ("ParachuteSafeStates", "Parachute safe states", typeof(Data_Parachute.DeploymentSafeStates)),
+                    ("EngineType", "Engine types", typeof(EngineType)),
+                    ("VesselSituation", "Vessel situation", typeof(VesselSituations)),
+                    ("VesselControlState", "Vessel control state", typeof(VesselControlState)),
                 });
 
             BindingGenerator.RegisterTypeMapping(typeof(FlightCtrlState),

@@ -62,6 +62,27 @@ autopilotmode.to_string ( ) -> string
 
 String representation of the number
 
+### AutopilotModeConstants
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+Antinormal | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | 
+AntiTarget | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | 
+Autopilot | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | 
+Maneuver | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | 
+Navigation | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | 
+Normal | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | 
+Prograde | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | 
+RadialIn | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | 
+RadialOut | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | 
+Retrograde | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | 
+StabilityAssist | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | 
+Target | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | 
+
 ### DeltaVSituation
 
 Vessel situation for delta-v calculation
@@ -75,6 +96,18 @@ deltavsituation.to_string ( ) -> string
 ```
 
 String representation of the number
+
+### DeltaVSituationConstants
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+Altitude | [ksp::vessel::DeltaVSituation](/reference/ksp/vessel.md#deltavsituation) | R/O | 
+SeaLevel | [ksp::vessel::DeltaVSituation](/reference/ksp/vessel.md#deltavsituation) | R/O | 
+Vaccum | [ksp::vessel::DeltaVSituation](/reference/ksp/vessel.md#deltavsituation) | R/O | 
 
 ### EngineDeltaV
 
@@ -145,6 +178,28 @@ enginetype.to_string ( ) -> string
 ```
 
 String representation of the number
+
+### EngineTypeConstants
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+Antimatter | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | 
+Electric | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | 
+Generic | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | 
+Helium3 | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | 
+MetallicHydrogen | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | 
+Methalox | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | 
+MonoProp | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | 
+Nuclear | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | 
+NuclearSaltwater | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | 
+Piston | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | 
+ScramJet | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | 
+SolidBooster | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | 
+Turbine | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | 
 
 ### FlightCtrlState
 
@@ -454,6 +509,18 @@ parachutedeploymode.to_string ( ) -> string
 
 String representation of the number
 
+### ParachuteDeployModeConstants
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+IMMEDIATE | [ksp::vessel::ParachuteDeployMode](/reference/ksp/vessel.md#parachutedeploymode) | R/O | 
+RISKY | [ksp::vessel::ParachuteDeployMode](/reference/ksp/vessel.md#parachutedeploymode) | R/O | 
+SAFE | [ksp::vessel::ParachuteDeployMode](/reference/ksp/vessel.md#parachutedeploymode) | R/O | 
+
 ### ParachuteDeployState
 
 Parachute deploy state
@@ -468,6 +535,20 @@ parachutedeploystate.to_string ( ) -> string
 
 String representation of the number
 
+### ParachuteDeployStateConstants
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+ARMED | [ksp::vessel::ParachuteDeployState](/reference/ksp/vessel.md#parachutedeploystate) | R/O | 
+CUT | [ksp::vessel::ParachuteDeployState](/reference/ksp/vessel.md#parachutedeploystate) | R/O | 
+DEPLOYED | [ksp::vessel::ParachuteDeployState](/reference/ksp/vessel.md#parachutedeploystate) | R/O | 
+SEMIDEPLOYED | [ksp::vessel::ParachuteDeployState](/reference/ksp/vessel.md#parachutedeploystate) | R/O | 
+STOWED | [ksp::vessel::ParachuteDeployState](/reference/ksp/vessel.md#parachutedeploystate) | R/O | 
+
 ### ParachuteSafeStates
 
 Parachute safe states
@@ -481,6 +562,19 @@ parachutesafestates.to_string ( ) -> string
 ```
 
 String representation of the number
+
+### ParachuteSafeStatesConstants
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+NONE | [ksp::vessel::ParachuteSafeStates](/reference/ksp/vessel.md#parachutesafestates) | R/O | 
+RISKY | [ksp::vessel::ParachuteSafeStates](/reference/ksp/vessel.md#parachutesafestates) | R/O | 
+SAFE | [ksp::vessel::ParachuteSafeStates](/reference/ksp/vessel.md#parachutesafestates) | R/O | 
+UNSAFE | [ksp::vessel::ParachuteSafeStates](/reference/ksp/vessel.md#parachutesafestates) | R/O | 
 
 ### Part
 
@@ -867,6 +961,19 @@ vesselcontrolstate.to_string ( ) -> string
 
 String representation of the number
 
+### VesselControlStateConstants
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+FullControl | [ksp::vessel::VesselControlState](/reference/ksp/vessel.md#vesselcontrolstate) | R/O | 
+FullControlHibernation | [ksp::vessel::VesselControlState](/reference/ksp/vessel.md#vesselcontrolstate) | R/O | 
+NoCommNet | [ksp::vessel::VesselControlState](/reference/ksp/vessel.md#vesselcontrolstate) | R/O | 
+NoControl | [ksp::vessel::VesselControlState](/reference/ksp/vessel.md#vesselcontrolstate) | R/O | 
+
 ### VesselDeltaV
 
 
@@ -902,62 +1009,35 @@ vesselsituation.to_string ( ) -> string
 
 String representation of the number
 
+### VesselSituationConstants
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+Escaping | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | 
+Flying | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | 
+Landed | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | 
+Orbiting | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | 
+PreLaunch | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | 
+Splashed | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | 
+SubOrbital | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | 
+Unknown | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | 
+
 ## Constants
 
 Name | Type | Description
 --- | --- | ---
-CONTROL_FULL_CONTROL | ksp::vessel::VesselControlState | 
-CONTROL_FULL_CONTROL_HIBERNATION | ksp::vessel::VesselControlState | 
-CONTROL_NO_COMM_NET | ksp::vessel::VesselControlState | 
-CONTROL_NO_CONTROL | ksp::vessel::VesselControlState | 
-DELTAV_ALTITUDE | ksp::vessel::DeltaVSituation | 
-DELTAV_SEA_LEVEL | ksp::vessel::DeltaVSituation | 
-DELTAV_VACCUM | ksp::vessel::DeltaVSituation | 
-ENGINE_TYPE_ANTIMATTER | ksp::vessel::EngineType | 
-ENGINE_TYPE_ELECTRIC | ksp::vessel::EngineType | 
-ENGINE_TYPE_GENERIC | ksp::vessel::EngineType | 
-ENGINE_TYPE_HELIUM3 | ksp::vessel::EngineType | 
-ENGINE_TYPE_METALLIC_HYDROGEN | ksp::vessel::EngineType | 
-ENGINE_TYPE_METHALOX | ksp::vessel::EngineType | 
-ENGINE_TYPE_MONO_PROP | ksp::vessel::EngineType | 
-ENGINE_TYPE_NUCLEAR | ksp::vessel::EngineType | 
-ENGINE_TYPE_NUCLEAR_SALTWATER | ksp::vessel::EngineType | 
-ENGINE_TYPE_PISTON | ksp::vessel::EngineType | 
-ENGINE_TYPE_SCRAM_JET | ksp::vessel::EngineType | 
-ENGINE_TYPE_SOLID_BOOSTER | ksp::vessel::EngineType | 
-ENGINE_TYPE_TURBINE | ksp::vessel::EngineType | 
-MODE_ANTI_TARGET | ksp::vessel::AutopilotMode | 
-MODE_ANTINORMAL | ksp::vessel::AutopilotMode | 
-MODE_AUTOPILOT | ksp::vessel::AutopilotMode | 
-MODE_MANEUVER | ksp::vessel::AutopilotMode | 
-MODE_NAVIGATION | ksp::vessel::AutopilotMode | 
-MODE_NORMAL | ksp::vessel::AutopilotMode | 
-MODE_PROGRADE | ksp::vessel::AutopilotMode | 
-MODE_RADIAL_IN | ksp::vessel::AutopilotMode | 
-MODE_RADIAL_OUT | ksp::vessel::AutopilotMode | 
-MODE_RETROGRADE | ksp::vessel::AutopilotMode | 
-MODE_STABILITY_ASSIST | ksp::vessel::AutopilotMode | 
-MODE_TARGET | ksp::vessel::AutopilotMode | 
-PARACHUTE_MODE_IMMEDIATE | ksp::vessel::ParachuteDeployMode | 
-PARACHUTE_MODE_RISKY | ksp::vessel::ParachuteDeployMode | 
-PARACHUTE_MODE_SAFE | ksp::vessel::ParachuteDeployMode | 
-PARACHUTE_SAFE_NONE | ksp::vessel::ParachuteSafeStates | 
-PARACHUTE_SAFE_RISKY | ksp::vessel::ParachuteSafeStates | 
-PARACHUTE_SAFE_SAFE | ksp::vessel::ParachuteSafeStates | 
-PARACHUTE_SAFE_UNSAFE | ksp::vessel::ParachuteSafeStates | 
-PARACHUTE_STATE_ARMED | ksp::vessel::ParachuteDeployState | 
-PARACHUTE_STATE_CUT | ksp::vessel::ParachuteDeployState | 
-PARACHUTE_STATE_DEPLOYED | ksp::vessel::ParachuteDeployState | 
-PARACHUTE_STATE_SEMIDEPLOYED | ksp::vessel::ParachuteDeployState | 
-PARACHUTE_STATE_STOWED | ksp::vessel::ParachuteDeployState | 
-SITUATION_ESCAPING | ksp::vessel::VesselSituation | 
-SITUATION_FLYING | ksp::vessel::VesselSituation | 
-SITUATION_LANDED | ksp::vessel::VesselSituation | 
-SITUATION_ORBITING | ksp::vessel::VesselSituation | 
-SITUATION_PRE_LAUNCH | ksp::vessel::VesselSituation | 
-SITUATION_SPLASHED | ksp::vessel::VesselSituation | 
-SITUATION_SUB_ORBITAL | ksp::vessel::VesselSituation | 
-SITUATION_UNKNOWN | ksp::vessel::VesselSituation | 
+AutopilotMode | ksp::vessel::AutopilotModeConstants | 
+DeltaVSituation | ksp::vessel::DeltaVSituationConstants | 
+EngineType | ksp::vessel::EngineTypeConstants | 
+ParachuteDeployMode | ksp::vessel::ParachuteDeployModeConstants | 
+ParachuteDeployState | ksp::vessel::ParachuteDeployStateConstants | 
+ParachuteSafeStates | ksp::vessel::ParachuteSafeStatesConstants | 
+VesselControlState | ksp::vessel::VesselControlStateConstants | 
+VesselSituation | ksp::vessel::VesselSituationConstants | 
 
 
 ## Functions

@@ -678,7 +678,7 @@ namespace KontrolSystem.TO2.Runtime {
         public bool IsReturn => false;
 
         public IREPLForInSource ForInSource() => null;
-        
+
         public static IREPLValue ObjEq(Node node, IREPLValue left, IREPLValue right) {
             if (left is REPLAny li && right is REPLAny ri) {
                 return new REPLBool(li.anyValue == ri.anyValue);
@@ -694,6 +694,6 @@ namespace KontrolSystem.TO2.Runtime {
 
             throw new REPLException(node, $"Can not preform int neq on: {left.Type.Name} {right.Type.Name}");
         }
-        
+
     }
 }
