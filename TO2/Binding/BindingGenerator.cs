@@ -149,19 +149,27 @@ namespace KontrolSystem.TO2.Binding {
             }
         }
 
-        public static List<IKontrolConstant> RegisterEnumTypeMapping(BoundEnumType enumType, string constantPrefix) {
-            RegisterTypeMapping(enumType.enumType, enumType);
-
-            var names = Enum.GetNames(enumType.enumType);
-            var values = Enum.GetValues(enumType.enumType);
+        public static (IEnumerable<RealizedType>, IEnumerable<IKontrolConstant>) RegisterEnumTypeMappings(
+            string modulePrefix, IEnumerable<(string localName, string description, Type enumType, string constantPrefix)> enums) {
+            List<RealizedType> types = new List<RealizedType>();
             List<IKontrolConstant> constants = new List<IKontrolConstant>();
-            
-            for (int i = 0; i < names.Length; i++) {
-                int value = (int) Convert.ChangeType(values.GetValue(i), typeof(int));
-                constants.Add(new EnumKontrolConstant(constantPrefix + ToSnakeCase((string)names.GetValue(i)).ToUpperInvariant(), enumType, value));    
+
+            foreach (var (localName, description, enumType, constantPrefix) in enums) {
+                var boundEnumType = new BoundEnumType(modulePrefix, localName, description, enumType);
+                var names = Enum.GetNames(enumType);
+                var values = Enum.GetValues(enumType);
+
+                RegisterTypeMapping(enumType, boundEnumType);
+                types.Add(boundEnumType);
+                
+                for (int i = 0; i < names.Length; i++) {
+                    int value = (int) Convert.ChangeType(values.GetValue(i), typeof(int));
+                    constants.Add(new EnumKontrolConstant(constantPrefix + ToSnakeCase((string)names.GetValue(i)).ToUpperInvariant(), boundEnumType, value));    
+                }
+                
             }
 
-            return constants;
+            return (types, constants);
         }
 
         internal static RealizedType MapNativeType(Type type) {

@@ -29,10 +29,10 @@ namespace KontrolSystem.TO2.AST {
             allowedSuffixOperators = new OperatorCollection() {
                 {
                     Operator.Eq,
-                    new DirectOperatorEmitter(() => BuiltinType.Int, () => BuiltinType.Bool, REPLAny.ObjEq, OpCodes.Ceq)
+                    new DirectOperatorEmitter(() => this, () => BuiltinType.Bool, REPLAny.ObjEq, OpCodes.Ceq)
                 }, {
                     Operator.NotEq,
-                    new DirectOperatorEmitter(() => BuiltinType.Int, () => BuiltinType.Bool, REPLAny.ObjNeq, OpCodes.Ceq,
+                    new DirectOperatorEmitter(() => this, () => BuiltinType.Bool, REPLAny.ObjNeq, OpCodes.Ceq,
                         OpCodes.Ldc_I4_0, OpCodes.Ceq)
                 }
             };

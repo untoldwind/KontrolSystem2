@@ -126,11 +126,25 @@ Name | Type | Read-only | Description
 --- | --- | --- | ---
 allow_restart | bool | R/O | 
 allow_shutdown | bool | R/O | 
-engine_type | string | R/O | 
+engine_type | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | 
 max_thrust | float | R/O | 
 min_thrust | float | R/O | 
 name | string | R/O | 
 throttle_locked | bool | R/O | 
+
+### EngineType
+
+Engine types
+
+#### Methods
+
+##### to_string
+
+```rust
+enginetype.to_string ( ) -> string
+```
+
+String representation of the number
 
 ### FlightCtrlState
 
@@ -456,7 +470,7 @@ String representation of the number
 
 ### ParachuteSafeStates
 
-Parachute deploy safe states
+Parachute safe states
 
 #### Methods
 
@@ -648,7 +662,7 @@ body_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) 
 celestial_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/O | The celestial/non-rotating reference frame of the vessel. 
 CoM | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Position of the center of mass of the vessel. 
 control_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/O | Reference frame for the current control position. 
-control_status | string | R/O | 
+control_status | [ksp::vessel::VesselControlState](/reference/ksp/vessel.md#vesselcontrolstate) | R/O | 
 delta_v | [ksp::vessel::VesselDeltaV](/reference/ksp/vessel.md#vesseldeltav) | R/O | 
 docking_nodes | [ksp::vessel::ModuleDockingNode](/reference/ksp/vessel.md#moduledockingnode)[] | R/O | 
 dynamic_pressure_kpa | float | R/O | 
@@ -680,7 +694,7 @@ orbit | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit) | R/O | Current orbit
 orbital_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Orbital velocity of the vessel relative to the main body. 
 parts | [ksp::vessel::Part](/reference/ksp/vessel.md#part)[] | R/O | 
 pitch_yaw_roll | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
-situation | string | R/O | 
+situation | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | 
 solar_panels | [ksp::vessel::ModuleSolarPanel](/reference/ksp/vessel.md#modulesolarpanel)[] | R/O | 
 sound_speed | float | R/O | 
 staging | [ksp::vessel::Staging](/reference/ksp/vessel.md#staging) | R/O | 
@@ -839,6 +853,20 @@ vessel.set_wheel_throttle ( wheelThrottle : float ) -> ksp::control::WheelThrott
 
 
 
+### VesselControlState
+
+Vessel control state
+
+#### Methods
+
+##### to_string
+
+```rust
+vesselcontrolstate.to_string ( ) -> string
+```
+
+String representation of the number
+
 ### VesselDeltaV
 
 
@@ -860,10 +888,44 @@ vesseldeltav.stage ( stage : int ) -> Option<ksp::vessel::StageDeltaV>
 Get delta-v information for a specific `stage` of the vessel, if existent.
 
 
+### VesselSituation
+
+Vessel situation
+
+#### Methods
+
+##### to_string
+
+```rust
+vesselsituation.to_string ( ) -> string
+```
+
+String representation of the number
+
 ## Constants
 
 Name | Type | Description
 --- | --- | ---
+CONTROL_FULL_CONTROL | ksp::vessel::VesselControlState | 
+CONTROL_FULL_CONTROL_HIBERNATION | ksp::vessel::VesselControlState | 
+CONTROL_NO_COMM_NET | ksp::vessel::VesselControlState | 
+CONTROL_NO_CONTROL | ksp::vessel::VesselControlState | 
+DELTAV_ALTITUDE | ksp::vessel::DeltaVSituation | 
+DELTAV_SEA_LEVEL | ksp::vessel::DeltaVSituation | 
+DELTAV_VACCUM | ksp::vessel::DeltaVSituation | 
+ENGINE_TYPE_ANTIMATTER | ksp::vessel::EngineType | 
+ENGINE_TYPE_ELECTRIC | ksp::vessel::EngineType | 
+ENGINE_TYPE_GENERIC | ksp::vessel::EngineType | 
+ENGINE_TYPE_HELIUM3 | ksp::vessel::EngineType | 
+ENGINE_TYPE_METALLIC_HYDROGEN | ksp::vessel::EngineType | 
+ENGINE_TYPE_METHALOX | ksp::vessel::EngineType | 
+ENGINE_TYPE_MONO_PROP | ksp::vessel::EngineType | 
+ENGINE_TYPE_NUCLEAR | ksp::vessel::EngineType | 
+ENGINE_TYPE_NUCLEAR_SALTWATER | ksp::vessel::EngineType | 
+ENGINE_TYPE_PISTON | ksp::vessel::EngineType | 
+ENGINE_TYPE_SCRAM_JET | ksp::vessel::EngineType | 
+ENGINE_TYPE_SOLID_BOOSTER | ksp::vessel::EngineType | 
+ENGINE_TYPE_TURBINE | ksp::vessel::EngineType | 
 MODE_ANTI_TARGET | ksp::vessel::AutopilotMode | 
 MODE_ANTINORMAL | ksp::vessel::AutopilotMode | 
 MODE_AUTOPILOT | ksp::vessel::AutopilotMode | 
@@ -879,18 +941,23 @@ MODE_TARGET | ksp::vessel::AutopilotMode |
 PARACHUTE_MODE_IMMEDIATE | ksp::vessel::ParachuteDeployMode | 
 PARACHUTE_MODE_RISKY | ksp::vessel::ParachuteDeployMode | 
 PARACHUTE_MODE_SAFE | ksp::vessel::ParachuteDeployMode | 
-PARACHUTE_SAFETY_NONE | ksp::vessel::ParachuteSafeStates | 
-PARACHUTE_SAFETY_RISKY | ksp::vessel::ParachuteSafeStates | 
-PARACHUTE_SAFETY_SAFE | ksp::vessel::ParachuteSafeStates | 
-PARACHUTE_SAFETY_UNSAFE | ksp::vessel::ParachuteSafeStates | 
+PARACHUTE_SAFE_NONE | ksp::vessel::ParachuteSafeStates | 
+PARACHUTE_SAFE_RISKY | ksp::vessel::ParachuteSafeStates | 
+PARACHUTE_SAFE_SAFE | ksp::vessel::ParachuteSafeStates | 
+PARACHUTE_SAFE_UNSAFE | ksp::vessel::ParachuteSafeStates | 
 PARACHUTE_STATE_ARMED | ksp::vessel::ParachuteDeployState | 
 PARACHUTE_STATE_CUT | ksp::vessel::ParachuteDeployState | 
 PARACHUTE_STATE_DEPLOYED | ksp::vessel::ParachuteDeployState | 
 PARACHUTE_STATE_SEMIDEPLOYED | ksp::vessel::ParachuteDeployState | 
 PARACHUTE_STATE_STOWED | ksp::vessel::ParachuteDeployState | 
-SITUATION_ALTITUDE | ksp::vessel::DeltaVSituation | 
-SITUATION_SEA_LEVEL | ksp::vessel::DeltaVSituation | 
-SITUATION_VACCUM | ksp::vessel::DeltaVSituation | 
+SITUATION_ESCAPING | ksp::vessel::VesselSituation | 
+SITUATION_FLYING | ksp::vessel::VesselSituation | 
+SITUATION_LANDED | ksp::vessel::VesselSituation | 
+SITUATION_ORBITING | ksp::vessel::VesselSituation | 
+SITUATION_PRE_LAUNCH | ksp::vessel::VesselSituation | 
+SITUATION_SPLASHED | ksp::vessel::VesselSituation | 
+SITUATION_SUB_ORBITAL | ksp::vessel::VesselSituation | 
+SITUATION_UNKNOWN | ksp::vessel::VesselSituation | 
 
 
 ## Functions

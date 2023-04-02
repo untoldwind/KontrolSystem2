@@ -3,11 +3,14 @@ using KSP.Sim.DeltaV;
 using KSP.Sim.State;
 using System.Collections.Generic;
 using System.Linq;
+using KontrolSystem.Parsing;
 using KontrolSystem.TO2;
 using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Runtime;
 using KSP.Modules;
 using KSP.Sim;
+using KSP.Sim.Definitions;
+using KSP.Sim.impl;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel {
     [KSModule("ksp::vessel",
@@ -25,40 +28,22 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
         }
 
         public static (IEnumerable<RealizedType>, IEnumerable<IKontrolConstant>) DirectBindings() {
-            var autopilotModeType =  new BoundEnumType("ksp::vessel", "AutopilotMode",
-                "Vessel autopilot (SAS) mode", typeof(AutopilotMode));
-            var autopilotConstants = BindingGenerator.RegisterEnumTypeMapping(autopilotModeType, "MODE_");
-            var deltaVSituationType = new BoundEnumType("ksp::vessel", "DeltaVSituation", 
-                "Vessel situation for delta-v calculation", typeof(DeltaVSituationOptions));
-            var deltaVSituationConstants = BindingGenerator.RegisterEnumTypeMapping(deltaVSituationType, "SITUATION_");
-            var parachuteDeployState = new BoundEnumType("ksp::vessel", "ParachuteDeployState",
-                "Parachute deploy state", typeof(Data_Parachute.DeploymentStates));
-            var parachuteDeployStateConstants = BindingGenerator.RegisterEnumTypeMapping(parachuteDeployState,
-                "PARACHUTE_STATE_");
+            var (enumTypes, enumConstants) = BindingGenerator.RegisterEnumTypeMappings("ksp::vessel",
+                new[] {
+                    ("AutopilotMode", "Vessel autopilot (SAS) mode", typeof(AutopilotMode), "MODE_"),
+                    ("DeltaVSituation", "Vessel situation for delta-v calculation", typeof(DeltaVSituationOptions), "DELTAV_"),
+                    ("ParachuteDeployState", "Parachute deploy state", typeof(Data_Parachute.DeploymentStates), "PARACHUTE_STATE_"),
+                    ("ParachuteDeployMode", "Parachute deploy mode", typeof(Data_Parachute.DeployMode), "PARACHUTE_MODE_"),
+                    ("ParachuteSafeStates", "Parachute safe states", typeof(Data_Parachute.DeploymentSafeStates), "PARACHUTE_SAFE_"),
+                    ("EngineType", "Engine types", typeof(EngineType), "ENGINE_TYPE_"),
+                    ("VesselSituation", "Vessel situation", typeof(VesselSituations), "SITUATION_"),
+                    ("VesselControlState", "Vessel control state", typeof(VesselControlState), "CONTROL_"),
+                });
 
-            var parachuteDeployMode = new BoundEnumType("ksp::vessel", "ParachuteDeployMode",
-                "Parachute deploy mode", typeof(Data_Parachute.DeployMode));
-            var parachuteDeployModeConstants = BindingGenerator.RegisterEnumTypeMapping(parachuteDeployMode,
-                "PARACHUTE_MODE_");
-            var parachuteSafeState = new BoundEnumType("ksp::vessel", "ParachuteSafeStates",
-                "Parachute deploy safe states", typeof(Data_Parachute.DeploymentSafeStates));
-            var parachuteSafeStateConstants = BindingGenerator.RegisterEnumTypeMapping(parachuteSafeState,
-                "PARACHUTE_SAFETY_");
-            
             BindingGenerator.RegisterTypeMapping(typeof(FlightCtrlState),
                 FlightCtrlStateBinding.FlightCtrlStateType);
 
-            return (new RealizedType[] { autopilotModeType, 
-                    deltaVSituationType,
-                    parachuteDeployState,
-                    parachuteDeployMode, 
-                    parachuteSafeState, 
-                    FlightCtrlStateBinding.FlightCtrlStateType }, 
-                autopilotConstants
-                    .Concat(deltaVSituationConstants)
-                    .Concat(parachuteDeployStateConstants)
-                    .Concat(parachuteDeployModeConstants)
-                    .Concat(parachuteSafeStateConstants));
+            return (enumTypes.Concat(FlightCtrlStateBinding.FlightCtrlStateType.Yield()), enumConstants);
         }
     }
 }

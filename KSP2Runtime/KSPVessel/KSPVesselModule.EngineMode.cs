@@ -23,7 +23,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField] public double MaxThrust => engineMode.maxThrust;
 
-            [KSField] public string EngineType => engineMode.engineType.ToString();
+            [KSField] public EngineType EngineType => engineMode.engineType;
         }
     }
 }

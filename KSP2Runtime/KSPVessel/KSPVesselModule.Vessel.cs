@@ -10,6 +10,7 @@ using KSP.Game;
 using KSP.Messages;
 using KSP.Modules;
 using KSP.Sim;
+using KSP.Sim.Definitions;
 using KSP.Sim.DeltaV;
 using KSP.Sim.impl;
 
@@ -50,7 +51,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             public bool IsActive => vessel.SimulationObject.IsActiveVessel;
 
             [KSField]
-            public string ControlStatus => vessel.ControlStatus.ToString();
+            public VesselControlState ControlStatus => vessel.ControlStatus;
 
             [KSField(Description = "")] public ManeuverAdapter Maneuver => maneuver;
 
@@ -145,7 +146,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField] public Vector GlobalEast => vessel.SimulationObject.Telemetry.HorizonEast;
 
-            [KSField] public string Situation => vessel.Situation.ToString();
+            [KSField] public VesselSituations Situation => vessel.Situation;
 
             [KSField] public double StaticPressureKpa => vessel.StaticPressure_kPa;
 
