@@ -1,4 +1,4 @@
-use { Vessel, MODE_AUTOPILOT, MODE_STABILITYASSIST } from ksp::vessel
+use { Vessel, AutopilotMode, VesselSituation } from ksp::vessel
 use { GeoCoordinates } from ksp::orbit
 use { CONSOLE, RED, BLUE, GREEN, WHITE } from ksp::console
 use { Vec3, vec3, vec2, from_vector_to_vector, angle_axis, matrix2x2, look_dir_up } from ksp::math
@@ -29,7 +29,7 @@ pub fn vac_land(vessel : Vessel, landing_side : GeoCoordinates, land_stage : int
             "\nLongitude  : " + vessel.geo_coordinates.longitude.to_fixed(2), WHITE, 8)
     }
 
-    if(vessel.situation == "Orbiting") {
+    if(vessel.situation == VesselSituation.Orbiting) {
         vac_land_prepare_deorbit(vessel, landing_side)
         sleep(1.0)
     }
@@ -40,7 +40,7 @@ pub fn vac_land(vessel : Vessel, landing_side : GeoCoordinates, land_stage : int
         vessel.staging.next()
     }
     
-    if(vessel.situation == "SubOrbital" || vessel.situation == "Flying") {
+    if(vessel.situation == VesselSituation.SubOrbital || vessel.situation == VesselSituation.Flying) {
         const max_accel = vessel.available_thrust / vessel.mass 
         const speed_policy = safe_speed_policy(vessel.main_body.radius + landing_side.terrain_height + 500, vessel.main_body.grav_parameter / vessel.main_body.radius / vessel.main_body.radius, max_accel)
         const simulation = init_simulation(vessel, current_time(), 1.0, 0.1, max_accel, landing_side.terrain_height, speed_policy)
@@ -124,7 +124,7 @@ pub fn vac_land_course_correct(vessel : Vessel, simulation : ReentrySimulation, 
     vessel.actions.rcs = false
 
     vessel.autopilot.enabled = true
-    vessel.autopilot.mode = MODE_AUTOPILOT
+    vessel.autopilot.mode = AutopilotMode.Autopilot
     
     const throttle = vessel.manage_throttle(fn(deltaT) -> if(!ship_is_facing(vessel, last_correction.value, 5, 1))
             0.0
@@ -308,7 +308,7 @@ pub fn vac_touchdown(vessel : Vessel) -> Unit = {
             0
     })
     
-    while(vessel.situation != "Landed" && vessel.situation != "Splashed") {
+    while(vessel.situation != VesselSituation.Landed && vessel.situation != VesselSituation.Splashed) {
         const steering_direction = if(vessel.surface_velocity.magnitude < 0.5)
            look_dir_up(-vessel.up, vessel.facing.up_vector)
         else
@@ -321,7 +321,7 @@ pub fn vac_touchdown(vessel : Vessel) -> Unit = {
 
     throttle.release()
 
-    vessel.autopilot.mode = MODE_STABILITYASSIST
+    vessel.autopilot.mode = AutopilotMode.StabilityAssist
     vessel.actions.rcs = true
 }
 

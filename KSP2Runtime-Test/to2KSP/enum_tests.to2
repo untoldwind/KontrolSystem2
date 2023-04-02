@@ -1,0 +1,11 @@
+use * from ksp::testing
+use { AutopilotMode } from ksp::vessel
+
+test sync fn test_enums() -> Unit = {
+    const mode = AutopilotMode.Prograde
+    assert_string("Prograde", AutopilotMode.Prograde.to_string())
+    assert_string("AntiTarget", AutopilotMode.AntiTarget.to_string())
+    const t = AutopilotMode.from_string("AntiTarget")
+    assert_true(t.defined)
+    assert_string("AntiTarget", t.value.to_string())
+}

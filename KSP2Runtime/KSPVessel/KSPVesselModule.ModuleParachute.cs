@@ -17,19 +17,15 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             }
 
             [KSField]
-            public string DeployState => dataParachute.deployState.GetValue().ToString();
+            public Data_Parachute.DeploymentStates DeployState => dataParachute.deployState.GetValue();
 
             [KSField]
-            public string ChuteSafety => dataParachute.deploymentSafetyState.GetValue().ToString();
+            public Data_Parachute.DeploymentSafeStates ChuteSafety => dataParachute.deploymentSafetyState.GetValue();
 
             [KSField]
-            public string DeployMode {
-                get => dataParachute.DeploymentMode.GetValue().ToString();
-                set {
-                    if (Enum.TryParse(value, true, out Data_Parachute.DeployMode mode)) {
-                        dataParachute.DeploymentMode.SetValue(mode);
-                    }
-                }
+            public Data_Parachute.DeployMode DeployMode {
+                get => dataParachute.DeploymentMode.GetValue();
+                set => dataParachute.DeploymentMode.SetValue(value);
             }
 
             [KSField]

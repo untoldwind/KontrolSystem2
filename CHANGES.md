@@ -6,6 +6,8 @@
 * Fix calculation of `vessel.heading_direction()`
 * Remove `vessel.pitch_horizon_relative` and `vessel.roll_horizon_relative` as say were misleading and did not create "valid" results
 * Added check for stack overflow of scripts
+* Create bindings for all enums:
+  * Instead of `vessel.autopilot.mode = "Prograde"` one should now use `vessel.autopilot.mode = AutopilotMode.Prograde`
 
 ## 0.2.3 -> 0.3.1
 

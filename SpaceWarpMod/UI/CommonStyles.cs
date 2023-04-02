@@ -45,7 +45,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             upButtonTexture = GFXAdapter.GetTexture("up");
             downButtonTexture = GFXAdapter.GetTexture("down");
         }
-        
+
         public static CommonStyles Instance;
 
         internal static void Init(GUISkin baseSkin, GUISkin skin) {

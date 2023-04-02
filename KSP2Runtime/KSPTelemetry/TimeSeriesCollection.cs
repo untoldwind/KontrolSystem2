@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -22,7 +22,7 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
                     timeSeriesList.Remove(existing);
                     timeSeriesList.AddLast(timeSeries);
                 } else {
-                    if(timeSeriesList.Count >= MAX_NUM_TIMESERIES) timeSeriesList.RemoveFirst();
+                    if (timeSeriesList.Count >= MAX_NUM_TIMESERIES) timeSeriesList.RemoveFirst();
                     timeSeriesList.AddLast(timeSeries);
                 }
             }
@@ -30,7 +30,7 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
 
         public KSPTelemetryModule.TimeSeries[] AllTimeSeries {
             get {
-                lock(collectionLock) {
+                lock (collectionLock) {
                     return timeSeriesList.ToArray();
                 }
             }
@@ -68,14 +68,14 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
             using (StreamWriter outputFile = new StreamWriter(filename, false, Encoding.UTF8, 65536)) {
                 using (JsonWriter writer = new JsonTextWriter(outputFile)) {
                     writer.Formatting = Formatting.Indented;
-                    
+
                     await writer.WriteStartArrayAsync();
                     foreach (var timeSeries in allTimeSeries) {
                         await writer.WriteStartObjectAsync();
 
                         await writer.WritePropertyNameAsync("name");
                         await writer.WriteValueAsync(timeSeries.Name);
-                        
+
                         await writer.WritePropertyNameAsync("startUT");
                         await writer.WriteValueAsync(timeSeries.StartUt);
 
@@ -87,10 +87,10 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
 
                         await writer.WritePropertyNameAsync("values");
                         await writer.WriteStartArrayAsync();
-                        
+
                         foreach (var value in timeSeries.Values) {
                             await writer.WriteStartObjectAsync();
-                            
+
                             await writer.WritePropertyNameAsync("ut");
                             await writer.WriteValueAsync(value.Item1);
 

@@ -15,15 +15,15 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             }
 
             [KSMethod("get_ISP", Description = "Estimated ISP of the engine in a given `situation`")]
-            public double GetIsp(string situation) => deltaVEngineInfo.GetSituationISP(SituationFromString(situation));
+            public double GetIsp(DeltaVSituationOptions situation) => deltaVEngineInfo.GetSituationISP(situation);
 
             [KSMethod(Description = "Estimated thrust of the engine in a given `situation`")]
-            public double GetThrust(string situation) =>
-                deltaVEngineInfo.GetSituationThrust(SituationFromString(situation));
+            public double GetThrust(DeltaVSituationOptions situation) =>
+                deltaVEngineInfo.GetSituationThrust(situation);
 
             [KSMethod(Description = "Estimated thrust vector of the engine in a given `situation`")]
-            public Vector3d GetThrustVector(string situation) =>
-                deltaVEngineInfo.GetSituationThrustVector(SituationFromString(situation));
+            public Vector3d GetThrustVector(DeltaVSituationOptions situation) =>
+                deltaVEngineInfo.GetSituationThrustVector(situation);
 
             [KSField(Description = "Number of the stage when engine is supposed to start")]
             public long StartBurnStage => deltaVEngineInfo.StartBurnStage;

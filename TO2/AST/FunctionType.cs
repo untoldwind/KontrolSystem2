@@ -49,7 +49,7 @@ namespace KontrolSystem.TO2.AST {
             if (otherType.UnderlyingType(context) is FunctionType otherFunctionType) {
                 return !otherFunctionType.isAsync && GeneratedType(context).IsAssignableFrom(otherType.GeneratedType(context));
             }
-            
+
             return false;
         }
 

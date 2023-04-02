@@ -35,7 +35,7 @@ namespace KontrolSystem.SpaceWarpMod {
             LoggerAdapter.Instance.Backend = Logger;
             LoggerAdapter.Instance.Info("Initialize KontrolSystemMod");
 
-            
+
             UIFactory.Init(ConfigAdapter.Instance);
             CommonStyles.Init(Skins.ConsoleSkin, Instantiate(Skins.ConsoleSkin));
 

@@ -13,7 +13,7 @@ namespace KontrolSystem.SpaceWarpMod {
             JetBrainsMono,
             Unifont
         }
-        
+
         internal string version;
         internal ConfigEntry<bool> enableHotkey;
         internal ConfigEntry<string> stdLibPath;
@@ -34,7 +34,7 @@ namespace KontrolSystem.SpaceWarpMod {
             consoleFontSize = config.Bind("Font", "consoleFontSize", 12, "Size of the console font");
             graphFont = config.Bind("Fonts", "graphFont", MonospaceFont.JetBrainsMono, "Font to use in graphs");
         }
-        
+
         public string Version => version;
 
         public string StdLibPath => stdLibPath.Value;
@@ -48,31 +48,31 @@ namespace KontrolSystem.SpaceWarpMod {
         public Font ConsoleFont {
             get {
                 switch (consoleFont.Value) {
-                    case MonospaceFont.Unifont:
-                        return AssetManager.GetAsset<Font>("kontrolsystem2/kontrolsystem2/fonts/unifont.ttf");
-                    default:
-                        return AssetManager.GetAsset<Font>("kontrolsystem2/kontrolsystem2/fonts/jetbrainsmono-regular.ttf");
+                case MonospaceFont.Unifont:
+                    return AssetManager.GetAsset<Font>("kontrolsystem2/kontrolsystem2/fonts/unifont.ttf");
+                default:
+                    return AssetManager.GetAsset<Font>("kontrolsystem2/kontrolsystem2/fonts/jetbrainsmono-regular.ttf");
                 }
             }
         }
-        
+
         public static ConfigAdapter Instance { get; private set; }
 
         public Texture2D WindowsBackground => AssetManager.GetAsset<Texture2D>($"kontrolsystem2/kontrolsystem2/gfx/window_sprite.png");
-        
+
         public Texture2D WindowCloseButton => AssetManager.GetAsset<Texture2D>($"kontrolsystem2/kontrolsystem2/gfx/close_button.png");
 
         public TMP_FontAsset GraphFontAsset {
             get {
                 switch (graphFont.Value) {
-                    case MonospaceFont.Unifont:
-                        return AssetManager.GetAsset<TMP_FontAsset>("kontrolsystem2/kontrolsystem2/fonts/unifont-extendedascii.asset");       
-                    default:
-                        return AssetManager.GetAsset<TMP_FontAsset>("kontrolsystem2/kontrolsystem2/fonts/jetbrainsmono-regular-extendedascii.asset");       
+                case MonospaceFont.Unifont:
+                    return AssetManager.GetAsset<TMP_FontAsset>("kontrolsystem2/kontrolsystem2/fonts/unifont-extendedascii.asset");
+                default:
+                    return AssetManager.GetAsset<TMP_FontAsset>("kontrolsystem2/kontrolsystem2/fonts/jetbrainsmono-regular-extendedascii.asset");
                 }
             }
         }
-        
+
         internal static void Init(PluginInfo pluginInfo, ConfigFile config) {
             Instance = new ConfigAdapter(pluginInfo, config);
         }

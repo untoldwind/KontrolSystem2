@@ -38,14 +38,14 @@ namespace KontrolSystem.TO2 {
         private readonly Dictionary<string, CompiledKontrolFunction> publicFunctions;
         private readonly List<CompiledKontrolFunction> testFunctions;
         private readonly Dictionary<string, RealizedType> types;
-        private readonly Dictionary<string, CompiledKontrolConstant> constants;
+        private readonly Dictionary<string, IKontrolConstant> constants;
 
         public CompiledKontrolModule(string name,
             string description,
             bool builtin,
             string sourceFile,
             IEnumerable<(string alias, RealizedType type)> types,
-            IEnumerable<CompiledKontrolConstant> constants,
+            IEnumerable<IKontrolConstant> constants,
             IEnumerable<CompiledKontrolFunction> functions,
             List<CompiledKontrolFunction> testFunctions) {
             Name = name;
@@ -59,7 +59,7 @@ namespace KontrolSystem.TO2 {
             this.testFunctions = testFunctions;
             this.types = types.ToDictionary(t => t.alias, t => t.type);
 
-            foreach (CompiledKontrolConstant constant in compiledKontrolConstants) constant.Module = this;
+            //            foreach (CompiledKontrolConstant constant in compiledKontrolConstants) constant.Module = this;
             foreach (CompiledKontrolFunction function in compiledKontrolFunctions) function.Module = this;
             foreach (CompiledKontrolFunction function in testFunctions) function.Module = this;
         }

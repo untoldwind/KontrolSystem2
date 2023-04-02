@@ -8,7 +8,7 @@ namespace KontrolSystem.TO2.Generator {
         public static void GenerateCheckTimeout(IBlockContext context) {
             context.IL.EmitCall(OpCodes.Call, typeof(Runtime.ContextHolder).GetMethod("CheckTimeout"), 0);
         }
-        
+
         public static void GenerateFunctionEnter(IBlockContext context, string name, List<FunctionParameter> parameters) {
             context.IL.Emit(OpCodes.Ldstr, context.ModuleContext.moduleName + "::" + name);
             context.IL.Emit(OpCodes.Ldc_I4, parameters.Count);
@@ -25,7 +25,7 @@ namespace KontrolSystem.TO2.Generator {
             }
             context.IL.EmitCall(OpCodes.Call, typeof(Runtime.ContextHolder).GetMethod("FunctionEnter"), 2);
         }
-        
+
         public static void GenerateFunctionLeave(IBlockContext context) {
             context.IL.EmitCall(OpCodes.Call, typeof(Runtime.ContextHolder).GetMethod("FunctionLeave"), 0);
         }

@@ -1,47 +1,75 @@
-﻿using KontrolSystem.TO2.AST;
+﻿using System;
+using KontrolSystem.TO2.AST;
 using System.Reflection;
+using System.Reflection.Emit;
+using KontrolSystem.TO2.Generator;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2 {
     public interface IKontrolConstant {
-        IKontrolModule Module { get; }
-
         string Name { get; }
 
         string Description { get; }
 
         TO2Type Type { get; }
 
-        FieldInfo RuntimeField { get; }
+        void EmitLoad(IBlockContext context);
+
+        IREPLValue REPLValue();
     }
 
     public class CompiledKontrolConstant : IKontrolConstant {
-        public IKontrolModule Module { get; internal set; }
         public string Name { get; }
         public string Description { get; }
         public TO2Type Type { get; }
-        public FieldInfo RuntimeField { get; }
+
+        private readonly FieldInfo runtimeField;
 
         public CompiledKontrolConstant(string name, string description, TO2Type type, FieldInfo runtimeField) {
             Name = name;
             Description = description;
             Type = type;
-            RuntimeField = runtimeField;
-        }
-    }
-
-    public class DeclaredKontrolConstant : IKontrolConstant {
-        private readonly DeclaredKontrolModule module;
-        public readonly ConstDeclaration to2Constant;
-        public readonly FieldInfo runtimeField;
-
-        public DeclaredKontrolConstant(DeclaredKontrolModule module, ConstDeclaration to2Constant,
-            FieldInfo runtimeField) {
-            this.module = module;
-            this.to2Constant = to2Constant;
             this.runtimeField = runtimeField;
         }
 
-        public IKontrolModule Module => module;
+        public void EmitLoad(IBlockContext context) {
+            context.IL.Emit(OpCodes.Ldsfld, runtimeField);
+        }
+
+        public IREPLValue REPLValue() {
+            return Type.REPLCast(runtimeField.GetValue(null));
+        }
+    }
+
+    public class EnumKontrolConstant : IKontrolConstant {
+        public string Name { get; }
+
+        private BoundEnumConstType enumType;
+
+        public EnumKontrolConstant(string name, BoundEnumConstType type) {
+            Name = name;
+            enumType = type;
+        }
+
+        public TO2Type Type => enumType;
+
+        public string Description => "";
+
+
+        public void EmitLoad(IBlockContext context) {
+        }
+
+        public IREPLValue REPLValue() => REPLUnit.INSTANCE;
+    }
+
+    public class DeclaredKontrolConstant : IKontrolConstant {
+        public readonly ConstDeclaration to2Constant;
+        public readonly FieldInfo runtimeField;
+
+        public DeclaredKontrolConstant(ConstDeclaration to2Constant, FieldInfo runtimeField) {
+            this.to2Constant = to2Constant;
+            this.runtimeField = runtimeField;
+        }
 
         public string Name => to2Constant.name;
 
@@ -49,8 +77,14 @@ namespace KontrolSystem.TO2 {
 
         public TO2Type Type => to2Constant.type;
 
-        public FieldInfo RuntimeField => runtimeField;
-
         public bool IsPublic => to2Constant.isPublic;
+
+        public void EmitLoad(IBlockContext context) {
+            context.IL.Emit(OpCodes.Ldsfld, runtimeField);
+        }
+
+        public IREPLValue REPLValue() {
+            return Type.REPLCast(runtimeField.GetValue(null));
+        }
     }
 }

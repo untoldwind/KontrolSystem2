@@ -12,7 +12,7 @@ namespace KontrolSystem.TO2.Runtime {
         void FunctionEnter(string name, object[] arguments);
 
         void FunctionLeave();
-        
+
         bool IsBackground { get; }
 
         IContext CloneBackground(CancellationTokenSource token);

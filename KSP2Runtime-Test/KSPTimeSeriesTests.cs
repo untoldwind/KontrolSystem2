@@ -12,22 +12,22 @@ namespace KontrolSystem.KSP.Runtime.Test {
                 var t = i * 0.5;
                 timeSeries.AddData(t, Math.Cos(2 * Math.PI * t / 5000));
             }
-            
+
             Assert.Equal(0, timeSeries.StartUt);
             Assert.Equal(3.2, timeSeries.Resolution, 6);
             Assert.Equal(10000, timeSeries.EndUt);
 
             var buckets = timeSeries.Values;
-            
+
             Assert.Equal(3125, buckets.Length);
 
             for (int i = 0; i < buckets.Length; i++) {
                 var (ut, bucket) = buckets[i];
                 Assert.Equal(i * timeSeries.Resolution, ut);
-                
+
                 var refT = (i + 0.5) * timeSeries.Resolution;
                 var refValue = Math.Cos(2 * Math.PI * refT / 5000);
-                
+
                 Assert.True(bucket.count > 0);
                 Assert.True(bucket.min <= refValue);
                 Assert.True(bucket.max >= refValue);
@@ -49,24 +49,24 @@ namespace KontrolSystem.KSP.Runtime.Test {
             timeSeries2.AddData(2000, 0.8);
             timeSeries2.AddData(2000, 0.9);
             var buckets = timeSeries2.Values;
-            
+
             Assert.True(buckets.Length == 4);
-            Assert.Equal(buckets[0].Item1, 0.0);
-            Assert.Equal(buckets[0].Item2.avg, 0.6, 6);
-            Assert.Equal(buckets[0].Item2.min, 0.5, 6);
-            Assert.Equal(buckets[0].Item2.max, 0.7, 6);
-            Assert.Equal(buckets[1].Item1, 500.0);
-            Assert.Equal(buckets[1].Item2.avg, 0.55, 6);
-            Assert.Equal(buckets[1].Item2.min, 0.3, 6);
-            Assert.Equal(buckets[1].Item2.max, 0.8, 6);
-            Assert.Equal(buckets[2].Item1, 1500.0);
-            Assert.Equal(buckets[2].Item2.avg, 0.35, 6);
-            Assert.Equal(buckets[2].Item2.min, 0.3, 6);
-            Assert.Equal(buckets[2].Item2.max, 0.4, 6);
-            Assert.Equal(buckets[3].Item1, 2000.0);
-            Assert.Equal(buckets[3].Item2.avg, 0.85, 6);
-            Assert.Equal(buckets[3].Item2.min, 0.8, 6);
-            Assert.Equal(buckets[3].Item2.max, 0.9, 6);
+            Assert.Equal(0.0, buckets[0].Item1);
+            Assert.Equal(0.6, buckets[0].Item2.avg, 6);
+            Assert.Equal(0.5, buckets[0].Item2.min, 6);
+            Assert.Equal(0.7, buckets[0].Item2.max, 6);
+            Assert.Equal(500.0, buckets[1].Item1);
+            Assert.Equal(0.55, buckets[1].Item2.avg, 6);
+            Assert.Equal(0.3, buckets[1].Item2.min, 6);
+            Assert.Equal(0.8, buckets[1].Item2.max, 6);
+            Assert.Equal(1500.0, buckets[2].Item1);
+            Assert.Equal(0.35, buckets[2].Item2.avg, 6);
+            Assert.Equal(0.3, buckets[2].Item2.min, 6);
+            Assert.Equal(0.4, buckets[2].Item2.max, 6);
+            Assert.Equal(2000.0, buckets[3].Item1);
+            Assert.Equal(0.85, buckets[3].Item2.avg, 6);
+            Assert.Equal(0.8, buckets[3].Item2.min, 6);
+            Assert.Equal(0.9, buckets[3].Item2.max, 6);
         }
     }
 }

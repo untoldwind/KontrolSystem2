@@ -13,7 +13,7 @@ pub fn main_flight(vessel: Vessel) -> Result<Unit, string> = {
         CONSOLE.print_line("My target is: " + maybe_target.value.name)
     }
     
-    CONSOLE.print_line("Autopilot: " + vessel.autopilot.enabled.to_string() + " " + vessel.autopilot.mode)
+    CONSOLE.print_line("Autopilot: " + vessel.autopilot.enabled.to_string() + " " + vessel.autopilot.mode.to_string())
     
     vessel.autopilot.enabled = true
 

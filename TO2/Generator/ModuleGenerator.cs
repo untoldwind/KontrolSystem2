@@ -36,7 +36,7 @@ namespace KontrolSystem.TO2.Generator {
                         ? FieldAttributes.Public | FieldAttributes.Static
                         : FieldAttributes.Private | FieldAttributes.Static);
                 DeclaredKontrolConstant declaredConstant =
-                    new DeclaredKontrolConstant(declaredModule, constant, runtimeField);
+                    new DeclaredKontrolConstant(constant, runtimeField);
 
                 if (moduleContext.mappedConstants.ContainsKey(declaredConstant.Name))
                     throw new CompilationErrorException(new List<StructuralError> {
@@ -157,7 +157,11 @@ namespace KontrolSystem.TO2.Generator {
             foreach (DeclaredKontrolFunction function in declaredModule.declaredFunctions) {
                 IBlockContext methodContext = function.methodContext;
 
-                function.to2Function.EmitCode(methodContext);
+                try {
+                    function.to2Function.EmitCode(methodContext);
+                } catch (CompilationErrorException e) {
+                    errors.AddRange(e.errors);
+                }
                 errors.AddRange(methodContext.AllErrors);
             }
 

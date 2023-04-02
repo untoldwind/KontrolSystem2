@@ -48,6 +48,10 @@ namespace KontrolSystem.TO2.AST {
             if (!asyncContext.HasErrors)
                 declaredReturn.AssignFrom(asyncContext.ModuleContext, expression.ResultType(asyncContext))
                     .EmitConvert(asyncContext);
+            else {
+                // At this point the IL code is most likely messed up beyond repair
+                throw new CompilationErrorException(asyncContext.AllErrors);
+            }
 
             asyncContext.IL.EmitNew(OpCodes.Newobj,
                 asyncContext.MethodBuilder.ReturnType.GetConstructor(new[] { typeParameter }));

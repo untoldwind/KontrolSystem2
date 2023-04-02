@@ -104,9 +104,9 @@ namespace KontrolSystem.TO2.AST {
                 ));
                 return;
             }
-            
+
             ILChunks.GenerateFunctionEnter(context, name, parameters);
-            
+
             if (isAsync) EmitCodeAsync(context);
             else EmitCodeSync(context);
         }

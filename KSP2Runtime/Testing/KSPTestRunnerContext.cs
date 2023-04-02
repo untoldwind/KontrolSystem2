@@ -38,7 +38,7 @@ namespace KontrolSystem.KSP.Runtime.Testing {
         public KSPConsoleBuffer ConsoleBuffer => consoleBuffer;
 
         public TimeSeriesCollection TimeSeriesCollection => timeSeriesCollection;
-        
+
         public Font ConsoleFont(int fontSize) => null;
 
         public double UniversalTime => 0;

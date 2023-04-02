@@ -678,5 +678,22 @@ namespace KontrolSystem.TO2.Runtime {
         public bool IsReturn => false;
 
         public IREPLForInSource ForInSource() => null;
+
+        public static IREPLValue ObjEq(Node node, IREPLValue left, IREPLValue right) {
+            if (left is REPLAny li && right is REPLAny ri) {
+                return new REPLBool(li.anyValue == ri.anyValue);
+            }
+
+            throw new REPLException(node, $"Can not preform int eq on: {left.Type.Name} {right.Type.Name}");
+        }
+
+        public static IREPLValue ObjNeq(Node node, IREPLValue left, IREPLValue right) {
+            if (left is REPLAny li && right is REPLAny ri) {
+                return new REPLBool(li.anyValue != ri.anyValue);
+            }
+
+            throw new REPLException(node, $"Can not preform int neq on: {left.Type.Name} {right.Type.Name}");
+        }
+
     }
 }

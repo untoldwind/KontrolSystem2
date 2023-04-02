@@ -30,9 +30,9 @@ namespace KontrolSystem.KSP.Runtime {
         VesselComponent ActiveVessel { get; }
 
         KSPConsoleBuffer ConsoleBuffer { get; }
-        
+
         TimeSeriesCollection TimeSeriesCollection { get; }
-        
+
         double UniversalTime { get; }
 
         KSPOrbitModule.IBody FindBody(string name);

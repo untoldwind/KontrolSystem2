@@ -1,11 +1,11 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace KontrolSystem.KSP.Runtime.KSPUI {
     public class UGUIDragHandler : MonoBehaviour, IDragHandler, IPointerDownHandler {
         public delegate void HandlePointerDown();
         public delegate void HandleDrag(Vector2 delta);
-        
+
         private RectTransform parentTransform;
         private HandlePointerDown pointerDownHandler;
         private HandleDrag dragHandler;
@@ -17,7 +17,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             this.dragHandler = dragHandler;
             this.pointerDownHandler = pointerDownHandler;
         }
-        
+
         public void OnDrag(PointerEventData eventData) {
             if (RectTransformUtility.ScreenPointToLocalPointInRectangle(parentTransform, eventData.position, eventData.pressEventCamera, out currentPointerPosition)) {
                 Vector2 vector = currentPointerPosition - previousPointerPosition;
@@ -25,7 +25,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
                 previousPointerPosition = currentPointerPosition;
             }
         }
-    
+
         public void OnPointerDown(PointerEventData data) {
             pointerDownHandler?.Invoke();
             RectTransformUtility.ScreenPointToLocalPointInRectangle(parentTransform, data.position, data.pressEventCamera, out previousPointerPosition);

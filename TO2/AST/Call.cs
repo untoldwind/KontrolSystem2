@@ -105,7 +105,7 @@ namespace KontrolSystem.TO2.AST {
                     return;
                 }
 
-                context.IL.Emit(OpCodes.Ldsfld, constant.RuntimeField);
+                constant.EmitLoad(context);
 
                 EmitCodeDelegate((FunctionType)constant.Type, context, dropResult);
                 return;

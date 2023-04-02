@@ -19,7 +19,7 @@ namespace KontrolSystem.TO2.Binding {
         private static readonly Dictionary<Type, CompiledKontrolModule> BoundModules =
             new Dictionary<Type, CompiledKontrolModule>();
 
-        public static CompiledKontrolModule BindModule(Type moduleType) {
+        public static CompiledKontrolModule BindModule(Type moduleType, IEnumerable<RealizedType> additionalTypes = null, IEnumerable<IKontrolConstant> additionConstants = null) {
             lock (BoundModules) {
                 if (BoundModules.ContainsKey(moduleType)) return BoundModules[moduleType];
 
@@ -29,21 +29,21 @@ namespace KontrolSystem.TO2.Binding {
 
                 Type runtimeType = moduleType;
                 List<CompiledKontrolFunction> functions = new List<CompiledKontrolFunction>();
-                List<BoundType> types = new List<BoundType>();
-                List<CompiledKontrolConstant> constants = new List<CompiledKontrolConstant>();
+                List<RealizedType> types = new List<RealizedType>(additionalTypes ?? Enumerable.Empty<RealizedType>());
+                List<IKontrolConstant> constants = new List<IKontrolConstant>(additionConstants ?? Enumerable.Empty<CompiledKontrolConstant>());
 
                 while (runtimeType != null && runtimeType != typeof(object)) {
                     foreach (Type nested in runtimeType.GetNestedTypes(BindingFlags.Public)) {
                         if (nested.GetCustomAttribute<KSClass>() != null) types.Add(BindType(ksModule.Name, nested));
                     }
 
-                    foreach (BoundType type in types) LinkType(type);
+                    foreach (RealizedType type in types) if (type is BoundType boundType) LinkType(boundType);
 
                     foreach (FieldInfo field in runtimeType.GetFields(BindingFlags.Public | BindingFlags.Static)) {
                         KSConstant ksConstant = field.GetCustomAttribute<KSConstant>();
                         if (ksConstant == null) continue;
 
-                        TO2Type to2Type = BindingGenerator.MapNativeType(field.FieldType);
+                        TO2Type to2Type = MapNativeType(field.FieldType);
 
                         constants.Add(new CompiledKontrolConstant(
                             ksConstant.Name ?? ToSnakeCase(field.Name).ToUpperInvariant(),
@@ -75,7 +75,7 @@ namespace KontrolSystem.TO2.Binding {
                 }
 
                 CompiledKontrolModule module = new CompiledKontrolModule(ksModule.Name,
-                    NormalizeDescription(ksModule.Description), true, null, types.Select(t => (t.localName, t as RealizedType)),
+                    NormalizeDescription(ksModule.Description), true, null, types.Select(t => (t.LocalName, t)),
                     constants, functions, new List<CompiledKontrolFunction>());
                 BoundModules.Add(moduleType, module);
                 return module;
@@ -149,6 +149,24 @@ namespace KontrolSystem.TO2.Binding {
             }
         }
 
+        public static (IEnumerable<RealizedType>, IEnumerable<IKontrolConstant>) RegisterEnumTypeMappings(
+            string modulePrefix, IEnumerable<(string localName, string description, Type enumType)> enums) {
+            List<RealizedType> types = new List<RealizedType>();
+            List<IKontrolConstant> constants = new List<IKontrolConstant>();
+
+            foreach (var (localName, description, enumType) in enums) {
+                var boundEnumType = new BoundEnumType(modulePrefix, localName, description, enumType);
+
+                RegisterTypeMapping(enumType, boundEnumType);
+                types.Add(boundEnumType);
+                var boundEnumConstants = new BoundEnumConstType(boundEnumType);
+                types.Add(boundEnumConstants);
+                constants.Add(new EnumKontrolConstant(localName, boundEnumConstants));
+            }
+
+            return (types, constants);
+        }
+
         internal static RealizedType MapNativeType(Type type) {
             lock (TypeMappings) {
                 if (type.IsGenericParameter) return new GenericParameter(type.Name);
@@ -202,7 +220,7 @@ namespace KontrolSystem.TO2.Binding {
             }
         }
 
-        public static string ToSnakeCase(string name) => String
+        public static string ToSnakeCase(string name) => name.All(ch => char.IsUpper(ch)) ? name : String
             .Concat(name.Select((x, i) => i > 0 && char.IsUpper(x) ? "_" + x.ToString() : x.ToString())).ToLower();
 
         private static string NormalizeDescription(string description) {
