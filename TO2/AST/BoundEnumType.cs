@@ -231,7 +231,21 @@ namespace KontrolSystem.TO2.AST {
         }
 
         public REPLValueFuture Eval(Node node, IREPLValue[] targetWithArguments) {
-            throw new NotImplementedException();
+            if (targetWithArguments.Length != 1) {
+                throw new REPLException(node, $"from_string requires one argument");
+            }
+            if (targetWithArguments[0].Value is REPLString value) {
+                try {
+                    return REPLValueFuture.Success(
+                        new REPLAny(new OptionType(boundEnumType),
+                            Option.Some<object>(Enum.Parse(boundEnumType.enumType, value.stringValue, true))));
+                } catch (Exception e) {
+                    return REPLValueFuture.Success(
+                        new REPLAny(new OptionType(boundEnumType), Option.None<object>()));
+                }
+            }
+
+            throw new REPLException(node, $"from_string requires string argument");
         }
     }
 }
