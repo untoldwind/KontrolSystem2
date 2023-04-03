@@ -54,18 +54,18 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 get {
                     var sas = vesselAdapter.vessel.Autopilot?.SAS;
                     return sas != null ? new Direction(vesselAdapter.vessel.mainBody.coordinateSystem
-                        .ToLocalRotation(sas.ReferenceFrame, sas.LockedRotation)) : vesselAdapter.Facing;
+                        .ToLocalRotation(sas.ReferenceFrame, sas.LockedRotation * ControlFacingRotation)) : vesselAdapter.Facing;
                 }
-                set => vesselAdapter.vessel.Autopilot?.SAS?.LockRotation(value.Rotation);
+                set => vesselAdapter.vessel.Autopilot?.SAS?.LockRotation(new Rotation(vesselAdapter.vessel.mainBody.coordinateSystem, value.Rotation * QuaternionD.Inverse(ControlFacingRotation)));
             }
 
             [KSField]
             public RotationWrapper GlobalLockDirection {
                 get {
                     var sas = vesselAdapter.vessel.Autopilot?.SAS;
-                    return sas != null ? new RotationWrapper(new Rotation(sas.ReferenceFrame, sas.LockedRotation)) : vesselAdapter.GlobalFacing;
+                    return sas != null ? new RotationWrapper(new Rotation(sas.ReferenceFrame, sas.LockedRotation * ControlFacingRotation)) : vesselAdapter.GlobalFacing;
                 }
-                set => vesselAdapter.vessel.Autopilot?.SAS?.LockRotation(value.Rotation);
+                set => vesselAdapter.vessel.Autopilot?.SAS?.LockRotation(new Rotation(vesselAdapter.vessel.mainBody.coordinateSystem, vesselAdapter.vessel.mainBody.coordinateSystem.ToLocalRotation(value.Rotation) * QuaternionD.Inverse(ControlFacingRotation)));
             }
         }
     }

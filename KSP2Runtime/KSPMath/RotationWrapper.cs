@@ -94,6 +94,8 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
 
         public static RotationWrapper operator -(RotationWrapper a) => new RotationWrapper(new Rotation(a.rotation.coordinateSystem, QuaternionD.Inverse(a.rotation.localRotation)));
 
+        public Direction ToLocal(ITransformFrame frame) => new Direction(frame.ToLocalRotation(rotation));
+
         public override bool Equals(object obj) {
             Type compareType = typeof(Direction);
             if (compareType.IsInstanceOfType(obj)) {
@@ -118,6 +120,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
         }
 
         public static bool operator !=(RotationWrapper a, RotationWrapper b) => !(a == b);
+
 
         public string ToString(ITransformFrame frame) {
             var euler = frame.ToLocalRotation(rotation).eulerAngles;

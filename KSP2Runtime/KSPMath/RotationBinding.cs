@@ -86,6 +86,13 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                         typeof(RotationWrapper).GetMethod("Roll"))
                 },
                 {
+                    "to_local",
+                    new BoundMethodInvokeFactory("Get local direction in a coordinate system", true,
+                        () => DirectionBinding.DirectionType,
+                        () => new List<RealizedParameter> {new RealizedParameter("frame", TransformFrameBinding.TransformFrameType)}, false,
+                        typeof(RotationWrapper), typeof(RotationWrapper).GetMethod("ToLocal"))
+                },
+                {
                     "to_string",
                     new BoundMethodInvokeFactory("Convert the direction to string", true, () => BuiltinType.String,
                         () => new List<RealizedParameter>() { new RealizedParameter("frame", TransformFrameBinding.TransformFrameType) }, false, typeof(RotationWrapper),
