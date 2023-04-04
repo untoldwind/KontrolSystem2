@@ -1,6 +1,6 @@
 # Changes
 
-## 0.3.1 ->
+## 0.3.1 -> 0.3.2
 
 * Cleanup calculation of `vessel.pitch_yaw_roll`
 * Fix calculation of `vessel.heading_direction()`
