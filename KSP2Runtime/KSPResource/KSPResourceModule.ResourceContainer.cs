@@ -1,15 +1,18 @@
 ﻿using System.Linq;
 using KontrolSystem.TO2.Binding;
+using KSP.Sim.impl;
 using KSP.Sim.ResourceSystem;
 
-namespace KontrolSystem.KSP.Runtime.KSPVessel {
-    public partial class KSPVesselModule {
+namespace KontrolSystem.KSP.Runtime.KSPResource {
+    public partial class KSPResourceModule {
         [KSClass("ResourceContainer")]
         public class ResourceContainerAdapter {
-            private readonly ResourceContainer resourceContainer;
+            internal readonly PartComponent partComponent;
+            internal readonly ResourceContainer resourceContainer;
 
-            internal ResourceContainerAdapter(ResourceContainer resourceContainer) {
-                this.resourceContainer = resourceContainer;
+            internal ResourceContainerAdapter(PartComponent partComponent) {
+                this.partComponent = partComponent;
+                resourceContainer = partComponent.PartResourceContainer;
             }
 
             [KSField]
@@ -28,6 +31,10 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             internal ResourceDataAdapter(ContainedResourceData resourceData) {
                 this.resourceData = resourceData;
             }
+
+            [KSField]
+            public ResourceDefinitionAdapter Resource =>
+                ResourceDefinitionAdapter.CreateFromResourceID(resourceData.ResourceID);
 
             [KSField] public double CapacityUnits => resourceData.CapacityUnits;
 

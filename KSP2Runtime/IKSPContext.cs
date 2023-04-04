@@ -3,6 +3,7 @@ using KontrolSystem.TO2.Runtime;
 using KontrolSystem.KSP.Runtime.KSPConsole;
 using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
+using KontrolSystem.KSP.Runtime.KSPResource;
 using KontrolSystem.KSP.Runtime.KSPTelemetry;
 using KontrolSystem.TO2.Binding;
 using KSP.Game;
@@ -47,10 +48,8 @@ namespace KontrolSystem.KSP.Runtime {
 
         void ClearMarkers();
 
-        void TriggerMarkerUpdate();
-
-        void TriggerMarkerRender();
-
+        void AddResourceTransfer(KSPResourceModule.ResourceTransfer resourceTransfer);
+        
         bool TryFindAutopilot<T>(VesselComponent vessel, out T autopilot) where T : IKSPAutopilot;
 
         void HookAutopilot(VesselComponent vessel, IKSPAutopilot autopilot);

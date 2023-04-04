@@ -10,6 +10,7 @@ namespace KontrolSystem.KSP.Runtime {
             registry.RegisterModule(KSPMathModule.Instance.module);
 
             var (vesselTypes, vesselConstants) = KSPVessel.KSPVesselModule.DirectBindings();
+            var (resourceTypes, resourceConstants) = KSPResource.KSPResourceModule.DirectBindings();
             registry.RegisterModule(
                 BindingGenerator.BindModule(typeof(KSPConsole.KSPConsoleModule)));
             registry.RegisterModule(
@@ -21,6 +22,8 @@ namespace KontrolSystem.KSP.Runtime {
             registry.RegisterModule(
                 BindingGenerator.BindModule(typeof(KSPControl.KSPControlModule)));
             registry.RegisterModule(
+                BindingGenerator.BindModule(typeof(KSPResource.KSPResourceModule), resourceTypes, resourceConstants));
+            registry.RegisterModule(
                 BindingGenerator.BindModule(typeof(KSPVessel.KSPVesselModule), vesselTypes, vesselConstants));
             registry.RegisterModule(
                 BindingGenerator.BindModule(typeof(KSPDebug.KSPDebugModule)));
@@ -28,7 +31,6 @@ namespace KontrolSystem.KSP.Runtime {
                 BindingGenerator.BindModule(typeof(KSPTelemetry.KSPTelemetryModule)));
             /*            registry.RegisterModule(BindingGenerator.BindModule(typeof(KSPUI.KSPUIModule)));
                         
-                        registry.RegisterModule(BindingGenerator.BindModule(typeof(KSPResource.KSPResourceModule)));
                         registry.RegisterModule(BindingGenerator.BindModule(typeof(KSPAddons.KSPAddonsModule)));
                         registry.RegisterModule(BindingGenerator.BindModule(typeof(KSPGame.KSPAlarmClockModule)));
                         */

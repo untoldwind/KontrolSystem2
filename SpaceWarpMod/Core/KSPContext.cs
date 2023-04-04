@@ -6,6 +6,7 @@ using KontrolSystem.KSP.Runtime;
 using KontrolSystem.KSP.Runtime.KSPConsole;
 using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
+using KontrolSystem.KSP.Runtime.KSPResource;
 using KontrolSystem.KSP.Runtime.KSPTelemetry;
 using KontrolSystem.SpaceWarpMod.UI;
 using KontrolSystem.TO2.Runtime;
@@ -62,6 +63,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         private readonly Stopwatch timeStopwatch;
         private readonly long timeoutMillis;
         internal readonly List<IMarker> markers;
+        internal readonly List<KSPResourceModule.ResourceTransfer> resourceTransfers;
         private readonly Dictionary<VesselComponent, AutopilotHooks> autopilotHooks;
         private readonly List<BackgroundKSPContext> childContexts;
         private int stackCallCount = 0;
@@ -71,6 +73,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
             this.consoleBuffer = consoleBuffer;
             this.timeSeriesCollection = timeSeriesCollection;
             markers = new List<IMarker>();
+            resourceTransfers = new List<KSPResourceModule.ResourceTransfer>();
             autopilotHooks = new Dictionary<VesselComponent, AutopilotHooks>();
             nextYield = new WaitForFixedUpdate();
             childContexts = new List<BackgroundKSPContext>();
@@ -160,6 +163,10 @@ namespace KontrolSystem.SpaceWarpMod.Core {
             markers.Clear();
         }
 
+        public void AddResourceTransfer(KSPResourceModule.ResourceTransfer resourceTransfer) {
+            resourceTransfers.Add(resourceTransfer);
+        }
+
         public void TriggerMarkerUpdate() {
             try {
                 ContextHolder.CurrentContext.Value = this;
@@ -235,6 +242,10 @@ namespace KontrolSystem.SpaceWarpMod.Core {
             foreach (var kv in autopilotHooks) {
                 LoggerAdapter.Instance.Debug($"Unhooking from vessel: {kv.Key.Name}");
                 kv.Key.SimulationObject.objVesselBehavior.OnPreAutopilotUpdate -= kv.Value.RunAutopilots;
+            }
+
+            foreach (var resourceTransfer in resourceTransfers) {
+                resourceTransfers.Clear();
             }
 
             foreach (var childContext in childContexts) {

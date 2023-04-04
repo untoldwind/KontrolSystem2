@@ -1,4 +1,5 @@
 ﻿using KontrolSystem.KSP.Runtime.KSPMath;
+using KontrolSystem.KSP.Runtime.KSPResource;
 using KontrolSystem.KSP2.Runtime.KSPVessel;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
@@ -28,7 +29,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField] public bool IsEngine => part.IsPartEngine(out var _);
 
             [KSField]
-            public ResourceContainerAdapter Resources => new ResourceContainerAdapter(part.PartResourceContainer);
+            public KSPResourceModule.ResourceContainerAdapter Resources => new KSPResourceModule.ResourceContainerAdapter(part);
 
             [KSField]
             public Option<ModuleAirIntakeAdapter> AirIntake {
