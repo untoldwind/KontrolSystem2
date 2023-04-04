@@ -83,6 +83,16 @@ Retrograde | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode
 StabilityAssist | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | 
 Target | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | 
 
+#### Methods
+
+##### from_string
+
+```rust
+autopilotmodeconstants.from_string ( value : string ) -> Option<ksp::vessel::AutopilotMode>
+```
+
+Parse from string
+
 ### DeltaVSituation
 
 Vessel situation for delta-v calculation
@@ -108,6 +118,16 @@ Name | Type | Read-only | Description
 Altitude | [ksp::vessel::DeltaVSituation](/reference/ksp/vessel.md#deltavsituation) | R/O | 
 SeaLevel | [ksp::vessel::DeltaVSituation](/reference/ksp/vessel.md#deltavsituation) | R/O | 
 Vaccum | [ksp::vessel::DeltaVSituation](/reference/ksp/vessel.md#deltavsituation) | R/O | 
+
+#### Methods
+
+##### from_string
+
+```rust
+deltavsituationconstants.from_string ( value : string ) -> Option<ksp::vessel::DeltaVSituation>
+```
+
+Parse from string
 
 ### EngineDeltaV
 
@@ -200,6 +220,16 @@ Piston | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O |
 ScramJet | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | 
 SolidBooster | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | 
 Turbine | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | 
+
+#### Methods
+
+##### from_string
+
+```rust
+enginetypeconstants.from_string ( value : string ) -> Option<ksp::vessel::EngineType>
+```
+
+Parse from string
 
 ### FlightCtrlState
 
@@ -521,6 +551,16 @@ IMMEDIATE | [ksp::vessel::ParachuteDeployMode](/reference/ksp/vessel.md#parachut
 RISKY | [ksp::vessel::ParachuteDeployMode](/reference/ksp/vessel.md#parachutedeploymode) | R/O | 
 SAFE | [ksp::vessel::ParachuteDeployMode](/reference/ksp/vessel.md#parachutedeploymode) | R/O | 
 
+#### Methods
+
+##### from_string
+
+```rust
+parachutedeploymodeconstants.from_string ( value : string ) -> Option<ksp::vessel::ParachuteDeployMode>
+```
+
+Parse from string
+
 ### ParachuteDeployState
 
 Parachute deploy state
@@ -549,6 +589,16 @@ DEPLOYED | [ksp::vessel::ParachuteDeployState](/reference/ksp/vessel.md#parachut
 SEMIDEPLOYED | [ksp::vessel::ParachuteDeployState](/reference/ksp/vessel.md#parachutedeploystate) | R/O | 
 STOWED | [ksp::vessel::ParachuteDeployState](/reference/ksp/vessel.md#parachutedeploystate) | R/O | 
 
+#### Methods
+
+##### from_string
+
+```rust
+parachutedeploystateconstants.from_string ( value : string ) -> Option<ksp::vessel::ParachuteDeployState>
+```
+
+Parse from string
+
 ### ParachuteSafeStates
 
 Parachute safe states
@@ -576,6 +626,16 @@ RISKY | [ksp::vessel::ParachuteSafeStates](/reference/ksp/vessel.md#parachutesaf
 SAFE | [ksp::vessel::ParachuteSafeStates](/reference/ksp/vessel.md#parachutesafestates) | R/O | 
 UNSAFE | [ksp::vessel::ParachuteSafeStates](/reference/ksp/vessel.md#parachutesafestates) | R/O | 
 
+#### Methods
+
+##### from_string
+
+```rust
+parachutesafestatesconstants.from_string ( value : string ) -> Option<ksp::vessel::ParachuteSafeStates>
+```
+
+Parse from string
+
 ### Part
 
 
@@ -602,39 +662,8 @@ is_solar_panel | bool | R/O |
 launch_clamp | Option&lt;[ksp::vessel::ModuleLaunchClamp](/reference/ksp/vessel.md#modulelaunchclamp)> | R/O | 
 parachute | Option&lt;[ksp::vessel::ModuleParachute](/reference/ksp/vessel.md#moduleparachute)> | R/O | 
 part_name | string | R/O | 
-resources | [ksp::vessel::ResourceContainer](/reference/ksp/vessel.md#resourcecontainer) | R/O | 
+resources | [ksp::resource::ResourceContainer](/reference/ksp/resource.md#resourcecontainer) | R/O | 
 solar_panel | Option&lt;[ksp::vessel::ModuleSolarPanel](/reference/ksp/vessel.md#modulesolarpanel)> | R/O | 
-
-### ResourceContainer
-
-
-
-#### Fields
-
-Name | Type | Read-only | Description
---- | --- | --- | ---
-list | [ksp::vessel::ResourceData](/reference/ksp/vessel.md#resourcedata)[] | R/O | 
-
-#### Methods
-
-##### dump_all
-
-```rust
-resourcecontainer.dump_all ( ) -> Unit
-```
-
-
-
-### ResourceData
-
-
-
-#### Fields
-
-Name | Type | Read-only | Description
---- | --- | --- | ---
-capacity_units | float | R/O | 
-stored_units | float | R/O | 
 
 ### StageDeltaV
 
@@ -974,6 +1003,16 @@ FullControlHibernation | [ksp::vessel::VesselControlState](/reference/ksp/vessel
 NoCommNet | [ksp::vessel::VesselControlState](/reference/ksp/vessel.md#vesselcontrolstate) | R/O | 
 NoControl | [ksp::vessel::VesselControlState](/reference/ksp/vessel.md#vesselcontrolstate) | R/O | 
 
+#### Methods
+
+##### from_string
+
+```rust
+vesselcontrolstateconstants.from_string ( value : string ) -> Option<ksp::vessel::VesselControlState>
+```
+
+Parse from string
+
 ### VesselDeltaV
 
 
@@ -1025,6 +1064,16 @@ PreLaunch | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituat
 Splashed | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | 
 SubOrbital | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | 
 Unknown | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | 
+
+#### Methods
+
+##### from_string
+
+```rust
+vesselsituationconstants.from_string ( value : string ) -> Option<ksp::vessel::VesselSituation>
+```
+
+Parse from string
 
 ## Constants
 

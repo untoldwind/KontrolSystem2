@@ -108,6 +108,14 @@ globaldirection.roll ( frame : ksp::math::TransformFrame ) -> float
 
 Get roll angle in a specific coordinate system
 
+##### to_local
+
+```rust
+globaldirection.to_local ( frame : ksp::math::TransformFrame ) -> ksp::math::Direction
+```
+
+Get local direction in a coordinate system
+
 ##### to_string
 
 ```rust
