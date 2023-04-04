@@ -8,6 +8,7 @@
 * Added check for stack overflow of scripts
 * Create bindings for all enums:
   * Instead of `vessel.autopilot.mode = "Prograde"` one should now use `vessel.autopilot.mode = AutopilotMode.Prograde`
+* Basic resource transfer API `ksp::resource`
 
 ## 0.2.3 -> 0.3.1
 
