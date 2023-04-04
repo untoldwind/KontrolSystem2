@@ -9,42 +9,42 @@ namespace KontrolSystem.KSP.Runtime.KSPResource {
         [KSClass("ResourceTransfer", Description = "Represents a resource transfer")]
         public class ResourceTransfer {
             private readonly List<ResourceTransferEntry> entries = new List<ResourceTransferEntry>();
-            private bool running;
 
             [KSField] public ResourceTransferEntry[] Entries => entries.ToArray();
 
+            [KSField] public bool IsRunning => entries.Any(e => e.IsRunning);
+            
             [KSMethod]
-            public bool AddContainer(FlowDirection flowDirection, ResourceContainerAdapter resourceContainer) {
-                if (running) return false;
-                entries.Add(new ResourceTransferEntry(flowDirection, resourceContainer));
+            public bool AddContainer(FlowDirection flowDirection, ResourceContainerAdapter resourceContainer, double relativeAmount = 1.0) {
+                if (IsRunning) return false;
+                entries.Add(new ResourceTransferEntry(flowDirection, resourceContainer, relativeAmount));
                 return true;
             }
 
             [KSMethod]
             public bool Start() {
-                if (running) return false;
+                if (IsRunning) return false;
                 foreach (var entry in entries) {
                     entry.Start();
                 }
-                running = true;
                 return true;
             }
 
             [KSMethod]
             public bool Stop() {
-                if (!running) return false;
+                if (!IsRunning) return false;
                 foreach (var entry in entries) {
                     entry.Stop();
                 }
-                running = false;
                 return true;
             }
 
             [KSMethod]
-            public bool Clear() {
-                if (running) return false;
+            public void Clear() {
+                foreach (var entry in entries) {
+                    entry.Cleanup();
+                }
                 entries.Clear();
-                return true;
             }
         }
 
@@ -52,11 +52,15 @@ namespace KontrolSystem.KSP.Runtime.KSPResource {
         public class ResourceTransferEntry {
             private readonly FlowDirection flowDirection;
             private readonly ResourceContainerAdapter resourceContainer;
+            private readonly double relativeAmount;
+            private readonly ResourceFlowRequestBroker broker;
             private ResourceFlowRequestHandle resourceFlowRequestHandle;
 
-            public ResourceTransferEntry(FlowDirection flowDirection, ResourceContainerAdapter resourceContainer) {
+            public ResourceTransferEntry(FlowDirection flowDirection, ResourceContainerAdapter resourceContainer, double relativeAmount) {
                 this.flowDirection = flowDirection;
                 this.resourceContainer = resourceContainer;
+                this.relativeAmount = relativeAmount;
+                broker = resourceContainer.partComponent.PartResourceFlowRequestBroker;
             }
 
             [KSField]
@@ -65,17 +69,27 @@ namespace KontrolSystem.KSP.Runtime.KSPResource {
             [KSField]
             public ResourceContainerAdapter ResourceContainer => resourceContainer;
 
+            internal bool IsRunning {
+                get {
+                    if (broker.TryGetCurrentRequest(resourceFlowRequestHandle, out var wrapper) && wrapper.RequestResolutionState.WasLastTickDeliveryAccepted) {
+                        return true;
+                    }
+
+                    return false;
+                }    
+            }
+            
             internal void Start() {
+                Cleanup();
                 var commandConfigs = resourceContainer.resourceContainer.GetAllResourcesContainedData().Select(
                     contained => new ResourceFlowRequestCommandConfig {
                         FlowResource = contained.ResourceID,
                         FlowDirection = flowDirection,
-                        TargetUnits = flowDirection == FlowDirection.FLOW_INBOUND ? contained.CapacityUnits - contained.StoredUnits : contained.StoredUnits,
-                        FlowUnits = flowDirection == FlowDirection.FLOW_INBOUND ? contained.CapacityUnits - contained.StoredUnits : contained.StoredUnits,
+                        TargetUnits = relativeAmount * contained.CapacityUnits,
+                        FlowUnits = relativeAmount * contained.CapacityUnits,
                         FlowModeOverride = ResourceFlowMode.NO_FLOW,
                     }).ToArray();
 
-                var broker = resourceContainer.partComponent.PartResourceFlowRequestBroker;
                 resourceFlowRequestHandle = broker.AllocateOrGetRequest();
                 if (resourceContainer.partComponent.PartOwner.ResourceFlowRequestManager.TryGetRequest(resourceFlowRequestHandle,
                         out var wrapper)) {
@@ -86,12 +100,9 @@ namespace KontrolSystem.KSP.Runtime.KSPResource {
                 broker.SetRequestActive(resourceFlowRequestHandle);
             }
 
-            internal void Stop() {
-                if (resourceContainer != null) {
-                    var broker = resourceContainer.partComponent.PartResourceFlowRequestBroker;
-                    broker.SetRequestInactive(resourceFlowRequestHandle);
-                }
-            }
+            internal void Stop() => broker.SetRequestInactive(resourceFlowRequestHandle);
+
+            internal void Cleanup() => broker.ForceRemoveRequest(resourceFlowRequestHandle);
         }
     }
 }

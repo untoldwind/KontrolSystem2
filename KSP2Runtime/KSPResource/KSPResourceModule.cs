@@ -10,7 +10,11 @@ namespace KontrolSystem.KSP.Runtime.KSPResource {
     )]
     public partial class KSPResourceModule {
         [KSFunction]
-        public static ResourceTransfer CreateResourceTransfer() => new ResourceTransfer();
+        public static ResourceTransfer CreateResourceTransfer() {
+            var resourceTransfer = new ResourceTransfer();
+            KSPContext.CurrentContext.AddResourceTransfer(resourceTransfer);
+            return resourceTransfer;
+        }
 
         public static (IEnumerable<RealizedType>, IEnumerable<IKontrolConstant>) DirectBindings() {
             var (enumTypes, enumConstants) = BindingGenerator.RegisterEnumTypeMappings("ksp::resource",
