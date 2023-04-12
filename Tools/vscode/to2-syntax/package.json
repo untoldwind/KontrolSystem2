@@ -16,7 +16,31 @@
     "type": "git",
     "url": "https://github.com/untoldwind/KontrolSystem2"
   },
+  "main": "./client/out/extension",
   "contributes": {
+    "configuration": {
+      "type": "object",
+			"title": "Example configuration",
+			"properties": {
+				"languageServerExample.maxNumberOfProblems": {
+					"scope": "resource",
+					"type": "number",
+					"default": 100,
+					"description": "Controls the maximum number of problems produced by the server."
+				},
+				"languageServerExample.trace.server": {
+					"scope": "window",
+					"type": "string",
+					"enum": [
+						"off",
+						"messages",
+						"verbose"
+					],
+					"default": "off",
+					"description": "Traces the communication between VS Code and the language server."
+				}
+			}
+    },
     "languages": [{
       "id": "to2",
       "aliases": ["TO2", "to2"],
@@ -28,5 +52,13 @@
       "scopeName": "source.to2",
       "path": "./syntaxes/to2.tmLanguage.json"
     }]
+  },
+  "scripts": {
+    "compile": "tsc -b",
+    "watch": "tsc -b -w"
+  },
+  "devDependencies": {
+    "@types/node": "18.15.11",
+    "typescript": "^5.0.4"
   }
 }
