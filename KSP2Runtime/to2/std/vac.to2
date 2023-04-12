@@ -21,7 +21,6 @@ pub fn exec_next_node(vessel : Vessel) -> Result<Unit, string> = {
     vessel.autopilot.mode = AutopilotMode.Maneuver
     
     const frame = vessel.main_body.celestial_frame
-    const target_orbit = node.expected_orbit
     const dv0 = node.global_burn_vector.vector
     const burn_duration = node.burn_duration 
     
@@ -50,6 +49,8 @@ pub fn exec_next_node(vessel : Vessel) -> Result<Unit, string> = {
         throttle
     })
 
+    const target_orbit = node.expected_orbit
+    
     while(dv_min.value >= 0.05) {
         const ut = current_time()
         
