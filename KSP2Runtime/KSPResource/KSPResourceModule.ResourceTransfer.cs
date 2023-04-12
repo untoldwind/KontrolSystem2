@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using KontrolSystem.TO2.Binding;
 using KSP.Sim.impl;
@@ -25,8 +26,36 @@ namespace KontrolSystem.KSP.Runtime.KSPResource {
             public bool Start() {
                 if (IsRunning) return false;
                 foreach (var entry in entries) {
+                    entry.Cleanup();
+                }
+                var resourceIds = entries.SelectMany(entry => entry.ResourceContainer.resourceContainer).ToHashSet();
+
+                foreach (var resourceId in resourceIds) {
+                    var inList = entries
+                        .Where(entry =>
+                            entry.HasResource(resourceId) && entry.FlowDirection == FlowDirection.FLOW_INBOUND)
+                        .OrderBy(entry => entry.GetTotalIn(resourceId)).ToList();
+                    var outList = entries
+                        .Where(entry =>
+                            entry.HasResource(resourceId) && entry.FlowDirection == FlowDirection.FLOW_OUTBOUND)
+                        .OrderBy(entry => entry.GetTotalOut(resourceId)).ToList();
+                    var totalIn = inList.Sum(entry => entry.GetTotalIn(resourceId));
+                    var totalOut = outList.Sum(entry => entry.GetTotalOut(resourceId));
+                    var transferUnits = Math.Min(totalIn, totalOut);
+                    var remainingIn = transferUnits;
+                    foreach (var entry in inList) {
+                        remainingIn = entry.PrepareTransfer(resourceId, remainingIn);
+                    }
+                    var remainingOut = transferUnits;
+                    foreach (var entry in outList) {
+                        remainingOut = entry.PrepareTransfer(resourceId, remainingOut);
+                    }
+                }
+
+                foreach (var entry in entries) {
                     entry.Start();
                 }
+                
                 return true;
             }
 
@@ -55,12 +84,14 @@ namespace KontrolSystem.KSP.Runtime.KSPResource {
             private readonly double relativeAmount;
             private readonly ResourceFlowRequestBroker broker;
             private ResourceFlowRequestHandle resourceFlowRequestHandle;
+            private List<ResourceFlowRequestCommandConfig> commands;
 
             public ResourceTransferEntry(FlowDirection flowDirection, ResourceContainerAdapter resourceContainer, double relativeAmount) {
                 this.flowDirection = flowDirection;
                 this.resourceContainer = resourceContainer;
                 this.relativeAmount = relativeAmount;
                 broker = resourceContainer.partComponent.PartResourceFlowRequestBroker;
+                commands = new List<ResourceFlowRequestCommandConfig>();
             }
 
             [KSField]
@@ -69,40 +100,68 @@ namespace KontrolSystem.KSP.Runtime.KSPResource {
             [KSField]
             public ResourceContainerAdapter ResourceContainer => resourceContainer;
 
+            public bool HasResource(ResourceDefinitionID resourceDefinitionID) =>
+                resourceContainer.resourceContainer.Contains(resourceDefinitionID);
+
+            public double GetTotalIn(ResourceDefinitionID resourceDefinitionID) =>
+                relativeAmount * (resourceContainer.resourceContainer.GetResourceCapacityUnits(resourceDefinitionID) -
+                resourceContainer.resourceContainer.GetResourceStoredUnits(resourceDefinitionID));
+
+            public double GetTotalOut(ResourceDefinitionID resourceDefinitionID) =>
+                relativeAmount * resourceContainer.resourceContainer.GetResourceStoredUnits(resourceDefinitionID);
+            
             internal bool IsRunning {
                 get {
-                    if (broker.TryGetCurrentRequest(resourceFlowRequestHandle, out var wrapper) && wrapper.RequestResolutionState.WasLastTickDeliveryAccepted) {
-                        return true;
+                    if (broker.IsRequestActive(resourceFlowRequestHandle) && broker.TryGetCurrentRequest(resourceFlowRequestHandle, out var wrapper)) {
+                        return wrapper.RequestResolutionState.LastTickDeltaTime < 0.001 || wrapper.RequestResolutionState.WasLastTickDeliveryAccepted;
                     }
 
                     return false;
                 }    
             }
+
+            internal double PrepareTransfer(ResourceDefinitionID resourceDefinitionID, double remaining) {
+                if (remaining <= 1e-5) return 0.0;
+
+                var transfer = Math.Min(remaining,
+                    FlowDirection == FlowDirection.FLOW_INBOUND
+                        ? GetTotalIn(resourceDefinitionID)
+                        : GetTotalOut(resourceDefinitionID));
+                if (transfer > 0) {
+                    commands.Add(new ResourceFlowRequestCommandConfig {
+                        FlowResource = resourceDefinitionID,
+                        FlowDirection = flowDirection,
+                        TargetUnits = transfer,
+                        FlowUnits = transfer,
+                        FlowModeOverride = ResourceFlowMode.NO_FLOW,
+                    });
+                }
+
+                return remaining - transfer;
+            }
             
             internal void Start() {
-                Cleanup();
-                var commandConfigs = resourceContainer.resourceContainer.GetAllResourcesContainedData().Select(
-                    contained => new ResourceFlowRequestCommandConfig {
-                        FlowResource = contained.ResourceID,
-                        FlowDirection = flowDirection,
-                        TargetUnits = relativeAmount * contained.CapacityUnits,
-                        FlowUnits = relativeAmount * contained.CapacityUnits,
-                        FlowModeOverride = ResourceFlowMode.NO_FLOW,
-                    }).ToArray();
-
+                if (commands.Count == 0) return;
+                
                 resourceFlowRequestHandle = broker.AllocateOrGetRequest();
                 if (resourceContainer.partComponent.PartOwner.ResourceFlowRequestManager.TryGetRequest(resourceFlowRequestHandle,
                         out var wrapper)) {
                     wrapper.RequestResolutionState = default;
                 }
 
-                broker.SetCommands(resourceFlowRequestHandle, 1.0, commandConfigs.ToArray());
+                broker.SetCommands(resourceFlowRequestHandle, 1.0, commands.ToArray());
                 broker.SetRequestActive(resourceFlowRequestHandle);
             }
 
-            internal void Stop() => broker.SetRequestInactive(resourceFlowRequestHandle);
+            internal void Stop() {
+                broker.SetRequestInactive(resourceFlowRequestHandle);
+                commands.Clear();
+            }
 
-            internal void Cleanup() => broker.ForceRemoveRequest(resourceFlowRequestHandle);
+            internal void Cleanup() {
+                broker.ForceRemoveRequest(resourceFlowRequestHandle);
+                commands.Clear();
+            }
         }
     }
 }
