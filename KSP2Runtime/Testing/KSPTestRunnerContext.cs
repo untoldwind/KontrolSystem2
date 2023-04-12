@@ -63,7 +63,7 @@ namespace KontrolSystem.KSP.Runtime.Testing {
 
         public void AddResourceTransfer(KSPResourceModule.ResourceTransfer resourceTransfer) {
         }
-        
+
         public bool TryFindAutopilot<T>(VesselComponent vessel, out T autopilot) where T : IKSPAutopilot {
             autopilot = default;
             return false;

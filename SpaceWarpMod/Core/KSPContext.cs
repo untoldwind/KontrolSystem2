@@ -245,13 +245,14 @@ namespace KontrolSystem.SpaceWarpMod.Core {
             }
 
             foreach (var resourceTransfer in resourceTransfers) {
-                resourceTransfers.Clear();
+                resourceTransfer.Clear();
             }
 
             foreach (var childContext in childContexts) {
                 childContext.Cleanup();
             }
 
+            resourceTransfers.Clear();
             autopilotHooks.Clear();
             childContexts.Clear();
         }

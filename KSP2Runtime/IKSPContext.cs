@@ -49,7 +49,7 @@ namespace KontrolSystem.KSP.Runtime {
         void ClearMarkers();
 
         void AddResourceTransfer(KSPResourceModule.ResourceTransfer resourceTransfer);
-        
+
         bool TryFindAutopilot<T>(VesselComponent vessel, out T autopilot) where T : IKSPAutopilot;
 
         void HookAutopilot(VesselComponent vessel, IKSPAutopilot autopilot);
