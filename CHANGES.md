@@ -1,5 +1,12 @@
 # Changes
 
+## 0.3.2 -> 0.3.3
+
+* Fix incompatibility with 0.1.2.0 on maneuver node creation
+* Add `activation_stage` and `decouple_stage` property to vessel part
+* Ensure that resources are not created from nothing on resource transfer
+  * ... still requires some additional testing
+
 ## 0.3.1 -> 0.3.2
 
 * Cleanup calculation of `vessel.pitch_yaw_roll`
