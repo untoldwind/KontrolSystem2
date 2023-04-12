@@ -28,6 +28,10 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField] public bool IsEngine => part.IsPartEngine(out var _);
 
+            [KSField] public long ActivationStage => part.ActivationStage;
+
+            [KSField] public long DecoupleStage => part.DecoupleStage;
+
             [KSField]
             public KSPResourceModule.ResourceContainerAdapter Resources => new KSPResourceModule.ResourceContainerAdapter(part);
 
