@@ -1,8 +1,11 @@
+import { Position } from "vscode-languageserver-textdocument"
+
 export interface Input {
-    current(): string
+    offset: number
+    position: Position
     available(): number
     take(count: number): string
-    findNext(predicate: (ch : string) => boolean): number
+    findNext(predicate: (charCode : number) => boolean): number
     advance(count: number): Input
 }
 
@@ -27,18 +30,18 @@ export class ParserSuccess<T> {
 
 export class ParserFailure<T> {
     success: false = false;
-    error: string;
+    expected: string;
 
-    constructor(error: string) {
-        this.error = error;
+    constructor(expected: string) {
+        this.expected = expected;
     }
 
     map<U>(mapper: (result: T) => U) : ParserResult<U> {
-        return new ParserFailure<U>(this.error);
+        return new ParserFailure<U>(this.expected);
     }
 
     select<U>(next: (result: ParserSuccess<T>) => ParserResult<U>) : ParserResult<U> {
-        return new ParserFailure<U>(this.error);
+        return new ParserFailure<U>(this.expected);
     }
 }
 
