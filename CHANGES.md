@@ -1,5 +1,9 @@
 # Changes
 
+## 0.3.3 -> 0.3.3.1
+
+* Prevent loading of files with "*.to2~" extension (issue #69) 
+
 ## 0.3.2 -> 0.3.3
 
 * Fix incompatibility with 0.1.2.0 on maneuver node creation
