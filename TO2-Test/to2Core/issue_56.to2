@@ -1,11 +1,11 @@
 use * from core::testing
 
-pub struct Sequencer(last: Option<SeqNode>) {
-    last: Option<SeqNode> = last
-}
-
 pub struct SeqNode(next: Option<SeqNode>) {
     next: Option<SeqNode> = next
+}
+
+pub struct Sequencer(last: Option<SeqNode>) {
+    last: Option<SeqNode> = last
 }
 
 impl Sequencer {

@@ -24,7 +24,7 @@ namespace KontrolSystem.TO2.Runtime {
             public static string Format<T>(string format, T items) {
                 try {
                     if (items is Array a) {
-                        return String.Format(CultureInfo.CurrentCulture, format, a.Cast<object>().ToArray());
+                        return String.Format(CultureInfo.InvariantCulture, format, a.Cast<object>().ToArray());
                     }
 
                     if (items is ITuple t) {
@@ -33,10 +33,10 @@ namespace KontrolSystem.TO2.Runtime {
                             values[i] = t[i];
                         }
 
-                        return String.Format(CultureInfo.CurrentCulture, format, values);
+                        return String.Format(CultureInfo.InvariantCulture, format, values);
                     }
 
-                    return String.Format(CultureInfo.CurrentCulture, format, items);
+                    return String.Format(CultureInfo.InvariantCulture, format, items);
                 } catch (FormatException e) {
                     return $"{format}: {e.Message}";
                 }
