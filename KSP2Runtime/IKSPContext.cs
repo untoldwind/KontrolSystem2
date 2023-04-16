@@ -5,6 +5,7 @@ using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.KSP.Runtime.KSPResource;
 using KontrolSystem.KSP.Runtime.KSPTelemetry;
+using KontrolSystem.KSP.Runtime.KSPUI;
 using KSP.Game;
 using KSP.Sim.impl;
 using KSP.Sim.State;
@@ -47,6 +48,8 @@ namespace KontrolSystem.KSP.Runtime {
         void ClearMarkers();
 
         void AddResourceTransfer(KSPResourceModule.ResourceTransfer resourceTransfer);
+
+        void AddWindow(KSPUIModule.Window window);
 
         bool TryFindAutopilot<T>(VesselComponent vessel, out T autopilot) where T : IKSPAutopilot;
 

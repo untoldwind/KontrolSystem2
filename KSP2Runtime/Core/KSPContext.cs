@@ -7,6 +7,7 @@ using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.KSP.Runtime.KSPResource;
 using KontrolSystem.KSP.Runtime.KSPTelemetry;
+using KontrolSystem.KSP.Runtime.KSPUI;
 using KontrolSystem.TO2.Runtime;
 using KSP.Game;
 using KSP.Sim.impl;
@@ -52,7 +53,7 @@ namespace KontrolSystem.KSP.Runtime.Core {
         }
     }
     public class KSPContext : IKSPContext {
-        internal static readonly int MAX_CALL_STACK = 100;
+        internal const int MaxCallStack = 100;
 
         private readonly ITO2Logger logger;
         private readonly GameInstance gameInstance;
@@ -63,11 +64,12 @@ namespace KontrolSystem.KSP.Runtime.Core {
         private Action onNextYieldOnce;
         private readonly Stopwatch timeStopwatch;
         private readonly long timeoutMillis;
-        internal readonly List<IMarker> markers;
-        internal readonly List<KSPResourceModule.ResourceTransfer> resourceTransfers;
+        private readonly List<IMarker> markers;
+        private readonly List<KSPResourceModule.ResourceTransfer> resourceTransfers;
+        private readonly List<KSPUIModule.Window> windows;
         private readonly Dictionary<VesselComponent, AutopilotHooks> autopilotHooks;
         private readonly List<BackgroundKSPContext> childContexts;
-        private int stackCallCount = 0;
+        private int stackCallCount;
 
         public KSPContext(ITO2Logger logger, GameInstance gameInstance, KSPConsoleBuffer consoleBuffer, TimeSeriesCollection timeSeriesCollection, OptionalAddons optionalAddons) {
             this.logger = logger;
@@ -78,6 +80,7 @@ namespace KontrolSystem.KSP.Runtime.Core {
             
             markers = new List<IMarker>();
             resourceTransfers = new List<KSPResourceModule.ResourceTransfer>();
+            windows = new List<KSPUIModule.Window>();
             autopilotHooks = new Dictionary<VesselComponent, AutopilotHooks>();
             nextYield = new WaitForFixedUpdate();
             childContexts = new List<BackgroundKSPContext>();
@@ -106,8 +109,8 @@ namespace KontrolSystem.KSP.Runtime.Core {
 
 
         public void FunctionEnter(string name, object[] arguments) {
-            if (Interlocked.Increment(ref stackCallCount) > MAX_CALL_STACK) {
-                throw new StackOverflowException($"Exceed stack count: {MAX_CALL_STACK}");
+            if (Interlocked.Increment(ref stackCallCount) > MaxCallStack) {
+                throw new StackOverflowException($"Exceed stack count: {MaxCallStack}");
             }
         }
 
@@ -133,7 +136,7 @@ namespace KontrolSystem.KSP.Runtime.Core {
 
         public KSPConsoleBuffer ConsoleBuffer => consoleBuffer;
 
-        public TimeSeriesCollection TimeSeriesCollection => timeSeriesCollection;
+        public TimeSeriesCollection TimeSeriesCollection { get; }
 
         public KSPOrbitModule.IBody FindBody(string name) {
             var body = Game.ViewController.GetBodyByName(name);
@@ -171,6 +174,10 @@ namespace KontrolSystem.KSP.Runtime.Core {
             resourceTransfers.Add(resourceTransfer);
         }
 
+        public void AddWindow(KSPUIModule.Window window) {
+            windows.Add(window);
+        }
+
         public void TriggerMarkerUpdate() {
             try {
                 ContextHolder.CurrentContext.Value = this;
@@ -192,8 +199,8 @@ namespace KontrolSystem.KSP.Runtime.Core {
         }
 
         public bool TryFindAutopilot<T>(VesselComponent vessel, out T autopilot) where T : IKSPAutopilot {
-            if (autopilotHooks.ContainsKey(vessel)) {
-                return autopilotHooks[vessel].TryFindAutopilot(out autopilot);
+            if (autopilotHooks.TryGetValue(vessel, out var hook)) {
+                return hook.TryFindAutopilot(out autopilot);
             }
 
             autopilot = default;
@@ -202,8 +209,8 @@ namespace KontrolSystem.KSP.Runtime.Core {
 
         public void HookAutopilot(VesselComponent vessel, IKSPAutopilot autopilot) {
             logger.Debug($"Hook autopilot {autopilot} to {vessel.Name}");
-            if (autopilotHooks.ContainsKey(vessel)) {
-                autopilotHooks[vessel].Add(autopilot);
+            if (autopilotHooks.TryGetValue(vessel, out var hook)) {
+                hook.Add(autopilot);
             } else {
                 AutopilotHooks autopilots = new AutopilotHooks(this);
                 autopilots.Add(autopilot);
@@ -255,10 +262,15 @@ namespace KontrolSystem.KSP.Runtime.Core {
                 resourceTransfer.Clear();
             }
 
+            foreach (var window in windows.ToArray()) {
+                window.Close();
+            }
+
             foreach (var childContext in childContexts.ToArray()) {
                 childContext.Cleanup();
             }
 
+            windows.Clear();
             resourceTransfers.Clear();
             autopilotHooks.Clear();
             childContexts.Clear();
@@ -306,8 +318,8 @@ namespace KontrolSystem.KSP.Runtime.Core {
             }
         }
         public void FunctionEnter(string name, object[] arguments) {
-            if (Interlocked.Increment(ref stackCallCount) > KSPContext.MAX_CALL_STACK) {
-                throw new StackOverflowException($"Exceed stack count: {KSPContext.MAX_CALL_STACK}");
+            if (Interlocked.Increment(ref stackCallCount) > KSPContext.MaxCallStack) {
+                throw new StackOverflowException($"Exceed stack count: {KSPContext.MaxCallStack}");
             }
         }
 

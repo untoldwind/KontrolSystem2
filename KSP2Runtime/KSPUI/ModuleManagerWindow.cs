@@ -368,7 +368,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
                         : UIFactory.Instance.startIcon);
                 root.Add(startStop, UGUILayout.Align.Center, new Vector2(24, 24));
                 startStopIcon = startStop.GetComponentInChildren<RawImage>();
-                startStop.GetComponent<Button>().onClick.AddListener(element.OnStartStop);
+                startStop.GetComponent<Button>().onClick.AddListener(() => this.element.OnStartStop());
 
                 root.Layout();
             }

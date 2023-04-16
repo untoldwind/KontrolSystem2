@@ -31,9 +31,7 @@ namespace KontrolSystem.KSP.Runtime {
                 BindingGenerator.BindModule(typeof(KSPTelemetry.KSPTelemetryModule)));
             registry.RegisterModule(
                 BindingGenerator.BindModule(typeof(KSPAddons.KSPAddonsModule)));
-            /*            registry.RegisterModule(BindingGenerator.BindModule(typeof(KSPUI.KSPUIModule)));
-                        
-                        */
+            registry.RegisterModule(BindingGenerator.BindModule(typeof(KSPUI.KSPUIModule)));
             registry.RegisterModule(BindingGenerator.BindModule(typeof(Testing.KSPTesting)));
 
             return registry;

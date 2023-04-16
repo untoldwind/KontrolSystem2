@@ -13,7 +13,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
         private Vector2 minSize = new Vector2(0, 0);
         public UnityEvent onClose = new UnityEvent();
 
-        protected void Initialize(string title, Rect initialRect) {
+        internal void Initialize(string title, Rect initialRect) {
             var canvas = Game.UI.GetPopupCanvas();
             window = new GameObject("ResizeableWindow", typeof(Image));
             canvasTransform = (RectTransform)canvas.transform;
@@ -103,10 +103,10 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
                 Mathf.Max(minSize.y, size.y));
         }
 
-        protected UGUIVerticalLayout RootVerticalLayout() =>
-            new UGUIVerticalLayout(windowTransform, 10, new UGUILayout.Padding(40, 20, 10, 10));
+        internal UGUIVerticalLayout RootVerticalLayout(float gap = 10) =>
+            new UGUIVerticalLayout(windowTransform, gap, new UGUILayout.Padding(40, 20, 10, 10));
 
-        protected UGUIHorizontalLayout RootHorizontalLayout() =>
-            new UGUIHorizontalLayout(windowTransform, 10, new UGUILayout.Padding(40, 20, 10, 10));
+        internal UGUIHorizontalLayout RootHorizontalLayout(float gap = 10) =>
+            new UGUIHorizontalLayout(windowTransform, gap, new UGUILayout.Padding(40, 20, 10, 10));
     }
 }

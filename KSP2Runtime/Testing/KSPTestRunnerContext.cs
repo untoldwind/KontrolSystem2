@@ -6,6 +6,7 @@ using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.KSP.Runtime.KSPResource;
 using KontrolSystem.KSP.Runtime.KSPTelemetry;
+using KontrolSystem.KSP.Runtime.KSPUI;
 using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Runtime;
 using KSP.Game;
@@ -62,6 +63,9 @@ namespace KontrolSystem.KSP.Runtime.Testing {
         }
 
         public void AddResourceTransfer(KSPResourceModule.ResourceTransfer resourceTransfer) {
+        }
+
+        public void AddWindow(KSPUIModule.Window window) {
         }
 
         public bool TryFindAutopilot<T>(VesselComponent vessel, out T autopilot) where T : IKSPAutopilot {
