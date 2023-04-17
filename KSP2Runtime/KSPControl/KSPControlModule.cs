@@ -7,8 +7,9 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
             "pid_loop",
             Description = "Create a new PIDLoop with given parameters."
         )]
-        public static PidLoop CreatePidLoop(double kp, double ki, double kd, double minOutput, double maxOutput) =>
-            new PidLoop(kp, ki, kd, minOutput, maxOutput);
+        public static PidLoop CreatePidLoop(double kp, double ki, double kd, double minOutput, double maxOutput,
+            bool extraUnwind = false) =>
+            new PidLoop(kp, ki, kd, minOutput, maxOutput, extraUnwind);
 
         [KSFunction(
             "moving_average",
@@ -16,5 +17,14 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
         )]
         public static MovingAverage CreateMovingAverage(long sampleLimit) =>
             new MovingAverage() { SampleLimit = sampleLimit };
+
+        [KSFunction(
+            "torque_pi",
+            Description = "Create a new TorquePI with given parameters.")]
+        public static TorquePI CreateTorquePI(double ts) {
+            var torquePi = new TorquePI();
+            torquePi.Ts = ts;
+            return torquePi;
+        }
     }
 }
