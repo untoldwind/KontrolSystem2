@@ -46,16 +46,16 @@ namespace KontrolSystem.TO2 {
 
         private BoundEnumConstType enumType;
 
-        public EnumKontrolConstant(string name, BoundEnumConstType type) {
+        public EnumKontrolConstant(string name, BoundEnumConstType type, string description) {
             Name = name;
             enumType = type;
+            Description = description;
         }
 
         public TO2Type Type => enumType;
 
-        public string Description => "";
-
-
+        public string Description { get; }
+        
         public void EmitLoad(IBlockContext context) {
         }
 

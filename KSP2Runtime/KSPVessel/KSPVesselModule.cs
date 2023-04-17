@@ -1,4 +1,5 @@
-﻿using KontrolSystem.TO2.Binding;
+﻿using System;
+using KontrolSystem.TO2.Binding;
 using KSP.Sim.DeltaV;
 using KSP.Sim.State;
 using System.Collections.Generic;
@@ -30,14 +31,51 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
         public static (IEnumerable<RealizedType>, IEnumerable<IKontrolConstant>) DirectBindings() {
             var (enumTypes, enumConstants) = BindingGenerator.RegisterEnumTypeMappings("ksp::vessel",
                 new[] {
-                    ("AutopilotMode", "Vessel autopilot (SAS) mode", typeof(AutopilotMode)),
-                    ("DeltaVSituation", "Vessel situation for delta-v calculation", typeof(DeltaVSituationOptions)),
-                    ("ParachuteDeployState", "Parachute deploy state", typeof(Data_Parachute.DeploymentStates)),
-                    ("ParachuteDeployMode", "Parachute deploy mode", typeof(Data_Parachute.DeployMode)),
-                    ("ParachuteSafeStates", "Parachute safe states", typeof(Data_Parachute.DeploymentSafeStates)),
-                    ("EngineType", "Engine types", typeof(EngineType)),
-                    ("VesselSituation", "Vessel situation", typeof(VesselSituations)),
-                    ("VesselControlState", "Vessel control state", typeof(VesselControlState)),
+                    ("AutopilotMode", "Vessel autopilot (SAS) mode", typeof(AutopilotMode), new (Enum value, string description)[] {
+                        (AutopilotMode.StabilityAssist, "Stability assist mode. The autopilot tries to stop the rotation of the vessel. "),
+                        (AutopilotMode.Prograde, "Align the vessel to the prograde vector of its orbit."),
+                        (AutopilotMode.Retrograde, "Align the vessel to the retrograde vector of its orbit."),
+                        (AutopilotMode.Normal, "Align the vessel to the normal vector of its orbit."),
+                        (AutopilotMode.Antinormal, "Align the vessel to the anti-normal vector of its orbit."),
+                        (AutopilotMode.RadialIn, "Align the vessel to the radial-in vector of its orbit."),
+                        (AutopilotMode.RadialOut, "Align the vessel to the radial-out vector of its orbit."),
+                        (AutopilotMode.Target, "Align the vessel to the vector pointing to its target (if a target is set)."),
+                        (AutopilotMode.AntiTarget, "Align the vessel to the vector pointing away from its target (if a target is set)."),
+                        (AutopilotMode.Maneuver, "Align the vessel to the burn vector of the next maneuver node (if a maneuver node exists)."),
+                        (AutopilotMode.Navigation, "Align the vessel to the `vessel.autopilot.target_orientation` vector."),
+                        (AutopilotMode.Autopilot, "Align the vessel to the `vessel.autopilot.target_orientation` vector. (probably no difference to AutopilotMode.Navigation)"),
+                    }),
+                    ("DeltaVSituation", "Vessel situation for delta-v calculation", typeof(DeltaVSituationOptions), new (Enum value, string description)[] {
+                        (DeltaVSituationOptions.SeaLevel, "Calculate delta-v at sea level of the current main body."),
+                        (DeltaVSituationOptions.Altitude, "Calculate delta-v at the current altitude of the vessel."),
+                        (DeltaVSituationOptions.Vaccum, "Calculate delta-v in vaccum."),
+                    }),
+                    ("ParachuteDeployState", "Parachute deploy state", typeof(Data_Parachute.DeploymentStates), new (Enum value, string description)[] {
+                    }),
+                    ("ParachuteDeployMode", "Parachute deploy mode", typeof(Data_Parachute.DeployMode), new (Enum value, string description)[] {
+                    }),
+                    ("ParachuteSafeStates", "Parachute safe states", typeof(Data_Parachute.DeploymentSafeStates), new (Enum value, string description)[] {
+                    }),
+                    ("EngineType", "Engine types", typeof(EngineType), new (Enum value, string description)[] {
+                        (EngineType.Generic, "Generic engine type (not specified)"),
+                        (EngineType.SolidBooster, "Engine is a solid fuel booster"),
+                        (EngineType.Methalox, "Methan-oxigene rocket engine"),
+                        (EngineType.Turbine, "Turbine engine"),
+                        (EngineType.Nuclear, "Nuclear engine"),
+                        (EngineType.MonoProp, "Mono-propellant engine"),
+                    }),
+                    ("VesselSituation", "Vessel situation", typeof(VesselSituations), new (Enum value, string description)[] {
+                        (VesselSituations.PreLaunch, "Vessel is in pre-launch situation."),
+                        (VesselSituations.Landed, "Vessel has landed."),
+                        (VesselSituations.Splashed, "Vessel has splashed in water."),
+                        (VesselSituations.Flying, "Vessel is flying."),
+                        (VesselSituations.SubOrbital, "Vessel is on a sub-orbital trajectory."),
+                        (VesselSituations.Orbiting, "Vessel is orbiting its main body."),
+                        (VesselSituations.Escaping, "Vessel is on an escape trajectory."),
+                        (VesselSituations.Unknown, "Vessel situation is unknown."),
+                    }),
+                    ("VesselControlState", "Vessel control state", typeof(VesselControlState), new (Enum value, string description)[] {
+                    }),
                 });
 
             BindingGenerator.RegisterTypeMapping(typeof(FlightCtrlState),

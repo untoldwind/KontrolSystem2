@@ -150,18 +150,18 @@ namespace KontrolSystem.TO2.Binding {
         }
 
         public static (IEnumerable<RealizedType>, IEnumerable<IKontrolConstant>) RegisterEnumTypeMappings(
-            string modulePrefix, IEnumerable<(string localName, string description, Type enumType)> enums) {
+            string modulePrefix, IEnumerable<(string localName, string description, Type enumType, (Enum value, string description)[] valueDescriptions)> enums) {
             List<RealizedType> types = new List<RealizedType>();
             List<IKontrolConstant> constants = new List<IKontrolConstant>();
 
-            foreach (var (localName, description, enumType) in enums) {
+            foreach (var (localName, description, enumType, valueDescriptions) in enums) {
                 var boundEnumType = new BoundEnumType(modulePrefix, localName, description, enumType);
 
                 RegisterTypeMapping(enumType, boundEnumType);
                 types.Add(boundEnumType);
-                var boundEnumConstants = new BoundEnumConstType(boundEnumType);
+                var boundEnumConstants = new BoundEnumConstType(boundEnumType, valueDescriptions);
                 types.Add(boundEnumConstants);
-                constants.Add(new EnumKontrolConstant(localName, boundEnumConstants));
+                constants.Add(new EnumKontrolConstant(localName, boundEnumConstants, description));
             }
 
             return (types, constants);

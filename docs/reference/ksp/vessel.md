@@ -70,18 +70,18 @@ String representation of the number
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
-Antinormal | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | 
-AntiTarget | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | 
-Autopilot | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | 
-Maneuver | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | 
-Navigation | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | 
-Normal | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | 
-Prograde | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | 
-RadialIn | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | 
-RadialOut | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | 
-Retrograde | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | 
-StabilityAssist | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | 
-Target | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | 
+Antinormal | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | Align the vessel to the anti-normal vector of its orbit.
+AntiTarget | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | Align the vessel to the vector pointing away from its target (if a target is set).
+Autopilot | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | Align the vessel to the `vessel.autopilot.target_orientation` vector. (probably no difference to AutopilotMode.Navigation)
+Maneuver | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | Align the vessel to the burn vector of the next maneuver node (if a maneuver node exists).
+Navigation | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | Align the vessel to the `vessel.autopilot.target_orientation` vector.
+Normal | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | Align the vessel to the normal vector of its orbit.
+Prograde | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | Align the vessel to the prograde vector of its orbit.
+RadialIn | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | Align the vessel to the radial-in vector of its orbit.
+RadialOut | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | Align the vessel to the radial-out vector of its orbit.
+Retrograde | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | Align the vessel to the retrograde vector of its orbit.
+StabilityAssist | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | Stability assist mode. The autopilot tries to stop the rotation of the vessel. 
+Target | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | Align the vessel to the vector pointing to its target (if a target is set).
 
 #### Methods
 
@@ -115,9 +115,9 @@ String representation of the number
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
-Altitude | [ksp::vessel::DeltaVSituation](/reference/ksp/vessel.md#deltavsituation) | R/O | 
-SeaLevel | [ksp::vessel::DeltaVSituation](/reference/ksp/vessel.md#deltavsituation) | R/O | 
-Vaccum | [ksp::vessel::DeltaVSituation](/reference/ksp/vessel.md#deltavsituation) | R/O | 
+Altitude | [ksp::vessel::DeltaVSituation](/reference/ksp/vessel.md#deltavsituation) | R/O | Calculate delta-v at the current altitude of the vessel.
+SeaLevel | [ksp::vessel::DeltaVSituation](/reference/ksp/vessel.md#deltavsituation) | R/O | Calculate delta-v at sea level of the current main body.
+Vaccum | [ksp::vessel::DeltaVSituation](/reference/ksp/vessel.md#deltavsituation) | R/O | Calculate delta-v in vaccum.
 
 #### Methods
 
@@ -209,17 +209,17 @@ Name | Type | Read-only | Description
 --- | --- | --- | ---
 Antimatter | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | 
 Electric | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | 
-Generic | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | 
+Generic | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | Generic engine type (not specified)
 Helium3 | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | 
 MetallicHydrogen | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | 
-Methalox | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | 
-MonoProp | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | 
-Nuclear | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | 
+Methalox | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | Methan-oxigene rocket engine
+MonoProp | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | Mono-propellant engine
+Nuclear | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | Nuclear engine
 NuclearSaltwater | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | 
 Piston | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | 
 ScramJet | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | 
-SolidBooster | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | 
-Turbine | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | 
+SolidBooster | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | Engine is a solid fuel booster
+Turbine | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R/O | Turbine engine
 
 #### Methods
 
@@ -1058,14 +1058,14 @@ String representation of the number
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
-Escaping | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | 
-Flying | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | 
-Landed | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | 
-Orbiting | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | 
-PreLaunch | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | 
-Splashed | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | 
-SubOrbital | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | 
-Unknown | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | 
+Escaping | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | Vessel is on an escape trajectory.
+Flying | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | Vessel is flying.
+Landed | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | Vessel has landed.
+Orbiting | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | Vessel is orbiting its main body.
+PreLaunch | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | Vessel is in pre-launch situation.
+Splashed | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | Vessel has splashed in water.
+SubOrbital | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | Vessel is on a sub-orbital trajectory.
+Unknown | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | Vessel situation is unknown.
 
 #### Methods
 
@@ -1081,14 +1081,14 @@ Parse from string
 
 Name | Type | Description
 --- | --- | ---
-AutopilotMode | ksp::vessel::AutopilotModeConstants | 
-DeltaVSituation | ksp::vessel::DeltaVSituationConstants | 
-EngineType | ksp::vessel::EngineTypeConstants | 
-ParachuteDeployMode | ksp::vessel::ParachuteDeployModeConstants | 
-ParachuteDeployState | ksp::vessel::ParachuteDeployStateConstants | 
-ParachuteSafeStates | ksp::vessel::ParachuteSafeStatesConstants | 
-VesselControlState | ksp::vessel::VesselControlStateConstants | 
-VesselSituation | ksp::vessel::VesselSituationConstants | 
+AutopilotMode | ksp::vessel::AutopilotModeConstants | Vessel autopilot (SAS) mode
+DeltaVSituation | ksp::vessel::DeltaVSituationConstants | Vessel situation for delta-v calculation
+EngineType | ksp::vessel::EngineTypeConstants | Engine types
+ParachuteDeployMode | ksp::vessel::ParachuteDeployModeConstants | Parachute deploy mode
+ParachuteDeployState | ksp::vessel::ParachuteDeployStateConstants | Parachute deploy state
+ParachuteSafeStates | ksp::vessel::ParachuteSafeStatesConstants | Parachute safe states
+VesselControlState | ksp::vessel::VesselControlStateConstants | Vessel control state
+VesselSituation | ksp::vessel::VesselSituationConstants | Vessel situation
 
 
 ## Functions

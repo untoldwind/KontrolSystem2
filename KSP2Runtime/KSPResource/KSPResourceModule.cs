@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using KontrolSystem.TO2;
 using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Binding;
@@ -19,7 +20,10 @@ namespace KontrolSystem.KSP.Runtime.KSPResource {
         public static (IEnumerable<RealizedType>, IEnumerable<IKontrolConstant>) DirectBindings() {
             var (enumTypes, enumConstants) = BindingGenerator.RegisterEnumTypeMappings("ksp::resource",
                 new[] {
-                    ("FlowDirection", "Resource flow direction", typeof(FlowDirection)),
+                    ("FlowDirection", "Resource flow direction", typeof(FlowDirection), new (Enum value, string description)[] {
+                        (FlowDirection.FLOW_INBOUND, "Inbound resource request (i.e demand resource from other parts)"),
+                        (FlowDirection.FLOW_OUTBOUND, "Outbound resource request (i.e. provide resource to other parts)"),
+                    }),
                 });
 
             return (enumTypes, enumConstants);

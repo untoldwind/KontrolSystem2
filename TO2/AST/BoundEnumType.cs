@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
 using KontrolSystem.TO2.Generator;
@@ -71,18 +72,19 @@ namespace KontrolSystem.TO2.AST {
 
         public override Dictionary<string, IMethodInvokeFactory> DeclaredMethods { get; }
 
-        public BoundEnumConstType(BoundEnumType boundEnumType) {
+        public BoundEnumConstType(BoundEnumType boundEnumType, IEnumerable<(Enum value, string description)> valueDescriptions) {
             this.boundEnumType = boundEnumType;
 
             var declaredFields = new Dictionary<string, IFieldAccessFactory>();
 
             var names = Enum.GetNames(boundEnumType.enumType);
             var values = Enum.GetValues(boundEnumType.enumType);
+            var descriptions = valueDescriptions.ToDictionary(i => (int)Convert.ChangeType(i.value, typeof(int)), i => i.description);
 
             for (int i = 0; i < names.Length; i++) {
-                int value = (int)Convert.ChangeType(values.GetValue(i), typeof(int));
+                int intValue = (int)Convert.ChangeType(values.GetValue(i), typeof(int));
 
-                declaredFields.Add((string)names.GetValue(i), new EnumConstantFieldAccessFactory(boundEnumType, value));
+                declaredFields.Add((string)names.GetValue(i), new EnumConstantFieldAccessFactory(boundEnumType, intValue, descriptions.GetOrDefault(intValue, "")));
             }
 
             DeclaredFields = declaredFields;
@@ -129,14 +131,15 @@ namespace KontrolSystem.TO2.AST {
         private readonly BoundEnumType boundEnumType;
         private readonly int value;
 
-        internal EnumConstantFieldAccessFactory(BoundEnumType boundEnumType, int value) {
+        internal EnumConstantFieldAccessFactory(BoundEnumType boundEnumType, int value, string description) {
             this.boundEnumType = boundEnumType;
             this.value = value;
+            Description = description;
         }
 
         public TO2Type DeclaredType => boundEnumType;
 
-        public string Description => "";
+        public string Description { get; }
 
         public bool CanStore => false;
 

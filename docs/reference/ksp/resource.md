@@ -28,8 +28,8 @@ String representation of the number
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
-FLOW_INBOUND | [ksp::resource::FlowDirection](/reference/ksp/resource.md#flowdirection) | R/O | 
-FLOW_OUTBOUND | [ksp::resource::FlowDirection](/reference/ksp/resource.md#flowdirection) | R/O | 
+FLOW_INBOUND | [ksp::resource::FlowDirection](/reference/ksp/resource.md#flowdirection) | R/O | Inbound resource request (i.e demand resource from other parts)
+FLOW_OUTBOUND | [ksp::resource::FlowDirection](/reference/ksp/resource.md#flowdirection) | R/O | Outbound resource request (i.e. provide resource to other parts)
 
 #### Methods
 
@@ -153,7 +153,7 @@ resource_container | [ksp::resource::ResourceContainer](/reference/ksp/resource.
 
 Name | Type | Description
 --- | --- | ---
-FlowDirection | ksp::resource::FlowDirectionConstants | 
+FlowDirection | ksp::resource::FlowDirectionConstants | Resource flow direction
 
 
 ## Functions
