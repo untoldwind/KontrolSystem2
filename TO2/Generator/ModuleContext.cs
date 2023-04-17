@@ -57,7 +57,7 @@ namespace KontrolSystem.TO2.Generator {
             typeBuilder = nestedType
                 ? parent.typeBuilder.DefineNestedType(subTypeName, TypeAttributes.NestedPublic, parentType, interfaces)
                 : root.moduleBuilder.DefineType(
-                    this.moduleName.ToUpperInvariant().Replace(':', '_') + "_" + subTypeName);
+                    this.moduleName.ToUpperInvariant().Replace(':', '_') + "_" + subTypeName, TypeAttributes.Public);
             moduleAliases = parent.moduleAliases;
             mappedTypes = parent.mappedTypes;
             mappedConstants = parent.mappedConstants;

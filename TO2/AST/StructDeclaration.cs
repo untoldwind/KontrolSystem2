@@ -136,10 +136,7 @@ namespace KontrolSystem.TO2.AST {
             this.fields = fields;
             structContext = declaredModule.DefineSiblingContext(name, typeof(object));
 
-            ConstructorBuilder constructorBuilder = structContext.typeBuilder.DefineConstructor(
-                MethodAttributes.Public, CallingConventions.Standard, Type.EmptyTypes);
-            IILEmitter constructorEmitter = new GeneratorILEmitter(constructorBuilder.GetILGenerator());
-            constructorEmitter.EmitReturn(typeof(void));
+            ConstructorBuilder constructorBuilder = structContext.typeBuilder.DefineDefaultConstructor(MethodAttributes.Public);
 
             realizedType = new RecordStructType(declaredModule.moduleName, name, description, structContext.typeBuilder,
                 Enumerable.Empty<RecordStructField>(),
