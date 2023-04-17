@@ -1,0 +1,29 @@
+use { MovingAverage, moving_average, PIDLoop, pid_loop, TorquePI, torque_pi } from ksp::control
+use { Vessel } from ksp::vessel
+use { GlobalDirection } from ksp::math
+use { MAX_FLOAT, MIN_FLOAT } from core::math
+
+pub struct SteeringManager(vessel: Vessel, direction_provider: fn() -> GlobalDirection) {
+    vessel: Vessel = vessel
+    direction_provider: fn() -> GlobalDirection = direction_provider
+    pitch_torque_calc: MovingAverage = moving_average(15)
+    yaw_torque_calc: MovingAverage = moving_average(15)
+    roll_torque_calc: MovingAverage = moving_average(15)
+    pitch_pi: TorquePI = torque_pi(2)
+    yaw_pi: TorquePI = torque_pi(2)
+    roll_pi: TorquePI = torque_pi(2)
+    pitch_rate_pi: PIDLoop = pid_loop(1, 0.1, 0, MIN_FLOAT, MAX_FLOAT, true)
+    yaw_rate_pi: PIDLoop = pid_loop(1, 0.1, 0, MIN_FLOAT, MAX_FLOAT, true)
+    roll_rate_pi: PIDLoop = pid_loop(1, 0.1, 0, MIN_FLOAT, MAX_FLOAT, true)
+}
+
+impl SteeringManager {
+    sync fn update_state_vectors(self) -> Unit = {
+    }
+    
+    sync fn update_control_parts(self) -> Unit = {
+    }
+    
+    sync fn update_torque(self) -> Unit = {
+    }
+}
