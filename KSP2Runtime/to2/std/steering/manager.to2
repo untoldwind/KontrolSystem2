@@ -1,6 +1,6 @@
 use { MovingAverage, moving_average, PIDLoop, pid_loop, TorquePI, torque_pi } from ksp::control
 use { Vessel } from ksp::vessel
-use { GlobalDirection } from ksp::math
+use { GlobalDirection, Direction, Vec3, vec3 } from ksp::math
 use { MAX_FLOAT, MIN_FLOAT } from core::math
 
 pub struct SteeringManager(vessel: Vessel, direction_provider: fn() -> GlobalDirection) {
@@ -15,10 +15,45 @@ pub struct SteeringManager(vessel: Vessel, direction_provider: fn() -> GlobalDir
     pitch_rate_pi: PIDLoop = pid_loop(1, 0.1, 0, MIN_FLOAT, MAX_FLOAT, true)
     yaw_rate_pi: PIDLoop = pid_loop(1, 0.1, 0, MIN_FLOAT, MAX_FLOAT, true)
     roll_rate_pi: PIDLoop = pid_loop(1, 0.1, 0, MIN_FLOAT, MAX_FLOAT, true)
+    target_rot: Direction = vessel.facing
+    center_of_mass: Vec3 = vec3(0, 0, 0)
+    vessel_rotation: Direction = vessel.facing
+    vessel_forward: Vec3 = vec3(0, 0, 0)
+    vessel_top: Vec3 = vec3(0, 0, 0)
+    vessel_starboard: Vec3 = vec3(0, 0, 0)
+    omega: Vec3 = vec3(0, 0, 0)
+    angular_acceleration: Vec3 = vec3(0, 0, 0)
+    moment_of_inertia: Vec3 = vec3(0, 0, 0)
+    measured_torque: Vec3 = vec3(0, 0, 0)
+    control_torque: Vec3 = vec3(0, 0, 0)
+    raw_torque: Vec3 = vec3(0, 0, 0)
 }
 
 impl SteeringManager {
+    sync fn update_autopilot(self, delta_t: float) -> Unit = {
+        if(delta_t > 1) {
+            self.reset_i()
+        }
+    }
+    
+    sync fn reset_i(self) -> Unit = {
+        self.pitch_pi.reset_i()
+        self.yaw_pi.reset_i()
+        self.roll_pi.reset_i()
+        self.pitch_rate_pi.reset_i()
+        self.yaw_rate_pi.reset_i()
+        self.roll_rate_pi.reset_i()
+    }
+    
     sync fn update_state_vectors(self) -> Unit = {
+        const frame = self.vessel.celestial_frame
+        
+        self.target_rot = self.direction_provider().to_local(frame)
+        self.center_of_mass = self.vessel.global_center_of_mass.to_local(frame)
+        self.vessel_rotation = self.vessel.global_facing.to_local(frame)
+        self.vessel_forward = self.vessel_rotation.vector
+        self.vessel_top = self.vessel_rotation.up_vector
+        self.vessel_starboard = self.vessel_rotation.right_vector
     }
     
     sync fn update_control_parts(self) -> Unit = {
