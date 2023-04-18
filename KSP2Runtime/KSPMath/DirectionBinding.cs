@@ -102,7 +102,11 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                     "roll",
                     new BoundPropertyLikeFieldAccessFactory("Roll in degree", () => BuiltinType.Float,
                         typeof(Direction), typeof(Direction).GetProperty("Roll"))
-                },
+                }, {
+                    "inverse",
+                   new BoundPropertyLikeFieldAccessFactory("Inverse direction", () => DirectionType, typeof(DirectionBinding), 
+                       typeof(DirectionBinding).GetMethod("Inverse"), null) 
+                }
             });
 
         public static Direction LookDirUp(Vector3d lookDirection, Vector3d upDirection) =>
@@ -113,5 +117,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
         public static Direction AngleAxis(double angle, Vector3d axis) => Direction.AngleAxis(angle, axis);
 
         public static Direction FromVectorToVector(Vector3d v1, Vector3d v2) => Direction.FromVectorToVector(v1, v2);
+
+        public static Direction Inverse(Direction direction) => new Direction(QuaternionD.Inverse(direction.Rotation));
     }
 }

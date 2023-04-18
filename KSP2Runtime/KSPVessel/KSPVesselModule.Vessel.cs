@@ -13,6 +13,7 @@ using KSP.Sim;
 using KSP.Sim.Definitions;
 using KSP.Sim.DeltaV;
 using KSP.Sim.impl;
+using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel {
     public partial class KSPVesselModule {
@@ -123,6 +124,37 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField] public AngularVelocity GlobalAngularVelocity => vessel.AngularVelocity;
 
+            [KSField] public Vector GlobalMomentOfInertia => vessel.MOI;
+
+            [KSField]
+            public Vector3d TotalTorque {
+                get {
+                    Vector3d posSum = Vector3d.zero;
+                    Vector3d negSum = Vector3d.zero;
+
+                    foreach (var part in vessel.SimulationObject.PartOwner.Parts) {
+                        if (KSPContext.CurrentContext.Game.SpaceSimulation.TryGetViewObject(part.SimulationObject,
+                                out var viewObject)) {
+                            PartBehaviourModule[] components = viewObject.GetComponents<PartBehaviourModule>();
+                            if (components != null) {
+                                foreach (var component in components) {
+                                    if (component is ITorqueProvider torqueProvider) {
+                                        torqueProvider.GetPotentialTorque(out var pos, out var neg);
+                                        posSum += pos;
+                                        negSum += neg;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    Vector3d totalVesselTorque;
+                    totalVesselTorque.x = Math.Max(posSum.x, negSum.x);
+                    totalVesselTorque.y = Math.Max(posSum.y, negSum.y);
+                    totalVesselTorque.z = Math.Max(posSum.z, negSum.z);
+                    return totalVesselTorque;
+                }
+            }
+            
             [KSField] public Vector3d AngularMomentum => vessel.mainBody.coordinateSystem.ToLocalVector(vessel.angularMomentum.relativeAngularVelocity);
 
             [KSField] public Vector3d AngularVelocity => vessel.mainBody.coordinateSystem.ToLocalVector(vessel.AngularVelocity.relativeAngularVelocity);
@@ -173,6 +205,11 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                     return new Direction(vesselFacing);
                 }
             }
+
+            [KSMethod]
+            public RotationWrapper GlobalHeadingDirection(double degreesFromNorth, double pitchAboveHorizon, double roll) =>
+                new RotationWrapper(new Rotation(HorizonFrame,
+                    QuaternionD.Euler(-pitchAboveHorizon, degreesFromNorth, roll)));
 
             [KSField]
             public RotationWrapper GlobalFacing => new RotationWrapper(new Rotation(vessel.ControlTransform.coordinateSystem, ControlFacingRotation));

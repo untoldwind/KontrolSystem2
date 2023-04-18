@@ -183,6 +183,14 @@ namespace KontrolSystem.TO2.Generator {
                 else compiledFunctions.Add(compiledFunction);
             }
 
+            foreach (DeclaredKontrolStructConstructor constructor in declaredModule.declaredStructConstructors) {
+                if (!constructor.to2Struct.exported) continue;
+                CompiledKontrolFunction compiledFunction = new CompiledKontrolFunction(constructor.Name,
+                    constructor.Description, constructor.IsAsync, constructor.Parameters, constructor.ReturnType,
+                    constructor.RuntimeMethod);
+                compiledFunctions.Add(compiledFunction);
+            }
+
             return new CompiledKontrolModule(declaredModule.Name,
                 declaredModule.Description,
                 declaredModule.IsBuiltin,

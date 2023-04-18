@@ -59,7 +59,7 @@ namespace KontrolSystem.TO2.Parser {
             WhiteSpaces0.Then(Tag("->")).Then(WhiteSpaces0).Then(TypeRef),
             WhiteSpaces0.Then(Char('=')).Then(WhiteSpaces0).Then(Expression)
         ).Map((items, start, end) =>
-            new MethodDeclaration(items.Item2.IsEmpty, items.Item3, items.Item1, items.Item4, items.Item5,
+            new MethodDeclaration(items.Item2.IsEmpty, items.Item3, items.Item1, items.Item5,
                 items.Item6, items.Item7, start, end));
     }
 }
