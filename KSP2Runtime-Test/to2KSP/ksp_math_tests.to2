@@ -114,6 +114,16 @@ test sync fn test_vector3_methods() -> Unit = {
     assert_float(45, vec3(1.0, 0.0, 0.0).angle_to(vec3(1, 1, 0)))
 }
 
+test sync fn test_vector3_fields() -> Unit = {
+    let v1 = vec3(0, 0, 0)
+    
+    v1.x = 1
+    v1.y = 2
+    v1.z = 3
+    
+    assert_vec3(vec3(1.0, 2.0, 3.0), v1)
+}
+
 test sync fn test_vector3_record() -> Unit = {
     const v1 : Vec3 = (x: 1.1, y: 2.2, z: 3.3, something: "Not important")
 

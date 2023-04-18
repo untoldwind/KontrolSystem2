@@ -26,6 +26,8 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
 
             [KSField] public long SampleLimit { get; set; }
 
+            [KSField] public double LastSampleTime { get; set; }
+            
             public MovingAverage() {
                 Reset();
                 SampleLimit = 30;
@@ -35,9 +37,13 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
             public void Reset() {
                 Mean = 0;
                 MeanDiff = 0;
+                LastSampleTime = 0;
                 if (values == null) values = new List<MovingAverageValue>();
                 else values.Clear();
             }
+
+            [KSMethod]
+            public double UpdateDelta(double deltaT, double input) => Update(LastSampleTime + deltaT, input);
 
             [KSMethod]
             public double Update(double sampleTime, double value) {
@@ -113,6 +119,7 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
 
                     Mean = sum / count;
                     MeanDiff = diffCount == 0 ? 0 : diffSum / diffCount;
+                    LastSampleTime = lastSampleTime;
                     return Mean;
                 }
             }

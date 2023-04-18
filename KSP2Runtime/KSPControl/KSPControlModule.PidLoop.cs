@@ -72,10 +72,12 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
                 return Update(sampleTime, input);
             }
 
-            public double Update(double sampleTime, double input, double setpoint, double maxOutput) {
-                return Update(sampleTime, input, setpoint, -maxOutput, maxOutput);
-            }
+            public double Update(double sampleTime, double input, double setpoint, double maxOutput) => 
+                Update(sampleTime, input, setpoint, -maxOutput, maxOutput);
 
+            [KSMethod]
+            public double UpdateDelta(double deltaT, double input) => Update(LastSampleTime + deltaT, input);
+            
             [KSMethod]
             public double Update(double sampleTime, double input) {
                 double error = Setpoint - input;
@@ -135,7 +137,7 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
                 return Output;
             }
 
-            [KSMethod]
+            [KSMethod(Description = "Reset the integral part of the PID loop")]
             public void ResetI() {
                 ErrorSum = 0;
                 ITerm = 0;

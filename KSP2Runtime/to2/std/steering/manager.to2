@@ -1,0 +1,230 @@
+use { MovingAverage, moving_average, PIDLoop, pid_loop, TorquePI, torque_pi } from ksp::control
+use { Vessel } from ksp::vessel
+use { GlobalDirection, Direction, Vec3, vec3, euler } from ksp::math
+use { MAX_FLOAT, MIN_FLOAT, min, max, RAD_TO_DEG, DEG_TO_RAD } from core::math
+use { CONSOLE } from ksp::console
+
+const EPSILON : float = 1e-16
+
+pub struct SteeringManager(vessel: Vessel, direction_provider: fn() -> GlobalDirection) {
+    direction_provider: fn() -> GlobalDirection = direction_provider
+    enable_torque_adjust: bool = false
+    max_stopping_time: float = 2
+    roll_control_angle_range: float = 5
+    pitch_torque_adjust: float = 0
+    yaw_torque_adjust: float = 0
+    roll_torque_adjust: float = 0
+    pitch_torque_factor: float = 1
+    yaw_torque_factor: float = 1
+    roll_torque_factor: float = 1
+
+    vessel: Vessel = vessel
+    pitch_torque_calc: MovingAverage = moving_average(15)
+    yaw_torque_calc: MovingAverage = moving_average(15)
+    roll_torque_calc: MovingAverage = moving_average(15)
+    pitch_pi: TorquePI = torque_pi(2)
+    yaw_pi: TorquePI = torque_pi(2)
+    roll_pi: TorquePI = torque_pi(2)
+    pitch_rate_pi: PIDLoop = pid_loop(1, 0.1, 0, MIN_FLOAT, MAX_FLOAT, true)
+    yaw_rate_pi: PIDLoop = pid_loop(1, 0.1, 0, MIN_FLOAT, MAX_FLOAT, true)
+    roll_rate_pi: PIDLoop = pid_loop(1, 0.1, 0, MIN_FLOAT, MAX_FLOAT, true)
+    target_rot: Direction = euler(0, 0, 0)
+    center_of_mass: Vec3 = vec3(0, 0, 0)
+    vessel_rotation: Direction = euler(0, 0, 0)
+    vessel_forward: Vec3 = vec3(0, 0, 0)
+    vessel_top: Vec3 = vec3(0, 0, 0)
+    vessel_starboard: Vec3 = vec3(0, 0, 0)
+    target_forward: Vec3 = vec3(0, 0, 0)
+    target_top: Vec3 = vec3(0, 0, 0)
+    target_starboard: Vec3 = vec3(0, 0, 0)
+    adjust_torque: Vec3 = vec3(0, 0, 0)
+    omega: Vec3 = vec3(0, 0, 0)
+    angular_acceleration: Vec3 = vec3(0, 0, 0)
+    moment_of_inertia: Vec3 = vec3(0, 0, 0)
+    measured_torque: Vec3 = vec3(0, 0, 0)
+    control_torque: Vec3 = vec3(0, 0, 0)
+    raw_torque: Vec3 = vec3(0, 0, 0)
+    acc_pitch: float = 0
+    acc_yaw: float = 0
+    acc_roll: float = 0
+    phi: float = 0
+    phi_pitch: float = 0
+    phi_yaw: float = 0
+    phi_roll: float = 0
+    max_pitch_omega: float = 0
+    max_yaw_omega: float = 0
+    max_roll_omega: float = 0
+    tgt_pitch_omega: float = 0
+    tgt_yaw_omega: float = 0
+    tgt_roll_omega: float = 0
+    tgt_pitch_torque: float = 0
+    tgt_yaw_torque: float = 0
+    tgt_roll_torque: float = 0
+}
+
+impl SteeringManager {
+    sync fn update(self, delta_t: float) -> Vec3 = {
+        if(delta_t > 1) {
+            // Too long since last update, reset integral part
+            self.reset_i()
+        }
+        self.update_state_vectors(delta_t)
+        self.update_torque()
+        self.update_prediction_pi(delta_t)
+        self.update_control()
+    }
+    
+    sync fn reset_i(self) -> Unit = {
+        self.pitch_pi.reset_i()
+        self.yaw_pi.reset_i()
+        self.roll_pi.reset_i()
+        self.pitch_rate_pi.reset_i()
+        self.yaw_rate_pi.reset_i()
+        self.roll_rate_pi.reset_i()
+    }
+    
+    sync fn update_state_vectors(self, delta_t: float) -> Unit = {
+        const frame = self.vessel.body_frame
+        
+        self.target_rot = self.direction_provider().to_local(frame)
+        self.center_of_mass = self.vessel.global_center_of_mass.to_local(frame)
+        self.vessel_rotation = self.vessel.global_facing.to_local(frame)
+        self.vessel_forward = self.vessel_rotation.vector
+        self.vessel_top = self.vessel_rotation.up_vector
+        self.vessel_starboard = self.vessel_rotation.right_vector
+        self.target_forward = self.target_rot.vector
+        self.target_top = self.target_rot.up_vector
+        self.target_starboard = self.target_rot.right_vector
+        
+        const old_omega = self.omega
+        const angular_velocity = self.vessel.global_angular_velocity.to_local(frame)
+        self.omega = self.vessel_rotation.inverse * angular_velocity
+        self.omega = vec3(-self.omega.x, self.omega.y, -self.omega.z)
+        
+        if(delta_t > 0) {
+            self.angular_acceleration = ((self.omega - old_omega) / delta_t).xzy
+        }
+        self.moment_of_inertia = self.vessel.global_moment_of_inertia.to_local(frame)
+        self.adjust_torque = vec3(0, 0, 0)
+        self.measured_torque = vec3(
+            self.moment_of_inertia.x * self.angular_acceleration.x,
+            self.moment_of_inertia.y * self.angular_acceleration.y,
+            self.moment_of_inertia.z * self.angular_acceleration.z
+        )
+        
+        if(delta_t > 0 && self.enable_torque_adjust) {
+            if(self.acc_pitch.abs > EPSILON) {
+                self.adjust_torque.x = min(
+                    self.pitch_torque_calc.update_delta(delta_t, self.measured_torque.x / self.acc_pitch).abs - self.raw_torque.x,
+                    0)
+            } else {
+                self.adjust_torque.x = self.pitch_torque_calc.update_delta(delta_t, self.pitch_torque_calc.mean).abs
+            }
+            if(self.acc_yaw.abs > EPSILON) {
+                self.adjust_torque.z = min(
+                    self.yaw_torque_calc.update_delta(delta_t, self.measured_torque.z / self.acc_yaw).abs - self.raw_torque.z,
+                    0)
+            } else {
+                self.adjust_torque.z = self.yaw_torque_calc.update_delta(delta_t, self.yaw_torque_calc.mean).abs
+            }
+            if(self.acc_roll.abs > EPSILON) {
+                self.adjust_torque.y = min(
+                    self.roll_torque_calc.update_delta(delta_t, self.measured_torque.y / self.acc_roll).abs - self.raw_torque.y,
+                    0)
+            } else {
+                self.adjust_torque.y = self.roll_torque_calc.update_delta(delta_t, self.roll_torque_calc.mean).abs
+            }
+        }
+    }
+
+    sync fn update_torque(self) -> Unit = {
+        const vessel_torque = self.vessel.total_torque
+        self.raw_torque = vec3(
+            (vessel_torque.x + self.pitch_torque_adjust) * self.pitch_torque_factor,
+            (vessel_torque.y + self.yaw_torque_adjust) * self.yaw_torque_factor,
+            (vessel_torque.z + self.roll_torque_adjust) * self.roll_torque_factor
+        )
+        self.control_torque = self.raw_torque + self.adjust_torque
+        if(self.control_torque.x < EPSILON) self.control_torque.x = EPSILON
+        if(self.control_torque.y < EPSILON) self.control_torque.y = EPSILON
+        if(self.control_torque.z < EPSILON) self.control_torque.z = EPSILON    
+    }
+    
+    sync fn update_prediction_pi(self, delta_t: float) -> Unit = {
+        self.phi = self.vessel_forward.angle_to(self.target_forward) * DEG_TO_RAD
+        if(self.vessel_top.angle_to(self.target_top) > 90)
+            self.phi = -self.phi
+        self.phi_pitch = self.vessel_forward.angle_to(self.vessel_starboard.exclude_from(self.target_forward)) * DEG_TO_RAD
+        if(self.vessel_top.angle_to(self.vessel_starboard.exclude_from(self.target_forward)) > 90)
+            self.phi_pitch = -self.phi_pitch
+        self.phi_yaw = self.vessel_forward.angle_to(self.vessel_top.exclude_from(self.target_forward)) * DEG_TO_RAD
+        if(self.vessel_starboard.angle_to(self.vessel_top.exclude_from(self.target_forward)) > 90)
+            self.phi_yaw = -self.phi_yaw
+        self.phi_roll = self.vessel_top.angle_to(self.vessel_forward.exclude_from(self.target_top)) * DEG_TO_RAD
+        if(self.vessel_starboard.angle_to(self.vessel_forward.exclude_from(self.target_top)) > 90)
+            self.phi_roll = -self.phi_roll
+            
+        self.max_pitch_omega = self.control_torque.x * self.max_stopping_time / self.moment_of_inertia.x
+        self.max_yaw_omega = self.control_torque.z * self.max_stopping_time / self.moment_of_inertia.z
+        self.max_roll_omega = self.control_torque.y * self.max_stopping_time / self.moment_of_inertia.y
+      
+        self.pitch_rate_pi.max_output = self.max_pitch_omega
+        self.pitch_rate_pi.min_output = -self.max_pitch_omega
+        self.tgt_pitch_omega = self.pitch_rate_pi.update_delta(delta_t, -self.phi_pitch)
+        self.yaw_rate_pi.max_output = self.max_yaw_omega
+        self.yaw_rate_pi.min_output = -self.max_yaw_omega
+        self.tgt_yaw_omega = self.yaw_rate_pi.update_delta(delta_t, -self.phi_yaw)
+        if(self.phi.abs > self.roll_control_angle_range * DEG_TO_RAD) {
+            self.tgt_roll_omega = 0
+            self.roll_rate_pi.reset_i()
+        } else {
+            self.roll_rate_pi.max_output = self.max_roll_omega
+            self.roll_rate_pi.min_output = -self.max_roll_omega
+            self.tgt_roll_omega = self.roll_rate_pi.update_delta(delta_t, -self.phi_roll)
+        }
+        
+        self.tgt_pitch_torque = self.pitch_pi.update_delta(delta_t, self.omega.x, self.tgt_pitch_omega, self.moment_of_inertia.x, self.control_torque.x)
+        self.tgt_yaw_torque = self.yaw_pi.update_delta(delta_t, self.omega.y, self.tgt_yaw_omega, self.moment_of_inertia.z, self.control_torque.z)
+        self.tgt_roll_torque = self.roll_pi.update_delta(delta_t, self.omega.z, self.tgt_roll_omega, self.moment_of_inertia.y, self.control_torque.y)
+    }
+    
+    sync fn update_control(self) -> Vec3 = {
+        const clamp_acc_pitch = max(self.acc_pitch.abs, 0.005) * 2
+        self.acc_pitch = self.tgt_pitch_torque / self.control_torque.x
+        if(self.acc_pitch.abs < EPSILON)
+            self.acc_pitch = 0
+        self.acc_pitch = max(min(self.acc_pitch, clamp_acc_pitch), -clamp_acc_pitch)
+        
+        const clamp_acc_yaw = max(self.acc_yaw.abs, 0.005) * 2
+        self.acc_yaw = self.tgt_yaw_torque / self.control_torque.x
+        if(self.acc_yaw.abs < EPSILON)
+            self.acc_yaw = 0
+        self.acc_yaw = max(min(self.acc_yaw, clamp_acc_yaw), -clamp_acc_yaw)
+
+        const clamp_acc_roll = max(self.acc_roll.abs, 0.005) * 2
+        self.acc_roll = self.tgt_roll_torque / self.control_torque.x
+        if(self.acc_roll.abs < EPSILON)
+            self.acc_roll = 0
+        self.acc_roll = max(min(self.acc_roll, clamp_acc_roll), -clamp_acc_roll)
+        
+        vec3(self.acc_pitch, self.acc_yaw, self.acc_roll)
+    }
+    
+    fn print_debug(self) -> Unit = {
+        CONSOLE.clear()
+        CONSOLE.print_line("phi: " + (self.phi * RAD_TO_DEG).to_fixed(3))
+        CONSOLE.print_line("   Pitch values:")
+        CONSOLE.print_line("phiPitch: " + (self.phi_pitch * RAD_TO_DEG).to_fixed(3))
+        CONSOLE.print_line("I pitch : " + self.moment_of_inertia.x.to_fixed(3))
+        CONSOLE.print_line("   Yaw values:")
+        CONSOLE.print_line("phiYaw: " + (self.phi_yaw * RAD_TO_DEG).to_fixed(3))
+        CONSOLE.print_line("I yaw : " + self.moment_of_inertia.z.to_fixed(3))
+        CONSOLE.print_line("   Roll values:")
+        CONSOLE.print_line("phiRoll: " + (self.phi_roll * RAD_TO_DEG).to_fixed(3))
+        CONSOLE.print_line("I roll : " + self.moment_of_inertia.y.to_fixed(3))
+    }
+}
+
+pub fn init_steering(vessel: Vessel, direction_provider: fn() -> GlobalDirection) -> SteeringManager = {
+    SteeringManager(vessel, direction_provider)
+}

@@ -86,12 +86,12 @@ namespace KontrolSystem.TO2.Generator {
         }
 
         // Struct methods only
-        public SyncBlockContext(StructTypeAliasDelegate structType, bool isConst, bool isAsync, string methodName,
+        public SyncBlockContext(StructTypeAliasDelegate structType, bool isAsync, string methodName,
             TO2Type returnType,
             List<FunctionParameter> parameters) : this(structType.declaredModule, isAsync, methodName, returnType,
             parameters) {
             variables.Add("self",
-                new MethodParameter("self", structType.UnderlyingType(structType.structContext), 0, isConst));
+                new MethodParameter("self", structType.UnderlyingType(structType.structContext), 0, false));
         }
 
         public ModuleContext ModuleContext => moduleContext;

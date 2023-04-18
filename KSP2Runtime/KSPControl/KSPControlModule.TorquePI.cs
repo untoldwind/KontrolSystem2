@@ -38,6 +38,11 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
             }
 
             [KSMethod]
+            public double UpdateDelta(double deltaT, double input, double setpoint, double momentOfInertia,
+                double maxOutput) =>
+                Update(Loop.LastSampleTime + deltaT, input, setpoint, momentOfInertia, maxOutput);
+
+            [KSMethod]
             public double Update(double sampleTime, double input, double setpoint, double momentOfInertia,
                 double maxOutput) {
                 I = momentOfInertia;
@@ -47,7 +52,7 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
                 return Loop.Update(sampleTime, input, setpoint, maxOutput);
             }
 
-            [KSMethod]
+            [KSMethod(Description = "Reset the integral part of the PID loop")]
             public void ResetI() {
                 Loop.ResetI();
             }

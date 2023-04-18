@@ -10,7 +10,7 @@ namespace KontrolSystem.TO2.AST {
         public readonly string name;
         private readonly string description;
         private readonly bool isAsync;
-        private readonly bool isConst;
+//        private readonly bool isConst;
         private readonly List<FunctionParameter> parameters;
         private readonly TO2Type declaredReturn;
         private readonly Expression expression;
@@ -18,14 +18,13 @@ namespace KontrolSystem.TO2.AST {
         private StructTypeAliasDelegate structType;
         private AsyncClass? asyncClass;
 
-        public MethodDeclaration(bool isAsync, string name, string description, bool isConst,
+        public MethodDeclaration(bool isAsync, string name, string description,
             List<FunctionParameter> parameters,
             TO2Type declaredReturn, Expression expression, Position start = new Position(),
             Position end = new Position()) : base(start, end) {
             this.name = name;
             this.description = description;
             this.isAsync = isAsync;
-            this.isConst = isConst;
             this.parameters = parameters;
             this.declaredReturn = declaredReturn;
             if (expression is Block b) {
@@ -47,11 +46,11 @@ namespace KontrolSystem.TO2.AST {
         }
 
         public IMethodInvokeFactory CreateInvokeFactory() {
-            syncBlockContext ??= new SyncBlockContext(structType, isConst, isAsync, structType.Name.ToUpper() + "_" + name, declaredReturn, parameters);
+            syncBlockContext ??= new SyncBlockContext(structType, isAsync, structType.Name.ToUpper() + "_" + name, declaredReturn, parameters);
 
             return new BoundMethodInvokeFactory(
                 description,
-                isConst,
+                true,
                 () => declaredReturn.UnderlyingType(structType.structContext),
                 () => parameters.Select(p => new RealizedParameter(syncBlockContext, p)).ToList(),
                 isAsync,

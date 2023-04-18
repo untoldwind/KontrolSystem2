@@ -38,6 +38,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
             BindingGenerator.RegisterTypeMapping(typeof(Vector3d), Vector3Binding.Vector3Type);
             BindingGenerator.RegisterTypeMapping(typeof(Direction), DirectionBinding.DirectionType);
             BindingGenerator.RegisterTypeMapping(typeof(Matrix2x2), Matrix2x2Binding.Matrix2x2Type);
+            BindingGenerator.RegisterTypeMapping(typeof(Matrix4x4D), Matrix4x4Binding.Matrix4x4Type);
             BindingGenerator.RegisterTypeMapping(typeof(ITransformFrame), TransformFrameBinding.TransformFrameType);
             BindingGenerator.RegisterTypeMapping(typeof(Position), PositionBinding.PositionType);
             BindingGenerator.RegisterTypeMapping(typeof(Vector), VectorBinding.VectorType);
@@ -75,7 +76,8 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                     "Calculate the difference between to angles in degree (-180 .. 180)", typeof(double),
                     typeof(double)),
                 Direct.BindFunction(typeof(Matrix2x2Binding), "Matrix2x2", "Create a new 2-dimensional matrix",
-                    typeof(double), typeof(double), typeof(double), typeof(double))
+                    typeof(double), typeof(double), typeof(double), typeof(double)),
+                Direct.BindFunction(typeof(Matrix4x4Binding), "Matrix4x4", "Create a new 4-dimensional matrix")
             };
 
             module = Direct.BindModule(ModuleName, "Collection of KSP/Unity related mathematical functions.", types,
