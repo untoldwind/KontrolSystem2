@@ -63,8 +63,8 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             terminalFrameActiveStyle = Create9SliceStyle(terminalFrameActiveImage);
 
             terminalLetterSkin = BuildPanelSkin();
-            terminalLetterSkin.label.fontSize = ConfigAdapter.Instance.ConsoleFontSize;
             terminalLetterSkin.label.font = ConfigAdapter.Instance.ConsoleFont;
+            terminalLetterSkin.label.fontSize = ConfigAdapter.Instance.ConsoleFontSize;
 
             LoggerAdapter.Instance.Debug($"Console font: {terminalLetterSkin.label.font}");
 
@@ -72,7 +72,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             terminalLetterSkin.label.font
                 .RequestCharactersInTexture("X"); // Make sure the char in the font is lazy-loaded by Unity.
             terminalLetterSkin.label.font.GetCharacterInfo('X', out chInfo);
-            fontCharWidth = chInfo.advance;
+            fontCharWidth = chInfo.advance - 3;
             fontCharHeight = terminalLetterSkin.label.fontSize + 2;
             LoggerAdapter.Instance.Debug($"Font metrics: {fontCharWidth} x {fontCharHeight}");
         }
@@ -169,6 +169,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
 
             GUI.EndGroup();
 
+            
             GUI.Label(new Rect(15, 28, windowRect.width - 30, windowRect.height - 105), "", terminalFrameStyle);
 
             GUI.Label(new Rect(windowRect.width / 2 - 40, windowRect.height - 16, 100, 10),
