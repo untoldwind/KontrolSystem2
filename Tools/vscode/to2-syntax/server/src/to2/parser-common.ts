@@ -1,7 +1,7 @@
 import { isDigit } from "unicode-properties";
 import { recognize, where } from "../parser/combinator";
-import { char, chars0, tag } from "../parser/complete";
-import { preceded } from "../parser/sequence";
+import { char, chars0, tag, whitespace0 } from "../parser/complete";
+import { between, preceded } from "../parser/sequence";
 import { isAlphabetic } from "unicode-properties";
 import { delimited1 } from "../parser/multi";
 
@@ -20,3 +20,5 @@ export const identifier = where(
 );
 
 export const identifierPath = delimited1(identifier, tag("::"), "<identifier>");
+
+export const commaDelimiter = between(whitespace0, tag(","), whitespace0);

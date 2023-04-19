@@ -1,4 +1,4 @@
-import { isDigit, isWhiteSpace } from "unicode-properties";
+import { getCategory, isDigit, isWhiteSpace } from "unicode-properties";
 import { Input, Parser, ParserFailure, ParserSuccess } from ".";
 
 export function char(predicate: (charCode: number) => boolean, expected: string): Parser<string> {
@@ -46,6 +46,10 @@ export const whitespace1 = chars1(ch => isWhiteSpace(ch) || ADDITIONAL_WHITESPAC
 export const digits0 = chars0(isDigit);
 
 export const digits1 = chars1(isDigit, "<digit>");
+
+const TAB = "\t".charCodeAt(0);
+
+export const spacing0 = chars0(ch => ch === TAB && getCategory(ch) === "Zs");
 
 export function tag(tag: string): Parser<string> {
     return (input: Input) => {
