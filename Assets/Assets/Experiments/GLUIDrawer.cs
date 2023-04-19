@@ -13,28 +13,32 @@ namespace Experiments {
             colored.hideFlags = HideFlags.HideAndDontSave;
         }
 
-        private RenderTexture _renderTexture;
+        private readonly RenderTexture renderTexture;
 
         public GLUIDrawer(int initialWidth, int initialHeight) {
-            _renderTexture = new RenderTexture(initialWidth, initialHeight, 0);
+            renderTexture = new RenderTexture(initialWidth, initialHeight, 0);
         }
 
         public void Resize(int width, int height) {
-            if (width != _renderTexture.width || height != _renderTexture.height) {
-                _renderTexture.Release();
-                _renderTexture.width = width;
-                _renderTexture.height = height;
+            if (width != renderTexture.width || height != renderTexture.height) {
+                renderTexture.Release();
+                renderTexture.width = width;
+                renderTexture.height = height;
             }
         }
 
-        public Texture Texture => _renderTexture;
+        public Texture Texture => renderTexture;
 
-        public GLUIDraw Draw() => new GLUIDraw(_renderTexture);
+        public GLUIDraw Draw() => new GLUIDraw(renderTexture);
 
         public void Dispose() {
-            _renderTexture.Release();
+            renderTexture.Release();
         }
 
+        public interface IGLUIDrawable {
+            void OnDraw(GLUIDraw draw);
+        }
+        
         public class GLUIDraw : IDisposable {
             private readonly int width;
             private readonly int height;
@@ -54,7 +58,12 @@ namespace Experiments {
 
             public int Height => height;
 
-            public void Polygon(Vector2[] points, Color color, bool closed = false) {
+            public void Draw(IGLUIDrawable drawable) {
+                colored.SetPass(0);
+                drawable.OnDraw(this);
+            }
+            
+            public void Polyline(Vector2[] points, Color color, bool closed = false) {
                 colored.SetPass(0);
                 GL.Begin(GL.LINE_STRIP);
                 GL.Color(color);
@@ -94,9 +103,11 @@ namespace Experiments {
                 var baseLine = (float)textFont.faceInfo.baseline;
                 var x = 0.0f;
                 var y = baseLine - textFont.faceInfo.descentLine;
-                for (int i = 0; i < text.Length; i++) {
-                    var glyph = TMP_FontAssetUtilities.GetCharacterFromFontAsset(text[i], textFont, false,
+                foreach (var ch in text) {
+                    var glyph = TMP_FontAssetUtilities.GetCharacterFromFontAsset(ch, textFont, false,
                         FontStyles.Normal, FontWeight.Regular, out var alternative)?.glyph;
+
+                    if (glyph == null) continue;
 
                     GL.TexCoord2(glyph.glyphRect.x / atlasWidth, (glyph.glyphRect.y + glyph.glyphRect.height) / atlasHeight);
                     GL.MultiTexCoord2(1, 0, 0.2f);
@@ -119,13 +130,13 @@ namespace Experiments {
                 GL.PopMatrix();
             }
 
-            public Vector2 TextSize(string text, float size) {
+            private Vector2 TextSize(string text, float size) {
                 var lineHeight = textFont.faceInfo.lineHeight;
                 var scale = size / lineHeight;
                 var x = 0.0f;
 
-                for (int i = 0; i < text.Length; i++) {
-                    var glyph = TMP_FontAssetUtilities.GetCharacterFromFontAsset(text[i], textFont, false, 
+                foreach (var ch in text) {
+                    var glyph = TMP_FontAssetUtilities.GetCharacterFromFontAsset(ch, textFont, false,
                         FontStyles.Normal, FontWeight.Regular, out var alternative)?.glyph;
 
                     if (glyph == null) continue;
@@ -141,6 +152,5 @@ namespace Experiments {
                 RenderTexture.active = null;
             }
         }
-
     }
 }

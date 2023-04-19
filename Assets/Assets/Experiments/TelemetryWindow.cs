@@ -62,7 +62,18 @@ namespace Experiments {
         }
 
         public void Update() {
+            var pts = new[] {
+                new Vector2(200, 200),
+                new Vector2(250, 500),
+                new Vector2(400, 400),
+                new Vector2(600, 300),
+                new Vector2(300, 350),
+            };
+            Polygon2D poly2D = new Polygon2D(Color.green, pts);
+            Line2D line2D = new Line2D(Color.red, 10, true, pts);
             using (var draw = drawer.Draw()) {
+                draw.Draw(poly2D);
+                draw.Draw(line2D);
                 if (selectedTimeSeriesNames.Count == 0) {
                     draw.DrawText(new Vector2(draw.Width / 2, draw.Height / 2), "No data", 50, new Vector2(0.5f, 0.5f), 0, Color.yellow);
                 } else {
@@ -94,7 +105,7 @@ namespace Experiments {
                     var yScale = (max - min) / (draw.Height - offsetBottom - offsetTop);
 
                     if (min < 0 && max > 0) {
-                        draw.Polygon(new Vector2[] {
+                        draw.Polyline(new Vector2[] {
                             new Vector2(offsetLeft,  (float)((0 - min) / yScale) + offsetBottom),
                             new Vector2(draw.Width - offsetRight,  (float)((0 - min) / yScale) + offsetBottom)
                         }, Color.gray);
@@ -108,12 +119,12 @@ namespace Experiments {
                                 (float)((i.Item2.min - min) / yScale) + offsetBottom,
                                 (float)((i.Item2.max - min) / yScale) + offsetBottom)).ToArray(), new Color(color.r, color.g, color.b, 0.5f));
 
-                        draw.Polygon(allValues[i].Select(i =>
+                        draw.Polyline(allValues[i].Select(i =>
                             new Vector2((float)((i.Item1 - startUT) / xScale) + offsetLeft,
                                 (float)((i.Item2.avg - min) / yScale) + offsetBottom)).ToArray(), color);
                     }
 
-                    draw.Polygon(new Vector2[] {
+                    draw.Polyline(new Vector2[] {
                         new Vector2(offsetLeft, offsetBottom),
                         new Vector2(offsetLeft, draw.Height - offsetTop ),
                         new Vector2(draw.Width - offsetRight, draw.Height - offsetTop),
