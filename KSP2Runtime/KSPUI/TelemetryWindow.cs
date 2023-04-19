@@ -95,7 +95,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
                     var yScale = (max - min) / (draw.Height - offsetBottom - offsetTop);
 
                     if (min < 0 && max > 0) {
-                        draw.Polygon(new Vector2[] {
+                        draw.Polyline(new Vector2[] {
                             new Vector2(offsetLeft,  (float)((0 - min) / yScale) + offsetBottom),
                             new Vector2(draw.Width - offsetRight,  (float)((0 - min) / yScale) + offsetBottom)
                         }, Color.gray);
@@ -109,12 +109,12 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
                                 (float)((i.Item2.min - min) / yScale) + offsetBottom,
                                 (float)((i.Item2.max - min) / yScale) + offsetBottom)).ToArray(), new Color(color.r, color.g, color.b, 0.5f));
 
-                        draw.Polygon(allValues[i].Select(i =>
+                        draw.Polyline(allValues[i].Select(i =>
                             new Vector2((float)((i.Item1 - startUT) / xScale) + offsetLeft,
                                 (float)((i.Item2.avg - min) / yScale) + offsetBottom)).ToArray(), color);
                     }
 
-                    draw.Polygon(new Vector2[] {
+                    draw.Polyline(new Vector2[] {
                         new Vector2(offsetLeft, offsetBottom),
                         new Vector2(offsetLeft, draw.Height - offsetTop ),
                         new Vector2(draw.Width - offsetRight, draw.Height - offsetTop),

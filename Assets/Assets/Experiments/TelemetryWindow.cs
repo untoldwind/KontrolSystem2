@@ -70,7 +70,7 @@ namespace Experiments {
                 new Vector2(300, 350),
             };
             Polygon2D poly2D = new Polygon2D(Color.green, pts);
-            Line2D line2D = new Line2D(Color.red, 10, true, pts);
+            Line2D line2D = new Line2D(Color.red, 5, true, pts);
             using (var draw = drawer.Draw()) {
                 draw.Draw(poly2D);
                 draw.Draw(line2D);

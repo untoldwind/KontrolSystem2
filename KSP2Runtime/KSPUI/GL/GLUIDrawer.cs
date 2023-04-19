@@ -35,6 +35,10 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
             renderTexture.Release();
         }
 
+        public interface IGLUIDrawable {
+            void OnDraw(GLUIDraw draw);
+        }
+        
         public class GLUIDraw : IDisposable {
             private readonly int width;
             private readonly int height;
@@ -54,7 +58,12 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
 
             public int Height => height;
 
-            public void Polygon(Vector2[] points, Color color, bool closed = false) {
+            public void Draw(IGLUIDrawable drawable) {
+                colored.SetPass(0);
+                drawable.OnDraw(this);
+            }
+            
+            public void Polyline(Vector2[] points, Color color, bool closed = false) {
                 colored.SetPass(0);
                 GL.Begin(GL.LINE_STRIP);
                 GL.Color(color);
@@ -75,6 +84,26 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
                 for (int i = 0; i < errors.Length; i++) {
                     GL.Vertex3(errors[i].x, errors[i].y, 0);
                     GL.Vertex3(errors[i].x, errors[i].z, 0);
+                }
+                GL.End();
+            }
+            
+            public void ConvexPolygon(Vector2[] points, Color color) {
+                if (points.Length < 3) return;
+                
+                colored.SetPass(0);
+                GL.Begin(GL.TRIANGLE_STRIP);
+                GL.Color(color);
+                int start = 0;
+                int end = points.Length - 1;
+
+                while (start < end) {
+                    GL.Vertex3(points[start].x, points[start].y, 0);
+                    start++;
+                    if (start < end) {
+                        GL.Vertex3(points[end].x, points[end].y, 0);
+                        end--;
+                    }
                 }
                 GL.End();
             }

@@ -88,6 +88,26 @@ namespace Experiments {
                 GL.End();
             }
 
+            public void ConvexPolygon(Vector2[] points, Color color) {
+                if (points.Length < 3) return;
+                
+                colored.SetPass(0);
+                GL.Begin(GL.TRIANGLE_STRIP);
+                GL.Color(color);
+                int start = 0;
+                int end = points.Length - 1;
+
+                while (start < end) {
+                    GL.Vertex3(points[start].x, points[start].y, 0);
+                    start++;
+                    if (start < end) {
+                        GL.Vertex3(points[end].x, points[end].y, 0);
+                        end--;
+                    }
+                }
+                GL.End();
+            }
+
             public void DrawText(Vector2 pos, string text, float size, Vector2 pivot, float degrees, Color color) {
                 var textSize = TextSize(text, size);
                 var lineHeight = textFont.faceInfo.lineHeight;
