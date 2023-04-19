@@ -84,11 +84,11 @@ impl SteeringManager {
     }
     
     sync fn update_state_vectors(self, delta_t: float) -> Unit = {
-        const frame = self.vessel.body_frame
+        const frame = self.vessel.control_frame
         
-        self.target_rot = self.direction_provider().to_local(frame)
+        self.target_rot = self.direction_provider().to_local(frame) * euler(90, 0, 0)
         self.center_of_mass = self.vessel.global_center_of_mass.to_local(frame)
-        self.vessel_rotation = self.vessel.global_facing.to_local(frame)
+        self.vessel_rotation = self.vessel.global_facing.to_local(frame) * euler(90, 0, 0)
         self.vessel_forward = self.vessel_rotation.vector
         self.vessel_top = self.vessel_rotation.up_vector
         self.vessel_starboard = self.vessel_rotation.right_vector
@@ -196,13 +196,13 @@ impl SteeringManager {
         self.acc_pitch = max(min(self.acc_pitch, clamp_acc_pitch), -clamp_acc_pitch)
         
         const clamp_acc_yaw = max(self.acc_yaw.abs, 0.005) * 2
-        self.acc_yaw = self.tgt_yaw_torque / self.control_torque.x
+        self.acc_yaw = self.tgt_yaw_torque / self.control_torque.z
         if(self.acc_yaw.abs < EPSILON)
             self.acc_yaw = 0
         self.acc_yaw = max(min(self.acc_yaw, clamp_acc_yaw), -clamp_acc_yaw)
 
         const clamp_acc_roll = max(self.acc_roll.abs, 0.005) * 2
-        self.acc_roll = self.tgt_roll_torque / self.control_torque.x
+        self.acc_roll = self.tgt_roll_torque / self.control_torque.y
         if(self.acc_roll.abs < EPSILON)
             self.acc_roll = 0
         self.acc_roll = max(min(self.acc_roll, clamp_acc_roll), -clamp_acc_roll)
