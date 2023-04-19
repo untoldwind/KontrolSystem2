@@ -6,60 +6,62 @@ use { CONSOLE } from ksp::console
 
 const EPSILON : float = 1e-16
 
+// In vessel.control_frame these are constants
+const VESSEL_ROTATION_INVERSE : Direction = euler(90, 0, 0)
+const VESSEL_FORWARD : Vec3 = vec3(0, 1, 0)
+const VESSEL_TOP : Vec3 = vec3(0, 0, -1)
+const VESSEL_STARBOARD : Vec3 = vec3(1, 0, 0)
+
 pub struct SteeringManager(vessel: Vessel, direction_provider: fn() -> GlobalDirection) {
     direction_provider: fn() -> GlobalDirection = direction_provider
-    enable_torque_adjust: bool = false
-    max_stopping_time: float = 2
+    enable_torque_adjust: bool      = false
+    max_stopping_time: float        = 2
     roll_control_angle_range: float = 5
-    pitch_torque_adjust: float = 0
-    yaw_torque_adjust: float = 0
-    roll_torque_adjust: float = 0
-    pitch_torque_factor: float = 1
-    yaw_torque_factor: float = 1
-    roll_torque_factor: float = 1
+    pitch_torque_adjust: float      = 0
+    yaw_torque_adjust: float        = 0
+    roll_torque_adjust: float       = 0
+    pitch_torque_factor: float      = 1
+    yaw_torque_factor: float        = 1
+    roll_torque_factor: float       = 1
 
-    vessel: Vessel = vessel
+    vessel: Vessel                   = vessel
     pitch_torque_calc: MovingAverage = moving_average(15)
-    yaw_torque_calc: MovingAverage = moving_average(15)
-    roll_torque_calc: MovingAverage = moving_average(15)
-    pitch_pi: TorquePI = torque_pi(2)
-    yaw_pi: TorquePI = torque_pi(2)
-    roll_pi: TorquePI = torque_pi(2)
-    pitch_rate_pi: PIDLoop = pid_loop(1, 0.1, 0, MIN_FLOAT, MAX_FLOAT, true)
-    yaw_rate_pi: PIDLoop = pid_loop(1, 0.1, 0, MIN_FLOAT, MAX_FLOAT, true)
-    roll_rate_pi: PIDLoop = pid_loop(1, 0.1, 0, MIN_FLOAT, MAX_FLOAT, true)
-    target_rot: Direction = euler(0, 0, 0)
-    center_of_mass: Vec3 = vec3(0, 0, 0)
-    vessel_rotation: Direction = euler(0, 0, 0)
-    vessel_forward: Vec3 = vec3(0, 0, 0)
-    vessel_top: Vec3 = vec3(0, 0, 0)
-    vessel_starboard: Vec3 = vec3(0, 0, 0)
-    target_forward: Vec3 = vec3(0, 0, 0)
-    target_top: Vec3 = vec3(0, 0, 0)
-    target_starboard: Vec3 = vec3(0, 0, 0)
-    adjust_torque: Vec3 = vec3(0, 0, 0)
-    omega: Vec3 = vec3(0, 0, 0)
-    angular_acceleration: Vec3 = vec3(0, 0, 0)
-    moment_of_inertia: Vec3 = vec3(0, 0, 0)
-    measured_torque: Vec3 = vec3(0, 0, 0)
-    control_torque: Vec3 = vec3(0, 0, 0)
-    raw_torque: Vec3 = vec3(0, 0, 0)
-    acc_pitch: float = 0
-    acc_yaw: float = 0
-    acc_roll: float = 0
-    phi: float = 0
-    phi_pitch: float = 0
-    phi_yaw: float = 0
-    phi_roll: float = 0
-    max_pitch_omega: float = 0
-    max_yaw_omega: float = 0
-    max_roll_omega: float = 0
-    tgt_pitch_omega: float = 0
-    tgt_yaw_omega: float = 0
-    tgt_roll_omega: float = 0
-    tgt_pitch_torque: float = 0
-    tgt_yaw_torque: float = 0
-    tgt_roll_torque: float = 0
+    yaw_torque_calc: MovingAverage   = moving_average(15)
+    roll_torque_calc: MovingAverage  = moving_average(15)
+    pitch_pi: TorquePI               = torque_pi(2)
+    yaw_pi: TorquePI                 = torque_pi(2)
+    roll_pi: TorquePI                = torque_pi(2)
+    pitch_rate_pi: PIDLoop           = pid_loop(1, 0.1, 0, MIN_FLOAT, MAX_FLOAT, true)
+    yaw_rate_pi: PIDLoop             = pid_loop(1, 0.1, 0, MIN_FLOAT, MAX_FLOAT, true)
+    roll_rate_pi: PIDLoop            = pid_loop(1, 0.1, 0, MIN_FLOAT, MAX_FLOAT, true)
+    target_rot: Direction            = euler(0, 0, 0)
+    center_of_mass: Vec3             = vec3(0, 0, 0)
+    target_forward: Vec3             = vec3(0, 0, 0)
+    target_top: Vec3                 = vec3(0, 0, 0)
+    target_starboard: Vec3           = vec3(0, 0, 0)
+    adjust_torque: Vec3              = vec3(0, 0, 0)
+    omega: Vec3                      = vec3(0, 0, 0)
+    angular_acceleration: Vec3       = vec3(0, 0, 0)
+    moment_of_inertia: Vec3          = vec3(0, 0, 0)
+    measured_torque: Vec3            = vec3(0, 0, 0)
+    control_torque: Vec3             = vec3(0, 0, 0)
+    raw_torque: Vec3                 = vec3(0, 0, 0)
+    acc_pitch: float                 = 0
+    acc_yaw: float                   = 0
+    acc_roll: float                  = 0
+    phi: float                       = 0
+    phi_pitch: float                 = 0
+    phi_yaw: float                   = 0
+    phi_roll: float                  = 0
+    max_pitch_omega: float           = 0
+    max_yaw_omega: float             = 0
+    max_roll_omega: float            = 0
+    tgt_pitch_omega: float           = 0
+    tgt_yaw_omega: float             = 0
+    tgt_roll_omega: float            = 0
+    tgt_pitch_torque: float          = 0
+    tgt_yaw_torque: float            = 0
+    tgt_roll_torque: float           = 0
 }
 
 impl SteeringManager {
@@ -89,17 +91,13 @@ impl SteeringManager {
         
         self.target_rot = self.direction_provider().to_local(frame)
         self.center_of_mass = self.vessel.global_center_of_mass.to_local(frame)
-        self.vessel_rotation = self.vessel.global_facing.to_local(frame)
-        self.vessel_forward = self.vessel_rotation.vector
-        self.vessel_top = self.vessel_rotation.up_vector
-        self.vessel_starboard = self.vessel_rotation.right_vector
         self.target_forward = self.target_rot.vector
         self.target_top = self.target_rot.up_vector
         self.target_starboard = self.target_rot.right_vector
         
         const old_omega = self.omega
         const angular_velocity = self.vessel.global_angular_velocity.relative_to(mcframe).to_local(frame)
-        self.omega = self.vessel_rotation.inverse * angular_velocity
+        self.omega = VESSEL_ROTATION_INVERSE * angular_velocity
         self.omega = vec3(-self.omega.x, self.omega.y, -self.omega.z)
         
         if(delta_t > 0) {
@@ -152,17 +150,17 @@ impl SteeringManager {
     }
     
     sync fn update_prediction_pi(self, delta_t: float) -> Unit = {
-        self.phi = self.vessel_forward.angle_to(self.target_forward) * DEG_TO_RAD
-        if(self.vessel_top.angle_to(self.target_top) > 90)
+        self.phi = VESSEL_FORWARD.angle_to(self.target_forward) * DEG_TO_RAD
+        if(VESSEL_TOP.angle_to(self.target_top) > 90)
             self.phi = -self.phi
-        self.phi_pitch = self.vessel_forward.angle_to(self.vessel_starboard.exclude_from(self.target_forward)) * DEG_TO_RAD
-        if(self.vessel_top.angle_to(self.vessel_starboard.exclude_from(self.target_forward)) > 90)
+        self.phi_pitch = VESSEL_FORWARD.angle_to(VESSEL_STARBOARD.exclude_from(self.target_forward)) * DEG_TO_RAD
+        if(VESSEL_TOP.angle_to(VESSEL_STARBOARD.exclude_from(self.target_forward)) > 90)
             self.phi_pitch = -self.phi_pitch
-        self.phi_yaw = self.vessel_forward.angle_to(self.vessel_top.exclude_from(self.target_forward)) * DEG_TO_RAD
-        if(self.vessel_starboard.angle_to(self.vessel_top.exclude_from(self.target_forward)) > 90)
+        self.phi_yaw = VESSEL_FORWARD.angle_to(VESSEL_TOP.exclude_from(self.target_forward)) * DEG_TO_RAD
+        if(VESSEL_STARBOARD.angle_to(VESSEL_TOP.exclude_from(self.target_forward)) > 90)
             self.phi_yaw = -self.phi_yaw
-        self.phi_roll = self.vessel_top.angle_to(self.vessel_forward.exclude_from(self.target_top)) * DEG_TO_RAD
-        if(self.vessel_starboard.angle_to(self.vessel_forward.exclude_from(self.target_top)) > 90)
+        self.phi_roll = VESSEL_TOP.angle_to(VESSEL_FORWARD.exclude_from(self.target_top)) * DEG_TO_RAD
+        if(VESSEL_STARBOARD.angle_to(VESSEL_FORWARD.exclude_from(self.target_top)) > 90)
             self.phi_roll = -self.phi_roll
             
         self.max_pitch_omega = self.control_torque.x * self.max_stopping_time / self.moment_of_inertia.x
@@ -215,14 +213,32 @@ impl SteeringManager {
         CONSOLE.clear()
         CONSOLE.print_line("phi: " + (self.phi * RAD_TO_DEG).to_fixed(3))
         CONSOLE.print_line("   Pitch values:")
-        CONSOLE.print_line("phiPitch: " + (self.phi_pitch * RAD_TO_DEG).to_fixed(3))
-        CONSOLE.print_line("I pitch : " + self.moment_of_inertia.x.to_fixed(3))
+        CONSOLE.print_line("phiPitch      : " + (self.phi_pitch * RAD_TO_DEG).to_fixed(3))
+        CONSOLE.print_line("I pitch       : " + self.moment_of_inertia.x.to_fixed(3))
+        CONSOLE.print_line("torque pitch  : " + self.control_torque.x.to_fixed(3))
+        CONSOLE.print_line("maxPitchOmega : " + self.max_pitch_omega.to_fixed(3))
+        CONSOLE.print_line("tgtPitchOmega : " + self.tgt_pitch_omega.to_fixed(3))
+        CONSOLE.print_line("pitchOmega    : " + self.omega.x.to_fixed(3))
+        CONSOLE.print_line("tgtPitchTorque: " + self.tgt_pitch_torque.to_fixed(3))
+        CONSOLE.print_line("accPitch      : " + self.acc_pitch.to_fixed(3))
         CONSOLE.print_line("   Yaw values:")
-        CONSOLE.print_line("phiYaw: " + (self.phi_yaw * RAD_TO_DEG).to_fixed(3))
-        CONSOLE.print_line("I yaw : " + self.moment_of_inertia.z.to_fixed(3))
+        CONSOLE.print_line("phiYaw        : " + (self.phi_yaw * RAD_TO_DEG).to_fixed(3))
+        CONSOLE.print_line("I yaw         : " + self.moment_of_inertia.z.to_fixed(3))
+        CONSOLE.print_line("torque yaw    : " + self.control_torque.z.to_fixed(3))
+        CONSOLE.print_line("maxYawOmega   : " + self.max_yaw_omega.to_fixed(3))
+        CONSOLE.print_line("tgtYawOmega   : " + self.tgt_yaw_omega.to_fixed(3))
+        CONSOLE.print_line("yawOmega      : " + self.omega.y.to_fixed(3))
+        CONSOLE.print_line("tgtYawTorque  : " + self.tgt_yaw_torque.to_fixed(3))
+        CONSOLE.print_line("accYaw        : " + self.acc_yaw.to_fixed(3))
         CONSOLE.print_line("   Roll values:")
-        CONSOLE.print_line("phiRoll: " + (self.phi_roll * RAD_TO_DEG).to_fixed(3))
-        CONSOLE.print_line("I roll : " + self.moment_of_inertia.y.to_fixed(3))
+        CONSOLE.print_line("phiRoll       : " + (self.phi_roll * RAD_TO_DEG).to_fixed(3))
+        CONSOLE.print_line("I roll        : " + self.moment_of_inertia.y.to_fixed(3))
+        CONSOLE.print_line("roll yaw      : " + self.control_torque.y.to_fixed(3))
+        CONSOLE.print_line("maxRollOmega  : " + self.max_roll_omega.to_fixed(3))
+        CONSOLE.print_line("tgtRollOmega  : " + self.tgt_roll_omega.to_fixed(3))
+        CONSOLE.print_line("rollOmega     : " + self.omega.z.to_fixed(3))
+        CONSOLE.print_line("tgtRollTorque : " + self.tgt_roll_torque.to_fixed(3))
+        CONSOLE.print_line("accRoll       : " + self.acc_roll.to_fixed(3)) 
     }
 }
 
