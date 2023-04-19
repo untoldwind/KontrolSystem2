@@ -54,19 +54,19 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField(Description = "Current control status of the vessel.")]
             public VesselControlState ControlStatus => vessel.ControlStatus;
 
-            [KSField(Description = "Collection of methods to interact with the maneuver plan of the vessel.")] 
+            [KSField(Description = "Collection of methods to interact with the maneuver plan of the vessel.")]
             public ManeuverAdapter Maneuver => maneuver;
 
-            [KSField(Description = "Collection of methods to trigger action groups.")] 
+            [KSField(Description = "Collection of methods to trigger action groups.")]
             public ActionGroupsAdapter Actions => actions;
 
-            [KSField(Description = "Collection of methods to interact with the SAS system of the vessel.")] 
+            [KSField(Description = "Collection of methods to interact with the SAS system of the vessel.")]
             public AutopilotAdapter Autopilot => autopilot;
 
-            [KSField(Description = "Collection of methods to obtain delta-v information of the vessel.")] 
+            [KSField(Description = "Collection of methods to obtain delta-v information of the vessel.")]
             public VesselDeltaVAdapter DeltaV => deltaV;
 
-            [KSField(Description = "Collection of methods to obtain information about stages and trigger staging.")] 
+            [KSField(Description = "Collection of methods to obtain information about stages and trigger staging.")]
             public StagingAdapter Staging => staging;
 
             [KSField(Description = "The main body of the current SOI the vessel is in.")]
@@ -159,7 +159,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                     return totalVesselTorque;
                 }
             }
-            
+
             [KSField] public Vector3d AngularMomentum => vessel.mainBody.coordinateSystem.ToLocalVector(vessel.angularMomentum.relativeAngularVelocity);
 
             [KSField] public Vector3d AngularVelocity => vessel.mainBody.coordinateSystem.ToLocalVector(vessel.AngularVelocity.relativeAngularVelocity);

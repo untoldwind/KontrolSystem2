@@ -10,7 +10,7 @@ namespace KontrolSystem.TO2.AST {
         public readonly string name;
         private readonly string description;
         private readonly bool isAsync;
-//        private readonly bool isConst;
+        //        private readonly bool isConst;
         private readonly List<FunctionParameter> parameters;
         private readonly TO2Type declaredReturn;
         private readonly Expression expression;

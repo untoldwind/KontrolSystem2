@@ -112,8 +112,8 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                         typeof(Direction), typeof(Direction).GetProperty("Roll"))
                 }, {
                     "inverse",
-                   new BoundPropertyLikeFieldAccessFactory("Inverse direction", () => DirectionType, typeof(DirectionBinding), 
-                       typeof(DirectionBinding).GetMethod("Inverse"), null) 
+                   new BoundPropertyLikeFieldAccessFactory("Inverse direction", () => DirectionType, typeof(DirectionBinding),
+                       typeof(DirectionBinding).GetMethod("Inverse"), null)
                 }
             });
 
@@ -127,8 +127,8 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
         public static Direction FromVectorToVector(Vector3d v1, Vector3d v2) => Direction.FromVectorToVector(v1, v2);
 
         public static Direction Inverse(Direction direction) => new Direction(QuaternionD.Inverse(direction.Rotation));
-        
-        public static RotationWrapper ToGlobal(Direction direction,  ITransformFrame frame) => new RotationWrapper(new Rotation(frame, direction.Rotation));
+
+        public static RotationWrapper ToGlobal(Direction direction, ITransformFrame frame) => new RotationWrapper(new Rotation(frame, direction.Rotation));
     }
 }
 

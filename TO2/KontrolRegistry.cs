@@ -55,8 +55,8 @@ namespace KontrolSystem.TO2 {
             List<DeclaredKontrolModule> declaredModules = new List<DeclaredKontrolModule>();
 
             foreach (string fileName in Directory.GetFiles(baseDir, "*.to2", SearchOption.AllDirectories)) {
-                if(!fileName.EndsWith(".to2")) continue;
-                
+                if (!fileName.EndsWith(".to2")) continue;
+
                 // First declare the existence of a module and its types
                 TO2Module to2Module = TO2Parser.ParseModuleFile(baseDir, fileName.Remove(0, baseDir.Length + 1));
                 DeclaredKontrolModule module = ModuleGenerator.DeclareModule(context, to2Module, fileName);

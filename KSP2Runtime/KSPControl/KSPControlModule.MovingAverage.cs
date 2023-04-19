@@ -27,7 +27,7 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
             [KSField] public long SampleLimit { get; set; }
 
             [KSField] public double LastSampleTime { get; set; }
-            
+
             public MovingAverage() {
                 Reset();
                 SampleLimit = 30;

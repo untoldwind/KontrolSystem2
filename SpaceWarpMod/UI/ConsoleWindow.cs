@@ -169,7 +169,7 @@ namespace KontrolSystem.SpaceWarpMod.UI {
 
             GUI.EndGroup();
 
-            
+
             GUI.Label(new Rect(15, 28, windowRect.width - 30, windowRect.height - 105), "", terminalFrameStyle);
 
             GUI.Label(new Rect(windowRect.width / 2 - 40, windowRect.height - 16, 100, 10),

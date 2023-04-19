@@ -72,12 +72,12 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
                 return Update(sampleTime, input);
             }
 
-            public double Update(double sampleTime, double input, double setpoint, double maxOutput) => 
+            public double Update(double sampleTime, double input, double setpoint, double maxOutput) =>
                 Update(sampleTime, input, setpoint, -maxOutput, maxOutput);
 
             [KSMethod]
             public double UpdateDelta(double deltaT, double input) => Update(LastSampleTime + deltaT, input);
-            
+
             [KSMethod]
             public double Update(double sampleTime, double input) {
                 double error = Setpoint - input;

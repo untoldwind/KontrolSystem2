@@ -14,7 +14,7 @@ namespace KontrolSystem.KSP.Runtime.KSPResource {
             [KSField] public ResourceTransferEntry[] Entries => entries.ToArray();
 
             [KSField] public bool IsRunning => entries.Any(e => e.IsRunning);
-            
+
             [KSMethod]
             public bool AddContainer(FlowDirection flowDirection, ResourceContainerAdapter resourceContainer, double relativeAmount = 1.0) {
                 if (IsRunning) return false;
@@ -55,7 +55,7 @@ namespace KontrolSystem.KSP.Runtime.KSPResource {
                 foreach (var entry in entries) {
                     entry.Start();
                 }
-                
+
                 return true;
             }
 
@@ -109,7 +109,7 @@ namespace KontrolSystem.KSP.Runtime.KSPResource {
 
             public double GetTotalOut(ResourceDefinitionID resourceDefinitionID) =>
                 relativeAmount * resourceContainer.resourceContainer.GetResourceStoredUnits(resourceDefinitionID);
-            
+
             internal bool IsRunning {
                 get {
                     if (broker.IsRequestActive(resourceFlowRequestHandle) && broker.TryGetCurrentRequest(resourceFlowRequestHandle, out var wrapper)) {
@@ -117,7 +117,7 @@ namespace KontrolSystem.KSP.Runtime.KSPResource {
                     }
 
                     return false;
-                }    
+                }
             }
 
             internal double PrepareTransfer(ResourceDefinitionID resourceDefinitionID, double remaining) {
@@ -139,10 +139,10 @@ namespace KontrolSystem.KSP.Runtime.KSPResource {
 
                 return remaining - transfer;
             }
-            
+
             internal void Start() {
                 if (commands.Count == 0) return;
-                
+
                 resourceFlowRequestHandle = broker.AllocateOrGetRequest();
                 if (resourceContainer.partComponent.PartOwner.ResourceFlowRequestManager.TryGetRequest(resourceFlowRequestHandle,
                         out var wrapper)) {

@@ -7,7 +7,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
         public static readonly BoundType Matrix4x4Type = Direct.BindType("ksp::math", "Matrix4x4",
             "A 4-dimensional matrix.", typeof(Matrix4x4D),
             new OperatorCollection() {
-                
+
             },
             new OperatorCollection() {
                 {
@@ -24,15 +24,15 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                     Operator.Sub,
                     new StaticMethodOperatorEmitter(() => Matrix4x4Type, () => Matrix4x4Type,
                         typeof(Matrix4x4D).GetMethod("op_Subtraction", new[] {typeof(Matrix4x4D), typeof(Matrix4x4D) }))
-                },                
+                },
                 {
                     Operator.SubAssign,
                     new StaticMethodOperatorEmitter(() => Matrix4x4Type, () => Matrix4x4Type,
                         typeof(Matrix4x4D).GetMethod("op_Subtraction", new[] {typeof(Matrix4x4D), typeof(Matrix4x4D) }))
-                },                
+                },
             },
             new Dictionary<string, IMethodInvokeFactory> {
-                
+
             },
             new Dictionary<string, IFieldAccessFactory>() {
                 {
@@ -113,7 +113,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                 }
             }
         );
-        
+
         public static Matrix4x4D Matrix4x4() => new Matrix4x4D();
 
     }

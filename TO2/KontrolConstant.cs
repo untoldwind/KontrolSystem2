@@ -55,7 +55,7 @@ namespace KontrolSystem.TO2 {
         public TO2Type Type => enumType;
 
         public string Description { get; }
-        
+
         public void EmitLoad(IBlockContext context) {
         }
 
