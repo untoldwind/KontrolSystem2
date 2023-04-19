@@ -1,4 +1,4 @@
-use { MovingAverage, moving_average, PIDLoop, pid_loop, TorquePI, torque_pi } from ksp::control
+use { MovingAverage, moving_average, PIDLoop, pid_loop, TorquePI, torque_pi, SteeringManager } from ksp::control
 use { Vessel } from ksp::vessel
 use { GlobalDirection, Direction, Vec3, vec3, euler } from ksp::math
 use { MAX_FLOAT, MIN_FLOAT, min, max, RAD_TO_DEG, DEG_TO_RAD } from core::math
@@ -12,8 +12,8 @@ const VESSEL_FORWARD : Vec3 = vec3(0, 1, 0)
 const VESSEL_TOP : Vec3 = vec3(0, 0, -1)
 const VESSEL_STARBOARD : Vec3 = vec3(1, 0, 0)
 
-pub struct SteeringManager(vessel: Vessel, direction_provider: fn() -> GlobalDirection) {
-    direction_provider: fn() -> GlobalDirection = direction_provider
+pub struct SteeringController(vessel: Vessel, target_direction: GlobalDirection) {
+    target_direction: GlobalDirection = target_direction
     enable_torque_adjust: bool      = false
     max_stopping_time: float        = 2
     roll_control_angle_range: float = 5
@@ -64,7 +64,7 @@ pub struct SteeringManager(vessel: Vessel, direction_provider: fn() -> GlobalDir
     tgt_roll_torque: float           = 0
 }
 
-impl SteeringManager {
+impl SteeringController {
     sync fn update(self, delta_t: float) -> Vec3 = {
         if(delta_t > 1) {
             // Too long since last update, reset integral part
@@ -75,7 +75,7 @@ impl SteeringManager {
         self.update_prediction_pi(delta_t)
         self.update_control()
     }
-    
+
     sync fn reset_i(self) -> Unit = {
         self.pitch_pi.reset_i()
         self.yaw_pi.reset_i()
@@ -89,7 +89,7 @@ impl SteeringManager {
         const mcframe = self.vessel.main_body.celestial_frame
         const frame = self.vessel.control_frame
         
-        self.target_rot = self.direction_provider().to_local(frame)
+        self.target_rot = self.target_direction.to_local(frame)
         self.center_of_mass = self.vessel.global_center_of_mass.to_local(frame)
         self.target_forward = self.target_rot.vector
         self.target_top = self.target_rot.up_vector
@@ -242,6 +242,32 @@ impl SteeringManager {
     }
 }
 
-pub fn init_steering(vessel: Vessel, direction_provider: fn() -> GlobalDirection) -> SteeringManager = {
-    SteeringManager(vessel, direction_provider)
+pub struct SteeringControl(manager: SteeringManager, controller: SteeringController) {
+    manager: SteeringManager       = manager
+    controller: SteeringController = controller
+}
+
+impl SteeringControl {
+    sync fn set_global_direction(self, dir: GlobalDirection) -> Unit = {
+        self.controller.target_direction = dir
+    }
+
+    sync fn set_direction(self, dir: Direction) -> Unit = {
+        self.controller.target_direction = dir.to_global(self.controller.vessel.main_body.celestial_frame)
+    }
+    
+    fn release(self) -> Unit = {
+        self.manager.release()
+    }
+
+    fn resume(self) -> Unit = {
+        self.manager.resume()
+    }
+}
+
+pub fn control_steering(vessel: Vessel) -> SteeringControl = {
+    const controller = SteeringController(vessel, vessel.global_facing)
+    const manager = vessel.manage_steering(fn(delta_t) -> controller.update(delta_t))
+    
+    SteeringControl(manager, controller)
 }

@@ -3,6 +3,7 @@ using System.Reflection.Emit;
 using KontrolSystem.TO2;
 using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Binding;
+using KSP.Sim;
 using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime.KSPMath {
@@ -67,6 +68,13 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                     new BoundMethodInvokeFactory("Convert the direction to string", true, () => BuiltinType.String,
                         () => new List<RealizedParameter>(), false, typeof(Direction),
                         typeof(Direction).GetMethod("ToString"))
+                }, {
+                    "to_global",
+                    new BoundMethodInvokeFactory("Associate this direction with a coordinate system",
+                        true,
+                        () => RotationBinding.RotationType,
+                        () => new List<RealizedParameter>() { new RealizedParameter("frame", TransformFrameBinding.TransformFrameType) },
+                        false, typeof(DirectionBinding), typeof(DirectionBinding).GetMethod("ToGlobal"))
                 }
             },
             new Dictionary<string, IFieldAccessFactory> {
@@ -119,5 +127,8 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
         public static Direction FromVectorToVector(Vector3d v1, Vector3d v2) => Direction.FromVectorToVector(v1, v2);
 
         public static Direction Inverse(Direction direction) => new Direction(QuaternionD.Inverse(direction.Rotation));
+        
+        public static RotationWrapper ToGlobal(Direction direction,  ITransformFrame frame) => new RotationWrapper(new Rotation(frame, direction.Rotation));
     }
 }
+
