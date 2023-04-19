@@ -84,11 +84,12 @@ impl SteeringManager {
     }
     
     sync fn update_state_vectors(self, delta_t: float) -> Unit = {
+        const mcframe = self.vessel.main_body.celestial_frame
         const frame = self.vessel.control_frame
         
-        self.target_rot = self.direction_provider().to_local(frame) * euler(90, 0, 0)
+        self.target_rot = self.direction_provider().to_local(frame)
         self.center_of_mass = self.vessel.global_center_of_mass.to_local(frame)
-        self.vessel_rotation = self.vessel.global_facing.to_local(frame) * euler(90, 0, 0)
+        self.vessel_rotation = self.vessel.global_facing.to_local(frame)
         self.vessel_forward = self.vessel_rotation.vector
         self.vessel_top = self.vessel_rotation.up_vector
         self.vessel_starboard = self.vessel_rotation.right_vector
@@ -97,7 +98,7 @@ impl SteeringManager {
         self.target_starboard = self.target_rot.right_vector
         
         const old_omega = self.omega
-        const angular_velocity = self.vessel.global_angular_velocity.to_local(frame)
+        const angular_velocity = self.vessel.global_angular_velocity.relative_to(mcframe).to_local(frame)
         self.omega = self.vessel_rotation.inverse * angular_velocity
         self.omega = vec3(-self.omega.x, self.omega.y, -self.omega.z)
         

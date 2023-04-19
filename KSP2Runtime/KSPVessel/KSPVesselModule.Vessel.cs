@@ -51,18 +51,23 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField(Description = "Check if the vessel is currently active.")]
             public bool IsActive => vessel.SimulationObject.IsActiveVessel;
 
-            [KSField]
+            [KSField(Description = "Current control status of the vessel.")]
             public VesselControlState ControlStatus => vessel.ControlStatus;
 
-            [KSField(Description = "")] public ManeuverAdapter Maneuver => maneuver;
+            [KSField(Description = "Collection of methods to interact with the maneuver plan of the vessel.")] 
+            public ManeuverAdapter Maneuver => maneuver;
 
-            [KSField] public ActionGroupsAdapter Actions => actions;
+            [KSField(Description = "Collection of methods to trigger action groups.")] 
+            public ActionGroupsAdapter Actions => actions;
 
-            [KSField] public AutopilotAdapter Autopilot => autopilot;
+            [KSField(Description = "Collection of methods to interact with the SAS system of the vessel.")] 
+            public AutopilotAdapter Autopilot => autopilot;
 
-            [KSField] public VesselDeltaVAdapter DeltaV => deltaV;
+            [KSField(Description = "Collection of methods to obtain delta-v information of the vessel.")] 
+            public VesselDeltaVAdapter DeltaV => deltaV;
 
-            [KSField] public StagingAdapter Staging => staging;
+            [KSField(Description = "Collection of methods to obtain information about stages and trigger staging.")] 
+            public StagingAdapter Staging => staging;
 
             [KSField(Description = "The main body of the current SOI the vessel is in.")]
             public KSPOrbitModule.IBody MainBody => new BodyWrapper(context, vessel.mainBody);
