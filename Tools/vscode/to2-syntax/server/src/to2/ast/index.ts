@@ -6,8 +6,18 @@ export interface Node {
   end: Position;
 }
 
-export interface BlockItem {
+export interface BlockItem extends Node {
+  isComment: boolean;
+
   resultType(): TO2Type;
 }
 
-export interface Expression extends Node, BlockItem {}
+export interface ModuleItem {}
+
+export abstract class Expression implements Node, BlockItem {
+  public isComment: boolean = false;
+
+  constructor(public readonly start: Position, public readonly end: Position) {}
+
+  public abstract resultType(): TO2Type;
+}

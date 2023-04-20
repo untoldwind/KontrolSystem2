@@ -73,6 +73,11 @@ const TAB = "\t".charCodeAt(0);
 
 export const spacing0 = chars0((ch) => ch === TAB && getCategory(ch) === "Zs");
 
+export const spacing1 = chars1(
+  (ch) => ch === TAB && getCategory(ch) === "Zs",
+  "<space>"
+);
+
 export function tag(tag: string): Parser<string> {
   return (input: Input) => {
     if (input.available() < tag.length) return new ParserFailure(input, tag);
@@ -87,6 +92,11 @@ export function peekLineEnd(input: Input): ParserResult<boolean> {
   if (input.take(1) === "\n" || input.take(2) == "\r\n")
     return new ParserSuccess(input, true);
   return new ParserFailure(input, "<end of line>");
+}
+
+export function eof(input: Input): ParserResult<void> {
+  if (input.available() > 0) return new ParserFailure(input, "<EOF>");
+  return new ParserSuccess(input, undefined);
 }
 
 function toCharCodes(chars: string): number[] {

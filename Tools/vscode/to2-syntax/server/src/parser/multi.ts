@@ -170,3 +170,37 @@ export function chain<T, OP>(
     return new ParserSuccess(remaining, result);
   };
 }
+
+export function delimitedUntil<T, D, E>(
+  itemParser: Parser<T>,
+  delimiter: Parser<D>,
+  end: Parser<E>,
+  description: string
+): Parser<T[]> {
+  return (input: Input) => {
+    let remaining = input;
+    const result: T[] = [];
+    let endResult = end(remaining);
+
+    if (endResult.success)
+      return new ParserSuccess(endResult.remaining, result);
+
+    while (remaining.available() > 0) {
+      const itemResult = itemParser(remaining);
+
+      if (!itemResult.success)
+        return new ParserFailure(itemResult.remaining, itemResult.expected);
+      if (remaining.offset === itemResult.remaining.offset)
+        return new ParserFailure(itemResult.remaining, description);
+
+      result.push(itemResult.result);
+      remaining = itemResult.remaining;
+
+      endResult = end(remaining);
+      if (endResult.success)
+        return new ParserSuccess(endResult.remaining, result);
+    }
+
+    return new ParserFailure(remaining, endResult.expected);
+  };
+}

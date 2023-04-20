@@ -41,5 +41,20 @@ export function getBuiltinType(
   namePath: string[],
   typeArguments: TO2Type[]
 ): TO2Type | undefined {
-  return undefined;
+  if (namePath.length !== 1) return undefined;
+
+  switch (namePath[0]) {
+    case "Unit":
+      return typeArguments.length === 0 ? BUILTIN_UNIT : undefined;
+    case "bool":
+      return typeArguments.length === 0 ? BUILTIN_BOOL : undefined;
+    case "int":
+      return typeArguments.length === 0 ? BUILTIN_INT : undefined;
+    case "float":
+      return typeArguments.length === 0 ? BUILTIN_FLOAT : undefined;
+    case "string":
+      return typeArguments.length === 0 ? BUILTIN_STRING : undefined;
+    default:
+      return undefined;
+  }
 }

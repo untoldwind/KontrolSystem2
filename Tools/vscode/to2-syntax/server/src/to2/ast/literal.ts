@@ -8,48 +8,40 @@ import {
   TO2Type,
 } from "./to2-type";
 
-export class LiteralBool implements Expression {
-  constructor(
-    public readonly value: boolean,
-    public readonly start: Position,
-    public readonly end: Position
-  ) {}
+export class LiteralBool extends Expression {
+  constructor(public readonly value: boolean, start: Position, end: Position) {
+    super(start, end);
+  }
 
   resultType(): TO2Type {
     return BUILTIN_BOOL;
   }
 }
 
-export class LiteralInt implements Expression {
-  constructor(
-    public readonly value: number,
-    public readonly start: Position,
-    public readonly end: Position
-  ) {}
+export class LiteralInt extends Expression {
+  constructor(public readonly value: number, start: Position, end: Position) {
+    super(start, end);
+  }
 
   resultType(): TO2Type {
     return BUILTIN_INT;
   }
 }
 
-export class LiteralFloat implements Expression {
-  constructor(
-    public readonly value: number,
-    public readonly start: Position,
-    public readonly end: Position
-  ) {}
+export class LiteralFloat extends Expression {
+  constructor(public readonly value: number, start: Position, end: Position) {
+    super(start, end);
+  }
 
   resultType(): TO2Type {
     return BUILTIN_FLOAT;
   }
 }
 
-export class LiteralString implements Expression {
-  constructor(
-    public readonly value: string,
-    public readonly start: Position,
-    public readonly end: Position
-  ) {}
+export class LiteralString extends Expression {
+  constructor(public readonly value: string, start: Position, end: Position) {
+    super(start, end);
+  }
 
   resultType(): TO2Type {
     return BUILTIN_STRING;

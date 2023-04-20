@@ -1,5 +1,5 @@
 import { isDigit } from "unicode-properties";
-import { map, opt, recognize, where } from "../parser/combinator";
+import { map, opt, recognize, recognizeAs, where } from "../parser/combinator";
 import {
   char,
   chars0,
@@ -10,12 +10,13 @@ import {
 } from "../parser/complete";
 import { between, preceded, seq } from "../parser/sequence";
 import { isAlphabetic } from "unicode-properties";
-import { delimited0, delimited1 } from "../parser/multi";
+import { delimited0, delimited1, many0 } from "../parser/multi";
 import { LineComment } from "./ast/line-comment";
 import { Input, ParserResult } from "../parser";
 import { TO2Type, getBuiltinType } from "./ast/to2-type";
 import { alt } from "../parser/branch";
 import { LookupTypeReference } from "./ast/type-reference";
+import { DeclarationParameter } from "./ast/variable-declaration";
 
 const RESERVED_KEYWORDS = new Set<string>([
   "pub",
@@ -98,3 +99,32 @@ const topLevelTypeRef = alt([typeReference]);
 export function typeRef(input: Input): ParserResult<TO2Type> {
   return topLevelTypeRef(input);
 }
+
+export const declarationParameter = map(
+  seq([
+    identifier,
+    opt(preceded(between(whitespace0, tag("@"), whitespace0), identifier)),
+    opt(typeSpec),
+  ]),
+  ([target, source, type]) => new DeclarationParameter(target, source, type)
+);
+
+export const declarationParameterOrPlaceholder = alt([
+  declarationParameter,
+  recognizeAs(
+    tag("_"),
+    new DeclarationParameter(undefined, undefined, undefined)
+  ),
+]);
+
+export const descriptionComment = map(
+  many0(
+    between(
+      preceded(whitespace0, tag("///")),
+      charsExcept0("\r\n"),
+      peekLineEnd
+    ),
+    "<description>"
+  ),
+  (lines) => lines.join("\n")
+);

@@ -1,22 +1,34 @@
 import { Input, Parser, ParserResult } from "../parser";
 import { alt } from "../parser/branch";
 import { map, opt, recognizeAs } from "../parser/combinator";
-import { spacing0, tag, whitespace0 } from "../parser/complete";
-import { chain, delimited0, fold0 } from "../parser/multi";
+import { spacing0, tag, whitespace0, whitespace1 } from "../parser/complete";
+import {
+  chain,
+  delimited0,
+  delimited1,
+  delimitedUntil,
+  fold0,
+} from "../parser/multi";
 import { between, preceded, seq, terminated } from "../parser/sequence";
 import { Expression } from "./ast";
 import { Binary } from "./ast/binary";
 import { BinaryBool } from "./ast/binary-bool";
+import { Block } from "./ast/block";
 import { Operator } from "./ast/operator";
 import { RangeCreate } from "./ast/range-create";
+import { TupleDeconstructDeclaration } from "./ast/tuple-deconstruct-declaration";
 import { Unapply } from "./ast/unapply";
 import { UnaryPrefix } from "./ast/unary-prefix";
 import { UnarySuffix } from "./ast/unary-suffix";
+import { VariableDeclaration } from "./ast/variable-declaration";
 import {
   commaDelimiter,
   constKeyword,
+  declarationParameter,
+  declarationParameterOrPlaceholder,
   identifier,
   letKeyword,
+  lineComment,
 } from "./parser-common";
 import {
   literalBool,
@@ -31,6 +43,48 @@ const letOrConst = alt([
   recognizeAs(constKeyword, true),
 ]);
 
+const variableDeclaration = map(
+  seq([
+    letOrConst,
+    preceded(
+      whitespace1,
+      alt([
+        map(declarationParameter, (item) => ({ isVar: true, items: [item] })),
+        map(
+          between(
+            terminated(tag("("), whitespace0),
+            delimited1(
+              declarationParameterOrPlaceholder,
+              commaDelimiter,
+              "<var declaration>"
+            ),
+            preceded(whitespace0, tag(")"))
+          ),
+          (items) => ({ isVar: false, items })
+        ),
+      ])
+    ),
+    preceded(between(whitespace0, tag("="), whitespace0), expression),
+  ]),
+  ([isConst, { isVar, items }, expression], start, end) =>
+    isVar
+      ? new VariableDeclaration(items[0], isConst, expression, start, end)
+      : new TupleDeconstructDeclaration(items, isConst, expression, start, end)
+);
+
+const block = map(
+  preceded(
+    terminated(tag("{"), whitespace0),
+    delimitedUntil(
+      alt([expression, lineComment, variableDeclaration]),
+      whitespace1,
+      tag("}"),
+      "<block item>"
+    )
+  ),
+  (items, start, end) => new Block(items, start, end)
+);
+
 const bracketTerm = between(
   terminated(tag("("), whitespace0),
   expression,
@@ -43,6 +97,7 @@ const term = alt<Expression>([
   literalInt,
   literalString,
   bracketTerm,
+  block,
 ]);
 
 const suffixOp = recognizeAs(tag("?"), Operator.Unwrap);

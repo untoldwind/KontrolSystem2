@@ -3,13 +3,15 @@ import { Expression } from ".";
 import { Operator } from "./operator";
 import { BUILTIN_BOOL, TO2Type } from "./to2-type";
 
-export class UnaryPrefix implements Expression {
+export class UnaryPrefix extends Expression {
   constructor(
     public readonly op: Operator,
     public readonly right: Expression,
-    public readonly start: Position,
-    public readonly end: Position
-  ) {}
+    start: Position,
+    end: Position
+  ) {
+    super(start, end);
+  }
 
   resultType(): TO2Type {
     return BUILTIN_BOOL;
