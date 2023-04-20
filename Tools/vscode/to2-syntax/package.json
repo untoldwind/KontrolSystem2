@@ -59,6 +59,7 @@
   },
   "devDependencies": {
     "@types/node": "18.15.12",
+    "@vscode/vsce": "2.19.0",
     "typescript": "^5.0.4"
   }
 }
