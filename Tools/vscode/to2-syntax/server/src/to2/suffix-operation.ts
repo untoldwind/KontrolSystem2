@@ -1,10 +1,7 @@
 import { Operator } from "./ast/operator";
 
-export interface SuffixOperation {
-
-}
+export interface SuffixOperation {}
 
 export class OperatorSuffix implements SuffixOperation {
-    constructor(public readonly op: Operator) {
-    }
+  constructor(public readonly op: Operator) {}
 }

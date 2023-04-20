@@ -1,17 +1,22 @@
 import { Input, Parser, ParserFailure } from ".";
 
 export function alt<T>(alternatives: Parser<T>[]): Parser<T> {
-    return (input: Input) => {
-        let expected : string[] = [];
+  return (input: Input) => {
+    let longest = input;
+    let expected: string[] = [];
 
-        for(const parser of alternatives) {
-            const result = parser(input);
+    for (const parser of alternatives) {
+      const result = parser(input);
 
-            if(result.success) return result;
+      if (result.success) return result;
 
-            expected.push(result.expected);
-        }
+      const longestAt = longest.offset;
+      const errorAt = result.remaining.offset;
+      if (errorAt > longestAt) longest = result.remaining;
 
-        return new ParserFailure(expected.join(" or "));
+      expected.push(result.expected);
     }
+
+    return new ParserFailure(longest, expected.join(" or "));
+  };
 }
