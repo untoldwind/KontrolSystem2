@@ -36,6 +36,12 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
         Texture2D ToggleOn { get; }
 
         Texture2D ToggleOff { get; }
+        
+        Texture2D SliderBackground { get; }
+        
+        Texture2D SliderFill { get; }
+        
+        Texture2D SliderHandle { get; }
 
         Texture2D ConsoleBackground { get; }
 
@@ -73,6 +79,9 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
         internal readonly Texture2D downIcon;
         internal readonly Sprite toggleOn;
         internal readonly Sprite toggleOff;
+        internal readonly Sprite sliderBackground;
+        internal readonly Sprite sliderFill;
+        internal readonly Sprite sliderHandle;
         internal readonly Sprite consoleBackground;
         internal readonly Sprite consoleInactiveFrame;
 
@@ -109,6 +118,9 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             downIcon = uiAssetsProvider.DownIcon;
             toggleOn = Make9TileSprite(uiAssetsProvider.ToggleOn, new Vector4(9, 9, 9, 9));
             toggleOff = Make9TileSprite(uiAssetsProvider.ToggleOff, new Vector4(9, 9, 9, 9));
+            sliderBackground = Make9TileSprite(uiAssetsProvider.SliderBackground, new Vector4(13, 8, 11, 8));
+            sliderFill = Make9TileSprite(uiAssetsProvider.SliderFill, new Vector4(5, 5, 5, 5));
+            sliderHandle = Make9TileSprite(uiAssetsProvider.SliderHandle, new Vector4(3, 5, 3, 5));
             consoleBackground = Make9TileSprite(uiAssetsProvider.ConsoleBackground, new Vector4(20, 20, 20, 20));
             consoleInactiveFrame = Make9TileSprite(uiAssetsProvider.ConsoleInactiveFrame, new Vector4(20, 20, 20, 20));
 
@@ -492,6 +504,43 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             return root;
         }
 
+        internal GameObject CreateHSlider() {
+            var root = new GameObject("Slider", typeof(Slider));
+
+            var background = new GameObject("Background", typeof(Image));
+            Layout(background, root.transform, LAYOUT_STRETCH, LAYOUT_STRETCH, 0, 0, 0, 0);
+            var fillArea = new GameObject("Fill Area",  typeof(RectTransform));
+            Layout(fillArea, root.transform, LAYOUT_STRETCH, LAYOUT_STRETCH, 5, 0, -20, 0);
+            var fill = new GameObject("Fill",  typeof(Image));
+            Layout(fill, fillArea.transform, LAYOUT_STRETCH, LAYOUT_STRETCH, -5, 0, 10, 0);
+            var handleArea = new GameObject("Handle Slide Area",  typeof(RectTransform));
+            Layout(handleArea, root.transform, LAYOUT_STRETCH, LAYOUT_STRETCH, 10, -3, -20, -6);
+            var handle = new GameObject("Handle", typeof(Image));
+            Layout(handle, handleArea.transform, LAYOUT_START, LAYOUT_STRETCH, -6, 0, 12, 0);
+
+            Image backgroundImage = background.GetComponent<Image>();
+            backgroundImage.sprite = sliderBackground;
+            backgroundImage.type = Image.Type.Tiled;
+            backgroundImage.color = Color.white;
+            
+            Image fillImage = fill.GetComponent<Image>();
+            fillImage.sprite = sliderFill;
+            fillImage.type = Image.Type.Tiled;
+            fillImage.color = Color.white;
+            
+            Image handleImage = handle.GetComponent<Image>();
+            handleImage.sprite = sliderHandle;
+            handleImage.color = Color.white;
+            
+            Slider slider = root.GetComponent<Slider>();
+            slider.fillRect = fill.GetComponent<RectTransform>();
+            slider.handleRect = handle.GetComponent<RectTransform>();
+            slider.targetGraphic = handleImage;
+            slider.direction = Slider.Direction.LeftToRight;
+
+            return root;
+        }
+        
         internal static RectTransform Layout(GameObject gameObject, Transform parent, LayoutAlign horizontal, LayoutAlign vertical,
             float x, float y, float width, float height) {
             RectTransform transform = gameObject.GetComponent<RectTransform>();

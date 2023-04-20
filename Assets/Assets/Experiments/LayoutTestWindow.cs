@@ -19,7 +19,7 @@ namespace Experiments {
             var vertical = UGUILayoutContainer.Vertical();
             root.Add(vertical, UGUILayout.Align.STRETCH, 2);
 
-            var panel3 = UIFactory.Instance.CreatePanel();
+            var panel3 = UIFactory.Instance.CreateHSlider();
             vertical.Add(panel3, UGUILayout.Align.STRETCH, new Vector2(30, 30));
 
             var panel4 = UGUILayoutContainer.HorizontalPanel();
