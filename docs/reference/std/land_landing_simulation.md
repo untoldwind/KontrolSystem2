@@ -177,6 +177,17 @@ path | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition)[] | R/
 ## Functions
 
 
+### BodyParameters
+
+```rust
+pub sync fn BodyParameters ( body : ksp::orbit::Body,
+                             decel_end_altitude_asl : float,
+                             landing_altitude_asl : float,
+                             speed_policy : sync fn(ksp::math::Vec3, ksp::math::Vec3) -> float ) -> std::land::landing_simulation::BodyParameters
+```
+
+
+
 ### init_simulation
 
 ```rust
@@ -187,6 +198,17 @@ pub sync fn init_simulation ( vessel : ksp::vessel::Vessel,
                               max_thrust_accel : float,
                               landing_altitude_asl : float,
                               speed_policy : sync fn(ksp::math::Vec3, ksp::math::Vec3) -> float ) -> std::land::landing_simulation::ReentrySimulation
+```
+
+
+
+### ReentrySimulation
+
+```rust
+pub sync fn ReentrySimulation ( body : std::land::landing_simulation::BodyParameters,
+                                start_dt : float,
+                                min_dt : float,
+                                max_thrust_accel : float ) -> std::land::landing_simulation::ReentrySimulation
 ```
 
 

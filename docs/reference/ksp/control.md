@@ -13,6 +13,7 @@
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
+last_sample_time | float | R/W | 
 mean | float | R/W | 
 mean_diff | float | R/W | 
 sample_limit | int | R/W | 
@@ -33,6 +34,15 @@ movingaverage.reset ( ) -> Unit
 ```rust
 movingaverage.update ( sampleTime : float,
                        value : float ) -> float
+```
+
+
+
+##### update_delta
+
+```rust
+movingaverage.update_delta ( deltaT : float,
+                             input : float ) -> float
 ```
 
 
@@ -70,6 +80,7 @@ setpoint | float | R/W |
 pidloop.reset_i ( ) -> Unit
 ```
 
+Reset the integral part of the PID loop
 
 
 ##### update
@@ -77,6 +88,15 @@ pidloop.reset_i ( ) -> Unit
 ```rust
 pidloop.update ( sampleTime : float,
                  input : float ) -> float
+```
+
+
+
+##### update_delta
+
+```rust
+pidloop.update_delta ( deltaT : float,
+                       input : float ) -> float
 ```
 
 
@@ -210,6 +230,7 @@ ts | float | R/W |
 torquepi.reset_i ( ) -> Unit
 ```
 
+Reset the integral part of the PID loop
 
 
 ##### update
@@ -220,6 +241,18 @@ torquepi.update ( sampleTime : float,
                   setpoint : float,
                   momentOfInertia : float,
                   maxOutput : float ) -> float
+```
+
+
+
+##### update_delta
+
+```rust
+torquepi.update_delta ( deltaT : float,
+                        input : float,
+                        setpoint : float,
+                        momentOfInertia : float,
+                        maxOutput : float ) -> float
 ```
 
 
@@ -315,8 +348,18 @@ pub sync fn pid_loop ( kp : float,
                        ki : float,
                        kd : float,
                        minOutput : float,
-                       maxOutput : float ) -> ksp::control::PIDLoop
+                       maxOutput : float,
+                       extraUnwind : bool ) -> ksp::control::PIDLoop
 ```
 
 Create a new PIDLoop with given parameters.
+
+
+### torque_pi
+
+```rust
+pub sync fn torque_pi ( ts : float ) -> ksp::control::TorquePI
+```
+
+Create a new TorquePI with given parameters.
 

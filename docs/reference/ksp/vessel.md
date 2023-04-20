@@ -773,7 +773,7 @@ Represents an in-game vessel, which might be a rocket, plane, rover ... or actua
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
-actions | [ksp::vessel::ActionGroups](/reference/ksp/vessel.md#actiongroups) | R/O | 
+actions | [ksp::vessel::ActionGroups](/reference/ksp/vessel.md#actiongroups) | R/O | Collection of methods to trigger action groups. 
 air_intakes | [ksp::vessel::ModuleAirIntake](/reference/ksp/vessel.md#moduleairintake)[] | R/O | 
 altitude_scenery | float | R/O | 
 altitude_sealevel | float | R/O | 
@@ -781,14 +781,14 @@ altitude_terrain | float | R/O |
 angular_momentum | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
 angular_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
 atmosphere_density | float | R/O | 
-autopilot | [ksp::vessel::Autopilot](/reference/ksp/vessel.md#autopilot) | R/O | 
+autopilot | [ksp::vessel::Autopilot](/reference/ksp/vessel.md#autopilot) | R/O | Collection of methods to interact with the SAS system of the vessel. 
 available_thrust | float | R/O | 
 body_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/O | The body/rotating reference frame of the vessel. 
 celestial_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/O | The celestial/non-rotating reference frame of the vessel. 
 CoM | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Position of the center of mass of the vessel. 
 control_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/O | Reference frame for the current control position. 
-control_status | [ksp::vessel::VesselControlState](/reference/ksp/vessel.md#vesselcontrolstate) | R/O | 
-delta_v | [ksp::vessel::VesselDeltaV](/reference/ksp/vessel.md#vesseldeltav) | R/O | 
+control_status | [ksp::vessel::VesselControlState](/reference/ksp/vessel.md#vesselcontrolstate) | R/O | Current control status of the vessel. 
+delta_v | [ksp::vessel::VesselDeltaV](/reference/ksp/vessel.md#vesseldeltav) | R/O | Collection of methods to obtain delta-v information of the vessel. 
 docking_nodes | [ksp::vessel::ModuleDockingNode](/reference/ksp/vessel.md#moduledockingnode)[] | R/O | 
 dynamic_pressure_kpa | float | R/O | 
 east | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
@@ -800,6 +800,7 @@ global_angular_velocity | [ksp::math::GlobalAngularVelocity](/reference/ksp/math
 global_center_of_mass | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | R/O | Coordinate independent position of the center of mass. 
 global_east | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | 
 global_facing | [ksp::math::GlobalDirection](/reference/ksp/math.md#globaldirection) | R/O | 
+global_moment_of_inertia | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | 
 global_north | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | 
 global_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | R/O | Coordinate independent position of the vessel. 
 global_up | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | 
@@ -810,7 +811,7 @@ horizontal_surface_speed | float | R/O |
 is_active | bool | R/O | Check if the vessel is currently active. 
 mach_number | float | R/O | 
 main_body | [ksp::orbit::Body](/reference/ksp/orbit.md#body) | R/O | The main body of the current SOI the vessel is in. 
-maneuver | [ksp::vessel::Maneuver](/reference/ksp/vessel.md#maneuver) | R/O |  
+maneuver | [ksp::vessel::Maneuver](/reference/ksp/vessel.md#maneuver) | R/O | Collection of methods to interact with the maneuver plan of the vessel. 
 mass | float | R/O | Total mass of the vessel. 
 name | string | R/O | The name of the vessel. 
 north | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
@@ -822,15 +823,26 @@ pitch_yaw_roll | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O |
 situation | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | 
 solar_panels | [ksp::vessel::ModuleSolarPanel](/reference/ksp/vessel.md#modulesolarpanel)[] | R/O | 
 sound_speed | float | R/O | 
-staging | [ksp::vessel::Staging](/reference/ksp/vessel.md#staging) | R/O | 
+staging | [ksp::vessel::Staging](/reference/ksp/vessel.md#staging) | R/O | Collection of methods to obtain information about stages and trigger staging. 
 static_pressure_kpa | float | R/O | 
 surface_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Surface velocity of the vessel relative to the main body. 
 target | Option&lt;[ksp::vessel::Targetable](/reference/ksp/vessel.md#targetable)> | R/W | 
+total_torque | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
 up | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
 vertical_speed | float | R/O | 
 vertical_surface_speed | float | R/O | 
 
 #### Methods
+
+##### global_heading_direction
+
+```rust
+vessel.global_heading_direction ( degreesFromNorth : float,
+                                  pitchAboveHorizon : float,
+                                  roll : float ) -> ksp::math::GlobalDirection
+```
+
+
 
 ##### heading_direction
 

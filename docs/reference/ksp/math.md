@@ -14,6 +14,7 @@ Represents the rotation from an initial coordinate system when looking down the 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
 euler | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/W | Euler angles in degree of the rotation
+inverse | [ksp::math::Direction](/reference/ksp/math.md#direction) | R/O | Inverse direction
 pitch | float | R/O | Pitch in degree
 right_vector | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Right vector of the rotation
 roll | float | R/O | Roll in degree
@@ -22,6 +23,14 @@ vector | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/W | Fore vector of t
 yaw | float | R/O | Yaw in degree
 
 #### Methods
+
+##### to_global
+
+```rust
+direction.to_global ( frame : ksp::math::TransformFrame ) -> ksp::math::GlobalDirection
+```
+
+Associate this direction with a coordinate system
 
 ##### to_string
 
@@ -622,6 +631,14 @@ pub sync fn matrix2x2 ( a : float,
 ```
 
 Create a new 2-dimensional matrix
+
+### matrix4x4
+
+```rust
+pub sync fn matrix4x4 ( ) -> ksp::math::Matrix4x4
+```
+
+Create a new 4-dimensional matrix
 
 ### vec2
 
