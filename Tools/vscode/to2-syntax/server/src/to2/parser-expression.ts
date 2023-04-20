@@ -8,25 +8,31 @@ import {
   delimited1,
   delimitedUntil,
   fold0,
+  many0,
 } from "../parser/multi";
 import { between, preceded, seq, terminated } from "../parser/sequence";
 import { Expression } from "./ast";
 import { Binary } from "./ast/binary";
 import { BinaryBool } from "./ast/binary-bool";
 import { Block } from "./ast/block";
+import { Break, Continue } from "./ast/break-continue";
 import { Operator } from "./ast/operator";
 import { RangeCreate } from "./ast/range-create";
+import { ReturnEmpty, ReturnValue } from "./ast/return";
 import { TupleDeconstructDeclaration } from "./ast/tuple-deconstruct-declaration";
 import { Unapply } from "./ast/unapply";
 import { UnaryPrefix } from "./ast/unary-prefix";
 import { UnarySuffix } from "./ast/unary-suffix";
 import { VariableDeclaration } from "./ast/variable-declaration";
+import { While } from "./ast/while";
 import {
   commaDelimiter,
   constKeyword,
   declarationParameter,
   declarationParameterOrPlaceholder,
+  eqDelimiter,
   identifier,
+  identifierPath,
   letKeyword,
   lineComment,
 } from "./parser-common";
@@ -46,25 +52,22 @@ const letOrConst = alt([
 const variableDeclaration = map(
   seq([
     letOrConst,
-    preceded(
-      whitespace1,
-      alt([
-        map(declarationParameter, (item) => ({ isVar: true, items: [item] })),
-        map(
-          between(
-            terminated(tag("("), whitespace0),
-            delimited1(
-              declarationParameterOrPlaceholder,
-              commaDelimiter,
-              "<var declaration>"
-            ),
-            preceded(whitespace0, tag(")"))
+    alt([
+      map(declarationParameter, (item) => ({ isVar: true, items: [item] })),
+      map(
+        between(
+          terminated(tag("("), whitespace0),
+          delimited1(
+            declarationParameterOrPlaceholder,
+            commaDelimiter,
+            "<var declaration>"
           ),
-          (items) => ({ isVar: false, items })
+          preceded(whitespace0, tag(")"))
         ),
-      ])
-    ),
-    preceded(between(whitespace0, tag("="), whitespace0), expression),
+        (items) => ({ isVar: false, items })
+      ),
+    ]),
+    preceded(eqDelimiter, expression),
   ]),
   ([isConst, { isVar, items }, expression], start, end) =>
     isVar
@@ -72,17 +75,71 @@ const variableDeclaration = map(
       : new TupleDeconstructDeclaration(items, isConst, expression, start, end)
 );
 
+const returnExpression = map(
+  seq([tag("return"), opt(preceded(spacing0, expression))]),
+  ([_, returnValue], start, end) =>
+    returnValue
+      ? new ReturnValue(returnValue, start, end)
+      : new ReturnEmpty(start, end)
+);
+
+const whileExpression = map(
+  seq([
+    between(
+      preceded(tag("while"), between(whitespace0, tag("("), whitespace0)),
+      expression,
+      preceded(whitespace0, tag(")"))
+    ),
+    preceded(whitespace0, expression),
+  ]),
+  ([condition, loopExpression], start, end) =>
+    new While(condition, loopExpression, start, end)
+);
+
+const breakExpression = map(
+  tag("break"),
+  (_, start, end) => new Break(start, end)
+);
+
+const continueExpression = map(
+  tag("continue"),
+  (_, start, end) => new Continue(start, end)
+);
+
 const block = map(
   preceded(
     terminated(tag("{"), whitespace0),
     delimitedUntil(
-      alt([expression, lineComment, variableDeclaration]),
+      alt([
+        expression,
+        lineComment,
+        variableDeclaration,
+        returnExpression,
+        whileExpression,
+        breakExpression,
+        continueExpression,
+      ]),
       whitespace1,
       tag("}"),
       "<block item>"
     )
   ),
   (items, start, end) => new Block(items, start, end)
+);
+
+const callArguments = preceded(
+  terminated(tag("("), whitespace0),
+  delimitedUntil(
+    expression,
+    commaDelimiter,
+    preceded(whitespace0, tag(")")),
+    "<call argument>"
+  )
+);
+
+const variableRefOrCall = map(
+  seq([identifierPath, opt(preceded(spacing0, callArguments))]),
+  ([fullname, aguments], start, end) => {}
 );
 
 const bracketTerm = between(
@@ -212,7 +269,7 @@ const unapplyExpr = map(
         preceded(spacing0, tag(")"))
       )
     ),
-    preceded(between(spacing0, tag("="), spacing0), BITBinaryExpr),
+    preceded(eqDelimiter, BITBinaryExpr),
   ]),
   ([pattern, extractNames, expression], start, end) =>
     new Unapply(pattern, extractNames, expression, start, end)

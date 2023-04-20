@@ -11,6 +11,7 @@ import {
 import {
   commaDelimiter,
   descriptionComment,
+  eqDelimiter,
   identifier,
   pubKeyword,
   typeRef,
@@ -62,11 +63,7 @@ const functionPrefix = alt([
 ]);
 
 const functionParameter = map(
-  seq([
-    identifier,
-    typeSpec,
-    opt(preceded(between(whitespace0, tag("="), whitespace0), expression)),
-  ]),
+  seq([identifier, typeSpec, opt(preceded(eqDelimiter, expression))]),
   ([name, type, defaultValue], start, end) =>
     new FunctionParameter(name, type, defaultValue, start, end)
 );
@@ -88,7 +85,7 @@ export const functionDeclaration = map(
     identifier,
     preceded(whitespace0, functionParameters),
     preceded(between(whitespace0, tag("->"), whitespace0), typeRef),
-    preceded(between(whitespace0, tag("="), whitespace0), expression),
+    preceded(eqDelimiter, expression),
   ]),
   (
     [

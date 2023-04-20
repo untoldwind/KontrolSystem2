@@ -5,10 +5,11 @@ import {
   chars0,
   charsExcept0,
   peekLineEnd,
+  spacing1,
   tag,
   whitespace0,
 } from "../parser/complete";
-import { between, preceded, seq } from "../parser/sequence";
+import { between, preceded, seq, terminated } from "../parser/sequence";
 import { isAlphabetic } from "unicode-properties";
 import { delimited0, delimited1, many0 } from "../parser/multi";
 import { LineComment } from "./ast/line-comment";
@@ -39,11 +40,11 @@ const RESERVED_KEYWORDS = new Set<string>([
   "impl",
 ]);
 
-export const pubKeyword = tag("pub");
+export const pubKeyword = terminated(tag("pub"), spacing1);
 
-export const letKeyword = tag("let");
+export const letKeyword = terminated(tag("let"), spacing1);
 
-export const constKeyword = tag("const");
+export const constKeyword = terminated(tag("const"), spacing1);
 
 export const lineComment = map(
   between(preceded(whitespace0, tag("//")), charsExcept0("\r\n"), peekLineEnd),
@@ -72,6 +73,8 @@ export const identifier = where(
 export const identifierPath = delimited1(identifier, tag("::"), "<identifier>");
 
 export const commaDelimiter = between(whitespace0, tag(","), whitespace0);
+
+export const eqDelimiter = between(whitespace0, tag("="), whitespace0);
 
 export const typeSpec = preceded(
   between(whitespace0, tag(":"), whitespace0),

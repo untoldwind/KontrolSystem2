@@ -28,7 +28,7 @@ namespace KontrolSystem.TO2.Parser {
         );
 
         public static readonly Parser<FunctionParameter> FunctionParameter = Seq(
-            Identifier, TypeSpec, Opt(WhiteSpaces0.Then(Char('=')).Then(WhiteSpaces0).Then(Expression))
+            Identifier, TypeSpec, Opt(EqDelimiter.Then(Expression))
         ).Map((param, start, end) => new FunctionParameter(param.Item1, param.Item2,
             param.Item3.IsDefined ? param.Item3.Value : null, start, end));
 
@@ -38,14 +38,14 @@ namespace KontrolSystem.TO2.Parser {
         public static readonly Parser<FunctionDeclaration> FunctionDeclaration = Seq(
             DescriptionComment, WhiteSpaces0.Then(FunctionPrefix), Identifier, WhiteSpaces0.Then(FunctionParameters),
             WhiteSpaces0.Then(Tag("->")).Then(WhiteSpaces0).Then(TypeRef),
-            WhiteSpaces0.Then(Char('=')).Then(WhiteSpaces0).Then(Expression)
+            EqDelimiter.Then(Expression)
         ).Map((decl, start, end) => new FunctionDeclaration(decl.Item2.modifier, decl.Item2.async, decl.Item3,
             decl.Item1, decl.Item4, decl.Item5, decl.Item6, start, end));
 
         private static readonly Parser<bool> MethodSelfParams = Char('(').Then(WhiteSpaces0).Then(Alt(
             SelfKeyword.To(true),
-            ConstKeyword.Then(WhiteSpaces1).Then(SelfKeyword).To(true),
-            LetKeyword.Then(WhiteSpaces1).Then(SelfKeyword).To(false)
+            ConstKeyword.Then(SelfKeyword).To(true),
+            LetKeyword.Then(SelfKeyword).To(false)
         ));
 
         private static readonly Parser<List<FunctionParameter>> MethodParameters = Alt(
@@ -57,7 +57,7 @@ namespace KontrolSystem.TO2.Parser {
             DescriptionComment, Opt(WhiteSpaces0.Then(SyncKeyword)), WhiteSpaces0.Then(FnKeyword).Then(Identifier),
             WhiteSpaces0.Then(MethodSelfParams), MethodParameters,
             WhiteSpaces0.Then(Tag("->")).Then(WhiteSpaces0).Then(TypeRef),
-            WhiteSpaces0.Then(Char('=')).Then(WhiteSpaces0).Then(Expression)
+            EqDelimiter.Then(Expression)
         ).Map((items, start, end) =>
             new MethodDeclaration(items.Item2.IsEmpty, items.Item3, items.Item1, items.Item5,
                 items.Item6, items.Item7, start, end));
