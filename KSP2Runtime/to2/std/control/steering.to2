@@ -12,6 +12,7 @@ const VESSEL_FORWARD : Vec3 = vec3(0, 1, 0)
 const VESSEL_TOP : Vec3 = vec3(0, 0, -1)
 const VESSEL_STARBOARD : Vec3 = vec3(1, 0, 0)
 
+/// Adaptation of the steering controller in kOS.
 pub struct SteeringController(vessel: Vessel, target_direction: GlobalDirection) {
     target_direction: GlobalDirection = target_direction
     enable_torque_adjust: bool      = false
@@ -65,6 +66,8 @@ pub struct SteeringController(vessel: Vessel, target_direction: GlobalDirection)
 }
 
 impl SteeringController {
+    /// Update the internal state and return the desired pitch, yaw and roll control values.
+    /// This is supposed the be the callback of a `ksp::control::SteeringManager`.
     sync fn update(self, delta_t: float) -> Vec3 = {
         if(delta_t > 1) {
             // Too long since last update, reset integral part
@@ -76,6 +79,7 @@ impl SteeringController {
         self.update_control()
     }
 
+    /// Reset the integral part of all PID loops.
     sync fn reset_i(self) -> Unit = {
         self.pitch_pi.reset_i()
         self.yaw_pi.reset_i()
@@ -242,29 +246,53 @@ impl SteeringController {
     }
 }
 
+/// Helper to use `SteeringController` with a `SteeringManager` of a vessel.
+/// Use the `control_steering` function to set it up correctly.
 pub struct SteeringControl(manager: SteeringManager, controller: SteeringController) {
     manager: SteeringManager       = manager
     controller: SteeringController = controller
 }
 
 impl SteeringControl {
+    /// Set the desired target direction in coordinate system independent form.  
     sync fn set_global_direction(self, dir: GlobalDirection) -> Unit = {
         self.controller.target_direction = dir
     }
 
+    /// Set the desired target direction in the coordinate system of the main body of the controlled vessel.
     sync fn set_direction(self, dir: Direction) -> Unit = {
         self.controller.target_direction = dir.to_global(self.controller.vessel.main_body.celestial_frame)
     }
     
+    /// Set the desired target direction relative to the horizon.
+    sync fn set_heading(self, degrees_from_north: float, pitch_above_horizon: float, roll: float) -> Unit = {
+        self.controller.target_direction = self.controller.vessel.global_heading_direction(degrees_from_north, pitch_above_horizon, roll)
+    }
+    
+    /// Release control of the vessel.
     fn release(self) -> Unit = {
         self.manager.release()
     }
 
+    /// Resume control of the vessel.
     fn resume(self) -> Unit = {
         self.manager.resume()
     }
 }
 
+/// Control the steering of a vessel.
+/// Example usage:
+/// ```rust
+/// use { control_steering } from std::control::steering
+///   ...
+/// const control = control_steering(vessel)
+///   // vessel is now controlled and will keep its current rotation
+///
+/// control.set_heading(30, 10, 5) // change the desired rotation
+/// sleep(5) // Give the controller time to steer the vessel
+///    ...
+/// control.release() // release control of the vessel
+/// ```
 pub fn control_steering(vessel: Vessel) -> SteeringControl = {
     const controller = SteeringController(vessel, vessel.global_facing)
     const manager = vessel.manage_steering(fn(delta_t) -> controller.update(delta_t))
