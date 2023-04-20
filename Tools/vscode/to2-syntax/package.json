@@ -20,15 +20,15 @@
   "contributes": {
     "configuration": {
       "type": "object",
-			"title": "Example configuration",
+			"title": "TO2 configuration",
 			"properties": {
-				"languageServerExample.maxNumberOfProblems": {
+				"to2LspServer.maxNumberOfProblems": {
 					"scope": "resource",
 					"type": "number",
 					"default": 100,
 					"description": "Controls the maximum number of problems produced by the server."
 				},
-				"languageServerExample.trace.server": {
+				"to2LspServer.trace.server": {
 					"scope": "window",
 					"type": "string",
 					"enum": [
@@ -58,7 +58,7 @@
     "watch": "tsc -b -w"
   },
   "devDependencies": {
-    "@types/node": "18.15.11",
+    "@types/node": "18.15.12",
     "typescript": "^5.0.4"
   }
 }

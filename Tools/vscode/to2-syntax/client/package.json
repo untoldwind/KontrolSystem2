@@ -1,10 +1,8 @@
 {
-	"name": "lsp-sample-client",
+	"name": "to2-lsp-client",
 	"description": "VSCode part of a language server",
-	"author": "Microsoft Corporation",
 	"license": "MIT",
 	"version": "0.0.1",
-	"publisher": "vscode",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/untoldwind/KontrolSystem2"

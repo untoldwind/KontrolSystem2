@@ -1,8 +1,7 @@
 {
-  "name": "lsp-sample-server",
+  "name": "to2-lsp-server",
   "description": "Example implementation of a language server in node.",
   "version": "1.0.0",
-  "author": "Microsoft Corporation",
   "license": "MIT",
   "engines": {
     "node": "*"
