@@ -1,5 +1,14 @@
 # Changes
 
+## 0.3.3.2 -> 0.3.3.3
+
+* Fixed visible columns of console view
+* Fix `vessel.angular_moment`
+* Added helpers for steering:
+  * `vessel.global_toment_of_inertia`
+  * `vessel.total_torque`
+* Add `std::control::steering` module to control a vessel without relying on the SAS system.
+
 ## 0.3.3.1 -> 0.3.3.2
 
 * Fix inaccessible `..ctor()` exception (issue #70)

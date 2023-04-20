@@ -160,9 +160,9 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 }
             }
 
-            [KSField] public Vector3d AngularMomentum => vessel.mainBody.coordinateSystem.ToLocalVector(vessel.angularMomentum.relativeAngularVelocity);
+            [KSField] public Vector3d AngularMomentum => vessel.mainBody.celestialMotionFrame.ToLocalAngularVelocity(vessel.angularMomentum);
 
-            [KSField] public Vector3d AngularVelocity => vessel.mainBody.coordinateSystem.ToLocalVector(vessel.AngularVelocity.relativeAngularVelocity);
+            [KSField] public Vector3d AngularVelocity => vessel.mainBody.celestialMotionFrame.ToLocalAngularVelocity(vessel.AngularVelocity);
 
             [KSField] public double VerticalSpeed => vessel.VerticalSrfSpeed;
 

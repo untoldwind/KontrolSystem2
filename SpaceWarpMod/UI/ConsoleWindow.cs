@@ -69,10 +69,11 @@ namespace KontrolSystem.SpaceWarpMod.UI {
             LoggerAdapter.Instance.Debug($"Console font: {terminalLetterSkin.label.font}");
 
             CharacterInfo chInfo;
+            float scale = (float)terminalLetterSkin.label.fontSize / terminalLetterSkin.font.fontSize;
             terminalLetterSkin.label.font
                 .RequestCharactersInTexture("X"); // Make sure the char in the font is lazy-loaded by Unity.
             terminalLetterSkin.label.font.GetCharacterInfo('X', out chInfo);
-            fontCharWidth = chInfo.advance - 3;
+            fontCharWidth = (int)(chInfo.advance * scale);
             fontCharHeight = terminalLetterSkin.label.fontSize + 2;
             LoggerAdapter.Instance.Debug($"Font metrics: {fontCharWidth} x {fontCharHeight}");
         }
