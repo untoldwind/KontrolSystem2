@@ -3,7 +3,7 @@ import { Position } from "vscode-languageserver-textdocument";
 export interface Input {
   offset: number;
   position: Position;
-  available(): number;
+  available: number;
   take(count: number): string;
   findNext(predicate: (charCode: number) => boolean): number;
   advance(count: number): Input;

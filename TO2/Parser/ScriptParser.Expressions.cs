@@ -150,16 +150,7 @@ namespace KontrolSystem.TO2.Parser {
         );
 
         private static readonly Parser<Expression> TermWithSuffixOps = Term.Fold0(SuffixOps,
-            (target, suffixOp, start, end) => {
-                switch (suffixOp) {
-                case IndexGetSuffix indexGet: return new IndexGet(target, indexGet.indexSpec, start, end);
-                case MethodCallSuffix methodCall:
-                    return new MethodCall(target, methodCall.methodName, methodCall.arguments, start, end);
-                case FieldGetSuffix fieldGet: return new FieldGet(target, fieldGet.fieldName, start, end);
-                case OperatorSuffix operatorSuffix: return new UnarySuffix(target, operatorSuffix.op, start, end);
-                default: throw new ParseException(start, new List<string> { "<valid suffix>" });
-                }
-            });
+            (target, suffixOp, start, end) => suffixOp.GetExpression(target, start, end));
 
         private static readonly Parser<Operator> UnaryPrefixOp = Alt(
             Char('-').To(Operator.Neg),

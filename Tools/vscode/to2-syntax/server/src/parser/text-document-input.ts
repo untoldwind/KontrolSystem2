@@ -4,6 +4,7 @@ import { Input } from ".";
 export class TextDocumentInput implements Input {
   private sourceText: string;
   public position: Position;
+  public available: number;
 
   constructor(
     private readonly source: TextDocument,
@@ -12,10 +13,7 @@ export class TextDocumentInput implements Input {
   ) {
     this.sourceText = sourceText ?? source.getText();
     this.position = source.positionAt(offset);
-  }
-
-  available(): number {
-    return this.sourceText.length - this.offset;
+    this.available = this.sourceText.length - offset;
   }
 
   take(count: number): string {

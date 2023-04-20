@@ -185,7 +185,7 @@ export function delimitedUntil<T, D, E>(
     if (endResult.success)
       return new ParserSuccess(endResult.remaining, result);
 
-    while (remaining.available() > 0) {
+    while (remaining.available > 0) {
       const itemResult = itemParser(remaining);
 
       if (!itemResult.success)
@@ -196,6 +196,16 @@ export function delimitedUntil<T, D, E>(
       result.push(itemResult.result);
       remaining = itemResult.remaining;
 
+      endResult = end(remaining);
+      if (endResult.success)
+        return new ParserSuccess(endResult.remaining, result);
+
+      const delimiterResult = delimiter(remaining);
+      if (!delimiterResult.success)
+        return new ParserFailure(
+          delimiterResult.remaining,
+          delimiterResult.expected
+        );
       endResult = end(remaining);
       if (endResult.success)
         return new ParserSuccess(endResult.remaining, result);

@@ -6,7 +6,7 @@ export function char(
   expected: string
 ): Parser<string> {
   return (input: Input) => {
-    if (input.available() < 1) return new ParserFailure(input, expected);
+    if (input.available < 1) return new ParserFailure(input, expected);
     const current = input.take(1);
     if (!predicate(current.charCodeAt(0)))
       return new ParserFailure(input, expected);
@@ -24,7 +24,7 @@ export function chars0(
 ): Parser<string> {
   return (input: Input) => {
     let count = input.findNext((ch) => !predicate(ch));
-    if (count < 0) count = input.available();
+    if (count < 0) count = input.available;
     return new ParserSuccess(input.advance(count), input.take(count));
   };
 }
@@ -35,7 +35,7 @@ export function chars1(
 ): Parser<string> {
   return (input: Input) => {
     let count = input.findNext((ch) => !predicate(ch));
-    if (count < 0) count = input.available();
+    if (count < 0) count = input.available;
     if (count === 0) return new ParserFailure(input, expected);
     return new ParserSuccess(input.advance(count), input.take(count));
   };
@@ -80,7 +80,7 @@ export const spacing1 = chars1(
 
 export function tag(tag: string): Parser<string> {
   return (input: Input) => {
-    if (input.available() < tag.length) return new ParserFailure(input, tag);
+    if (input.available < tag.length) return new ParserFailure(input, tag);
     const content = input.take(tag.length);
     if (content !== tag) return new ParserFailure(input, `Expected ${tag}`);
     return new ParserSuccess(input.advance(tag.length), content);
@@ -88,14 +88,14 @@ export function tag(tag: string): Parser<string> {
 }
 
 export function peekLineEnd(input: Input): ParserResult<boolean> {
-  if (input.available() === 0) return new ParserSuccess(input, false);
+  if (input.available === 0) return new ParserSuccess(input, false);
   if (input.take(1) === "\n" || input.take(2) == "\r\n")
     return new ParserSuccess(input, true);
   return new ParserFailure(input, "<end of line>");
 }
 
 export function eof(input: Input): ParserResult<void> {
-  if (input.available() > 0) return new ParserFailure(input, "<EOF>");
+  if (input.available > 0) return new ParserFailure(input, "<EOF>");
   return new ParserSuccess(input, undefined);
 }
 

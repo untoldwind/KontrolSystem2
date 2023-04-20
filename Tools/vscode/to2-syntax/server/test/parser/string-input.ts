@@ -3,6 +3,7 @@ import { Input } from "../../src/parser";
 
 export class StringInput implements Input {
   public position: Position;
+  public available: number;
 
   constructor(
     private readonly source: string,
@@ -14,10 +15,7 @@ export class StringInput implements Input {
       line: 1,
       character: offset,
     };
-  }
-
-  available(): number {
-    return this.source.length - this.offset;
+    this.available = source.length - offset;
   }
 
   take(count: number): string {

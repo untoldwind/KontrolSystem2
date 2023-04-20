@@ -16,6 +16,8 @@ import { Binary } from "./ast/binary";
 import { BinaryBool } from "./ast/binary-bool";
 import { Block } from "./ast/block";
 import { Break, Continue } from "./ast/break-continue";
+import { IfThen, IfThenElse } from "./ast/if-then";
+import { IndexSpec } from "./ast/index-spec";
 import { Operator } from "./ast/operator";
 import { RangeCreate } from "./ast/range-create";
 import { ReturnEmpty, ReturnValue } from "./ast/return";
@@ -42,7 +44,13 @@ import {
   literalInt,
   literalString,
 } from "./parser-literals";
-import { OperatorSuffix, SuffixOperation } from "./suffix-operation";
+import {
+  FieldGetSuffix,
+  IndexGetSuffix,
+  MethodCallSuffix,
+  OperatorSuffix,
+  SuffixOperation,
+} from "./suffix-operation";
 
 const letOrConst = alt([
   recognizeAs(letKeyword, false),
@@ -157,24 +165,37 @@ const term = alt<Expression>([
   block,
 ]);
 
+const indexSpec = map(expression, (expression) => new IndexSpec(expression));
+
 const suffixOp = recognizeAs(tag("?"), Operator.Unwrap);
 
-const suffixOps = alt([
+const suffixOps = alt<SuffixOperation>([
   map(
-    preceded(spacing0, suffixOp),
-    (op) => new OperatorSuffix(op) as SuffixOperation
+    seq([
+      preceded(between(whitespace0, tag("."), whitespace0), identifier),
+      opt(callArguments),
+    ]),
+    ([name, args]) =>
+      args ? new MethodCallSuffix(name, args) : new FieldGetSuffix(name)
   ),
+  map(
+    preceded(
+      spacing0,
+      between(
+        terminated(tag("["), whitespace0),
+        indexSpec,
+        preceded(whitespace0, tag("]"))
+      )
+    ),
+    (indexSpec) => new IndexGetSuffix(indexSpec)
+  ),
+  map(preceded(spacing0, suffixOp), (op) => new OperatorSuffix(op)),
 ]);
 
 const termWithSuffixOps = fold0(
   term,
   suffixOps,
-  (target, suffixOp, start, end) => {
-    if (suffixOp instanceof OperatorSuffix) {
-      return new UnarySuffix(target, suffixOp.op, start, end);
-    }
-    throw new Error(`<valid suffix> ${start}`);
-  }
+  (target, suffixOp, start, end) => suffixOp.getExpression(target, start, end)
 );
 
 const unaryPrefixOp = alt<Operator>([
@@ -309,7 +330,46 @@ const booleanExpr = chain(
   (left, op, right, start, end) => new BinaryBool(left, op, right, start, end)
 );
 
-const topLevelExpression = alt([booleanExpr]);
+const ifBody = alt([
+  expression,
+  returnExpression,
+  breakExpression,
+  continueExpression,
+]);
+
+const ifExpr = map(
+  seq([
+    between(
+      preceded(tag("if"), between(whitespace0, tag("("), whitespace0)),
+      booleanExpr,
+      preceded(whitespace0, tag(")"))
+    ),
+    preceded(whitespace0, ifBody),
+    opt(preceded(between(whitespace1, tag("else"), whitespace1), ifBody)),
+  ]),
+  ([condition, thenExpression, elseExpression], start, end) =>
+    elseExpression
+      ? new IfThenElse(condition, thenExpression, elseExpression, start, end)
+      : new IfThen(condition, thenExpression, start, end)
+);
+
+const assignOp = between(
+  whitespace0,
+  alt([
+    recognizeAs(tag("="), Operator.Assign),
+    recognizeAs(tag("+="), Operator.AddAssign),
+    recognizeAs(tag("-="), Operator.SubAssign),
+    recognizeAs(tag("*="), Operator.MulAssign),
+    recognizeAs(tag("/="), Operator.DivAssign),
+    recognizeAs(tag("%="), Operator.ModAssign),
+    recognizeAs(tag("|="), Operator.BitOrAssign),
+    recognizeAs(tag("&="), Operator.BitAndAssign),
+    recognizeAs(tag("^="), Operator.BitXorAssign),
+  ]),
+  whitespace0
+);
+
+const topLevelExpression = alt([ifExpr, booleanExpr]);
 
 export function expression(input: Input): ParserResult<Expression> {
   return topLevelExpression(input);

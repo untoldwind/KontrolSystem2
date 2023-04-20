@@ -13,10 +13,10 @@ declare global {
 expect.extend({
   toBeSuccess(received: ParserResult<any>): jest.CustomMatcherResult {
     const pass: boolean =
-      received.success && received.remaining.available() === 0;
+      received.success && received.remaining.available === 0;
     const message: () => string = () => {
       if (received.success) {
-        const available = received.remaining.available();
+        const available = received.remaining.available;
         if (available > 0) {
           return `Remaining input: ${received.remaining.take(available)}`;
         }
@@ -48,11 +48,11 @@ expect.extend({
   ): jest.CustomMatcherResult {
     const pass: boolean =
       received.success &&
-      received.remaining.take(received.remaining.available()) === remaining;
+      received.remaining.take(received.remaining.available) === remaining;
     const message: () => string = () => {
       if (received.success) {
         const actualRemaining = received.remaining.take(
-          received.remaining.available()
+          received.remaining.available
         );
         if (actualRemaining !== remaining) {
           return `Unexpected remaining input: "${actualRemaining}" != "${remaining}"`;
