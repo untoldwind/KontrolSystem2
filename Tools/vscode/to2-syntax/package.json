@@ -2,7 +2,7 @@
   "name": "to2-syntax",
   "displayName": "to2-syntax",
   "description": "",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "engines": {
     "vscode": "^1.76.0"
@@ -10,6 +10,7 @@
   "categories": [
     "Programming Languages"
   ],
+  "publisher": "kontrolsystem2",
   "private": true,
   "icon": "assets/icon.png",
   "repository": {
