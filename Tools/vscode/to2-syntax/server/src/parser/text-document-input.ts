@@ -1,9 +1,9 @@
 import { Position, TextDocument } from "vscode-languageserver-textdocument";
-import { Input } from ".";
+import { Input, InputPosition } from ".";
 
 export class TextDocumentInput implements Input {
   private sourceText: string;
-  public position: Position;
+  public position: InputPosition;
   public available: number;
 
   constructor(
@@ -12,7 +12,12 @@ export class TextDocumentInput implements Input {
     sourceText: string | undefined = undefined
   ) {
     this.sourceText = sourceText ?? source.getText();
-    this.position = source.positionAt(offset);
+    const textPosition = source.positionAt(offset);
+    this.position = new InputPosition(
+      offset,
+      textPosition.line,
+      textPosition.character
+    );
     this.available = this.sourceText.length - offset;
   }
 

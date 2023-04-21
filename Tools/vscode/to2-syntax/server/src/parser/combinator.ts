@@ -11,10 +11,10 @@ export function recognize<T>(parser: Parser<T>): Parser<string> {
     if (result.success) {
       return new ParserSuccess(
         result.remaining,
-        input.take(result.remaining.offset - input.offset)
+        input.take(result.remaining.position.offset - input.position.offset)
       );
     }
-    return new ParserFailure(result.remaining, result.expected);
+    return new ParserFailure(result.remaining, result.expected, "");
   };
 }
 
@@ -27,7 +27,7 @@ export function recognizeAs<T, U>(
     if (result.success) {
       return new ParserSuccess(result.remaining, replacement);
     }
-    return new ParserFailure(result.remaining, result.expected);
+    return new ParserFailure(result.remaining, result.expected, replacement);
   };
 }
 
@@ -38,8 +38,8 @@ export function where<T>(
 ): Parser<T> {
   return (input: Input) => {
     const result = parser(input);
-    if (result.success && !predicate(result.result))
-      return new ParserFailure(result.remaining, expected);
+    if (result.success && !predicate(result.value))
+      return new ParserFailure(result.remaining, expected, result.value);
     return result;
   };
 }
@@ -53,7 +53,7 @@ export function map<T, U>(
       (s) =>
         new ParserSuccess(
           s.remaining,
-          convert(s.result, input.position, s.remaining.position)
+          convert(s.value, input.position, s.remaining.position)
         )
     );
 }

@@ -13,7 +13,7 @@ describe("TO2 parser literals", () => {
     expect(literalString(new StringInput(`""`))).toEqual(
       expect.objectContaining({
         success: true,
-        result: expect.objectContaining({
+        value: expect.objectContaining({
           value: "",
         }),
       })
@@ -21,7 +21,7 @@ describe("TO2 parser literals", () => {
     expect(literalString(new StringInput(`"abcdefgh01234"`))).toEqual(
       expect.objectContaining({
         success: true,
-        result: expect.objectContaining({
+        value: expect.objectContaining({
           value: "abcdefgh01234",
         }),
       })
@@ -29,7 +29,7 @@ describe("TO2 parser literals", () => {
     expect(literalString(new StringInput(`"abdc\\"edf\\ngh\\tzu"`))).toEqual(
       expect.objectContaining({
         success: true,
-        result: expect.objectContaining({
+        value: expect.objectContaining({
           value: 'abdc"edf\ngh\tzu',
         }),
       })
@@ -41,7 +41,7 @@ describe("TO2 parser literals", () => {
     expect(literalInt(new StringInput(`123456`))).toEqual(
       expect.objectContaining({
         success: true,
-        result: expect.objectContaining({
+        value: expect.objectContaining({
           value: 123456,
         }),
       })
@@ -49,7 +49,7 @@ describe("TO2 parser literals", () => {
     expect(literalInt(new StringInput(`-123_456`))).toEqual(
       expect.objectContaining({
         success: true,
-        result: expect.objectContaining({
+        value: expect.objectContaining({
           value: -123456,
         }),
       })
@@ -57,7 +57,7 @@ describe("TO2 parser literals", () => {
     expect(literalInt(new StringInput(`0x12_34_56`))).toEqual(
       expect.objectContaining({
         success: true,
-        result: expect.objectContaining({
+        value: expect.objectContaining({
           value: 1193046,
         }),
       })
@@ -65,7 +65,7 @@ describe("TO2 parser literals", () => {
     expect(literalInt(new StringInput(`-0x123456`))).toEqual(
       expect.objectContaining({
         success: true,
-        result: expect.objectContaining({
+        value: expect.objectContaining({
           value: -1193046,
         }),
       })
@@ -73,7 +73,7 @@ describe("TO2 parser literals", () => {
     expect(literalInt(new StringInput(`0o123456`))).toEqual(
       expect.objectContaining({
         success: true,
-        result: expect.objectContaining({
+        value: expect.objectContaining({
           value: 42798,
         }),
       })
@@ -81,7 +81,7 @@ describe("TO2 parser literals", () => {
     expect(literalInt(new StringInput(`0b1010010011`))).toEqual(
       expect.objectContaining({
         success: true,
-        result: expect.objectContaining({
+        value: expect.objectContaining({
           value: 659,
         }),
       })
@@ -93,7 +93,7 @@ describe("TO2 parser literals", () => {
     expect(literalFloat(new StringInput(`123.456`))).toEqual(
       expect.objectContaining({
         success: true,
-        result: expect.objectContaining({
+        value: expect.objectContaining({
           value: 123.456,
         }),
       })
@@ -101,7 +101,7 @@ describe("TO2 parser literals", () => {
     expect(literalFloat(new StringInput(`-123.456`))).toEqual(
       expect.objectContaining({
         success: true,
-        result: expect.objectContaining({
+        value: expect.objectContaining({
           value: -123.456,
         }),
       })
@@ -109,7 +109,7 @@ describe("TO2 parser literals", () => {
     expect(literalFloat(new StringInput(`1.23456E4`))).toEqual(
       expect.objectContaining({
         success: true,
-        result: expect.objectContaining({
+        value: expect.objectContaining({
           value: 12345.6,
         }),
       })
@@ -121,7 +121,7 @@ describe("TO2 parser literals", () => {
     expect(literalBool(new StringInput(`false`))).toEqual(
       expect.objectContaining({
         success: true,
-        result: expect.objectContaining({
+        value: expect.objectContaining({
           value: false,
         }),
       })
@@ -129,7 +129,7 @@ describe("TO2 parser literals", () => {
     expect(literalBool(new StringInput(`true`))).toEqual(
       expect.objectContaining({
         success: true,
-        result: expect.objectContaining({
+        value: expect.objectContaining({
           value: true,
         }),
       })

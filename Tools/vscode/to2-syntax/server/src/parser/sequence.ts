@@ -5,7 +5,7 @@ export function then<T, U>(
   second: (result: T) => Parser<U>
 ): Parser<U> {
   return (input: Input) =>
-    first(input).select((s) => second(s.result)(s.remaining));
+    first(input).select((s) => second(s.value)(s.remaining));
 }
 
 export function preceded<T, U>(
@@ -20,7 +20,7 @@ export function terminated<T, U>(
   suffix: Parser<U>
 ): Parser<T> {
   return (input: Input) =>
-    parser(input).select((s) => suffix(s.remaining).map((_) => s.result));
+    parser(input).select((s) => suffix(s.remaining).map((_) => s.value));
 }
 
 export function between<T, P, S>(
@@ -31,7 +31,7 @@ export function between<T, P, S>(
   return (input: Input) =>
     prefix(input)
       .select((s) => parser(s.remaining))
-      .select((s) => suffix(s.remaining).map((_) => s.result));
+      .select((s) => suffix(s.remaining).map((_) => s.value));
 }
 
 export function seq<P extends any[]>(
@@ -44,8 +44,8 @@ export function seq<P extends any[]>(
     for (const item of items) {
       const itemResult = item(remaining);
       if (!itemResult.success)
-        return new ParserFailure(remaining, itemResult.expected);
-      result.push(itemResult.result);
+        return new ParserFailure<P>(remaining, itemResult.expected, undefined);
+      result.push(itemResult.value);
       remaining = itemResult.remaining;
     }
 

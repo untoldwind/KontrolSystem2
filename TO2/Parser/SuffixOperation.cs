@@ -7,7 +7,8 @@ namespace KontrolSystem.TO2.Parser {
         Expression GetExpression(Expression target, Position start, Position end);
     }
 
-    public interface IAssignSuffixOperation {
+    public interface IAssignSuffixOperation : ISuffixOperation {
+        Expression AssignExpression(Expression target, Operator op, Expression value, Position start, Position end);
     }
 
     public readonly struct IndexGetSuffix : ISuffixOperation, IAssignSuffixOperation {
@@ -16,6 +17,9 @@ namespace KontrolSystem.TO2.Parser {
         public IndexGetSuffix(IndexSpec indexSpec) => this.indexSpec = indexSpec;
         public Expression GetExpression(Expression target, Position start, Position end) =>
             new IndexGet(target, indexSpec, start, end);
+
+        public Expression AssignExpression(Expression target, Operator op, Expression value, Position start, Position end) =>
+            new IndexAssign(target, indexSpec, op, value, start, end);
     }
 
     public readonly struct FieldGetSuffix : ISuffixOperation, IAssignSuffixOperation {
@@ -24,6 +28,10 @@ namespace KontrolSystem.TO2.Parser {
         public FieldGetSuffix(string fieldName) => this.fieldName = fieldName;
         public Expression GetExpression(Expression target, Position start, Position end) =>
             new FieldGet(target, fieldName, start, end);
+
+        public Expression AssignExpression(Expression target, Operator op, Expression value, Position start,
+            Position end) =>
+            new FieldAssign(target, fieldName, op, value, start, end);
     }
 
     public readonly struct MethodCallSuffix : ISuffixOperation {

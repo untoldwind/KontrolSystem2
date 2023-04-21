@@ -8,7 +8,7 @@ describe("TO2 parser expression", () => {
     expect(expression(new StringInput(`123 + 456`))).toEqual(
       expect.objectContaining({
         success: true,
-        result: expect.objectContaining({
+        value: expect.objectContaining({
           op: Operator.Add,
           left: expect.objectContaining({
             value: 123,
@@ -22,7 +22,7 @@ describe("TO2 parser expression", () => {
     expect(expression(new StringInput(`123 - 456`))).toEqual(
       expect.objectContaining({
         success: true,
-        result: expect.objectContaining({
+        value: expect.objectContaining({
           op: Operator.Sub,
           left: expect.objectContaining({
             value: 123,
@@ -39,7 +39,7 @@ describe("TO2 parser expression", () => {
     expect(expression(new StringInput(`12 * 45 + 67 / 89`))).toEqual(
       expect.objectContaining({
         success: true,
-        result: expect.objectContaining({
+        value: expect.objectContaining({
           op: Operator.Add,
           left: expect.objectContaining({
             op: Operator.Mul,
@@ -66,7 +66,7 @@ describe("TO2 parser expression", () => {
     expect(expression(new StringInput(`12 * (45 - 67) / 89`))).toEqual(
       expect.objectContaining({
         success: true,
-        result: expect.objectContaining({
+        value: expect.objectContaining({
           op: Operator.Div,
           left: expect.objectContaining({
             op: Operator.Mul,

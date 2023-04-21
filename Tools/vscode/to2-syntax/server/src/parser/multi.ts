@@ -14,9 +14,10 @@ export function manyM_N<T>(
     let itemResult: ParserResult<T> = item(input);
 
     while (itemResult.success) {
-      if (remaining.offset === itemResult.remaining.offset) break;
+      if (remaining.position.offset === itemResult.remaining.position.offset)
+        break;
 
-      result.push(itemResult.result);
+      result.push(itemResult.value);
       remaining = itemResult.remaining;
 
       itemResult = item(remaining);
@@ -25,13 +26,15 @@ export function manyM_N<T>(
     if (minCount && result.length < minCount) {
       return new ParserFailure(
         remaining,
-        `Expected at least ${minCount} ${description}`
+        `Expected at least ${minCount} ${description}`,
+        result
       );
     }
     if (maxCount && result.length > maxCount) {
       return new ParserFailure(
         remaining,
-        `Expected at most ${maxCount} ${description}`
+        `Expected at most ${maxCount} ${description}`,
+        result
       );
     }
 
@@ -60,9 +63,10 @@ export function delimitedM_N<T, D>(
     let itemResult: ParserResult<T> = item(input);
 
     while (itemResult.success) {
-      if (remaining.offset === itemResult.remaining.offset) break;
+      if (remaining.position.offset === itemResult.remaining.position.offset)
+        break;
 
-      result.push(itemResult.result);
+      result.push(itemResult.value);
       remaining = itemResult.remaining;
 
       const delimiterResult = delimiter(remaining);
@@ -74,13 +78,15 @@ export function delimitedM_N<T, D>(
     if (minCount && result.length < minCount) {
       return new ParserFailure(
         remaining,
-        `Expected at least ${minCount} ${description}`
+        `Expected at least ${minCount} ${description}`,
+        result
       );
     }
     if (maxCount && result.length > maxCount) {
       return new ParserFailure(
         remaining,
-        `Expected at most ${maxCount} ${description}`
+        `Expected at most ${maxCount} ${description}`,
+        result
       );
     }
 
@@ -115,13 +121,17 @@ export function fold0<T, S>(
 
     let suffixResult = suffix(result.remaining);
     while (suffixResult.success) {
-      if (suffixResult.remaining.offset === result.remaining.offset) break;
+      if (
+        suffixResult.remaining.position.offset ===
+        result.remaining.position.offset
+      )
+        break;
 
       result = new ParserSuccess(
         suffixResult.remaining,
         combine(
-          result.result,
-          suffixResult.result,
+          result.value,
+          suffixResult.value,
           result.remaining.position,
           suffixResult.remaining.position
         )
@@ -146,14 +156,15 @@ export function chain<T, OP>(
     if (!firstResult.success) return firstResult;
 
     let remaining = firstResult.remaining;
-    let result = firstResult.result;
+    let result = firstResult.value;
 
     let restResult = restParser(remaining);
 
     while (restResult.success) {
-      if (remaining.offset === restResult.remaining.offset) break;
+      if (remaining.position.offset === restResult.remaining.position.offset)
+        break;
 
-      var [op, operant] = restResult.result;
+      var [op, operant] = restResult.value;
 
       result = apply(
         result,
@@ -189,11 +200,15 @@ export function delimitedUntil<T, D, E>(
       const itemResult = itemParser(remaining);
 
       if (!itemResult.success)
-        return new ParserFailure(itemResult.remaining, itemResult.expected);
-      if (remaining.offset === itemResult.remaining.offset)
-        return new ParserFailure(itemResult.remaining, description);
+        return new ParserFailure(
+          itemResult.remaining,
+          itemResult.expected,
+          result
+        );
+      if (remaining.position.offset === itemResult.remaining.position.offset)
+        return new ParserFailure(itemResult.remaining, description, result);
 
-      result.push(itemResult.result);
+      result.push(itemResult.value);
       remaining = itemResult.remaining;
 
       endResult = end(remaining);
@@ -204,13 +219,14 @@ export function delimitedUntil<T, D, E>(
       if (!delimiterResult.success)
         return new ParserFailure(
           delimiterResult.remaining,
-          delimiterResult.expected
+          delimiterResult.expected,
+          result
         );
       endResult = end(remaining);
       if (endResult.success)
         return new ParserSuccess(endResult.remaining, result);
     }
 
-    return new ParserFailure(remaining, endResult.expected);
+    return new ParserFailure(remaining, endResult.expected, result);
   };
 }

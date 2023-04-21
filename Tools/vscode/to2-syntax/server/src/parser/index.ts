@@ -1,8 +1,15 @@
 import { Position } from "vscode-languageserver-textdocument";
 
+export class InputPosition implements Position {
+  constructor(
+    public readonly offset: number,
+    public readonly line: number,
+    public readonly character: number
+  ) {}
+}
+
 export interface Input {
-  offset: number;
-  position: Position;
+  position: InputPosition;
   available: number;
   take(count: number): string;
   findNext(predicate: (charCode: number) => boolean): number;
@@ -12,13 +19,13 @@ export interface Input {
 export class ParserSuccess<T> {
   success: true = true;
 
-  constructor(public readonly remaining: Input, public readonly result: T) {
+  constructor(public readonly remaining: Input, public readonly value: T) {
     this.remaining = remaining;
-    this.result = result;
+    this.value = value;
   }
 
   map<U>(mapper: (result: T) => U): ParserResult<U> {
-    return new ParserSuccess<U>(this.remaining, mapper(this.result));
+    return new ParserSuccess<U>(this.remaining, mapper(this.value));
   }
 
   select<U>(
@@ -33,19 +40,24 @@ export class ParserFailure<T> {
 
   constructor(
     public readonly remaining: Input,
-    public readonly expected: string
+    public readonly expected: string,
+    public readonly value: T | undefined
   ) {
     this.expected = expected;
   }
 
   map<U>(mapper: (result: T) => U): ParserResult<U> {
-    return new ParserFailure<U>(this.remaining, this.expected);
+    return new ParserFailure<U>(
+      this.remaining,
+      this.expected,
+      this.value ? mapper(this.value) : undefined
+    );
   }
 
   select<U>(
     next: (result: ParserSuccess<T>) => ParserResult<U>
   ): ParserResult<U> {
-    return new ParserFailure<U>(this.remaining, this.expected);
+    return new ParserFailure<U>(this.remaining, this.expected, undefined);
   }
 }
 

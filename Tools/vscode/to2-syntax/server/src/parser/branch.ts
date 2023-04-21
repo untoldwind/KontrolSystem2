@@ -10,13 +10,13 @@ export function alt<T>(alternatives: Parser<T>[]): Parser<T> {
 
       if (result.success) return result;
 
-      const longestAt = longest.offset;
-      const errorAt = result.remaining.offset;
+      const longestAt = longest.position.offset;
+      const errorAt = result.remaining.position.offset;
       if (errorAt > longestAt) longest = result.remaining;
 
       expected.push(result.expected);
     }
 
-    return new ParserFailure(longest, expected.join(" or "));
+    return new ParserFailure<T>(longest, expected.join(" or "), undefined);
   };
 }

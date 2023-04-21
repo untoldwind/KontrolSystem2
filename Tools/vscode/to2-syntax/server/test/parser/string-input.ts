@@ -1,8 +1,8 @@
-import { Position } from "vscode-languageserver-textdocument";
-import { Input } from "../../src/parser";
+import { off } from "process";
+import { Input, InputPosition } from "../../src/parser";
 
 export class StringInput implements Input {
-  public position: Position;
+  public position: InputPosition;
   public available: number;
 
   constructor(
@@ -11,10 +11,7 @@ export class StringInput implements Input {
   ) {
     this.source = source;
     this.offset = offset;
-    this.position = {
-      line: 1,
-      character: offset,
-    };
+    this.position = new InputPosition(offset, 1, offset);
     this.available = source.length - offset;
   }
 
