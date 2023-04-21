@@ -1,6 +1,6 @@
 import { Parser } from "../parser";
 import { alt } from "../parser/branch";
-import { map, recognize, recognizeAs } from "../parser/combinator";
+import { either, map, opt, recognize, recognizeAs } from "../parser/combinator";
 import {
   eof,
   spacing1,
@@ -8,18 +8,32 @@ import {
   whitespace0,
   whitespace1,
 } from "../parser/complete";
-import { delimited1, delimitedUntil } from "../parser/multi";
+import { delimited0, delimited1, delimitedUntil } from "../parser/multi";
 import { between, preceded, seq, terminated } from "../parser/sequence";
 import { ModuleItem } from "./ast";
+import { FunctionParameter } from "./ast/function-declaration";
+import { ImplDeclaration } from "./ast/impl-declaration";
+import { StructDeclaration, StructField } from "./ast/struct-declaration";
 import { TO2Module } from "./ast/to2-module";
+import { TypeAlias } from "./ast/type-alias";
 import { UseDeclaration } from "./ast/use-declaration";
 import {
   commaDelimiter,
   descriptionComment,
+  eqDelimiter,
   identifier,
   identifierPath,
+  lineComment,
+  pubKeyword,
+  typeRef,
+  typeSpec,
 } from "./parser-common";
-import { functionDeclaration } from "./parser-functions";
+import { expression } from "./parser-expression";
+import {
+  functionDeclaration,
+  functionParameters,
+  methodDeclaration,
+} from "./parser-functions";
 
 const useKeyword = terminated(tag("use"), spacing1);
 
@@ -54,10 +68,76 @@ const useAliasDeclaration = map(
     new UseDeclaration(undefined, alias, namePath, start, end)
 );
 
+const typeAlias = map(
+  seq([
+    descriptionComment,
+    preceded(whitespace0, opt(pubKeyword)),
+    preceded(typeKeyword, identifier),
+    preceded(eqDelimiter, typeRef),
+  ]),
+  ([description, pub, name, type], start, end) =>
+    new TypeAlias(pub !== undefined, name, description, type, start, end)
+);
+
+const structField = map(
+  seq([
+    descriptionComment,
+    preceded(whitespace0, identifier),
+    typeSpec,
+    preceded(eqDelimiter, expression),
+  ]),
+  ([description, name, type, initializer], start, end) =>
+    new StructField(name, type, description, initializer, start, end)
+);
+
+const structDeclaration = map(
+  seq([
+    descriptionComment,
+    preceded(whitespace0, opt(pubKeyword)),
+    preceded(structKeyword, identifier),
+    opt(functionParameters),
+    between(
+      preceded(whitespace0, tag("{")),
+      delimited0(either(lineComment, structField), whitespace1, "fields"),
+      preceded(whitespace0, tag("}"))
+    ),
+  ]),
+  ([description, pub, name, constructorParameters, fields], start, end) =>
+    new StructDeclaration(
+      pub !== undefined,
+      name,
+      description,
+      constructorParameters ?? [],
+      fields,
+      start,
+      end
+    )
+);
+
+const implDeclaration = map(
+  seq([
+    preceded(implKeyword, identifier),
+    between(
+      preceded(whitespace0, tag("{")),
+      delimited0(
+        either(lineComment, methodDeclaration),
+        whitespace1,
+        "methods"
+      ),
+      preceded(whitespace0, tag("}"))
+    ),
+  ]),
+  ([name, methods], start, end) =>
+    new ImplDeclaration(name, methods, start, end)
+);
+
 const moduleItem = alt<ModuleItem>([
   useNamesDeclaration,
   useAliasDeclaration,
   functionDeclaration,
+  typeAlias,
+  structDeclaration,
+  implDeclaration,
 ]);
 
 const moduleItems = delimitedUntil(

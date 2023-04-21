@@ -1,14 +1,14 @@
-import { Position } from "vscode-languageserver-textdocument";
 import { BlockItem, Node } from ".";
 import { BUILTIN_UNIT, TO2Type } from "./to2-type";
+import { InputPosition } from "../../parser";
 
 export class LineComment implements Node, BlockItem {
   public isComment: boolean = true;
 
   constructor(
     public readonly comment: string,
-    public readonly start: Position,
-    public readonly end: Position
+    public readonly start: InputPosition,
+    public readonly end: InputPosition
   ) {}
 
   resultType(): TO2Type {

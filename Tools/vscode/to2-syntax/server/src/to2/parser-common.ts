@@ -11,13 +11,14 @@ import {
 } from "../parser/complete";
 import { between, preceded, seq, terminated } from "../parser/sequence";
 import { isAlphabetic } from "unicode-properties";
-import { delimited0, delimited1, many0 } from "../parser/multi";
+import { delimited0, delimited1, delimitedUntil, many0 } from "../parser/multi";
 import { LineComment } from "./ast/line-comment";
 import { Input, ParserResult } from "../parser";
 import { TO2Type, getBuiltinType } from "./ast/to2-type";
 import { alt } from "../parser/branch";
 import { LookupTypeReference } from "./ast/type-reference";
 import { DeclarationParameter } from "./ast/variable-declaration";
+import { FunctionType } from "./ast/function-type";
 
 const RESERVED_KEYWORDS = new Set<string>([
   "pub",
@@ -81,6 +82,25 @@ export const typeSpec = preceded(
   typeRef
 );
 
+const functionTypeParameters = preceded(
+  terminated(tag("("), whitespace0),
+  delimitedUntil(
+    typeRef,
+    commaDelimiter,
+    preceded(whitespace0, tag(")")),
+    "<function parameter type"
+  )
+);
+
+const functionType = map(
+  seq([
+    preceded(terminated(tag("fn"), whitespace0), functionTypeParameters),
+    preceded(between(whitespace0, tag("->"), whitespace0), typeRef),
+  ]),
+  ([parameterTypes, returnType]) =>
+    new FunctionType(false, parameterTypes, returnType)
+);
+
 const typeReference = map(
   seq([
     identifierPath,
@@ -97,7 +117,7 @@ const typeReference = map(
     new LookupTypeReference(name, typeArguments ?? [], start, end)
 );
 
-const topLevelTypeRef = alt([typeReference]);
+const topLevelTypeRef = alt([functionType, typeReference]);
 
 export function typeRef(input: Input): ParserResult<TO2Type> {
   return topLevelTypeRef(input);

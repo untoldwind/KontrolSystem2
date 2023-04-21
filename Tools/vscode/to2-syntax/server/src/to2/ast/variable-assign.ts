@@ -1,12 +1,13 @@
 import { Expression } from ".";
-import { Operator } from "./operator";
 import { BUILTIN_BOOL, TO2Type } from "./to2-type";
+import { Operator } from "./operator";
 import { InputPosition } from "../../parser";
 
-export class UnaryPrefix extends Expression {
+export class VariableAssign extends Expression {
   constructor(
+    public readonly name: string,
     public readonly op: Operator,
-    public readonly right: Expression,
+    public readonly expression: Expression,
     start: InputPosition,
     end: InputPosition
   ) {

@@ -1,6 +1,6 @@
-import { Position } from "vscode-languageserver-textdocument";
 import { Expression, ModuleItem, Node } from ".";
 import { TO2Type } from "./to2-type";
+import { InputPosition } from "../../parser";
 
 export enum FunctionModifier {
   Public,
@@ -11,10 +11,10 @@ export enum FunctionModifier {
 export class FunctionParameter implements Node {
   constructor(
     public readonly name: string,
-    public readonly type: TO2Type,
+    public readonly type: TO2Type | undefined,
     public readonly defaultValue: Expression | undefined,
-    public readonly start: Position,
-    public readonly end: Position
+    public readonly start: InputPosition,
+    public readonly end: InputPosition
   ) {}
 }
 
@@ -27,7 +27,7 @@ export class FunctionDeclaration implements Node, ModuleItem {
     public readonly parameters: FunctionParameter[],
     public readonly declaredReturn: TO2Type,
     public readonly expression: Expression,
-    public readonly start: Position,
-    public readonly end: Position
+    public readonly start: InputPosition,
+    public readonly end: InputPosition
   ) {}
 }

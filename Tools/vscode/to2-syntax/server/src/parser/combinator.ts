@@ -1,5 +1,4 @@
-import { Position } from "vscode-languageserver-textdocument";
-import { Input, Parser, ParserFailure, ParserSuccess } from ".";
+import { Input, InputPosition, Parser, ParserFailure, ParserSuccess } from ".";
 
 export function value<T>(value: T): Parser<T> {
   return (input: Input) => new ParserSuccess<T>(input, value);
@@ -46,7 +45,7 @@ export function where<T>(
 
 export function map<T, U>(
   parser: Parser<T>,
-  convert: (result: T, start: Position, end: Position) => U
+  convert: (result: T, start: InputPosition, end: InputPosition) => U
 ): Parser<U> {
   return (input: Input) =>
     parser(input).select(
@@ -65,5 +64,15 @@ export function opt<T>(parser: Parser<T>): Parser<T | undefined> {
     if (result.success) return result;
 
     return new ParserSuccess(input, undefined);
+  };
+}
+
+export function either<L, R>(left: Parser<L>, right: Parser<R>): Parser<L | R> {
+  return (input: Input) => {
+    const leftResult = left(input);
+
+    if (leftResult.success) return leftResult;
+
+    return right(input);
   };
 }

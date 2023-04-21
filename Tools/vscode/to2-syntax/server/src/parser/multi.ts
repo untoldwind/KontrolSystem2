@@ -1,5 +1,11 @@
-import { Position } from "vscode-languageserver-textdocument";
-import { Input, Parser, ParserFailure, ParserResult, ParserSuccess } from ".";
+import {
+  Input,
+  InputPosition,
+  Parser,
+  ParserFailure,
+  ParserResult,
+  ParserSuccess,
+} from ".";
 import { seq } from "./sequence";
 
 export function manyM_N<T>(
@@ -113,7 +119,12 @@ export function delimited1<T, D>(
 export function fold0<T, S>(
   initial: Parser<T>,
   suffix: Parser<S>,
-  combine: (collect: T, current: S, start: Position, end: Position) => T
+  combine: (
+    collect: T,
+    current: S,
+    start: InputPosition,
+    end: InputPosition
+  ) => T
 ): Parser<T> {
   return (input: Input) => {
     let result = initial(input);
@@ -146,7 +157,13 @@ export function fold0<T, S>(
 export function chain<T, OP>(
   operantParser: Parser<T>,
   opParser: Parser<OP>,
-  apply: (left: T, op: OP, right: T, start: Position, end: Position) => T
+  apply: (
+    left: T,
+    op: OP,
+    right: T,
+    start: InputPosition,
+    end: InputPosition
+  ) => T
 ) {
   const restParser = seq([opParser, operantParser]);
 

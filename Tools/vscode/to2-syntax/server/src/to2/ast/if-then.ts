@@ -1,13 +1,13 @@
-import { Position } from "vscode-languageserver-textdocument";
 import { Expression } from ".";
 import { BUILTIN_UNIT, TO2Type } from "./to2-type";
+import { InputPosition } from "../../parser";
 
 export class IfThen extends Expression {
   constructor(
     public readonly condition: Expression,
     public readonly thenExpression: Expression,
-    start: Position,
-    end: Position
+    start: InputPosition,
+    end: InputPosition
   ) {
     super(start, end);
   }
@@ -21,8 +21,8 @@ export class IfThenElse extends Expression {
     public readonly condition: Expression,
     public readonly thenExpression: Expression,
     public readonly elseExpression: Expression,
-    start: Position,
-    end: Position
+    start: InputPosition,
+    end: InputPosition
   ) {
     super(start, end);
   }

@@ -6,26 +6,35 @@ import {
   chain,
   delimited0,
   delimited1,
+  delimitedM_N,
   delimitedUntil,
   fold0,
   many0,
 } from "../parser/multi";
 import { between, preceded, seq, terminated } from "../parser/sequence";
 import { Expression } from "./ast";
+import { ArrayCreate } from "./ast/array-create";
 import { Binary } from "./ast/binary";
 import { BinaryBool } from "./ast/binary-bool";
 import { Block } from "./ast/block";
 import { Break, Continue } from "./ast/break-continue";
+import { Call } from "./ast/call";
+import { FunctionParameter } from "./ast/function-declaration";
 import { IfThen, IfThenElse } from "./ast/if-then";
 import { IndexSpec } from "./ast/index-spec";
+import { Lambda } from "./ast/lambda";
 import { Operator } from "./ast/operator";
 import { RangeCreate } from "./ast/range-create";
+import { RecordCreate } from "./ast/record-create";
 import { ReturnEmpty, ReturnValue } from "./ast/return";
+import { TupleCreate } from "./ast/tuple-create";
+import { TupleDeconstructAssign } from "./ast/tuple-deconstruct-assign";
 import { TupleDeconstructDeclaration } from "./ast/tuple-deconstruct-declaration";
 import { Unapply } from "./ast/unapply";
 import { UnaryPrefix } from "./ast/unary-prefix";
-import { UnarySuffix } from "./ast/unary-suffix";
+import { VariableAssign } from "./ast/variable-assign";
 import { VariableDeclaration } from "./ast/variable-declaration";
+import { VariableGet } from "./ast/variable-get";
 import { While } from "./ast/while";
 import {
   commaDelimiter,
@@ -37,6 +46,8 @@ import {
   identifierPath,
   letKeyword,
   lineComment,
+  typeRef,
+  typeSpec,
 } from "./parser-common";
 import {
   literalBool,
@@ -45,6 +56,7 @@ import {
   literalString,
 } from "./parser-literals";
 import {
+  AssignSuffixOperation,
   FieldGetSuffix,
   IndexGetSuffix,
   MethodCallSuffix,
@@ -147,7 +159,93 @@ const callArguments = preceded(
 
 const variableRefOrCall = map(
   seq([identifierPath, opt(preceded(spacing0, callArguments))]),
-  ([fullname, aguments], start, end) => {}
+  ([fullname, args], start, end) =>
+    args !== undefined
+      ? new Call(fullname, args, start, end)
+      : new VariableGet(fullname, start, end)
+);
+
+const tupleCreate = map(
+  between(
+    terminated(tag("("), whitespace0),
+    delimitedM_N(2, undefined, expression, commaDelimiter, "<expression>"),
+    preceded(whitespace0, tag(")"))
+  ),
+  (expressions, start, end) => new TupleCreate(expressions, start, end)
+);
+
+const recordCreate = map(
+  seq([
+    opt(
+      between(
+        terminated(tag("<"), whitespace0),
+        typeRef,
+        preceded(whitespace0, tag(">"))
+      )
+    ),
+    between(
+      terminated(tag("("), whitespace0),
+      delimited1(
+        seq([
+          identifier,
+          preceded(between(spacing0, tag(":"), spacing0), expression),
+        ]),
+        commaDelimiter,
+        "<expression>"
+      ),
+      preceded(whitespace0, tag(")"))
+    ),
+  ]),
+  ([resultType, items], start, end) =>
+    new RecordCreate(resultType, items, start, end)
+);
+
+const arrayCreate = map(
+  seq([
+    opt(
+      between(
+        terminated(tag("<"), whitespace0),
+        typeRef,
+        preceded(whitespace0, tag(">"))
+      )
+    ),
+    preceded(
+      terminated(tag("["), whitespace0),
+      delimitedUntil(
+        expression,
+        commaDelimiter,
+        preceded(whitespace0, tag("]")),
+        "<expression>"
+      )
+    ),
+  ]),
+  ([elementType, items], start, end) =>
+    new ArrayCreate(elementType, items, start, end)
+);
+
+const lambdaParameter = map(
+  seq([identifier, opt(typeSpec)]),
+  ([name, type], start, end) =>
+    new FunctionParameter(name, type, undefined, start, end)
+);
+
+const lambdaParameters = preceded(
+  terminated(tag("("), whitespace0),
+  delimitedUntil(
+    lambdaParameter,
+    commaDelimiter,
+    preceded(whitespace0, tag(")")),
+    "<lambda parameter>"
+  )
+);
+
+const lambda = map(
+  seq([
+    preceded(terminated(tag("fn"), spacing0), lambdaParameters),
+    preceded(between(whitespace0, tag("->"), whitespace0), expression),
+  ]),
+  ([parameters, expression], start, end) =>
+    new Lambda(parameters, expression, start, end)
 );
 
 const bracketTerm = between(
@@ -163,6 +261,11 @@ const term = alt<Expression>([
   literalString,
   bracketTerm,
   block,
+  arrayCreate,
+  tupleCreate,
+  recordCreate,
+  variableRefOrCall,
+  lambda,
 ]);
 
 const indexSpec = map(expression, (expression) => new IndexSpec(expression));
@@ -369,7 +472,77 @@ const assignOp = between(
   whitespace0
 );
 
-const topLevelExpression = alt([ifExpr, booleanExpr]);
+const assignSuffixOps = alt<AssignSuffixOperation>([
+  map(
+    preceded(between(whitespace0, tag("."), whitespace0), identifier),
+    (name) => new FieldGetSuffix(name)
+  ),
+  map(
+    preceded(
+      spacing0,
+      between(
+        terminated(tag("["), whitespace0),
+        indexSpec,
+        preceded(whitespace0, tag("]"))
+      )
+    ),
+    (indexSpec) => new IndexGetSuffix(indexSpec)
+  ),
+]);
+
+const assignment = map(
+  seq([
+    identifier,
+    many0(assignSuffixOps, "<suffix op>"),
+    assignOp,
+    alt([booleanExpr, ifExpr]),
+  ]),
+  ([variableName, suffixOps, assignOp, value], start, end) => {
+    if (suffixOps.length === 0)
+      return new VariableAssign(variableName, assignOp, value, start, end);
+    const last = suffixOps[suffixOps.length - 1];
+    const target = suffixOps
+      .slice(0, suffixOps.length - 1)
+      .reduce<Expression>(
+        (target, op) => op.getExpression(target, start, end),
+        new VariableGet([variableName], start, end)
+      );
+    return last.assignExpression(target, assignOp, value, start, end);
+  }
+);
+
+const sourceTargetList = between(
+  terminated(tag("("), whitespace0),
+  delimited1(
+    alt([
+      map(
+        seq([
+          identifier,
+          preceded(between(spacing0, tag("@"), spacing0), identifier),
+        ]),
+        ([source, target]) => ({ source, target })
+      ),
+      recognizeAs(tag("_"), { source: "", target: "" }),
+      map(identifier, (name) => ({ source: name, target: name })),
+    ]),
+    commaDelimiter,
+    "<tuple target>"
+  ),
+  preceded(whitespace0, tag(")"))
+);
+
+const tupleDeconstructAssignment = map(
+  seq([sourceTargetList, preceded(eqDelimiter, alt([booleanExpr, ifExpr]))]),
+  ([targets, expression], start, end) =>
+    new TupleDeconstructAssign(targets, expression, start, end)
+);
+
+const topLevelExpression = alt([
+  tupleDeconstructAssignment,
+  assignment,
+  ifExpr,
+  booleanExpr,
+]);
 
 export function expression(input: Input): ParserResult<Expression> {
   return topLevelExpression(input);

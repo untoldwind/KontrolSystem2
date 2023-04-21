@@ -1,12 +1,12 @@
-import { Position } from "vscode-languageserver-textdocument";
 import { Expression } from ".";
 import { BUILTIN_BOOL, TO2Type } from "./to2-type";
+import { InputPosition } from "../../parser";
 
 export class VariableGet extends Expression {
   constructor(
     public readonly namePath: string[],
-    start: Position,
-    end: Position
+    start: InputPosition,
+    end: InputPosition
   ) {
     super(start, end);
   }

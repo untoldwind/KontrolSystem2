@@ -1,9 +1,9 @@
-import { Position } from "vscode-languageserver-textdocument";
 import { Expression } from ".";
 import { BUILTIN_UNIT, TO2Type } from "./to2-type";
+import { InputPosition } from "../../parser";
 
 export class ReturnEmpty extends Expression {
-  constructor(start: Position, end: Position) {
+  constructor(start: InputPosition, end: InputPosition) {
     super(start, end);
   }
 
@@ -15,8 +15,8 @@ export class ReturnEmpty extends Expression {
 export class ReturnValue extends Expression {
   constructor(
     public readonly returnValue: Expression,
-    start: Position,
-    end: Position
+    start: InputPosition,
+    end: InputPosition
   ) {
     super(start, end);
   }

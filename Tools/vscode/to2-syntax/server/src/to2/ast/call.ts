@@ -2,10 +2,9 @@ import { Expression } from ".";
 import { BUILTIN_UNIT, TO2Type } from "./to2-type";
 import { InputPosition } from "../../parser";
 
-export class MethodCall extends Expression {
+export class Call extends Expression {
   constructor(
-    public readonly target: Expression,
-    public readonly methodName: string,
+    public readonly namePath: string[],
     public readonly args: Expression[],
     start: InputPosition,
     end: InputPosition

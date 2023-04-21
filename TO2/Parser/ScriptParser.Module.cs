@@ -58,7 +58,7 @@ namespace KontrolSystem.TO2.Parser {
                 items.Item4.IsDefined ? items.Item4.Value : new List<FunctionParameter>(), items.Item5, start, end));
 
         private static readonly Parser<ImplDeclaration> ImplDeclaration = Seq(
-            ImplKeyword.Then(Identifier), Delimited0(LineComments.Then(WhiteSpaces0).Then(MethodDeclaration), WhiteSpaces1, "methods")
+            ImplKeyword.Then(Identifier), Delimited0(Either(LineComment, MethodDeclaration), WhiteSpaces1, "methods")
                 .Between(WhiteSpaces0.Then(Char('{')), LineComments.Then(WhiteSpaces0).Then(Char('}')))
         ).Map((items, start, end) => new ImplDeclaration(items.Item1, items.Item2, start, end));
 

@@ -1,4 +1,3 @@
-import { Position } from "vscode-languageserver-textdocument";
 import { Expression } from ".";
 import {
   BUILTIN_BOOL,
@@ -7,9 +6,14 @@ import {
   BUILTIN_STRING,
   TO2Type,
 } from "./to2-type";
+import { InputPosition } from "../../parser";
 
 export class LiteralBool extends Expression {
-  constructor(public readonly value: boolean, start: Position, end: Position) {
+  constructor(
+    public readonly value: boolean,
+    start: InputPosition,
+    end: InputPosition
+  ) {
     super(start, end);
   }
 
@@ -19,7 +23,11 @@ export class LiteralBool extends Expression {
 }
 
 export class LiteralInt extends Expression {
-  constructor(public readonly value: number, start: Position, end: Position) {
+  constructor(
+    public readonly value: number,
+    start: InputPosition,
+    end: InputPosition
+  ) {
     super(start, end);
   }
 
@@ -29,7 +37,11 @@ export class LiteralInt extends Expression {
 }
 
 export class LiteralFloat extends Expression {
-  constructor(public readonly value: number, start: Position, end: Position) {
+  constructor(
+    public readonly value: number,
+    start: InputPosition,
+    end: InputPosition
+  ) {
     super(start, end);
   }
 
@@ -39,7 +51,11 @@ export class LiteralFloat extends Expression {
 }
 
 export class LiteralString extends Expression {
-  constructor(public readonly value: string, start: Position, end: Position) {
+  constructor(
+    public readonly value: string,
+    start: InputPosition,
+    end: InputPosition
+  ) {
     super(start, end);
   }
 

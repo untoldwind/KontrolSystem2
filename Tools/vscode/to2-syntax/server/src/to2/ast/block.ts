@@ -1,14 +1,14 @@
-import { Position } from "vscode-languageserver-textdocument";
 import { BlockItem, Expression } from ".";
 import { BUILTIN_UNIT, TO2Type } from "./to2-type";
+import { InputPosition } from "../../parser";
 
 export class Block extends Expression {
   public isComment: boolean = false;
 
   constructor(
     public readonly items: BlockItem[],
-    start: Position,
-    end: Position
+    start: InputPosition,
+    end: InputPosition
   ) {
     super(start, end);
   }

@@ -8,11 +8,14 @@ import {
   FunctionModifier,
   FunctionParameter,
 } from "./ast/function-declaration";
+import { MethodDeclaration } from "./ast/method-declaration";
 import {
   commaDelimiter,
+  constKeyword,
   descriptionComment,
   eqDelimiter,
   identifier,
+  letKeyword,
   pubKeyword,
   typeRef,
   typeSpec,
@@ -68,7 +71,7 @@ const functionParameter = map(
     new FunctionParameter(name, type, defaultValue, start, end)
 );
 
-const functionParameters = preceded(
+export const functionParameters = preceded(
   terminated(tag("("), whitespace0),
   delimitedUntil(
     functionParameter,
@@ -105,6 +108,54 @@ export const functionDeclaration = map(
       name,
       description,
       parameters,
+      returnType,
+      expression,
+      start,
+      end
+    )
+);
+
+const methodSelfParams = preceded(
+  terminated(tag("("), whitespace0),
+  alt([
+    recognizeAs(selfKeyword, true),
+    recognizeAs(preceded(constKeyword, selfKeyword), true),
+    recognizeAs(preceded(letKeyword, selfKeyword), false),
+  ])
+);
+
+const methodParameters = alt<FunctionParameter[]>([
+  recognizeAs(preceded(whitespace0, tag(")")), []),
+  preceded(
+    commaDelimiter,
+    delimitedUntil(
+      functionParameter,
+      commaDelimiter,
+      preceded(whitespace0, tag(")")),
+      "<method parameter>"
+    )
+  ),
+]);
+
+export const methodDeclaration = map(
+  seq([
+    descriptionComment,
+    opt(preceded(whitespace0, syncKeyword)),
+    preceded(preceded(whitespace0, fnKeyword), identifier),
+    preceded(whitespace0, methodSelfParams),
+    methodParameters,
+    preceded(between(whitespace0, tag("->"), whitespace0), typeRef),
+    preceded(eqDelimiter, expression),
+  ]),
+  (
+    [description, sync, name, _, parameters, returnType, expression],
+    start,
+    end
+  ) =>
+    new MethodDeclaration(
+      sync === undefined,
+      name,
+      description,
       returnType,
       expression,
       start,
