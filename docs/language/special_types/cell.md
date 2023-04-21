@@ -9,8 +9,8 @@ E.g.
 
 ```rust
 Cell<int>              // a (memory) cell containing an integer
-Option<string>         // a (memory) cell containing a string
-Option<(int, string)>  // a (memory) cell containing a tuple of integer and string
+Cell<string>         // a (memory) cell containing a string
+Cell<(int, string)>  // a (memory) cell containing a tuple of integer and string
 ```
 
 ## Creation
