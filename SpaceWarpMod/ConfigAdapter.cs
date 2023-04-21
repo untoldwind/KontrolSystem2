@@ -93,7 +93,7 @@ namespace KontrolSystem.SpaceWarpMod {
         public Texture2D ToggleOff => GetTexture("toggle_off");
         public Texture2D SliderBackground => GetTexture("slider_bg");
         public Texture2D SliderFill => GetTexture("slider_fill");
-        public Texture2D SliderHandle => GetTexture("slider_handle");        
+        public Texture2D SliderHandle => GetTexture("slider_handle");
         public Texture2D UpIcon => GetTexture("up");
         public Texture2D DownIcon => GetTexture("down");
 

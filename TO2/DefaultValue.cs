@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
 using KontrolSystem.TO2.AST;
@@ -73,6 +74,13 @@ namespace KontrolSystem.TO2 {
         public double Value => value;
 
         public void EmitCode(IBlockContext context) => context.IL.Emit(OpCodes.Ldc_R8, value);
+    }
+
+    public class EnumDefaultValue : IDefaultValue {
+        private readonly int intValue;
+        public EnumDefaultValue(Enum value) => intValue = (int)Convert.ChangeType(value, typeof(int));
+
+        public void EmitCode(IBlockContext context) => context.IL.Emit(OpCodes.Ldc_I4, intValue);
     }
 
     public class StringDefaultValue : IDefaultValue {

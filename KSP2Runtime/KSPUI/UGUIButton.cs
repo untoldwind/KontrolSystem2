@@ -13,7 +13,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             label = gameObject.GetComponentInChildren<TextMeshProUGUI>();
 
             minSize = new Vector2(30 + label.preferredWidth, 30);
-            button.onClick.AddListener(onClick);
+            if (onClick != null) button.onClick.AddListener(onClick);
         }
 
         public string Label {
@@ -31,7 +31,12 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             set => button.colors = value;
         }
 
-        public static UGUIButton Create(string label, UnityAction onClick) =>
+        public void OnClick(UnityAction onClick) {
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(onClick);
+        }
+
+        public static UGUIButton Create(string label, UnityAction onClick = null) =>
             new UGUIButton(UIFactory.Instance.CreateButton(label), onClick);
     }
 }

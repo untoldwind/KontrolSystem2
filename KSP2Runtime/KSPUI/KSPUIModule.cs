@@ -1,4 +1,8 @@
-﻿using KontrolSystem.TO2.Binding;
+﻿using System;
+using System.Collections.Generic;
+using KontrolSystem.TO2;
+using KontrolSystem.TO2.AST;
+using KontrolSystem.TO2.Binding;
 using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime.KSPUI {
@@ -9,18 +13,28 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
 
         [KSFunction]
         public static Window OpenWindow(string title, double x, double y, double width, double height) {
-            var window = new Window(title, new Rect((float)x, (float)y, (float)width, (float)height));
-            KSPContext.CurrentContext.AddWindow(window);
-            return window;
+            var uiWindow = UIWindows.Instance.gameObject.AddComponent<UGUIResizableWindow>();
+            uiWindow.Initialize(title, new Rect((float)x, (float)y, (float)width, (float)height));
+            return new Window(uiWindow);
         }
 
         [KSFunction]
         public static Window OpenCenteredWindow(string title, double width, double height) {
-            var window = new Window(title,
-                new Rect(0.5f * (Screen.width - (float)width), 0.5f * (Screen.height + (float)height), (float)width,
-                    (float)height));
-            KSPContext.CurrentContext.AddWindow(window);
-            return window;
+            var uiWindow = UIWindows.Instance.gameObject.AddComponent<UGUIResizableWindow>();
+            uiWindow.Initialize(title, new Rect(0.5f * (Screen.width - (float)width), 0.5f * (Screen.height + (float)height), (float)width, (float)height));
+            return new Window(uiWindow);
+        }
+
+        public static (IEnumerable<RealizedType>, IEnumerable<IKontrolConstant>) DirectBindings() {
+            return BindingGenerator.RegisterEnumTypeMappings("ksp::up",
+                new[] {
+                    ("Align", "Alignment of the element in off direction (horizontal for vertical container and vice versa)", typeof(UGUILayout.Align), new (Enum value, string description)[] {
+                        (UGUILayout.Align.Start, "Align the element to start of container (left/top)."),
+                        (UGUILayout.Align.Center, "Align the element to the center of the container."),
+                        (UGUILayout.Align.End, "Align the element to end of container (right/bottom)."),
+                        (UGUILayout.Align.Stretch, "Strech the element to full size of container"),
+                    }),
+                });
         }
     }
 }

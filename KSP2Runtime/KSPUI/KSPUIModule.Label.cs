@@ -9,6 +9,12 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             public Label(UGUILabel label) {
                 this.label = label;
             }
+
+            [KSField]
+            public string Text {
+                get => label.Text;
+                set => label.Text = value;
+            }
         }
     }
 }

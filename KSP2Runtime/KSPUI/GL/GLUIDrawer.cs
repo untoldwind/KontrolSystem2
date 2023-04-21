@@ -38,7 +38,7 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
         public interface IGLUIDrawable {
             void OnDraw(GLUIDraw draw);
         }
-        
+
         public class GLUIDraw : IDisposable {
             private readonly int width;
             private readonly int height;
@@ -62,7 +62,7 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
                 colored.SetPass(0);
                 drawable.OnDraw(this);
             }
-            
+
             public void Polyline(Vector2[] points, Color color, bool closed = false) {
                 colored.SetPass(0);
                 GL.Begin(GL.LINE_STRIP);
@@ -87,10 +87,10 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
                 }
                 GL.End();
             }
-            
+
             public void ConvexPolygon(Vector2[] points, Color color) {
                 if (points.Length < 3) return;
-                
+
                 colored.SetPass(0);
                 GL.Begin(GL.TRIANGLE_STRIP);
                 GL.Color(color);

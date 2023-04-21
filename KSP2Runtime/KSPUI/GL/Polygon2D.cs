@@ -1,11 +1,11 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
     public class Polygon2D : GLUIDrawer.IGLUIDrawable {
         private static float EPSILON = 1e-5f;
-        
+
         private Vector2[] points;
         private Vector2[] triangles;
 
@@ -14,9 +14,9 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
             this.points = points;
             Triangulate();
         }
-        
+
         public Color Color { get; set; }
-        
+
         public Vector2[] Points {
             get => points;
             set {
@@ -41,9 +41,9 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
                 triangles = Array.Empty<Vector2>();
                 return;
             }
-            
+
             int[] indices = new int[n];
-            if ( Area() > 0f )
+            if (Area() > 0f)
                 for (int v = 0; v < n; v++) {
                     indices[v] = v;
                 }
@@ -76,8 +76,8 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
 
             triangles = newTriangles.ToArray();
         }
-        
-        private float Area () {
+
+        private float Area() {
             int n = points.Length;
             float area = 0.0f;
             int q = 0;
@@ -94,12 +94,12 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
             var c = points[idx[w]];
 
             if ((b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x) < EPSILON ||
-                (a-b).sqrMagnitude < EPSILON || (a-c).sqrMagnitude < EPSILON || (b-c).sqrMagnitude < EPSILON) {
+                (a - b).sqrMagnitude < EPSILON || (a - c).sqrMagnitude < EPSILON || (b - c).sqrMagnitude < EPSILON) {
                 return false;
             }
 
             for (int p = 0; p < idxCount; p++) {
-                if(p == u || p == v || p == w) continue;
+                if (p == u || p == v || p == w) continue;
                 var pt = points[idx[p]];
                 if (Inside(a, b, c, pt)) return false;
             }
@@ -110,13 +110,13 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
         private static bool Inside(Vector2 a, Vector2 b, Vector2 c, Vector2 pt) {
             var ax = c.x - b.x; var ay = c.y - b.y;
             var bx = a.x - c.x; var by = a.y - c.y;
-            var cx = b.x - a.x;  var cy = b.y - a.y;
-            var apx= pt.x - a.x; var  apy= pt.y - a.y;
-            var bpx= pt.x - b.x;  var bpy= pt.y - b.y;
-            var cpx= pt.x - c.x;  var cpy= pt.y - c.y;
-            
-            return ax*bpy - ay*bpx >= 0.0f && bx*cpy - by*cpx >= 0.0f && cx*apy - cy*apx >= 0.0f;
+            var cx = b.x - a.x; var cy = b.y - a.y;
+            var apx = pt.x - a.x; var apy = pt.y - a.y;
+            var bpx = pt.x - b.x; var bpy = pt.y - b.y;
+            var cpx = pt.x - c.x; var cpy = pt.y - c.y;
+
+            return ax * bpy - ay * bpx >= 0.0f && bx * cpy - by * cpx >= 0.0f && cx * apy - cy * apx >= 0.0f;
         }
-        
+
     }
 }

@@ -36,11 +36,11 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
         Texture2D ToggleOn { get; }
 
         Texture2D ToggleOff { get; }
-        
+
         Texture2D SliderBackground { get; }
-        
+
         Texture2D SliderFill { get; }
-        
+
         Texture2D SliderHandle { get; }
 
         Texture2D ConsoleBackground { get; }
@@ -509,11 +509,11 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
 
             var background = new GameObject("Background", typeof(Image));
             Layout(background, root.transform, LAYOUT_STRETCH, LAYOUT_STRETCH, 0, 0, 0, 0);
-            var fillArea = new GameObject("Fill Area",  typeof(RectTransform));
+            var fillArea = new GameObject("Fill Area", typeof(RectTransform));
             Layout(fillArea, root.transform, LAYOUT_STRETCH, LAYOUT_STRETCH, 5, 0, -20, 0);
-            var fill = new GameObject("Fill",  typeof(Image));
+            var fill = new GameObject("Fill", typeof(Image));
             Layout(fill, fillArea.transform, LAYOUT_STRETCH, LAYOUT_STRETCH, -5, 0, 10, 0);
-            var handleArea = new GameObject("Handle Slide Area",  typeof(RectTransform));
+            var handleArea = new GameObject("Handle Slide Area", typeof(RectTransform));
             Layout(handleArea, root.transform, LAYOUT_STRETCH, LAYOUT_STRETCH, 10, -3, -20, -6);
             var handle = new GameObject("Handle", typeof(Image));
             Layout(handle, handleArea.transform, LAYOUT_START, LAYOUT_STRETCH, -6, 0, 12, 0);
@@ -522,16 +522,16 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             backgroundImage.sprite = sliderBackground;
             backgroundImage.type = Image.Type.Tiled;
             backgroundImage.color = Color.white;
-            
+
             Image fillImage = fill.GetComponent<Image>();
             fillImage.sprite = sliderFill;
             fillImage.type = Image.Type.Tiled;
             fillImage.color = Color.white;
-            
+
             Image handleImage = handle.GetComponent<Image>();
             handleImage.sprite = sliderHandle;
             handleImage.color = Color.white;
-            
+
             Slider slider = root.GetComponent<Slider>();
             slider.fillRect = fill.GetComponent<RectTransform>();
             slider.handleRect = handle.GetComponent<RectTransform>();
@@ -540,7 +540,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
 
             return root;
         }
-        
+
         internal static RectTransform Layout(GameObject gameObject, Transform parent, LayoutAlign horizontal, LayoutAlign vertical,
             float x, float y, float width, float height) {
             RectTransform transform = gameObject.GetComponent<RectTransform>();

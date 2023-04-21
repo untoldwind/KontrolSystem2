@@ -1,8 +1,8 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime.KSPTelemetry {
-public class Line2D : GLUIDrawer.IGLUIDrawable {
+    public class Line2D : GLUIDrawer.IGLUIDrawable {
         private static float EPSILON = 1e-5f;
 
         private float thickness;
@@ -35,7 +35,7 @@ public class Line2D : GLUIDrawer.IGLUIDrawable {
                 Triangulate();
             }
         }
-        
+
         public float Thickness {
             get => thickness;
             set {
@@ -80,11 +80,11 @@ public class Line2D : GLUIDrawer.IGLUIDrawable {
             if (closed && points.Length > 2) {
                 Vector2 offset1;
                 Vector2 offset2;
-                if(MakeOffset(points[points.Length - 2], points[points.Length - 1], points[0], out offset1, out offset2)) {
+                if (MakeOffset(points[points.Length - 2], points[points.Length - 1], points[0], out offset1, out offset2)) {
                     triangleStrip[2 * points.Length - 2] = offset1;
                     triangleStrip[2 * points.Length - 1] = offset2;
                 }
-                if (MakeOffset(points[points.Length - 1], points[0], points[1], out offset1, out  offset2)) {
+                if (MakeOffset(points[points.Length - 1], points[0], points[1], out offset1, out offset2)) {
                     triangleStrip[0] = offset1;
                     triangleStrip[1] = offset2;
                 }
@@ -109,11 +109,11 @@ public class Line2D : GLUIDrawer.IGLUIDrawable {
             var refPt1 = prev2 - 0.5f * thickness * prevNorm;
             var refPt2 = prev2 - 0.5f * thickness * currentNorm;
             offset1 = Intersection(prevDir, refPt1, currentDir, refPt2);
-            
+
             refPt1 = prev2 + 0.5f * thickness * prevNorm;
             refPt2 = prev2 + 0.5f * thickness * currentNorm;
             offset2 = Intersection(prevDir, refPt1, currentDir, refPt2);
-            
+
             return true;
         }
 
