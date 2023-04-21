@@ -8,7 +8,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
         [KSClass("Body", Description = "Represents an in-game celestial body.")]
         public interface IBody : KSPVesselModule.IKSPTargetable {
             [KSField(Description = "Name of the celestial body.")]
-            string Name { get; }
+            new string Name { get; }
 
             [KSField(Description = "Standard gravitation parameter of the body.")]
             double GravParameter { get; }
@@ -17,7 +17,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             double SoiRadius { get; }
 
             [KSField(Description = "The orbit of the celestial body itself (around the parent body)")]
-            IOrbit Orbit { get; }
+            new IOrbit Orbit { get; }
 
             [KSField(Description = "`true` if the celestial body has an atmosphere to deal with.")]
             bool HasAtmosphere { get; }

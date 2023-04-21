@@ -496,7 +496,7 @@ namespace KontrolSystem.KSP.Runtime.Testing {
         public double TimeOfDescendingNode(KSPOrbitModule.IOrbit b, Option<double> maybeUt = new Option<double>()) =>
             TimeOfTrueAnomaly(DescendingNodeTrueAnomaly(b), maybeUt);
 
-        public string ToString() => KSPOrbitModule.OrbitToString(this);
+        public override string ToString() => KSPOrbitModule.OrbitToString(this);
 
         public string ToFixed(long decimals) => KSPOrbitModule.OrbitToFixed(this, decimals);
     }

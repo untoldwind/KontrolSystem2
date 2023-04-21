@@ -4,6 +4,7 @@ namespace KontrolSystem.TO2.Runtime {
     public class Cell<T> {
         private readonly object cellLock;
         private T element;
+        private Action<T> observers;
 
         public Cell(T value) {
             element = value;
@@ -20,14 +21,25 @@ namespace KontrolSystem.TO2.Runtime {
                 lock (cellLock) {
                     element = value;
                 }
+
+                observers?.Invoke(element);
             }
         }
 
         public Cell<T> Update(Func<T, T> updater) {
             lock (cellLock) {
                 element = updater(element);
-                return this;
             }
+            observers?.Invoke(element);
+            return this;
+        }
+
+        public void AddObserver(Action<T> observer) {
+            observers += observer;
+        }
+
+        public void RemoveObserver(Action<T> observer) {
+            observers -= observer;
         }
     }
 

@@ -60,19 +60,26 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
                 Root.Layout();
                 return new StringInputField(element);
             }
-            
+
             [KSMethod]
             public IntInputField AddIntInput(UGUILayout.Align align = UGUILayout.Align.Stretch, double stretch = 0) {
                 var element = layout.Add(UGUIInputField.Create("0", 50.0f), align, (float)stretch);
                 Root.Layout();
                 return new IntInputField(element);
             }
-            
+
             [KSMethod]
             public FloatInputField AddFloatInput(UGUILayout.Align align = UGUILayout.Align.Stretch, double stretch = 0) {
                 var element = layout.Add(UGUIInputField.Create("0.0", 50.0f), align, (float)stretch);
                 Root.Layout();
                 return new FloatInputField(element);
+            }
+
+            [KSMethod]
+            public Slider AddHorizontalSlider(UGUILayout.Align align = UGUILayout.Align.Stretch, double stretch = 0) {
+                var element = layout.Add(UGUISlider.CreateHorizontal(), align, (float)stretch);
+                Root.Layout();
+                return new Slider(element);
             }
         }
     }

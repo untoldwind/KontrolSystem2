@@ -17,14 +17,14 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
                 get => inputField.Value;
                 set => inputField.Value = value;
             }
-            
+
             [KSField]
             public bool Enabled {
                 get => inputField.Interactable;
                 set => inputField.Interactable = value;
             }
         }
-        
+
         [KSClass]
         public class IntInputField {
             private UGUIInputField inputField;
@@ -42,14 +42,14 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
                 }
                 set => inputField.Value = value.ToString(CultureInfo.InvariantCulture);
             }
-            
+
             [KSField]
             public bool Enabled {
                 get => inputField.Interactable;
                 set => inputField.Interactable = value;
             }
-        }        
-        
+        }
+
         [KSClass]
         public class FloatInputField {
             private UGUIInputField inputField;
@@ -67,7 +67,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
                 }
                 set => inputField.Value = value.ToString(CultureInfo.InvariantCulture);
             }
-            
+
             [KSField]
             public bool Enabled {
                 get => inputField.Interactable;

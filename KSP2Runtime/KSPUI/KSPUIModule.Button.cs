@@ -23,7 +23,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
                 get => button.Interactable;
                 set => button.Interactable = value;
             }
-            
+
             [KSMethod]
             public void OnClick(Action onClick) {
                 var context = KSPContext.CurrentContext;

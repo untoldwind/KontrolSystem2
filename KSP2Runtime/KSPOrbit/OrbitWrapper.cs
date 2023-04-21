@@ -177,7 +177,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
         public Vector3d RelativeEccentricityVector => orbit.referenceBody.transform.celestialFrame.ToLocalPosition(orbit.ReferenceFrame, orbit.GetRelativeEccVector().SwapYAndZ);
 
-        public string ToString() => KSPOrbitModule.OrbitToString(this);
+        public override string ToString() => KSPOrbitModule.OrbitToString(this);
 
         public string ToFixed(long decimals) => KSPOrbitModule.OrbitToFixed(this, decimals);
     }
