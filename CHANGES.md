@@ -1,5 +1,9 @@
 # Changes
 
+## 0.3.3.3 ->
+
+* Fix `vessel.global_facing` for space planes
+
 ## 0.3.3.2 -> 0.3.3.3
 
 * Fixed visible columns of console view

@@ -217,7 +217,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                     QuaternionD.Euler(-pitchAboveHorizon, degreesFromNorth, roll)));
 
             [KSField]
-            public RotationWrapper GlobalFacing => new RotationWrapper(new Rotation(vessel.ControlTransform.coordinateSystem, ControlFacingRotation));
+            public RotationWrapper GlobalFacing => new RotationWrapper(new Rotation(vessel.ControlTransform.bodyFrame, ControlFacingRotation));
 
             [KSField] public PartAdapter[] Parts => vessel.SimulationObject.PartOwner.Parts.Select(part => new PartAdapter(this, part)).ToArray();
 
