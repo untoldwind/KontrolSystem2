@@ -12,7 +12,6 @@ using KontrolSystem.TO2.Runtime;
 using KSP.Game;
 using KSP.Sim.impl;
 using KSP.Sim.State;
-using UniLinq;
 using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime.Core {
@@ -253,8 +252,8 @@ namespace KontrolSystem.KSP.Runtime.Core {
         public void Cleanup() {
             ClearMarkers();
             foreach (var kv in autopilotHooks) {
-                LoggerAdapter.Instance.Debug($"Unhooking from vessel: {kv.Key.Name}");
-                if (kv.Key.SimulationObject != null && kv.Key.SimulationObject.objVesselBehavior != null)
+                logger.Debug($"Unhooking from vessel: {kv.Key.Name}");
+                if(kv.Key.SimulationObject != null && kv.Key.SimulationObject.objVesselBehavior != null)
                     kv.Key.SimulationObject.objVesselBehavior.OnPreAutopilotUpdate -= kv.Value.RunAutopilots;
             }
 

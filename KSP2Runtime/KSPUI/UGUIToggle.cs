@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -11,10 +12,10 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
         private UGUIToggle(GameObject gameObject, UnityAction<bool> onChange) : base(gameObject, Vector2.zero) {
             toggle = gameObject.GetComponent<Toggle>();
             label = gameObject.GetComponentInChildren<TextMeshProUGUI>();
-
-            minSize = new Vector2(50 + label.preferredWidth, 30);
-            toggle.onValueChanged.AddListener(onChange);
+            if (onChange != null) toggle.onValueChanged.AddListener(onChange);
         }
+
+        public override Vector2 MinSize => new Vector2(Math.Max(minSize.x, 50 + label.preferredWidth), Math.Max(minSize.y, 10 + label.preferredHeight));
 
         public string Label {
             get => label.text;
@@ -36,10 +37,15 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             set => label.fontSize = value;
         }
 
-        public static UGUIToggle Create(string label, UnityAction<bool> onChange) =>
+        public void OnChange(UnityAction<bool> onChange) {
+            toggle.onValueChanged.RemoveAllListeners();
+            toggle.onValueChanged.AddListener(onChange);
+        }
+
+        public static UGUIToggle Create(string label, UnityAction<bool> onChange = null) =>
             new UGUIToggle(UIFactory.Instance.CreateToggle(label), onChange);
 
-        public static UGUIToggle CreateSelectButton(string label, UnityAction<bool> onChange) =>
+        public static UGUIToggle CreateSelectButton(string label, UnityAction<bool> onChange = null) =>
             new UGUIToggle(UIFactory.Instance.CreateSelectButton(label), onChange);
     }
 }

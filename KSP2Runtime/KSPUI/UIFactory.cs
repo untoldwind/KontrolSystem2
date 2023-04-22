@@ -186,6 +186,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             text.verticalAlignment = VerticalAlignmentOptions.Middle;
             text.fontSize = 20;
             text.color = Color.black;
+            text.enableWordWrapping = false;
 
             return buttonRoot;
         }
@@ -252,6 +253,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             text.verticalAlignment = VerticalAlignmentOptions.Middle;
             text.fontSize = 20;
             text.color = new Color(0.7961f, 0.8706f, 1f);
+            text.enableWordWrapping = false;
 
             return buttonRoot;
         }
@@ -312,7 +314,8 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             labelText.verticalAlignment = VerticalAlignmentOptions.Middle;
             labelText.fontSize = 20;
             labelText.color = new Color(0.7961f, 0.8706f, 1f);
-
+            labelText.enableWordWrapping = false;
+            
             toggle.graphic = checkmarkImage;
             toggle.targetGraphic = bgImage;
             ColorBlock colors = toggle.colors;

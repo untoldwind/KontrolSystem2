@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -12,8 +13,14 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             button = gameObject.GetComponent<Button>();
             label = gameObject.GetComponentInChildren<TextMeshProUGUI>();
 
-            minSize = new Vector2(30 + label.preferredWidth, 30);
             if (onClick != null) button.onClick.AddListener(onClick);
+        }
+
+        public override Vector2 MinSize => new Vector2(Math.Max(minSize.x, 30 + label.preferredWidth), Math.Max(minSize.y, 10 + label.preferredHeight));
+
+        public float FontSize {
+            get => label.fontSize;
+            set => label.fontSize = value;
         }
 
         public string Label {

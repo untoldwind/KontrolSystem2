@@ -109,6 +109,7 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
 
             private ITransformModel vesselTransform;
 
+            /*
             private KSPDebugModule.VectorRenderer vForward;
             private KSPDebugModule.VectorRenderer vTop;
             private KSPDebugModule.VectorRenderer vStarboard;
@@ -128,6 +129,7 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
             private KSPDebugModule.VectorRenderer vTgtTorqueX;
             private KSPDebugModule.VectorRenderer vTgtTorqueY;
             private KSPDebugModule.VectorRenderer vTgtTorqueZ;
+            */
 
             public SteeringManagerLegacy(IKSPContext context, KSPVesselModule.VesselAdapter vessel,
                 Func<Direction> directionProvider) {

@@ -6,7 +6,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
     public partial class KSPUIModule {
         public abstract class AbstractContainer {
             protected UGUILayout layout;
-            protected abstract Window Root { get; }
+            internal abstract Window Root { get; }
 
             protected AbstractContainer(UGUILayout layout) {
                 this.layout = layout;
@@ -44,42 +44,49 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             public Label AddLabel(string label, UGUILayout.Align align = UGUILayout.Align.Stretch, double stretch = 0) {
                 var element = layout.Add(UGUILabel.Create(label), align, (float)stretch);
                 Root.Layout();
-                return new Label(element);
+                return new Label(this, element);
             }
 
             [KSMethod]
             public Button AddButton(string label, UGUILayout.Align align = UGUILayout.Align.Stretch, double stretch = 0) {
                 var element = layout.Add(UGUIButton.Create(label), align, (float)stretch);
                 Root.Layout();
-                return new Button(element);
+                return new Button(Root, element);
+            }
+
+            [KSMethod]
+            public Toggle AddToggle(string label, UGUILayout.Align align = UGUILayout.Align.Stretch, double stretch = 0) {
+                var element = layout.Add(UGUIToggle.Create(label), align, (float)stretch);
+                Root.Layout();
+                return new Toggle(Root, element);
             }
 
             [KSMethod]
             public StringInputField AddStringInput(UGUILayout.Align align = UGUILayout.Align.Stretch, double stretch = 0) {
                 var element = layout.Add(UGUIInputField.Create("", 50.0f), align, (float)stretch);
                 Root.Layout();
-                return new StringInputField(element);
+                return new StringInputField(this, element);
             }
 
             [KSMethod]
             public IntInputField AddIntInput(UGUILayout.Align align = UGUILayout.Align.Stretch, double stretch = 0) {
                 var element = layout.Add(UGUIInputField.Create("0", 50.0f), align, (float)stretch);
                 Root.Layout();
-                return new IntInputField(element);
+                return new IntInputField(this, element);
             }
 
             [KSMethod]
             public FloatInputField AddFloatInput(UGUILayout.Align align = UGUILayout.Align.Stretch, double stretch = 0) {
                 var element = layout.Add(UGUIInputField.Create("0.0", 50.0f), align, (float)stretch);
                 Root.Layout();
-                return new FloatInputField(element);
+                return new FloatInputField(this, element);
             }
 
             [KSMethod]
             public Slider AddHorizontalSlider(UGUILayout.Align align = UGUILayout.Align.Stretch, double stretch = 0) {
                 var element = layout.Add(UGUISlider.CreateHorizontal(), align, (float)stretch);
                 Root.Layout();
-                return new Slider(element);
+                return new Slider(this, element);
             }
         }
     }

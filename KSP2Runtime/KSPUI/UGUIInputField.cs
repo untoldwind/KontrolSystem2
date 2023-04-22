@@ -12,6 +12,11 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             if (onChange != null) inputField.onValueChanged.AddListener(onChange);
         }
 
+        public float FontSize {
+            get => inputField.pointSize;
+            set => inputField.pointSize = value;
+        }
+
         public string Value {
             get => inputField.text;
             set => inputField.text = value;

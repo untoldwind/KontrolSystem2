@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime.KSPUI {
@@ -7,8 +8,13 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
 
         private UGUILabel(GameObject gameObject) : base(gameObject, Vector2.zero) {
             label = gameObject.GetComponentInChildren<TextMeshProUGUI>();
+        }
 
-            minSize = new Vector2(label.preferredWidth, 30);
+        public override Vector2 MinSize => new Vector2(Math.Max(minSize.x, label.preferredWidth), Math.Max(minSize.y, label.preferredHeight));
+
+        public float FontSize {
+            get => label.fontSize;
+            set => label.fontSize = value;
         }
 
         public string Text {

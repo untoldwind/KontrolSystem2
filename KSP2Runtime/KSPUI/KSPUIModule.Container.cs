@@ -10,7 +10,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
                 this.window = window;
             }
 
-            protected override Window Root => window;
+            internal override Window Root => window;
         }
     }
 }

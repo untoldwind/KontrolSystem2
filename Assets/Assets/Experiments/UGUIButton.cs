@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,9 +13,10 @@ namespace Experiments {
             button = gameObject.GetComponent<Button>();
             label = gameObject.GetComponentInChildren<TextMeshProUGUI>();
 
-            minSize = new Vector2(30 + label.preferredWidth, 30);
             button.onClick.AddListener(onClick);
         }
+        
+        public override Vector2 MinSize => new Vector2(Math.Max(minSize.x, 30 + label.preferredWidth), Math.Max(minSize.y, 10 + label.preferredHeight));
 
         public string Label {
             get => label.text;

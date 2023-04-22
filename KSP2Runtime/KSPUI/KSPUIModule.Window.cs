@@ -21,7 +21,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
                 window.Close();
             }
 
-            protected override Window Root => this;
+            internal override Window Root => this;
         }
     }
 }

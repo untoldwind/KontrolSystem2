@@ -4,12 +4,40 @@ using TMPro;
 
 namespace KontrolSystem.KSP.Runtime.KSPUI {
     public partial class KSPUIModule {
-        [KSClass]
-        public class StringInputField {
-            private UGUIInputField inputField;
+        public abstract class AbstractInputField {
+            protected AbstractContainer parent;
+            protected UGUIInputField inputField;
 
-            public StringInputField(UGUIInputField inputField) {
+            public AbstractInputField(AbstractContainer parent, UGUIInputField inputField) {
+                this.parent = parent;
                 this.inputField = inputField;
+                this.inputField.GameObject.AddComponent<UGUILifecycleCallback>().AddOnDestroy(OnDestroy);
+            }
+
+            [KSField]
+            public double FontSize {
+                get => inputField.FontSize;
+                set {
+                    inputField.FontSize = (float)value;
+                    parent.Root.Layout();
+                }
+            }
+
+
+
+            [KSField]
+            public bool Enabled {
+                get => inputField.Interactable;
+                set => inputField.Interactable = value;
+            }
+
+            private void OnDestroy() {
+            }
+        }
+
+        [KSClass]
+        public class StringInputField : AbstractInputField {
+            public StringInputField(AbstractContainer parent, UGUIInputField inputField) : base(parent, inputField) {
             }
 
             [KSField]
@@ -17,20 +45,11 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
                 get => inputField.Value;
                 set => inputField.Value = value;
             }
-
-            [KSField]
-            public bool Enabled {
-                get => inputField.Interactable;
-                set => inputField.Interactable = value;
-            }
         }
 
         [KSClass]
-        public class IntInputField {
-            private UGUIInputField inputField;
-
-            public IntInputField(UGUIInputField inputField) {
-                this.inputField = inputField;
+        public class IntInputField : AbstractInputField {
+            public IntInputField(AbstractContainer parent, UGUIInputField inputField) : base(parent, inputField) {
                 this.inputField.CharacterValidation = TMP_InputField.CharacterValidation.Integer;
             }
 
@@ -42,20 +61,11 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
                 }
                 set => inputField.Value = value.ToString(CultureInfo.InvariantCulture);
             }
-
-            [KSField]
-            public bool Enabled {
-                get => inputField.Interactable;
-                set => inputField.Interactable = value;
-            }
         }
 
         [KSClass]
-        public class FloatInputField {
-            private UGUIInputField inputField;
-
-            public FloatInputField(UGUIInputField inputField) {
-                this.inputField = inputField;
+        public class FloatInputField : AbstractInputField {
+            public FloatInputField(AbstractContainer parent, UGUIInputField inputField) : base(parent, inputField) {
                 this.inputField.CharacterValidation = TMP_InputField.CharacterValidation.Decimal;
             }
 
@@ -66,12 +76,6 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
                     return 0;
                 }
                 set => inputField.Value = value.ToString(CultureInfo.InvariantCulture);
-            }
-
-            [KSField]
-            public bool Enabled {
-                get => inputField.Interactable;
-                set => inputField.Interactable = value;
             }
         }
     }
