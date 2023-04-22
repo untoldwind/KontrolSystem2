@@ -1,0 +1,111 @@
+/// ********************************************************************************************************************
+///
+/// LAUNCH SEQUENCE - LOGARITHMIC
+///
+/// ABOUT: This script launches a rocket and tries to follow a logarithmic curve (base e) for the pitch
+/// This is not a proper launch sequence since one should be implemented taking into account
+/// Drag, Gravity and Thrust. This launch sequence only works if a rocket has sufficient T/W ratio to overcome external
+/// forces with ease and will not deliver the best usage of your Delta-V. A new procedure should be created following 
+/// the documentation in the provided link
+/// 
+/// NOTE: This is an oversimplification to allow for maximum game performance and little interruptions -> (engineer 
+/// ingenuity)
+/// 
+/// LINKS:
+/// http://www.aerostudents.com/courses/rocket-motion-and-reentry-systems/RocketMotionSummary.pdf
+///
+/// ********************************************************************************************************************
+
+use { Vessel, AutopilotMode } from ksp::vessel
+use { trigger_staging } from std::staging
+use { wait_until, sleep } from ksp::game
+use { log, E } from core::math
+use { estimate_burn_time, exec_next_node } from std::vac
+use { circularize_orbit_at } from std::maneuvers
+use { log_init, log_console_telemetry, log_console_debug, log_console_message} from log::log_helper
+
+
+/// Entry Point
+pub fn main_flight(vessel: Vessel, target_apoapsis: int = 100000, heading: float = 90) -> Result<Unit, string> = {
+    // Set Lights ON
+    vessel.actions.light = true
+    
+    launch_ascent(vessel, target_apoapsis, heading)
+}
+
+/// Perform a rocket launch ascent from an atmosphere
+fn launch_ascent(vessel: Vessel, target_apoapsis: float, heading: float) -> Unit = {
+    // Prepare the console
+    log_init("=== TARGET: " + target_apoapsis.to_string() + ", HEADING: " + heading.to_string() + " ===")
+    log_console_message("Launch Sequence Started")
+    
+    // Enable SAS
+    vessel.autopilot.enabled = true
+    vessel.autopilot.mode = AutopilotMode.Autopilot
+
+    // Start Stage
+    vessel.staging.next()
+
+    // Wait until minimum vertical speed
+    log_console_message("Waiting for minimum speed...")
+    let pitch = 90.0
+    vessel.autopilot.target_orientation = vessel.heading_direction(heading, pitch, 0).vector
+    wait_until(fn() -> vessel.surface_velocity.magnitude > 25)
+
+    log_console_message("Minimum speed achieved!")
+
+    // Calculate desired logarithmic scale
+    const logarithmic_scale = (90 / target_apoapsis)
+    const logarithmic_curve = 90 / (log(90))
+    log_console_debug(0, "Launch Log Scale: " + logarithmic_scale.to_string())
+    log_console_debug(1, "Launch Log Curve: " + logarithmic_curve.to_string())
+
+    // Perform gravity turn
+    log_console_message("Starting gravity turn...")
+    while(vessel.orbit.apoapsis.value < target_apoapsis && pitch > 0.0) {
+        // Calculate current desired pitch
+        const scaled_apoapsis = (vessel.orbit.apoapsis.value * logarithmic_scale) + 1
+        let log_value = log(scaled_apoapsis)
+        if (log_value < 0) {
+            log_value = 0
+        }
+        let log_pitch = (log_value * logarithmic_curve)
+
+        pitch = 90.0 - log_pitch
+        
+        log_console_telemetry(0, "Target pitch: " + pitch.to_string())
+        log_console_telemetry(1, "Apoapsis: " + vessel.orbit.apoapsis.value.to_string())
+        log_console_debug(2, "Scaled Apoapsis: " + scaled_apoapsis.to_string())
+        log_console_debug(3, "Log Value: " + log_value.to_string())
+        log_console_debug(4, "Log Pitch: " + log_pitch.to_string())
+        
+        vessel.autopilot.target_orientation = vessel.heading_direction(heading, pitch, 0).vector
+
+        if(trigger_staging(vessel)) {
+            log_console_message("Next stage triggered")
+        }
+
+        sleep(0.05)
+    }
+
+    log_console_message("Gravity turn ended. Waiting for apoapsis")
+    vessel.autopilot.target_orientation = vessel.heading_direction(heading, 0, 0).vector
+    wait_until(fn() -> vessel.orbit.apoapsis.value > target_apoapsis)
+    vessel.set_throttle(0.0)
+
+    log_console_message("Apoapsis reached. Waiting to leave atmosphere")
+    wait_until(fn() -> vessel.altitude_sealevel > vessel.main_body.atmosphere_depth)
+    
+    log_console_message("Launch Squence Ended", true)
+
+    const UT = if(vessel.orbit.eccentricity < 1) vessel.orbit.next_apoapsis_time().value else vessel.orbit.next_periapsis_time()
+
+    const delta_v = circularize_orbit_at(vessel.orbit, UT)
+
+    let (burn_time, half_burn_time) = estimate_burn_time(vessel, delta_v.magnitude, 0.5, 1.0)
+
+    vessel.maneuver.add_burn_vector(UT - half_burn_time, delta_v)
+
+    exec_next_node(vessel)
+}
+

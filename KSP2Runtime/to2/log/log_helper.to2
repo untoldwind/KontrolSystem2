@@ -1,0 +1,43 @@
+/// ********************************************************************************************************************
+///
+/// LOG HELPER
+///
+/// ABOUT: This script helps with treating the console a log separated by three scetions. Telemetry, Debug and Messages.
+/// Note that you must always call the log_init first
+///
+/// ********************************************************************************************************************
+
+use { sleep } from ksp::game
+use { CONSOLE } from ksp::console
+
+// Prepares the console for to be used as a log
+pub fn log_init(header: string = "==") -> Unit = {
+    CONSOLE.clear()
+    CONSOLE.print_at(0, 0, header)
+    CONSOLE.print_at(3, 0, "=== TELEMETRY ===")
+    CONSOLE.print_at(10, 0, "=== DEBUG TELEMETRY ===")
+    CONSOLE.print_at(20, 0, "=== MESSAGES ===")
+    CONSOLE.move_cursor(21, 0)
+}
+
+// Logs a telemetry message in the telemetry section
+pub fn log_console_telemetry(row: int, message: string) -> Unit = {
+    let console_telemetry_row = 3
+    CONSOLE.print_at(console_telemetry_row + row + 1, 0, message)
+}
+
+// Logs a debug message in the debug section
+pub fn log_console_debug(row: int, message: string) -> Unit = {
+    let console_debug_row = 10
+    CONSOLE.print_at(console_debug_row + row + 1, 0, message)
+}
+
+// Logs a console message
+pub fn log_console_message(message: string, isLastMessage: bool = false) -> Unit = {
+    CONSOLE.print_at(CONSOLE.cursor_row, 0, message)
+    CONSOLE.move_cursor(CONSOLE.cursor_row + 1, 0)
+    if (isLastMessage) {
+        sleep(3)
+        CONSOLE.clear()
+    }
+}
