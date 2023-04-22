@@ -133,8 +133,8 @@ pub fn dock_approach(vessel : Vessel, target_port : ModuleDockingNode) -> Result
 
     vessel.actions.rcs = true
 
-    const dock_x = pid_loop(0.4, 0.1, 0.2, -1, 1)
-    const dock_y = pid_loop(0.4, 0.1, 0.2, -1, 1)
+    const dock_x = pid_loop(0.4, 0.2, 1.2, -1, 1)
+    const dock_y = pid_loop(0.4, 0.2, 1.2, -1, 1)
     const dock_z = pid_loop(0.8, 0, 0.4, -1, 1)
     
     const rcs_manager = vessel.manage_rcs_translate(fn(delta_t) -> {
