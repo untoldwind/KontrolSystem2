@@ -22,7 +22,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
         }
 
         public Vector Vector {
-            get => vector;
+            get => new Vector(this.rotation.coordinateSystem, rotation.localRotation * Vector3d.forward);
             set {
                 vector = Vector.normalize(value);
                 rotation = SimRotation.LookRotation(vector, new Vector(vector.coordinateSystem, Vector3d.up));
