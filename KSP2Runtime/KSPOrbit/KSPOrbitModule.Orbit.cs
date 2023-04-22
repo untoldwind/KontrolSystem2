@@ -170,6 +170,41 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
                 The returned value is always between 0 and 2pi.")]
             double TrueAnomalyFromVector(Vector3d vec);
 
+            [KSMethod(Description = @"Gives the true anomaly (in a's orbit) at which a crosses its ascending node with b's orbit.
+                The returned value is always between 0 and 360.")]
+            double AscendingNodeTrueAnomaly(IOrbit b);
+
+            [KSMethod(Description = @"Gives the true anomaly (in a's orbit) at which a crosses its descending node with b's orbit.
+                The returned value is always between 0 and 360.")]
+            double DescendingNodeTrueAnomaly(IOrbit b);
+            
+            [KSMethod(Description = @"Returns the next time at which a will cross its ascending node with b.
+                For elliptical orbits this is a time between UT and UT + a.period.
+                For hyperbolic orbits this can be any time, including a time in the past if
+                the ascending node is in the past.
+                NOTE: this function will throw an ArgumentException if a is a hyperbolic orbit and the ascending node
+                occurs at a true anomaly that a does not actually ever attain.
+                If `ut` is omitted the current time will be used.")]
+            double TimeOfAscendingNode(IOrbit b, Option<double> maybeUt = new Option<double>());
+
+            /// <summary>
+            /// Returns the next time at which a will cross its descending node with b.
+            /// For elliptical orbits this is a time between UT and UT + a.period.
+            /// For hyperbolic orbits this can be any time, including a time in the past if
+            /// the descending node is in the past.
+            /// NOTE: this function will throw an ArgumentException if a is a hyperbolic orbit and the "descending node"
+            /// occurs at a true anomaly that a does not actually ever attain.
+            /// If `ut` is omitted the current time will be used"
+            /// </summary>
+            [KSMethod(Description = @"Returns the next time at which a will cross its descending node with b.
+                For elliptical orbits this is a time between UT and UT + a.period.
+                For hyperbolic orbits this can be any time, including a time in the past if
+                the descending node is in the past.
+                NOTE: this function will throw an ArgumentException if a is a hyperbolic orbit and the descending node
+                occurs at a true anomaly that a does not actually ever attain.
+                If `ut` is omitted the current time will be used")]
+            double TimeOfDescendingNode(IOrbit b, Option<double> maybeUt = new Option<double>());
+            
             [KSField(Description = "Get the relative position of the ascending node.")]
             Vector3d RelativeAscendingNode { get; }
 

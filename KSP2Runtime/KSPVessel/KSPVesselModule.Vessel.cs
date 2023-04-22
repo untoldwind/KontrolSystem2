@@ -240,7 +240,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField]
             public ModuleDockingNodeAdapter[] DockingNodes => vessel.SimulationObject.PartOwner.Parts.Select(part => {
                 if (part.IsPartDockingPort(out Data_DockingNode data)) {
-                    return new ModuleDockingNodeAdapter(part, data);
+                    return new ModuleDockingNodeAdapter(this, part, data);
                 }
                 return null;
             }).Where(node => node != null).ToArray();
@@ -411,6 +411,12 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSMethod]
             public void OverrideInputTranslateZ(double value) => FlightInputHandler.OverrideInputTranslateZ((float)value);
+
+            public Option<KSPOrbitModule.IBody> AsBody => new Option<KSPOrbitModule.IBody>();
+            
+            public Option<VesselAdapter> AsVessel  => new Option<VesselAdapter>(this);
+
+            public Option<ModuleDockingNodeAdapter> AsDockingPort => new Option<ModuleDockingNodeAdapter>();
 
             public IGGuid UnderlyingId => vessel.SimulationObject.GlobalId;
         }

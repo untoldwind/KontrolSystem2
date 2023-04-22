@@ -3,6 +3,8 @@
 ## 0.3.3.3 ->
 
 * Fix `vessel.global_facing` for space planes
+* Add `time_of_ascending_node` and `time_of_decending_node` helper to orbit
+* Fix NPE in type checking
 
 ## 0.3.3.2 -> 0.3.3.3
 

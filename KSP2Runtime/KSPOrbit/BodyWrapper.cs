@@ -1,6 +1,7 @@
 ﻿using KontrolSystem.KSP.Runtime.KSPMath;
 using KontrolSystem.KSP.Runtime.KSPVessel;
 using KontrolSystem.TO2.Binding;
+using KontrolSystem.TO2.Runtime;
 using KSP.Sim;
 using KSP.Sim.impl;
 
@@ -80,6 +81,13 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             return new OrbitWrapper(context, orbit);
         }
 
+        public Option<KSPOrbitModule.IBody> AsBody => new Option<KSPOrbitModule.IBody>(this);
+            
+        public Option<KSPVesselModule.VesselAdapter> AsVessel  => new Option<KSPVesselModule.VesselAdapter>();
+
+        public Option<KSPVesselModule.ModuleDockingNodeAdapter> AsDockingPort => new Option<KSPVesselModule.ModuleDockingNodeAdapter>();
+
+        
         public IGGuid UnderlyingId => body.SimulationObject.GlobalId;
     }
 }

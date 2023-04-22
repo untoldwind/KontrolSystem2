@@ -490,11 +490,11 @@ namespace KontrolSystem.KSP.Runtime.Testing {
         public double DescendingNodeTrueAnomaly(KSPOrbitModule.IOrbit b) =>
             DirectBindingMath.ClampRadians2Pi(AscendingNodeTrueAnomaly(b) + Math.PI);
 
-        public double TimeOfAscendingNode(KSPOrbitModule.IOrbit b, double ut) =>
-            TimeOfTrueAnomaly(AscendingNodeTrueAnomaly(b), Option.Some<double>(ut));
+        public double TimeOfAscendingNode(KSPOrbitModule.IOrbit b, Option<double> maybeUt = new Option<double>()) =>
+            TimeOfTrueAnomaly(AscendingNodeTrueAnomaly(b), maybeUt);
 
-        public double TimeOfDescendingNode(KSPOrbitModule.IOrbit b, double ut) =>
-            TimeOfTrueAnomaly(DescendingNodeTrueAnomaly(b), Option.Some<double>(ut));
+        public double TimeOfDescendingNode(KSPOrbitModule.IOrbit b, Option<double> maybeUt = new Option<double>()) =>
+            TimeOfTrueAnomaly(DescendingNodeTrueAnomaly(b), maybeUt);
 
         public string ToString() => KSPOrbitModule.OrbitToString(this);
 

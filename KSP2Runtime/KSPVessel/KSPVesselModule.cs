@@ -76,6 +76,8 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                     }),
                     ("VesselControlState", "Vessel control state", typeof(VesselControlState), new (Enum value, string description)[] {
                     }),
+                    ("DockingState", "Current state of a docking node", typeof(Data_DockingNode.DockingState), new (Enum value, string description)[] {
+                    }),
                 });
 
             BindingGenerator.RegisterTypeMapping(typeof(FlightCtrlState),

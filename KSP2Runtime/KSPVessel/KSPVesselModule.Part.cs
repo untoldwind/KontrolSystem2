@@ -50,7 +50,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             public Option<ModuleDockingNodeAdapter> DockingNode {
                 get {
                     if (part.IsPartDockingPort(out Data_DockingNode data)) {
-                        return new Option<ModuleDockingNodeAdapter>(new ModuleDockingNodeAdapter(part, data));
+                        return new Option<ModuleDockingNodeAdapter>(new ModuleDockingNodeAdapter(vesselAdapter, part, data));
                     }
 
                     return new Option<ModuleDockingNodeAdapter>();

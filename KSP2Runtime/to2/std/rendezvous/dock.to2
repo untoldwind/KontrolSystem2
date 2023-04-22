@@ -1,0 +1,41 @@
+use { Vessel, Targetable, ModuleDockingNode, DockingState } from ksp::vessel
+use { DEBUG } from ksp::debug
+use { CONSOLE, RED, BLUE } from ksp::console
+use { sleep, wait_until, current_time } from ksp::game
+use { look_dir_up, vec3 } from ksp::math 
+use { ship_is_facing } from std::utils
+use { pid_loop } from ksp::control
+use { clamp } from core::math
+
+pub fn dock_vessel(vessel : Vessel, target : Targetable) -> Result<Unit, string> = {
+    const (vessel_port, target_port) = choose_docking_nodes(vessel, target)?
+        
+    DEBUG.add_vector(fn() -> vessel_port.global_position, fn() -> vessel_port.global_rotation.vector * 10, RED, "", 1)
+    DEBUG.add_vector(fn() -> vessel_port.global_position, fn() -> vessel_port.global_rotation.up_vector * 10, BLUE, "", 1)
+
+    DEBUG.add_vector(fn() -> target_port.global_position, fn() -> target_port.global_rotation.vector * 10, RED, "", 1)
+    DEBUG.add_vector(fn() -> target_port.global_position, fn() ->target_port.global_rotation.up_vector * 10, BLUE, "", 1)
+}
+
+pub sync fn choose_docking_nodes(vessel : Vessel, target : Targetable) -> Result<(vessel_port : ModuleDockingNode, target_port : ModuleDockingNode), string> = {
+    const target_ports = if(Some(docking_node) = target.docking_node) {
+        [docking_node]
+    } else {
+        const target_vessel = target.vessel.ok_or("Can only dock to another vessel")?
+        target_vessel.docking_nodes.filter(fn(part) -> part.docking_state == DockingState.Ready)
+    }
+    const vessel_ports = vessel.docking_nodes.filter(fn(part) -> part.docking_state == DockingState.Ready)
+ 
+    for(port in vessel_ports) {
+        const maybe_target_port = target_ports.find(fn(target_port) -> has_matching_types(target_port.node_types, port.node_types))
+        
+        if(maybe_target_port.defined) {
+            return Ok((vessel_port: port, target_port: maybe_target_port.value))
+        }
+    }
+    
+    Err("No matching docking ports found")
+}
+
+sync fn has_matching_types(target_types: string[], source_types: string[]) -> bool = 
+    target_types.exists(fn(target_type) -> source_types.exists(fn(source_type) -> target_type == source_type))

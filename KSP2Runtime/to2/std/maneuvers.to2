@@ -212,6 +212,63 @@ pub sync fn intercept_at(start : Orbit, start_UT : float, target : Orbit, target
         (target_velocity: target_orbit_velocity - transfer_vf_counter_clockwise, start_velocity: transfer_vi_counter_clockwise - start_orbit_velocity)
 }
 
+sync fn sample_ejection(body : Body, frame_x : Vec3, frame_y : Vec3, radius : float, exit_velocity : float) -> (orbit: Orbit, periapsis_velocity: float) = {
+    const exit_energy = 0.5 * exit_velocity * exit_velocity - body.grav_parameter / body.SOI_radius
+    const periapsis_velocity = math::sqrt(2 * (exit_energy + body.grav_parameter / radius))
+
+    (orbit: body.create_orbit(frame_x * radius, frame_y * periapsis_velocity, 0), periapsis_velocity: periapsis_velocity)
+}
+
+/// Calculate the ideal ejection from a (nearly) circular orbit around a given `body`, `radius` and `normal` vector.
+/// The resulting orbit is choosen so that the vessel will have a given `exit_velocity` on the SOI radius at time `UT`.
+pub sync fn ideal_ejection(body : Body, UT : float, radius : float, normal : Vec3, exit_velocity : Vec3) -> Orbit = {
+    // Create a more or less arbitrary frame of reference where exitVelocity points to sampleX
+    const frame_x = exit_velocity.normalized
+    const frame_z = frame_x.exclude_from(normal).normalized
+    const frame_y = frame_z.cross(frame_x).normalized
+
+    // Create a sample orbit in the plane perpendicular to sampleZ
+    const (orbit, periapsis_velocity) = sample_ejection(body, frame_x, frame_y, radius, exit_velocity.magnitude)
+    // Now we get the true anomaly of the exit point
+    const exit_ta = orbit.true_anomaly_at_radius(body.SOI_radius)
+    // ... the time it takes ot get from periapsis to exit point
+    const dt = orbit.time_of_true_anomaly(exit_ta, 0)
+    const sample_exit_velocity = orbit.orbital_velocity(dt)
+    
+    // By choice of the reference plane neither exitVelocity nor sampleExitVelocity
+    // should have an z-component. So we just have to turn everything
+    // around sampleY so that sampleExitVelocity points to sampleX as well.
+    const angle = -math::atan2(frame_y * sample_exit_velocity, frame_x * sample_exit_velocity)
+
+    const start_pos = radius * (math::cos(angle) * frame_x + math::sin(angle) * frame_y)
+    const start_vel = periapsis_velocity * (math::cos(angle) * frame_y - math::sin(angle) * frame_x)
+
+    body.create_orbit(start_pos, start_vel, UT - dt)
+}
+
+pub sync fn cheapest_course_correction(orbit: Orbit, min_UT: float, target: Orbit) -> (delta_v: Vec3, UT: float) = {
+    const closest_approach_time = next_closest_approach_time(orbit, target, min_UT + 2)
+
+    let burn_UT = min_UT
+    let delta_v = intercept_at(orbit, burn_UT, target, closest_approach_time).start_velocity
+    const steps = 20.0
+    let step = 0.5
+
+    while(step < steps) {
+        const test_UT = min_UT + (closest_approach_time - min_UT) * step / steps
+        const test_delta_v = intercept_at(orbit, test_UT, target, closest_approach_time).start_velocity
+
+        if(test_delta_v.magnitude < delta_v.magnitude) {
+            delta_v = test_delta_v
+            burn_UT = test_UT
+        }
+
+        step += 1.0
+    }
+
+    (delta_v: delta_v, UT: burn_UT)
+}
+
 pub sync fn next_closest_approach_time(start : Orbit, target : Orbit, UT : float) -> float = {
     let closest_approach_time = UT
     let closest_approach_distance = math::MAX_FLOAT
@@ -242,4 +299,56 @@ pub sync fn next_closest_approach_time(start : Orbit, target : Orbit, UT : float
     }
     
     closest_approach_time
+}
+
+pub sync fn match_velocities(start : Orbit, target : Orbit) -> (delta_v: Vec3, UT: float) = {
+    const collision_UT = next_closest_approach_time(start, target, current_time())
+    
+    (delta_v: target.orbital_velocity(collision_UT) - start.orbital_velocity(collision_UT), UT: collision_UT)
+}
+
+pub sync fn match_inclination(start : Orbit, target : Orbit) -> (delta_v: Vec3, UT: float) = {
+    const an_UT = start.time_of_ascending_node(target, current_time() + 2)
+    const dn_UT = start.time_of_descending_node(target, current_time() + 2)
+    
+    const v_dir = if(an_UT < dn_UT)         
+        target.orbit_normal.cross(start.relative_position(an_UT).normalized)
+    else
+        -target.orbit_normal.cross(start.relative_position(dn_UT).normalized)
+    const UT = math::min(an_UT, dn_UT)
+    
+    const v = start.orbital_velocity(UT)
+    const target_v = v_dir * v.magnitude
+    
+    (delta_v: target_v - v, UT: UT)
+}
+
+pub sync fn match_periapsis(start : Orbit, target : Orbit) -> (delta_v: Vec3, UT: float) = {
+    const pe_pos = target.relative_position(target.next_periapsis_time())
+    const UT = start.time_of_true_anomaly(start.true_anomaly_from_vector(-pe_pos.normalized), current_time() + 2)
+    
+    const v1 = start.orbital_velocity(UT)
+    const r = start.radius(UT)
+    const sma = (target.periapsis_radius + r) / 2
+    const v2 = if(r < 2 * sma) 
+        start.orbit_normal.cross(start.relative_position(UT).normalized) * math::sqrt(start.reference_body.grav_parameter * (2/r - 1/sma))
+    else
+        -start.orbit_normal.cross(start.relative_position(UT).normalized) * math::sqrt(start.reference_body.grav_parameter * (1/sma - 2/r))
+    
+    (delta_v: v2 - v1, UT: UT)
+}
+
+pub sync fn match_apoapsis(start : Orbit, target : Orbit) -> Result<(delta_v: Vec3, UT: float), string> = {
+    const ap_pos = target.relative_position(target.next_apoapsis_time().ok_or("Hyperbolic orbit")?)
+    const UT = start.time_of_true_anomaly(start.true_anomaly_from_vector(-ap_pos.normalized), current_time() + 2)
+    
+    const v1 = start.orbital_velocity(UT)
+    const r = start.radius(UT)
+    const sma = (target.apoapsis_radius.ok_or("Hyperbolic orbit")? + r) / 2
+    const v2 = if(r < 2 * sma) 
+        start.orbit_normal.cross(start.relative_position(UT).normalized) * math::sqrt(start.reference_body.grav_parameter * (2/r - 1/sma))
+    else
+        -start.orbit_normal.cross(start.relative_position(UT).normalized) * math::sqrt(start.reference_body.grav_parameter * (1/sma - 2/r))
+    
+    (delta_v: v2 - v1, UT: UT)
 }

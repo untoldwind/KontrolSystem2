@@ -1,0 +1,26 @@
+use { remove_all_nodes } from std::utils
+use { next_closest_approach_time } from std::maneuvers
+use { current_time } from ksp::game
+use { CONSOLE } from ksp::console
+use { Vessel } from ksp::vessel
+use { Orbit } from ksp::orbit
+use { exec_next_node } from std::vac
+use { estimate_burn_time } from std::vac
+
+pub fn approach_target(vessel: Vessel, target: Orbit) -> Result<Unit, string> = {
+    const closest_time = next_closest_approach_time(vessel.orbit, target, current_time())
+
+    CONSOLE.print_line(">>> " + closest_time.to_string())
+    
+    const delta_v = target.orbital_velocity(closest_time) - vessel.orbit.orbital_velocity(closest_time) 
+    
+    let (burn_time, half_burn_time) = estimate_burn_time(vessel, delta_v.magnitude, 0.5, 1.0)
+
+    CONSOLE.print_line("Burntime: " + burn_time.to_string() + " " + half_burn_time.to_string())
+
+    remove_all_nodes(vessel)
+    
+    vessel.maneuver.add_burn_vector(closest_time - half_burn_time, delta_v)?
+    
+    exec_next_node(vessel)
+}

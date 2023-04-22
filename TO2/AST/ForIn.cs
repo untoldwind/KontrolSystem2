@@ -28,7 +28,7 @@ namespace KontrolSystem.TO2.AST {
 
         public TO2Type FindVariableLocal(IBlockContext context, string name) {
             if (name != variableName) return null;
-            return variableType ?? sourceExpression.ResultType(context)?.ForInSource(context.ModuleContext, null)
+            return variableType ?? sourceExpression.ResultType(context)?.ForInSource(context.ModuleContext, null)?
                 .ElementType;
         }
 
