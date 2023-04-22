@@ -2,10 +2,12 @@ use { Vessel, Targetable, ModuleDockingNode, DockingState } from ksp::vessel
 use { DEBUG } from ksp::debug
 use { CONSOLE, RED, BLUE } from ksp::console
 use { sleep, wait_until, current_time } from ksp::game
-use { look_dir_up, vec3 } from ksp::math 
+use { global_look_dir_up, vec3 } from ksp::math 
 use { ship_is_facing } from std::utils
 use { pid_loop } from ksp::control
 use { clamp } from core::math
+use { global_ship_is_facing } from std::utils
+use { control_steering } from std::control::steering
 
 pub fn dock_vessel(vessel : Vessel, target : Targetable) -> Result<Unit, string> = {
     const (vessel_port, target_port) = choose_docking_nodes(vessel, target)?
@@ -15,6 +17,17 @@ pub fn dock_vessel(vessel : Vessel, target : Targetable) -> Result<Unit, string>
 
     DEBUG.add_vector(fn() -> target_port.global_position, fn() -> target_port.global_rotation.vector * 10, RED, "", 1)
     DEBUG.add_vector(fn() -> target_port.global_position, fn() ->target_port.global_rotation.up_vector * 10, BLUE, "", 1)
+    
+    vessel.actions.sas = false
+    vessel.actions.rcs = false
+    
+    const steering_control = control_steering(vessel)
+    const target_dir = global_look_dir_up(-target_port.global_rotation.vector, target_port.global_rotation.up_vector)
+    
+    steering_control.set_global_direction(target_dir)
+    
+    wait_until(fn() -> global_ship_is_facing(vessel, target_dir.vector, 5, 0.5))
+
 }
 
 pub sync fn choose_docking_nodes(vessel : Vessel, target : Targetable) -> Result<(vessel_port : ModuleDockingNode, target_port : ModuleDockingNode), string> = {
@@ -39,3 +52,63 @@ pub sync fn choose_docking_nodes(vessel : Vessel, target : Targetable) -> Result
 
 sync fn has_matching_types(target_types: string[], source_types: string[]) -> bool = 
     target_types.exists(fn(target_type) -> source_types.exists(fn(source_type) -> target_type == source_type))
+    
+pub fn dock_move_correct_side(vessel : Vessel, target_port : ModuleDockingNode) -> Result<Unit, string> = {
+    CONSOLE.print_line("=== dock_move_correct_side ===")
+    const console_row = CONSOLE.cursor_row
+    CONSOLE.move_cursor(console_row + 12, 0)
+
+    const frame = vessel.main_body.celestial_frame
+
+    vessel.actions.rcs = true
+
+    const dock_x = pid_loop(0.8, 0, 0.4, -1, 1)
+    const dock_y = pid_loop(0.8, 0, 0.4, -1, 1)
+    const dock_z = pid_loop(0.8, 0, 0.4, -1, 1)
+    
+    const rcs_manager = vessel.manage_rcs_translate(fn(delta_t) -> {
+        const vel_diff = vessel.orbital_velocity - target_port.vessel.orbital_velocity
+        const target_pos = target_port.global_position.to_local(frame) - vessel.global_position.to_local(frame)
+        const x = target_pos * vessel.facing.right_vector
+        const y = -target_pos * vessel.facing.up_vector
+        const z = target_pos * vessel.facing.vector
+        const vx = -vel_diff * vessel.facing.right_vector
+        const vy = vel_diff * vessel.facing.up_vector
+        const vz = -vel_diff * vessel.facing.vector
+        const tx = -clamp(x / 20, -5, 5)
+        const ty = -clamp(y / 20, -5, 5)
+        const tz = -clamp((z - 100) / 20, -5, 5)
+
+        CONSOLE.move_cursor(console_row + 9, 0)
+        CONSOLE.print_at(console_row    , 0, "X: " + x.to_string())
+        CONSOLE.print_at(console_row + 1, 0, "Y: " + y.to_string())
+        CONSOLE.print_at(console_row + 2, 0, "Z: " + z.to_string())
+        CONSOLE.print_at(console_row + 3, 0, "VX: " + vx.to_string())
+        CONSOLE.print_at(console_row + 4, 0, "VY: " + vy.to_string())
+        CONSOLE.print_at(console_row + 5, 0, "VZ: " + vz.to_string())
+        CONSOLE.print_at(console_row + 6, 0, "TX: " + tx.to_fixed(3))
+        CONSOLE.print_at(console_row + 7, 0, "TY: " + ty.to_fixed(3))
+        CONSOLE.print_at(console_row + 8, 0, "TZ: " + tz.to_fixed(3))
+        
+        const dX = dock_x.update_delta(delta_t, tx - vx)
+        const dY = dock_y.update_delta(delta_t, vy - ty)
+        const dZ = dock_z.update_delta(delta_t, tz - vz)
+
+        CONSOLE.print_at(console_row + 9, 0, "dX: " + dX.to_fixed(3))
+        CONSOLE.print_at(console_row + 10, 0, "dY: " + dY.to_fixed(3))
+        CONSOLE.print_at(console_row + 11, 0, "dZ: " + dZ.to_fixed(3))
+
+        vec3(dX, dY, dZ)
+    })
+
+    wait_until(fn() -> {
+        const target_pos = target_port.global_position.to_local(frame) - vessel.global_position.to_local(frame)
+        const x = target_pos * vessel.facing.right_vector
+        const y = -target_pos * vessel.facing.up_vector
+        const z = target_pos * vessel.facing.vector
+
+        vec3(x, y, z - 100).magnitude < 5
+    })
+    
+    rcs_manager.release()
+}

@@ -17,7 +17,7 @@ using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel {
     public partial class KSPVesselModule {
-        private static QuaternionD ControlFacingRotation = QuaternionD.Euler(270, 0, 0);
+        public static QuaternionD ControlFacingRotation = QuaternionD.Euler(270, 0, 0);
 
         [KSClass("Vessel",
             Description =

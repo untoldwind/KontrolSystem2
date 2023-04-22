@@ -4,6 +4,11 @@
 
 * Fix `vessel.global_facing` for space planes
 * Add `time_of_ascending_node` and `time_of_decending_node` helper to orbit
+* Improve docking port API:
+  * Add `DockingState` enum
+  * Get node type information
+* Experimental additions:
+  * Add `std::rendezvous::lib` for a simple orbital rendezvous maneuver
 * Fix NPE in type checking
 
 ## 0.3.3.2 -> 0.3.3.3

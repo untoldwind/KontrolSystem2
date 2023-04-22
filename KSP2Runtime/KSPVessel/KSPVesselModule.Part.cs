@@ -20,11 +20,13 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 this.part = part;
             }
 
+            [KSField] public VesselAdapter Vessel => vesselAdapter;
+            
             [KSField] public string PartName => part.PartName;
 
             [KSField] public Position GlobalPosition => part.SimulationObject.Position;
 
-            [KSField] public RotationWrapper GlobalRotation => new RotationWrapper(part.SimulationObject.Rotation);
+            [KSField] public RotationWrapper GlobalRotation => new RotationWrapper(new Rotation(part.SimulationObject.transform.bodyFrame, ControlFacingRotation));
 
             [KSField] public bool IsEngine => part.IsPartEngine(out var _);
 
