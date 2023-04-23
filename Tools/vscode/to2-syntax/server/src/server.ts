@@ -13,6 +13,8 @@ import {
   TextDocuments,
   createConnection,
 } from "vscode-languageserver/node";
+import { module } from "./to2/parser-module";
+import { TextDocumentInput } from "./parser/text-document-input";
 
 const connection = createConnection(ProposedFeatures.all);
 
@@ -74,26 +76,26 @@ connection.onInitialized(() => {
 });
 
 // The example settings
-interface ExampleSettings {
+interface To2LspSettings {
   maxNumberOfProblems: number;
 }
 
 // The global settings, used when the `workspace/configuration` request is not supported by the client.
 // Please note that this is not the case when using this server with the client provided in this example
 // but could happen with other clients.
-const defaultSettings: ExampleSettings = { maxNumberOfProblems: 1000 };
-let globalSettings: ExampleSettings = defaultSettings;
+const defaultSettings: To2LspSettings = { maxNumberOfProblems: 1000 };
+let globalSettings: To2LspSettings = defaultSettings;
 
 // Cache the settings of all open documents
-const documentSettings: Map<string, Thenable<ExampleSettings>> = new Map();
+const documentSettings: Map<string, Thenable<To2LspSettings>> = new Map();
 
 connection.onDidChangeConfiguration((change) => {
   if (hasConfigurationCapability) {
     // Reset all cached document settings
     documentSettings.clear();
   } else {
-    globalSettings = <ExampleSettings>(
-      (change.settings.languageServerExample || defaultSettings)
+    globalSettings = <To2LspSettings>(
+      (change.settings.to2LspServer || defaultSettings)
     );
   }
 
@@ -101,7 +103,7 @@ connection.onDidChangeConfiguration((change) => {
   documents.all().forEach(validateTextDocument);
 });
 
-function getDocumentSettings(resource: string): Thenable<ExampleSettings> {
+function getDocumentSettings(resource: string): Thenable<To2LspSettings> {
   if (!hasConfigurationCapability) {
     return Promise.resolve(globalSettings);
   }
@@ -131,8 +133,14 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
   // In this simple example we get the settings for every validate run.
   const settings = await getDocumentSettings(textDocument.uri);
 
+  const input = new TextDocumentInput(textDocument);
+  const moduleResult = module("<test>")(input);
+
+  console.log(moduleResult.remaining.position);
+
   // The validator creates diagnostics for all uppercase words length 2 and more
   const text = textDocument.getText();
+
   const pattern = /\b[A-Z]{2,}\b/g;
   let m: RegExpExecArray | null;
 

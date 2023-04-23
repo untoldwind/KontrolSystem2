@@ -71,10 +71,10 @@ export const digits1 = chars1(isDigit, "<digit>");
 
 const TAB = "\t".charCodeAt(0);
 
-export const spacing0 = chars0((ch) => ch === TAB && getCategory(ch) === "Zs");
+export const spacing0 = chars0((ch) => ch === TAB || getCategory(ch) === "Zs");
 
 export const spacing1 = chars1(
-  (ch) => ch === TAB && getCategory(ch) === "Zs",
+  (ch) => ch === TAB || getCategory(ch) === "Zs",
   "<space>"
 );
 

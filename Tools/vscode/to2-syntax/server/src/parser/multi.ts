@@ -239,6 +239,7 @@ export function delimitedUntil<T, D, E>(
           delimiterResult.expected,
           result
         );
+      remaining = delimiterResult.remaining;
       endResult = end(remaining);
       if (endResult.success)
         return new ParserSuccess(endResult.remaining, result);
