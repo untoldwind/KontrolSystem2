@@ -166,13 +166,13 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
         public double DescendingNodeTrueAnomaly(KSPOrbitModule.IOrbit b) =>
             DirectBindingMath.ClampRadians2Pi(AscendingNodeTrueAnomaly(b) + Math.PI);
-        
+
         public double TimeOfAscendingNode(KSPOrbitModule.IOrbit b, Option<double> maybeUt = new Option<double>()) =>
             TimeOfTrueAnomaly(AscendingNodeTrueAnomaly(b), maybeUt);
 
         public double TimeOfDescendingNode(KSPOrbitModule.IOrbit b, Option<double> maybeUt = new Option<double>()) =>
             TimeOfTrueAnomaly(DescendingNodeTrueAnomaly(b), maybeUt);
-        
+
         public Vector3d RelativeAscendingNode => orbit.referenceBody.transform.celestialFrame.ToLocalPosition(orbit.ReferenceFrame, orbit.GetRelativeANVector().SwapYAndZ);
 
         public Vector3d RelativeEccentricityVector => orbit.referenceBody.transform.celestialFrame.ToLocalPosition(orbit.ReferenceFrame, orbit.GetRelativeEccVector().SwapYAndZ);

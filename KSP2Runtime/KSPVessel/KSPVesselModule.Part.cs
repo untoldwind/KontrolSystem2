@@ -21,7 +21,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             }
 
             [KSField] public VesselAdapter Vessel => vesselAdapter;
-            
+
             [KSField] public string PartName => part.PartName;
 
             [KSField] public Position GlobalPosition => part.SimulationObject.Position;

@@ -91,12 +91,12 @@ pub fn dock_move_correct_side(vessel : Vessel, target_port : ModuleDockingNode) 
         const tz = -clamp((z - 100) / 20, -5, 5)
 
         CONSOLE.move_cursor(console_row + 9, 0)
-        CONSOLE.print_at(console_row    , 0, "X: " + x.to_string())
-        CONSOLE.print_at(console_row + 1, 0, "Y: " + y.to_string())
-        CONSOLE.print_at(console_row + 2, 0, "Z: " + z.to_string())
-        CONSOLE.print_at(console_row + 3, 0, "VX: " + vx.to_string())
-        CONSOLE.print_at(console_row + 4, 0, "VY: " + vy.to_string())
-        CONSOLE.print_at(console_row + 5, 0, "VZ: " + vz.to_string())
+        CONSOLE.print_at(console_row    , 0, "X: " + x.to_fixed(3))
+        CONSOLE.print_at(console_row + 1, 0, "Y: " + y.to_fixed(3))
+        CONSOLE.print_at(console_row + 2, 0, "Z: " + z.to_fixed(3))
+        CONSOLE.print_at(console_row + 3, 0, "VX: " + vx.to_fixed(3))
+        CONSOLE.print_at(console_row + 4, 0, "VY: " + vy.to_fixed(3))
+        CONSOLE.print_at(console_row + 5, 0, "VZ: " + vz.to_fixed(3))
         CONSOLE.print_at(console_row + 6, 0, "TX: " + tx.to_fixed(3))
         CONSOLE.print_at(console_row + 7, 0, "TY: " + ty.to_fixed(3))
         CONSOLE.print_at(console_row + 8, 0, "TZ: " + tz.to_fixed(3))
@@ -127,14 +127,14 @@ pub fn dock_move_correct_side(vessel : Vessel, target_port : ModuleDockingNode) 
 pub fn dock_approach(vessel : Vessel, target_port : ModuleDockingNode) -> Result<Unit, string> = {
     CONSOLE.print_line("=== dock_approach ===")
     const console_row = CONSOLE.cursor_row
-    CONSOLE.move_cursor(console_row + 8, 0)
+    CONSOLE.move_cursor(console_row + 1, 0)
 
     const frame = vessel.main_body.celestial_frame
 
     vessel.actions.rcs = true
 
-    const dock_x = pid_loop(0.4, 0.2, 1.2, -1, 1)
-    const dock_y = pid_loop(0.4, 0.2, 1.2, -1, 1)
+    const dock_x = pid_loop(0.4, 0.1, 0.4, -1, 1)
+    const dock_y = pid_loop(0.4, 0.1, 0.4, -1, 1)
     const dock_z = pid_loop(0.8, 0, 0.4, -1, 1)
     
     const rcs_manager = vessel.manage_rcs_translate(fn(delta_t) -> {
@@ -148,19 +148,22 @@ pub fn dock_approach(vessel : Vessel, target_port : ModuleDockingNode) -> Result
         const vz = -vel_diff * vessel.facing.vector
         const tz = if(z > 40) -2.0 else if(z > 20) -1.0 else -0.2
 
-        CONSOLE.print_at(console_row    , 0, "X: " + x.to_string())
-        CONSOLE.print_at(console_row + 1, 0, "Y: " + y.to_string())
-        CONSOLE.print_at(console_row + 2, 0, "Z: " + z.to_string())
-        CONSOLE.print_at(console_row + 3, 0, "VX: " + vx.to_string())
-        CONSOLE.print_at(console_row + 4, 0, "VY: " + vy.to_string())
-        CONSOLE.print_at(console_row + 5, 0, "VZ: " + vz.to_string())
+        CONSOLE.print_at(console_row    , 0, "X: " + x.to_fixed(3))
+        CONSOLE.print_at(console_row + 1, 0, "Y: " + y.to_fixed(3))
+        CONSOLE.print_at(console_row + 2, 0, "Z: " + z.to_fixed(3))
+        CONSOLE.print_at(console_row + 3, 0, "VX: " + vx.to_fixed(3))
+        CONSOLE.print_at(console_row + 4, 0, "VY: " + vy.to_fixed(3))
+        CONSOLE.print_at(console_row + 5, 0, "VZ: " + vz.to_fixed(3))
         CONSOLE.print_at(console_row + 6, 0, "State: " + target_port.docking_state.to_string())
         CONSOLE.print_at(console_row + 7, 0, "TZ: " + tz.to_fixed(3))
-
 
         const dX = dock_x.update_delta(delta_t, -x)
         const dY = dock_y.update_delta(delta_t, y)
         const dZ = dock_z.update_delta(delta_t, tz - vz)
+
+        CONSOLE.print_at(console_row + 8, 0, "dX: " + dX.to_fixed(3))
+        CONSOLE.print_at(console_row + 9, 0, "dY: " + dY.to_fixed(3))
+        CONSOLE.print_at(console_row + 10, 0, "dZ: " + dZ.to_fixed(3))
         
         vec3(dX, dY, dZ)
     })

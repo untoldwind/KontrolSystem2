@@ -419,8 +419,8 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             public void OverrideInputTranslateZ(double value) => FlightInputHandler.OverrideInputTranslateZ((float)value);
 
             public Option<KSPOrbitModule.IBody> AsBody => new Option<KSPOrbitModule.IBody>();
-            
-            public Option<VesselAdapter> AsVessel  => new Option<VesselAdapter>(this);
+
+            public Option<VesselAdapter> AsVessel => new Option<VesselAdapter>(this);
 
             public Option<ModuleDockingNodeAdapter> AsDockingPort => new Option<ModuleDockingNodeAdapter>();
 

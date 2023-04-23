@@ -11,24 +11,60 @@ namespace KontrolSystem.KSP.Runtime.KSPResource {
         public class ResourceTransfer {
             private readonly List<ResourceTransferEntry> entries = new List<ResourceTransferEntry>();
 
-            [KSField] public ResourceTransferEntry[] Entries => entries.ToArray();
+            [KSField(Description = "Get currently registers resource transfer entries.")] public ResourceTransferEntry[] Entries => entries.ToArray();
 
-            [KSField] public bool IsRunning => entries.Any(e => e.IsRunning);
+            [KSField(Description = "Check if a resource transfer is in progress.")] public bool IsRunning => entries.Any(e => e.IsRunning);
 
             [KSMethod]
             public bool AddContainer(FlowDirection flowDirection, ResourceContainerAdapter resourceContainer, double relativeAmount = 1.0) {
                 if (IsRunning) return false;
-                entries.Add(new ResourceTransferEntry(flowDirection, resourceContainer, relativeAmount));
+                if (entries.Exists(entry =>
+                        entry.ResourceContainer.partComponent.GlobalId == resourceContainer.partComponent.GlobalId))
+                    return false;
+                entries.Add(new ResourceTransferEntry(flowDirection, resourceContainer, resourceContainer.resourceContainer.Select(
+                    resourceDefinitionID =>
+                        flowDirection == FlowDirection.FLOW_INBOUND ?
+                             new ResourceLimit(resourceDefinitionID, relativeAmount *
+                                                                           (resourceContainer.resourceContainer
+                                                                                .GetResourceCapacityUnits(
+                                                                                    resourceDefinitionID) -
+                                                                            resourceContainer.resourceContainer
+                                                                                .GetResourceStoredUnits(
+                                                                                    resourceDefinitionID))) :
+                             new ResourceLimit(resourceDefinitionID, relativeAmount *
+                                                                               resourceContainer.resourceContainer
+                                                                                   .GetResourceStoredUnits(
+                                                                                       resourceDefinitionID))
+                    ).ToList()));
                 return true;
             }
 
             [KSMethod]
+            public bool AddResource(FlowDirection flowDirection, ResourceDataAdapter resource, double maxUnits) {
+                if (IsRunning) return false;
+                var existing = entries.Find(entry =>
+                    entry.ResourceContainer.partComponent.GlobalId ==
+                    resource.resourceContainer.partComponent.GlobalId);
+                if (existing != null) {
+                    if (existing.FlowDirection != flowDirection) return false;
+                    if (existing.resourceLimits.Exists(limit =>
+                            limit.resourceDefinitionID == resource.resourceData.ResourceID)) return false;
+                    existing.resourceLimits.Add(new ResourceLimit(resource.resourceData.ResourceID, maxUnits));
+                    return true;
+                }
+                entries.Add(new ResourceTransferEntry(flowDirection, resource.resourceContainer, new List<ResourceLimit>() {
+                    new ResourceLimit(resource.resourceData.ResourceID, maxUnits)
+                }));
+                return true;
+            }
+
+            [KSMethod(Description = "Start the resource transfer.")]
             public bool Start() {
                 if (IsRunning) return false;
                 foreach (var entry in entries) {
                     entry.Cleanup();
                 }
-                var resourceIds = entries.SelectMany(entry => entry.ResourceContainer.resourceContainer).ToHashSet();
+                var resourceIds = entries.SelectMany(entry => entry.ResourceDefinitionIDs).ToHashSet();
 
                 foreach (var resourceId in resourceIds) {
                     var inList = entries
@@ -59,7 +95,7 @@ namespace KontrolSystem.KSP.Runtime.KSPResource {
                 return true;
             }
 
-            [KSMethod]
+            [KSMethod(Description = "Stop the resource transfer.")]
             public bool Stop() {
                 if (!IsRunning) return false;
                 foreach (var entry in entries) {
@@ -68,7 +104,8 @@ namespace KontrolSystem.KSP.Runtime.KSPResource {
                 return true;
             }
 
-            [KSMethod]
+            [KSMethod(Description = @"Cleanup all registered resource transfer entries. 
+                This will implicitly stop the resource transfer if it is still running.")]
             public void Clear() {
                 foreach (var entry in entries) {
                     entry.Cleanup();
@@ -81,15 +118,15 @@ namespace KontrolSystem.KSP.Runtime.KSPResource {
         public class ResourceTransferEntry {
             private readonly FlowDirection flowDirection;
             private readonly ResourceContainerAdapter resourceContainer;
-            private readonly double relativeAmount;
+            internal readonly List<ResourceLimit> resourceLimits;
             private readonly ResourceFlowRequestBroker broker;
             private ResourceFlowRequestHandle resourceFlowRequestHandle;
             private List<ResourceFlowRequestCommandConfig> commands;
 
-            public ResourceTransferEntry(FlowDirection flowDirection, ResourceContainerAdapter resourceContainer, double relativeAmount) {
+            public ResourceTransferEntry(FlowDirection flowDirection, ResourceContainerAdapter resourceContainer, List<ResourceLimit> resourceLimits) {
                 this.flowDirection = flowDirection;
                 this.resourceContainer = resourceContainer;
-                this.relativeAmount = relativeAmount;
+                this.resourceLimits = resourceLimits;
                 broker = resourceContainer.partComponent.PartResourceFlowRequestBroker;
                 commands = new List<ResourceFlowRequestCommandConfig>();
             }
@@ -100,15 +137,19 @@ namespace KontrolSystem.KSP.Runtime.KSPResource {
             [KSField]
             public ResourceContainerAdapter ResourceContainer => resourceContainer;
 
+            public IEnumerable<ResourceDefinitionID> ResourceDefinitionIDs => resourceLimits.Select(resourceLimit => resourceLimit.resourceDefinitionID);
+
             public bool HasResource(ResourceDefinitionID resourceDefinitionID) =>
-                resourceContainer.resourceContainer.Contains(resourceDefinitionID);
+                ResourceDefinitionIDs.Contains(resourceDefinitionID);
 
             public double GetTotalIn(ResourceDefinitionID resourceDefinitionID) =>
-                relativeAmount * (resourceContainer.resourceContainer.GetResourceCapacityUnits(resourceDefinitionID) -
-                resourceContainer.resourceContainer.GetResourceStoredUnits(resourceDefinitionID));
+                Math.Max(resourceLimits.Find(resourceLimit => resourceLimit.resourceDefinitionID == resourceDefinitionID).maxUnits,
+                    resourceContainer.resourceContainer.GetResourceCapacityUnits(resourceDefinitionID) -
+                                  resourceContainer.resourceContainer.GetResourceStoredUnits(resourceDefinitionID));
 
             public double GetTotalOut(ResourceDefinitionID resourceDefinitionID) =>
-                relativeAmount * resourceContainer.resourceContainer.GetResourceStoredUnits(resourceDefinitionID);
+                Math.Max(resourceLimits.Find(resourceLimit => resourceLimit.resourceDefinitionID == resourceDefinitionID).maxUnits,
+                    resourceContainer.resourceContainer.GetResourceStoredUnits(resourceDefinitionID));
 
             internal bool IsRunning {
                 get {
@@ -161,6 +202,16 @@ namespace KontrolSystem.KSP.Runtime.KSPResource {
             internal void Cleanup() {
                 broker.ForceRemoveRequest(resourceFlowRequestHandle);
                 commands.Clear();
+            }
+        }
+
+        public struct ResourceLimit {
+            public ResourceDefinitionID resourceDefinitionID;
+            public double maxUnits;
+
+            public ResourceLimit(ResourceDefinitionID resourceDefinitionID, double maxUnits) {
+                this.resourceDefinitionID = resourceDefinitionID;
+                this.maxUnits = maxUnits;
             }
         }
     }

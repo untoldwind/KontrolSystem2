@@ -241,7 +241,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
             ClearMarkers();
             foreach (var kv in autopilotHooks) {
                 LoggerAdapter.Instance.Debug($"Unhooking from vessel: {kv.Key.Name}");
-                if(kv.Key.SimulationObject != null && kv.Key.SimulationObject.objVesselBehavior != null)
+                if (kv.Key.SimulationObject != null && kv.Key.SimulationObject.objVesselBehavior != null)
                     kv.Key.SimulationObject.objVesselBehavior.OnPreAutopilotUpdate -= kv.Value.RunAutopilots;
             }
 

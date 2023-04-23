@@ -16,7 +16,7 @@ namespace KontrolSystem.KSP.Runtime.KSPResource {
             }
 
             [KSField]
-            public ResourceDataAdapter[] List => resourceContainer.GetAllResourcesContainedData().Select(data => new ResourceDataAdapter(data)).ToArray();
+            public ResourceDataAdapter[] List => resourceContainer.GetAllResourcesContainedData().Select(data => new ResourceDataAdapter(this, data)).ToArray();
 
             [KSMethod]
             public void DumpAll() {
@@ -26,9 +26,11 @@ namespace KontrolSystem.KSP.Runtime.KSPResource {
 
         [KSClass("ResourceData")]
         public class ResourceDataAdapter {
-            private readonly ContainedResourceData resourceData;
+            internal readonly ResourceContainerAdapter resourceContainer;
+            internal readonly ContainedResourceData resourceData;
 
-            internal ResourceDataAdapter(ContainedResourceData resourceData) {
+            internal ResourceDataAdapter(ResourceContainerAdapter resourceContainer, ContainedResourceData resourceData) {
+                this.resourceContainer = resourceContainer;
                 this.resourceData = resourceData;
             }
 

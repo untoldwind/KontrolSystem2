@@ -14,9 +14,9 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField("body", Description = "Get the targeted celestial body, if target is a body.")] Option<KSPOrbitModule.IBody> AsBody { get; }
 
             [KSField("vessel", Description = "Get the targeted vessel, if target is a vessel.")] Option<VesselAdapter> AsVessel { get; }
-            
+
             [KSField("docking_node", Description = "Get the targeted docking node, if target is a docking node.")] Option<ModuleDockingNodeAdapter> AsDockingPort { get; }
-            
+
             IGGuid UnderlyingId { get; }
         }
     }

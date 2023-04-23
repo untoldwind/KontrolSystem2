@@ -82,12 +82,12 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
         }
 
         public Option<KSPOrbitModule.IBody> AsBody => new Option<KSPOrbitModule.IBody>(this);
-            
-        public Option<KSPVesselModule.VesselAdapter> AsVessel  => new Option<KSPVesselModule.VesselAdapter>();
+
+        public Option<KSPVesselModule.VesselAdapter> AsVessel => new Option<KSPVesselModule.VesselAdapter>();
 
         public Option<KSPVesselModule.ModuleDockingNodeAdapter> AsDockingPort => new Option<KSPVesselModule.ModuleDockingNodeAdapter>();
 
-        
+
         public IGGuid UnderlyingId => body.SimulationObject.GlobalId;
     }
 }

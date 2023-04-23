@@ -12,6 +12,7 @@
   * Add `std::rendezvous::lib` for a simple orbital rendezvous maneuver
   * Add `std::rendezvous::dock` for simple docking (needs lots of tweaking/optimization)
 * Add improved launch sequence (thanks to RobertoBiundo)
+* Extend the resource transfer API to support transfer of specific resources (and specific number of units)
 * Fix NPE in type checking
 
 ## 0.3.3.2 -> 0.3.3.3

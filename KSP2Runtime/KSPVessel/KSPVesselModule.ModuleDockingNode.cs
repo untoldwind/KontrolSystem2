@@ -23,13 +23,13 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField]
             public string[] NodeTypes => dataDockingNode.NodeTypes;
-            
+
             public string Name => part.Name;
 
             public KSPOrbitModule.IOrbit Orbit => vesselAdapter.Orbit;
 
             public Option<KSPOrbitModule.IBody> AsBody => new Option<KSPOrbitModule.IBody>();
-            
+
             public Option<VesselAdapter> AsVessel => new Option<VesselAdapter>();
 
             public Option<ModuleDockingNodeAdapter> AsDockingPort => new Option<ModuleDockingNodeAdapter>(this);
