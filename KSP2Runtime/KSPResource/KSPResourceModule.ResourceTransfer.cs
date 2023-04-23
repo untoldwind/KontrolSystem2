@@ -143,12 +143,12 @@ namespace KontrolSystem.KSP.Runtime.KSPResource {
                 ResourceDefinitionIDs.Contains(resourceDefinitionID);
 
             public double GetTotalIn(ResourceDefinitionID resourceDefinitionID) =>
-                Math.Max(resourceLimits.Find(resourceLimit => resourceLimit.resourceDefinitionID == resourceDefinitionID).maxUnits,
+                Math.Min(resourceLimits.Find(resourceLimit => resourceLimit.resourceDefinitionID == resourceDefinitionID).maxUnits,
                     resourceContainer.resourceContainer.GetResourceCapacityUnits(resourceDefinitionID) -
                                   resourceContainer.resourceContainer.GetResourceStoredUnits(resourceDefinitionID));
 
             public double GetTotalOut(ResourceDefinitionID resourceDefinitionID) =>
-                Math.Max(resourceLimits.Find(resourceLimit => resourceLimit.resourceDefinitionID == resourceDefinitionID).maxUnits,
+                Math.Min(resourceLimits.Find(resourceLimit => resourceLimit.resourceDefinitionID == resourceDefinitionID).maxUnits,
                     resourceContainer.resourceContainer.GetResourceStoredUnits(resourceDefinitionID));
 
             internal bool IsRunning {
