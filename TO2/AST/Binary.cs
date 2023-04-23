@@ -72,19 +72,28 @@ namespace KontrolSystem.TO2.AST {
                 return;
             }
 
-            right.Prepare(context);
+            try {
+                right.Prepare(context);
 
-            left.EmitCode(context, false);
-            rightEmitter?.OtherType.AssignFrom(context.ModuleContext, leftType).EmitConvert(context);
-            right.EmitCode(context, false);
-            leftEmitter?.OtherType.AssignFrom(context.ModuleContext, rightType).EmitConvert(context);
+                left.EmitCode(context, false);
+                rightEmitter?.OtherType.AssignFrom(context.ModuleContext, leftType).EmitConvert(context);
+                right.EmitCode(context, false);
+                leftEmitter?.OtherType.AssignFrom(context.ModuleContext, rightType).EmitConvert(context);
 
-            if (context.HasErrors) return;
+                if (context.HasErrors) return;
 
-            if (leftEmitter != null) leftEmitter.EmitCode(context, this);
-            else rightEmitter.EmitCode(context, this);
+                if (leftEmitter != null) leftEmitter.EmitCode(context, this);
+                else rightEmitter.EmitCode(context, this);
 
-            if (dropResult) context.IL.Emit(OpCodes.Pop);
+                if (dropResult) context.IL.Emit(OpCodes.Pop);
+            } catch (CodeGenerationException e) {
+                context.AddError(new StructuralError(
+                    StructuralError.ErrorType.CoreGeneration,
+                    e.Message,
+                    Start,
+                    End
+                ));
+            }
         }
 
         public override REPLValueFuture Eval(REPLContext context) {
