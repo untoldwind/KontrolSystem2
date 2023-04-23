@@ -67,6 +67,16 @@ pub sync fn change_periapsis ( orbit : ksp::orbit::Orbit,
 Calculate the required delta-v to change the periapsis of an `orbit`
 to `periapsis_radius` at time `UT`
 
+### cheapest_course_correction
+
+```rust
+pub sync fn cheapest_course_correction ( orbit : ksp::orbit::Orbit,
+                                         min_UT : float,
+                                         target : ksp::orbit::Orbit ) -> (delta_v : ksp::math::Vec3, UT : float)
+```
+
+
+
 ### circularize_orbit
 
 ```rust
@@ -119,6 +129,19 @@ pub sync fn ellipticize ( orbit : ksp::orbit::Orbit,
 Calculate the required delta-v to change the `apoapsis` and `periapsis` of the given `orbit`
 at time `UT`.
 
+### ideal_ejection
+
+```rust
+pub sync fn ideal_ejection ( body : ksp::orbit::Body,
+                             UT : float,
+                             radius : float,
+                             normal : ksp::math::Vec3,
+                             exit_velocity : ksp::math::Vec3 ) -> ksp::orbit::Orbit
+```
+
+Calculate the ideal ejection from a (nearly) circular orbit around a given `body`, `radius` and `normal` vector.
+The resulting orbit is choosen so that the vessel will have a given `exit_velocity` on the SOI radius at time `UT`.
+
 ### intercept_at
 
 ```rust
@@ -131,6 +154,42 @@ pub sync fn intercept_at ( start : ksp::orbit::Orbit,
 
 Calculate required delta-v to intercept `target` orbit at time `target_UT` from `start` orbit at time `start_UT`.
 `offset_distance` may be used to define a desired distance to the target.
+
+### match_apoapsis
+
+```rust
+pub sync fn match_apoapsis ( start : ksp::orbit::Orbit,
+                             target : ksp::orbit::Orbit ) -> Result<(delta_v : ksp::math::Vec3, UT : float), string>
+```
+
+
+
+### match_inclination
+
+```rust
+pub sync fn match_inclination ( start : ksp::orbit::Orbit,
+                                target : ksp::orbit::Orbit ) -> (delta_v : ksp::math::Vec3, UT : float)
+```
+
+
+
+### match_periapsis
+
+```rust
+pub sync fn match_periapsis ( start : ksp::orbit::Orbit,
+                              target : ksp::orbit::Orbit ) -> (delta_v : ksp::math::Vec3, UT : float)
+```
+
+
+
+### match_velocities
+
+```rust
+pub sync fn match_velocities ( start : ksp::orbit::Orbit,
+                               target : ksp::orbit::Orbit ) -> (delta_v : ksp::math::Vec3, UT : float)
+```
+
+
 
 ### next_closest_approach_time
 

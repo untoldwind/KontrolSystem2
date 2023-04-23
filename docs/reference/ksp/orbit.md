@@ -183,6 +183,26 @@ start_ut | float | R/O | Universal time of the start of the orbit, in case it is
 
 #### Methods
 
+##### ascending_node_true_anomaly
+
+```rust
+orbit.ascending_node_true_anomaly ( b : ksp::orbit::Orbit ) -> float
+```
+
+Gives the true anomaly (in a's orbit) at which a crosses its ascending node with b's orbit.
+The returned value is always between 0 and 360.
+
+
+##### descending_node_true_anomaly
+
+```rust
+orbit.descending_node_true_anomaly ( b : ksp::orbit::Orbit ) -> float
+```
+
+Gives the true anomaly (in a's orbit) at which a crosses its descending node with b's orbit.
+The returned value is always between 0 and 360.
+
+
 ##### get_eccentric_anomaly_at_true_anomaly
 
 ```rust
@@ -376,6 +396,38 @@ Computes the period of the phase angle between orbiting objects of this orbit an
 For noncircular orbits the time variation of the phase angle is only quasiperiodic
 and for high eccentricities and/or large relative inclinations, the relative motion is
 not really periodic at all.
+
+
+##### time_of_ascending_node
+
+```rust
+orbit.time_of_ascending_node ( b : ksp::orbit::Orbit,
+                               maybeUt : Option<float> ) -> float
+```
+
+Returns the next time at which a will cross its ascending node with b.
+For elliptical orbits this is a time between UT and UT + a.period.
+For hyperbolic orbits this can be any time, including a time in the past if
+the ascending node is in the past.
+NOTE: this function will throw an ArgumentException if a is a hyperbolic orbit and the ascending node
+occurs at a true anomaly that a does not actually ever attain.
+If `ut` is omitted the current time will be used.
+
+
+##### time_of_descending_node
+
+```rust
+orbit.time_of_descending_node ( b : ksp::orbit::Orbit,
+                                maybeUt : Option<float> ) -> float
+```
+
+Returns the next time at which a will cross its descending node with b.
+For elliptical orbits this is a time between UT and UT + a.period.
+For hyperbolic orbits this can be any time, including a time in the past if
+the descending node is in the past.
+NOTE: this function will throw an ArgumentException if a is a hyperbolic orbit and the descending node
+occurs at a true anomaly that a does not actually ever attain.
+If `ut` is omitted the current time will be used
 
 
 ##### time_of_true_anomaly

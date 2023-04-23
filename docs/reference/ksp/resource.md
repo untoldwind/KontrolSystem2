@@ -99,8 +99,8 @@ Represents a resource transfer
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
-entries | [ksp::resource::ResourceTransferEntry](/reference/ksp/resource.md#resourcetransferentry)[] | R/O | 
-is_running | bool | R/O | 
+entries | [ksp::resource::ResourceTransferEntry](/reference/ksp/resource.md#resourcetransferentry)[] | R/O | Get currently registers resource transfer entries. 
+is_running | bool | R/O | Check if a resource transfer is in progress. 
 
 #### Methods
 
@@ -114,12 +114,24 @@ resourcetransfer.add_container ( flowDirection : ksp::resource::FlowDirection,
 
 
 
+##### add_resource
+
+```rust
+resourcetransfer.add_resource ( flowDirection : ksp::resource::FlowDirection,
+                                resource : ksp::resource::ResourceData,
+                                maxUnits : float ) -> bool
+```
+
+
+
 ##### clear
 
 ```rust
 resourcetransfer.clear ( ) -> Unit
 ```
 
+Cleanup all registered resource transfer entries.
+This will implicitly stop the resource transfer if it is still running.
 
 
 ##### start
@@ -128,6 +140,7 @@ resourcetransfer.clear ( ) -> Unit
 resourcetransfer.start ( ) -> bool
 ```
 
+Start the resource transfer.
 
 
 ##### stop
@@ -136,6 +149,7 @@ resourcetransfer.start ( ) -> bool
 resourcetransfer.stop ( ) -> bool
 ```
 
+Stop the resource transfer.
 
 
 ### ResourceTransferEntry
