@@ -12,6 +12,7 @@ namespace KontrolSystem.TO2.Binding {
             case bool b: return new BoolDefaultValue(b);
             case long l: return new IntDefaultValue(l);
             case double d: return new FloatDefaultValue(d);
+            case string s: return new StringDefaultValue(s);
             case Enum e: return new EnumDefaultValue(e);
             default: throw new ArgumentException($"Unable to handle default value with type {parameter.ParameterType}");
             }

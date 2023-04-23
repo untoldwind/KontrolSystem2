@@ -32,6 +32,11 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             set => inputField.characterValidation = value;
         }
 
+        public void OnChange(UnityAction<string> onChange) {
+            inputField.onValueChanged.RemoveAllListeners();
+            inputField.onValueChanged.AddListener(onChange);
+        }
+
         public static UGUIInputField Create(string value, float minWidth, UnityAction<string> onChange = null) {
             var element = new UGUIInputField(UIFactory.Instance.CreateInputField(), new Vector2(minWidth, 30), onChange);
 

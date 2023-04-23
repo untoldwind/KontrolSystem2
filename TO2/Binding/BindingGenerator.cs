@@ -14,6 +14,7 @@ namespace KontrolSystem.TO2.Binding {
             {typeof(double), BuiltinType.Float},
             {typeof(string), BuiltinType.String},
             {typeof(void), BuiltinType.Unit},
+            {typeof(Cell<>), BuiltinType.Cell},
         };
 
         private static readonly Dictionary<Type, CompiledKontrolModule> BoundModules =
@@ -218,7 +219,9 @@ namespace KontrolSystem.TO2.Binding {
                     return new FunctionType(false, new List<TO2Type>(), BuiltinType.Unit);
                 }
 
-                return TypeMappings.Get(type) ?? throw new ArgumentException($"No mapping for {type}");
+                var t = TypeMappings.Get(type);
+                if (t != null) return t;
+                throw new ArgumentException($"No mapping for {type}");
             }
         }
 

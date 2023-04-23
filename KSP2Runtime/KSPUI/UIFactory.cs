@@ -315,7 +315,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             labelText.fontSize = 20;
             labelText.color = new Color(0.7961f, 0.8706f, 1f);
             labelText.enableWordWrapping = false;
-            
+
             toggle.graphic = checkmarkImage;
             toggle.targetGraphic = bgImage;
             ColorBlock colors = toggle.colors;

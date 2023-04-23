@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace KontrolSystem.KSP.Runtime.KSPUI {
@@ -17,6 +18,11 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
         public bool Interactable {
             get => slider.interactable;
             set => slider.interactable = value;
+        }
+
+        public void OnChange(UnityAction<float> onChange) {
+            slider.onValueChanged.RemoveAllListeners();
+            slider.onValueChanged.AddListener(onChange);
         }
 
         public static UGUISlider CreateHorizontal() =>

@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace KontrolSystem.TO2.Runtime {
-    public class Cell<T> {
+    public class Cell<T> : IObservable<T> {
         private readonly object cellLock;
         private T element;
-        private Action<T> observers;
+        private List<IObserver<T>> observers;
 
         public Cell(T value) {
             element = value;
@@ -22,7 +23,7 @@ namespace KontrolSystem.TO2.Runtime {
                     element = value;
                 }
 
-                observers?.Invoke(element);
+                Notify();
             }
         }
 
@@ -30,17 +31,39 @@ namespace KontrolSystem.TO2.Runtime {
             lock (cellLock) {
                 element = updater(element);
             }
-            observers?.Invoke(element);
+            Notify();
             return this;
         }
 
-        public void AddObserver(Action<T> observer) {
-            observers += observer;
+        public IDisposable Subscribe(IObserver<T> observer) {
+            observers ??= new List<IObserver<T>>();
+            observers.Add(observer);
+            return new Unsubscriber(observers, observer);
         }
 
-        public void RemoveObserver(Action<T> observer) {
-            observers -= observer;
+        private void Notify() {
+            if (observers == null) return;
+            var value = element;
+            foreach (var observer in observers) {
+                observer.OnNext(value);
+            }
         }
+
+        private class Unsubscriber : IDisposable {
+            private List<IObserver<T>> observers;
+            private IObserver<T> observer;
+
+            public Unsubscriber(List<IObserver<T>> observers, IObserver<T> observer) {
+                this.observers = observers;
+                this.observer = observer;
+            }
+
+            public void Dispose() {
+                if (observer != null && observers.Contains(observer))
+                    observers.Remove(observer);
+            }
+        }
+
     }
 
     public static class Cell {

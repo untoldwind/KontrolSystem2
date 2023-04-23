@@ -1,4 +1,5 @@
-﻿using KontrolSystem.TO2.Runtime;
+﻿using System;
+using KontrolSystem.TO2.Runtime;
 using Xunit;
 
 namespace KontrolSystem.KSP.Runtime.Test {
@@ -23,7 +24,7 @@ namespace KontrolSystem.KSP.Runtime.Test {
             var cell = new Cell<string>("initial");
             var observer1 = new Obverser();
 
-            cell.AddObserver(observer1.Call);
+            var sub1 = cell.Subscribe(observer1);
 
             cell.Value = "Value1";
 
@@ -31,21 +32,21 @@ namespace KontrolSystem.KSP.Runtime.Test {
 
             var observer2 = new Obverser();
 
-            cell.AddObserver(observer2.Call);
+            var sub2 = cell.Subscribe(observer2);
 
             cell.Value = "Value2";
 
             Assert.Equal("Value2", observer1.lastCall);
             Assert.Equal("Value2", observer2.lastCall);
 
-            cell.RemoveObserver(observer1.Call);
+            sub1.Dispose();
 
             cell.Value = "Value3";
 
             Assert.Equal("Value2", observer1.lastCall);
             Assert.Equal("Value3", observer2.lastCall);
 
-            cell.RemoveObserver(observer2.Call);
+            sub2.Dispose();
 
             cell.Value = "Value4";
 
@@ -53,11 +54,17 @@ namespace KontrolSystem.KSP.Runtime.Test {
             Assert.Equal("Value3", observer2.lastCall);
         }
 
-        class Obverser {
+        class Obverser : IObserver<string> {
             internal string lastCall;
 
-            internal void Call(string value) {
+            public void OnNext(string value) {
                 lastCall = value;
+            }
+
+            public void OnError(Exception error) {
+            }
+
+            public void OnCompleted() {
             }
         }
     }

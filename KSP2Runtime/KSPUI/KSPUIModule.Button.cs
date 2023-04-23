@@ -27,12 +27,12 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             [KSField]
             public string Label {
                 get => button.Label;
-                set { 
-                    button.Label = value; 
+                set {
+                    button.Label = value;
                     parent.Root.Layout();
                 }
             }
-            
+
             [KSField]
             public bool Enabled {
                 get => button.Interactable;

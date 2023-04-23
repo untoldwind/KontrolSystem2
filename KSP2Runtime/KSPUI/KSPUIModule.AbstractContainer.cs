@@ -83,10 +83,10 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             }
 
             [KSMethod]
-            public Slider AddHorizontalSlider(UGUILayout.Align align = UGUILayout.Align.Stretch, double stretch = 0) {
+            public Slider AddHorizontalSlider(double min, double max, UGUILayout.Align align = UGUILayout.Align.Stretch, double stretch = 0) {
                 var element = layout.Add(UGUISlider.CreateHorizontal(), align, (float)stretch);
                 Root.Layout();
-                return new Slider(this, element);
+                return new Slider(this, element, min, max);
             }
         }
     }
