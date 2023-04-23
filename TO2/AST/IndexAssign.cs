@@ -72,6 +72,8 @@ namespace KontrolSystem.TO2.AST {
             }
 
             if (op == Operator.Assign) {
+                expression.Prepare(context);
+                
                 if (indexAccess.RequiresPtr) target.EmitPtr(context);
                 else target.EmitCode(context, false);
 

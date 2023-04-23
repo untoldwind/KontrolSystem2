@@ -15,6 +15,7 @@
 * Extend the resource transfer API to support transfer of specific resources (and specific number of units)
 * Fix NPE in type checking
 * Fix broken error reporting (issue #78)
+* Fix invalid IL code exception (issue #79)
 
 ## 0.3.3.2 -> 0.3.3.3
 
