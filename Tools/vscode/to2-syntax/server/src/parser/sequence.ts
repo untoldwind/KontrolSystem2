@@ -1,26 +1,37 @@
 import { Input, Parser, ParserFailure, ParserSuccess } from ".";
 
-export function then<T, U>(
-  first: Parser<T>,
-  second: (result: T) => Parser<U>
-): Parser<U> {
-  return (input: Input) =>
-    first(input).select((s) => second(s.value)(s.remaining));
-}
-
 export function preceded<T, U>(
   prefix: Parser<T>,
   parser: Parser<U>
 ): Parser<U> {
-  return (input: Input) => prefix(input).select((s) => parser(s.remaining));
+  return (input: Input) => {
+    const prefixResult = prefix(input);
+    if (!prefixResult.success)
+      return new ParserFailure<U>(
+        prefixResult.remaining,
+        prefixResult.expected,
+        undefined
+      );
+    return parser(prefixResult.remaining);
+  };
 }
 
 export function terminated<T, U>(
   parser: Parser<T>,
   suffix: Parser<U>
 ): Parser<T> {
-  return (input: Input) =>
-    parser(input).select((s) => suffix(s.remaining).map((_) => s.value));
+  return (input: Input) => {
+    const inputResult = parser(input);
+    if (!inputResult.success) return inputResult;
+    const suffixResult = suffix(inputResult.remaining);
+    if (!suffixResult.success)
+      return new ParserFailure(
+        suffixResult.remaining,
+        suffixResult.expected,
+        inputResult.value
+      );
+    return new ParserSuccess(suffixResult.remaining, inputResult.value);
+  };
 }
 
 export function between<T, P, S>(
@@ -28,10 +39,25 @@ export function between<T, P, S>(
   parser: Parser<T>,
   suffix: Parser<S>
 ): Parser<T> {
-  return (input: Input) =>
-    prefix(input)
-      .select((s) => parser(s.remaining))
-      .select((s) => suffix(s.remaining).map((_) => s.value));
+  return (input: Input) => {
+    const prefixResult = prefix(input);
+    if (!prefixResult.success)
+      return new ParserFailure<T>(
+        prefixResult.remaining,
+        prefixResult.expected,
+        undefined
+      );
+    const inputResult = parser(prefixResult.remaining);
+    if (!inputResult.success) return inputResult;
+    const suffixResult = suffix(inputResult.remaining);
+    if (!suffixResult.success)
+      return new ParserFailure(
+        suffixResult.remaining,
+        suffixResult.expected,
+        inputResult.value
+      );
+    return new ParserSuccess(suffixResult.remaining, inputResult.value);
+  };
 }
 
 export function seq<P extends any[]>(
@@ -43,8 +69,21 @@ export function seq<P extends any[]>(
 
     for (const item of items) {
       const itemResult = item(remaining);
-      if (!itemResult.success)
-        return new ParserFailure<P>(remaining, itemResult.expected, undefined);
+      if (!itemResult.success) {
+        if (itemResult.value && result.length == items.length - 1) {
+          result.push(itemResult.value);
+          return new ParserFailure<P>(
+            itemResult.remaining,
+            itemResult.expected,
+            result as P
+          );
+        }
+        return new ParserFailure<P>(
+          itemResult.remaining,
+          itemResult.expected,
+          undefined
+        );
+      }
       result.push(itemResult.value);
       remaining = itemResult.remaining;
     }

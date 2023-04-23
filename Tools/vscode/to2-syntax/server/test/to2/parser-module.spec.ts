@@ -10,6 +10,7 @@ describe("TO2 parser module", () => {
     `;
     const moduleParser = module("<test>");
 
+    console.log(moduleParser(new StringInput(source)));
     expect(moduleParser(new StringInput(source))).toBeSuccess();
   });
 });

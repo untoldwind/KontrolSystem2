@@ -47,14 +47,21 @@ export function map<T, U>(
   parser: Parser<T>,
   convert: (result: T, start: InputPosition, end: InputPosition) => U
 ): Parser<U> {
-  return (input: Input) =>
-    parser(input).select(
-      (s) =>
-        new ParserSuccess(
-          s.remaining,
-          convert(s.value, input.position, s.remaining.position)
-        )
+  return (input: Input) => {
+    const result = parser(input);
+    if (result.success)
+      return new ParserSuccess(
+        result.remaining,
+        convert(result.value, input.position, result.remaining.position)
+      );
+    return new ParserFailure(
+      result.remaining,
+      result.expected,
+      result.value
+        ? convert(result.value, input.position, result.remaining.position)
+        : undefined
     );
+  };
 }
 
 export function opt<T>(parser: Parser<T>): Parser<T | undefined> {

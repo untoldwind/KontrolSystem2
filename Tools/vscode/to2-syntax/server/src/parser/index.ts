@@ -27,12 +27,6 @@ export class ParserSuccess<T> {
   map<U>(mapper: (result: T) => U): ParserResult<U> {
     return new ParserSuccess<U>(this.remaining, mapper(this.value));
   }
-
-  select<U>(
-    next: (result: ParserSuccess<T>) => ParserResult<U>
-  ): ParserResult<U> {
-    return next(this);
-  }
 }
 
 export class ParserFailure<T> {
@@ -52,12 +46,6 @@ export class ParserFailure<T> {
       this.expected,
       this.value ? mapper(this.value) : undefined
     );
-  }
-
-  select<U>(
-    next: (result: ParserSuccess<T>) => ParserResult<U>
-  ): ParserResult<U> {
-    return new ParserFailure<U>(this.remaining, this.expected, undefined);
   }
 }
 
