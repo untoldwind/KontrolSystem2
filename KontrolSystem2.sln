@@ -15,7 +15,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KSP2Runtime", "KSP2Runtime\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KSP2Runtime-Test", "KSP2Runtime-Test\KSP2Runtime-Test.csproj", "{B8E2A508-B32B-409B-BAC3-E5955F4F293A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenDocs", "Tools\GenDocs\GenDocs.csproj", "{B19D88C6-94C6-446C-A3BE-E1BA5FF4B643}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBD}") = "GenDocs", "Tools\GenDocs\GenDocs.csproj", "{B19D88C6-94C6-446C-A3BE-E1BA5FF4B643}"
+EndProject
+Project("{26E283E9-7E7C-4B6F-9EFD-2FB2450B80D6}") = "GenRefs", "Tools\GenRefs\GenRefs.csproj", "{B0A3BC14-8710-43AC-90DB-C058958FC592}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,5 +57,9 @@ Global
 		{B19D88C6-94C6-446C-A3BE-E1BA5FF4B643}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B19D88C6-94C6-446C-A3BE-E1BA5FF4B643}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B19D88C6-94C6-446C-A3BE-E1BA5FF4B643}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0A3BC14-8710-43AC-90DB-C058958FC592}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0A3BC14-8710-43AC-90DB-C058958FC592}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0A3BC14-8710-43AC-90DB-C058958FC592}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0A3BC14-8710-43AC-90DB-C058958FC592}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -14,11 +14,11 @@ namespace KontrolSystem.TO2.Parser {
         private static readonly Parser<bool> LetOrConst = Alt(LetKeyword.To(false), ConstKeyword.To(true));
 
         public static readonly Parser<IBlockItem> VariableDeclaration = Seq(
-            LetOrConst, WhiteSpaces1.Then(Alt(
+            LetOrConst, Alt(
                 DeclarationParameter.Map(item => (true, new List<DeclarationParameter> { item })),
                 Delimited1(DeclarationParameterOrPlaceholder, CommaDelimiter)
                     .Between(Char('(').Then(WhiteSpaces0), WhiteSpaces0.Then(Char(')'))).Map(items => (false, items))
-            )), WhiteSpaces0.Then(Char('=')).Then(WhiteSpaces0).Then(Expression)
+            ), EqDelimiter.Then(Expression)
         ).Map((items, start, end) => {
             if (items.Item2.Item1)
                 return new VariableDeclaration(items.Item2.Item2[0], items.Item1, items.Item3, start, end);
@@ -75,12 +75,11 @@ namespace KontrolSystem.TO2.Parser {
             .Then(DelimitedUntil(Expression, CommaDelimiter, WhiteSpaces0.Then(Char(')'))));
 
         private static readonly Parser<Expression> VariableRefOrCall = Seq(
-            Identifier, Many0(Tag("::").Then(Identifier)), Opt(Spacing0.Then(CallArguments))
+            IdentifierPath, Opt(Spacing0.Then(CallArguments))
         ).Map((items, start, end) => {
-            List<string> fullName = items.Item2;
-            fullName.Insert(0, items.Item1);
-            if (items.Item3.IsDefined) {
-                return new Call(fullName, items.Item3.Value, start, end);
+            List<string> fullName = items.Item1;
+            if (items.Item2.IsDefined) {
+                return new Call(fullName, items.Item2.Value, start, end);
             }
 
             return new VariableGet(fullName, start, end) as Expression;
@@ -151,16 +150,7 @@ namespace KontrolSystem.TO2.Parser {
         );
 
         private static readonly Parser<Expression> TermWithSuffixOps = Term.Fold0(SuffixOps,
-            (target, suffixOp, start, end) => {
-                switch (suffixOp) {
-                case IndexGetSuffix indexGet: return new IndexGet(target, indexGet.indexSpec, start, end);
-                case MethodCallSuffix methodCall:
-                    return new MethodCall(target, methodCall.methodName, methodCall.arguments, start, end);
-                case FieldGetSuffix fieldGet: return new FieldGet(target, fieldGet.fieldName, start, end);
-                case OperatorSuffix operatorSuffix: return new UnarySuffix(target, operatorSuffix.op, start, end);
-                default: throw new ParseException(start, new List<string> { "<valid suffix>" });
-                }
-            });
+            (target, suffixOp, start, end) => suffixOp.GetExpression(target, start, end));
 
         private static readonly Parser<Operator> UnaryPrefixOp = Alt(
             Char('-').To(Operator.Neg),
@@ -184,8 +174,8 @@ namespace KontrolSystem.TO2.Parser {
             (left, op, right, start, end) => new Binary(left, op, right, start, end));
 
         private static readonly Parser<Operator> AddSubBinaryOp = Alt(
-            Char('+').Map(_ => Operator.Add),
-            Char('-').Map(_ => Operator.Sub)
+            Char('+').To(Operator.Add),
+            Char('-').To(Operator.Sub)
         ).Between(WhiteSpaces0, WhiteSpaces0);
 
         private static readonly Parser<Expression> AddSubBinaryExpr = Chain(MulDivBinaryExpr, AddSubBinaryOp,
@@ -277,20 +267,8 @@ namespace KontrolSystem.TO2.Parser {
                 return new VariableAssign(items.Item1, items.Item3, items.Item4, start, end) as Expression;
             var last = items.Item2[suffixCount - 1];
             var target = items.Item2.Take(suffixCount - 1)
-                .Aggregate(new VariableGet(new List<string> { items.Item1 }, start, end) as Expression, (result, op) => {
-                    switch (op) {
-                    case IndexGetSuffix indexGet: return new IndexGet(result, indexGet.indexSpec, start, end);
-                    case FieldGetSuffix fieldGet: return new FieldGet(result, fieldGet.fieldName, start, end);
-                    default: throw new ParseException(start, new List<string>() { "<valid suffix>" });
-                    }
-                });
-            switch (last) {
-            case IndexGetSuffix indexGet:
-                return new IndexAssign(target, indexGet.indexSpec, items.Item3, items.Item4, start, end);
-            case FieldGetSuffix fieldGet:
-                return new FieldAssign(target, fieldGet.fieldName, items.Item3, items.Item4, start, end);
-            default: throw new ParseException(start, new List<string>() { "<valid suffix>" });
-            }
+                .Aggregate(new VariableGet(new List<string> { items.Item1 }, start, end) as Expression, (result, op) => op.GetExpression(result, start, end));
+            return last.AssignExpression(target, items.Item3, items.Item4, start, end);
         });
 
         private static readonly Parser<List<(string source, string target)>> SourceTargetList = Delimited1(Alt(
@@ -300,7 +278,7 @@ namespace KontrolSystem.TO2.Parser {
         ), CommaDelimiter).Between(Char('(').Then(WhiteSpaces0), WhiteSpaces0.Then(Char(')')));
 
         private static readonly Parser<Expression> TupleDeconstructAssignment = Seq(
-            SourceTargetList, WhiteSpaces0.Then(Char('=')).Then(WhiteSpaces0).Then(Alt(BooleanExpr, IfExpr))
+            SourceTargetList, EqDelimiter.Then(Alt(BooleanExpr, IfExpr))
         ).Map((items, start, end) => new TupleDeconstructAssign(items.Item1, items.Item2, start, end));
 
         private static readonly Parser<Expression> TopLevelExpression = Alt(

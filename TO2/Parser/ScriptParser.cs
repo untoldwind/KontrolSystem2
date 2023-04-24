@@ -16,9 +16,9 @@ namespace KontrolSystem.TO2.Parser {
 
         public static readonly Parser<string> PubKeyword = Tag("pub").Then(Spacing1);
 
-        public static readonly Parser<string> LetKeyword = Tag("let");
+        public static readonly Parser<string> LetKeyword = Tag("let").Then(Spacing1);
 
-        public static readonly Parser<string> ConstKeyword = Tag("const");
+        public static readonly Parser<string> ConstKeyword = Tag("const").Then(Spacing1);
 
         public static readonly Parser<LineComment> LineComment =
             CharsExcept0("\r\n").Map((comment, start, end) => new LineComment(comment, start, end))
@@ -27,6 +27,8 @@ namespace KontrolSystem.TO2.Parser {
         public static readonly Parser<List<LineComment>> LineComments = Delimited0(LineComment, WhiteSpaces0);
 
         public static readonly Parser<char> CommaDelimiter = Char(',').Between(WhiteSpaces0, WhiteSpaces0);
+
+        public static readonly Parser<char> EqDelimiter = Char('=').Between(WhiteSpaces0, WhiteSpaces0);
 
         public static readonly Parser<string> Identifier = Recognize(
             Char(ch => char.IsLetter(ch) || ch == '_', "letter or _")
@@ -57,7 +59,7 @@ namespace KontrolSystem.TO2.Parser {
 
         private static readonly Parser<TO2Type> TypeReference = Seq(
             IdentifierPath,
-            Opt(Delimited0(TypeRef, WhiteSpaces0.Then(Char(',')).Then(WhiteSpaces0))
+            Opt(Delimited0(TypeRef, CommaDelimiter)
                     .Between(WhiteSpaces0.Then(Char('<')).Then(WhiteSpaces0), WhiteSpaces0.Then(Char('>'))))
                 .Map(o => o.IsDefined ? o.Value : new List<TO2Type>())
         ).Map((items, start, end) => BuiltinType.GetBuiltinType(items.Item1, items.Item2) ??

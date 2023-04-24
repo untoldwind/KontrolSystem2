@@ -2,7 +2,7 @@
   "name": "to2-syntax",
   "displayName": "to2-syntax",
   "description": "",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "engines": {
     "vscode": "^1.76.0"
@@ -10,23 +10,67 @@
   "categories": [
     "Programming Languages"
   ],
+  "publisher": "kontrolsystem2",
   "private": true,
   "icon": "assets/icon.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/untoldwind/KontrolSystem2"
   },
+  "main": "./client/out/extension",
   "contributes": {
-    "languages": [{
-      "id": "to2",
-      "aliases": ["TO2", "to2"],
-      "extensions": [".to2"],
-      "configuration": "./language-configuration.json"
-    }],
-    "grammars": [{
-      "language": "to2",
-      "scopeName": "source.to2",
-      "path": "./syntaxes/to2.tmLanguage.json"
-    }]
+    "configuration": {
+      "type": "object",
+      "title": "TO2 configuration",
+      "properties": {
+        "to2LspServer.maxNumberOfProblems": {
+          "scope": "resource",
+          "type": "number",
+          "default": 100,
+          "description": "Controls the maximum number of problems produced by the server."
+        },
+        "to2LspServer.trace.server": {
+          "scope": "window",
+          "type": "string",
+          "enum": [
+            "off",
+            "messages",
+            "verbose"
+          ],
+          "default": "off",
+          "description": "Traces the communication between VS Code and the language server."
+        }
+      }
+    },
+    "languages": [
+      {
+        "id": "to2",
+        "aliases": [
+          "TO2",
+          "to2"
+        ],
+        "extensions": [
+          ".to2"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "to2",
+        "scopeName": "source.to2",
+        "path": "./syntaxes/to2.tmLanguage.json"
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "tsc -b",
+    "watch": "tsc -b -w",
+    "postinstall": "(cd client && npm install) && (cd server && npm install)"
+  },
+  "devDependencies": {
+    "@types/node": "18.15.12",
+    "@vscode/vsce": "2.19.0",
+    "typescript": "^5.0.4"
   }
 }

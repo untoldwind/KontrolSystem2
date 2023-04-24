@@ -24,7 +24,7 @@ namespace KontrolSystem.TO2.Parser {
 
         private static readonly Parser<List<string>> UseNames = Alt(
             Char('*').Map(_ => (List<string>)null),
-            Delimited1(Identifier, Char(',').Between(WhiteSpaces0, WhiteSpaces0))
+            Delimited1(Identifier, CommaDelimiter)
                 .Between(Char('{').Then(WhiteSpaces0), WhiteSpaces0.Then(Char('}')))
         );
 
@@ -39,13 +39,13 @@ namespace KontrolSystem.TO2.Parser {
 
         public static readonly Parser<TypeAlias> TypeAlias = Seq(
             DescriptionComment, WhiteSpaces0.Then(Opt(PubKeyword)), TypeKeyword.Then(Identifier),
-            WhiteSpaces0.Then(Char('=')).Then(WhiteSpaces0).Then(TypeRef)
+            EqDelimiter.Then(TypeRef)
         ).Map((items, start, end) =>
             new TypeAlias(items.Item2.IsDefined, items.Item3, items.Item1, items.Item4, start, end));
 
         private static readonly Parser<StructField> StructField = Seq(
             DescriptionComment, WhiteSpaces0.Then(Identifier), TypeSpec,
-            WhiteSpaces0.Then(Char('=')).Then(WhiteSpaces0).Then(Expression)).Map((items, start, end) =>
+            EqDelimiter.Then(Expression)).Map((items, start, end) =>
             new StructField(items.Item2, items.Item3, items.Item1, items.Item4, start, end));
 
         private static readonly Parser<StructDeclaration> StructDeclaration = Seq(
@@ -58,13 +58,13 @@ namespace KontrolSystem.TO2.Parser {
                 items.Item4.IsDefined ? items.Item4.Value : new List<FunctionParameter>(), items.Item5, start, end));
 
         private static readonly Parser<ImplDeclaration> ImplDeclaration = Seq(
-            ImplKeyword.Then(Identifier), Delimited0(LineComments.Then(WhiteSpaces0).Then(MethodDeclaration), WhiteSpaces1, "methods")
+            ImplKeyword.Then(Identifier), Delimited0(Either(LineComment, MethodDeclaration), WhiteSpaces1, "methods")
                 .Between(WhiteSpaces0.Then(Char('{')), LineComments.Then(WhiteSpaces0).Then(Char('}')))
         ).Map((items, start, end) => new ImplDeclaration(items.Item1, items.Item2, start, end));
 
         private static readonly Parser<ConstDeclaration> ConstDeclaration = Seq(
             DescriptionComment, Opt(PubKeyword), Tag("const").Then(WhiteSpaces1).Then(Identifier), TypeSpec,
-            WhiteSpaces0.Then(Char('=')).Then(WhiteSpaces0).Then(Expression)
+            EqDelimiter.Then(Expression)
         ).Map((items, start, end) =>
             new ConstDeclaration(items.Item2.IsDefined, items.Item3, items.Item1, items.Item4, items.Item5,
                 start, end));

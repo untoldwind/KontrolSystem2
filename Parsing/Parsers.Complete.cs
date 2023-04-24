@@ -83,7 +83,7 @@ namespace KontrolSystem.Parsing {
         public static readonly Parser<string> Spacing1 =
             Chars1(
                 ch => ch == '\t' || System.Char.GetUnicodeCategory(ch) ==
-                    System.Globalization.UnicodeCategory.SpaceSeparator, "<space");
+                    System.Globalization.UnicodeCategory.SpaceSeparator, "<space>");
 
         /// <summary>
         /// Parse a letter.

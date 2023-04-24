@@ -1,0 +1,21 @@
+{
+	"name": "to2-lsp-client",
+	"description": "VSCode part of a language server",
+	"license": "MIT",
+	"version": "0.0.2",
+	"publisher": "kontrolsystem2",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/untoldwind/KontrolSystem2"
+	},
+	"engines": {
+		"vscode": "^1.75.0"
+	},
+	"dependencies": {
+		"vscode-languageclient": "^8.1.0"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.77.0",
+		"@vscode/test-electron": "^2.3.0"
+	}
+}
