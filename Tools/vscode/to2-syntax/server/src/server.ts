@@ -136,16 +136,30 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
   const input = new TextDocumentInput(textDocument);
   const moduleResult = module("<test>")(input);
 
-  console.log(moduleResult.remaining.position);
+  let problems = 0;
+  const diagnostics: Diagnostic[] = [];
+
+  if(!moduleResult.success) {
+    problems++;
+    const diagnostic: Diagnostic = {
+      severity: DiagnosticSeverity.Error,
+      range: {
+        start: moduleResult.remaining.position,
+        end: textDocument.positionAt(moduleResult.remaining.position.offset + moduleResult.remaining.available),
+      },
+      message: moduleResult.expected,
+      source: "parser"
+    };
+    diagnostics.push(diagnostic);
+  }
 
   // The validator creates diagnostics for all uppercase words length 2 and more
   const text = textDocument.getText();
 
+  /*
   const pattern = /\b[A-Z]{2,}\b/g;
   let m: RegExpExecArray | null;
 
-  let problems = 0;
-  const diagnostics: Diagnostic[] = [];
   while ((m = pattern.exec(text)) && problems < settings.maxNumberOfProblems) {
     problems++;
     const diagnostic: Diagnostic = {
@@ -177,6 +191,7 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
     }
     diagnostics.push(diagnostic);
   }
+  */
 
   // Send the computed diagnostics to VSCode.
   connection.sendDiagnostics({ uri: textDocument.uri, diagnostics });
