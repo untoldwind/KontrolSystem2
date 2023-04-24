@@ -1,4 +1,4 @@
-import { getCategory, isDigit, isWhiteSpace } from "unicode-properties";
+import { getCategory, isDigit, isWhiteSpace as utf8IsWhiteSpace } from "unicode-properties";
 import { Input, Parser, ParserFailure, ParserResult, ParserSuccess } from ".";
 
 export function char(
@@ -56,14 +56,13 @@ export function charsExcept1(forbidden: string): Parser<string> {
 
 const ADDITIONAL_WHITESPACE_CHARS = toCharCodes("\n\t\r\f\v");
 
-export const whitespace0 = chars0(
-  (ch) => isWhiteSpace(ch) || ADDITIONAL_WHITESPACE_CHARS.indexOf(ch) >= 0
-);
+export function isWhitespace(ch: number): boolean {
+  return utf8IsWhiteSpace(ch) || ADDITIONAL_WHITESPACE_CHARS.indexOf(ch) >= 0;
+}
 
-export const whitespace1 = chars1(
-  (ch) => isWhiteSpace(ch) || ADDITIONAL_WHITESPACE_CHARS.indexOf(ch) >= 0,
-  "<whitespace>"
-);
+export const whitespace0 = chars0(isWhitespace);
+
+export const whitespace1 = chars1(isWhitespace, "<whitespace>");
 
 export const digits0 = chars0(isDigit);
 

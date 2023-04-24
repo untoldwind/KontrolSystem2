@@ -203,7 +203,8 @@ export function delimitedUntil<T, D, E>(
   itemParser: Parser<T>,
   delimiter: Parser<D>,
   end: Parser<E>,
-  description: string
+  description: string,
+  recover?: (failure: ParserFailure<T | D>) => ParserSuccess<T>
 ): Parser<T[]> {
   return (input: Input) => {
     let remaining = input;
@@ -216,30 +217,43 @@ export function delimitedUntil<T, D, E>(
     while (remaining.available > 0) {
       const itemResult = itemParser(remaining);
 
-      if (!itemResult.success)
-        return new ParserFailure(
-          itemResult.remaining,
-          itemResult.expected,
-          result
-        );
-      if (remaining.position.offset === itemResult.remaining.position.offset)
-        return new ParserFailure(itemResult.remaining, description, result);
+      if (!itemResult.success) {
+        if (recover !== undefined) {
+          const recoverResult = recover(itemResult);
+          result.push(recoverResult.value);
+          remaining = recoverResult.remaining;
+        } else
+          return new ParserFailure(
+            itemResult.remaining,
+            itemResult.expected,
+            result
+          );
+      } else {
+        if (remaining.position.offset === itemResult.remaining.position.offset)
+          return new ParserFailure(itemResult.remaining, description, result);
 
-      result.push(itemResult.value);
-      remaining = itemResult.remaining;
+        result.push(itemResult.value);
+        remaining = itemResult.remaining;
+      }
 
       endResult = end(remaining);
       if (endResult.success)
         return new ParserSuccess(endResult.remaining, result);
 
       const delimiterResult = delimiter(remaining);
-      if (!delimiterResult.success)
-        return new ParserFailure(
-          delimiterResult.remaining,
-          delimiterResult.expected,
-          result
-        );
-      remaining = delimiterResult.remaining;
+      if (!delimiterResult.success) {
+        if (recover !== undefined) {
+          const recoverResult = recover(delimiterResult);
+          result.push(recoverResult.value);
+          remaining = recoverResult.remaining;
+        } else
+          return new ParserFailure(
+            delimiterResult.remaining,
+            delimiterResult.expected,
+            result
+          );
+      } else remaining = delimiterResult.remaining;
+
       endResult = end(remaining);
       if (endResult.success)
         return new ParserSuccess(endResult.remaining, result);

@@ -93,7 +93,7 @@ export function either<L, R>(left: Parser<L>, right: Parser<R>): Parser<L | R> {
 
 export function recover<T>(
   parser: Parser<T>,
-  onFailure: (failure: ParserFailure<T>) => ParserResult<T>
+  onFailure: (failure: ParserFailure<T>) => ParserSuccess<T>
 ): Parser<T> {
   return (input: Input) => {
     const inputResult = parser(input);

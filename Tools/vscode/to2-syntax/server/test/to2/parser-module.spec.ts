@@ -65,6 +65,6 @@ describe("TO2 parser module", () => {
       return errors;
     }, [] as ErrorNode[]);
 
-    expect(errors).toHaveLength(1);
+    expect(errors).toHaveLength(2);
   });
 });

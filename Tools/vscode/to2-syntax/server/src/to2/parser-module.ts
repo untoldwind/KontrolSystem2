@@ -1,13 +1,10 @@
-import { ParserSuccess } from "../parser";
-import { Parser, ParserFailure, ParserResult } from "../parser";
+import { Parser, ParserFailure, ParserSuccess } from "../parser";
 import { alt } from "../parser/branch";
 import {
   either,
   map,
   opt,
-  recognize,
-  recognizeAs,
-  recover,
+  recognizeAs
 } from "../parser/combinator";
 import {
   NL,
@@ -150,10 +147,11 @@ const moduleItem = alt<ModuleItem>([
 ]);
 
 const moduleItems = delimitedUntil(
-  recover(moduleItem, recoverModuleItem),
+  moduleItem,
   whitespace1,
   eof,
-  "<module item>"
+  "<module item>",
+  recoverModuleItem
 );
 
 export function module(moduleName: string): Parser<TO2Module> {
@@ -165,8 +163,8 @@ export function module(moduleName: string): Parser<TO2Module> {
 }
 
 function recoverModuleItem(
-  failure: ParserFailure<ModuleItem>
-): ParserResult<ModuleItem> {
+  failure: ParserFailure<ModuleItem | string>
+): ParserSuccess<ModuleItem> {
   const remaining = failure.remaining;
   const nextNL = remaining.findNext((ch) => ch === NL);
   const recoverAt = remaining.advance(

@@ -1,12 +1,7 @@
-import {
-  Input,
-  Parser,
-  ParserFailure,
-  ParserResult,
-  ParserSuccess,
-} from "../parser";
+import { isWhiteSpace } from "unicode-properties";
+import { Input, ParserFailure, ParserResult, ParserSuccess } from "../parser";
 import { alt } from "../parser/branch";
-import { map, opt, recognizeAs, recover } from "../parser/combinator";
+import { map, opt, recognizeAs } from "../parser/combinator";
 import {
   NL,
   spacing0,
@@ -143,35 +138,41 @@ const block = map(
   preceded(
     terminated(tag("{"), whitespace0),
     delimitedUntil(
-      recover(
-        alt([
-          expression,
-          lineComment,
-          variableDeclaration,
-          returnExpression,
-          whileExpression,
-          breakExpression,
-          continueExpression,
-        ]),
-        recoverBlockItem
-      ),
+      alt([
+        expression,
+        lineComment,
+        variableDeclaration,
+        returnExpression,
+        whileExpression,
+        breakExpression,
+        continueExpression,
+      ]),
       whitespace1,
       tag("}"),
-      "<block item>"
+      "<block item>",
+      recoverBlockItem
     )
   ),
   (items, start, end) => new Block(items, start, end)
 );
 
+const CURLY_CLOSE = "}".codePointAt(0);
+
 function recoverBlockItem(
-  failure: ParserFailure<BlockItem>
-): ParserResult<BlockItem> {
-  console.log("Rec")
+  failure: ParserFailure<BlockItem | string>
+): ParserSuccess<BlockItem> {
   const remaining = failure.remaining;
-  const nextNL = remaining.findNext((ch) => ch === NL);
+  const nextWhiteSpace = remaining.findNext((ch) => isWhiteSpace(ch) || ch === CURLY_CLOSE);
   const recoverAt = remaining.advance(
-    nextNL >= 0 ? nextNL : remaining.available
+    nextWhiteSpace >= 0 ? nextWhiteSpace : remaining.available
   );
+  const whiteSpaceResult = whitespace1(recoverAt);
+  if(whiteSpaceResult.success) {
+    return new ParserSuccess(
+      whiteSpaceResult.remaining,
+      new ErrorNode(failure.expected, remaining.position, whiteSpaceResult.remaining.position)
+    );  
+  }
 
   return new ParserSuccess(
     recoverAt,
