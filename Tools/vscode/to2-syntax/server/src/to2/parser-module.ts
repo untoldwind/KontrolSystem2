@@ -1,11 +1,6 @@
 import { Parser, ParserFailure, ParserSuccess } from "../parser";
 import { alt } from "../parser/branch";
-import {
-  either,
-  map,
-  opt,
-  recognizeAs
-} from "../parser/combinator";
+import { either, map, opt, recognizeAs } from "../parser/combinator";
 import {
   NL,
   eof,
@@ -17,6 +12,7 @@ import {
 import { delimited0, delimited1, delimitedUntil } from "../parser/multi";
 import { between, preceded, seq, terminated } from "../parser/sequence";
 import { ModuleItem } from "./ast";
+import { ConstDeclaration } from "./ast/const-declaration";
 import { ErrorNode } from "./ast/error-node";
 import { ImplDeclaration } from "./ast/impl-declaration";
 import { StructDeclaration, StructField } from "./ast/struct-declaration";
@@ -52,6 +48,8 @@ const implKeyword = terminated(tag("impl"), spacing1);
 const fromKeyword = between(spacing1, tag("from"), spacing1);
 
 const asKeyword = between(spacing1, tag("as"), spacing1);
+
+const constKeyword = terminated(tag("const"), spacing1);
 
 const useNames = alt([
   recognizeAs(tag("*"), undefined),
@@ -137,6 +135,26 @@ const implDeclaration = map(
     new ImplDeclaration(name, methods, start, end)
 );
 
+const constDeclaration = map(
+  seq([
+    descriptionComment,
+    opt(pubKeyword),
+    preceded(constKeyword, identifier),
+    typeSpec,
+    preceded(eqDelimiter, expression),
+  ]),
+  ([description, pub, name, type, expression], start, end) =>
+    new ConstDeclaration(
+      pub !== undefined,
+      name,
+      description,
+      type,
+      expression,
+      start,
+      end
+    )
+);
+
 const moduleItem = alt<ModuleItem>([
   useNamesDeclaration,
   useAliasDeclaration,
@@ -144,6 +162,8 @@ const moduleItem = alt<ModuleItem>([
   typeAlias,
   structDeclaration,
   implDeclaration,
+  constDeclaration,
+  lineComment,
 ]);
 
 const moduleItems = delimitedUntil(

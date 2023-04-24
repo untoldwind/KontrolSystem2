@@ -1,4 +1,6 @@
-import { isDigit } from "unicode-properties";
+import { isAlphabetic, isDigit } from "unicode-properties";
+import { Input, ParserResult } from "../parser";
+import { alt } from "../parser/branch";
 import { map, opt, recognize, recognizeAs, where } from "../parser/combinator";
 import {
   char,
@@ -9,16 +11,21 @@ import {
   tag,
   whitespace0,
 } from "../parser/complete";
+import {
+  delimited0,
+  delimited1,
+  delimitedM_N,
+  delimitedUntil,
+  many0,
+} from "../parser/multi";
 import { between, preceded, seq, terminated } from "../parser/sequence";
-import { isAlphabetic } from "unicode-properties";
-import { delimited0, delimited1, delimitedUntil, many0 } from "../parser/multi";
+import { FunctionType } from "./ast/function-type";
 import { LineComment } from "./ast/line-comment";
-import { Input, ParserResult } from "../parser";
+import { RecordType } from "./ast/record-type";
 import { TO2Type, getBuiltinType } from "./ast/to2-type";
-import { alt } from "../parser/branch";
+import { TupleType } from "./ast/tuple-type";
 import { LookupTypeReference } from "./ast/type-reference";
 import { DeclarationParameter } from "./ast/variable-declaration";
-import { FunctionType } from "./ast/function-type";
 
 const RESERVED_KEYWORDS = new Set<string>([
   "pub",
@@ -105,6 +112,37 @@ const functionType = map(
     new FunctionType(false, parameterTypes, returnType)
 );
 
+const tupleType = map(
+  between(
+    terminated(tag("("), whitespace0),
+    delimitedM_N(
+      2,
+      undefined,
+      preceded(opt(terminated(lineComment, whitespace0)), typeRef),
+      commaDelimiter,
+      "<type>"
+    ),
+    preceded(whitespace0, tag(")"))
+  ),
+  (items) => new TupleType(items)
+);
+
+const recordType = map(
+  between(
+    terminated(tag("("), whitespace0),
+    delimited1(
+      preceded(
+        opt(terminated(lineComment, whitespace0)),
+        seq([identifier, typeRef])
+      ),
+      commaDelimiter,
+      "<identifier : type>"
+    ),
+    preceded(whitespace0, tag(")"))
+  ),
+  (items) => new RecordType(items)
+);
+
 const typeReference = map(
   seq([
     identifierPath,
@@ -121,7 +159,12 @@ const typeReference = map(
     new LookupTypeReference(name, typeArguments ?? [], start, end)
 );
 
-const topLevelTypeRef = alt([functionType, typeReference]);
+const topLevelTypeRef = alt([
+  functionType,
+  typeReference,
+  tupleType,
+  recordType,
+]);
 
 export function typeRef(input: Input): ParserResult<TO2Type> {
   return topLevelTypeRef(input);

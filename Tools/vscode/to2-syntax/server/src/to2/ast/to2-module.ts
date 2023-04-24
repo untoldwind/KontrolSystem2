@@ -9,7 +9,6 @@ export class TO2Module implements Node {
     public readonly start: InputPosition,
     public readonly end: InputPosition
   ) {}
-  isError?: boolean | undefined;
 
   reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,

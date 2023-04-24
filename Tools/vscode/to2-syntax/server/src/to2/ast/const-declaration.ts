@@ -1,13 +1,13 @@
-import { Expression, Node } from ".";
-import { TO2Type } from "./to2-type";
+import { Expression, ModuleItem, Node } from ".";
 import { InputPosition } from "../../parser";
+import { TO2Type } from "./to2-type";
 
-export class MethodDeclaration implements Node {
+export class ConstDeclaration implements Node, ModuleItem {
   constructor(
-    public readonly isAsync: boolean,
+    public readonly isPublic: boolean,
     public readonly name: string,
     public readonly description: string,
-    public readonly declaredReturn: TO2Type,
+    public readonly type: TO2Type,
     public readonly expression: Expression,
     public readonly start: InputPosition,
     public readonly end: InputPosition

@@ -16,7 +16,6 @@ export class FunctionParameter implements Node {
     public readonly start: InputPosition,
     public readonly end: InputPosition
   ) {}
-  isError?: boolean | undefined;
 
   reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
@@ -40,7 +39,6 @@ export class FunctionDeclaration implements Node, ModuleItem {
     public readonly start: InputPosition,
     public readonly end: InputPosition
   ) {}
-  isError?: boolean | undefined;
 
   reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
@@ -48,7 +46,10 @@ export class FunctionDeclaration implements Node, ModuleItem {
   ): T {
     return this.expression.reduceNode(
       combine,
-      this.parameters.reduce((prev, param) => param.reduceNode(combine, prev), combine(initialValue, this))
+      this.parameters.reduce(
+        (prev, param) => param.reduceNode(combine, prev),
+        combine(initialValue, this)
+      )
     );
   }
 }
