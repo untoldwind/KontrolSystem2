@@ -28,7 +28,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
             get => vector;
             set {
                 vector = value.normalized;
-                rotation = QuaternionD.LookRotation(value);
+                rotation = RotationFromVector(value);
                 euler = rotation.eulerAngles;
             }
         }
@@ -150,5 +150,11 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
 
         public override string ToString() =>
             $"R({Math.Round(euler.x, 3)},{Math.Round(euler.y, 3)},{Math.Round(euler.z, 3)})";
+        
+        private static QuaternionD RotationFromVector(Vector3d vector) {
+            if(Math.Abs(Vector3d.Dot(vector, Vector3d.up)) > 0.99)
+                return QuaternionD.LookRotation(vector, Vector3d.right);
+            return QuaternionD.LookRotation(vector, Vector3d.up);
+        }
     }
 }

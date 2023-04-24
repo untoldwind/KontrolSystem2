@@ -1,5 +1,9 @@
 # Changes
 
+## 0.3.4 ->
+
+* Ensure that `Vec3.to_direction()` and `GlobalVector.to_direction()` also work for "Up" 
+
 ## 0.3.3.3 -> 0.3.4
 
 * Fix `vessel.global_facing` for space plane
