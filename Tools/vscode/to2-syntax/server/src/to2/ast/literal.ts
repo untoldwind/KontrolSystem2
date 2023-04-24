@@ -1,4 +1,4 @@
-import { Expression } from ".";
+import { Expression, Node } from ".";
 import {
   BUILTIN_BOOL,
   BUILTIN_FLOAT,
@@ -20,6 +20,13 @@ export class LiteralBool extends Expression {
   resultType(): TO2Type {
     return BUILTIN_BOOL;
   }
+
+  public reduceNode<T>(
+    combine: (previousValue: T, node: Node) => T,
+    initialValue: T
+  ): T {
+    return combine(initialValue, this);
+  }
 }
 
 export class LiteralInt extends Expression {
@@ -33,6 +40,13 @@ export class LiteralInt extends Expression {
 
   resultType(): TO2Type {
     return BUILTIN_INT;
+  }
+
+  public reduceNode<T>(
+    combine: (previousValue: T, node: Node) => T,
+    initialValue: T
+  ): T {
+    return combine(initialValue, this);
   }
 }
 
@@ -48,6 +62,13 @@ export class LiteralFloat extends Expression {
   resultType(): TO2Type {
     return BUILTIN_FLOAT;
   }
+
+  public reduceNode<T>(
+    combine: (previousValue: T, node: Node) => T,
+    initialValue: T
+  ): T {
+    return combine(initialValue, this);
+  }
 }
 
 export class LiteralString extends Expression {
@@ -61,5 +82,12 @@ export class LiteralString extends Expression {
 
   resultType(): TO2Type {
     return BUILTIN_STRING;
+  }
+
+  public reduceNode<T>(
+    combine: (previousValue: T, node: Node) => T,
+    initialValue: T
+  ): T {
+    return combine(initialValue, this);
   }
 }

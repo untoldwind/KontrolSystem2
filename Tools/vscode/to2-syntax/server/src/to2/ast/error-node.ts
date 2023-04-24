@@ -1,12 +1,13 @@
-import { BlockItem, Node } from ".";
-import { BUILTIN_UNIT, TO2Type } from "./to2-type";
+import { BlockItem, ModuleItem, Node } from ".";
 import { InputPosition } from "../../parser";
+import { BUILTIN_UNIT, TO2Type } from "./to2-type";
 
-export class LineComment implements Node, BlockItem {
+export class ErrorNode implements Node, ModuleItem, BlockItem {
+  public isError: boolean = true;
   public isComment: boolean = true;
 
   constructor(
-    public readonly comment: string,
+    public readonly message: string,
     public readonly start: InputPosition,
     public readonly end: InputPosition
   ) {}
@@ -21,4 +22,8 @@ export class LineComment implements Node, BlockItem {
   ): T {
     return combine(initialValue, this);
   }
+}
+
+export function isErrorNode(node: Node): node is ErrorNode {
+  return node.isError === true;
 }

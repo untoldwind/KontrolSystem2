@@ -15,6 +15,8 @@ import {
 } from "vscode-languageserver/node";
 import { module } from "./to2/parser-module";
 import { TextDocumentInput } from "./parser/text-document-input";
+import { isErrorNode } from "./to2/ast/error-node";
+import { error } from "console";
 
 const connection = createConnection(ProposedFeatures.all);
 
@@ -136,21 +138,41 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
   const input = new TextDocumentInput(textDocument);
   const moduleResult = module("<test>")(input);
 
-  let problems = 0;
   const diagnostics: Diagnostic[] = [];
 
-  if(!moduleResult.success) {
-    problems++;
+  if (!moduleResult.success) {
     const diagnostic: Diagnostic = {
       severity: DiagnosticSeverity.Error,
       range: {
         start: moduleResult.remaining.position,
-        end: textDocument.positionAt(moduleResult.remaining.position.offset + moduleResult.remaining.available),
+        end: textDocument.positionAt(
+          moduleResult.remaining.position.offset +
+            moduleResult.remaining.available
+        ),
       },
       message: moduleResult.expected,
-      source: "parser"
+      source: "parser",
     };
     diagnostics.push(diagnostic);
+  } else {
+    moduleResult.value.reduceNode((diagnostics, node) => {
+      if (
+        isErrorNode(node) &&
+        diagnostics.length < settings.maxNumberOfProblems
+      ) {
+        const diagnostic: Diagnostic = {
+          severity: DiagnosticSeverity.Error,
+          range: {
+            start: node.start,
+            end: node.end,
+          },
+          message: node.message,
+          source: "parser",
+        };
+        diagnostics.push(diagnostic);
+      }
+      return diagnostics;
+    }, diagnostics);
   }
 
   // The validator creates diagnostics for all uppercase words length 2 and more

@@ -1,4 +1,11 @@
-import { Input, InputPosition, Parser, ParserFailure, ParserSuccess } from ".";
+import {
+  Input,
+  InputPosition,
+  Parser,
+  ParserFailure,
+  ParserResult,
+  ParserSuccess,
+} from ".";
 
 export function value<T>(value: T): Parser<T> {
   return (input: Input) => new ParserSuccess<T>(input, value);
@@ -81,5 +88,16 @@ export function either<L, R>(left: Parser<L>, right: Parser<R>): Parser<L | R> {
     if (leftResult.success) return leftResult;
 
     return right(input);
+  };
+}
+
+export function recover<T>(
+  parser: Parser<T>,
+  onFailure: (failure: ParserFailure<T>) => ParserResult<T>
+): Parser<T> {
+  return (input: Input) => {
+    const inputResult = parser(input);
+    if (inputResult.success) return inputResult;
+    return onFailure(inputResult);
   };
 }

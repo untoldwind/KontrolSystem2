@@ -69,7 +69,9 @@ export const digits0 = chars0(isDigit);
 
 export const digits1 = chars1(isDigit, "<digit>");
 
-const TAB = "\t".charCodeAt(0);
+export const NL = "\n".charCodeAt(0);
+
+export const TAB = "\t".charCodeAt(0);
 
 export const spacing0 = chars0((ch) => ch === TAB || getCategory(ch) === "Zs");
 
@@ -100,7 +102,7 @@ export function eof(input: Input): ParserResult<void> {
   return new ParserSuccess(input, undefined);
 }
 
-function toCharCodes(chars: string): number[] {
+export function toCharCodes(chars: string): number[] {
   const result = new Array<number>(chars.length);
   for (let i = 0; i < chars.length; i++) {
     result[i] = chars.charCodeAt(i);

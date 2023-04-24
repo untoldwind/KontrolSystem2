@@ -71,7 +71,11 @@ export const identifier = where(
   "Not a keyword"
 );
 
-export const identifierPath = delimited1(identifier, tag("::"), "<identifier path>");
+export const identifierPath = delimited1(
+  identifier,
+  tag("::"),
+  "<identifier path>"
+);
 
 export const commaDelimiter = between(whitespace0, tag(","), whitespace0);
 

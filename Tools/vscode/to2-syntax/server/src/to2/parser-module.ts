@@ -1,7 +1,16 @@
-import { Parser } from "../parser";
+import { ParserSuccess } from "../parser";
+import { Parser, ParserFailure, ParserResult } from "../parser";
 import { alt } from "../parser/branch";
-import { either, map, opt, recognize, recognizeAs } from "../parser/combinator";
 import {
+  either,
+  map,
+  opt,
+  recognize,
+  recognizeAs,
+  recover,
+} from "../parser/combinator";
+import {
+  NL,
   eof,
   spacing1,
   tag,
@@ -11,7 +20,7 @@ import {
 import { delimited0, delimited1, delimitedUntil } from "../parser/multi";
 import { between, preceded, seq, terminated } from "../parser/sequence";
 import { ModuleItem } from "./ast";
-import { FunctionParameter } from "./ast/function-declaration";
+import { ErrorNode } from "./ast/error-node";
 import { ImplDeclaration } from "./ast/impl-declaration";
 import { StructDeclaration, StructField } from "./ast/struct-declaration";
 import { TO2Module } from "./ast/to2-module";
@@ -141,7 +150,7 @@ const moduleItem = alt<ModuleItem>([
 ]);
 
 const moduleItems = delimitedUntil(
-  moduleItem,
+  recover(moduleItem, recoverModuleItem),
   whitespace1,
   eof,
   "<module item>"
@@ -150,6 +159,22 @@ const moduleItems = delimitedUntil(
 export function module(moduleName: string): Parser<TO2Module> {
   return map(
     seq([preceded(whitespace0, descriptionComment), moduleItems]),
-    ([description, items]) => new TO2Module(moduleName, description, items)
+    ([description, items], start, end) =>
+      new TO2Module(moduleName, description, items, start, end)
+  );
+}
+
+function recoverModuleItem(
+  failure: ParserFailure<ModuleItem>
+): ParserResult<ModuleItem> {
+  const remaining = failure.remaining;
+  const nextNL = remaining.findNext((ch) => ch === NL);
+  const recoverAt = remaining.advance(
+    nextNL >= 0 ? nextNL : remaining.available
+  );
+
+  return new ParserSuccess(
+    recoverAt,
+    new ErrorNode(failure.expected, remaining.position, recoverAt.position)
   );
 }

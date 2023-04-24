@@ -1,7 +1,19 @@
-import { Input, Parser, ParserResult } from "../parser";
+import {
+  Input,
+  Parser,
+  ParserFailure,
+  ParserResult,
+  ParserSuccess,
+} from "../parser";
 import { alt } from "../parser/branch";
-import { map, opt, recognizeAs } from "../parser/combinator";
-import { spacing0, tag, whitespace0, whitespace1 } from "../parser/complete";
+import { map, opt, recognizeAs, recover } from "../parser/combinator";
+import {
+  NL,
+  spacing0,
+  tag,
+  whitespace0,
+  whitespace1,
+} from "../parser/complete";
 import {
   chain,
   delimited0,
@@ -12,13 +24,14 @@ import {
   many0,
 } from "../parser/multi";
 import { between, preceded, seq, terminated } from "../parser/sequence";
-import { Expression } from "./ast";
+import { BlockItem, Expression } from "./ast";
 import { ArrayCreate } from "./ast/array-create";
 import { Binary } from "./ast/binary";
 import { BinaryBool } from "./ast/binary-bool";
 import { Block } from "./ast/block";
 import { Break, Continue } from "./ast/break-continue";
 import { Call } from "./ast/call";
+import { ErrorNode } from "./ast/error-node";
 import { FunctionParameter } from "./ast/function-declaration";
 import { IfThen, IfThenElse } from "./ast/if-then";
 import { IndexSpec } from "./ast/index-spec";
@@ -130,15 +143,18 @@ const block = map(
   preceded(
     terminated(tag("{"), whitespace0),
     delimitedUntil(
-      alt([
-        expression,
-        lineComment,
-        variableDeclaration,
-        returnExpression,
-        whileExpression,
-        breakExpression,
-        continueExpression,
-      ]),
+      recover(
+        alt([
+          expression,
+          lineComment,
+          variableDeclaration,
+          returnExpression,
+          whileExpression,
+          breakExpression,
+          continueExpression,
+        ]),
+        recoverBlockItem
+      ),
       whitespace1,
       tag("}"),
       "<block item>"
@@ -146,6 +162,22 @@ const block = map(
   ),
   (items, start, end) => new Block(items, start, end)
 );
+
+function recoverBlockItem(
+  failure: ParserFailure<BlockItem>
+): ParserResult<BlockItem> {
+  console.log("Rec")
+  const remaining = failure.remaining;
+  const nextNL = remaining.findNext((ch) => ch === NL);
+  const recoverAt = remaining.advance(
+    nextNL >= 0 ? nextNL : remaining.available
+  );
+
+  return new ParserSuccess(
+    recoverAt,
+    new ErrorNode(failure.expected, remaining.position, recoverAt.position)
+  );
+}
 
 const callArguments = preceded(
   terminated(tag("("), whitespace0),

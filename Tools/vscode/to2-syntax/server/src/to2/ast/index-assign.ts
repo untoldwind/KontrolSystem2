@@ -1,4 +1,4 @@
-import { Expression } from ".";
+import { Expression, Node } from ".";
 import { IndexSpec } from "./index-spec";
 import { BUILTIN_UNIT, TO2Type } from "./to2-type";
 import { Operator } from "./operator";
@@ -18,5 +18,18 @@ export class IndexAssign extends Expression {
 
   public resultType(): TO2Type {
     return BUILTIN_UNIT;
+  }
+
+  public reduceNode<T>(
+    combine: (previousValue: T, node: Node) => T,
+    initialValue: T
+  ): T {
+    return this.expression.reduceNode(
+      combine,
+      this.indexSpec.reduceNode(
+        combine,
+        this.target.reduceNode(combine, combine(initialValue, this))
+      )
+    );
   }
 }

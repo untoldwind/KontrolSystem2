@@ -16,6 +16,16 @@ export class FunctionParameter implements Node {
     public readonly start: InputPosition,
     public readonly end: InputPosition
   ) {}
+  isError?: boolean | undefined;
+
+  reduceNode<T>(
+    combine: (previousValue: T, node: Node) => T,
+    initialValue: T
+  ): T {
+    if (this.defaultValue)
+      return this.defaultValue.reduceNode(combine, combine(initialValue, this));
+    return combine(initialValue, this);
+  }
 }
 
 export class FunctionDeclaration implements Node, ModuleItem {
@@ -30,4 +40,15 @@ export class FunctionDeclaration implements Node, ModuleItem {
     public readonly start: InputPosition,
     public readonly end: InputPosition
   ) {}
+  isError?: boolean | undefined;
+
+  reduceNode<T>(
+    combine: (previousValue: T, node: Node) => T,
+    initialValue: T
+  ): T {
+    return this.expression.reduceNode(
+      combine,
+      this.parameters.reduce((prev, param) => param.reduceNode(combine, prev), combine(initialValue, this))
+    );
+  }
 }

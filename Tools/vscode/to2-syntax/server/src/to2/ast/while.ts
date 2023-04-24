@@ -1,4 +1,4 @@
-import { Expression } from ".";
+import { Expression, Node } from ".";
 import { BUILTIN_UNIT, TO2Type } from "./to2-type";
 import { InputPosition } from "../../parser";
 
@@ -14,5 +14,15 @@ export class While extends Expression {
 
   public resultType(): TO2Type {
     return BUILTIN_UNIT;
+  }
+
+  public reduceNode<T>(
+    combine: (previousValue: T, node: Node) => T,
+    initialValue: T
+  ): T {
+    return this.loopExpression.reduceNode(
+      combine,
+      this.condition.reduceNode(combine, combine(initialValue, this))
+    );
   }
 }

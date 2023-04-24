@@ -17,4 +17,11 @@ export class LookupTypeReference implements Node, TO2Type {
     this.description = "";
     this.localName = namePath.join("::");
   }
+
+  public reduceNode<T>(
+    combine: (previousValue: T, node: Node) => T,
+    initialValue: T
+  ): T {
+    return combine(initialValue, this);
+  }
 }

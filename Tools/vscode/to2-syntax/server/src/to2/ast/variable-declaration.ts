@@ -20,7 +20,15 @@ export class VariableDeclaration implements Node, BlockItem {
     public readonly start: InputPosition,
     public readonly end: InputPosition
   ) {}
+
   resultType(): TO2Type {
     return this.expression.resultType();
+  }
+
+  public reduceNode<T>(
+    combine: (previousValue: T, node: Node) => T,
+    initialValue: T
+  ): T {
+    return this.expression.reduceNode(combine, combine(initialValue, this));
   }
 }

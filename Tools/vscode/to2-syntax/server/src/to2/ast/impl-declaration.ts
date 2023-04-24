@@ -10,4 +10,14 @@ export class ImplDeclaration implements Node {
     public readonly start: InputPosition,
     public readonly end: InputPosition
   ) {}
+
+  reduceNode<T>(
+    combine: (previousValue: T, node: Node) => T,
+    initialValue: T
+  ): T {
+    return this.methods.reduce(
+      (prev, method) => method.reduceNode(combine, prev),
+      combine(initialValue, this)
+    );
+  }
 }

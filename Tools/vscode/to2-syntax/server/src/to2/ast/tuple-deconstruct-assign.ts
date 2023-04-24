@@ -19,4 +19,11 @@ export class TupleDeconstructAssign implements Node, BlockItem {
   resultType(): TO2Type {
     return this.expression.resultType();
   }
+
+  public reduceNode<T>(
+    combine: (previousValue: T, node: Node) => T,
+    initialValue: T
+  ): T {
+    return this.expression.reduceNode(combine, combine(initialValue, this));
+  }
 }

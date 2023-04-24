@@ -9,4 +9,11 @@ export class UseDeclaration implements Node, ModuleItem {
     public readonly start: InputPosition,
     public readonly end: InputPosition
   ) {}
+
+  public reduceNode<T>(
+    combine: (previousValue: T, node: Node) => T,
+    initialValue: T
+  ): T {
+    return combine(initialValue, this);
+  }
 }
