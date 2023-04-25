@@ -4,14 +4,11 @@ using BepInEx;
 using BepInEx.Bootstrap;
 using BepInEx.Configuration;
 using KontrolSystem.KSP.Runtime;
-<<<<<<< HEAD
 using KontrolSystem.KSP.Runtime.KSPAddons;
-=======
->>>>>>> 3fe35a0 (Add scroll assets)
 using KontrolSystem.KSP.Runtime.KSPUI;
+using KontrolSystem.KSP.Runtime.KSPUI.UGUI;
 using KontrolSystem.TO2.Runtime;
 using SpaceWarp.API.Assets;
-using TMPro;
 using UnityEngine;
 
 namespace KontrolSystem.SpaceWarpMod {

@@ -1,4 +1,5 @@
-﻿using KontrolSystem.TO2.Binding;
+﻿using KontrolSystem.KSP.Runtime.KSPUI.UGUI;
+using KontrolSystem.TO2.Binding;
 
 namespace KontrolSystem.KSP.Runtime.KSPUI {
     public partial class KSPUIModule {

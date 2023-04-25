@@ -1,8 +1,8 @@
-using System;
+﻿using System;
 using TMPro;
 using UnityEngine;
 
-namespace Experiments {
+namespace KontrolSystem.KSP.Runtime.KSPUI {
     public class GLUIDrawer {
         private static Material colored;
         private static TMP_FontAsset textFont;
@@ -38,7 +38,7 @@ namespace Experiments {
         public interface IGLUIDrawable {
             void OnDraw(GLUIDraw draw);
         }
-        
+
         public class GLUIDraw : IDisposable {
             private readonly int width;
             private readonly int height;
@@ -52,7 +52,7 @@ namespace Experiments {
                 GL.Clear(false, true, Color.black);
                 GL.PushMatrix();
                 GL.LoadPixelMatrix(0, width, height, 0);
-                currentTransform = Matrix4x4.Translate(new Vector3(0, height)) * Matrix4x4.Scale(new Vector3(1, -1)); 
+                currentTransform = Matrix4x4.Translate(new Vector3(0, height)) * Matrix4x4.Scale(new Vector3(1, -1));
                 GL.MultMatrix(currentTransform);
             }
 
@@ -64,12 +64,12 @@ namespace Experiments {
                 get => currentTransform;
                 set => currentTransform = value;
             }
-            
+
             public void Draw(IGLUIDrawable drawable) {
                 colored.SetPass(0);
                 drawable.OnDraw(this);
             }
-            
+
             public void Polyline(Vector2[] points, Color color, bool closed = false) {
                 colored.SetPass(0);
                 GL.Begin(GL.LINE_STRIP);
@@ -97,7 +97,7 @@ namespace Experiments {
 
             public void ConvexPolygon(Vector2[] points, Color color) {
                 if (points.Length < 3) return;
-                
+
                 colored.SetPass(0);
                 GL.Begin(GL.TRIANGLE_STRIP);
                 GL.Color(color);

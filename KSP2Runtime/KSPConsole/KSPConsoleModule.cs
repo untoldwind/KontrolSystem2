@@ -32,7 +32,7 @@ namespace KontrolSystem.KSP.Runtime.KSPConsole {
         [KSFunction(
             Description = "Create a new color from `red`, `green`, `blue` and `alpha` (0.0 - 1.0)."
         )]
-        public static RgbaColor Color(double red, double green, double blue, double alpha) =>
+        public static RgbaColor Color(double red, double green, double blue, double alpha = 1.0) =>
             new RgbaColor(red, green, blue, alpha);
     }
 }

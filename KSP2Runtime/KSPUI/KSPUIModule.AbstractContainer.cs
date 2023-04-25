@@ -1,4 +1,5 @@
 ﻿using System;
+using KontrolSystem.KSP.Runtime.KSPUI.UGUI;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
 
@@ -87,6 +88,13 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
                 var element = layout.Add(UGUISlider.CreateHorizontal(), align, (float)stretch);
                 Root.Layout();
                 return new Slider(this, element, min, max);
+            }
+
+            [KSMethod]
+            public Canvas AddCanvas(double minWidth, double minHeight, UGUILayout.Align align = UGUILayout.Align.Stretch, double stretch = 0) {
+                var element = layout.Add(UGUICanvas.Create((float)minWidth, (float)minHeight), align, (float)stretch);
+                Root.Layout();
+                return new Canvas(this, element);
             }
         }
     }

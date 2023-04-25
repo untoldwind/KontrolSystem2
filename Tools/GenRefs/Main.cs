@@ -267,7 +267,7 @@ namespace KontrolSystem.GenRefs {
             Description = constant.Description;
             Type = new TypeRef(moduleContext, constant.Type);
         }
-
+        
         [JsonProperty("name")] public string Name { get; }
 
         [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)] public string Description { get; }

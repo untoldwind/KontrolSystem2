@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using KontrolSystem.KSP.Runtime.KSPUI.UGUI;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
 using TMPro;

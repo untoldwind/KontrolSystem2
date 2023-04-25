@@ -1,6 +1,6 @@
 ﻿using BepInEx;
 using KontrolSystem.KSP.Runtime.Core;
-using KontrolSystem.KSP.Runtime.KSPUI;
+using KontrolSystem.KSP.Runtime.KSPUI.Builtin;
 using KSP.Game;
 using KSP.UI.Binding;
 using SpaceWarp;

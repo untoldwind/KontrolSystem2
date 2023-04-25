@@ -27,6 +27,8 @@ namespace Experiments {
         }
 
         public void OnDraw(GLUIDrawer.GLUIDraw draw) {
+            if (triangles.Length < 3) return;
+            
             GL.Begin(GL.TRIANGLES);
             GL.Color(Color);
             for (int i = 0; i < triangles.Length; i++) {

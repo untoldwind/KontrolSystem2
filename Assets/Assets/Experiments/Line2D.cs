@@ -45,6 +45,8 @@ namespace Experiments {
         }
 
         public void OnDraw(GLUIDrawer.GLUIDraw draw) {
+            if (triangleStrip.Length < 3) return;
+            
             GL.Begin(GL.TRIANGLE_STRIP);
             GL.Color(Color);
             for (int i = 0; i < triangleStrip.Length; i++) {

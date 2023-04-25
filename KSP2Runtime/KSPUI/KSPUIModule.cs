@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using KontrolSystem.KSP.Runtime.KSPUI.Builtin;
+using KontrolSystem.KSP.Runtime.KSPUI.UGUI;
 using KontrolSystem.TO2;
 using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Binding;
