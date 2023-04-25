@@ -13,15 +13,51 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             public void Clear() => RemoveAllElements();
 
             [KSMethod]
-            public Line2D AddLine(Vector2d[] points, KSPConsoleModule.RgbaColor color, bool closed = false, double thickness = 2.0) {
-                var element = new Line2D(color, thickness, closed, points);
+            public Line2D AddLine(Vector2d[] points, KSPConsoleModule.RgbaColor strokeColor, bool closed = false, double thickness = 2.0) {
+                var element = new Line2D(strokeColor, thickness, closed, points);
                 AddElement(element);
                 return element;
             }
 
             [KSMethod]
-            public Polygon2D AddPolygon(Vector2d[] points, KSPConsoleModule.RgbaColor color) {
-                var element = new Polygon2D(color, points);
+            public PixelLine2D AddPixelLine(Vector2d[] points, KSPConsoleModule.RgbaColor strokeColor, bool closed = false) {
+                var element = new PixelLine2D(strokeColor, closed, points);
+                AddElement(element);
+                return element;
+            }
+
+            [KSMethod]
+            public Polygon2D AddPolygon(Vector2d[] points, KSPConsoleModule.RgbaColor fillColor) {
+                var element = new Polygon2D(fillColor, points);
+                AddElement(element);
+                return element;
+            }
+
+            [KSMethod]
+            public Text2D AddText(Vector2d position, string text, double fontSize, KSPConsoleModule.RgbaColor color,
+                double degrees = 0.0, Vector2d pivot = default) {
+                var element = new Text2D(position, text, fontSize, pivot, degrees, color);
+                AddElement(element);
+                return element;
+            }
+
+            [KSMethod]
+            public Translate2D AddTranslate(Vector2d translate) {
+                var element = new Translate2D(translate);
+                AddElement(element);
+                return element;
+            }
+
+            [KSMethod]
+            public Scale2D AddScale(Vector2d scale) {
+                var element = new Scale2D(scale);
+                AddElement(element);
+                return element;
+            }
+
+            [KSMethod]
+            public Rotate2D AddRotate(double degrees) {
+                var element = new Rotate2D(degrees);
                 AddElement(element);
                 return element;
             }

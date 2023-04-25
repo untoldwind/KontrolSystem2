@@ -13,13 +13,13 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             private Vector2d[] points;
             private Vector2d[] triangles;
 
-            public Polygon2D(KSPConsoleModule.RgbaColor color, Vector2d[] points) {
-                Color = color;
+            public Polygon2D(KSPConsoleModule.RgbaColor fillColor, Vector2d[] points) {
+                FillColor = fillColor;
                 this.points = points;
                 Triangulate();
             }
 
-            [KSField] public KSPConsoleModule.RgbaColor Color { get; set; }
+            [KSField] public KSPConsoleModule.RgbaColor FillColor { get; set; }
 
             [KSField]
             public Vector2d[] Points {
@@ -34,7 +34,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
                 if (triangles.Length < 3) return;
 
                 GL.Begin(GL.TRIANGLES);
-                GL.Color(Color.Color);
+                GL.Color(FillColor.Color);
                 for (int i = 0; i < triangles.Length; i++) {
                     GL.Vertex3((float)triangles[i].x, (float)triangles[i].y, 0);
                 }

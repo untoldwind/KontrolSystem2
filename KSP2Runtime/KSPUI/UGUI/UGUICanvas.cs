@@ -15,6 +15,10 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI {
 
         public void Clear() => drawer.Clear();
 
+        public int Width => drawer.Width;
+
+        public int Height => drawer.Height;
+
         public static UGUICanvas Create(float minWidth, float minHeight) {
             return new UGUICanvas(new GameObject("Canvas", typeof(RawImage), typeof(UGUICanvasDrawer)), minWidth, minHeight);
         }

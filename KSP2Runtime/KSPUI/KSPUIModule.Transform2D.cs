@@ -79,8 +79,8 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             }
 
             private static Matrix4x4 MakeTransform(Vector2d scale, Vector2d pivot) =>
-                Matrix4x4.Translate(new Vector3((float)pivot.x, (float)pivot.y)) * 
-                Matrix4x4.Scale(new Vector3((float)scale.x, (float)scale.y)) * 
+                Matrix4x4.Translate(new Vector3((float)pivot.x, (float)pivot.y)) *
+                Matrix4x4.Scale(new Vector3((float)scale.x, (float)scale.y)) *
                 Matrix4x4.Translate(new Vector3(-(float)pivot.x, -(float)pivot.y));
         }
 
@@ -113,7 +113,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             }
 
             private static Matrix4x4 MakeTransform(double degrees, Vector2d pivot) =>
-                Matrix4x4.Translate(new Vector3((float)pivot.x, (float)pivot.y)) * 
+                Matrix4x4.Translate(new Vector3((float)pivot.x, (float)pivot.y)) *
                 Matrix4x4.Rotate(Quaternion.Euler(Vector3.forward * (float)degrees)) *
                 Matrix4x4.Translate(new Vector3(-(float)pivot.x, -(float)pivot.y));
         }

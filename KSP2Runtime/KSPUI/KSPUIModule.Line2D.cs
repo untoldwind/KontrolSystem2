@@ -14,8 +14,8 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             private Vector2d[] points;
             private Vector2d[] triangleStrip;
 
-            public Line2D(KSPConsoleModule.RgbaColor color, double thickness, bool closed, Vector2d[] points) {
-                Color = color;
+            public Line2D(KSPConsoleModule.RgbaColor strokeColor, double thickness, bool closed, Vector2d[] points) {
+                StrokeColor = strokeColor;
                 this.thickness = thickness;
                 this.closed = closed;
                 this.points = points;
@@ -23,7 +23,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             }
 
             [KSField]
-            public KSPConsoleModule.RgbaColor Color { get; set; }
+            public KSPConsoleModule.RgbaColor StrokeColor { get; set; }
 
             [KSField]
             public Vector2d[] Points {
@@ -56,7 +56,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
                 if (triangleStrip.Length < 3) return;
 
                 GL.Begin(GL.TRIANGLE_STRIP);
-                GL.Color(Color.Color);
+                GL.Color(StrokeColor.Color);
                 for (int i = 0; i < triangleStrip.Length; i++) {
                     GL.Vertex3((float)triangleStrip[i].x, (float)triangleStrip[i].y, 0);
                 }
