@@ -4,11 +4,17 @@ import { InputPosition } from "../../parser";
 
 export class DeclarationParameter {
   constructor(
-    public readonly target: string | undefined,
+    public readonly target: string,
     public readonly source: string | undefined,
     public readonly type: TO2Type | undefined
   ) {}
 }
+
+export class DeclarationPlaceholder {}
+
+export type DeclarationParameterOrPlaceholder =
+  | DeclarationParameter
+  | DeclarationPlaceholder;
 
 export class VariableDeclaration implements Node, BlockItem {
   public isComment: boolean = false;

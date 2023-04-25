@@ -25,7 +25,11 @@ import { RecordType } from "./ast/record-type";
 import { TO2Type, getBuiltinType } from "./ast/to2-type";
 import { TupleType } from "./ast/tuple-type";
 import { LookupTypeReference } from "./ast/type-reference";
-import { DeclarationParameter } from "./ast/variable-declaration";
+import {
+  DeclarationParameter,
+  DeclarationParameterOrPlaceholder,
+  DeclarationPlaceholder,
+} from "./ast/variable-declaration";
 
 const RESERVED_KEYWORDS = new Set<string>([
   "pub",
@@ -179,13 +183,11 @@ export const declarationParameter = map(
   ([target, source, type]) => new DeclarationParameter(target, source, type)
 );
 
-export const declarationParameterOrPlaceholder = alt([
-  declarationParameter,
-  recognizeAs(
-    tag("_"),
-    new DeclarationParameter(undefined, undefined, undefined)
-  ),
-]);
+export const declarationParameterOrPlaceholder =
+  alt<DeclarationParameterOrPlaceholder>([
+    declarationParameter,
+    recognizeAs(tag("_"), new DeclarationPlaceholder()),
+  ]);
 
 export const descriptionComment = map(
   many0(

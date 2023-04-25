@@ -1,5 +1,5 @@
 import { BlockItem, Expression, Node } from ".";
-import { DeclarationParameter } from "./variable-declaration";
+import { DeclarationParameterOrPlaceholder } from "./variable-declaration";
 import { TO2Type } from "./to2-type";
 import { InputPosition } from "../../parser";
 
@@ -7,7 +7,7 @@ export class TupleDeconstructDeclaration implements Node, BlockItem {
   public isComment: boolean = false;
 
   constructor(
-    public readonly declarations: DeclarationParameter[],
+    public readonly declarations: DeclarationParameterOrPlaceholder[],
     public readonly isConst: boolean,
     public readonly expression: Expression,
     public readonly start: InputPosition,

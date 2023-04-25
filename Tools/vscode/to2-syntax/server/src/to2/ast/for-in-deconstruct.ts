@@ -1,11 +1,14 @@
 import { Expression, Node } from ".";
 import { BUILTIN_UNIT, TO2Type } from "./to2-type";
 import { InputPosition } from "../../parser";
+import {
+  DeclarationParameter,
+  DeclarationParameterOrPlaceholder,
+} from "./variable-declaration";
 
-export class ForIn extends Expression {
+export class ForInDeconstruct extends Expression {
   constructor(
-    public readonly variableName: string,
-    public readonly variableType: TO2Type | undefined,
+    public readonly declarations: DeclarationParameterOrPlaceholder[],
     public readonly sourceExpression: Expression,
     public readonly loopExpression: Expression,
     start: InputPosition,

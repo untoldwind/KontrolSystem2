@@ -18,3 +18,7 @@ server/node_modules/**
 !server/node_modules/vscode-languageserver-protocol/**
 !server/node_modules/vscode-languageserver-textdocument/**
 !server/node_modules/vscode-languageserver-types/**
+!server/node_modules/unicode-properties/**
+!server/node_modules/unicode-trie/**
+!server/node_modules/base64-js/**
+!server/node_modules/tiny-inflate/**

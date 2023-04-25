@@ -41,7 +41,11 @@ import { TupleDeconstructDeclaration } from "./ast/tuple-deconstruct-declaration
 import { Unapply } from "./ast/unapply";
 import { UnaryPrefix } from "./ast/unary-prefix";
 import { VariableAssign } from "./ast/variable-assign";
-import { VariableDeclaration } from "./ast/variable-declaration";
+import {
+  DeclarationParameter,
+  DeclarationParameterOrPlaceholder,
+  VariableDeclaration,
+} from "./ast/variable-declaration";
 import { VariableGet } from "./ast/variable-get";
 import { While } from "./ast/while";
 import {
@@ -71,6 +75,8 @@ import {
   OperatorSuffix,
   SuffixOperation,
 } from "./suffix-operation";
+import { ForIn } from "./ast/for-in";
+import { ForInDeconstruct } from "./ast/for-in-deconstruct";
 
 const letOrConst = alt([
   recognizeAs(letKeyword, false),
@@ -80,8 +86,11 @@ const letOrConst = alt([
 const variableDeclaration = map(
   seq([
     letOrConst,
-    alt([
-      map(declarationParameter, (item) => ({ isVar: true, items: [item] })),
+    alt<
+      | { isVar: true; decl: DeclarationParameter }
+      | { isVar: false; decls: DeclarationParameterOrPlaceholder[] }
+    >([
+      map(declarationParameter, (decl) => ({ isVar: true, decl })),
       map(
         between(
           terminated(tag("("), whitespace0),
@@ -92,15 +101,21 @@ const variableDeclaration = map(
           ),
           preceded(whitespace0, tag(")"))
         ),
-        (items) => ({ isVar: false, items })
+        (decls) => ({ isVar: false, decls })
       ),
     ]),
     preceded(eqDelimiter, expression),
   ]),
-  ([isConst, { isVar, items }, expression], start, end) =>
-    isVar
-      ? new VariableDeclaration(items[0], isConst, expression, start, end)
-      : new TupleDeconstructDeclaration(items, isConst, expression, start, end)
+  ([isConst, vars, expression], start, end) =>
+    vars.isVar
+      ? new VariableDeclaration(vars.decl, isConst, expression, start, end)
+      : new TupleDeconstructDeclaration(
+          vars.decls,
+          isConst,
+          expression,
+          start,
+          end
+        )
 );
 
 const returnExpression = map(
@@ -124,6 +139,51 @@ const whileExpression = map(
     new While(condition, loopExpression, start, end)
 );
 
+const forInExpression = map(
+  seq([
+    preceded(
+      preceded(tag("for"), between(whitespace0, tag("("), whitespace0)),
+      alt<
+        | { isVar: true; decl: DeclarationParameter }
+        | { isVar: false; decls: DeclarationParameterOrPlaceholder[] }
+      >([
+        map(declarationParameter, (decl) => ({ isVar: true, decl })),
+        map(
+          between(
+            terminated(tag("("), whitespace0),
+            delimited1(
+              declarationParameterOrPlaceholder,
+              commaDelimiter,
+              "<variable>"
+            ),
+            preceded(whitespace0, tag(")"))
+          ),
+          (decls) => ({ isVar: false, decls })
+        ),
+      ])
+    ),
+    preceded(between(whitespace1, tag("in"), whitespace1), expression),
+    preceded(between(whitespace0, tag(")"), whitespace0), expression),
+  ]),
+  ([vars, sourceExpression, loopExpression], start, end) =>
+    vars.isVar
+      ? new ForIn(
+          vars.decl.target,
+          vars.decl.type,
+          sourceExpression,
+          loopExpression,
+          start,
+          end
+        )
+      : new ForInDeconstruct(
+          vars.decls,
+          sourceExpression,
+          loopExpression,
+          start,
+          end
+        )
+);
+
 const breakExpression = map(
   tag("break"),
   (_, start, end) => new Break(start, end)
@@ -143,6 +203,7 @@ const block = map(
         lineComment,
         variableDeclaration,
         returnExpression,
+        forInExpression,
         whileExpression,
         breakExpression,
         continueExpression,
@@ -162,16 +223,22 @@ function recoverBlockItem(
   failure: ParserFailure<BlockItem | string>
 ): ParserSuccess<BlockItem> {
   const remaining = failure.remaining;
-  const nextWhiteSpace = remaining.findNext((ch) => isWhiteSpace(ch) || ch === CURLY_CLOSE);
+  const nextWhiteSpace = remaining.findNext(
+    (ch) => isWhiteSpace(ch) || ch === CURLY_CLOSE
+  );
   const recoverAt = remaining.advance(
     nextWhiteSpace >= 0 ? nextWhiteSpace : remaining.available
   );
   const whiteSpaceResult = whitespace1(recoverAt);
-  if(whiteSpaceResult.success) {
+  if (whiteSpaceResult.success) {
     return new ParserSuccess(
       whiteSpaceResult.remaining,
-      new ErrorNode(failure.expected, remaining.position, whiteSpaceResult.remaining.position)
-    );  
+      new ErrorNode(
+        failure.expected,
+        remaining.position,
+        whiteSpaceResult.remaining.position
+      )
+    );
   }
 
   return new ParserSuccess(
