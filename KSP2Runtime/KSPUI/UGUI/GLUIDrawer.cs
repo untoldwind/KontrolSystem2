@@ -104,10 +104,10 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
                 int start = 0;
                 int end = points.Length - 1;
 
-                while (start < end) {
+                while (start <= end) {
                     GL.Vertex3(points[start].x, points[start].y, 0);
                     start++;
-                    if (start < end) {
+                    if (start <= end) {
                         GL.Vertex3(points[end].x, points[end].y, 0);
                         end--;
                     }

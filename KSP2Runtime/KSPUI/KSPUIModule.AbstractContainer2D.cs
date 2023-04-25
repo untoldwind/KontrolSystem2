@@ -27,6 +27,13 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             }
 
             [KSMethod]
+            public Rect2D AddRect(Vector2d point1, Vector2d point2, KSPConsoleModule.RgbaColor fillColor) {
+                var element = new Rect2D(point1, point2, fillColor);
+                AddElement(element);
+                return element;
+            }
+
+            [KSMethod]
             public Polygon2D AddPolygon(Vector2d[] points, KSPConsoleModule.RgbaColor fillColor) {
                 var element = new Polygon2D(fillColor, points);
                 AddElement(element);

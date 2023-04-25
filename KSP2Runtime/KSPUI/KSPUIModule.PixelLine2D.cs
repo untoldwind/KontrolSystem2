@@ -7,7 +7,6 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
     public partial class KSPUIModule {
         [KSClass]
         public class PixelLine2D : GLUIDrawer.IGLUIDrawable {
-            private bool closed;
             private Vector2d[] points;
             private Vector2[] drawPoints;
 

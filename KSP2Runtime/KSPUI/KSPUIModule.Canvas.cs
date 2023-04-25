@@ -24,7 +24,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             }
 
             [KSField] public double Width => canvas.Width;
-            
+
             [KSField] public double Height => canvas.Height;
 
             protected override void AddElement(GLUIDrawer.IGLUIDrawable element) => canvas.Add(element);
