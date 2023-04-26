@@ -24,6 +24,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI {
             this.tabs = tabs;
             var toggleGroup = GameObject.GetComponent<ToggleGroup>();
             var count = (float)tabs.Length;
+            GameObject.AddComponent<UGUILifecycleCallback>().AddOnDestroy(OnDestroy);
 
             for (int i = 0; i < count; i++) {
                 var tab = tabs[i];
@@ -55,6 +56,10 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI {
                 tabs[tabIdx].Create(tabPanelTransform);
                 currentTabIdx = tabIdx;
             };
+        }
+
+        private void OnDestroy() {
+            if (currentTabIdx >= 0) tabs[currentTabIdx].OnDestroy();
         }
     }
 }

@@ -57,7 +57,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
             OnResize(Vector2.zero);
         }
 
-        public new void OnDisable() {
+        public override void OnDisable() {
             base.OnDisable();
 
             timeSeriesCollection.changed.RemoveListener(OnTimeSeriesChanged);

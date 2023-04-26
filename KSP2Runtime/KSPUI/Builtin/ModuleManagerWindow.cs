@@ -40,7 +40,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
             Mainframe.Instance.availableProcessesChanged.AddListener(OnProcessesChanged);
         }
 
-        public new void OnDisable() {
+        public override void OnDisable() {
             base.OnDisable();
             Mainframe.Instance.availableProcessesChanged.RemoveListener(OnProcessesChanged);
         }

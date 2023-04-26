@@ -93,7 +93,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
             OnConsoleBufferChanged();
         }
 
-        public new void OnDisable() {
+        public override void OnDisable() {
             base.OnDisable();
 
             consoleBuffer.changed.RemoveListener(OnConsoleBufferChanged);
