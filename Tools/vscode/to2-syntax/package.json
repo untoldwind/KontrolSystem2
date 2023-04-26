@@ -64,6 +64,7 @@
     ]
   },
   "scripts": {
+    "bundle": "(cd client && npm run bundle) && (cd server && npm run bundle)",
     "compile": "tsc -b",
     "watch": "tsc -b -w",
     "postinstall": "(cd client && npm install) && (cd server && npm install)"

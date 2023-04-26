@@ -16,6 +16,11 @@
 	},
 	"devDependencies": {
 		"@types/vscode": "^1.77.0",
-		"@vscode/test-electron": "^2.3.0"
+		"@vscode/test-electron": "^2.3.0",
+		"esbuild": "0.17.18",
+		"rimraf": "5.0.0"
+	},
+	"scripts": {
+		"bundle": "tsc --noEmit && rimraf out && esbuild src/extension.ts --external:vscode --bundle --sourcemap --outdir=out --platform=node"
 	}
 }

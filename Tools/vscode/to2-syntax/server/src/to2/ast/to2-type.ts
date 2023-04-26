@@ -1,3 +1,7 @@
+import { OptionType } from "./option-type";
+import { RangeType } from "./range-type";
+import { ResultType } from "./result-type";
+
 export interface TO2Type {
   name: string;
   localName: string;
@@ -37,6 +41,8 @@ export const BUILTIN_UNIT: RealizedType = {
   localName: "Unit",
 };
 
+export const BUILDIN_RANGE: RealizedType = new RangeType();
+
 export function getBuiltinType(
   namePath: string[],
   typeArguments: TO2Type[]
@@ -54,6 +60,16 @@ export function getBuiltinType(
       return typeArguments.length === 0 ? BUILTIN_FLOAT : undefined;
     case "string":
       return typeArguments.length === 0 ? BUILTIN_STRING : undefined;
+    case "Range":
+      return typeArguments.length === 0 ? BUILTIN_STRING : undefined;
+    case "Option":
+      return typeArguments.length === 1
+        ? new OptionType(typeArguments[0])
+        : undefined;
+    case "Result":
+      return typeArguments.length === 2
+        ? new ResultType(typeArguments[0], typeArguments[1])
+        : undefined;
     default:
       return undefined;
   }

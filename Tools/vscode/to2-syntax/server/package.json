@@ -21,9 +21,12 @@
     "jest": "29.5.0",
     "prettier": "2.8.7",
     "ts-jest": "29.1.0",
-    "unicode-properties": "1.4.1"
+    "unicode-properties": "1.4.1",
+    "esbuild": "0.17.18",
+    "rimraf": "5.0.0"
   },
   "scripts": {
+    "bundle": "tsc --noEmit && rimraf out && esbuild src/server.ts --bundle --sourcemap --outdir=out --platform=node",
     "test": "jest",
     "format": "prettier --write ."
   }

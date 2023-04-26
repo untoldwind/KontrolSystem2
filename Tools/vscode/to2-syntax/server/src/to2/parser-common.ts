@@ -7,6 +7,7 @@ import {
   chars0,
   charsExcept0,
   peekLineEnd,
+  spacing0,
   spacing1,
   tag,
   whitespace0,
@@ -30,6 +31,7 @@ import {
   DeclarationParameterOrPlaceholder,
   DeclarationPlaceholder,
 } from "./ast/variable-declaration";
+import { ArrayType } from "./ast/array-type";
 
 const RESERVED_KEYWORDS = new Set<string>([
   "pub",
@@ -163,12 +165,17 @@ const typeReference = map(
     new LookupTypeReference(name, typeArguments ?? [], start, end)
 );
 
-const topLevelTypeRef = alt([
-  functionType,
-  typeReference,
-  tupleType,
-  recordType,
-]);
+const topLevelTypeRef = map(
+  seq([
+    alt([functionType, typeReference, tupleType, recordType]),
+    many0(
+      preceded(spacing0, between(tag("["), spacing0, tag("]"))),
+      "<array type>"
+    ),
+  ]),
+  ([baseType, arrayDim]) =>
+    arrayDim.length > 0 ? new ArrayType(baseType, arrayDim.length) : baseType
+);
 
 export function typeRef(input: Input): ParserResult<TO2Type> {
   return topLevelTypeRef(input);
