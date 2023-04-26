@@ -32,13 +32,18 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI {
                 int i;
                 for (i = 0; i < value.Length; i++) {
                     if (i < uiElements.Length) {
-                        newUIElements[i] = uiElements[i];
-                        newUIElements[i].Update(value[i]);
-                    } else {
-                        newUIElements[i] = createElement(value[i]);
-                        UIFactory.Layout(newUIElements[i].Root, Transform, UIFactory.LAYOUT_STRETCH,
-                            UIFactory.LAYOUT_START, 0, -i * elementHeight, 0, elementHeight);
+                        var uiElement = uiElements[i];
+                        try {
+                            uiElement.Update(value[i]);
+                            newUIElements[i] = uiElement;
+                            continue;
+                        } catch (Exception) {
+                            UnityEngine.Object.Destroy(uiElement.Root);
+                        }
                     }
+                    newUIElements[i] = createElement(value[i]);
+                    UIFactory.Layout(newUIElements[i].Root, Transform, UIFactory.LAYOUT_STRETCH,
+                        UIFactory.LAYOUT_START, 0, -i * elementHeight, 0, elementHeight);
                 }
 
                 for (; i < uiElements.Length; i++) {

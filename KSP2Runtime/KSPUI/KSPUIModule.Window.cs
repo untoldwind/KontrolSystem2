@@ -17,6 +17,8 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
                 window.MinSize = layout.Layout();
             }
 
+            [KSField] public bool IsClosed => window.Closed;
+            
             [KSMethod]
             public void Close() {
                 window.Close();

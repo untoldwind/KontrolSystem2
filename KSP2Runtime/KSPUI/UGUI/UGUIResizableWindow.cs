@@ -12,6 +12,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI {
         private RectTransform canvasTransform;
         private Vector2 minSize = new Vector2(0, 0);
         public UnityEvent onClose = new UnityEvent();
+        private bool closed = false;
 
         internal void Initialize(string title, Rect initialRect) {
             var canvas = Game.UI.GetPopupCanvas();
@@ -49,11 +50,14 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI {
             UIFactory.Layout(windowTitle, window.transform, UIFactory.LAYOUT_STRETCH, UIFactory.LAYOUT_START, 30, -2, -60, 30);
         }
 
+        public bool Closed => closed;
+        
         public void OnDisable() {
             Destroy(window);
         }
 
         public void OnDestroy() {
+            closed = true;
             onClose.Invoke();
         }
 

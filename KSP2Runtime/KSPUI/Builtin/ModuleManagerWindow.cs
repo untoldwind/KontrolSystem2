@@ -364,7 +364,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
                 });
 
                 GameObject startStop = UIFactory.Instance.CreateIconButton(
-                    element.process.State == KontrolSystemProcessState.Running
+                    element.process.State == KontrolSystemProcessState.Running || element.process.State == KontrolSystemProcessState.Outdated
                         ? UIFactory.Instance.stopIcon
                         : UIFactory.Instance.startIcon);
                 root.Add(startStop, UGUILayout.Align.Center, new Vector2(24, 24));
@@ -381,7 +381,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
             public void Update(KontrolSystemProcessWithArguments element) {
                 this.element = element;
                 label.SetText($"{element.process.Name} ({element.process.State})");
-                startStopIcon.texture = element.process.State == KontrolSystemProcessState.Running
+                startStopIcon.texture = element.process.State == KontrolSystemProcessState.Running || element.process.State == KontrolSystemProcessState.Outdated
                     ? UIFactory.Instance.stopIcon
                     : UIFactory.Instance.startIcon;
                 parameterToggle.GetComponentInChildren<TextMeshProUGUI>().text = element.argumentDescriptors.Length.ToString();
