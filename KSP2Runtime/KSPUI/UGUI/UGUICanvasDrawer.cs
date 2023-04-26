@@ -15,9 +15,9 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI {
 
         public void Clear() => elements.Clear();
 
-        public int Width => drawer.Texture.width;
+        public int Width => drawer?.Texture.width ?? -1;
 
-        public int Height => drawer.Texture.height;
+        public int Height => drawer?.Texture.height ?? -1;
 
         private void Awake() {
             elements = new List<GLUIDrawer.IGLUIDrawable>();
