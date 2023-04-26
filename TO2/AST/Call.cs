@@ -265,6 +265,8 @@ namespace KontrolSystem.TO2.AST {
                 argument.Prepare(context);
             }
 
+            if (context.HasErrors) return;
+
             for (i = 0; i < arguments.Count; i++) {
                 arguments[i].EmitCode(context, false);
                 if (!context.HasErrors)
@@ -277,7 +279,6 @@ namespace KontrolSystem.TO2.AST {
                     function.Parameters[i].defaultValue.EmitCode(context);
                 }
             }
-
 
             if (context.HasErrors) return;
 
