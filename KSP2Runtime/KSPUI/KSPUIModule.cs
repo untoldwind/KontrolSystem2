@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using KontrolSystem.KSP.Runtime.KSPConsole;
 using KontrolSystem.KSP.Runtime.KSPUI.Builtin;
 using KontrolSystem.KSP.Runtime.KSPUI.UGUI;
 using KontrolSystem.TO2;
@@ -26,6 +27,10 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             uiWindow.Initialize(title, new Rect(0.5f * (Screen.width - (float)width), 0.5f * (Screen.height + (float)height), (float)width, (float)height));
             return new Window(uiWindow);
         }
+
+        [KSFunction]
+        public static GradientWrapper Gradient(KSPConsoleModule.RgbaColor start, KSPConsoleModule.RgbaColor end) =>
+            new GradientWrapper(start, end);
 
         public static (IEnumerable<RealizedType>, IEnumerable<IKontrolConstant>) DirectBindings() {
             return BindingGenerator.RegisterEnumTypeMappings("ksp::up",

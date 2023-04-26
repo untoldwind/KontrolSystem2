@@ -68,6 +68,13 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
                 AddElement(element);
                 return element;
             }
+
+            public ValueRaster2D AddValueRaster(double[] values, long width, long height, GradientWrapper gradientWrapper,
+                Vector2d point1, Vector2d point2) {
+                var element = new ValueRaster2D(values, (int)width, (int)height, gradientWrapper, point1, point2);
+                AddElement(element);
+                return element;
+            }
         }
     }
 }
