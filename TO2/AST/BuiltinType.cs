@@ -4,7 +4,7 @@ using KontrolSystem.TO2.Generator;
 using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
-    public abstract partial class BuiltinType {
+    public abstract partial class BuiltinType : RealizedType {
         public static readonly OperatorCollection NoOperators = new OperatorCollection();
 
         public static readonly Dictionary<string, IMethodInvokeFactory> NoMethods =
@@ -14,7 +14,7 @@ namespace KontrolSystem.TO2.AST {
             new Dictionary<string, IFieldAccessFactory>();
 
         public override RealizedType UnderlyingType(ModuleContext context) => this;
-
+        
         public static readonly RealizedType Unit = new TO2Unit();
         public static readonly RealizedType Bool = new TO2Bool();
         public static readonly RealizedType Int = new TO2Int();

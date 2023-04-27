@@ -1,6 +1,7 @@
-import { BlockItem, Expression, Node } from ".";
+import { BlockItem, Expression, Node, ValidationError } from ".";
 import { TO2Type } from "./to2-type";
 import { InputPosition } from "../../parser";
+import { BlockContext } from "./context";
 
 export interface TupleTarget {
   target: string;
@@ -16,8 +17,8 @@ export class TupleDeconstructAssign implements Node, BlockItem {
     public readonly start: InputPosition,
     public readonly end: InputPosition
   ) {}
-  resultType(): TO2Type {
-    return this.expression.resultType();
+  public resultType(context: BlockContext): TO2Type {
+    return this.expression.resultType(context);
   }
 
   public reduceNode<T>(
@@ -25,5 +26,11 @@ export class TupleDeconstructAssign implements Node, BlockItem {
     initialValue: T
   ): T {
     return this.expression.reduceNode(combine, combine(initialValue, this));
+  }
+
+  public validateBlock(context: BlockContext): ValidationError[] {
+    const errors: ValidationError[] = [];
+
+    return errors;
   }
 }

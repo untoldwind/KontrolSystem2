@@ -86,11 +86,12 @@ const letOrConst = alt([
 const variableDeclaration = map(
   seq([
     letOrConst,
-    alt<
-      | { isVar: true; decl: DeclarationParameter }
-      | { isVar: false; decls: DeclarationParameterOrPlaceholder[] }
-    >([
-      map(declarationParameter, (decl) => ({ isVar: true, decl })),
+    alt([
+      map(
+        declarationParameter,
+        (decl) =>
+          ({ isVar: true, decl } as { isVar: true; decl: DeclarationParameter })
+      ),
       map(
         between(
           terminated(tag("("), whitespace0),
@@ -101,7 +102,11 @@ const variableDeclaration = map(
           ),
           preceded(whitespace0, tag(")"))
         ),
-        (decls) => ({ isVar: false, decls })
+        (decls) =>
+          ({ isVar: false, decls } as {
+            isVar: false;
+            decls: DeclarationParameterOrPlaceholder[];
+          })
       ),
     ]),
     preceded(eqDelimiter, expression),
@@ -143,11 +148,15 @@ const forInExpression = map(
   seq([
     preceded(
       preceded(tag("for"), between(whitespace0, tag("("), whitespace0)),
-      alt<
-        | { isVar: true; decl: DeclarationParameter }
-        | { isVar: false; decls: DeclarationParameterOrPlaceholder[] }
-      >([
-        map(declarationParameter, (decl) => ({ isVar: true, decl })),
+      alt([
+        map(
+          declarationParameter,
+          (decl) =>
+            ({ isVar: true, decl } as {
+              isVar: true;
+              decl: DeclarationParameter;
+            })
+        ),
         map(
           between(
             terminated(tag("("), whitespace0),
@@ -158,7 +167,11 @@ const forInExpression = map(
             ),
             preceded(whitespace0, tag(")"))
           ),
-          (decls) => ({ isVar: false, decls })
+          (decls) =>
+            ({ isVar: false, decls } as {
+              isVar: false;
+              decls: DeclarationParameterOrPlaceholder[];
+            })
         ),
       ])
     ),
@@ -354,7 +367,7 @@ const bracketTerm = between(
   preceded(whitespace0, tag(")"))
 );
 
-const term = alt<Expression>([
+const term = alt([
   literalBool,
   literalFloat,
   literalInt,
@@ -370,9 +383,9 @@ const term = alt<Expression>([
 
 const indexSpec = map(expression, (expression) => new IndexSpec(expression));
 
-const suffixOp = recognizeAs(tag("?"), Operator.Unwrap);
+const suffixOp = tag("?");
 
-const suffixOps = alt<SuffixOperation>([
+const suffixOps = alt([
   map(
     seq([
       preceded(between(whitespace0, tag("."), whitespace0), identifier),
@@ -401,11 +414,7 @@ const termWithSuffixOps = fold0(
   (target, suffixOp, start, end) => suffixOp.getExpression(target, start, end)
 );
 
-const unaryPrefixOp = alt<Operator>([
-  recognizeAs(tag("-"), Operator.Neg),
-  recognizeAs(tag("!"), Operator.Not),
-  recognizeAs(tag("~"), Operator.BitNot),
-]);
+const unaryPrefixOp = alt([tag("-"), tag("!"), tag("~")]);
 
 const unaryPrefixExpr = alt([
   map(
@@ -417,11 +426,7 @@ const unaryPrefixExpr = alt([
 
 const mulDivBinaryOp = between(
   whitespace0,
-  alt([
-    recognizeAs(tag("*"), Operator.Mul),
-    recognizeAs(tag("/"), Operator.Div),
-    recognizeAs(tag("%"), Operator.Mod),
-  ]),
+  alt([tag("*"), tag("/"), tag("%")]),
   whitespace0
 );
 
@@ -433,10 +438,7 @@ const mulDivBinaryExpr = chain(
 
 const addSubBinaryOp = between(
   whitespace0,
-  alt([
-    recognizeAs(tag("+"), Operator.Add),
-    recognizeAs(tag("-"), Operator.Sub),
-  ]),
+  alt([tag("+"), tag("-")]),
   whitespace0
 );
 
@@ -448,11 +450,7 @@ const addSubBinaryExpr = chain(
 
 const BITOp = between(
   whitespace0,
-  alt([
-    recognizeAs(tag("&"), Operator.BitAnd),
-    recognizeAs(tag("|"), Operator.BitOr),
-    recognizeAs(tag("^"), Operator.BitXor),
-  ]),
+  alt([tag("&"), tag("|"), tag("^")]),
   whitespace0
 );
 
@@ -501,14 +499,7 @@ const unapplyExpr = map(
 
 const compareOp = between(
   whitespace0,
-  alt([
-    recognizeAs(tag("=="), Operator.Eq),
-    recognizeAs(tag("!="), Operator.Neg),
-    recognizeAs(tag("<="), Operator.Le),
-    recognizeAs(tag(">="), Operator.Ge),
-    recognizeAs(tag("<"), Operator.Lt),
-    recognizeAs(tag(">"), Operator.Gt),
-  ]),
+  alt([tag("=="), tag("!="), tag("<="), tag(">="), tag("<"), tag(">")]),
   whitespace0
 );
 
@@ -520,10 +511,7 @@ const compareExpr = chain(
 
 const booleanOp = between(
   whitespace0,
-  alt([
-    recognizeAs(tag("&&"), Operator.BoolAnd),
-    recognizeAs(tag("||"), Operator.BoolOr),
-  ]),
+  alt([tag("&&"), tag("||")]),
   whitespace0
 );
 
@@ -559,20 +547,20 @@ const ifExpr = map(
 const assignOp = between(
   whitespace0,
   alt([
-    recognizeAs(tag("="), Operator.Assign),
-    recognizeAs(tag("+="), Operator.AddAssign),
-    recognizeAs(tag("-="), Operator.SubAssign),
-    recognizeAs(tag("*="), Operator.MulAssign),
-    recognizeAs(tag("/="), Operator.DivAssign),
-    recognizeAs(tag("%="), Operator.ModAssign),
-    recognizeAs(tag("|="), Operator.BitOrAssign),
-    recognizeAs(tag("&="), Operator.BitAndAssign),
-    recognizeAs(tag("^="), Operator.BitXorAssign),
+    tag("="),
+    tag("+="),
+    tag("-="),
+    tag("*="),
+    tag("/="),
+    tag("%="),
+    tag("|="),
+    tag("&="),
+    tag("^="),
   ]),
   whitespace0
 );
 
-const assignSuffixOps = alt<AssignSuffixOperation>([
+const assignSuffixOps = alt([
   map(
     preceded(between(whitespace0, tag("."), whitespace0), identifier),
     (name) => new FieldGetSuffix(name)

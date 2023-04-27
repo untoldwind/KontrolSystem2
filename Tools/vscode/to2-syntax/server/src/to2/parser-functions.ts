@@ -124,7 +124,7 @@ const methodSelfParams = preceded(
   ])
 );
 
-const methodParameters = alt<FunctionParameter[]>([
+const methodParameters = alt([
   recognizeAs(preceded(whitespace0, tag(")")), []),
   preceded(
     commaDelimiter,

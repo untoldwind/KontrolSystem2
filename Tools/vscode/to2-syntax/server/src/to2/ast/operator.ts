@@ -1,31 +1,32 @@
-export enum Operator {
-  Assign, // =
-  Add, // +
-  AddAssign, // +=
-  Sub, // -
-  SubAssign, // -=
-  Mul, // *
-  MulAssign, // *=
-  Div, // /
-  DivAssign, // /=
-  Mod, // %
-  ModAssign, // %=
-  BitOr, // |
-  BitOrAssign, // |=
-  BitAnd, // &
-  BitAndAssign, // &=
-  BitXor, // ^
-  BitXorAssign, // ^=
-  Eq, // ==
-  NotEq, // !=
-  Lt, // <
-  Le, // <=
-  Gt, // >
-  Ge, // >=
-  Neg, // -
-  Not, // !
-  BitNot, // ~
-  BoolAnd, // &&
-  BoolOr, // ||
-  Unwrap, // ?
-}
+export const OPERATORS = [
+  "=",
+  "+",
+  "+=",
+  "-",
+  "-=",
+  "*",
+  "*=",
+  "/",
+  "/=",
+  "%",
+  "%=",
+  "|",
+  "|=",
+  "&",
+  "&=",
+  "^",
+  "^=",
+  "==",
+  "!=",
+  "<",
+  "<=",
+  ">",
+  ">=",
+  "!",
+  "&&",
+  "||",
+  "?",
+  "~",
+] as const;
+
+export type Operator = (typeof OPERATORS)[number];

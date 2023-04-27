@@ -1,4 +1,4 @@
-import { Expression, Node } from ".";
+import { BlockItem, Expression, Node, ValidationError } from ".";
 import {
   BUILTIN_BOOL,
   BUILTIN_FLOAT,
@@ -7,6 +7,7 @@ import {
   TO2Type,
 } from "./to2-type";
 import { InputPosition } from "../../parser";
+import { BlockContext } from "./context";
 
 export class LiteralBool extends Expression {
   constructor(
@@ -26,6 +27,10 @@ export class LiteralBool extends Expression {
     initialValue: T
   ): T {
     return combine(initialValue, this);
+  }
+
+  public validateBlock(context: BlockContext): ValidationError[] {
+    return [];
   }
 }
 
@@ -48,6 +53,10 @@ export class LiteralInt extends Expression {
   ): T {
     return combine(initialValue, this);
   }
+
+  public validateBlock(context: BlockContext): ValidationError[] {
+    return [];
+  }
 }
 
 export class LiteralFloat extends Expression {
@@ -69,6 +78,10 @@ export class LiteralFloat extends Expression {
   ): T {
     return combine(initialValue, this);
   }
+
+  public validateBlock(context: BlockContext): ValidationError[] {
+    return [];
+  }
 }
 
 export class LiteralString extends Expression {
@@ -89,5 +102,9 @@ export class LiteralString extends Expression {
     initialValue: T
   ): T {
     return combine(initialValue, this);
+  }
+
+  public validateBlock(context: BlockContext): ValidationError[] {
+    return [];
   }
 }

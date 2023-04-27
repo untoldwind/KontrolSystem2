@@ -28,6 +28,8 @@ namespace KontrolSystem.TO2.AST {
 
         public override string Name => $"Result<{successType}, {errorType}>";
 
+        public override string LocalName => "Result";
+
         public override bool IsValid(ModuleContext context) =>
             successType.IsValid(context) && errorType.IsValid(context);
 

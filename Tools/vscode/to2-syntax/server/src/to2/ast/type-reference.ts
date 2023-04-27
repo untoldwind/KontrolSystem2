@@ -1,5 +1,5 @@
 import { TO2Type } from "./to2-type";
-import { Node } from ".";
+import { Node, ValidationError } from ".";
 import { InputPosition } from "../../parser";
 
 export class LookupTypeReference implements Node, TO2Type {
@@ -23,5 +23,10 @@ export class LookupTypeReference implements Node, TO2Type {
     initialValue: T
   ): T {
     return combine(initialValue, this);
+  }
+  public validate(): ValidationError[] {
+    const errors: ValidationError[] = [];
+
+    return errors;
   }
 }

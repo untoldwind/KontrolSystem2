@@ -1,4 +1,8 @@
-import { getCategory, isDigit, isWhiteSpace as utf8IsWhiteSpace } from "unicode-properties";
+import {
+  getCategory,
+  isDigit,
+  isWhiteSpace as utf8IsWhiteSpace,
+} from "unicode-properties";
 import { Input, Parser, ParserFailure, ParserResult, ParserSuccess } from ".";
 
 export function char(
@@ -79,13 +83,14 @@ export const spacing1 = chars1(
   "<space>"
 );
 
-export function tag(tag: string): Parser<string> {
+export function tag<T extends string>(tag: T): Parser<T> {
   return (input: Input) => {
-    if (input.available < tag.length) return new ParserFailure(input, tag, "");
+    if (input.available < tag.length)
+      return new ParserFailure<T>(input, tag, undefined);
     const content = input.take(tag.length);
     if (content !== tag)
-      return new ParserFailure(input, `Expected ${tag}`, content);
-    return new ParserSuccess(input.advance(tag.length), content);
+      return new ParserFailure<T>(input, `Expected ${tag}`, undefined);
+    return new ParserSuccess(input.advance(tag.length), content as T);
   };
 }
 

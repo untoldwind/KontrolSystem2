@@ -155,7 +155,7 @@ const constDeclaration = map(
     )
 );
 
-const moduleItem = alt<ModuleItem>([
+const moduleItem: Parser<ModuleItem> = alt([
   useNamesDeclaration,
   useAliasDeclaration,
   functionDeclaration,

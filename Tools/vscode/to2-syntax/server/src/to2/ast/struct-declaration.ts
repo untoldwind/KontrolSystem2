@@ -1,9 +1,10 @@
 import { Position } from "vscode-languageserver-textdocument";
-import { Expression, ModuleItem, Node } from ".";
+import { Expression, ModuleItem, Node, ValidationError } from ".";
 import { TO2Type } from "./to2-type";
 import { FunctionParameter } from "./function-declaration";
 import { LineComment } from "./line-comment";
 import { InputPosition } from "../../parser";
+import { ModuleContext } from "./context";
 
 export class StructField implements Node {
   constructor(
@@ -20,6 +21,11 @@ export class StructField implements Node {
     initialValue: T
   ): T {
     return this.initializer.reduceNode(combine, combine(initialValue, this));
+  }
+  public validate(): ValidationError[] {
+    const errors: ValidationError[] = [];
+
+    return errors;
   }
 }
 
@@ -45,5 +51,11 @@ export class StructDeclaration implements Node, ModuleItem {
         combine(initialValue, this)
       )
     );
+  }
+
+  public validateModule(context: ModuleContext): ValidationError[] {
+    const errors: ValidationError[] = [];
+
+    return errors;
   }
 }

@@ -1,6 +1,9 @@
 import { Input, Parser, ParserFailure } from ".";
+import { tag } from "./complete";
 
-export function alt<T>(alternatives: Parser<T>[]): Parser<T> {
+export function alt<P extends any[]>(
+  alternatives: [...{ [k in keyof P]: Parser<P[k]> }]
+): Parser<P[number]> {
   return (input: Input) => {
     let longest = input;
     let expected: string[] = [];
@@ -17,6 +20,10 @@ export function alt<T>(alternatives: Parser<T>[]): Parser<T> {
       expected.push(result.expected);
     }
 
-    return new ParserFailure<T>(longest, expected.join(" or "), undefined);
+    return new ParserFailure<P[keyof P]>(
+      longest,
+      expected.join(" or "),
+      undefined
+    );
   };
 }

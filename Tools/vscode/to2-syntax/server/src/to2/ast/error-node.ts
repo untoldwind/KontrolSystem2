@@ -1,5 +1,6 @@
-import { BlockItem, ModuleItem, Node } from ".";
+import { BlockItem, ModuleItem, Node, ValidationError } from ".";
 import { InputPosition } from "../../parser";
+import { BlockContext, ModuleContext } from "./context";
 import { BUILTIN_UNIT, TO2Type } from "./to2-type";
 
 export class ErrorNode implements Node, ModuleItem, BlockItem {
@@ -21,6 +22,28 @@ export class ErrorNode implements Node, ModuleItem, BlockItem {
     initialValue: T
   ): T {
     return combine(initialValue, this);
+  }
+
+  public validateModule(context: ModuleContext): ValidationError[] {
+    return [
+      {
+        status: "error",
+        message: this.message,
+        start: this.start,
+        end: this.end,
+      },
+    ];
+  }
+
+  public validateBlock(context: BlockContext): ValidationError[] {
+    return [
+      {
+        status: "error",
+        message: this.message,
+        start: this.start,
+        end: this.end,
+      },
+    ];
   }
 }
 

@@ -1,7 +1,8 @@
-import { Expression, Node } from ".";
+import { Expression, Node, ValidationError } from ".";
 import { BUILTIN_BOOL, TO2Type } from "./to2-type";
 import { Operator } from "./operator";
 import { InputPosition } from "../../parser";
+import { BlockContext } from "./context";
 
 export class VariableAssign extends Expression {
   constructor(
@@ -23,5 +24,10 @@ export class VariableAssign extends Expression {
     initialValue: T
   ): T {
     return this.expression.reduceNode(combine, combine(initialValue, this));
+  }
+  public validateBlock(context: BlockContext): ValidationError[] {
+    const errors: ValidationError[] = [];
+
+    return errors;
   }
 }

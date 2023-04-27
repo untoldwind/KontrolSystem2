@@ -140,6 +140,7 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
 
   const diagnostics: Diagnostic[] = [];
 
+  console.log("hu");
   if (!moduleResult.success) {
     const diagnostic: Diagnostic = {
       severity: DiagnosticSeverity.Error,
@@ -154,29 +155,26 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
       source: "parser",
     };
     diagnostics.push(diagnostic);
-  } else {
-    moduleResult.value.reduceNode((diagnostics, node) => {
-      if (
-        isErrorNode(node) &&
-        diagnostics.length < settings.maxNumberOfProblems
-      ) {
+  }
+  if (moduleResult.value) {
+    for (const validationError of moduleResult.value.validate()) {
+      if (diagnostics.length < settings.maxNumberOfProblems) {
         const diagnostic: Diagnostic = {
           severity: DiagnosticSeverity.Error,
           range: {
-            start: node.start,
-            end: node.end,
+            start: validationError.start,
+            end: validationError.end,
           },
-          message: node.message,
+          message: validationError.message,
           source: "parser",
         };
         diagnostics.push(diagnostic);
       }
-      return diagnostics;
-    }, diagnostics);
+    }
   }
 
   // The validator creates diagnostics for all uppercase words length 2 and more
-  const text = textDocument.getText();
+  // const text = textDocument.getText();
 
   /*
   const pattern = /\b[A-Z]{2,}\b/g;

@@ -1,8 +1,9 @@
-import { BlockItem, Node } from ".";
+import { BlockItem, ModuleItem, Node, ValidationError } from ".";
 import { BUILTIN_UNIT, TO2Type } from "./to2-type";
 import { InputPosition } from "../../parser";
+import { BlockContext, ModuleContext } from "./context";
 
-export class LineComment implements Node, BlockItem {
+export class LineComment implements Node, BlockItem, ModuleItem {
   public isComment: boolean = true;
 
   constructor(
@@ -20,5 +21,13 @@ export class LineComment implements Node, BlockItem {
     initialValue: T
   ): T {
     return combine(initialValue, this);
+  }
+
+  public validateModule(context: ModuleContext): ValidationError[] {
+    return [];
+  }
+
+  public validateBlock(context: BlockContext): ValidationError[] {
+    return [];
   }
 }

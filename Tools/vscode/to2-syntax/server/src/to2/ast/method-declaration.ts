@@ -1,4 +1,4 @@
-import { Expression, Node } from ".";
+import { Expression, Node, ValidationError } from ".";
 import { TO2Type } from "./to2-type";
 import { InputPosition } from "../../parser";
 
@@ -18,5 +18,11 @@ export class MethodDeclaration implements Node {
     initialValue: T
   ): T {
     return this.expression.reduceNode(combine, combine(initialValue, this));
+  }
+
+  public validate(): ValidationError[] {
+    const errors: ValidationError[] = [];
+
+    return errors;
   }
 }

@@ -4,11 +4,11 @@ using System.Linq;
 using KontrolSystem.TO2.Generator;
 
 namespace KontrolSystem.TO2.AST {
-    public interface IOperatorCollection {
+    public interface IOperatorCollection : IEnumerable<(Operator op, List<IOperatorEmitter> emitters)> {
         IOperatorEmitter GetMatching(ModuleContext context, Operator op, TO2Type otherType);
     }
 
-    public class OperatorCollection : IEnumerable<IOperatorEmitter>, IOperatorCollection {
+    public class OperatorCollection : IOperatorCollection {
         private readonly Dictionary<Operator, List<IOperatorEmitter>> collection;
 
         public OperatorCollection() => collection = new Dictionary<Operator, List<IOperatorEmitter>>();
@@ -17,8 +17,8 @@ namespace KontrolSystem.TO2.AST {
             collection.GroupBy(o => o.op, o => o.emitter).ToDictionary(g => g.Key, g => g.ToList());
 
         public void Add(Operator op, IOperatorEmitter operatorEmitter) {
-            if (collection.ContainsKey(op))
-                collection[op].Add(operatorEmitter);
+            if (collection.TryGetValue(op, out var value))
+                value.Add(operatorEmitter);
             else
                 collection.Add(op, new List<IOperatorEmitter> { operatorEmitter });
         }
@@ -28,7 +28,7 @@ namespace KontrolSystem.TO2.AST {
             return collection[op].Find(o => o.Accepts(context, otherType));
         }
 
-        public IEnumerator<IOperatorEmitter> GetEnumerator() => collection.Values.SelectMany(o => o).GetEnumerator();
+        public IEnumerator<(Operator op,  List<IOperatorEmitter> emitters)> GetEnumerator() => collection.Select(o => (o.Key, o.Value)).GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 

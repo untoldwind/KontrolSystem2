@@ -19,6 +19,6 @@ pub fn main_flight(vessel: Vessel, max_rotations : float = 2.0) -> Result<Unit, 
     CONSOLE.print_line("Burntime: " + burn_time.to_string() + " " + half_burn_time.to_string())
 
     remove_all_nodes(vessel)
-    
+
     vessel.maneuver.add_burn_vector(UT - half_burn_time, delta_v)?
 }

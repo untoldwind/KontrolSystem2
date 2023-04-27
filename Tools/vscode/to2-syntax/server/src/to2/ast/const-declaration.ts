@@ -1,5 +1,6 @@
-import { Expression, ModuleItem, Node } from ".";
+import { Expression, ModuleItem, Node, ValidationError } from ".";
 import { InputPosition } from "../../parser";
+import { ModuleContext } from "./context";
 import { TO2Type } from "./to2-type";
 
 export class ConstDeclaration implements Node, ModuleItem {
@@ -18,5 +19,22 @@ export class ConstDeclaration implements Node, ModuleItem {
     initialValue: T
   ): T {
     return this.expression.reduceNode(combine, combine(initialValue, this));
+  }
+
+  public validateModule(context: ModuleContext): ValidationError[] {
+    const errors: ValidationError[] = [];
+
+    if (context.mappedConstants.has(this.name)) {
+      errors.push({
+        status: "error",
+        message: `Duplicate constant ${this.name}`,
+        start: this.start,
+        end: this.end,
+      });
+    } else {
+      context.mappedConstants.set(this.name, this.type);
+    }
+
+    return errors;
   }
 }

@@ -23,7 +23,7 @@ import { between, preceded, seq, terminated } from "../parser/sequence";
 import { FunctionType } from "./ast/function-type";
 import { LineComment } from "./ast/line-comment";
 import { RecordType } from "./ast/record-type";
-import { TO2Type, getBuiltinType } from "./ast/to2-type";
+import { TO2Type, findType } from "./ast/to2-type";
 import { TupleType } from "./ast/tuple-type";
 import { LookupTypeReference } from "./ast/type-reference";
 import {
@@ -161,7 +161,7 @@ const typeReference = map(
     ),
   ]),
   ([name, typeArguments], start, end) =>
-    getBuiltinType(name, typeArguments ?? []) ??
+    findType(name, typeArguments ?? []) ??
     new LookupTypeReference(name, typeArguments ?? [], start, end)
 );
 
@@ -190,11 +190,10 @@ export const declarationParameter = map(
   ([target, source, type]) => new DeclarationParameter(target, source, type)
 );
 
-export const declarationParameterOrPlaceholder =
-  alt<DeclarationParameterOrPlaceholder>([
-    declarationParameter,
-    recognizeAs(tag("_"), new DeclarationPlaceholder()),
-  ]);
+export const declarationParameterOrPlaceholder = alt([
+  declarationParameter,
+  recognizeAs(tag("_"), new DeclarationPlaceholder()),
+]);
 
 export const descriptionComment = map(
   many0(

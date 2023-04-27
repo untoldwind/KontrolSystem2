@@ -1,6 +1,7 @@
-import { BlockItem, Expression, Node } from ".";
+import { BlockItem, Expression, Node, ValidationError } from ".";
 import { TO2Type } from "./to2-type";
 import { InputPosition } from "../../parser";
+import { BlockContext } from "./context";
 
 export class DeclarationParameter {
   constructor(
@@ -27,8 +28,8 @@ export class VariableDeclaration implements Node, BlockItem {
     public readonly end: InputPosition
   ) {}
 
-  resultType(): TO2Type {
-    return this.expression.resultType();
+  public resultType(context: BlockContext): TO2Type {
+    return this.expression.resultType(context);
   }
 
   public reduceNode<T>(
@@ -36,5 +37,22 @@ export class VariableDeclaration implements Node, BlockItem {
     initialValue: T
   ): T {
     return this.expression.reduceNode(combine, combine(initialValue, this));
+  }
+
+  public validateBlock(context: BlockContext): ValidationError[] {
+    const errors: ValidationError[] = [];
+
+    if (context.localVariables.has(this.declaration.target)) {
+      errors.push({
+        status: "error",
+        message: `Duplicate variable ${this.declaration.target}`,
+        start: this.start,
+        end: this.end,
+      });
+    } else {
+      context.localVariables.set(this.declaration.target, this.resultType(context));
+    }
+
+    return errors;
   }
 }

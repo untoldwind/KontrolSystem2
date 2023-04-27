@@ -1,5 +1,6 @@
-import { ModuleItem, Node } from ".";
+import { ModuleItem, Node, ValidationError } from ".";
 import { InputPosition } from "../../parser";
+import { ModuleContext } from "./context";
 
 export class TO2Module implements Node {
   constructor(
@@ -18,5 +19,16 @@ export class TO2Module implements Node {
       (prev, item) => item.reduceNode(combine, prev),
       combine(initialValue, this)
     );
+  }
+
+  public validate(): ValidationError[] {
+    const context = new ModuleContext();
+    const errors: ValidationError[] = [];
+
+    for (const item of this.items) {
+      errors.push(...item.validateModule(context));
+    }
+
+    return errors;
   }
 }

@@ -1,6 +1,7 @@
 import { TO2Type } from "./to2-type";
-import { ModuleItem, Node } from ".";
+import { ModuleItem, Node, ValidationError } from ".";
 import { InputPosition } from "../../parser";
+import { ModuleContext } from "./context";
 
 export class TypeAlias implements Node, ModuleItem {
   constructor(
@@ -17,5 +18,10 @@ export class TypeAlias implements Node, ModuleItem {
     initialValue: T
   ): T {
     return combine(initialValue, this);
+  }
+  public validateModule(context: ModuleContext): ValidationError[] {
+    const errors: ValidationError[] = [];
+
+    return errors;
   }
 }

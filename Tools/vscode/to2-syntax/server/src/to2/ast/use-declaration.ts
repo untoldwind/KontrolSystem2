@@ -1,5 +1,6 @@
-import { ModuleItem, Node } from ".";
+import { ModuleItem, Node, ValidationError } from ".";
 import { InputPosition } from "../../parser";
+import { ModuleContext } from "./context";
 
 export class UseDeclaration implements Node, ModuleItem {
   constructor(
@@ -15,5 +16,10 @@ export class UseDeclaration implements Node, ModuleItem {
     initialValue: T
   ): T {
     return combine(initialValue, this);
+  }
+  public validateModule(context: ModuleContext): ValidationError[] {
+    const errors: ValidationError[] = [];
+
+    return errors;
   }
 }

@@ -33,6 +33,8 @@ namespace KontrolSystem.TO2.AST {
 
         public override string Name => $"Option<{elementType}>";
 
+        public override string LocalName => "Option";
+
         public override bool IsValid(ModuleContext context) => elementType.IsValid(context);
 
         public override RealizedType UnderlyingType(ModuleContext context) =>

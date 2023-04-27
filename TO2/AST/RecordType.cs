@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using KontrolSystem.TO2.Generator;
@@ -60,6 +61,10 @@ namespace KontrolSystem.TO2.AST {
 
             return hasMatch ? recordType.CombineFrom(otherRecordType) : null;
         }
+
+        public IEnumerator<(Operator op, List<IOperatorEmitter> emitters)> GetEnumerator() => allowedOperators.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
     internal abstract class RecordTypeAssignEmitter<T> : IAssignEmitter, IOperatorEmitter where T : RecordType {

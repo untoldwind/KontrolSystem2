@@ -1,6 +1,7 @@
-import { Expression, Node } from ".";
-import { BUILTIN_BOOL, TO2Type } from "./to2-type";
+import { Expression, Node, ValidationError } from ".";
 import { InputPosition } from "../../parser";
+import { BlockContext } from "./context";
+import { BUILTIN_RANGE, TO2Type } from "./to2-type";
 
 export class RangeCreate extends Expression {
   constructor(
@@ -14,7 +15,7 @@ export class RangeCreate extends Expression {
   }
 
   resultType(): TO2Type {
-    return BUILTIN_BOOL;
+    return BUILTIN_RANGE;
   }
 
   public reduceNode<T>(
@@ -25,5 +26,10 @@ export class RangeCreate extends Expression {
       combine,
       this.to.reduceNode(combine, combine(initialValue, this))
     );
+  }
+  public validateBlock(context: BlockContext): ValidationError[] {
+    const errors: ValidationError[] = [];
+
+    return errors;
   }
 }

@@ -1,7 +1,8 @@
-import { Expression, Node } from ".";
+import { Expression, Node, ValidationError } from ".";
 import { Operator } from "./operator";
 import { BUILTIN_BOOL, TO2Type } from "./to2-type";
 import { InputPosition } from "../../parser";
+import { BlockContext } from "./context";
 
 export class BinaryBool extends Expression {
   constructor(
@@ -26,5 +27,11 @@ export class BinaryBool extends Expression {
       combine,
       this.right.reduceNode(combine, combine(initialValue, this))
     );
+  }
+
+  public validateBlock(context: BlockContext): ValidationError[] {
+    const errors: ValidationError[] = [];
+
+    return errors;
   }
 }

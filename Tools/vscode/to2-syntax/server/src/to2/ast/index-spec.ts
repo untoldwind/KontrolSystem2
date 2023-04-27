@@ -1,4 +1,4 @@
-import { Expression, Node } from ".";
+import { Expression, Node, ValidationError } from ".";
 
 export class IndexSpec {
   constructor(public readonly start: Expression) {}
@@ -8,5 +8,10 @@ export class IndexSpec {
     initialValue: T
   ): T {
     return this.start.reduceNode(combine, initialValue);
+  }
+  public validate(): ValidationError[] {
+    const errors: ValidationError[] = [];
+
+    return errors;
   }
 }

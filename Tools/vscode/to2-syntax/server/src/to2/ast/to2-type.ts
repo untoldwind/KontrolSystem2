@@ -1,5 +1,5 @@
+import { REFERENCE, TypeReference } from "../../reference";
 import { OptionType } from "./option-type";
-import { RangeType } from "./range-type";
 import { ResultType } from "./result-type";
 
 export interface TO2Type {
@@ -11,66 +11,54 @@ export interface RealizedType extends TO2Type {
   description: string;
 }
 
-export const BUILTIN_BOOL: RealizedType = {
-  name: "bool",
-  description: "boolean",
-  localName: "bool",
+export class ReferencedType implements RealizedType {
+  public readonly name: string;
+  public readonly localName: string;
+  public readonly description: string;
+
+  constructor(
+    private readonly typeReference: TypeReference,
+    moduleName?: string
+  ) {
+    this.localName = typeReference.name;
+    this.name = moduleName
+      ? `${moduleName}::${typeReference.name}`
+      : typeReference.name;
+    this.description = typeReference.description || "";
+  }
+}
+
+const referencedTypes: Record<string, ReferencedType> = [
+  ...Object.values(REFERENCE.builtin).map(
+    (typeReference) => new ReferencedType(typeReference)
+  ),
+  ...Object.values(REFERENCE.modules).flatMap((module) =>
+    Object.values(module.types).map(
+      (typeReference) => new ReferencedType(typeReference, module.name)
+    )
+  ),
+].reduce((acc, referencedType) => {
+  acc[referencedType.name] = referencedType;
+  return acc;
+}, {} as Record<string, ReferencedType>);
+
+export const UNKNOWN_TYPE : RealizedType = {
+  name: "<unknown>",
+  localName: "<unknown>",
+  description: "Undeterminded type",
 };
 
-export const BUILTIN_INT: RealizedType = {
-  name: "int",
-  description: "integer",
-  localName: "int",
-};
+export const BUILTIN_UNIT = new ReferencedType(REFERENCE.builtin["Unit"]);
+export const BUILTIN_BOOL = new ReferencedType(REFERENCE.builtin["bool"]);
+export const BUILTIN_INT = new ReferencedType(REFERENCE.builtin["int"]);
+export const BUILTIN_FLOAT = new ReferencedType(REFERENCE.builtin["float"]);
+export const BUILTIN_STRING = new ReferencedType(REFERENCE.builtin["string"]);
+export const BUILTIN_RANGE = new ReferencedType(REFERENCE.builtin["Range"]);
 
-export const BUILTIN_FLOAT: RealizedType = {
-  name: "float",
-  description: "floating point",
-  localName: "float",
-};
-
-export const BUILTIN_STRING: RealizedType = {
-  name: "string",
-  description: "character string",
-  localName: "string",
-};
-
-export const BUILTIN_UNIT: RealizedType = {
-  name: "Unit",
-  description: "unit type",
-  localName: "Unit",
-};
-
-export const BUILDIN_RANGE: RealizedType = new RangeType();
-
-export function getBuiltinType(
+export function findType(
   namePath: string[],
   typeArguments: TO2Type[]
 ): TO2Type | undefined {
-  if (namePath.length !== 1) return undefined;
-
-  switch (namePath[0]) {
-    case "Unit":
-      return typeArguments.length === 0 ? BUILTIN_UNIT : undefined;
-    case "bool":
-      return typeArguments.length === 0 ? BUILTIN_BOOL : undefined;
-    case "int":
-      return typeArguments.length === 0 ? BUILTIN_INT : undefined;
-    case "float":
-      return typeArguments.length === 0 ? BUILTIN_FLOAT : undefined;
-    case "string":
-      return typeArguments.length === 0 ? BUILTIN_STRING : undefined;
-    case "Range":
-      return typeArguments.length === 0 ? BUILTIN_STRING : undefined;
-    case "Option":
-      return typeArguments.length === 1
-        ? new OptionType(typeArguments[0])
-        : undefined;
-    case "Result":
-      return typeArguments.length === 2
-        ? new ResultType(typeArguments[0], typeArguments[1])
-        : undefined;
-    default:
-      return undefined;
-  }
+  const fullName = namePath.join("::");
+  return referencedTypes[fullName];
 }

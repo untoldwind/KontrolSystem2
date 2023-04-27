@@ -1,10 +1,11 @@
-import { Expression, Node } from ".";
+import { Expression, Node, ValidationError } from ".";
 import { BUILTIN_UNIT, TO2Type } from "./to2-type";
 import { InputPosition } from "../../parser";
 import {
   DeclarationParameter,
   DeclarationParameterOrPlaceholder,
 } from "./variable-declaration";
+import { BlockContext } from "./context";
 
 export class ForInDeconstruct extends Expression {
   constructor(
@@ -17,7 +18,7 @@ export class ForInDeconstruct extends Expression {
     super(start, end);
   }
 
-  public resultType(): TO2Type {
+  public resultType(context: BlockContext): TO2Type {
     return BUILTIN_UNIT;
   }
 
@@ -29,5 +30,10 @@ export class ForInDeconstruct extends Expression {
       combine,
       this.sourceExpression.reduceNode(combine, combine(initialValue, this))
     );
+  }
+  public validateBlock(context: BlockContext): ValidationError[] {
+    const errors: ValidationError[] = [];
+
+    return errors;
   }
 }

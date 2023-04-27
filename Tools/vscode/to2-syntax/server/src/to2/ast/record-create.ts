@@ -1,6 +1,7 @@
-import { Expression, Node } from ".";
+import { BlockItem, Expression, Node, ValidationError } from ".";
 import { BUILTIN_UNIT, TO2Type } from "./to2-type";
 import { InputPosition } from "../../parser";
+import { BlockContext } from "./context";
 
 export class RecordCreate extends Expression {
   constructor(
@@ -12,7 +13,7 @@ export class RecordCreate extends Expression {
     super(start, end);
   }
 
-  public resultType(): TO2Type {
+  public resultType(context: BlockContext): TO2Type {
     return BUILTIN_UNIT;
   }
 
@@ -24,5 +25,10 @@ export class RecordCreate extends Expression {
       (prev, item) => item[1].reduceNode(combine, prev),
       combine(initialValue, this)
     );
+  }
+  public validateBlock(context: BlockContext): ValidationError[] {
+    const errors: ValidationError[] = [];
+
+    return errors;
   }
 }

@@ -1,6 +1,6 @@
-import { Position } from "vscode-languageserver-textdocument";
 import { TO2Type } from "./to2-type";
 import { InputPosition } from "../../parser";
+import { BlockContext, ModuleContext } from "./context";
 
 export interface Node {
   isError?: boolean;
@@ -16,10 +16,14 @@ export interface Node {
 export interface BlockItem extends Node {
   isComment: boolean;
 
-  resultType(): TO2Type;
+  resultType(context: BlockContext): TO2Type;
+
+  validateBlock(context: BlockContext): ValidationError[];
 }
 
-export interface ModuleItem extends Node {}
+export interface ModuleItem extends Node {
+  validateModule(context: ModuleContext): ValidationError[];
+}
 
 export abstract class Expression implements Node, BlockItem {
   public isComment: boolean = false;
@@ -29,10 +33,23 @@ export abstract class Expression implements Node, BlockItem {
     public readonly end: InputPosition
   ) {}
 
-  public abstract resultType(): TO2Type;
+  public abstract resultType(context: BlockContext): TO2Type;
 
   public abstract reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
     initialValue: T
   ): T;
+
+  public abstract validateBlock(context: BlockContext): ValidationError[];
+}
+
+export interface VariableContainer {
+  findVariable(name: string): TO2Type | undefined;
+}
+
+export interface ValidationError {
+  status: "warn" | "error";
+  message: string;
+  start: InputPosition;
+  end: InputPosition;
 }

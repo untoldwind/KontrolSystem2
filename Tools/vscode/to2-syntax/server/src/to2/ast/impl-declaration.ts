@@ -1,7 +1,8 @@
-import { Node } from ".";
+import { Node, ValidationError } from ".";
 import { LineComment } from "./line-comment";
 import { MethodDeclaration } from "./method-declaration";
 import { InputPosition } from "../../parser";
+import { ModuleContext } from "./context";
 
 export class ImplDeclaration implements Node {
   constructor(
@@ -19,5 +20,10 @@ export class ImplDeclaration implements Node {
       (prev, method) => method.reduceNode(combine, prev),
       combine(initialValue, this)
     );
+  }
+  public validateModule(context: ModuleContext): ValidationError[] {
+    const errors: ValidationError[] = [];
+
+    return errors;
   }
 }
