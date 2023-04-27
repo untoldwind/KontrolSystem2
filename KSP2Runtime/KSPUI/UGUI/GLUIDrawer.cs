@@ -122,7 +122,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
                 textFont.material.SetPass(0);
                 GL.PushMatrix();
 
-                GL.MultMatrix(Matrix4x4.Translate(new Vector3(pos.x, height - pos.y)) * Matrix4x4.Scale(new Vector3(scale, -scale)) * Matrix4x4.Rotate(Quaternion.Euler(Vector3.forward * degrees)) * Matrix4x4.Translate(new Vector3(-pivot.x * textSize.x / scale, -pivot.y * textSize.y / scale)));
+                GL.MultMatrix( currentTransform * Matrix4x4.Translate(new Vector3(pos.x, pos.y)) * Matrix4x4.Scale(new Vector3(scale, scale)) * Matrix4x4.Rotate(Quaternion.Euler(Vector3.forward * degrees)) * Matrix4x4.Translate(new Vector3(-pivot.x * textSize.x / scale, -pivot.y * textSize.y / scale)));
                 GL.Begin(GL.QUADS);
                 GL.Color(color);
                 var atlasWidth = (float)textFont.atlasWidth;
