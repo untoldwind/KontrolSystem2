@@ -311,7 +311,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 }
             }
 
-            [KSField(Description = @"Returns the maximum thrust of all engines in vacuum.")]
+            [KSField(Description = @"Returns the maximum thrust of all engines in the current situation of the vessel.")]
             public double AvailableThrust {
                 get {
                     double thrust = 0.0;
@@ -319,7 +319,14 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                     foreach (PartComponent part in vessel.SimulationObject.PartOwner.Parts) {
                         if (part.TryGetModuleData<PartComponentModule_Engine, Data_Engine>(out var engine) &&
                             engine.staged) {
-                            thrust += engine.MaxThrustOutputVac(true);
+                            var staticPressureAtm = part.StaticPressureAtm;
+                            if (staticPressureAtm > 0) {
+                                thrust += engine.MaxThrustOutputAtm(atmPressure: staticPressureAtm,
+                                    atmTemp: part.AtmosphericTemperature, atmDensity: part.AtmDensity);
+                            } else if (engine.CurrentPropellantState == null ||
+                                       !engine.CurrentPropellantState.resourceDef.UsesAir) {
+                                thrust += engine.MaxThrustOutputVac();
+                            }
                         }
                     }
 

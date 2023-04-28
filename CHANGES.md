@@ -2,7 +2,8 @@
 
 ## 0.3.4 ->
 
-* Ensure that `Vec3.to_direction()` and `GlobalVector.to_direction()` also work for "Up" 
+* Ensure that `Vec3.to_direction()` and `GlobalVector.to_direction()` also work for "Up"
+* Fix `vessel.available_thrust` to calculate the thrust in the current situation (i.e. atmosphere/vacuum)
 
 ## 0.3.3.3 -> 0.3.4
 
