@@ -14,7 +14,7 @@ namespace KontrolSystem.TO2.AST {
             new Dictionary<string, IFieldAccessFactory>();
 
         public override RealizedType UnderlyingType(ModuleContext context) => this;
-        
+
         public static readonly RealizedType Unit = new TO2Unit();
         public static readonly RealizedType Bool = new TO2Bool();
         public static readonly RealizedType Int = new TO2Int();

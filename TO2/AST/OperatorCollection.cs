@@ -28,7 +28,7 @@ namespace KontrolSystem.TO2.AST {
             return collection[op].Find(o => o.Accepts(context, otherType));
         }
 
-        public IEnumerator<(Operator op,  List<IOperatorEmitter> emitters)> GetEnumerator() => collection.Select(o => (o.Key, o.Value)).GetEnumerator();
+        public IEnumerator<(Operator op, List<IOperatorEmitter> emitters)> GetEnumerator() => collection.Select(o => (o.Key, o.Value)).GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 

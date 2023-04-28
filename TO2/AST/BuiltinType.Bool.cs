@@ -57,7 +57,7 @@ namespace KontrolSystem.TO2.AST {
             }
 
             public override string Name => "bool";
-            
+
             public override Type GeneratedType(ModuleContext context) => typeof(bool);
 
             public override IOperatorCollection AllowedPrefixOperators(ModuleContext context) => allowedPrefixOperators;

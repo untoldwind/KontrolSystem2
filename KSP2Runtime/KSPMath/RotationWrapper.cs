@@ -47,7 +47,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
         public Vector UpVector => new Vector(this.rotation.coordinateSystem, rotation.localRotation * Vector3d.up);
 
         public Vector RightVector => new Vector(this.rotation.coordinateSystem, rotation.localRotation * Vector3d.right);
-        
+
         /// <summary>
         /// Produces a direction that if it was applied to vector v1, would
         /// cause it to rotate to be the same direction as vector v2.
@@ -128,7 +128,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
 
         private static SimRotation RotationFromVector(Vector vector) {
             var up = new Vector(vector.coordinateSystem, Vector3d.up);
-            if(Math.Abs(Vector.dot(vector, up)) > 0.99)
+            if (Math.Abs(Vector.dot(vector, up)) > 0.99)
                 return SimRotation.LookRotation(vector, new Vector(vector.coordinateSystem, Vector3d.right));
             return SimRotation.LookRotation(vector, up);
         }
