@@ -1,11 +1,11 @@
 import { Expression, Node, ValidationError } from ".";
 import { BUILTIN_UNIT, TO2Type } from "./to2-type";
-import { InputPosition } from "../../parser";
+import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
 
 export class ForIn extends Expression {
   constructor(
-    public readonly variableName: string,
+    public readonly variableName: WithPosition<string>,
     public readonly variableType: TO2Type | undefined,
     public readonly sourceExpression: Expression,
     public readonly loopExpression: Expression,

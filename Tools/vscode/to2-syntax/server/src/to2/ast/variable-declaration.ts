@@ -1,11 +1,11 @@
 import { BlockItem, Expression, Node, ValidationError } from ".";
 import { TO2Type } from "./to2-type";
-import { InputPosition } from "../../parser";
+import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
 
 export class DeclarationParameter {
   constructor(
-    public readonly target: string,
+    public readonly target: WithPosition<string>,
     public readonly source: string | undefined,
     public readonly type: TO2Type | undefined
   ) {}
@@ -42,15 +42,18 @@ export class VariableDeclaration implements Node, BlockItem {
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
-    if (context.localVariables.has(this.declaration.target)) {
+    if (context.localVariables.has(this.declaration.target.value)) {
       errors.push({
         status: "error",
         message: `Duplicate variable ${this.declaration.target}`,
-        start: this.start,
-        end: this.end,
+        start: this.declaration.target.start,
+        end: this.declaration.target.end,
       });
     } else {
-      context.localVariables.set(this.declaration.target, this.resultType(context));
+      context.localVariables.set(
+        this.declaration.target.value,
+        this.resultType(context)
+      );
     }
 
     return errors;

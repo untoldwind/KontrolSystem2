@@ -1,5 +1,5 @@
 import { alt } from "../parser/branch";
-import { map, opt, recognizeAs } from "../parser/combinator";
+import { map, opt, recognizeAs, withPosition } from "../parser/combinator";
 import { spacing1, tag, whitespace0 } from "../parser/complete";
 import { delimitedUntil } from "../parser/multi";
 import { between, preceded, seq, terminated } from "../parser/sequence";
@@ -66,7 +66,11 @@ const functionPrefix = alt([
 ]);
 
 const functionParameter = map(
-  seq([identifier, typeSpec, opt(preceded(eqDelimiter, expression))]),
+  seq([
+    withPosition(identifier),
+    typeSpec,
+    opt(preceded(eqDelimiter, expression)),
+  ]),
   ([name, type, defaultValue], start, end) =>
     new FunctionParameter(name, type, defaultValue, start, end)
 );
@@ -85,7 +89,7 @@ export const functionDeclaration = map(
   seq([
     descriptionComment,
     preceded(whitespace0, functionPrefix),
-    identifier,
+    withPosition(identifier),
     preceded(whitespace0, functionParameters),
     preceded(between(whitespace0, tag("->"), whitespace0), typeRef),
     preceded(eqDelimiter, expression),

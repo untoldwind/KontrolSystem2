@@ -1,3 +1,4 @@
+import { WithPosition } from "../../parser";
 import { RealizedType, TO2Type } from "./to2-type";
 
 export class RecordType implements RealizedType {

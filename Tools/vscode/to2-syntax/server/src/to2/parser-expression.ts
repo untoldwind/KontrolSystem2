@@ -1,7 +1,7 @@
 import { isWhiteSpace } from "unicode-properties";
 import { Input, ParserFailure, ParserResult, ParserSuccess } from "../parser";
 import { alt } from "../parser/branch";
-import { map, opt, recognizeAs } from "../parser/combinator";
+import { map, opt, recognizeAs, withPosition } from "../parser/combinator";
 import {
   NL,
   spacing0,
@@ -337,7 +337,7 @@ const arrayCreate = map(
 );
 
 const lambdaParameter = map(
-  seq([identifier, opt(typeSpec)]),
+  seq([withPosition(identifier), opt(typeSpec)]),
   ([name, type], start, end) =>
     new FunctionParameter(name, type, undefined, start, end)
 );

@@ -52,3 +52,9 @@ export class ParserFailure<T> {
 export type ParserResult<T> = ParserSuccess<T> | ParserFailure<T>;
 
 export type Parser<T> = (input: Input) => ParserResult<T>;
+
+export type WithPosition<T> = {
+  value: T;
+  start: InputPosition;
+  end: InputPosition;
+};

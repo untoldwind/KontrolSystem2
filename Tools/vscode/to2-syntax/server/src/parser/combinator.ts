@@ -3,8 +3,8 @@ import {
   InputPosition,
   Parser,
   ParserFailure,
-  ParserResult,
   ParserSuccess,
+  WithPosition,
 } from ".";
 
 export function value<T>(value: T): Parser<T> {
@@ -99,5 +99,28 @@ export function recover<T>(
     const inputResult = parser(input);
     if (inputResult.success) return inputResult;
     return onFailure(inputResult);
+  };
+}
+
+export function withPosition<T>(parser: Parser<T>): Parser<WithPosition<T>> {
+  return (input: Input) => {
+    const inputResult = parser(input);
+    if (inputResult.success)
+      return new ParserSuccess(inputResult.remaining, {
+        value: inputResult.value,
+        start: input.position,
+        end: inputResult.remaining.position,
+      });
+    return new ParserFailure(
+      inputResult.remaining,
+      inputResult.expected,
+      inputResult.value
+        ? {
+            value: inputResult.value,
+            start: input.position,
+            end: inputResult.remaining.position,
+          }
+        : undefined
+    );
   };
 }

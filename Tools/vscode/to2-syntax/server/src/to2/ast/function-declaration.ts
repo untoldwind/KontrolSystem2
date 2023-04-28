@@ -1,6 +1,6 @@
 import { Expression, ModuleItem, Node, ValidationError } from ".";
 import { TO2Type, UNKNOWN_TYPE } from "./to2-type";
-import { InputPosition } from "../../parser";
+import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext, FunctionContext, ModuleContext } from "./context";
 import { FunctionType } from "./function-type";
 import { error } from "console";
@@ -13,14 +13,14 @@ export enum FunctionModifier {
 
 export class FunctionParameter implements Node {
   constructor(
-    public readonly name: string,
+    public readonly name: WithPosition<string>,
     public readonly type: TO2Type | undefined,
     public readonly defaultValue: Expression | undefined,
     public readonly start: InputPosition,
     public readonly end: InputPosition
   ) {}
 
-  public resultType(context : BlockContext): TO2Type {
+  public resultType(context: BlockContext): TO2Type {
     return this.type ?? this.defaultValue?.resultType(context) ?? UNKNOWN_TYPE;
   }
 
@@ -44,7 +44,7 @@ export class FunctionDeclaration implements Node, ModuleItem {
   constructor(
     public readonly modifier: FunctionModifier,
     public readonly isAsync: boolean,
-    public readonly name: string,
+    public readonly name: WithPosition<string>,
     public readonly description: string,
     public readonly parameters: FunctionParameter[],
     public readonly declaredReturn: TO2Type,
@@ -71,27 +71,37 @@ export class FunctionDeclaration implements Node, ModuleItem {
 
     const blockContext = new FunctionContext(context);
 
-    if (context.mappedFunctions.has(this.name)) {
+    if (context.mappedFunctions.has(this.name.value)) {
       errors.push({
         status: "error",
         message: `Duplicate function ${this.name}`,
-        start: this.start,
-        end: this.end,
+        start: this.name.start,
+        end: this.name.end,
       });
     } else {
-      context.mappedFunctions.set(this.name, new FunctionType(this.isAsync, this.parameters.map(param => param.resultType(blockContext)), this.declaredReturn));
+      context.mappedFunctions.set(
+        this.name.value,
+        new FunctionType(
+          this.isAsync,
+          this.parameters.map((param) => param.resultType(blockContext)),
+          this.declaredReturn
+        )
+      );
     }
-    for(const parameter of this.parameters) {
+    for (const parameter of this.parameters) {
       errors.push(...parameter.validateBlock(blockContext));
-      if(blockContext.localVariables.has(parameter.name)) {
+      if (blockContext.localVariables.has(parameter.name.value)) {
         errors.push({
           status: "error",
           message: `Duplicate parameter name ${parameter.name}`,
-          start: this.start,
-          end: this.end,
+          start: parameter.name.start,
+          end: parameter.name.end,
         });
       } else {
-        blockContext.localVariables.set(parameter.name, parameter.resultType(blockContext));
+        blockContext.localVariables.set(
+          parameter.name.value,
+          parameter.resultType(blockContext)
+        );
       }
     }
     errors.push(...this.expression.validateBlock(blockContext));

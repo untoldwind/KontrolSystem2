@@ -1,6 +1,12 @@
 import { Parser, ParserFailure, ParserSuccess } from "../parser";
 import { alt } from "../parser/branch";
-import { either, map, opt, recognizeAs } from "../parser/combinator";
+import {
+  either,
+  map,
+  opt,
+  recognizeAs,
+  withPosition,
+} from "../parser/combinator";
 import {
   NL,
   eof,
@@ -55,19 +61,25 @@ const useNames = alt([
   recognizeAs(tag("*"), undefined),
   between(
     terminated(tag("{"), whitespace0),
-    delimited1(identifier, commaDelimiter, "<import name>"),
+    delimited1(withPosition(identifier), commaDelimiter, "<import name>"),
     preceded(whitespace0, tag("}"))
   ),
 ]);
 
 const useNamesDeclaration = map(
-  seq([preceded(useKeyword, useNames), preceded(fromKeyword, identifierPath)]),
+  seq([
+    preceded(useKeyword, useNames),
+    preceded(fromKeyword, withPosition(identifierPath)),
+  ]),
   ([names, namePath], start, end) =>
     new UseDeclaration(names, undefined, namePath, start, end)
 );
 
 const useAliasDeclaration = map(
-  seq([preceded(useKeyword, identifierPath), preceded(asKeyword, identifier)]),
+  seq([
+    preceded(useKeyword, withPosition(identifierPath)),
+    preceded(asKeyword, withPosition(identifier)),
+  ]),
   ([namePath, alias], start, end) =>
     new UseDeclaration(undefined, alias, namePath, start, end)
 );
@@ -76,7 +88,7 @@ const typeAlias = map(
   seq([
     descriptionComment,
     preceded(whitespace0, opt(pubKeyword)),
-    preceded(typeKeyword, identifier),
+    preceded(typeKeyword, withPosition(identifier)),
     preceded(eqDelimiter, typeRef),
   ]),
   ([description, pub, name, type], start, end) =>

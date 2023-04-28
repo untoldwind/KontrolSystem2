@@ -1,7 +1,14 @@
 import { isAlphabetic, isDigit } from "unicode-properties";
 import { Input, ParserResult } from "../parser";
 import { alt } from "../parser/branch";
-import { map, opt, recognize, recognizeAs, where } from "../parser/combinator";
+import {
+  map,
+  opt,
+  recognize,
+  recognizeAs,
+  where,
+  withPosition,
+} from "../parser/combinator";
 import {
   char,
   chars0,
@@ -28,7 +35,6 @@ import { TupleType } from "./ast/tuple-type";
 import { LookupTypeReference } from "./ast/type-reference";
 import {
   DeclarationParameter,
-  DeclarationParameterOrPlaceholder,
   DeclarationPlaceholder,
 } from "./ast/variable-declaration";
 import { ArrayType } from "./ast/array-type";
@@ -183,7 +189,7 @@ export function typeRef(input: Input): ParserResult<TO2Type> {
 
 export const declarationParameter = map(
   seq([
-    identifier,
+    withPosition(identifier),
     opt(preceded(between(whitespace0, tag("@"), whitespace0), identifier)),
     opt(typeSpec),
   ]),
