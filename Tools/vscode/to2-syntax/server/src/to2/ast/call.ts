@@ -1,7 +1,8 @@
 import { Expression, Node, ValidationError } from ".";
-import { BUILTIN_UNIT, TO2Type } from "./to2-type";
+import { TO2Type, UNKNOWN_TYPE } from "./to2-type";
 import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
+import { isFunctionType } from "./function-type";
 
 export class Call extends Expression {
   constructor(
@@ -14,7 +15,8 @@ export class Call extends Expression {
   }
 
   public resultType(context: BlockContext): TO2Type {
-    return BUILTIN_UNIT;
+    const variableType = this.namePath.value.length == 1 ? context.findVariable(this.namePath.value[0])?.realizedType(context.module) : undefined;
+    return variableType && isFunctionType(variableType) ? variableType.returnType : UNKNOWN_TYPE;
   }
 
   public reduceNode<T>(
@@ -34,15 +36,20 @@ export class Call extends Expression {
       errors.push(...argExpression.validateBlock(context));
     }
 
-    if (
-      this.namePath.value.length == 1 &&
-      !context.findVariable(this.namePath.value[0])
-    ) {
+    const variableType = this.namePath.value.length == 1 ? context.findVariable(this.namePath.value[0])?.realizedType(context.module) : undefined;
+    if (!variableType) {
       errors.push({
         status: "error",
-        message: `Undefined variable: ${this.namePath.value[0]}`,
-        start: this.start,
-        end: this.end,
+        message: `Undefined variable or function: ${this.namePath.value.join("::")}`,
+        start: this.namePath.start,
+        end: this.namePath.end,
+      });
+    } else if(!isFunctionType(variableType)) {
+      errors.push({
+        status: "error",
+        message: `Undefined variable: ${this.namePath.value.join("::")} is not callable`,
+        start: this.namePath.start,
+        end: this.namePath.end,
       });
     }
     

@@ -60,31 +60,31 @@ export class UseDeclaration implements Node, ModuleItem {
             });
           }
           if (importedConstant) {
-            if (context.mappedConstants.has(importedConstant.name)) {
+            if (context.mappedConstants.has(name.value)) {
               errors.push({
                 status: "error",
-                message: `Duplicate constant ${importedConstant.name}`,
+                message: `Duplicate constant ${name.value}`,
                 start: this.start,
                 end: this.end,
               });
             } else {
               context.mappedConstants.set(
-                importedConstant.name,
+                name.value,
                 importedConstant
               );
             }
           }
           if (importedFunction) {
-            if (context.mappedFunctions.has(importedFunction.name)) {
+            if (context.mappedFunctions.has(name.value)) {
               errors.push({
                 status: "error",
-                message: `Duplicate function name ${importedFunction.name}`,
+                message: `Duplicate function name ${name.value}`,
                 start: this.start,
                 end: this.end,
               });
             } else {
               context.mappedFunctions.set(
-                importedFunction.name,
+                name.value,
                 importedFunction
               );
             }

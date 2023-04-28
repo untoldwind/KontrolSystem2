@@ -1,5 +1,5 @@
 import { Expression, Node, ValidationError } from ".";
-import { BUILTIN_BOOL, TO2Type, UNKNOWN_TYPE } from "./to2-type";
+import { TO2Type, UNKNOWN_TYPE } from "./to2-type";
 import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
 
@@ -35,8 +35,8 @@ export class VariableGet extends Expression {
       errors.push({
         status: "error",
         message: `Undefined variable: ${this.namePath.value[0]}`,
-        start: this.start,
-        end: this.end,
+        start: this.namePath.start,
+        end: this.namePath.end,
       });
     }
     return errors;
