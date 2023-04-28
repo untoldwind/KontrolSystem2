@@ -98,6 +98,7 @@ red | float | R/O |
 
 Name | Type | Description
 --- | --- | ---
+BLACK | ksp::console::RgbaColor | Color black 
 BLUE | ksp::console::RgbaColor | Color blue 
 CONSOLE | ksp::console::Console | Main console 
 CYAN | ksp::console::RgbaColor | Color cyan 

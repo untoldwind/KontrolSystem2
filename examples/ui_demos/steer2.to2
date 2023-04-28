@@ -1,0 +1,42 @@
+use { Vessel } from ksp::vessel
+use { CONSOLE } from ksp::console
+use { DEBUG } from ksp::debug
+use { sleep } from ksp::game
+use { control_steering } from std::control::steering
+use { euler } from ksp::math
+use { open_centered_window, Align } from ksp::ui
+
+pub fn main_flight(vessel: Vessel) -> Result<Unit, string> = {
+    const window = open_centered_window("UI: Steering", 400, 200)
+
+    const heading : Cell<float> = Cell(0)
+    const pitch : Cell<float> = Cell(0)
+    const roll : Cell<float> = Cell(0)
+
+    const headingPanel = window.add_vertical_panel()
+    headingPanel.add_label("Heading", Align.Center)
+    const headingControls = headingPanel.add_horizontal()
+    headingControls.add_label("999").bind(heading, "{0, 5:F1}")
+    headingControls.add_horizontal_slider(-180, 180, Align.Stretch, 1).bind(heading)
+    const pitchPanel = window.add_vertical_panel()    
+    pitchPanel.add_label("Pitch", Align.Center)
+    const pitchControls = pitchPanel.add_horizontal()
+    pitchControls.add_label("999").bind(pitch, "{0, 5:F1}")
+    pitchControls.add_horizontal_slider(-90, 90, Align.Stretch, 1).bind(pitch)
+    const rollPanel = window.add_vertical_panel()
+    rollPanel.add_label("Roll", Align.Center)
+    const rollControls = rollPanel.add_horizontal()
+    rollControls.add_label("999").bind(roll, "{0, 5:F1}")
+    rollControls.add_horizontal_slider(-180, 180, Align.Stretch, 1).bind(roll)
+
+    const control = control_steering(vessel)
+
+
+    while(!window.is_closed) {
+        sleep(0.1)
+
+        control.set_heading(heading.value, pitch.value, roll.value)
+    }
+
+    control.release()
+}

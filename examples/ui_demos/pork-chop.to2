@@ -1,0 +1,52 @@
+use { Vessel } from ksp::vessel
+use { CONSOLE, BLACK, RED, YELLOW, GREEN, BLUE, CYAN } from ksp::console
+use { open_centered_window, Align, gradient } from ksp::ui
+use { wait_until, current_time } from ksp::game
+use { vec2 } from ksp::math
+use core::background as background
+use { find_body } from ksp::orbit
+use { info } from core::logging
+use { intercept_at } from std::maneuvers
+
+const DAY: int = 6 * 3600
+const WIDTH: int = 500
+const HEIGHT:int = 500
+
+pub fn main_flight(vessel: Vessel) -> Result<Unit, string> = {
+    const kerbin = find_body("Kerbin")?
+    const duna = find_body("Duna")?
+    const start = kerbin.orbit
+    const target = duna.orbit
+    const now = current_time()
+
+    const colors = gradient(BLUE, RED)
+    colors.add_color(0.10, CYAN)
+    colors.add_color(0.50, YELLOW)
+    
+    const window = open_centered_window("UI: Test", WIDTH, HEIGHT)
+    
+    const canvas = window.add_canvas(WIDTH, HEIGHT, Align.Stretch, 1)
+
+    canvas.add_text(vec2(WIDTH/2, HEIGHT/2), "Calculating", 30, YELLOW)
+
+    const calculation_task = background::run(fn() -> {
+        let values : ArrayBuilder<float> = ArrayBuilder(WIDTH * HEIGHT)
+        for(y in 0..HEIGHT) {
+            const tt = 2 * (HEIGHT - y) * DAY + 100 * DAY
+            for(x in 0..WIDTH) {
+                const start_ut = now + 4 * x * DAY
+
+                const (start_velocity, target_velocity) = intercept_at(start, start_ut, target, start_ut + tt)
+
+                values += start_velocity.magnitude + target_velocity.magnitude
+            }
+        }
+        values.result()
+    })
+
+    wait_until(fn() -> calculation_task.is_completed)
+
+    const valueRaster = canvas.add_value_raster(vec2(0, 0), vec2(WIDTH, HEIGHT), calculation_task.result, WIDTH, HEIGHT, colors)
+
+    wait_until(fn() -> window.is_closed)
+}

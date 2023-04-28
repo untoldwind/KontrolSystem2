@@ -1,0 +1,65 @@
+use { Vessel } from ksp::vessel
+use { CONSOLE, WHITE, BLACK, RED, YELLOW, BLUE, CYAN } from ksp::console
+use { open_centered_window, Align, gradient } from ksp::ui
+use { sleep } from ksp::game
+use { vec2 } from ksp::math
+
+pub fn main_flight(vessel: Vessel) -> Result<Unit, string> = {
+    const x : Cell<float> = Cell(0.5)
+
+    const window = open_centered_window("UI: Test", 450, 450)
+    
+    const canvas = window.add_canvas(450, 450, Align.Stretch, 1)
+
+    const g = canvas.add_translate(vec2(200, 200))
+
+    g.add_line([vec2(-200, -200), vec2(-200, 200), vec2(200, 200), vec2(200, -200)], WHITE, false, 8)
+    
+    const racket = g.add_translate(vec2(0, -200))
+    racket.add_line([vec2(-30, 0), vec2(30, 0)], WHITE, false, 9)
+
+    const ball = g.add_translate(vec2(0, 0))
+    ball.add_rect(vec2(-5, -5), vec2(5, 5), YELLOW)
+
+    window.add_horizontal_slider(0, 1).bind(x)
+
+    let ball_pos = vec2(0, 0)
+    let ball_vel = vec2(5.4, 8.6)
+
+    while(!window.is_closed) {
+        const w = canvas.width
+        const h = canvas.height
+
+        g.translate = vec2(0.5 * w, 0.5 * h)
+        racket.translate = vec2(x.value * 340 - 170, -200)
+        ball.translate = vec2(ball_pos.x, ball_pos.y)
+
+        ball_pos += ball_vel
+
+        if(ball_pos.x > 195) {
+            ball_pos.x = 195
+            ball_vel.x *= -1
+        }
+        if(ball_pos.x < -195) {
+            ball_pos.x = -195
+            ball_vel.x *= -1
+        }
+        if(ball_pos.y > 195) {
+            ball_pos.y = 195
+            ball_vel.y *= -1
+        }
+        if(ball_pos.y < -195) {
+            if (((x.value * 340 - 170) - ball_pos.x).abs < 60) {
+                ball_pos.y = -195
+                ball_vel.y *= -1
+            } else {
+                ball_pos.y = -300
+                ball_vel.x = 0
+                ball_vel.y = 0
+            }
+        }
+
+        sleep(0.02)
+    }
+}
+

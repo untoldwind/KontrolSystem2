@@ -1,0 +1,62 @@
+use { Vessel } from ksp::vessel
+use { CONSOLE, BLACK, RED, YELLOW, BLUE, CYAN } from ksp::console
+use { open_centered_window, Align, gradient } from ksp::ui
+use { wait_until } from ksp::game
+use { vec2 } from ksp::math
+use core::background as background
+
+const WIDTH: int = 1000
+const HEIGHT:int = 1000
+const MAX_ITER:int = 1000
+
+pub fn main_flight(vessel: Vessel) -> Result<Unit, string> = {
+    const colors = gradient(BLACK, RED)
+    colors.add_color(0.01, BLUE)
+    colors.add_color(0.33, CYAN)
+    colors.add_color(0.66, YELLOW)
+    
+    const window = open_centered_window("UI: Test", WIDTH, HEIGHT)
+    
+    const canvas = window.add_canvas(WIDTH, HEIGHT, Align.Stretch, 1)
+
+    canvas.add_text(vec2(WIDTH/2, HEIGHT/2), "Calculating", 30, YELLOW)
+
+    const calculation_task = background::run(calculate_values)
+
+    wait_until(fn() -> calculation_task.is_completed)
+
+    const valueRaster = canvas.add_value_raster(vec2(0, 0), vec2(WIDTH, HEIGHT), calculation_task.result, WIDTH, HEIGHT, colors)
+
+    wait_until(fn() -> window.is_closed)
+}
+
+sync fn calculate_values() -> float[] = {
+    let values : ArrayBuilder<float> = ArrayBuilder(WIDTH * HEIGHT)
+    for(y in 0..HEIGHT) {
+        for(x in 0..WIDTH) {
+            const cre = (3.0 * x) / WIDTH - 2.0
+            const cim = (3.0 * y) / HEIGHT - 1.5
+            let re = cre
+            let im = cim
+            let rere = re*re
+            let imim = im*im
+            let reim = re*im
+
+            let value = 0
+            for(i in 0..MAX_ITER) {
+                if(rere + imim > 4.0) {
+                    value = (i % 20) + 1
+                    break
+                }
+                re = rere - imim + cre
+                im = 2 * reim + cim
+                rere = re*re
+                imim = im*im
+                reim = re*im
+            }
+
+            values += value
+        }
+    }
+    values.result()
+}

@@ -1,0 +1,42 @@
+use { Vessel } from ksp::vessel
+use { CONSOLE } from ksp::console
+use { open_centered_window, Align } from ksp::ui
+use { wait_until } from ksp::game
+
+pub fn main_flight(vessel: Vessel) -> Result<Unit, string> = {
+    const stringCell : Cell<string> = Cell("")
+    const intCell : Cell<int> = Cell(0)
+    const floatCell : Cell<float> = Cell(0)
+    const window = open_centered_window("UI: Test", 400, 400)
+
+    const l1 = window.add_label("Label1")
+    window.add_label("Label3").bind(stringCell)
+
+    const v = window.add_horizontal()
+
+    v.add_label("L2.1", Align.Stretch, 1.0).bind(intCell, "{0}")
+    v.add_label("L2.2", Align.Stretch, 1.0).bind(floatCell, "{0:F2} Deg")
+
+    const sInput = window.add_string_input().bind(stringCell)
+    const iInput = window.add_int_input().bind(intCell)
+    const fInput = window.add_float_input().bind(floatCell)
+
+    window.add_toggle("Test toggle")
+
+    window.add_horizontal_slider(-10, 20).bind(floatCell)
+
+    window.add_button("Button1").on_click(fn () -> {
+        l1.font_size = 100
+
+        CONSOLE.print_line("Button1")
+        CONSOLE.print_line("S: " + sInput.value)
+        CONSOLE.print_line("I: " + iInput.value.to_string())
+        CONSOLE.print_line("F: " + fInput.value.to_string())
+    })
+
+    const done: Cell<bool> = Cell(false)
+
+    window.add_button("Close").on_click(fn () -> window.close())
+
+    wait_until(fn() -> window.is_closed)
+}

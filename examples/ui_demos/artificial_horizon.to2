@@ -1,0 +1,50 @@
+use { Vessel } from ksp::vessel
+use { CONSOLE, WHITE, BLACK, RED, YELLOW, BLUE, CYAN, color } from ksp::console
+use { open_centered_window, Align, gradient } from ksp::ui
+use { sleep } from ksp::game
+use { vec2 } from ksp::math
+
+pub fn main_flight(vessel: Vessel) -> Result<Unit, string> = {
+    const x : Cell<float> = Cell(0.5)
+    const y : Cell<float> = Cell(0.5)
+
+    const window = open_centered_window("UI: Test", 400, 400)
+    
+    const canvas = window.add_canvas(400, 400, Align.Stretch, 1)
+
+    const bg = canvas.add_translate(vec2(200, 200))
+    const bgR = bg.add_rotate(10)
+    const bgT = bgR.add_translate(vec2(0, 0))
+    bgT.add_rect(vec2(-600, 0), vec2(600, 600), color(0.376, 0.631, 0.98))
+    bgT.add_rect(vec2(-600, 0), vec2(600, -600), color(0.514, 0.384, 0.239))
+    bgT.add_line([vec2(-600, 0), vec2(600, 0)], WHITE)
+
+    for(i in 1..18) {
+        bgT.add_line([vec2(-70, 40 * i), vec2(-30, 40 * i)], WHITE)
+        bgT.add_line([vec2(70, 40 * i), vec2(30, 40 * i)], WHITE)
+        bgT.add_text(vec2(0, 40 * i), (10 * i).to_string(), 20, WHITE, 0, vec2(0.5, 0.5))
+        bgT.add_line([vec2(-70, -40 * i), vec2(-30, -40 * i)], WHITE)
+        bgT.add_line([vec2(70, -40 * i), vec2(30, -40 * i)], WHITE)
+        bgT.add_text(vec2(0, -40 * i), (10 * i).to_string(), 20, WHITE, 0, vec2(0.5, 0.5))
+    }
+
+    const fg = canvas.add_translate(vec2(200, 200))
+    fg.add_line([vec2(-100, 0), vec2(-40, 0), vec2(-40, -20)], YELLOW, false, 8)
+    fg.add_line([vec2(100, 0), vec2(40, 0), vec2(40, -20)], YELLOW, false, 8)
+    fg.add_line([vec2(-8, 0), vec2(8, 0)], YELLOW, false, 8)
+
+
+    while(!window.is_closed) {
+        const pyr = vessel.pitch_yaw_roll
+        const w = canvas.width
+        const h = canvas.height
+
+        fg.translate = vec2(0.5 * w, 0.5 * h)
+        bg.translate = vec2(0.5 * w, 0.5 * h)
+        bgT.translate = vec2(0, -pyr.x * 4)
+        bgR.degrees = -pyr.z
+
+        sleep(0.02)
+    }
+}
+

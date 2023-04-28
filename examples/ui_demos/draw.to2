@@ -1,0 +1,20 @@
+use { Vessel } from ksp::vessel
+use { CONSOLE, RED, BLUE, YELLOW } from ksp::console
+use { DEBUG } from ksp::debug
+use { wait_until } from ksp::game
+use { control_steering } from std::control::steering
+use { euler, vec2 } from ksp::math
+use { open_centered_window, Align } from ksp::ui
+
+pub fn main_flight(vessel: Vessel) -> Result<Unit, string> = {
+    const window = open_centered_window("UI: Draw", 400, 400)
+
+    const canvas = window.add_canvas(300, 300, Align.Stretch, 1)
+
+    canvas.add_polygon([vec2(50, 50), vec2(100, 100), vec2(150, 200), vec2(300, 250), vec2(350, 20)], BLUE)
+    canvas.add_line([vec2(50, 50), vec2(100, 100), vec2(150, 200), vec2(300, 250), vec2(350, 20)], RED, true, 10.0)
+    canvas.add_text(vec2(100, 100), "Bla test", 50, YELLOW, 50, vec2(0.5, 0.5))
+    canvas.add_rect(vec2(250, 250), vec2(300, 300), YELLOW)
+
+    wait_until(fn() -> window.is_closed)
+}

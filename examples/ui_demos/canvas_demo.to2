@@ -1,0 +1,38 @@
+use { Vessel } from ksp::vessel
+use { CONSOLE, BLACK, RED, YELLOW, BLUE, CYAN } from ksp::console
+use { open_centered_window, Align, gradient } from ksp::ui
+use { sleep } from ksp::game
+use { vec2 } from ksp::math
+
+pub fn main_flight(vessel: Vessel) -> Result<Unit, string> = {
+    const x : Cell<float> = Cell(0.5)
+    const y : Cell<float> = Cell(0.5)
+
+    const window = open_centered_window("UI: Test", 400, 400)
+    
+    const canvas = window.add_canvas(400, 400, Align.Stretch, 1)
+
+    const hLine = canvas.add_line([vec2(0,0), vec2(1,0)], RED, false, 5)
+    const vLine = canvas.add_line([vec2(0,0), vec2(0,1)], BLUE, false, 5)
+    const pts = [vec2(-30, 0), vec2(30, 0), vec2(0, 60)]
+
+    window.add_horizontal_slider(0, 1).bind(x)
+    window.add_horizontal_slider(0, 1).bind(y)
+    window.add_button("Add").on_click(fn() -> {
+        const w = canvas.width
+        const h = canvas.height
+        const translate = canvas.add_translate(vec2(x.value * w, y.value * h))
+        translate.add_polygon(pts, CYAN)
+    })
+
+    while(!window.is_closed) {
+        const w = canvas.width
+        const h = canvas.height
+
+        hLine.points = [vec2(0, y.value * h), vec2(w, y.value * h)]
+        vLine.points = [vec2(x.value * w, 0), vec2(x.value * w, h)]
+
+        sleep(0.02)
+    }
+}
+

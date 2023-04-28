@@ -1,0 +1,32 @@
+use { Vessel } from ksp::vessel
+use { CONSOLE } from ksp::console
+use { open_centered_window, Align } from ksp::ui
+use { sleep } from ksp::game
+
+pub fn main_flight(vessel: Vessel) -> Result<Unit, string> = {
+    const intCell : Cell<int> = Cell(0)
+    const floatCell : Cell<float> = Cell(0)
+    const window = open_centered_window("DANGER Will Robinson", 400, 400)
+
+    window.add_label("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv", Align.Center)
+    window.add_label("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv", Align.Center)
+    window.add_label("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv", Align.Center)
+
+    const buttonPanel = window.add_horizontal()
+
+    buttonPanel.add_label(">>>\n>>>\n>>>\n>>>\n>>>\n>>>\n>>>\n>>>\n>>>\n>>>\n")
+    const button = buttonPanel.add_button("<color=#800000>!!!Do not press this button!!!", Align.Stretch, 1)
+    button.font_size = 40
+    button.on_click(fn() -> {
+        // Universe ending code omitted due to savety reasons
+    })
+    buttonPanel.add_label("<<<\n<<<\n<<<\n<<<\n<<<\n<<<\n<<<\n<<<\n<<<\n<<<\n")
+
+    window.add_label("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^", Align.Center)
+    window.add_label("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^", Align.Center)
+    window.add_label("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^", Align.Center)
+
+    sleep(30)
+
+    window.close()
+}
