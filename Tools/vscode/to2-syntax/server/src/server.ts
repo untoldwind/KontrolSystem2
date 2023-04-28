@@ -2,8 +2,6 @@ import { TextDocument } from "vscode-languageserver-textdocument";
 import {
   CompletionItem,
   CompletionItemKind,
-  Diagnostic,
-  DiagnosticSeverity,
   DidChangeConfigurationNotification,
   InitializeParams,
   InitializeResult,
@@ -13,13 +11,10 @@ import {
   TextDocuments,
   createConnection,
 } from "vscode-languageserver/node";
-import { module } from "./to2/parser-module";
-import { TextDocumentInput } from "./parser/text-document-input";
-import { isErrorNode } from "./to2/ast/error-node";
-import { error } from "console";
+import { LspServer } from "./lsp-server";
 
 const connection = createConnection(ProposedFeatures.all);
-
+const server = new LspServer(connection);
 const documents: TextDocuments<TextDocument> = new TextDocuments(TextDocument);
 
 let hasConfigurationCapability = false;
@@ -102,10 +97,12 @@ connection.onDidChangeConfiguration((change) => {
   }
 
   // Revalidate all open text documents
-  documents.all().forEach(validateTextDocument);
+  documents.all().forEach((document) => server.validateTextDocument(document));
 });
 
-function getDocumentSettings(resource: string): Thenable<To2LspSettings> {
+export function getDocumentSettings(
+  resource: string
+): Thenable<To2LspSettings> {
   if (!hasConfigurationCapability) {
     return Promise.resolve(globalSettings);
   }
@@ -128,94 +125,8 @@ documents.onDidClose((e) => {
 // The content of a text document has changed. This event is emitted
 // when the text document first opened or when its content has changed.
 documents.onDidChangeContent((change) => {
-  validateTextDocument(change.document);
+  server.validateTextDocument(change.document);
 });
-
-async function validateTextDocument(textDocument: TextDocument): Promise<void> {
-  // In this simple example we get the settings for every validate run.
-  const settings = await getDocumentSettings(textDocument.uri);
-
-  const input = new TextDocumentInput(textDocument);
-  const moduleResult = module("<test>")(input);
-
-  const diagnostics: Diagnostic[] = [];
-
-  console.log("hu");
-  if (!moduleResult.success) {
-    const diagnostic: Diagnostic = {
-      severity: DiagnosticSeverity.Error,
-      range: {
-        start: moduleResult.remaining.position,
-        end: textDocument.positionAt(
-          moduleResult.remaining.position.offset +
-            moduleResult.remaining.available
-        ),
-      },
-      message: moduleResult.expected,
-      source: "parser",
-    };
-    diagnostics.push(diagnostic);
-  }
-  if (moduleResult.value) {
-    for (const validationError of moduleResult.value.validate()) {
-      if (diagnostics.length < settings.maxNumberOfProblems) {
-        const diagnostic: Diagnostic = {
-          severity: DiagnosticSeverity.Error,
-          range: {
-            start: validationError.start,
-            end: validationError.end,
-          },
-          message: validationError.message,
-          source: "parser",
-        };
-        diagnostics.push(diagnostic);
-      }
-    }
-  }
-
-  // The validator creates diagnostics for all uppercase words length 2 and more
-  // const text = textDocument.getText();
-
-  /*
-  const pattern = /\b[A-Z]{2,}\b/g;
-  let m: RegExpExecArray | null;
-
-  while ((m = pattern.exec(text)) && problems < settings.maxNumberOfProblems) {
-    problems++;
-    const diagnostic: Diagnostic = {
-      severity: DiagnosticSeverity.Warning,
-      range: {
-        start: textDocument.positionAt(m.index),
-        end: textDocument.positionAt(m.index + m[0].length),
-      },
-      message: `${m[0]} is all uppercase.`,
-      source: "ex",
-    };
-    if (hasDiagnosticRelatedInformationCapability) {
-      diagnostic.relatedInformation = [
-        {
-          location: {
-            uri: textDocument.uri,
-            range: Object.assign({}, diagnostic.range),
-          },
-          message: "Spelling matters",
-        },
-        {
-          location: {
-            uri: textDocument.uri,
-            range: Object.assign({}, diagnostic.range),
-          },
-          message: "Particularly for names",
-        },
-      ];
-    }
-    diagnostics.push(diagnostic);
-  }
-  */
-
-  // Send the computed diagnostics to VSCode.
-  connection.sendDiagnostics({ uri: textDocument.uri, diagnostics });
-}
 
 connection.onDidChangeWatchedFiles((_change) => {
   // Monitored files have change in VSCode

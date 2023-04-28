@@ -1,3 +1,4 @@
+import { ModuleContext } from "./context";
 import { RealizedType, TO2Type } from "./to2-type";
 
 export class ArrayType implements RealizedType {
@@ -7,8 +8,25 @@ export class ArrayType implements RealizedType {
   public description: string;
 
   constructor(element: TO2Type, dimension: number = 1) {
-    this.elementType = dimension > 1 ? new ArrayType(element, dimension - 1) : element;
+    this.elementType =
+      dimension > 1 ? new ArrayType(element, dimension - 1) : element;
     this.name = this.localName = `${this.elementType}[]`;
     this.description = "";
+  }
+
+  public isAssignableFrom(otherType: RealizedType): boolean {
+    return this.name === otherType.name;
+  }
+
+  public realizedType(context: ModuleContext): RealizedType {
+    return this;
+  }
+
+  public findSuffixOperator(): RealizedType | undefined {
+    return undefined;
+  }
+
+  public findPrefixOperator(): RealizedType | undefined {
+    return undefined;
   }
 }

@@ -30,6 +30,10 @@ export class Call extends Expression {
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
+    for(const argExpression of this.args) {
+      errors.push(...argExpression.validateBlock(context));
+    }
+
     return errors;
   }
 }

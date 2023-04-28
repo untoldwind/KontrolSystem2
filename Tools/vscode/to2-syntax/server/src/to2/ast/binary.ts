@@ -1,6 +1,6 @@
 import { Expression, Node, ValidationError } from ".";
 import { Operator } from "./operator";
-import { BUILTIN_BOOL, TO2Type } from "./to2-type";
+import { TO2Type, UNKNOWN_TYPE } from "./to2-type";
 import { InputPosition } from "../../parser";
 import { BlockContext } from "./context";
 
@@ -15,8 +15,8 @@ export class Binary extends Expression {
     super(start, end);
   }
 
-  resultType(): TO2Type {
-    return BUILTIN_BOOL;
+  resultType(context: BlockContext): TO2Type {
+    return this.findOperator(context) ?? UNKNOWN_TYPE;
   }
 
   public reduceNode<T>(
@@ -31,7 +31,33 @@ export class Binary extends Expression {
 
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
+    
+    errors.push(...this.left.validateBlock(context));
+    errors.push(...this.right.validateBlock(context));
+
+    if (errors.length === 0 && !this.findOperator(context)) {
+      const leftType = this.left.resultType(context);
+      const rightType = this.right.resultType(context);
+      errors.push({
+        status: "error",
+        message: `Invalid operator: ${leftType.name} ${this.op} ${rightType.name} is not definied`,
+        start: this.start,
+        end: this.end,
+      });
+    }
 
     return errors;
+  }
+
+  private findOperator(context: BlockContext): TO2Type | undefined {
+    const leftType = this.left.resultType(context).realizedType(context.module);
+    const rightType = this.right
+      .resultType(context)
+      .realizedType(context.module);
+
+    return (
+      leftType.findSuffixOperator(this.op, rightType) ??
+      rightType.findPrefixOperator(this.op, leftType)
+    );
   }
 }

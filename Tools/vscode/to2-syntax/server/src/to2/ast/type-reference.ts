@@ -1,6 +1,7 @@
-import { TO2Type } from "./to2-type";
+import { RealizedType, TO2Type, UNKNOWN_TYPE } from "./to2-type";
 import { Node, ValidationError } from ".";
 import { InputPosition } from "../../parser";
+import { ModuleContext } from "./context";
 
 export class LookupTypeReference implements Node, TO2Type {
   public name: string;
@@ -24,9 +25,14 @@ export class LookupTypeReference implements Node, TO2Type {
   ): T {
     return combine(initialValue, this);
   }
+
   public validate(): ValidationError[] {
     const errors: ValidationError[] = [];
 
     return errors;
+  }
+
+  public realizedType(context: ModuleContext): RealizedType {
+    return context.findType(this.namePath, this.typeArguments) ?? UNKNOWN_TYPE;
   }
 }

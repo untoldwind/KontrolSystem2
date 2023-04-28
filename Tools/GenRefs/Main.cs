@@ -20,7 +20,7 @@ namespace KontrolSystem.GenRefs {
 
             var reference = GenerateReference(context.CreateModuleContext("reference"), registry);
 
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "docs", "reference.json");
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "Tools", "vscode", "to2-syntax", "server", "src", "reference", "reference.json");
 
             File.WriteAllText(path, JsonConvert.SerializeObject(reference, Formatting.Indented));
         }
@@ -33,7 +33,7 @@ namespace KontrolSystem.GenRefs {
         public Reference(ModuleContext moduleContext, KontrolRegistry registry) {
             Builtin = new Dictionary<string, TypeReference>();
             Modules = new Dictionary<string, ModuleReference>();
-
+            
             foreach (var type in new List<RealizedType> {
                          BuiltinType.Unit, BuiltinType.Bool, BuiltinType.Int,
                          BuiltinType.Float, BuiltinType.String, BuiltinType.Range, BuiltinType.ArrayBuilder,
@@ -47,6 +47,17 @@ namespace KontrolSystem.GenRefs {
                 if (IsModuleEmpty(module) || !module.Name.Contains("::")) continue;
                 var moduleReference = new ModuleReference(moduleContext, module);
                 Modules.Add(moduleReference.Name, moduleReference);
+            }
+
+            var allTypes = Builtin.Values.Concat(Modules.Values.SelectMany(module => module.Types.Values)).ToList();
+            
+            foreach(var typeReference in allTypes) {
+                foreach (var otherType in allTypes) {
+                    if(otherType == typeReference) continue;
+                    if(!typeReference.TO2Type.IsAssignableFrom(moduleContext, otherType.TO2Type)) continue;
+                    
+                    typeReference.AssignableFrom.Add(new TypeRef(moduleContext, otherType.TO2Type));
+                }
             }
         }
 
@@ -99,12 +110,14 @@ namespace KontrolSystem.GenRefs {
 
     public class TypeReference {
         public TypeReference(ModuleContext moduleContext, RealizedType type) {
+            TO2Type = type;
             Name = type.LocalName;
             Description = type.Description;
             Fields = new Dictionary<string, FieldReference>();
             Methods = new Dictionary<string, FunctionReference>();
             GenericParameters = type.GenericParameters.Length > 0 ? type.GenericParameters : null;
-
+            AssignableFrom = new List<TypeRef>();
+            
             foreach (var field in type.DeclaredFields) {
                 var fieldReference = new FieldReference(moduleContext, field);
                 Fields.Add(fieldReference.Name, fieldReference);
@@ -156,6 +169,12 @@ namespace KontrolSystem.GenRefs {
 
         [JsonProperty("suffixOperators", NullValueHandling = NullValueHandling.Ignore)]
         public Dictionary<string, List<OperatorReference>> SuffixOperators { get; }
+        
+        [JsonProperty("assignableFrom")]
+        public List<TypeRef> AssignableFrom { get; }
+        
+        [JsonIgnore]
+        public RealizedType TO2Type { get; }
     }
 
     public class FieldReference {

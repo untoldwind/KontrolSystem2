@@ -30,7 +30,7 @@ import { between, preceded, seq, terminated } from "../parser/sequence";
 import { FunctionType } from "./ast/function-type";
 import { LineComment } from "./ast/line-comment";
 import { RecordType } from "./ast/record-type";
-import { TO2Type, findType } from "./ast/to2-type";
+import { TO2Type, findLibraryType } from "./ast/to2-type";
 import { TupleType } from "./ast/tuple-type";
 import { LookupTypeReference } from "./ast/type-reference";
 import {
@@ -167,7 +167,7 @@ const typeReference = map(
     ),
   ]),
   ([name, typeArguments], start, end) =>
-    findType(name, typeArguments ?? []) ??
+    findLibraryType(name, typeArguments ?? []) ??
     new LookupTypeReference(name, typeArguments ?? [], start, end)
 );
 

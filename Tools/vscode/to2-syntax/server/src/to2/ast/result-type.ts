@@ -1,3 +1,4 @@
+import { ModuleContext } from "./context";
 import { RealizedType, TO2Type } from "./to2-type";
 
 export class ResultType implements RealizedType {
@@ -11,5 +12,21 @@ export class ResultType implements RealizedType {
   ) {
     this.name = this.localName = `Result<${successType}, ${errorType}>`;
     this.description = "";
+  }
+
+  public isAssignableFrom(otherType: RealizedType): boolean {
+    return this.name === otherType.name;
+  }
+
+  public realizedType(context: ModuleContext): RealizedType {
+    return this;
+  }
+
+  public findSuffixOperator(): RealizedType | undefined {
+    return undefined;
+  }
+
+  public findPrefixOperator(): RealizedType | undefined {
+    return undefined;
   }
 }

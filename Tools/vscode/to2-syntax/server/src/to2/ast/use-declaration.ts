@@ -17,9 +17,19 @@ export class UseDeclaration implements Node, ModuleItem {
   ): T {
     return combine(initialValue, this);
   }
+
   public validateModule(context: ModuleContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
+    if (!context.findModule(this.moduleNamePath.value)) {
+      errors.push({
+        status: "error",
+        message: `Module not found: ${this.moduleNamePath.value}`,
+        start: this.moduleNamePath.start,
+        end: this.moduleNamePath.end,
+      });
+    }
+    
     return errors;
   }
 }

@@ -22,7 +22,7 @@ import { ConstDeclaration } from "./ast/const-declaration";
 import { ErrorNode } from "./ast/error-node";
 import { ImplDeclaration } from "./ast/impl-declaration";
 import { StructDeclaration, StructField } from "./ast/struct-declaration";
-import { TO2Module } from "./ast/to2-module";
+import { TO2ModuleNode } from "./ast/to2-module";
 import { TypeAlias } from "./ast/type-alias";
 import { UseDeclaration } from "./ast/use-declaration";
 import {
@@ -186,11 +186,11 @@ const moduleItems = delimitedUntil(
   recoverModuleItem
 );
 
-export function module(moduleName: string): Parser<TO2Module> {
+export function module(moduleName: string): Parser<TO2ModuleNode> {
   return map(
     seq([preceded(whitespace0, descriptionComment), moduleItems]),
     ([description, items], start, end) =>
-      new TO2Module(moduleName, description, items, start, end)
+      new TO2ModuleNode(moduleName, description, items, start, end)
   );
 }
 

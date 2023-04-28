@@ -1,4 +1,5 @@
 import { WithPosition } from "../../parser";
+import { ModuleContext } from "./context";
 import { RealizedType, TO2Type } from "./to2-type";
 
 export class RecordType implements RealizedType {
@@ -11,5 +12,21 @@ export class RecordType implements RealizedType {
       .map((item) => `${item[0]} : ${item[1]}`)
       .join(", ")})`;
     this.description = "";
+  }
+
+  public isAssignableFrom(otherType: RealizedType): boolean {
+    return this.name === otherType.name;
+  }
+
+  public realizedType(context: ModuleContext): RealizedType {
+    return this;
+  }
+
+  public findSuffixOperator(): RealizedType | undefined {
+    return undefined;
+  }
+
+  public findPrefixOperator(): RealizedType | undefined {
+    return undefined;
   }
 }

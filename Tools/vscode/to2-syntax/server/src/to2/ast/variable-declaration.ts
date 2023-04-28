@@ -29,7 +29,7 @@ export class VariableDeclaration implements Node, BlockItem {
   ) {}
 
   public resultType(context: BlockContext): TO2Type {
-    return this.expression.resultType(context);
+    return this.declaration.type ?? this.expression.resultType(context);
   }
 
   public reduceNode<T>(
@@ -55,6 +55,7 @@ export class VariableDeclaration implements Node, BlockItem {
         this.resultType(context)
       );
     }
+    errors.push(...this.expression.validateBlock(context));
 
     return errors;
   }

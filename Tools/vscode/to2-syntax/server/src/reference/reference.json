@@ -4,7 +4,470 @@
       "name": "Unit",
       "description": "",
       "fields": {},
-      "methods": {}
+      "methods": {},
+      "assignableFrom": [
+        {
+          "kind": "Builtin",
+          "name": "bool"
+        },
+        {
+          "kind": "Builtin",
+          "name": "int"
+        },
+        {
+          "kind": "Builtin",
+          "name": "float"
+        },
+        {
+          "kind": "Builtin",
+          "name": "string"
+        },
+        {
+          "kind": "Standard",
+          "module": "",
+          "name": "Range"
+        },
+        {
+          "kind": "Standard",
+          "module": "",
+          "name": "ArrayBuilder<T>"
+        },
+        {
+          "kind": "Standard",
+          "module": "",
+          "name": "Cell<T>"
+        },
+        {
+          "kind": "Standard",
+          "module": "",
+          "name": "Option<T>"
+        },
+        {
+          "kind": "Standard",
+          "module": "",
+          "name": "Result<T, U>"
+        },
+        {
+          "kind": "Standard",
+          "module": "core::background",
+          "name": "Task<T>"
+        },
+        {
+          "kind": "Standard",
+          "module": "core::math",
+          "name": "Random"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::console",
+          "name": "Console"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::console",
+          "name": "RgbaColor"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::control",
+          "name": "MovingAverage"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::control",
+          "name": "PIDLoop"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::control",
+          "name": "RCSTranslateManager"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::control",
+          "name": "SteeringManager"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::control",
+          "name": "ThrottleManager"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::control",
+          "name": "TorquePI"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::control",
+          "name": "WheelSteeringManager"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::control",
+          "name": "WheelThrottleManager"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::debug",
+          "name": "DebugBillboard"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::debug",
+          "name": "Debug"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::debug",
+          "name": "GroundMarker"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::debug",
+          "name": "DebugPath"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::debug",
+          "name": "DebugVector"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::math",
+          "name": "Vec2"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::math",
+          "name": "Vec3"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::math",
+          "name": "Direction"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::math",
+          "name": "Matrix2x2"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::math",
+          "name": "GlobalAngularVelocity"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::math",
+          "name": "GlobalPosition"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::math",
+          "name": "TransformFrame"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::math",
+          "name": "GlobalVector"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::math",
+          "name": "GlobalVelocity"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::math",
+          "name": "GlobalDirection"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::orbit",
+          "name": "Body"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::orbit",
+          "name": "GeoCoordinates"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::orbit",
+          "name": "Orbit"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::resource",
+          "name": "FlowDirection"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::resource",
+          "name": "FlowDirectionConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::resource",
+          "name": "ResourceContainer"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::resource",
+          "name": "ResourceData"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::resource",
+          "name": "ResourceDefinition"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::resource",
+          "name": "ResourceTransfer"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::resource",
+          "name": "ResourceTransferEntry"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::telemetry",
+          "name": "TimeSeries"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "AutopilotMode"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "AutopilotModeConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "DeltaVSituation"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "DeltaVSituationConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ParachuteDeployState"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ParachuteDeployStateConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ParachuteDeployMode"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ParachuteDeployModeConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ParachuteSafeStates"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ParachuteSafeStatesConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "EngineType"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "EngineTypeConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "VesselSituation"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "VesselSituationConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "VesselControlState"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "VesselControlStateConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "DockingState"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "DockingStateConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "FlightCtrlState"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ActionGroups"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "Autopilot"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "EngineDeltaV"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "StageDeltaV"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "EngineMode"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "Maneuver"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ManeuverNode"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleAirIntake"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleDecoupler"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleDeployable"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleDockingNode"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleEngine"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleFairing"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleLaunchClamp"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleParachute"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleSolarPanel"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "Part"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "Staging"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "Targetable"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "Vessel"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "VesselDeltaV"
+        },
+        {
+          "kind": "Standard",
+          "module": "std::control::steering",
+          "name": "SteeringController"
+        },
+        {
+          "kind": "Standard",
+          "module": "std::control::steering",
+          "name": "SteeringControl"
+        },
+        {
+          "kind": "Standard",
+          "module": "std::land::landing_simulation",
+          "name": "BodyParameters"
+        },
+        {
+          "kind": "Standard",
+          "module": "(brake_time : float, end_latitude : float, end_longitude : float, end_time : float, path : ksp::math",
+          "name": "GlobalPosition[])"
+        },
+        {
+          "kind": "Standard",
+          "module": "std::land::landing_simulation",
+          "name": "ReentrySimulation"
+        },
+        {
+          "kind": "Standard",
+          "module": "sync fn(ksp::math::Vec3, ksp::math",
+          "name": "Vec3) -> float"
+        }
+      ]
     },
     "bool": {
       "name": "bool",
@@ -108,7 +571,8 @@
             }
           }
         ]
-      }
+      },
+      "assignableFrom": []
     },
     "int": {
       "name": "int",
@@ -464,7 +928,8 @@
             }
           }
         ]
-      }
+      },
+      "assignableFrom": []
     },
     "float": {
       "name": "float",
@@ -841,7 +1306,13 @@
             }
           }
         ]
-      }
+      },
+      "assignableFrom": [
+        {
+          "kind": "Builtin",
+          "name": "int"
+        }
+      ]
     },
     "string": {
       "name": "string",
@@ -1090,7 +1561,8 @@
             }
           }
         ]
-      }
+      },
+      "assignableFrom": []
     },
     "Range": {
       "name": "Range",
@@ -1127,7 +1599,8 @@
             "name": "T[]"
           }
         }
-      }
+      },
+      "assignableFrom": []
     },
     "ArrayBuilder": {
       "name": "ArrayBuilder",
@@ -1192,7 +1665,8 @@
             }
           }
         ]
-      }
+      },
+      "assignableFrom": []
     },
     "Cell": {
       "name": "Cell",
@@ -1250,7 +1724,8 @@
             "name": "Cell<T>"
           }
         }
-      }
+      },
+      "assignableFrom": []
     },
     "Option": {
       "name": "Option",
@@ -1363,7 +1838,469 @@
             }
           }
         ]
-      }
+      },
+      "assignableFrom": [
+        {
+          "kind": "Builtin",
+          "name": "Unit"
+        },
+        {
+          "kind": "Builtin",
+          "name": "bool"
+        },
+        {
+          "kind": "Builtin",
+          "name": "int"
+        },
+        {
+          "kind": "Builtin",
+          "name": "float"
+        },
+        {
+          "kind": "Builtin",
+          "name": "string"
+        },
+        {
+          "kind": "Standard",
+          "module": "",
+          "name": "Range"
+        },
+        {
+          "kind": "Standard",
+          "module": "",
+          "name": "ArrayBuilder<T>"
+        },
+        {
+          "kind": "Standard",
+          "module": "",
+          "name": "Cell<T>"
+        },
+        {
+          "kind": "Standard",
+          "module": "",
+          "name": "Result<T, U>"
+        },
+        {
+          "kind": "Standard",
+          "module": "core::background",
+          "name": "Task<T>"
+        },
+        {
+          "kind": "Standard",
+          "module": "core::math",
+          "name": "Random"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::console",
+          "name": "Console"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::console",
+          "name": "RgbaColor"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::control",
+          "name": "MovingAverage"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::control",
+          "name": "PIDLoop"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::control",
+          "name": "RCSTranslateManager"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::control",
+          "name": "SteeringManager"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::control",
+          "name": "ThrottleManager"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::control",
+          "name": "TorquePI"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::control",
+          "name": "WheelSteeringManager"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::control",
+          "name": "WheelThrottleManager"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::debug",
+          "name": "DebugBillboard"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::debug",
+          "name": "Debug"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::debug",
+          "name": "GroundMarker"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::debug",
+          "name": "DebugPath"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::debug",
+          "name": "DebugVector"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::math",
+          "name": "Vec2"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::math",
+          "name": "Vec3"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::math",
+          "name": "Direction"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::math",
+          "name": "Matrix2x2"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::math",
+          "name": "GlobalAngularVelocity"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::math",
+          "name": "GlobalPosition"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::math",
+          "name": "TransformFrame"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::math",
+          "name": "GlobalVector"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::math",
+          "name": "GlobalVelocity"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::math",
+          "name": "GlobalDirection"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::orbit",
+          "name": "Body"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::orbit",
+          "name": "GeoCoordinates"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::orbit",
+          "name": "Orbit"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::resource",
+          "name": "FlowDirection"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::resource",
+          "name": "FlowDirectionConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::resource",
+          "name": "ResourceContainer"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::resource",
+          "name": "ResourceData"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::resource",
+          "name": "ResourceDefinition"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::resource",
+          "name": "ResourceTransfer"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::resource",
+          "name": "ResourceTransferEntry"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::telemetry",
+          "name": "TimeSeries"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "AutopilotMode"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "AutopilotModeConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "DeltaVSituation"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "DeltaVSituationConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ParachuteDeployState"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ParachuteDeployStateConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ParachuteDeployMode"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ParachuteDeployModeConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ParachuteSafeStates"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ParachuteSafeStatesConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "EngineType"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "EngineTypeConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "VesselSituation"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "VesselSituationConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "VesselControlState"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "VesselControlStateConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "DockingState"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "DockingStateConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "FlightCtrlState"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ActionGroups"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "Autopilot"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "EngineDeltaV"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "StageDeltaV"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "EngineMode"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "Maneuver"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ManeuverNode"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleAirIntake"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleDecoupler"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleDeployable"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleDockingNode"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleEngine"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleFairing"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleLaunchClamp"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleParachute"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleSolarPanel"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "Part"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "Staging"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "Targetable"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "Vessel"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "VesselDeltaV"
+        },
+        {
+          "kind": "Standard",
+          "module": "std::control::steering",
+          "name": "SteeringController"
+        },
+        {
+          "kind": "Standard",
+          "module": "std::control::steering",
+          "name": "SteeringControl"
+        },
+        {
+          "kind": "Standard",
+          "module": "std::land::landing_simulation",
+          "name": "BodyParameters"
+        },
+        {
+          "kind": "Standard",
+          "module": "(brake_time : float, end_latitude : float, end_longitude : float, end_time : float, path : ksp::math",
+          "name": "GlobalPosition[])"
+        },
+        {
+          "kind": "Standard",
+          "module": "std::land::landing_simulation",
+          "name": "ReentrySimulation"
+        },
+        {
+          "kind": "Standard",
+          "module": "sync fn(ksp::math::Vec3, ksp::math",
+          "name": "Vec3) -> float"
+        }
+      ]
     },
     "Result": {
       "name": "Result",
@@ -1412,7 +2349,469 @@
             }
           }
         ]
-      }
+      },
+      "assignableFrom": [
+        {
+          "kind": "Builtin",
+          "name": "Unit"
+        },
+        {
+          "kind": "Builtin",
+          "name": "bool"
+        },
+        {
+          "kind": "Builtin",
+          "name": "int"
+        },
+        {
+          "kind": "Builtin",
+          "name": "float"
+        },
+        {
+          "kind": "Builtin",
+          "name": "string"
+        },
+        {
+          "kind": "Standard",
+          "module": "",
+          "name": "Range"
+        },
+        {
+          "kind": "Standard",
+          "module": "",
+          "name": "ArrayBuilder<T>"
+        },
+        {
+          "kind": "Standard",
+          "module": "",
+          "name": "Cell<T>"
+        },
+        {
+          "kind": "Standard",
+          "module": "",
+          "name": "Option<T>"
+        },
+        {
+          "kind": "Standard",
+          "module": "core::background",
+          "name": "Task<T>"
+        },
+        {
+          "kind": "Standard",
+          "module": "core::math",
+          "name": "Random"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::console",
+          "name": "Console"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::console",
+          "name": "RgbaColor"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::control",
+          "name": "MovingAverage"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::control",
+          "name": "PIDLoop"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::control",
+          "name": "RCSTranslateManager"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::control",
+          "name": "SteeringManager"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::control",
+          "name": "ThrottleManager"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::control",
+          "name": "TorquePI"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::control",
+          "name": "WheelSteeringManager"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::control",
+          "name": "WheelThrottleManager"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::debug",
+          "name": "DebugBillboard"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::debug",
+          "name": "Debug"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::debug",
+          "name": "GroundMarker"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::debug",
+          "name": "DebugPath"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::debug",
+          "name": "DebugVector"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::math",
+          "name": "Vec2"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::math",
+          "name": "Vec3"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::math",
+          "name": "Direction"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::math",
+          "name": "Matrix2x2"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::math",
+          "name": "GlobalAngularVelocity"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::math",
+          "name": "GlobalPosition"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::math",
+          "name": "TransformFrame"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::math",
+          "name": "GlobalVector"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::math",
+          "name": "GlobalVelocity"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::math",
+          "name": "GlobalDirection"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::orbit",
+          "name": "Body"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::orbit",
+          "name": "GeoCoordinates"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::orbit",
+          "name": "Orbit"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::resource",
+          "name": "FlowDirection"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::resource",
+          "name": "FlowDirectionConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::resource",
+          "name": "ResourceContainer"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::resource",
+          "name": "ResourceData"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::resource",
+          "name": "ResourceDefinition"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::resource",
+          "name": "ResourceTransfer"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::resource",
+          "name": "ResourceTransferEntry"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::telemetry",
+          "name": "TimeSeries"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "AutopilotMode"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "AutopilotModeConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "DeltaVSituation"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "DeltaVSituationConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ParachuteDeployState"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ParachuteDeployStateConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ParachuteDeployMode"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ParachuteDeployModeConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ParachuteSafeStates"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ParachuteSafeStatesConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "EngineType"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "EngineTypeConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "VesselSituation"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "VesselSituationConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "VesselControlState"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "VesselControlStateConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "DockingState"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "DockingStateConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "FlightCtrlState"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ActionGroups"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "Autopilot"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "EngineDeltaV"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "StageDeltaV"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "EngineMode"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "Maneuver"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ManeuverNode"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleAirIntake"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleDecoupler"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleDeployable"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleDockingNode"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleEngine"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleFairing"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleLaunchClamp"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleParachute"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleSolarPanel"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "Part"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "Staging"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "Targetable"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "Vessel"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "VesselDeltaV"
+        },
+        {
+          "kind": "Standard",
+          "module": "std::control::steering",
+          "name": "SteeringController"
+        },
+        {
+          "kind": "Standard",
+          "module": "std::control::steering",
+          "name": "SteeringControl"
+        },
+        {
+          "kind": "Standard",
+          "module": "std::land::landing_simulation",
+          "name": "BodyParameters"
+        },
+        {
+          "kind": "Standard",
+          "module": "(brake_time : float, end_latitude : float, end_longitude : float, end_time : float, path : ksp::math",
+          "name": "GlobalPosition[])"
+        },
+        {
+          "kind": "Standard",
+          "module": "std::land::landing_simulation",
+          "name": "ReentrySimulation"
+        },
+        {
+          "kind": "Standard",
+          "module": "sync fn(ksp::math::Vec3, ksp::math",
+          "name": "Vec3) -> float"
+        }
+      ]
     }
   },
   "modules": {
@@ -1474,7 +2873,8 @@
                 "name": "Unit"
               }
             }
-          }
+          },
+          "assignableFrom": []
         }
       },
       "constants": {},
@@ -1660,7 +3060,8 @@
                 "name": "float"
               }
             }
-          }
+          },
+          "assignableFrom": []
         }
       },
       "constants": {
@@ -2938,7 +4339,8 @@
                 "name": "Unit"
               }
             }
-          }
+          },
+          "assignableFrom": []
         },
         "RgbaColor": {
           "name": "RgbaColor",
@@ -2977,7 +4379,8 @@
               }
             }
           },
-          "methods": {}
+          "methods": {},
+          "assignableFrom": []
         }
       },
       "constants": {
@@ -3197,7 +4600,8 @@
                 "name": "float"
               }
             }
-          }
+          },
+          "assignableFrom": []
         },
         "PIDLoop": {
           "name": "PIDLoop",
@@ -3391,7 +4795,8 @@
                 "name": "Unit"
               }
             }
-          }
+          },
+          "assignableFrom": []
         },
         "RCSTranslateManager": {
           "name": "RCSTranslateManager",
@@ -3441,7 +4846,8 @@
                 "name": "Unit"
               }
             }
-          }
+          },
+          "assignableFrom": []
         },
         "SteeringManager": {
           "name": "SteeringManager",
@@ -3491,7 +4897,8 @@
                 "name": "Unit"
               }
             }
-          }
+          },
+          "assignableFrom": []
         },
         "ThrottleManager": {
           "name": "ThrottleManager",
@@ -3540,7 +4947,8 @@
                 "name": "Unit"
               }
             }
-          }
+          },
+          "assignableFrom": []
         },
         "TorquePI": {
           "name": "TorquePI",
@@ -3687,7 +5095,8 @@
                 "name": "Unit"
               }
             }
-          }
+          },
+          "assignableFrom": []
         },
         "WheelSteeringManager": {
           "name": "WheelSteeringManager",
@@ -3736,7 +5145,8 @@
                 "name": "Unit"
               }
             }
-          }
+          },
+          "assignableFrom": []
         },
         "WheelThrottleManager": {
           "name": "WheelThrottleManager",
@@ -3785,7 +5195,8 @@
                 "name": "Unit"
               }
             }
-          }
+          },
+          "assignableFrom": []
         }
       },
       "constants": {},
@@ -3934,7 +5345,8 @@
                 "name": "Unit"
               }
             }
-          }
+          },
+          "assignableFrom": []
         },
         "Debug": {
           "name": "Debug",
@@ -4175,7 +5587,8 @@
                 "name": "Unit"
               }
             }
-          }
+          },
+          "assignableFrom": []
         },
         "GroundMarker": {
           "name": "GroundMarker",
@@ -4227,7 +5640,8 @@
                 "name": "Unit"
               }
             }
-          }
+          },
+          "assignableFrom": []
         },
         "DebugPath": {
           "name": "DebugPath",
@@ -4280,7 +5694,8 @@
                 "name": "Unit"
               }
             }
-          }
+          },
+          "assignableFrom": []
         },
         "DebugVector": {
           "name": "DebugVector",
@@ -4418,7 +5833,8 @@
                 "name": "Unit"
               }
             }
-          }
+          },
+          "assignableFrom": []
         }
       },
       "constants": {
@@ -4847,7 +6263,19 @@
                 }
               }
             ]
-          }
+          },
+          "assignableFrom": [
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec3"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "FlightCtrlState"
+            }
+          ]
         },
         "Vec3": {
           "name": "Vec3",
@@ -5331,7 +6759,14 @@
                 }
               }
             ]
-          }
+          },
+          "assignableFrom": [
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "FlightCtrlState"
+            }
+          ]
         },
         "Direction": {
           "name": "Direction",
@@ -5609,7 +7044,8 @@
                 }
               }
             ]
-          }
+          },
+          "assignableFrom": []
         },
         "Matrix2x2": {
           "name": "Matrix2x2",
@@ -5704,7 +7140,8 @@
                 }
               }
             ]
-          }
+          },
+          "assignableFrom": []
         },
         "GlobalAngularVelocity": {
           "name": "GlobalAngularVelocity",
@@ -5797,7 +7234,14 @@
                 "name": "GlobalVector"
               }
             }
-          }
+          },
+          "assignableFrom": [
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVelocity"
+            }
+          ]
         },
         "GlobalPosition": {
           "name": "GlobalPosition",
@@ -5998,7 +7442,8 @@
                 }
               }
             ]
-          }
+          },
+          "assignableFrom": []
         },
         "TransformFrame": {
           "name": "TransformFrame",
@@ -6126,7 +7571,8 @@
                 "name": "Vec3"
               }
             }
-          }
+          },
+          "assignableFrom": []
         },
         "GlobalVector": {
           "name": "GlobalVector",
@@ -6457,7 +7903,8 @@
                 }
               }
             ]
-          }
+          },
+          "assignableFrom": []
         },
         "GlobalVelocity": {
           "name": "GlobalVelocity",
@@ -6571,7 +8018,14 @@
                 "name": "string"
               }
             }
-          }
+          },
+          "assignableFrom": [
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalAngularVelocity"
+            }
+          ]
         },
         "GlobalDirection": {
           "name": "GlobalDirection",
@@ -6874,7 +8328,8 @@
                 }
               }
             ]
-          }
+          },
+          "assignableFrom": []
         }
       },
       "constants": {},
@@ -7697,7 +9152,8 @@
                 "name": "Orbit"
               }
             }
-          }
+          },
+          "assignableFrom": []
         },
         "GeoCoordinates": {
           "name": "GeoCoordinates",
@@ -7791,7 +9247,8 @@
                 "name": "GlobalPosition"
               }
             }
-          }
+          },
+          "assignableFrom": []
         },
         "Orbit": {
           "name": "Orbit",
@@ -8591,7 +10048,8 @@
                 "name": "string"
               }
             }
-          }
+          },
+          "assignableFrom": []
         }
       },
       "constants": {},
@@ -8675,7 +10133,8 @@
                 }
               }
             ]
-          }
+          },
+          "assignableFrom": []
         },
         "FlowDirectionConstants": {
           "name": "FlowDirectionConstants",
@@ -8722,7 +10181,469 @@
                 "name": "FlowDirection>"
               }
             }
-          }
+          },
+          "assignableFrom": [
+            {
+              "kind": "Builtin",
+              "name": "Unit"
+            },
+            {
+              "kind": "Builtin",
+              "name": "bool"
+            },
+            {
+              "kind": "Builtin",
+              "name": "int"
+            },
+            {
+              "kind": "Builtin",
+              "name": "float"
+            },
+            {
+              "kind": "Builtin",
+              "name": "string"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Range"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "ArrayBuilder<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Cell<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Option<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Result<T, U>"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::background",
+              "name": "Task<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::math",
+              "name": "Random"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "Console"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "RgbaColor"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "MovingAverage"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "PIDLoop"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "RCSTranslateManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "SteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "ThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "TorquePI"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelSteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugBillboard"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "Debug"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "GroundMarker"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugPath"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec3"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Direction"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Matrix2x2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalAngularVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalPosition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "TransformFrame"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Body"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "GeoCoordinates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Orbit"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceContainer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceData"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransfer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransferEntry"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::telemetry",
+              "name": "TimeSeries"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStatesConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "FlightCtrlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ActionGroups"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Autopilot"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "StageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Maneuver"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ManeuverNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDockingNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleEngine"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Staging"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Targetable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Vessel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringController"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringControl"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "BodyParameters"
+            },
+            {
+              "kind": "Standard",
+              "module": "(brake_time : float, end_latitude : float, end_longitude : float, end_time : float, path : ksp::math",
+              "name": "GlobalPosition[])"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "ReentrySimulation"
+            },
+            {
+              "kind": "Standard",
+              "module": "sync fn(ksp::math::Vec3, ksp::math",
+              "name": "Vec3) -> float"
+            }
+          ]
         },
         "ResourceContainer": {
           "name": "ResourceContainer",
@@ -8746,7 +10667,8 @@
                 "name": "Unit"
               }
             }
-          }
+          },
+          "assignableFrom": []
         },
         "ResourceData": {
           "name": "ResourceData",
@@ -8777,7 +10699,8 @@
               }
             }
           },
-          "methods": {}
+          "methods": {},
+          "assignableFrom": []
         },
         "ResourceDefinition": {
           "name": "ResourceDefinition",
@@ -8840,7 +10763,8 @@
               }
             }
           },
-          "methods": {}
+          "methods": {},
+          "assignableFrom": []
         },
         "ResourceTransfer": {
           "name": "ResourceTransfer",
@@ -8964,7 +10888,8 @@
                 "name": "Unit"
               }
             }
-          }
+          },
+          "assignableFrom": []
         },
         "ResourceTransferEntry": {
           "name": "ResourceTransferEntry",
@@ -8988,7 +10913,8 @@
               }
             }
           },
-          "methods": {}
+          "methods": {},
+          "assignableFrom": []
         }
       },
       "constants": {
@@ -9084,7 +11010,8 @@
                 "name": "bool"
               }
             }
-          }
+          },
+          "assignableFrom": []
         }
       },
       "constants": {},
@@ -9553,7 +11480,8 @@
                 }
               }
             ]
-          }
+          },
+          "assignableFrom": []
         },
         "AutopilotModeConstants": {
           "name": "AutopilotModeConstants",
@@ -9700,7 +11628,469 @@
                 "name": "AutopilotMode>"
               }
             }
-          }
+          },
+          "assignableFrom": [
+            {
+              "kind": "Builtin",
+              "name": "Unit"
+            },
+            {
+              "kind": "Builtin",
+              "name": "bool"
+            },
+            {
+              "kind": "Builtin",
+              "name": "int"
+            },
+            {
+              "kind": "Builtin",
+              "name": "float"
+            },
+            {
+              "kind": "Builtin",
+              "name": "string"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Range"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "ArrayBuilder<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Cell<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Option<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Result<T, U>"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::background",
+              "name": "Task<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::math",
+              "name": "Random"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "Console"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "RgbaColor"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "MovingAverage"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "PIDLoop"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "RCSTranslateManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "SteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "ThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "TorquePI"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelSteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugBillboard"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "Debug"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "GroundMarker"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugPath"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec3"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Direction"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Matrix2x2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalAngularVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalPosition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "TransformFrame"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Body"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "GeoCoordinates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Orbit"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirectionConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceContainer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceData"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransfer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransferEntry"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::telemetry",
+              "name": "TimeSeries"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStatesConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "FlightCtrlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ActionGroups"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Autopilot"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "StageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Maneuver"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ManeuverNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDockingNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleEngine"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Staging"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Targetable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Vessel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringController"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringControl"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "BodyParameters"
+            },
+            {
+              "kind": "Standard",
+              "module": "(brake_time : float, end_latitude : float, end_longitude : float, end_time : float, path : ksp::math",
+              "name": "GlobalPosition[])"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "ReentrySimulation"
+            },
+            {
+              "kind": "Standard",
+              "module": "sync fn(ksp::math::Vec3, ksp::math",
+              "name": "Vec3) -> float"
+            }
+          ]
         },
         "DeltaVSituation": {
           "name": "DeltaVSituation",
@@ -9746,7 +12136,8 @@
                 }
               }
             ]
-          }
+          },
+          "assignableFrom": []
         },
         "DeltaVSituationConstants": {
           "name": "DeltaVSituationConstants",
@@ -9803,7 +12194,469 @@
                 "name": "DeltaVSituation>"
               }
             }
-          }
+          },
+          "assignableFrom": [
+            {
+              "kind": "Builtin",
+              "name": "Unit"
+            },
+            {
+              "kind": "Builtin",
+              "name": "bool"
+            },
+            {
+              "kind": "Builtin",
+              "name": "int"
+            },
+            {
+              "kind": "Builtin",
+              "name": "float"
+            },
+            {
+              "kind": "Builtin",
+              "name": "string"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Range"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "ArrayBuilder<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Cell<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Option<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Result<T, U>"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::background",
+              "name": "Task<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::math",
+              "name": "Random"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "Console"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "RgbaColor"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "MovingAverage"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "PIDLoop"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "RCSTranslateManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "SteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "ThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "TorquePI"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelSteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugBillboard"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "Debug"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "GroundMarker"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugPath"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec3"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Direction"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Matrix2x2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalAngularVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalPosition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "TransformFrame"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Body"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "GeoCoordinates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Orbit"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirectionConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceContainer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceData"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransfer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransferEntry"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::telemetry",
+              "name": "TimeSeries"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStatesConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "FlightCtrlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ActionGroups"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Autopilot"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "StageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Maneuver"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ManeuverNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDockingNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleEngine"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Staging"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Targetable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Vessel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringController"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringControl"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "BodyParameters"
+            },
+            {
+              "kind": "Standard",
+              "module": "(brake_time : float, end_latitude : float, end_longitude : float, end_time : float, path : ksp::math",
+              "name": "GlobalPosition[])"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "ReentrySimulation"
+            },
+            {
+              "kind": "Standard",
+              "module": "sync fn(ksp::math::Vec3, ksp::math",
+              "name": "Vec3) -> float"
+            }
+          ]
         },
         "ParachuteDeployState": {
           "name": "ParachuteDeployState",
@@ -9849,7 +12702,8 @@
                 }
               }
             ]
-          }
+          },
+          "assignableFrom": []
         },
         "ParachuteDeployStateConstants": {
           "name": "ParachuteDeployStateConstants",
@@ -9926,7 +12780,469 @@
                 "name": "ParachuteDeployState>"
               }
             }
-          }
+          },
+          "assignableFrom": [
+            {
+              "kind": "Builtin",
+              "name": "Unit"
+            },
+            {
+              "kind": "Builtin",
+              "name": "bool"
+            },
+            {
+              "kind": "Builtin",
+              "name": "int"
+            },
+            {
+              "kind": "Builtin",
+              "name": "float"
+            },
+            {
+              "kind": "Builtin",
+              "name": "string"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Range"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "ArrayBuilder<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Cell<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Option<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Result<T, U>"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::background",
+              "name": "Task<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::math",
+              "name": "Random"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "Console"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "RgbaColor"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "MovingAverage"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "PIDLoop"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "RCSTranslateManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "SteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "ThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "TorquePI"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelSteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugBillboard"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "Debug"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "GroundMarker"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugPath"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec3"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Direction"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Matrix2x2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalAngularVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalPosition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "TransformFrame"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Body"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "GeoCoordinates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Orbit"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirectionConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceContainer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceData"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransfer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransferEntry"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::telemetry",
+              "name": "TimeSeries"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStatesConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "FlightCtrlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ActionGroups"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Autopilot"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "StageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Maneuver"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ManeuverNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDockingNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleEngine"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Staging"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Targetable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Vessel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringController"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringControl"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "BodyParameters"
+            },
+            {
+              "kind": "Standard",
+              "module": "(brake_time : float, end_latitude : float, end_longitude : float, end_time : float, path : ksp::math",
+              "name": "GlobalPosition[])"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "ReentrySimulation"
+            },
+            {
+              "kind": "Standard",
+              "module": "sync fn(ksp::math::Vec3, ksp::math",
+              "name": "Vec3) -> float"
+            }
+          ]
         },
         "ParachuteDeployMode": {
           "name": "ParachuteDeployMode",
@@ -9972,7 +13288,8 @@
                 }
               }
             ]
-          }
+          },
+          "assignableFrom": []
         },
         "ParachuteDeployModeConstants": {
           "name": "ParachuteDeployModeConstants",
@@ -10029,7 +13346,469 @@
                 "name": "ParachuteDeployMode>"
               }
             }
-          }
+          },
+          "assignableFrom": [
+            {
+              "kind": "Builtin",
+              "name": "Unit"
+            },
+            {
+              "kind": "Builtin",
+              "name": "bool"
+            },
+            {
+              "kind": "Builtin",
+              "name": "int"
+            },
+            {
+              "kind": "Builtin",
+              "name": "float"
+            },
+            {
+              "kind": "Builtin",
+              "name": "string"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Range"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "ArrayBuilder<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Cell<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Option<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Result<T, U>"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::background",
+              "name": "Task<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::math",
+              "name": "Random"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "Console"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "RgbaColor"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "MovingAverage"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "PIDLoop"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "RCSTranslateManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "SteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "ThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "TorquePI"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelSteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugBillboard"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "Debug"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "GroundMarker"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugPath"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec3"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Direction"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Matrix2x2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalAngularVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalPosition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "TransformFrame"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Body"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "GeoCoordinates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Orbit"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirectionConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceContainer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceData"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransfer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransferEntry"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::telemetry",
+              "name": "TimeSeries"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStatesConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "FlightCtrlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ActionGroups"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Autopilot"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "StageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Maneuver"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ManeuverNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDockingNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleEngine"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Staging"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Targetable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Vessel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringController"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringControl"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "BodyParameters"
+            },
+            {
+              "kind": "Standard",
+              "module": "(brake_time : float, end_latitude : float, end_longitude : float, end_time : float, path : ksp::math",
+              "name": "GlobalPosition[])"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "ReentrySimulation"
+            },
+            {
+              "kind": "Standard",
+              "module": "sync fn(ksp::math::Vec3, ksp::math",
+              "name": "Vec3) -> float"
+            }
+          ]
         },
         "ParachuteSafeStates": {
           "name": "ParachuteSafeStates",
@@ -10075,7 +13854,8 @@
                 }
               }
             ]
-          }
+          },
+          "assignableFrom": []
         },
         "ParachuteSafeStatesConstants": {
           "name": "ParachuteSafeStatesConstants",
@@ -10142,7 +13922,469 @@
                 "name": "ParachuteSafeStates>"
               }
             }
-          }
+          },
+          "assignableFrom": [
+            {
+              "kind": "Builtin",
+              "name": "Unit"
+            },
+            {
+              "kind": "Builtin",
+              "name": "bool"
+            },
+            {
+              "kind": "Builtin",
+              "name": "int"
+            },
+            {
+              "kind": "Builtin",
+              "name": "float"
+            },
+            {
+              "kind": "Builtin",
+              "name": "string"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Range"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "ArrayBuilder<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Cell<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Option<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Result<T, U>"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::background",
+              "name": "Task<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::math",
+              "name": "Random"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "Console"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "RgbaColor"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "MovingAverage"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "PIDLoop"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "RCSTranslateManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "SteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "ThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "TorquePI"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelSteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugBillboard"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "Debug"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "GroundMarker"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugPath"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec3"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Direction"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Matrix2x2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalAngularVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalPosition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "TransformFrame"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Body"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "GeoCoordinates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Orbit"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirectionConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceContainer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceData"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransfer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransferEntry"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::telemetry",
+              "name": "TimeSeries"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "FlightCtrlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ActionGroups"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Autopilot"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "StageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Maneuver"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ManeuverNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDockingNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleEngine"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Staging"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Targetable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Vessel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringController"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringControl"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "BodyParameters"
+            },
+            {
+              "kind": "Standard",
+              "module": "(brake_time : float, end_latitude : float, end_longitude : float, end_time : float, path : ksp::math",
+              "name": "GlobalPosition[])"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "ReentrySimulation"
+            },
+            {
+              "kind": "Standard",
+              "module": "sync fn(ksp::math::Vec3, ksp::math",
+              "name": "Vec3) -> float"
+            }
+          ]
         },
         "EngineType": {
           "name": "EngineType",
@@ -10188,7 +14430,8 @@
                 }
               }
             ]
-          }
+          },
+          "assignableFrom": []
         },
         "EngineTypeConstants": {
           "name": "EngineTypeConstants",
@@ -10345,7 +14588,469 @@
                 "name": "EngineType>"
               }
             }
-          }
+          },
+          "assignableFrom": [
+            {
+              "kind": "Builtin",
+              "name": "Unit"
+            },
+            {
+              "kind": "Builtin",
+              "name": "bool"
+            },
+            {
+              "kind": "Builtin",
+              "name": "int"
+            },
+            {
+              "kind": "Builtin",
+              "name": "float"
+            },
+            {
+              "kind": "Builtin",
+              "name": "string"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Range"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "ArrayBuilder<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Cell<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Option<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Result<T, U>"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::background",
+              "name": "Task<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::math",
+              "name": "Random"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "Console"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "RgbaColor"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "MovingAverage"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "PIDLoop"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "RCSTranslateManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "SteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "ThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "TorquePI"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelSteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugBillboard"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "Debug"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "GroundMarker"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugPath"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec3"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Direction"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Matrix2x2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalAngularVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalPosition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "TransformFrame"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Body"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "GeoCoordinates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Orbit"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirectionConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceContainer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceData"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransfer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransferEntry"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::telemetry",
+              "name": "TimeSeries"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStatesConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "FlightCtrlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ActionGroups"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Autopilot"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "StageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Maneuver"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ManeuverNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDockingNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleEngine"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Staging"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Targetable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Vessel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringController"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringControl"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "BodyParameters"
+            },
+            {
+              "kind": "Standard",
+              "module": "(brake_time : float, end_latitude : float, end_longitude : float, end_time : float, path : ksp::math",
+              "name": "GlobalPosition[])"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "ReentrySimulation"
+            },
+            {
+              "kind": "Standard",
+              "module": "sync fn(ksp::math::Vec3, ksp::math",
+              "name": "Vec3) -> float"
+            }
+          ]
         },
         "VesselSituation": {
           "name": "VesselSituation",
@@ -10391,7 +15096,8 @@
                 }
               }
             ]
-          }
+          },
+          "assignableFrom": []
         },
         "VesselSituationConstants": {
           "name": "VesselSituationConstants",
@@ -10498,7 +15204,469 @@
                 "name": "VesselSituation>"
               }
             }
-          }
+          },
+          "assignableFrom": [
+            {
+              "kind": "Builtin",
+              "name": "Unit"
+            },
+            {
+              "kind": "Builtin",
+              "name": "bool"
+            },
+            {
+              "kind": "Builtin",
+              "name": "int"
+            },
+            {
+              "kind": "Builtin",
+              "name": "float"
+            },
+            {
+              "kind": "Builtin",
+              "name": "string"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Range"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "ArrayBuilder<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Cell<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Option<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Result<T, U>"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::background",
+              "name": "Task<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::math",
+              "name": "Random"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "Console"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "RgbaColor"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "MovingAverage"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "PIDLoop"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "RCSTranslateManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "SteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "ThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "TorquePI"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelSteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugBillboard"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "Debug"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "GroundMarker"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugPath"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec3"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Direction"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Matrix2x2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalAngularVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalPosition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "TransformFrame"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Body"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "GeoCoordinates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Orbit"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirectionConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceContainer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceData"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransfer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransferEntry"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::telemetry",
+              "name": "TimeSeries"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStatesConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "FlightCtrlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ActionGroups"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Autopilot"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "StageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Maneuver"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ManeuverNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDockingNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleEngine"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Staging"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Targetable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Vessel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringController"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringControl"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "BodyParameters"
+            },
+            {
+              "kind": "Standard",
+              "module": "(brake_time : float, end_latitude : float, end_longitude : float, end_time : float, path : ksp::math",
+              "name": "GlobalPosition[])"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "ReentrySimulation"
+            },
+            {
+              "kind": "Standard",
+              "module": "sync fn(ksp::math::Vec3, ksp::math",
+              "name": "Vec3) -> float"
+            }
+          ]
         },
         "VesselControlState": {
           "name": "VesselControlState",
@@ -10544,7 +15712,8 @@
                 }
               }
             ]
-          }
+          },
+          "assignableFrom": []
         },
         "VesselControlStateConstants": {
           "name": "VesselControlStateConstants",
@@ -10611,7 +15780,469 @@
                 "name": "VesselControlState>"
               }
             }
-          }
+          },
+          "assignableFrom": [
+            {
+              "kind": "Builtin",
+              "name": "Unit"
+            },
+            {
+              "kind": "Builtin",
+              "name": "bool"
+            },
+            {
+              "kind": "Builtin",
+              "name": "int"
+            },
+            {
+              "kind": "Builtin",
+              "name": "float"
+            },
+            {
+              "kind": "Builtin",
+              "name": "string"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Range"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "ArrayBuilder<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Cell<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Option<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Result<T, U>"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::background",
+              "name": "Task<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::math",
+              "name": "Random"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "Console"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "RgbaColor"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "MovingAverage"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "PIDLoop"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "RCSTranslateManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "SteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "ThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "TorquePI"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelSteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugBillboard"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "Debug"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "GroundMarker"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugPath"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec3"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Direction"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Matrix2x2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalAngularVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalPosition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "TransformFrame"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Body"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "GeoCoordinates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Orbit"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirectionConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceContainer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceData"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransfer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransferEntry"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::telemetry",
+              "name": "TimeSeries"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStatesConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "FlightCtrlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ActionGroups"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Autopilot"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "StageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Maneuver"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ManeuverNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDockingNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleEngine"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Staging"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Targetable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Vessel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringController"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringControl"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "BodyParameters"
+            },
+            {
+              "kind": "Standard",
+              "module": "(brake_time : float, end_latitude : float, end_longitude : float, end_time : float, path : ksp::math",
+              "name": "GlobalPosition[])"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "ReentrySimulation"
+            },
+            {
+              "kind": "Standard",
+              "module": "sync fn(ksp::math::Vec3, ksp::math",
+              "name": "Vec3) -> float"
+            }
+          ]
         },
         "DockingState": {
           "name": "DockingState",
@@ -10657,7 +16288,8 @@
                 }
               }
             ]
-          }
+          },
+          "assignableFrom": []
         },
         "DockingStateConstants": {
           "name": "DockingStateConstants",
@@ -10744,7 +16376,469 @@
                 "name": "DockingState>"
               }
             }
-          }
+          },
+          "assignableFrom": [
+            {
+              "kind": "Builtin",
+              "name": "Unit"
+            },
+            {
+              "kind": "Builtin",
+              "name": "bool"
+            },
+            {
+              "kind": "Builtin",
+              "name": "int"
+            },
+            {
+              "kind": "Builtin",
+              "name": "float"
+            },
+            {
+              "kind": "Builtin",
+              "name": "string"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Range"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "ArrayBuilder<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Cell<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Option<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Result<T, U>"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::background",
+              "name": "Task<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::math",
+              "name": "Random"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "Console"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "RgbaColor"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "MovingAverage"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "PIDLoop"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "RCSTranslateManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "SteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "ThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "TorquePI"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelSteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugBillboard"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "Debug"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "GroundMarker"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugPath"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec3"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Direction"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Matrix2x2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalAngularVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalPosition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "TransformFrame"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Body"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "GeoCoordinates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Orbit"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirectionConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceContainer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceData"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransfer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransferEntry"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::telemetry",
+              "name": "TimeSeries"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStatesConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "FlightCtrlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ActionGroups"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Autopilot"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "StageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Maneuver"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ManeuverNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDockingNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleEngine"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Staging"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Targetable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Vessel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringController"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringControl"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "BodyParameters"
+            },
+            {
+              "kind": "Standard",
+              "module": "(brake_time : float, end_latitude : float, end_longitude : float, end_time : float, path : ksp::math",
+              "name": "GlobalPosition[])"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "ReentrySimulation"
+            },
+            {
+              "kind": "Standard",
+              "module": "sync fn(ksp::math::Vec3, ksp::math",
+              "name": "Vec3) -> float"
+            }
+          ]
         },
         "FlightCtrlState": {
           "name": "FlightCtrlState",
@@ -10922,7 +17016,8 @@
               }
             }
           },
-          "methods": {}
+          "methods": {},
+          "assignableFrom": []
         },
         "ActionGroups": {
           "name": "ActionGroups",
@@ -11072,7 +17167,8 @@
               }
             }
           },
-          "methods": {}
+          "methods": {},
+          "assignableFrom": []
         },
         "Autopilot": {
           "name": "Autopilot",
@@ -11131,7 +17227,8 @@
               }
             }
           },
-          "methods": {}
+          "methods": {},
+          "assignableFrom": []
         },
         "EngineDeltaV": {
           "name": "EngineDeltaV",
@@ -11214,7 +17311,8 @@
                 "name": "Vec3"
               }
             }
-          }
+          },
+          "assignableFrom": []
         },
         "StageDeltaV": {
           "name": "StageDeltaV",
@@ -11369,7 +17467,8 @@
                 "name": "float"
               }
             }
-          }
+          },
+          "assignableFrom": []
         },
         "EngineMode": {
           "name": "EngineMode",
@@ -11432,7 +17531,8 @@
               }
             }
           },
-          "methods": {}
+          "methods": {},
+          "assignableFrom": []
         },
         "Maneuver": {
           "name": "Maneuver",
@@ -11526,7 +17626,8 @@
                 "name": "ManeuverNode, string>"
               }
             }
-          }
+          },
+          "assignableFrom": []
         },
         "ManeuverNode": {
           "name": "ManeuverNode",
@@ -11625,7 +17726,8 @@
                 "name": "Unit"
               }
             }
-          }
+          },
+          "assignableFrom": []
         },
         "ModuleAirIntake": {
           "name": "ModuleAirIntake",
@@ -11647,7 +17749,8 @@
               }
             }
           },
-          "methods": {}
+          "methods": {},
+          "assignableFrom": []
         },
         "ModuleDecoupler": {
           "name": "ModuleDecoupler",
@@ -11686,7 +17789,8 @@
                 "name": "bool"
               }
             }
-          }
+          },
+          "assignableFrom": []
         },
         "ModuleDeployable": {
           "name": "ModuleDeployable",
@@ -11742,7 +17846,8 @@
                 "name": "Unit"
               }
             }
-          }
+          },
+          "assignableFrom": []
         },
         "ModuleDockingNode": {
           "name": "ModuleDockingNode",
@@ -11971,7 +18076,8 @@
               }
             }
           },
-          "methods": {}
+          "methods": {},
+          "assignableFrom": []
         },
         "ModuleEngine": {
           "name": "ModuleEngine",
@@ -12117,7 +18223,8 @@
                 "name": "bool"
               }
             }
-          }
+          },
+          "assignableFrom": []
         },
         "ModuleFairing": {
           "name": "ModuleFairing",
@@ -12156,7 +18263,8 @@
                 "name": "bool"
               }
             }
-          }
+          },
+          "assignableFrom": []
         },
         "ModuleLaunchClamp": {
           "name": "ModuleLaunchClamp",
@@ -12187,7 +18295,8 @@
                 "name": "bool"
               }
             }
-          }
+          },
+          "assignableFrom": []
         },
         "ModuleParachute": {
           "name": "ModuleParachute",
@@ -12269,7 +18378,8 @@
                 "name": "bool"
               }
             }
-          }
+          },
+          "assignableFrom": []
         },
         "ModuleSolarPanel": {
           "name": "ModuleSolarPanel",
@@ -12300,7 +18410,8 @@
               }
             }
           },
-          "methods": {}
+          "methods": {},
+          "assignableFrom": []
         },
         "Part": {
           "name": "Part",
@@ -12503,7 +18614,14 @@
               }
             }
           },
-          "methods": {}
+          "methods": {},
+          "assignableFrom": [
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDockingNode"
+            }
+          ]
         },
         "Staging": {
           "name": "Staging",
@@ -12568,7 +18686,8 @@
                 "name": "Part[]"
               }
             }
-          }
+          },
+          "assignableFrom": []
         },
         "Targetable": {
           "name": "Targetable",
@@ -12623,7 +18742,24 @@
               }
             }
           },
-          "methods": {}
+          "methods": {},
+          "assignableFrom": [
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Body"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDockingNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Vessel"
+            }
+          ]
         },
         "Vessel": {
           "name": "Vessel",
@@ -13522,7 +19658,8 @@
                 "name": "Unit"
               }
             }
-          }
+          },
+          "assignableFrom": []
         },
         "VesselDeltaV": {
           "name": "VesselDeltaV",
@@ -13557,7 +19694,8 @@
                 "name": "StageDeltaV>"
               }
             }
-          }
+          },
+          "assignableFrom": []
         }
       },
       "constants": {
@@ -14428,7 +20566,8 @@
                 "name": "Unit"
               }
             }
-          }
+          },
+          "assignableFrom": []
         },
         "SteeringControl": {
           "name": "SteeringControl",
@@ -14546,7 +20685,8 @@
                 "name": "Unit"
               }
             }
-          }
+          },
+          "assignableFrom": []
         }
       },
       "constants": {},
@@ -15005,7 +21145,8 @@
                 "name": "(latitude : float, longitude : float)"
               }
             }
-          }
+          },
+          "assignableFrom": []
         },
         "(brake_time : float, end_latitude : float, end_longitude : float, end_time : float, path : ksp::math::GlobalPosition[])": {
           "name": "(brake_time : float, end_latitude : float, end_longitude : float, end_time : float, path : ksp::math::GlobalPosition[])",
@@ -15058,7 +21199,8 @@
               }
             }
           },
-          "methods": {}
+          "methods": {},
+          "assignableFrom": []
         },
         "ReentrySimulation": {
           "name": "ReentrySimulation",
@@ -15233,7 +21375,8 @@
                 "name": "bool"
               }
             }
-          }
+          },
+          "assignableFrom": []
         }
       },
       "constants": {},
@@ -15468,7 +21611,8 @@
           "name": "sync fn(ksp::math::Vec3, ksp::math::Vec3) -> float",
           "description": "",
           "fields": {},
-          "methods": {}
+          "methods": {},
+          "assignableFrom": []
         }
       },
       "constants": {},

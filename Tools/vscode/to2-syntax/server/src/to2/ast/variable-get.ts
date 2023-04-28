@@ -1,5 +1,5 @@
 import { Expression, Node, ValidationError } from ".";
-import { BUILTIN_BOOL, TO2Type } from "./to2-type";
+import { BUILTIN_BOOL, TO2Type, UNKNOWN_TYPE } from "./to2-type";
 import { InputPosition } from "../../parser";
 import { BlockContext } from "./context";
 
@@ -13,7 +13,7 @@ export class VariableGet extends Expression {
   }
 
   public resultType(context: BlockContext): TO2Type {
-    return BUILTIN_BOOL;
+    return this.namePath.length == 1 ? context.findVariable(this.namePath[0]) ?? UNKNOWN_TYPE : UNKNOWN_TYPE;
   }
 
   public reduceNode<T>(
@@ -26,6 +26,14 @@ export class VariableGet extends Expression {
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
+    if(this.namePath.length == 1 && !context.findVariable(this.namePath[0])) {
+      errors.push({
+        status: "error",
+        message: `Undefined variable: ${this.namePath[0]}`,
+        start: this.start,
+        end: this.end,
+      })
+    }
     return errors;
   }
 }
