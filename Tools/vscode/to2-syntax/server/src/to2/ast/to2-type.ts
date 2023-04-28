@@ -10,6 +10,7 @@ export interface TO2Type {
 }
 
 export interface RealizedType extends TO2Type {
+  isFunction?: boolean;
   description: string;
 
   isAssignableFrom(otherType: RealizedType): boolean;
@@ -42,9 +43,9 @@ export class ReferencedType implements RealizedType {
   }
 
   public isAssignableFrom(otherType: RealizedType): boolean {
-    if(this.name === otherType.name) return true;
-    for(const typeRef of this.typeReference.assignableFrom) {
-      if(otherType.name === resolveTypeRef(typeRef)?.name) return true;
+    if (this.name === otherType.name) return true;
+    for (const typeRef of this.typeReference.assignableFrom) {
+      if (otherType.name === resolveTypeRef(typeRef)?.name) return true;
     }
     return false;
   }
@@ -128,11 +129,11 @@ export function findLibraryType(
 }
 
 export function resolveTypeRef(typeRef: TypeRef): RealizedType | undefined {
-  switch(typeRef.kind) {
+  switch (typeRef.kind) {
     case "Builtin":
       return findLibraryType([typeRef.name], []);
     case "Generic":
     case "Standard":
-      return findLibraryType([typeRef.module, typeRef.name], [])
+      return findLibraryType([typeRef.module, typeRef.name], []);
   }
 }

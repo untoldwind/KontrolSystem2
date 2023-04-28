@@ -265,6 +265,7 @@ namespace KontrolSystem.GenRefs {
         }
 
         public FunctionReference(ModuleContext moduleContext, KeyValuePair<string, IMethodInvokeFactory> method) {
+            IsAsync = method.Value.IsAsync;
             Name = method.Key;
             Description = method.Value.Description;
             ReturnType = new TypeRef(moduleContext, method.Value.DeclaredReturn);
@@ -273,6 +274,8 @@ namespace KontrolSystem.GenRefs {
                 .ToArray();
         }
 
+        [JsonProperty("isAsync")] public bool IsAsync { get; }
+        
         [JsonProperty("name")] public string Name { get; }
 
         [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)] public string Description { get; }

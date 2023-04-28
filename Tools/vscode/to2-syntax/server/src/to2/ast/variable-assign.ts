@@ -1,12 +1,12 @@
 import { Expression, Node, ValidationError } from ".";
 import { BUILTIN_BOOL, TO2Type } from "./to2-type";
 import { Operator } from "./operator";
-import { InputPosition } from "../../parser";
+import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
 
 export class VariableAssign extends Expression {
   constructor(
-    public readonly name: string,
+    public readonly name: WithPosition<string>,
     public readonly op: Operator,
     public readonly expression: Expression,
     start: InputPosition,
@@ -29,7 +29,16 @@ export class VariableAssign extends Expression {
     const errors: ValidationError[] = [];
 
     errors.push(...this.expression.validateBlock(context));
-    
+
+    if (!context.findVariable(this.name.value)) {
+      errors.push({
+        status: "error",
+        message: `Undefined variable: ${this.name.value}`,
+        start: this.name.start,
+        end: this.name.end,
+      });
+    }
+
     return errors;
   }
 }

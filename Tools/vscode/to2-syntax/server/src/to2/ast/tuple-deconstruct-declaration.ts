@@ -5,8 +5,6 @@ import { InputPosition } from "../../parser";
 import { BlockContext } from "./context";
 
 export class TupleDeconstructDeclaration implements Node, BlockItem {
-  public isComment: boolean = false;
-
   constructor(
     public readonly declarations: DeclarationParameterOrPlaceholder[],
     public readonly isConst: boolean,

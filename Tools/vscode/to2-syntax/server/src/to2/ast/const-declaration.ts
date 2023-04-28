@@ -1,12 +1,14 @@
 import { Expression, ModuleItem, Node, ValidationError } from ".";
-import { InputPosition } from "../../parser";
+import { InputPosition, WithPosition } from "../../parser";
 import { ModuleContext } from "./context";
 import { TO2Type } from "./to2-type";
 
 export class ConstDeclaration implements Node, ModuleItem {
+  public isConstDecl: boolean = true;
+
   constructor(
     public readonly isPublic: boolean,
-    public readonly name: string,
+    public readonly name: WithPosition<string>,
     public readonly description: string,
     public readonly type: TO2Type,
     public readonly expression: Expression,
@@ -24,7 +26,7 @@ export class ConstDeclaration implements Node, ModuleItem {
   public validateModule(context: ModuleContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
-    if (context.mappedConstants.has(this.name)) {
+    if (context.mappedConstants.has(this.name.value)) {
       errors.push({
         status: "error",
         message: `Duplicate constant ${this.name}`,
@@ -32,9 +34,13 @@ export class ConstDeclaration implements Node, ModuleItem {
         end: this.end,
       });
     } else {
-      context.mappedConstants.set(this.name, this.type);
+      context.mappedConstants.set(this.name.value, this.type);
     }
 
     return errors;
   }
+}
+
+export function isConstDeclaration(node: ModuleItem): node is ConstDeclaration {
+  return node.isConstDecl === true;
 }

@@ -18,8 +18,6 @@ export type DeclarationParameterOrPlaceholder =
   | DeclarationPlaceholder;
 
 export class VariableDeclaration implements Node, BlockItem {
-  public isComment: boolean = false;
-
   constructor(
     public readonly declaration: DeclarationParameter,
     public readonly isConst: boolean,

@@ -31,7 +31,6 @@ import { FunctionParameter } from "./ast/function-declaration";
 import { IfThen, IfThenElse } from "./ast/if-then";
 import { IndexSpec } from "./ast/index-spec";
 import { Lambda } from "./ast/lambda";
-import { Operator } from "./ast/operator";
 import { RangeCreate } from "./ast/range-create";
 import { RecordCreate } from "./ast/record-create";
 import { ReturnEmpty, ReturnValue } from "./ast/return";
@@ -271,7 +270,7 @@ const callArguments = preceded(
 );
 
 const variableRefOrCall = map(
-  seq([identifierPath, opt(preceded(spacing0, callArguments))]),
+  seq([withPosition(identifierPath), opt(preceded(spacing0, callArguments))]),
   ([fullname, args], start, end) =>
     args !== undefined
       ? new Call(fullname, args, start, end)
@@ -580,7 +579,7 @@ const assignSuffixOps = alt([
 
 const assignment = map(
   seq([
-    identifier,
+    withPosition(identifier),
     many0(assignSuffixOps, "<suffix op>"),
     assignOp,
     alt([booleanExpr, ifExpr]),
@@ -593,7 +592,15 @@ const assignment = map(
       .slice(0, suffixOps.length - 1)
       .reduce<Expression>(
         (target, op) => op.getExpression(target, start, end),
-        new VariableGet([variableName], start, end)
+        new VariableGet(
+          {
+            value: [variableName.value],
+            start: variableName.start,
+            end: variableName.end,
+          },
+          start,
+          end
+        )
       );
     return last.assignExpression(target, assignOp, value, start, end);
   }

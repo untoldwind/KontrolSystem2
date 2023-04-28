@@ -41,6 +41,9 @@ export class FunctionParameter implements Node {
 }
 
 export class FunctionDeclaration implements Node, ModuleItem {
+  public isFunctionDecl: boolean = true;
+  public functionType: FunctionType;
+
   constructor(
     public readonly modifier: FunctionModifier,
     public readonly isAsync: boolean,
@@ -51,9 +54,16 @@ export class FunctionDeclaration implements Node, ModuleItem {
     public readonly expression: Expression,
     public readonly start: InputPosition,
     public readonly end: InputPosition
-  ) {}
+  ) {
+    this.functionType = new FunctionType(
+      isAsync,
+      parameters.map((param) => [param.name.value, param.type ?? UNKNOWN_TYPE]),
+      declaredReturn,
+      description
+    );
+  }
 
-  reduceNode<T>(
+  public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
     initialValue: T
   ): T {
@@ -83,7 +93,10 @@ export class FunctionDeclaration implements Node, ModuleItem {
         this.name.value,
         new FunctionType(
           this.isAsync,
-          this.parameters.map((param) => param.resultType(blockContext)),
+          this.parameters.map((param) => [
+            param.name.value,
+            param.resultType(blockContext),
+          ]),
           this.declaredReturn
         )
       );
@@ -108,4 +121,10 @@ export class FunctionDeclaration implements Node, ModuleItem {
 
     return errors;
   }
+}
+
+export function isFunctionDeclaration(
+  node: ModuleItem
+): node is FunctionDeclaration {
+  return node.isFunctionDecl === true;
 }

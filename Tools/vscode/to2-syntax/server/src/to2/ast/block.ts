@@ -4,8 +4,6 @@ import { InputPosition } from "../../parser";
 import { BlockContext } from "./context";
 
 export class Block extends Expression {
-  public isComment: boolean = false;
-
   constructor(
     public readonly items: BlockItem[],
     start: InputPosition,

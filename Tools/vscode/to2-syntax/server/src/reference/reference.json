@@ -494,6 +494,7 @@
       },
       "methods": {
         "to_string": {
+          "isAsync": false,
           "name": "to_string",
           "description": "Convert boolean to string",
           "parameters": [],
@@ -617,6 +618,7 @@
       },
       "methods": {
         "to_string": {
+          "isAsync": false,
           "name": "to_string",
           "description": "Convert integer to string",
           "parameters": [],
@@ -992,6 +994,7 @@
       },
       "methods": {
         "to_string": {
+          "isAsync": false,
           "name": "to_string",
           "description": "Convert the float to string.",
           "parameters": [],
@@ -1001,6 +1004,7 @@
           }
         },
         "to_fixed": {
+          "isAsync": false,
           "name": "to_fixed",
           "description": "Convert the float to string with fixed number of `decimals`.",
           "parameters": [
@@ -1330,6 +1334,7 @@
       },
       "methods": {
         "repeat": {
+          "isAsync": false,
           "name": "repeat",
           "description": "Repeat the string `count` number of time",
           "parameters": [
@@ -1348,6 +1353,7 @@
           }
         },
         "pad_left": {
+          "isAsync": false,
           "name": "pad_left",
           "description": "Pad the string to `length` by filling spaces from the left side",
           "parameters": [
@@ -1366,6 +1372,7 @@
           }
         },
         "pad_right": {
+          "isAsync": false,
           "name": "pad_right",
           "description": "Pad the string to `length` by filling spaces from the right side",
           "parameters": [
@@ -1384,6 +1391,7 @@
           }
         },
         "contains": {
+          "isAsync": false,
           "name": "contains",
           "description": "Check if the string contains a sub string `other`",
           "parameters": [
@@ -1402,6 +1410,7 @@
           }
         },
         "starts_with": {
+          "isAsync": false,
           "name": "starts_with",
           "description": "Check if the string starts with `other`",
           "parameters": [
@@ -1420,6 +1429,7 @@
           }
         },
         "ends_with": {
+          "isAsync": false,
           "name": "ends_with",
           "description": "Check if the string ends with `other`",
           "parameters": [
@@ -1438,6 +1448,7 @@
           }
         },
         "to_lower": {
+          "isAsync": false,
           "name": "to_lower",
           "description": "Convert string to lower case",
           "parameters": [],
@@ -1447,6 +1458,7 @@
           }
         },
         "to_upper": {
+          "isAsync": false,
           "name": "to_upper",
           "description": "Convert string to upper case",
           "parameters": [],
@@ -1580,6 +1592,7 @@
       },
       "methods": {
         "map": {
+          "isAsync": false,
           "name": "map",
           "description": "Map the elements of the range, i.e. convert it into an array.",
           "parameters": [
@@ -1621,6 +1634,7 @@
       },
       "methods": {
         "append": {
+          "isAsync": false,
           "name": "append",
           "description": "Append an element to the array",
           "parameters": [
@@ -1640,6 +1654,7 @@
           }
         },
         "result": {
+          "isAsync": false,
           "name": "result",
           "description": "Build the resulting array",
           "parameters": [],
@@ -1687,6 +1702,7 @@
       },
       "methods": {
         "set_value": {
+          "isAsync": false,
           "name": "set_value",
           "description": "Set the value of the cell",
           "parameters": [
@@ -1705,6 +1721,7 @@
           }
         },
         "update": {
+          "isAsync": false,
           "name": "update",
           "description": "Atomically update the value of the cell",
           "parameters": [
@@ -1752,6 +1769,7 @@
       },
       "methods": {
         "map": {
+          "isAsync": false,
           "name": "map",
           "description": "Map the content of the option",
           "parameters": [
@@ -1772,6 +1790,7 @@
           }
         },
         "then": {
+          "isAsync": false,
           "name": "then",
           "description": "Continue with a second operation that also has an optional result. (Also called flat_map)",
           "parameters": [
@@ -1792,6 +1811,7 @@
           }
         },
         "ok_or": {
+          "isAsync": false,
           "name": "ok_or",
           "description": "Convert the option to a result, where None is mapped to the `if_none` error",
           "parameters": [
@@ -2865,6 +2885,7 @@
           },
           "methods": {
             "cancel": {
+              "isAsync": false,
               "name": "cancel",
               "description": "Cancel/abort the task\n",
               "parameters": [],
@@ -2880,6 +2901,7 @@
       "constants": {},
       "functions": {
         "is_background": {
+          "isAsync": false,
           "name": "is_background",
           "description": "Check if current thread is a background thread\n",
           "parameters": [],
@@ -2889,6 +2911,7 @@
           }
         },
         "run": {
+          "isAsync": false,
           "name": "run",
           "description": "Run a function as background task.\n",
           "parameters": [
@@ -2917,6 +2940,7 @@
       "constants": {},
       "functions": {
         "debug": {
+          "isAsync": false,
           "name": "debug",
           "description": "Write a debug-level `message`.\n",
           "parameters": [
@@ -2935,6 +2959,7 @@
           }
         },
         "info": {
+          "isAsync": false,
           "name": "info",
           "description": "Write an info-level `message`.\n",
           "parameters": [
@@ -2953,6 +2978,7 @@
           }
         },
         "warning": {
+          "isAsync": false,
           "name": "warning",
           "description": "Write a warning-level `message`.\n",
           "parameters": [
@@ -2971,6 +2997,7 @@
           }
         },
         "error": {
+          "isAsync": false,
           "name": "error",
           "description": "Write an error-level `message`.\n",
           "parameters": [
@@ -3000,6 +3027,7 @@
           "fields": {},
           "methods": {
             "next_int": {
+              "isAsync": false,
               "name": "next_int",
               "description": "Get next random number between `min` and `max`",
               "parameters": [
@@ -3026,6 +3054,7 @@
               }
             },
             "next_float": {
+              "isAsync": false,
               "name": "next_float",
               "description": "Get next random number between 0.0 and 1.0",
               "parameters": [],
@@ -3035,6 +3064,7 @@
               }
             },
             "next_gaussian": {
+              "isAsync": false,
               "name": "next_gaussian",
               "description": "Get next gaussian distributed random number",
               "parameters": [
@@ -3140,6 +3170,7 @@
       },
       "functions": {
         "abs": {
+          "isAsync": false,
           "name": "abs",
           "description": "Returns the absolute value of a number.",
           "parameters": [
@@ -3158,6 +3189,7 @@
           }
         },
         "acos": {
+          "isAsync": false,
           "name": "acos",
           "description": "Returns the angle in radian whose cosine is the specified number.",
           "parameters": [
@@ -3176,6 +3208,7 @@
           }
         },
         "acos_deg": {
+          "isAsync": false,
           "name": "acos_deg",
           "description": "Returns the angle in degree whose cosine is the specified number.",
           "parameters": [
@@ -3194,6 +3227,7 @@
           }
         },
         "asin": {
+          "isAsync": false,
           "name": "asin",
           "description": "Returns the angle in radian whose sine is the specified number.",
           "parameters": [
@@ -3212,6 +3246,7 @@
           }
         },
         "asin_deg": {
+          "isAsync": false,
           "name": "asin_deg",
           "description": "Returns the angle in degree whose sine is the specified number.",
           "parameters": [
@@ -3230,6 +3265,7 @@
           }
         },
         "atan": {
+          "isAsync": false,
           "name": "atan",
           "description": "Returns the angle in radian whose tanget is the specified number.",
           "parameters": [
@@ -3248,6 +3284,7 @@
           }
         },
         "atan_deg": {
+          "isAsync": false,
           "name": "atan_deg",
           "description": "Returns the angle in degree whose tangent is the specified number.",
           "parameters": [
@@ -3266,6 +3303,7 @@
           }
         },
         "atan2": {
+          "isAsync": false,
           "name": "atan2",
           "description": "Returns the angle in redian whose tangent is the quotient of two specified numbers.",
           "parameters": [
@@ -3292,6 +3330,7 @@
           }
         },
         "atan2_deg": {
+          "isAsync": false,
           "name": "atan2_deg",
           "description": "Returns the angle in degree whose tangent is the quotient of two specified numbers.",
           "parameters": [
@@ -3318,6 +3357,7 @@
           }
         },
         "ceiling": {
+          "isAsync": false,
           "name": "ceiling",
           "description": "Returns the smallest integral value that is greater than or equal to the specified number.",
           "parameters": [
@@ -3336,6 +3376,7 @@
           }
         },
         "cos": {
+          "isAsync": false,
           "name": "cos",
           "description": "Returns the cosine of the specified angle in redian.",
           "parameters": [
@@ -3354,6 +3395,7 @@
           }
         },
         "cos_deg": {
+          "isAsync": false,
           "name": "cos_deg",
           "description": "Returns the cosine of the specified angle in degree.",
           "parameters": [
@@ -3372,6 +3414,7 @@
           }
         },
         "cosh": {
+          "isAsync": false,
           "name": "cosh",
           "description": "Returns the hyperbolic cosine of the specified angle.",
           "parameters": [
@@ -3390,6 +3433,7 @@
           }
         },
         "exp": {
+          "isAsync": false,
           "name": "exp",
           "description": "Returns e raised to the specified power.",
           "parameters": [
@@ -3408,6 +3452,7 @@
           }
         },
         "floor": {
+          "isAsync": false,
           "name": "floor",
           "description": "Returns the largest integral value less than or equal to the specified number.",
           "parameters": [
@@ -3426,6 +3471,7 @@
           }
         },
         "log": {
+          "isAsync": false,
           "name": "log",
           "description": "Returns the natural (base e) logarithm of a specified number.",
           "parameters": [
@@ -3444,6 +3490,7 @@
           }
         },
         "log10": {
+          "isAsync": false,
           "name": "log10",
           "description": "Returns the base 10 logarithm of a specified number.",
           "parameters": [
@@ -3462,6 +3509,7 @@
           }
         },
         "max": {
+          "isAsync": false,
           "name": "max",
           "description": "Returns the larger of two decimal numbers.",
           "parameters": [
@@ -3488,6 +3536,7 @@
           }
         },
         "min": {
+          "isAsync": false,
           "name": "min",
           "description": "Returns the smaller of two decimal numbers.",
           "parameters": [
@@ -3514,6 +3563,7 @@
           }
         },
         "pow": {
+          "isAsync": false,
           "name": "pow",
           "description": "Returns a specified number raised to the specified power.",
           "parameters": [
@@ -3540,6 +3590,7 @@
           }
         },
         "round": {
+          "isAsync": false,
           "name": "round",
           "description": "Rounds a decimal value to the nearest integral value, and rounds midpoint values to the nearest even number.",
           "parameters": [
@@ -3558,6 +3609,7 @@
           }
         },
         "sin": {
+          "isAsync": false,
           "name": "sin",
           "description": "Returns the sine of the specified angle in redian.",
           "parameters": [
@@ -3576,6 +3628,7 @@
           }
         },
         "sin_deg": {
+          "isAsync": false,
           "name": "sin_deg",
           "description": "Returns the sine of the specified angle in degree.",
           "parameters": [
@@ -3594,6 +3647,7 @@
           }
         },
         "sinh": {
+          "isAsync": false,
           "name": "sinh",
           "description": "Returns the hyperbolic sine of the specified angle.",
           "parameters": [
@@ -3612,6 +3666,7 @@
           }
         },
         "sqrt": {
+          "isAsync": false,
           "name": "sqrt",
           "description": "Returns the square root of a specified number.",
           "parameters": [
@@ -3630,6 +3685,7 @@
           }
         },
         "tan": {
+          "isAsync": false,
           "name": "tan",
           "description": "Returns the sine of the specified angle in redian.",
           "parameters": [
@@ -3648,6 +3704,7 @@
           }
         },
         "tan_deg": {
+          "isAsync": false,
           "name": "tan_deg",
           "description": "Returns the sine of the specified angle in degree.",
           "parameters": [
@@ -3666,6 +3723,7 @@
           }
         },
         "tanh": {
+          "isAsync": false,
           "name": "tanh",
           "description": "Returns the hyperbolic tangent of the specified angle.",
           "parameters": [
@@ -3684,6 +3742,7 @@
           }
         },
         "truncate": {
+          "isAsync": false,
           "name": "truncate",
           "description": "Calculates the integral part of a specified number.",
           "parameters": [
@@ -3702,6 +3761,7 @@
           }
         },
         "acosh": {
+          "isAsync": false,
           "name": "acosh",
           "description": "Returns the angle whose hyperbolic cosine is the specified number.",
           "parameters": [
@@ -3720,6 +3780,7 @@
           }
         },
         "asinh": {
+          "isAsync": false,
           "name": "asinh",
           "description": "Returns the angle whose hyperbolic sine is the specified number.",
           "parameters": [
@@ -3738,6 +3799,7 @@
           }
         },
         "atanh": {
+          "isAsync": false,
           "name": "atanh",
           "description": "Returns the angle whose hyperbolic tanget is the specified number.",
           "parameters": [
@@ -3756,6 +3818,7 @@
           }
         },
         "clamp": {
+          "isAsync": false,
           "name": "clamp",
           "description": "Clamp a number between a given minimum and maximum",
           "parameters": [
@@ -3790,6 +3853,7 @@
           }
         },
         "clamp_degrees360": {
+          "isAsync": false,
           "name": "clamp_degrees360",
           "description": "Clamp an angle between 0 and 360 degree",
           "parameters": [
@@ -3808,6 +3872,7 @@
           }
         },
         "clamp_degrees180": {
+          "isAsync": false,
           "name": "clamp_degrees180",
           "description": "Clamp an angle between -180 and 180 degree",
           "parameters": [
@@ -3826,6 +3891,7 @@
           }
         },
         "clamp_radians2_pi": {
+          "isAsync": false,
           "name": "clamp_radians2_pi",
           "description": "Clamp an angle between 0 and 2π",
           "parameters": [
@@ -3844,6 +3910,7 @@
           }
         },
         "clamp_radians_pi": {
+          "isAsync": false,
           "name": "clamp_radians_pi",
           "description": "Clamp an angle between -π and π",
           "parameters": [
@@ -3862,6 +3929,7 @@
           }
         },
         "random": {
+          "isAsync": false,
           "name": "random",
           "description": "New random number generator",
           "parameters": [],
@@ -3872,6 +3940,7 @@
           }
         },
         "random_from_seed": {
+          "isAsync": false,
           "name": "random_from_seed",
           "description": "New random number generator from given seed",
           "parameters": [
@@ -3899,6 +3968,7 @@
       "constants": {},
       "functions": {
         "join": {
+          "isAsync": false,
           "name": "join",
           "description": "Join an array of string with a separator.\n",
           "parameters": [
@@ -3926,6 +3996,7 @@
           }
         },
         "format": {
+          "isAsync": false,
           "name": "format",
           "description": "Format items using C# format strings (https://learn.microsoft.com/en-us/dotnet/api/system.string.format). Items can be either a single value, an array or a tuple.\n",
           "parameters": [
@@ -3960,6 +4031,7 @@
       "constants": {},
       "functions": {
         "assert_true": {
+          "isAsync": false,
           "name": "assert_true",
           "description": "Assert that `actual` is true (Test only)\n",
           "parameters": [
@@ -3978,6 +4050,7 @@
           }
         },
         "assert_false": {
+          "isAsync": false,
           "name": "assert_false",
           "description": "Assert that `actual` is false (Test only)\n",
           "parameters": [
@@ -3996,6 +4069,7 @@
           }
         },
         "assert_string": {
+          "isAsync": false,
           "name": "assert_string",
           "description": "Assert that `actual` string is equal to `expected` (Test only)\n",
           "parameters": [
@@ -4022,6 +4096,7 @@
           }
         },
         "assert_int": {
+          "isAsync": false,
           "name": "assert_int",
           "description": "Assert that `actual` integer is equal to `expected` (Test only)\n",
           "parameters": [
@@ -4048,6 +4123,7 @@
           }
         },
         "assert_float": {
+          "isAsync": false,
           "name": "assert_float",
           "description": "Assert that `actual` float is almost equal to `expected` with an absolute tolerance of `delta` (Test only)\n",
           "parameters": [
@@ -4082,6 +4158,7 @@
           }
         },
         "assert_some": {
+          "isAsync": false,
           "name": "assert_some",
           "parameters": [
             {
@@ -4108,6 +4185,7 @@
           }
         },
         "assert_none": {
+          "isAsync": false,
           "name": "assert_none",
           "parameters": [
             {
@@ -4126,6 +4204,7 @@
           }
         },
         "fail_test": {
+          "isAsync": false,
           "name": "fail_test",
           "description": "Fail the test case with a `message` (Test only).\n",
           "parameters": [
@@ -4144,6 +4223,7 @@
           }
         },
         "assert_yield": {
+          "isAsync": false,
           "name": "assert_yield",
           "description": "Assert that test case has yielded `expected` number of times already (Async test only)\n",
           "parameters": [
@@ -4162,6 +4242,7 @@
           }
         },
         "yield": {
+          "isAsync": false,
           "name": "yield",
           "description": "Yield the test case (Async test only)\n",
           "parameters": [],
@@ -4171,6 +4252,7 @@
           }
         },
         "test_sleep": {
+          "isAsync": false,
           "name": "test_sleep",
           "description": "Suspend execution for `millis`\n",
           "parameters": [
@@ -4217,6 +4299,7 @@
           },
           "methods": {
             "clear": {
+              "isAsync": false,
               "name": "clear",
               "description": "Clear the console of all its content and move cursor to (0, 0).\n",
               "parameters": [],
@@ -4226,6 +4309,7 @@
               }
             },
             "print": {
+              "isAsync": false,
               "name": "print",
               "description": "Print a message at the current cursor position (and move cursor forward)\n",
               "parameters": [
@@ -4244,6 +4328,7 @@
               }
             },
             "print_line": {
+              "isAsync": false,
               "name": "print_line",
               "description": "Print a message at the current cursor position and move cursor to the beginning of the next line.\n",
               "parameters": [
@@ -4262,6 +4347,7 @@
               }
             },
             "print_at": {
+              "isAsync": false,
               "name": "print_at",
               "description": "Moves the cursor to the specified position, prints the message and restores the previous cursor position\n",
               "parameters": [
@@ -4296,6 +4382,7 @@
               }
             },
             "move_cursor": {
+              "isAsync": false,
               "name": "move_cursor",
               "description": "Move the cursor to a give `row` and `column`.\n",
               "parameters": [
@@ -4322,6 +4409,7 @@
               }
             },
             "clear_line": {
+              "isAsync": false,
               "name": "clear_line",
               "description": "Clear a line\n",
               "parameters": [
@@ -4450,6 +4538,7 @@
       },
       "functions": {
         "color": {
+          "isAsync": false,
           "name": "color",
           "description": "Create a new color from `red`, `green`, `blue` and `alpha` (0.0 - 1.0).\n",
           "parameters": [
@@ -4543,6 +4632,7 @@
           },
           "methods": {
             "reset": {
+              "isAsync": false,
               "name": "reset",
               "parameters": [],
               "returnType": {
@@ -4551,6 +4641,7 @@
               }
             },
             "update_delta": {
+              "isAsync": false,
               "name": "update_delta",
               "parameters": [
                 {
@@ -4576,6 +4667,7 @@
               }
             },
             "update": {
+              "isAsync": false,
               "name": "update",
               "parameters": [
                 {
@@ -4737,6 +4829,7 @@
           },
           "methods": {
             "update_delta": {
+              "isAsync": false,
               "name": "update_delta",
               "parameters": [
                 {
@@ -4762,6 +4855,7 @@
               }
             },
             "update": {
+              "isAsync": false,
               "name": "update",
               "parameters": [
                 {
@@ -4787,6 +4881,7 @@
               }
             },
             "reset_i": {
+              "isAsync": false,
               "name": "reset_i",
               "description": "Reset the integral part of the PID loop\n",
               "parameters": [],
@@ -4813,6 +4908,7 @@
           },
           "methods": {
             "set_translate_provider": {
+              "isAsync": false,
               "name": "set_translate_provider",
               "parameters": [
                 {
@@ -4831,6 +4927,7 @@
               }
             },
             "release": {
+              "isAsync": true,
               "name": "release",
               "parameters": [],
               "returnType": {
@@ -4839,6 +4936,7 @@
               }
             },
             "resume": {
+              "isAsync": false,
               "name": "resume",
               "parameters": [],
               "returnType": {
@@ -4864,6 +4962,7 @@
           },
           "methods": {
             "set_pitch_yaw_roll_provider": {
+              "isAsync": false,
               "name": "set_pitch_yaw_roll_provider",
               "parameters": [
                 {
@@ -4882,6 +4981,7 @@
               }
             },
             "release": {
+              "isAsync": true,
               "name": "release",
               "parameters": [],
               "returnType": {
@@ -4890,6 +4990,7 @@
               }
             },
             "resume": {
+              "isAsync": false,
               "name": "resume",
               "parameters": [],
               "returnType": {
@@ -4914,6 +5015,7 @@
           },
           "methods": {
             "set_throttle_provider": {
+              "isAsync": false,
               "name": "set_throttle_provider",
               "parameters": [
                 {
@@ -4932,6 +5034,7 @@
               }
             },
             "release": {
+              "isAsync": true,
               "name": "release",
               "parameters": [],
               "returnType": {
@@ -4940,6 +5043,7 @@
               }
             },
             "resume": {
+              "isAsync": false,
               "name": "resume",
               "parameters": [],
               "returnType": {
@@ -4989,6 +5093,7 @@
           },
           "methods": {
             "update_delta": {
+              "isAsync": false,
               "name": "update_delta",
               "parameters": [
                 {
@@ -5038,6 +5143,7 @@
               }
             },
             "update": {
+              "isAsync": false,
               "name": "update",
               "parameters": [
                 {
@@ -5087,6 +5193,7 @@
               }
             },
             "reset_i": {
+              "isAsync": false,
               "name": "reset_i",
               "description": "Reset the integral part of the PID loop\n",
               "parameters": [],
@@ -5112,6 +5219,7 @@
           },
           "methods": {
             "set_wheel_steer_provider": {
+              "isAsync": false,
               "name": "set_wheel_steer_provider",
               "parameters": [
                 {
@@ -5130,6 +5238,7 @@
               }
             },
             "release": {
+              "isAsync": true,
               "name": "release",
               "parameters": [],
               "returnType": {
@@ -5138,6 +5247,7 @@
               }
             },
             "resume": {
+              "isAsync": false,
               "name": "resume",
               "parameters": [],
               "returnType": {
@@ -5162,6 +5272,7 @@
           },
           "methods": {
             "set_wheel_throttle_provider": {
+              "isAsync": false,
               "name": "set_wheel_throttle_provider",
               "parameters": [
                 {
@@ -5180,6 +5291,7 @@
               }
             },
             "release": {
+              "isAsync": true,
               "name": "release",
               "parameters": [],
               "returnType": {
@@ -5188,6 +5300,7 @@
               }
             },
             "resume": {
+              "isAsync": false,
               "name": "resume",
               "parameters": [],
               "returnType": {
@@ -5202,6 +5315,7 @@
       "constants": {},
       "functions": {
         "pid_loop": {
+          "isAsync": false,
           "name": "pid_loop",
           "description": "Create a new PIDLoop with given parameters.\n",
           "parameters": [
@@ -5261,6 +5375,7 @@
           }
         },
         "moving_average": {
+          "isAsync": false,
           "name": "moving_average",
           "description": "Create a new MovingAverage with given sample limit.\n",
           "parameters": [
@@ -5280,6 +5395,7 @@
           }
         },
         "torque_pi": {
+          "isAsync": false,
           "name": "torque_pi",
           "description": "Create a new TorquePI with given parameters.\n",
           "parameters": [
@@ -5338,6 +5454,7 @@
           },
           "methods": {
             "remove": {
+              "isAsync": false,
               "name": "remove",
               "parameters": [],
               "returnType": {
@@ -5354,6 +5471,7 @@
           "fields": {},
           "methods": {
             "add_line": {
+              "isAsync": false,
               "name": "add_line",
               "description": "Draws a line from `start` to `end` with a specified `color` and `width` in the current game scene.\nThe line may have a `label` at its mid-point.\n\n",
               "parameters": [
@@ -5408,6 +5526,7 @@
               }
             },
             "add_vector": {
+              "isAsync": false,
               "name": "add_vector",
               "description": "Draws a `vector` positioned at `start` with a specified `color` and `width` in the current game scene.\nThe vector may have a `label` at its mid-point.\n\n",
               "parameters": [
@@ -5462,6 +5581,7 @@
               }
             },
             "add_ground_marker": {
+              "isAsync": false,
               "name": "add_ground_marker",
               "parameters": [
                 {
@@ -5498,6 +5618,7 @@
               }
             },
             "add_billboard": {
+              "isAsync": false,
               "name": "add_billboard",
               "parameters": [
                 {
@@ -5543,6 +5664,7 @@
               }
             },
             "add_path": {
+              "isAsync": false,
               "name": "add_path",
               "parameters": [
                 {
@@ -5579,6 +5701,7 @@
               }
             },
             "clear_markers": {
+              "isAsync": false,
               "name": "clear_markers",
               "description": "Remove all markers from the game-scene.\n",
               "parameters": [],
@@ -5633,6 +5756,7 @@
           },
           "methods": {
             "remove": {
+              "isAsync": false,
               "name": "remove",
               "parameters": [],
               "returnType": {
@@ -5687,6 +5811,7 @@
           },
           "methods": {
             "remove": {
+              "isAsync": false,
               "name": "remove",
               "parameters": [],
               "returnType": {
@@ -5769,6 +5894,7 @@
           },
           "methods": {
             "remove": {
+              "isAsync": false,
               "name": "remove",
               "parameters": [],
               "returnType": {
@@ -5777,6 +5903,7 @@
               }
             },
             "set_start_provider": {
+              "isAsync": false,
               "name": "set_start_provider",
               "description": "Change the function providing the start position of the debug vector.\n",
               "parameters": [
@@ -5796,6 +5923,7 @@
               }
             },
             "set_end_provider": {
+              "isAsync": false,
               "name": "set_end_provider",
               "description": "Change the function providing the end position of the debug vector.\n",
               "parameters": [
@@ -5815,6 +5943,7 @@
               }
             },
             "set_vector_provider": {
+              "isAsync": false,
               "name": "set_vector_provider",
               "description": "Change the function providing the vector/direction of the debug vector.\n",
               "parameters": [
@@ -5857,6 +5986,7 @@
       "constants": {},
       "functions": {
         "current_time": {
+          "isAsync": false,
           "name": "current_time",
           "description": "Get the current universal time (UT) in seconds from start.\n",
           "parameters": [],
@@ -5866,6 +5996,7 @@
           }
         },
         "yield": {
+          "isAsync": false,
           "name": "yield",
           "description": "Yield execution to allow Unity to do some other stuff inbetween.\n",
           "parameters": [],
@@ -5875,6 +6006,7 @@
           }
         },
         "sleep": {
+          "isAsync": false,
           "name": "sleep",
           "description": "Stop execution of given number of seconds (factions of a seconds are supported as well).\n",
           "parameters": [
@@ -5893,6 +6025,7 @@
           }
         },
         "wait_until": {
+          "isAsync": false,
           "name": "wait_until",
           "description": "Stop execution until a given condition is met.\n",
           "parameters": [
@@ -5912,6 +6045,7 @@
           }
         },
         "wait_while": {
+          "isAsync": false,
           "name": "wait_while",
           "description": "Stop execution as long as a given condition is met.\n",
           "parameters": [
@@ -5939,6 +6073,7 @@
       "constants": {},
       "functions": {
         "current_index": {
+          "isAsync": false,
           "name": "current_index",
           "description": "Get the current warp index. Actual factor depends on warp mode.\n",
           "parameters": [],
@@ -5948,6 +6083,7 @@
           }
         },
         "current_rate": {
+          "isAsync": false,
           "name": "current_rate",
           "description": "Get the current warp rate (i.e. actual time multiplier).\n",
           "parameters": [],
@@ -5957,6 +6093,7 @@
           }
         },
         "warp_to": {
+          "isAsync": false,
           "name": "warp_to",
           "description": "Warp forward to a specific universal time.\n",
           "parameters": [
@@ -5975,6 +6112,7 @@
           }
         },
         "cancel": {
+          "isAsync": false,
           "name": "cancel",
           "description": "Cancel time warp\n",
           "parameters": [],
@@ -6042,6 +6180,7 @@
           },
           "methods": {
             "angle_to": {
+              "isAsync": false,
               "name": "angle_to",
               "description": "Calculate the angle in degree to `other` vector.",
               "parameters": [
@@ -6061,6 +6200,7 @@
               }
             },
             "to_string": {
+              "isAsync": false,
               "name": "to_string",
               "description": "Convert the vector to string",
               "parameters": [],
@@ -6070,6 +6210,7 @@
               }
             },
             "to_fixed": {
+              "isAsync": false,
               "name": "to_fixed",
               "description": "Convert the vector to string with fixed number of `decimals`.",
               "parameters": [
@@ -6349,6 +6490,7 @@
           },
           "methods": {
             "cross": {
+              "isAsync": false,
               "name": "cross",
               "description": "Calculate the cross/other product with `other` vector.",
               "parameters": [
@@ -6369,6 +6511,7 @@
               }
             },
             "dot": {
+              "isAsync": false,
               "name": "dot",
               "description": "Calculate the dot/inner product with `other` vector.",
               "parameters": [
@@ -6388,6 +6531,7 @@
               }
             },
             "angle_to": {
+              "isAsync": false,
               "name": "angle_to",
               "description": "Calculate the angle in degree to `other` vector.",
               "parameters": [
@@ -6407,6 +6551,7 @@
               }
             },
             "lerp_to": {
+              "isAsync": false,
               "name": "lerp_to",
               "description": "Linear interpolate position between this and `other` vector, where `t = 0.0` is this and `t = 1.0` is `other`.",
               "parameters": [
@@ -6435,6 +6580,7 @@
               }
             },
             "project_to": {
+              "isAsync": false,
               "name": "project_to",
               "description": "Project this on `other` vector.",
               "parameters": [
@@ -6455,6 +6601,7 @@
               }
             },
             "distance_to": {
+              "isAsync": false,
               "name": "distance_to",
               "description": "Calculate the distance between this and `other` vector.",
               "parameters": [
@@ -6475,6 +6622,7 @@
               }
             },
             "exclude_from": {
+              "isAsync": false,
               "name": "exclude_from",
               "description": "Exclude this from `other` vector.",
               "parameters": [
@@ -6495,6 +6643,7 @@
               }
             },
             "to_string": {
+              "isAsync": false,
               "name": "to_string",
               "description": "Convert vector to string.",
               "parameters": [],
@@ -6504,6 +6653,7 @@
               }
             },
             "to_fixed": {
+              "isAsync": false,
               "name": "to_fixed",
               "description": "Convert the vector to string with fixed number of `decimals`.",
               "parameters": [
@@ -6522,6 +6672,7 @@
               }
             },
             "to_position": {
+              "isAsync": false,
               "name": "to_position",
               "description": "Consider this vector as position in a coordinate system",
               "parameters": [
@@ -6542,6 +6693,7 @@
               }
             },
             "to_global": {
+              "isAsync": false,
               "name": "to_global",
               "description": "Associate this vector with a coordinate system",
               "parameters": [
@@ -6562,6 +6714,7 @@
               }
             },
             "to_direction": {
+              "isAsync": false,
               "name": "to_direction",
               "description": "Point in direction of this vector.",
               "parameters": [],
@@ -6852,6 +7005,7 @@
           },
           "methods": {
             "to_string": {
+              "isAsync": false,
               "name": "to_string",
               "description": "Convert the direction to string",
               "parameters": [],
@@ -6861,6 +7015,7 @@
               }
             },
             "to_global": {
+              "isAsync": false,
               "name": "to_global",
               "description": "Associate this direction with a coordinate system",
               "parameters": [
@@ -7149,6 +7304,7 @@
           "fields": {},
           "methods": {
             "to_local": {
+              "isAsync": false,
               "name": "to_local",
               "description": "Get local angular velocity in a frame of reference",
               "parameters": [
@@ -7169,6 +7325,7 @@
               }
             },
             "to_string": {
+              "isAsync": false,
               "name": "to_string",
               "description": "Convert angular velocity to string in a given coordinate system.",
               "parameters": [
@@ -7188,6 +7345,7 @@
               }
             },
             "to_fixed": {
+              "isAsync": false,
               "name": "to_fixed",
               "description": "Convert angular velocity to string with fixed number of `decimals` in a given coordinate system.",
               "parameters": [
@@ -7215,6 +7373,7 @@
               }
             },
             "relative_to": {
+              "isAsync": false,
               "name": "relative_to",
               "description": "Get relative angular velocity to a frame of reference",
               "parameters": [
@@ -7249,6 +7408,7 @@
           "fields": {},
           "methods": {
             "to_local": {
+              "isAsync": false,
               "name": "to_local",
               "description": "Get local vector in a coordinate system",
               "parameters": [
@@ -7269,6 +7429,7 @@
               }
             },
             "to_string": {
+              "isAsync": false,
               "name": "to_string",
               "description": "Convert vector to string in a given coordinate system.",
               "parameters": [
@@ -7288,6 +7449,7 @@
               }
             },
             "to_fixed": {
+              "isAsync": false,
               "name": "to_fixed",
               "description": "Convert the vector to string with fixed number of `decimals` in a given coordinate system.",
               "parameters": [
@@ -7315,6 +7477,7 @@
               }
             },
             "distance": {
+              "isAsync": false,
               "name": "distance",
               "description": "Calculate the distance of `other` position.",
               "parameters": [
@@ -7334,6 +7497,7 @@
               }
             },
             "distance_sqr": {
+              "isAsync": false,
               "name": "distance_sqr",
               "description": "Calculate the squared distance of `other` position.",
               "parameters": [
@@ -7353,6 +7517,7 @@
               }
             },
             "lerp_to": {
+              "isAsync": false,
               "name": "lerp_to",
               "description": "Linear interpolate position between this and `other` position, where `t = 0.0` is this and `t = 1.0` is `other`.",
               "parameters": [
@@ -7512,6 +7677,7 @@
           },
           "methods": {
             "to_local_position": {
+              "isAsync": false,
               "name": "to_local_position",
               "description": "Get local coordinates of a position",
               "parameters": [
@@ -7532,6 +7698,7 @@
               }
             },
             "to_local_vector": {
+              "isAsync": false,
               "name": "to_local_vector",
               "description": "Get local coordinates of a vector",
               "parameters": [
@@ -7552,6 +7719,7 @@
               }
             },
             "to_local_velocity": {
+              "isAsync": false,
               "name": "to_local_velocity",
               "description": "Get local coordinates of a velocity",
               "parameters": [
@@ -7609,6 +7777,7 @@
           },
           "methods": {
             "to_local": {
+              "isAsync": false,
               "name": "to_local",
               "description": "Get local vector in a coordinate system",
               "parameters": [
@@ -7629,6 +7798,7 @@
               }
             },
             "to_string": {
+              "isAsync": false,
               "name": "to_string",
               "description": "Convert vector to string in a given coordinate system.",
               "parameters": [
@@ -7648,6 +7818,7 @@
               }
             },
             "to_fixed": {
+              "isAsync": false,
               "name": "to_fixed",
               "description": "Convert the vector to string with fixed number of `decimals` in a given coordinate system.",
               "parameters": [
@@ -7675,6 +7846,7 @@
               }
             },
             "to_direction": {
+              "isAsync": false,
               "name": "to_direction",
               "description": "Convert the vector to a rotation/direction in space.",
               "parameters": [],
@@ -7685,6 +7857,7 @@
               }
             },
             "cross": {
+              "isAsync": false,
               "name": "cross",
               "description": "Calculate the cross/other product with `other` vector.",
               "parameters": [
@@ -7705,6 +7878,7 @@
               }
             },
             "dot": {
+              "isAsync": false,
               "name": "dot",
               "description": "Calculate the dot/inner product with `other` vector.",
               "parameters": [
@@ -7724,6 +7898,7 @@
               }
             },
             "lerp_to": {
+              "isAsync": false,
               "name": "lerp_to",
               "description": "Linear interpolate position between this and `other` vector, where `t = 0.0` is this and `t = 1.0` is `other`.",
               "parameters": [
@@ -7752,6 +7927,7 @@
               }
             },
             "exclude_from": {
+              "isAsync": false,
               "name": "exclude_from",
               "description": "Exclude this from `other` vector.",
               "parameters": [
@@ -7933,6 +8109,7 @@
           },
           "methods": {
             "to_relative": {
+              "isAsync": false,
               "name": "to_relative",
               "description": "Get relative velocity to frame of reference",
               "parameters": [
@@ -7953,6 +8130,7 @@
               }
             },
             "to_local": {
+              "isAsync": false,
               "name": "to_local",
               "description": "Get local velocity in a frame of reference",
               "parameters": [
@@ -7973,6 +8151,7 @@
               }
             },
             "to_string": {
+              "isAsync": false,
               "name": "to_string",
               "description": "Convert vector to string in a given coordinate system.",
               "parameters": [
@@ -7992,6 +8171,7 @@
               }
             },
             "to_fixed": {
+              "isAsync": false,
               "name": "to_fixed",
               "description": "Convert the vector to string with fixed number of `decimals` in a given coordinate system.",
               "parameters": [
@@ -8064,6 +8244,7 @@
           },
           "methods": {
             "euler": {
+              "isAsync": false,
               "name": "euler",
               "description": "Get euler angles in a specific coordinate system",
               "parameters": [
@@ -8084,6 +8265,7 @@
               }
             },
             "pitch": {
+              "isAsync": false,
               "name": "pitch",
               "description": "Get pitch angle in a specific coordinate system",
               "parameters": [
@@ -8103,6 +8285,7 @@
               }
             },
             "yaw": {
+              "isAsync": false,
               "name": "yaw",
               "description": "Get yaw angle in a specific coordinate system",
               "parameters": [
@@ -8122,6 +8305,7 @@
               }
             },
             "roll": {
+              "isAsync": false,
               "name": "roll",
               "description": "Get roll angle in a specific coordinate system",
               "parameters": [
@@ -8141,6 +8325,7 @@
               }
             },
             "to_local": {
+              "isAsync": false,
               "name": "to_local",
               "description": "Get local direction in a coordinate system",
               "parameters": [
@@ -8161,6 +8346,7 @@
               }
             },
             "to_string": {
+              "isAsync": false,
               "name": "to_string",
               "description": "Convert the direction to string",
               "parameters": [
@@ -8335,6 +8521,7 @@
       "constants": {},
       "functions": {
         "vec2": {
+          "isAsync": false,
           "name": "vec2",
           "description": "Create a new 2-dimensional vector",
           "parameters": [
@@ -8362,6 +8549,7 @@
           }
         },
         "vec3": {
+          "isAsync": false,
           "name": "vec3",
           "description": "Create a new 3-dimensional vector",
           "parameters": [
@@ -8397,6 +8585,7 @@
           }
         },
         "euler": {
+          "isAsync": false,
           "name": "euler",
           "description": "Create a Direction from euler angles in degree",
           "parameters": [
@@ -8432,6 +8621,7 @@
           }
         },
         "angle_axis": {
+          "isAsync": false,
           "name": "angle_axis",
           "description": "Create a Direction from a given axis with rotation angle in degree",
           "parameters": [
@@ -8460,6 +8650,7 @@
           }
         },
         "from_vector_to_vector": {
+          "isAsync": false,
           "name": "from_vector_to_vector",
           "description": "Create a Direction to rotate from one vector to another",
           "parameters": [
@@ -8489,6 +8680,7 @@
           }
         },
         "look_dir_up": {
+          "isAsync": false,
           "name": "look_dir_up",
           "description": "Create a Direction from a fore-vector and an up-vector",
           "parameters": [
@@ -8518,6 +8710,7 @@
           }
         },
         "global_euler": {
+          "isAsync": false,
           "name": "global_euler",
           "description": "Create a Direction from euler angles in degree",
           "parameters": [
@@ -8562,6 +8755,7 @@
           }
         },
         "global_angle_axis": {
+          "isAsync": false,
           "name": "global_angle_axis",
           "description": "Create a Direction from a given axis with rotation angle in degree",
           "parameters": [
@@ -8590,6 +8784,7 @@
           }
         },
         "global_from_vector_to_vector": {
+          "isAsync": false,
           "name": "global_from_vector_to_vector",
           "description": "Create a Direction to rotate from one vector to another",
           "parameters": [
@@ -8619,6 +8814,7 @@
           }
         },
         "global_look_dir_up": {
+          "isAsync": false,
           "name": "global_look_dir_up",
           "description": "Create a Direction from a fore-vector and an up-vector",
           "parameters": [
@@ -8648,6 +8844,7 @@
           }
         },
         "angle_delta": {
+          "isAsync": false,
           "name": "angle_delta",
           "description": "Calculate the difference between to angles in degree (-180 .. 180)",
           "parameters": [
@@ -8674,6 +8871,7 @@
           }
         },
         "matrix2x2": {
+          "isAsync": false,
           "name": "matrix2x2",
           "description": "Create a new 2-dimensional matrix",
           "parameters": [
@@ -8717,6 +8915,7 @@
           }
         },
         "matrix4x4": {
+          "isAsync": false,
           "name": "matrix4x4",
           "description": "Create a new 4-dimensional matrix",
           "parameters": [],
@@ -8911,6 +9110,7 @@
           },
           "methods": {
             "surface_normal": {
+              "isAsync": false,
               "name": "surface_normal",
               "description": "Get the surface normal at a `latitude` and `longitude` (i.e. the vector pointing up at this geo coordinate)\n",
               "parameters": [
@@ -8938,6 +9138,7 @@
               }
             },
             "global_surface_normal": {
+              "isAsync": false,
               "name": "global_surface_normal",
               "description": "Get the surface normal at a `latitude` and `longitude` (i.e. the vector pointing up at this geo coordinate, coordinate system independent)\n",
               "parameters": [
@@ -8965,6 +9166,7 @@
               }
             },
             "terrain_height": {
+              "isAsync": false,
               "name": "terrain_height",
               "description": "Height of the terrain relative to sea-level a a `latitude` and `longitude`\n",
               "parameters": [
@@ -8991,6 +9193,7 @@
               }
             },
             "surface_position": {
+              "isAsync": false,
               "name": "surface_position",
               "description": "Position of a `latitude` and `longitude` at an altitude relative to sea-level in the celestial frame of the body\n",
               "parameters": [
@@ -9026,6 +9229,7 @@
               }
             },
             "global_surface_position": {
+              "isAsync": false,
               "name": "global_surface_position",
               "description": "Position of a `latitude` and `longitude` at an altitude relative to sea-level (coordinate system independent)\n",
               "parameters": [
@@ -9061,6 +9265,7 @@
               }
             },
             "geo_coordinates": {
+              "isAsync": false,
               "name": "geo_coordinates",
               "description": "Get `GeoCoordinates` struct representing a `latitude` and `longitude` of the body\n",
               "parameters": [
@@ -9088,6 +9293,7 @@
               }
             },
             "create_orbit": {
+              "isAsync": false,
               "name": "create_orbit",
               "description": "Create a new orbit around this body starting at a given relative `position` and `velocity` at universal time `ut`\n",
               "parameters": [
@@ -9125,6 +9331,7 @@
               }
             },
             "global_create_orbit": {
+              "isAsync": false,
               "name": "global_create_orbit",
               "description": "Create a new orbit around this body starting at a given a coordinate independent `velocity` at universal time `ut`\n",
               "parameters": [
@@ -9212,6 +9419,7 @@
           },
           "methods": {
             "altitude_position": {
+              "isAsync": false,
               "name": "altitude_position",
               "parameters": [
                 {
@@ -9230,6 +9438,7 @@
               }
             },
             "global_altitude_position": {
+              "isAsync": false,
               "name": "global_altitude_position",
               "parameters": [
                 {
@@ -9444,6 +9653,7 @@
           },
           "methods": {
             "orbital_velocity": {
+              "isAsync": false,
               "name": "orbital_velocity",
               "description": "Get the relative orbital velocity at a given universal time `ut`\n",
               "parameters": [
@@ -9463,6 +9673,7 @@
               }
             },
             "global_position": {
+              "isAsync": false,
               "name": "global_position",
               "description": "Get the coordinate independent position at a given universal time `ut`\n",
               "parameters": [
@@ -9482,6 +9693,7 @@
               }
             },
             "global_velocity": {
+              "isAsync": false,
               "name": "global_velocity",
               "description": "Get the coordinate independent velocity at a given universal time `ut`\n",
               "parameters": [
@@ -9501,6 +9713,7 @@
               }
             },
             "relative_position": {
+              "isAsync": false,
               "name": "relative_position",
               "description": "Get relative position at a given universal time `ut`\n",
               "parameters": [
@@ -9520,6 +9733,7 @@
               }
             },
             "relative_position_for_true_anomaly": {
+              "isAsync": false,
               "name": "relative_position_for_true_anomaly",
               "description": "Get relative position for a given `trueAnomaly`\n",
               "parameters": [
@@ -9539,6 +9753,7 @@
               }
             },
             "global_position_for_true_anomaly": {
+              "isAsync": false,
               "name": "global_position_for_true_anomaly",
               "description": "Get the coordinate independent position for a given `trueAnomaly`\n",
               "parameters": [
@@ -9558,6 +9773,7 @@
               }
             },
             "prograde": {
+              "isAsync": false,
               "name": "prograde",
               "description": "The relative prograde vector at a given universal time `ut`\n",
               "parameters": [
@@ -9577,6 +9793,7 @@
               }
             },
             "normal_plus": {
+              "isAsync": false,
               "name": "normal_plus",
               "description": "The relative normal-plus vector at a given universal time `ut`\n",
               "parameters": [
@@ -9596,6 +9813,7 @@
               }
             },
             "radial_plus": {
+              "isAsync": false,
               "name": "radial_plus",
               "description": "The relative radial-plus vector at a given universal time `ut`\n",
               "parameters": [
@@ -9615,6 +9833,7 @@
               }
             },
             "up": {
+              "isAsync": false,
               "name": "up",
               "description": "Relative up vector of the orbit at a given universal time `ut`\n",
               "parameters": [
@@ -9634,6 +9853,7 @@
               }
             },
             "radius": {
+              "isAsync": false,
               "name": "radius",
               "description": "Get the orbital radius (distance from center of body) at a given universal time `ut`\n",
               "parameters": [
@@ -9652,6 +9872,7 @@
               }
             },
             "horizontal": {
+              "isAsync": false,
               "name": "horizontal",
               "description": "Relative horizontal vector at a given universal time `ut`\n",
               "parameters": [
@@ -9671,6 +9892,7 @@
               }
             },
             "perturbed_orbit": {
+              "isAsync": false,
               "name": "perturbed_orbit",
               "description": "Returns a new Orbit object that represents the result of applying a given relative `deltaV` to o at `ut`.\n",
               "parameters": [
@@ -9699,6 +9921,7 @@
               }
             },
             "mean_anomaly_at_ut": {
+              "isAsync": false,
               "name": "mean_anomaly_at_ut",
               "description": "The mean anomaly of the orbit.\nFor elliptical orbits, the value return is always between 0 and 2pi.\nFor hyperbolic orbits, the value can be any number.\n",
               "parameters": [
@@ -9717,6 +9940,7 @@
               }
             },
             "ut_at_mean_anomaly": {
+              "isAsync": false,
               "name": "ut_at_mean_anomaly",
               "description": "The next time at which the orbiting object will reach the given mean anomaly.\nFor elliptical orbits, this will be a time between UT and UT + o.period.\nFor hyperbolic orbits, this can be any time, including a time in the past, if the given mean anomaly occurred in the past\n",
               "parameters": [
@@ -9743,6 +9967,7 @@
               }
             },
             "get_mean_anomaly_at_eccentric_anomaly": {
+              "isAsync": false,
               "name": "get_mean_anomaly_at_eccentric_anomaly",
               "description": "Converts an eccentric anomaly into a mean anomaly.\nFor an elliptical orbit, the returned value is between 0 and 2pi.\nFor a hyperbolic orbit, the returned value is any number.\n",
               "parameters": [
@@ -9761,6 +9986,7 @@
               }
             },
             "get_eccentric_anomaly_at_true_anomaly": {
+              "isAsync": false,
               "name": "get_eccentric_anomaly_at_true_anomaly",
               "description": "Converts a true anomaly into an eccentric anomaly.\nFor elliptical orbits this returns a value between 0 and 2pi.\nFor hyperbolic orbits the returned value can be any number.\n",
               "parameters": [
@@ -9779,6 +10005,7 @@
               }
             },
             "time_of_true_anomaly": {
+              "isAsync": false,
               "name": "time_of_true_anomaly",
               "description": "Next time of a certain true anomaly after a given universal time `ut`.\nIf `ut` is omitted the current time will be used\n",
               "parameters": [
@@ -9806,6 +10033,7 @@
               }
             },
             "next_periapsis_time": {
+              "isAsync": false,
               "name": "next_periapsis_time",
               "description": "The next time at which the orbiting object will be at periapsis after a given universal time `ut`.\nIf `ut` is omitted the current time will be used.\nFor elliptical orbits, this will be between `ut` and `ut` + Period.\nFor hyperbolic orbits, this can be any time, including a time in the past, if the periapsis is in the past.\n",
               "parameters": [
@@ -9825,6 +10053,7 @@
               }
             },
             "next_apoapsis_time": {
+              "isAsync": false,
               "name": "next_apoapsis_time",
               "description": "Returns the next time at which the orbiting object will be at apoapsis after a given universal time `ut`.\nIf `ut` is omitted the current time will be used.\nFor elliptical orbits, this will be between `ut` and `ut` + Period.\nFor hyperbolic orbits, this is undefined.\n",
               "parameters": [
@@ -9845,6 +10074,7 @@
               }
             },
             "true_anomaly_at_radius": {
+              "isAsync": false,
               "name": "true_anomaly_at_radius",
               "description": "Get the true anomaly of a radius.\nIf the radius is below the periapsis the true anomaly of the periapsis will be returned.\nIf it is above the apoapsis the true anomaly of the apoapsis is returned.\nThe returned value is always between 0 and 2pi.\n",
               "parameters": [
@@ -9863,6 +10093,7 @@
               }
             },
             "next_time_of_radius": {
+              "isAsync": false,
               "name": "next_time_of_radius",
               "description": "Finds the next time at which the orbiting object will achieve a given `radius` from center of the body\nafter a given universal time `ut`.\nThis will be undefined if the specified `radius` is impossible for this orbit, otherwise:\nFor elliptical orbits this will be a time between `ut` and `ut` + period.\nFor hyperbolic orbits this can be any time. If the given radius will be achieved\nin the future then the next time at which that radius will be achieved will be returned.\nIf the given radius was only achieved in the past, then there are no guarantees\nabout which of the two times in the past will be returned.\n",
               "parameters": [
@@ -9890,6 +10121,7 @@
               }
             },
             "synodic_period": {
+              "isAsync": false,
               "name": "synodic_period",
               "description": "Computes the period of the phase angle between orbiting objects of this orbit and and `other` orbit.\nFor noncircular orbits the time variation of the phase angle is only quasiperiodic\nand for high eccentricities and/or large relative inclinations, the relative motion is\nnot really periodic at all.\n",
               "parameters": [
@@ -9909,6 +10141,7 @@
               }
             },
             "true_anomaly_from_vector": {
+              "isAsync": false,
               "name": "true_anomaly_from_vector",
               "description": "Converts a relative direction, into a true anomaly.\nThe vector is projected into the orbital plane and then the true anomaly is\ncomputed as the angle this vector makes with the vector pointing to the periapsis.\nThe returned value is always between 0 and 2pi.\n",
               "parameters": [
@@ -9928,6 +10161,7 @@
               }
             },
             "ascending_node_true_anomaly": {
+              "isAsync": false,
               "name": "ascending_node_true_anomaly",
               "description": "Gives the true anomaly (in a's orbit) at which a crosses its ascending node with b's orbit.\nThe returned value is always between 0 and 360.\n",
               "parameters": [
@@ -9947,6 +10181,7 @@
               }
             },
             "descending_node_true_anomaly": {
+              "isAsync": false,
               "name": "descending_node_true_anomaly",
               "description": "Gives the true anomaly (in a's orbit) at which a crosses its descending node with b's orbit.\nThe returned value is always between 0 and 360.\n",
               "parameters": [
@@ -9966,6 +10201,7 @@
               }
             },
             "time_of_ascending_node": {
+              "isAsync": false,
               "name": "time_of_ascending_node",
               "description": "Returns the next time at which a will cross its ascending node with b.\nFor elliptical orbits this is a time between UT and UT + a.period.\nFor hyperbolic orbits this can be any time, including a time in the past if\nthe ascending node is in the past.\nNOTE: this function will throw an ArgumentException if a is a hyperbolic orbit and the ascending node\noccurs at a true anomaly that a does not actually ever attain.\nIf `ut` is omitted the current time will be used.\n",
               "parameters": [
@@ -9994,6 +10230,7 @@
               }
             },
             "time_of_descending_node": {
+              "isAsync": false,
               "name": "time_of_descending_node",
               "description": "Returns the next time at which a will cross its descending node with b.\nFor elliptical orbits this is a time between UT and UT + a.period.\nFor hyperbolic orbits this can be any time, including a time in the past if\nthe descending node is in the past.\nNOTE: this function will throw an ArgumentException if a is a hyperbolic orbit and the descending node\noccurs at a true anomaly that a does not actually ever attain.\nIf `ut` is omitted the current time will be used\n",
               "parameters": [
@@ -10022,6 +10259,7 @@
               }
             },
             "to_string": {
+              "isAsync": false,
               "name": "to_string",
               "description": "Convert orbital parameters to string.\n",
               "parameters": [],
@@ -10031,6 +10269,7 @@
               }
             },
             "to_fixed": {
+              "isAsync": false,
               "name": "to_fixed",
               "description": "Convert orbital parameter to string using specified number of `decimals`\n",
               "parameters": [
@@ -10055,6 +10294,7 @@
       "constants": {},
       "functions": {
         "find_body": {
+          "isAsync": false,
           "name": "find_body",
           "description": "Find a body by name.\n",
           "parameters": [
@@ -10074,6 +10314,7 @@
           }
         },
         "galactic_origin": {
+          "isAsync": false,
           "name": "galactic_origin",
           "description": "Get the galactic celestial frame.\n",
           "parameters": [],
@@ -10095,6 +10336,7 @@
           "fields": {},
           "methods": {
             "to_string": {
+              "isAsync": false,
               "name": "to_string",
               "description": "String representation of the number",
               "parameters": [],
@@ -10163,6 +10405,7 @@
           },
           "methods": {
             "from_string": {
+              "isAsync": false,
               "name": "from_string",
               "description": "Parse from string",
               "parameters": [
@@ -10660,6 +10903,7 @@
           },
           "methods": {
             "dump_all": {
+              "isAsync": false,
               "name": "dump_all",
               "parameters": [],
               "returnType": {
@@ -10792,6 +11036,7 @@
           },
           "methods": {
             "add_container": {
+              "isAsync": false,
               "name": "add_container",
               "parameters": [
                 {
@@ -10827,6 +11072,7 @@
               }
             },
             "add_resource": {
+              "isAsync": false,
               "name": "add_resource",
               "parameters": [
                 {
@@ -10862,6 +11108,7 @@
               }
             },
             "start": {
+              "isAsync": false,
               "name": "start",
               "description": "Start the resource transfer.\n",
               "parameters": [],
@@ -10871,6 +11118,7 @@
               }
             },
             "stop": {
+              "isAsync": false,
               "name": "stop",
               "description": "Stop the resource transfer.\n",
               "parameters": [],
@@ -10880,6 +11128,7 @@
               }
             },
             "clear": {
+              "isAsync": false,
               "name": "clear",
               "description": "Cleanup all registered resource transfer entries.\nThis will implicitly stop the resource transfer if it is still running.\n",
               "parameters": [],
@@ -10930,6 +11179,7 @@
       },
       "functions": {
         "create_resource_transfer": {
+          "isAsync": false,
           "name": "create_resource_transfer",
           "parameters": [],
           "returnType": {
@@ -10985,6 +11235,7 @@
           },
           "methods": {
             "add_data": {
+              "isAsync": false,
               "name": "add_data",
               "description": "Add a data `value` at time `ut`.\n",
               "parameters": [
@@ -11017,6 +11268,7 @@
       "constants": {},
       "functions": {
         "add_time_series": {
+          "isAsync": false,
           "name": "add_time_series",
           "description": "\nCreate a new time series starting at `startUt` with an initial resultion `initialResolution`.\nIf a time series of the `name` already exists it will be replace by the new one.\n\n",
           "parameters": [
@@ -11052,6 +11304,7 @@
           }
         },
         "get_time_series": {
+          "isAsync": false,
           "name": "get_time_series",
           "description": "Get a time series by name. Will be undefined if there it does not exists\n",
           "parameters": [
@@ -11071,6 +11324,7 @@
           }
         },
         "remove_time_series": {
+          "isAsync": false,
           "name": "remove_time_series",
           "description": "Remove a time series by name.\n",
           "parameters": [
@@ -11089,6 +11343,7 @@
           }
         },
         "remove_all_time_series": {
+          "isAsync": false,
           "name": "remove_all_time_series",
           "description": "Remove all time series.\n",
           "parameters": [],
@@ -11098,6 +11353,7 @@
           }
         },
         "save_time_series": {
+          "isAsync": false,
           "name": "save_time_series",
           "description": "Store the data of all time series to a file.\n",
           "parameters": [
@@ -11132,6 +11388,7 @@
       },
       "functions": {
         "assert_vec2": {
+          "isAsync": false,
           "name": "assert_vec2",
           "parameters": [
             {
@@ -11167,6 +11424,7 @@
           }
         },
         "assert_vec3": {
+          "isAsync": false,
           "name": "assert_vec3",
           "parameters": [
             {
@@ -11202,6 +11460,7 @@
           }
         },
         "assert_true": {
+          "isAsync": false,
           "name": "assert_true",
           "description": "Assert that `actual` is true (Test only)\n",
           "parameters": [
@@ -11220,6 +11479,7 @@
           }
         },
         "assert_false": {
+          "isAsync": false,
           "name": "assert_false",
           "description": "Assert that `actual` is false (Test only)\n",
           "parameters": [
@@ -11238,6 +11498,7 @@
           }
         },
         "assert_string": {
+          "isAsync": false,
           "name": "assert_string",
           "description": "Assert that `actual` string is equal to `expected` (Test only)\n",
           "parameters": [
@@ -11264,6 +11525,7 @@
           }
         },
         "assert_int": {
+          "isAsync": false,
           "name": "assert_int",
           "description": "Assert that `actual` integer is equal to `expected` (Test only)\n",
           "parameters": [
@@ -11290,6 +11552,7 @@
           }
         },
         "assert_float": {
+          "isAsync": false,
           "name": "assert_float",
           "description": "Assert that `actual` float is almost equal to `expected` with an absolute tolerance of `delta` (Test only)\n",
           "parameters": [
@@ -11324,6 +11587,7 @@
           }
         },
         "assert_some": {
+          "isAsync": false,
           "name": "assert_some",
           "parameters": [
             {
@@ -11350,6 +11614,7 @@
           }
         },
         "assert_none": {
+          "isAsync": false,
           "name": "assert_none",
           "parameters": [
             {
@@ -11368,6 +11633,7 @@
           }
         },
         "fail_test": {
+          "isAsync": false,
           "name": "fail_test",
           "description": "Fail the test case with a `message` (Test only).\n",
           "parameters": [
@@ -11386,6 +11652,7 @@
           }
         },
         "assert_yield": {
+          "isAsync": false,
           "name": "assert_yield",
           "description": "Assert that test case has yielded `expected` number of times already (Async test only)\n",
           "parameters": [
@@ -11404,6 +11671,7 @@
           }
         },
         "yield": {
+          "isAsync": false,
           "name": "yield",
           "description": "Yield the test case (Async test only)\n",
           "parameters": [],
@@ -11413,6 +11681,7 @@
           }
         },
         "test_sleep": {
+          "isAsync": false,
           "name": "test_sleep",
           "description": "Suspend execution for `millis`\n",
           "parameters": [
@@ -11442,6 +11711,7 @@
           "fields": {},
           "methods": {
             "to_string": {
+              "isAsync": false,
               "name": "to_string",
               "description": "String representation of the number",
               "parameters": [],
@@ -11610,6 +11880,7 @@
           },
           "methods": {
             "from_string": {
+              "isAsync": false,
               "name": "from_string",
               "description": "Parse from string",
               "parameters": [
@@ -12098,6 +12369,7 @@
           "fields": {},
           "methods": {
             "to_string": {
+              "isAsync": false,
               "name": "to_string",
               "description": "String representation of the number",
               "parameters": [],
@@ -12176,6 +12448,7 @@
           },
           "methods": {
             "from_string": {
+              "isAsync": false,
               "name": "from_string",
               "description": "Parse from string",
               "parameters": [
@@ -12664,6 +12937,7 @@
           "fields": {},
           "methods": {
             "to_string": {
+              "isAsync": false,
               "name": "to_string",
               "description": "String representation of the number",
               "parameters": [],
@@ -12762,6 +13036,7 @@
           },
           "methods": {
             "from_string": {
+              "isAsync": false,
               "name": "from_string",
               "description": "Parse from string",
               "parameters": [
@@ -13250,6 +13525,7 @@
           "fields": {},
           "methods": {
             "to_string": {
+              "isAsync": false,
               "name": "to_string",
               "description": "String representation of the number",
               "parameters": [],
@@ -13328,6 +13604,7 @@
           },
           "methods": {
             "from_string": {
+              "isAsync": false,
               "name": "from_string",
               "description": "Parse from string",
               "parameters": [
@@ -13816,6 +14093,7 @@
           "fields": {},
           "methods": {
             "to_string": {
+              "isAsync": false,
               "name": "to_string",
               "description": "String representation of the number",
               "parameters": [],
@@ -13904,6 +14182,7 @@
           },
           "methods": {
             "from_string": {
+              "isAsync": false,
               "name": "from_string",
               "description": "Parse from string",
               "parameters": [
@@ -14392,6 +14671,7 @@
           "fields": {},
           "methods": {
             "to_string": {
+              "isAsync": false,
               "name": "to_string",
               "description": "String representation of the number",
               "parameters": [],
@@ -14570,6 +14850,7 @@
           },
           "methods": {
             "from_string": {
+              "isAsync": false,
               "name": "from_string",
               "description": "Parse from string",
               "parameters": [
@@ -15058,6 +15339,7 @@
           "fields": {},
           "methods": {
             "to_string": {
+              "isAsync": false,
               "name": "to_string",
               "description": "String representation of the number",
               "parameters": [],
@@ -15186,6 +15468,7 @@
           },
           "methods": {
             "from_string": {
+              "isAsync": false,
               "name": "from_string",
               "description": "Parse from string",
               "parameters": [
@@ -15674,6 +15957,7 @@
           "fields": {},
           "methods": {
             "to_string": {
+              "isAsync": false,
               "name": "to_string",
               "description": "String representation of the number",
               "parameters": [],
@@ -15762,6 +16046,7 @@
           },
           "methods": {
             "from_string": {
+              "isAsync": false,
               "name": "from_string",
               "description": "Parse from string",
               "parameters": [
@@ -16250,6 +16535,7 @@
           "fields": {},
           "methods": {
             "to_string": {
+              "isAsync": false,
               "name": "to_string",
               "description": "String representation of the number",
               "parameters": [],
@@ -16358,6 +16644,7 @@
           },
           "methods": {
             "from_string": {
+              "isAsync": false,
               "name": "from_string",
               "description": "Parse from string",
               "parameters": [
@@ -17254,6 +17541,7 @@
           },
           "methods": {
             "get_ISP": {
+              "isAsync": false,
               "name": "get_ISP",
               "description": "Estimated ISP of the engine in a given `situation`\n",
               "parameters": [
@@ -17273,6 +17561,7 @@
               }
             },
             "get_thrust": {
+              "isAsync": false,
               "name": "get_thrust",
               "description": "Estimated thrust of the engine in a given `situation`\n",
               "parameters": [
@@ -17292,6 +17581,7 @@
               }
             },
             "get_thrust_vector": {
+              "isAsync": false,
               "name": "get_thrust_vector",
               "description": "Estimated thrust vector of the engine in a given `situation`\n",
               "parameters": [
@@ -17392,6 +17682,7 @@
           },
           "methods": {
             "get_deltav": {
+              "isAsync": false,
               "name": "get_deltav",
               "description": "Estimated delta-v of the stage in a given `situation`\n",
               "parameters": [
@@ -17411,6 +17702,7 @@
               }
             },
             "get_ISP": {
+              "isAsync": false,
               "name": "get_ISP",
               "description": "Estimated ISP of the stage in a given `situation`\n",
               "parameters": [
@@ -17430,6 +17722,7 @@
               }
             },
             "get_TWR": {
+              "isAsync": false,
               "name": "get_TWR",
               "description": "Estimated TWR of the stage in a given `situation`\n",
               "parameters": [
@@ -17449,6 +17742,7 @@
               }
             },
             "get_thrust": {
+              "isAsync": false,
               "name": "get_thrust",
               "description": "Estimated thrust of the stage in a given `situation`\n",
               "parameters": [
@@ -17549,6 +17843,7 @@
           },
           "methods": {
             "next_node": {
+              "isAsync": false,
               "name": "next_node",
               "parameters": [],
               "returnType": {
@@ -17558,6 +17853,7 @@
               }
             },
             "add": {
+              "isAsync": false,
               "name": "add",
               "parameters": [
                 {
@@ -17600,6 +17896,7 @@
               }
             },
             "add_burn_vector": {
+              "isAsync": false,
               "name": "add_burn_vector",
               "parameters": [
                 {
@@ -17719,6 +18016,7 @@
           },
           "methods": {
             "remove": {
+              "isAsync": false,
               "name": "remove",
               "parameters": [],
               "returnType": {
@@ -17782,6 +18080,7 @@
           },
           "methods": {
             "decouple": {
+              "isAsync": false,
               "name": "decouple",
               "parameters": [],
               "returnType": {
@@ -17830,6 +18129,7 @@
           },
           "methods": {
             "set_extended": {
+              "isAsync": false,
               "name": "set_extended",
               "parameters": [
                 {
@@ -18130,6 +18430,14 @@
                 "name": "bool"
               }
             },
+            "is_propellant_starved": {
+              "name": "is_propellant_starved",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
             "current_throttle": {
               "name": "current_throttle",
               "readOnly": true,
@@ -18140,6 +18448,14 @@
             },
             "current_thrust": {
               "name": "current_thrust",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "real_isp": {
+              "name": "real_isp",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -18207,6 +18523,7 @@
           },
           "methods": {
             "change_mode": {
+              "isAsync": false,
               "name": "change_mode",
               "parameters": [
                 {
@@ -18256,6 +18573,7 @@
           },
           "methods": {
             "jettison": {
+              "isAsync": false,
               "name": "jettison",
               "parameters": [],
               "returnType": {
@@ -18288,6 +18606,7 @@
           },
           "methods": {
             "release": {
+              "isAsync": false,
               "name": "release",
               "parameters": [],
               "returnType": {
@@ -18355,6 +18674,7 @@
           },
           "methods": {
             "deploy": {
+              "isAsync": false,
               "name": "deploy",
               "parameters": [],
               "returnType": {
@@ -18363,6 +18683,7 @@
               }
             },
             "cut": {
+              "isAsync": false,
               "name": "cut",
               "parameters": [],
               "returnType": {
@@ -18371,6 +18692,7 @@
               }
             },
             "repack": {
+              "isAsync": false,
               "name": "repack",
               "parameters": [],
               "returnType": {
@@ -18661,6 +18983,7 @@
           },
           "methods": {
             "next": {
+              "isAsync": true,
               "name": "next",
               "parameters": [],
               "returnType": {
@@ -18669,6 +18992,7 @@
               }
             },
             "parts_in_stage": {
+              "isAsync": false,
               "name": "parts_in_stage",
               "parameters": [
                 {
@@ -18925,7 +19249,7 @@
             },
             "orbital_velocity": {
               "name": "orbital_velocity",
-              "description": "Orbital velocity of the vessel relative to the main body.\n",
+              "description": "Orbital velocity of the vessel relative to the main body.\nThis is equivalent of expressing the `global_velocity` in the celestial frame of the main body.\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -18935,7 +19259,7 @@
             },
             "surface_velocity": {
               "name": "surface_velocity",
-              "description": "Surface velocity of the vessel relative to the main body.\n",
+              "description": "Surface velocity of the vessel relative to the main body.\nThis is equivalent of expressing the `global_velocity` in the body frame of the main body.\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -19038,6 +19362,7 @@
             },
             "global_angular_momentum": {
               "name": "global_angular_momentum",
+              "description": "Get the coordinate system independent angular momentum of the vessel.\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -19047,6 +19372,7 @@
             },
             "global_angular_velocity": {
               "name": "global_angular_velocity",
+              "description": "Get the coordinate system independent angular velocity of the vessel.\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -19056,6 +19382,7 @@
             },
             "global_moment_of_inertia": {
               "name": "global_moment_of_inertia",
+              "description": "Get the coordinate system independent moment of inertial of the vessel\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -19065,6 +19392,7 @@
             },
             "total_torque": {
               "name": "total_torque",
+              "description": "Get the available torque of relative to its control frame.\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -19074,6 +19402,7 @@
             },
             "angular_momentum": {
               "name": "angular_momentum",
+              "description": "Get the angular momentum of the vessel in the celestial frame of its main body.\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -19083,6 +19412,7 @@
             },
             "angular_velocity": {
               "name": "angular_velocity",
+              "description": "Get the coordinate angular velocity in the celestial frame of its main body.\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -19092,6 +19422,7 @@
             },
             "vertical_speed": {
               "name": "vertical_speed",
+              "description": "Get the vertical speed of the vessel.\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -19100,6 +19431,7 @@
             },
             "geo_coordinates": {
               "name": "geo_coordinates",
+              "description": "Get the current geo-coordinate of the vessel.\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -19109,6 +19441,7 @@
             },
             "up": {
               "name": "up",
+              "description": "Get the horizon up vector in the celestial frame of the main body.\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -19118,6 +19451,7 @@
             },
             "north": {
               "name": "north",
+              "description": "Get the horizon north vector in the celestial frame of the main body.\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -19127,6 +19461,7 @@
             },
             "east": {
               "name": "east",
+              "description": "Get the horizon east vector in the celestial frame of the main body.\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -19136,6 +19471,7 @@
             },
             "global_up": {
               "name": "global_up",
+              "description": "Get the coordinate system independent horizon up vector.\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -19145,6 +19481,7 @@
             },
             "global_north": {
               "name": "global_north",
+              "description": "Get the coordinate system independent horizon east vector.\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -19154,6 +19491,7 @@
             },
             "global_east": {
               "name": "global_east",
+              "description": "Get the coordinate system independent horizon north vector.\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -19163,6 +19501,7 @@
             },
             "situation": {
               "name": "situation",
+              "description": "Get the current situation of the vessel.\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -19204,6 +19543,7 @@
             },
             "facing": {
               "name": "facing",
+              "description": "Get the current facing direction of the vessel in the celestial frame of its main body.\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -19213,6 +19553,7 @@
             },
             "global_facing": {
               "name": "global_facing",
+              "description": "Get the coordinate system independent facing direction of the vessel.\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -19222,6 +19563,7 @@
             },
             "parts": {
               "name": "parts",
+              "description": "Get a list of all vessel parts.\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -19231,6 +19573,7 @@
             },
             "air_intakes": {
               "name": "air_intakes",
+              "description": "Get a list of all air intake parts of the vessel.\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -19240,6 +19583,7 @@
             },
             "engines": {
               "name": "engines",
+              "description": "Get a list of all engine parts of the vessel.\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -19249,6 +19593,7 @@
             },
             "docking_nodes": {
               "name": "docking_nodes",
+              "description": "Get a list of all docking node parts of the vessel.\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -19258,6 +19603,7 @@
             },
             "solar_panels": {
               "name": "solar_panels",
+              "description": "Get a list of all solar panel parts of the vessel.\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -19267,6 +19613,7 @@
             },
             "target": {
               "name": "target",
+              "description": "Get the currently selected target of the vessel, if there is one.\n",
               "readOnly": false,
               "type": {
                 "kind": "Standard",
@@ -19276,6 +19623,7 @@
             },
             "available_thrust": {
               "name": "available_thrust",
+              "description": "Returns the maximum thrust of all engines in the current situation of the vessel.\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -19284,6 +19632,7 @@
             },
             "pitch_yaw_roll": {
               "name": "pitch_yaw_roll",
+              "description": "Returns the pitch, yaw/heading and roll of the vessel relative to the horizon.\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -19294,7 +19643,9 @@
           },
           "methods": {
             "heading_direction": {
+              "isAsync": false,
               "name": "heading_direction",
+              "description": "Calculate a direction in the celestial frame of the main body based on\nheading, pitch an roll relative to the horizon.\n",
               "parameters": [
                 {
                   "name": "degreesFromNorth",
@@ -19328,7 +19679,9 @@
               }
             },
             "global_heading_direction": {
+              "isAsync": false,
               "name": "global_heading_direction",
+              "description": "Calculate a coordinate system independent direction based on\nheading, pitch an roll relative to the horizon.\n",
               "parameters": [
                 {
                   "name": "degreesFromNorth",
@@ -19362,6 +19715,7 @@
               }
             },
             "set_steering": {
+              "isAsync": false,
               "name": "set_steering",
               "parameters": [
                 {
@@ -19381,6 +19735,7 @@
               }
             },
             "manage_steering": {
+              "isAsync": false,
               "name": "manage_steering",
               "parameters": [
                 {
@@ -19400,6 +19755,7 @@
               }
             },
             "set_throttle": {
+              "isAsync": false,
               "name": "set_throttle",
               "parameters": [
                 {
@@ -19418,6 +19774,7 @@
               }
             },
             "manage_throttle": {
+              "isAsync": false,
               "name": "manage_throttle",
               "parameters": [
                 {
@@ -19437,6 +19794,7 @@
               }
             },
             "set_rcs_translate": {
+              "isAsync": false,
               "name": "set_rcs_translate",
               "parameters": [
                 {
@@ -19456,6 +19814,7 @@
               }
             },
             "manage_rcs_translate": {
+              "isAsync": false,
               "name": "manage_rcs_translate",
               "parameters": [
                 {
@@ -19475,6 +19834,7 @@
               }
             },
             "set_wheel_steering": {
+              "isAsync": false,
               "name": "set_wheel_steering",
               "parameters": [
                 {
@@ -19493,6 +19853,7 @@
               }
             },
             "manage_wheel_steering": {
+              "isAsync": false,
               "name": "manage_wheel_steering",
               "parameters": [
                 {
@@ -19512,6 +19873,7 @@
               }
             },
             "set_wheel_throttle": {
+              "isAsync": false,
               "name": "set_wheel_throttle",
               "parameters": [
                 {
@@ -19530,6 +19892,7 @@
               }
             },
             "manage_wheel_throttle": {
+              "isAsync": false,
               "name": "manage_wheel_throttle",
               "parameters": [
                 {
@@ -19549,6 +19912,7 @@
               }
             },
             "release_control": {
+              "isAsync": false,
               "name": "release_control",
               "parameters": [],
               "returnType": {
@@ -19557,6 +19921,7 @@
               }
             },
             "override_input_pitch": {
+              "isAsync": false,
               "name": "override_input_pitch",
               "parameters": [
                 {
@@ -19574,6 +19939,7 @@
               }
             },
             "override_input_roll": {
+              "isAsync": false,
               "name": "override_input_roll",
               "parameters": [
                 {
@@ -19591,6 +19957,7 @@
               }
             },
             "override_input_yaw": {
+              "isAsync": false,
               "name": "override_input_yaw",
               "parameters": [
                 {
@@ -19608,6 +19975,7 @@
               }
             },
             "override_input_translate_x": {
+              "isAsync": false,
               "name": "override_input_translate_x",
               "parameters": [
                 {
@@ -19625,6 +19993,7 @@
               }
             },
             "override_input_translate_y": {
+              "isAsync": false,
               "name": "override_input_translate_y",
               "parameters": [
                 {
@@ -19642,6 +20011,7 @@
               }
             },
             "override_input_translate_z": {
+              "isAsync": false,
               "name": "override_input_translate_z",
               "parameters": [
                 {
@@ -19676,6 +20046,7 @@
           },
           "methods": {
             "stage": {
+              "isAsync": false,
               "name": "stage",
               "description": "Get delta-v information for a specific `stage` of the vessel, if existent.\n",
               "parameters": [
@@ -19783,6 +20154,7 @@
       },
       "functions": {
         "active_vessel": {
+          "isAsync": false,
           "name": "active_vessel",
           "description": "Try to get the currently active vessel. Will result in an error if there is none.\n",
           "parameters": [],
@@ -19801,6 +20173,7 @@
       "constants": {},
       "functions": {
         "log_init": {
+          "isAsync": false,
           "name": "log_init",
           "description": "",
           "parameters": [
@@ -19819,6 +20192,7 @@
           }
         },
         "log_console_telemetry": {
+          "isAsync": false,
           "name": "log_console_telemetry",
           "description": "",
           "parameters": [
@@ -19845,6 +20219,7 @@
           }
         },
         "log_console_debug": {
+          "isAsync": false,
           "name": "log_console_debug",
           "description": "",
           "parameters": [
@@ -19871,6 +20246,7 @@
           }
         },
         "log_console_message": {
+          "isAsync": false,
           "name": "log_console_message",
           "description": "",
           "parameters": [
@@ -19905,6 +20281,7 @@
       "constants": {},
       "functions": {
         "atmo_launch": {
+          "isAsync": false,
           "name": "atmo_launch",
           "description": "Automatically launch a rocket from an atmosphere to a circular orbit.",
           "parameters": [
@@ -19957,6 +20334,7 @@
           }
         },
         "atmo_launch_ascent": {
+          "isAsync": false,
           "name": "atmo_launch_ascent",
           "description": "Perform a rocket launch ascent from an atmosphere.\n\nNote: The rocket will not end up in a stable orbit and most likely crash if no further action\nis taken.",
           "parameters": [
@@ -20475,6 +20853,7 @@
           },
           "methods": {
             "update": {
+              "isAsync": false,
               "name": "update",
               "description": "",
               "parameters": [
@@ -20494,6 +20873,7 @@
               }
             },
             "reset_i": {
+              "isAsync": false,
               "name": "reset_i",
               "description": "",
               "parameters": [],
@@ -20503,6 +20883,7 @@
               }
             },
             "update_state_vectors": {
+              "isAsync": false,
               "name": "update_state_vectors",
               "description": "",
               "parameters": [
@@ -20521,6 +20902,7 @@
               }
             },
             "update_torque": {
+              "isAsync": false,
               "name": "update_torque",
               "description": "",
               "parameters": [],
@@ -20530,6 +20912,7 @@
               }
             },
             "update_prediction_pi": {
+              "isAsync": false,
               "name": "update_prediction_pi",
               "description": "",
               "parameters": [
@@ -20548,6 +20931,7 @@
               }
             },
             "update_control": {
+              "isAsync": false,
               "name": "update_control",
               "description": "",
               "parameters": [],
@@ -20558,6 +20942,7 @@
               }
             },
             "print_debug": {
+              "isAsync": true,
               "name": "print_debug",
               "description": "",
               "parameters": [],
@@ -20596,6 +20981,7 @@
           },
           "methods": {
             "set_global_direction": {
+              "isAsync": false,
               "name": "set_global_direction",
               "description": "",
               "parameters": [
@@ -20615,6 +21001,7 @@
               }
             },
             "set_direction": {
+              "isAsync": false,
               "name": "set_direction",
               "description": "",
               "parameters": [
@@ -20634,6 +21021,7 @@
               }
             },
             "set_heading": {
+              "isAsync": false,
               "name": "set_heading",
               "description": "",
               "parameters": [
@@ -20668,6 +21056,7 @@
               }
             },
             "release": {
+              "isAsync": true,
               "name": "release",
               "description": "",
               "parameters": [],
@@ -20677,6 +21066,7 @@
               }
             },
             "resume": {
+              "isAsync": true,
               "name": "resume",
               "description": "",
               "parameters": [],
@@ -20692,6 +21082,7 @@
       "constants": {},
       "functions": {
         "control_steering": {
+          "isAsync": false,
           "name": "control_steering",
           "description": "Control the steering of a vessel.\nExample usage:\n```rust\nuse { control_steering } from std::control::steering\n...\nconst control = control_steering(vessel)\n// vessel is now controlled and will keep its current rotation\n\ncontrol.set_heading(30, 10, 5) // change the desired rotation\nsleep(5) // Give the controller time to steer the vessel\n...\ncontrol.release() // release control of the vessel\n```",
           "parameters": [
@@ -20712,6 +21103,7 @@
           }
         },
         "SteeringController": {
+          "isAsync": false,
           "name": "SteeringController",
           "description": "Adaptation of the steering controller in kOS.",
           "parameters": [
@@ -20741,6 +21133,7 @@
           }
         },
         "SteeringControl": {
+          "isAsync": false,
           "name": "SteeringControl",
           "description": "Helper to use `SteeringController` with a `SteeringManager` of a vessel.\nUse the `control_steering` function to set it up correctly.",
           "parameters": [
@@ -20778,6 +21171,7 @@
       "constants": {},
       "functions": {
         "solve_lambert": {
+          "isAsync": false,
           "name": "solve_lambert",
           "description": "Solve Lambert's problem, i.e. calculate the Kepler orbit to get from point `r1`\nto point `r2` in time `tof` (time of flight).\n\n* `mu` is the standard gravitational parameter of the central body\n* `clockwise` defines if a clockwise or counter-clockwise orbit should be calculated\n* The result `v1` is the required velocity at `r1`\n* The result `v2` is the required velocity at `r2`\n\nThis is based on the solver developed by Dario Izzo\nDetails can be found here: https://arxiv.org/pdf/1403.2705.pdf\nReleased under the GNU GENERAL PUBLIC LICENSE as part of the PyKEP library:",
           "parameters": [
@@ -20967,6 +21361,7 @@
           },
           "methods": {
             "reset": {
+              "isAsync": false,
               "name": "reset",
               "description": "",
               "parameters": [
@@ -20986,6 +21381,7 @@
               }
             },
             "surface_velocity": {
+              "isAsync": false,
               "name": "surface_velocity",
               "description": "",
               "parameters": [
@@ -21015,6 +21411,7 @@
               }
             },
             "find_freefall_end_time": {
+              "isAsync": false,
               "name": "find_freefall_end_time",
               "description": "",
               "parameters": [
@@ -21042,6 +21439,7 @@
               }
             },
             "freefall_ended": {
+              "isAsync": false,
               "name": "freefall_ended",
               "description": "",
               "parameters": [
@@ -21069,6 +21467,7 @@
               }
             },
             "total_accel": {
+              "isAsync": false,
               "name": "total_accel",
               "description": "",
               "parameters": [
@@ -21098,6 +21497,7 @@
               }
             },
             "grav_accel": {
+              "isAsync": false,
               "name": "grav_accel",
               "description": "",
               "parameters": [
@@ -21118,6 +21518,7 @@
               }
             },
             "surface_position": {
+              "isAsync": false,
               "name": "surface_position",
               "description": "",
               "parameters": [
@@ -21302,6 +21703,7 @@
           },
           "methods": {
             "reset": {
+              "isAsync": false,
               "name": "reset",
               "description": "",
               "parameters": [
@@ -21330,6 +21732,7 @@
               }
             },
             "run": {
+              "isAsync": false,
               "name": "run",
               "description": "",
               "parameters": [],
@@ -21340,6 +21743,7 @@
               }
             },
             "bs34_step": {
+              "isAsync": false,
               "name": "bs34_step",
               "description": "",
               "parameters": [],
@@ -21349,6 +21753,7 @@
               }
             },
             "limit_speed": {
+              "isAsync": false,
               "name": "limit_speed",
               "description": "",
               "parameters": [],
@@ -21358,6 +21763,7 @@
               }
             },
             "landed": {
+              "isAsync": false,
               "name": "landed",
               "description": "",
               "parameters": [],
@@ -21367,6 +21773,7 @@
               }
             },
             "escaping": {
+              "isAsync": false,
               "name": "escaping",
               "description": "",
               "parameters": [],
@@ -21382,6 +21789,7 @@
       "constants": {},
       "functions": {
         "init_simulation": {
+          "isAsync": false,
           "name": "init_simulation",
           "description": "",
           "parameters": [
@@ -21451,6 +21859,7 @@
           }
         },
         "BodyParameters": {
+          "isAsync": false,
           "name": "BodyParameters",
           "description": "",
           "parameters": [
@@ -21496,6 +21905,7 @@
           }
         },
         "ReentrySimulation": {
+          "isAsync": false,
           "name": "ReentrySimulation",
           "description": "",
           "parameters": [
@@ -21548,6 +21958,7 @@
       "constants": {},
       "functions": {
         "land_time_to_longitude": {
+          "isAsync": false,
           "name": "land_time_to_longitude",
           "description": "",
           "parameters": [
@@ -21575,6 +21986,7 @@
           }
         },
         "land_deorbit_delta_v": {
+          "isAsync": false,
           "name": "land_deorbit_delta_v",
           "description": "",
           "parameters": [
@@ -21618,6 +22030,7 @@
       "constants": {},
       "functions": {
         "gravity_turn_speed_policy": {
+          "isAsync": false,
           "name": "gravity_turn_speed_policy",
           "description": "",
           "parameters": [
@@ -21653,6 +22066,7 @@
           }
         },
         "safe_speed_policy": {
+          "isAsync": false,
           "name": "safe_speed_policy",
           "description": "",
           "parameters": [
@@ -21688,6 +22102,7 @@
           }
         },
         "powered_coast_speed_policy": {
+          "isAsync": false,
           "name": "powered_coast_speed_policy",
           "description": "",
           "parameters": [
@@ -21731,6 +22146,7 @@
       "constants": {},
       "functions": {
         "vac_land": {
+          "isAsync": false,
           "name": "vac_land",
           "description": "",
           "parameters": [
@@ -21768,6 +22184,7 @@
           }
         },
         "vac_land_prepare_deorbit": {
+          "isAsync": false,
           "name": "vac_land_prepare_deorbit",
           "description": "",
           "parameters": [
@@ -21797,6 +22214,7 @@
           }
         },
         "vac_land_course_correct": {
+          "isAsync": false,
           "name": "vac_land_course_correct",
           "description": "",
           "parameters": [
@@ -21844,6 +22262,7 @@
           }
         },
         "vac_deceleration_burn": {
+          "isAsync": false,
           "name": "vac_deceleration_burn",
           "description": "",
           "parameters": [
@@ -21900,6 +22319,7 @@
           }
         },
         "vac_break_zero": {
+          "isAsync": false,
           "name": "vac_break_zero",
           "description": "",
           "parameters": [
@@ -21919,6 +22339,7 @@
           }
         },
         "vac_touchdown": {
+          "isAsync": false,
           "name": "vac_touchdown",
           "description": "",
           "parameters": [
@@ -21946,6 +22367,7 @@
       "constants": {},
       "functions": {
         "circularize_orbit": {
+          "isAsync": false,
           "name": "circularize_orbit",
           "description": "Calculate the required delta-v and time to change the given `orbit`\nto a (mostly) circular orbit at the next apoapsis (if `orbit` is elliplic)\nor periapsis (if `orbit` is hyperbolic).",
           "parameters": [
@@ -21966,6 +22388,7 @@
           }
         },
         "circularize_orbit_pe": {
+          "isAsync": false,
           "name": "circularize_orbit_pe",
           "description": "Calculate the required delta-v and time to change the given `orbit`\nto a (mostly) circular orbit at the next periapsis",
           "parameters": [
@@ -21986,6 +22409,7 @@
           }
         },
         "circularize_orbit_at": {
+          "isAsync": false,
           "name": "circularize_orbit_at",
           "description": "Calculate the required delta-v to change the given `orbit`\nto a (mostly) circular orbit at a given universal time `UT`.",
           "parameters": [
@@ -22014,6 +22438,7 @@
           }
         },
         "ellipticize": {
+          "isAsync": false,
           "name": "ellipticize",
           "description": "Calculate the required delta-v to change the `apoapsis` and `periapsis` of the given `orbit`\nat time `UT`.",
           "parameters": [
@@ -22058,6 +22483,7 @@
           }
         },
         "change_periapsis": {
+          "isAsync": false,
           "name": "change_periapsis",
           "description": "Calculate the required delta-v to change the periapsis of an `orbit`\nto `periapsis_radius` at time `UT`",
           "parameters": [
@@ -22094,6 +22520,7 @@
           }
         },
         "change_apoapsis": {
+          "isAsync": false,
           "name": "change_apoapsis",
           "description": "Calculate the required delta-v to change the apoapsis of an `orbit`\nto `apoapsis_radius` at time `UT`",
           "parameters": [
@@ -22130,6 +22557,7 @@
           }
         },
         "bi_impulsive_transfer_near": {
+          "isAsync": false,
           "name": "bi_impulsive_transfer_near",
           "description": "Calculate delta-v to intercept a `target` orbit starting nearly at time `UT` with\na nearly transfer time of `TT`. `UT` and `TT` will be optimized for a minimal delta-v for\nacceleration and deacceleration.",
           "parameters": [
@@ -22175,6 +22603,7 @@
           }
         },
         "bi_impulsive_transfer": {
+          "isAsync": false,
           "name": "bi_impulsive_transfer",
           "description": "Calculate delta-v to intercept a `target` orbit starting after `min_UT`.\nActual starting and transfer time will be optimized for a minimal delta-v for\nacceleration and deacceleration.\n\nWill result in an error if maneuver nodes cannot be created\n(e.g. because command or tracking facility has not been sufficiently upgraded)",
           "parameters": [
@@ -22220,6 +22649,7 @@
           }
         },
         "bi_impulsive_transfer_body": {
+          "isAsync": false,
           "name": "bi_impulsive_transfer_body",
           "description": "",
           "parameters": [
@@ -22265,6 +22695,7 @@
           }
         },
         "course_correction_body": {
+          "isAsync": false,
           "name": "course_correction_body",
           "description": "",
           "parameters": [
@@ -22310,6 +22741,7 @@
           }
         },
         "intercept_at": {
+          "isAsync": false,
           "name": "intercept_at",
           "description": "Calculate required delta-v to intercept `target` orbit at time `target_UT` from `start` orbit at time `start_UT`.\n`offset_distance` may be used to define a desired distance to the target.",
           "parameters": [
@@ -22363,6 +22795,7 @@
           }
         },
         "ideal_ejection": {
+          "isAsync": false,
           "name": "ideal_ejection",
           "description": "Calculate the ideal ejection from a (nearly) circular orbit around a given `body`, `radius` and `normal` vector.\nThe resulting orbit is choosen so that the vessel will have a given `exit_velocity` on the SOI radius at time `UT`.",
           "parameters": [
@@ -22417,6 +22850,7 @@
           }
         },
         "cheapest_course_correction": {
+          "isAsync": false,
           "name": "cheapest_course_correction",
           "description": "",
           "parameters": [
@@ -22454,6 +22888,7 @@
           }
         },
         "next_closest_approach_time": {
+          "isAsync": false,
           "name": "next_closest_approach_time",
           "description": "",
           "parameters": [
@@ -22490,6 +22925,7 @@
           }
         },
         "match_velocities": {
+          "isAsync": false,
           "name": "match_velocities",
           "description": "",
           "parameters": [
@@ -22519,6 +22955,7 @@
           }
         },
         "match_inclination": {
+          "isAsync": false,
           "name": "match_inclination",
           "description": "",
           "parameters": [
@@ -22548,6 +22985,7 @@
           }
         },
         "match_periapsis": {
+          "isAsync": false,
           "name": "match_periapsis",
           "description": "",
           "parameters": [
@@ -22577,6 +23015,7 @@
           }
         },
         "match_apoapsis": {
+          "isAsync": false,
           "name": "match_apoapsis",
           "description": "",
           "parameters": [
@@ -22614,6 +23053,7 @@
       "constants": {},
       "functions": {
         "navball": {
+          "isAsync": false,
           "name": "navball",
           "description": "",
           "parameters": [
@@ -22643,6 +23083,7 @@
           }
         },
         "global_navball": {
+          "isAsync": false,
           "name": "global_navball",
           "description": "",
           "parameters": [
@@ -22680,6 +23121,7 @@
       "constants": {},
       "functions": {
         "amoeba_optimize_perturbation": {
+          "isAsync": false,
           "name": "amoeba_optimize_perturbation",
           "description": "",
           "parameters": [
@@ -22734,6 +23176,7 @@
           }
         },
         "amoeba_optimize": {
+          "isAsync": false,
           "name": "amoeba_optimize",
           "description": "",
           "parameters": [
@@ -22787,6 +23230,7 @@
       "constants": {},
       "functions": {
         "anneal_optimize": {
+          "isAsync": false,
           "name": "anneal_optimize",
           "description": "",
           "parameters": [
@@ -22865,6 +23309,7 @@
       "constants": {},
       "functions": {
         "J0": {
+          "isAsync": false,
           "name": "J0",
           "description": "",
           "parameters": [
@@ -22883,6 +23328,7 @@
           }
         },
         "J1": {
+          "isAsync": false,
           "name": "J1",
           "description": "",
           "parameters": [
@@ -22909,6 +23355,7 @@
       "constants": {},
       "functions": {
         "brent_optimize": {
+          "isAsync": false,
           "name": "brent_optimize",
           "description": "",
           "parameters": [
@@ -22969,6 +23416,7 @@
       "constants": {},
       "functions": {
         "regula_falsi_solve": {
+          "isAsync": false,
           "name": "regula_falsi_solve",
           "description": "",
           "parameters": [
@@ -23028,6 +23476,7 @@
       "constants": {},
       "functions": {
         "rk23": {
+          "isAsync": false,
           "name": "rk23",
           "description": "",
           "parameters": [
@@ -23107,6 +23556,7 @@
       "constants": {},
       "functions": {
         "dock_vessel": {
+          "isAsync": false,
           "name": "dock_vessel",
           "description": "",
           "parameters": [
@@ -23136,6 +23586,7 @@
           }
         },
         "choose_docking_nodes": {
+          "isAsync": false,
           "name": "choose_docking_nodes",
           "description": "",
           "parameters": [
@@ -23165,6 +23616,7 @@
           }
         },
         "dock_move_correct_side": {
+          "isAsync": false,
           "name": "dock_move_correct_side",
           "description": "",
           "parameters": [
@@ -23194,6 +23646,7 @@
           }
         },
         "dock_approach": {
+          "isAsync": false,
           "name": "dock_approach",
           "description": "",
           "parameters": [
@@ -23231,6 +23684,7 @@
       "constants": {},
       "functions": {
         "rendezvous_with": {
+          "isAsync": false,
           "name": "rendezvous_with",
           "description": "",
           "parameters": [
@@ -23260,6 +23714,7 @@
           }
         },
         "intercept_target": {
+          "isAsync": false,
           "name": "intercept_target",
           "description": "",
           "parameters": [
@@ -23289,6 +23744,7 @@
           }
         },
         "move_to_target": {
+          "isAsync": false,
           "name": "move_to_target",
           "description": "",
           "parameters": [
@@ -23326,6 +23782,7 @@
       "constants": {},
       "functions": {
         "trigger_staging": {
+          "isAsync": false,
           "name": "trigger_staging",
           "description": "Helper function to automatically trigger staging during a burn.\n\nThis function is just checking if one of the ignited engines has has a flameout,\nwhich in most cases means that the current stage has burned out.\n\nWill return `true` if stating has been triggered.",
           "parameters": [
@@ -23345,6 +23802,7 @@
           }
         },
         "has_flameout": {
+          "isAsync": false,
           "name": "has_flameout",
           "description": "",
           "parameters": [
@@ -23364,6 +23822,7 @@
           }
         },
         "has_still_running": {
+          "isAsync": false,
           "name": "has_still_running",
           "description": "",
           "parameters": [
@@ -23383,6 +23842,7 @@
           }
         },
         "has_ignited": {
+          "isAsync": false,
           "name": "has_ignited",
           "description": "",
           "parameters": [
@@ -23402,6 +23862,7 @@
           }
         },
         "has_engine_in_stage": {
+          "isAsync": false,
           "name": "has_engine_in_stage",
           "description": "",
           "parameters": [
@@ -23437,6 +23898,7 @@
       "constants": {},
       "functions": {
         "ship_is_facing": {
+          "isAsync": false,
           "name": "ship_is_facing",
           "description": "Determine if `vessel` is facing a given direction.\n\n* `max_deviation_degrees` sets a limit how many degrees the angle may differ\n* `max_angular_velocity` sets a limit how much the `vessel` may still be turning",
           "parameters": [
@@ -23481,6 +23943,7 @@
           }
         },
         "global_ship_is_facing": {
+          "isAsync": false,
           "name": "global_ship_is_facing",
           "description": "Determine if `vessel` is facing a given direction. (Coordinate independent version)\n\n* `max_deviation_degrees` sets a limit how many degrees the angle may differ\n* `max_angular_velocity` sets a limit how much the `vessel` may still be turning",
           "parameters": [
@@ -23525,6 +23988,7 @@
           }
         },
         "remove_all_nodes": {
+          "isAsync": false,
           "name": "remove_all_nodes",
           "description": "Removes all maneuvering nodes from the flight plan of a `vessel`.",
           "parameters": [
@@ -23544,6 +24008,7 @@
           }
         },
         "angle_to_360": {
+          "isAsync": false,
           "name": "angle_to_360",
           "description": "",
           "parameters": [
@@ -23562,6 +24027,7 @@
           }
         },
         "angle_to_180": {
+          "isAsync": false,
           "name": "angle_to_180",
           "description": "",
           "parameters": [
@@ -23588,6 +24054,7 @@
       "constants": {},
       "functions": {
         "exec_next_node": {
+          "isAsync": false,
           "name": "exec_next_node",
           "description": "Execute the next planed maneuver node.\n\nWill result in an error if there are no planed maneuver nodes.",
           "parameters": [
@@ -23608,6 +24075,7 @@
           }
         },
         "estimate_burn_time": {
+          "isAsync": false,
           "name": "estimate_burn_time",
           "description": "Estimate the required burn time for a desired `delta_v` in vacuum.\n\n* `stage_delay` is the assumed amount of seconds required for staging\n* `throttle_limit` is a limit for the throttle to be considered",
           "parameters": [

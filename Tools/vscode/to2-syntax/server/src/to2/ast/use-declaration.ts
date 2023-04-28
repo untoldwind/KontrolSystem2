@@ -21,15 +21,78 @@ export class UseDeclaration implements Node, ModuleItem {
   public validateModule(context: ModuleContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
-    if (!context.findModule(this.moduleNamePath.value)) {
+    const importedModule = context.findModule(this.moduleNamePath.value);
+    if (!importedModule) {
       errors.push({
         status: "error",
-        message: `Module not found: ${this.moduleNamePath.value}`,
+        message: `Module not found: ${this.moduleNamePath.value.join("::")}`,
         start: this.moduleNamePath.start,
         end: this.moduleNamePath.end,
       });
+    } else {
+      if (this.alias) {
+        if (context.moduleAliases.has(this.alias.value)) {
+          errors.push({
+            status: "error",
+            message: `Duplicate module alias: ${this.alias.value}`,
+            start: this.alias.start,
+            end: this.alias.end,
+          });
+        } else {
+          context.moduleAliases.set(
+            this.alias.value,
+            this.moduleNamePath.value
+          );
+        }
+      }
+      if (this.names) {
+        for (const name of this.names) {
+          const importedConstant = importedModule.findConstant(name.value);
+          const importedFunction = importedModule.findFunction(name.value);
+          const importedType = importedModule.findType(name.value);
+
+          if (!importedConstant && !importedFunction && !importedType) {
+            errors.push({
+              status: "error",
+              message: `Module ${importedModule.name} does not have an exported member ${name.value}`,
+              start: name.start,
+              end: name.end,
+            });
+          }
+          if (importedConstant) {
+            if (context.mappedConstants.has(importedConstant.name)) {
+              errors.push({
+                status: "error",
+                message: `Duplicate constant ${importedConstant.name}`,
+                start: this.start,
+                end: this.end,
+              });
+            } else {
+              context.mappedConstants.set(
+                importedConstant.name,
+                importedConstant
+              );
+            }
+          }
+          if (importedFunction) {
+            if (context.mappedFunctions.has(importedFunction.name)) {
+              errors.push({
+                status: "error",
+                message: `Duplicate function name ${importedFunction.name}`,
+                start: this.start,
+                end: this.end,
+              });
+            } else {
+              context.mappedFunctions.set(
+                importedFunction.name,
+                importedFunction
+              );
+            }
+          }
+        }
+      }
     }
-    
+
     return errors;
   }
 }

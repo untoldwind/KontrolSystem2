@@ -151,7 +151,7 @@ const constDeclaration = map(
   seq([
     descriptionComment,
     opt(pubKeyword),
-    preceded(constKeyword, identifier),
+    preceded(constKeyword, withPosition(identifier)),
     typeSpec,
     preceded(eqDelimiter, expression),
   ]),

@@ -9,8 +9,6 @@ export interface TupleTarget {
 }
 
 export class TupleDeconstructAssign implements Node, BlockItem {
-  public isComment: boolean = false;
-
   constructor(
     public readonly targets: TupleTarget[],
     public readonly expression: Expression,

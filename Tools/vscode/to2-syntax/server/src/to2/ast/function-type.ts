@@ -2,19 +2,19 @@ import { ModuleContext } from "./context";
 import { RealizedType, TO2Type } from "./to2-type";
 
 export class FunctionType implements RealizedType {
+  public isFunction: boolean = true;
   public name: string;
-  public description: string;
   public localName: string;
 
   constructor(
     public readonly isAsync: boolean,
-    public readonly parameterTypes: TO2Type[],
-    public readonly returnType: TO2Type
+    public readonly parameterTypes: [string, TO2Type][],
+    public readonly returnType: TO2Type,
+    public readonly description: string = ""
   ) {
     this.name = `${isAsync ? "" : "sync "}fn(${parameterTypes.join(
       ", "
     )}) -> ${returnType}`;
-    this.description = "";
     this.localName = this.name;
   }
 
@@ -33,4 +33,8 @@ export class FunctionType implements RealizedType {
   public findPrefixOperator(): RealizedType | undefined {
     return undefined;
   }
+}
+
+export function isFunctionType(node: RealizedType): node is FunctionType {
+  return node.isFunction === true;
 }

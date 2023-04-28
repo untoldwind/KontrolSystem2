@@ -41,6 +41,7 @@ export interface OperatorReference {
 }
 
 export interface FunctionReference {
+  isAsync: boolean;
   name: string;
   description?: string;
   parameters: FunctionParameterReference[];

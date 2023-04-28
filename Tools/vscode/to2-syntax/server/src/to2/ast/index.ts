@@ -14,7 +14,7 @@ export interface Node {
 }
 
 export interface BlockItem extends Node {
-  isComment: boolean;
+  isComment?: boolean;
 
   resultType(context: BlockContext): TO2Type;
 
@@ -22,12 +22,12 @@ export interface BlockItem extends Node {
 }
 
 export interface ModuleItem extends Node {
+  isConstDecl?: boolean;
+  isFunctionDecl?: boolean;
   validateModule(context: ModuleContext): ValidationError[];
 }
 
 export abstract class Expression implements Node, BlockItem {
-  public isComment: boolean = false;
-
   constructor(
     public readonly start: InputPosition,
     public readonly end: InputPosition

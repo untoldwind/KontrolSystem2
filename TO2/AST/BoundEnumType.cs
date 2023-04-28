@@ -191,6 +191,8 @@ namespace KontrolSystem.TO2.AST {
             this.boundEnumType = boundEnumType;
         }
 
+        public bool IsAsync => false;
+        
         public bool IsConst => true;
 
         public TypeHint ReturnHint => context => new OptionType(boundEnumType);

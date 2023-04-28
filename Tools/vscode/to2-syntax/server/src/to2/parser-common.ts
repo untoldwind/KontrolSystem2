@@ -121,7 +121,7 @@ const functionType = map(
     preceded(between(whitespace0, tag("->"), whitespace0), typeRef),
   ]),
   ([parameterTypes, returnType]) =>
-    new FunctionType(false, parameterTypes, returnType)
+    new FunctionType(false, parameterTypes.map((type, idx) => [`param${idx + 1}`, type]), returnType)
 );
 
 const tupleType = map(

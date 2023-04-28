@@ -1,11 +1,11 @@
 import { Expression, Node, ValidationError } from ".";
 import { BUILTIN_BOOL, TO2Type, UNKNOWN_TYPE } from "./to2-type";
-import { InputPosition } from "../../parser";
+import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
 
 export class VariableGet extends Expression {
   constructor(
-    public readonly namePath: string[],
+    public readonly namePath: WithPosition<string[]>,
     start: InputPosition,
     end: InputPosition
   ) {
@@ -13,7 +13,9 @@ export class VariableGet extends Expression {
   }
 
   public resultType(context: BlockContext): TO2Type {
-    return this.namePath.length == 1 ? context.findVariable(this.namePath[0]) ?? UNKNOWN_TYPE : UNKNOWN_TYPE;
+    return this.namePath.value.length == 1
+      ? context.findVariable(this.namePath.value[0]) ?? UNKNOWN_TYPE
+      : UNKNOWN_TYPE;
   }
 
   public reduceNode<T>(
@@ -26,13 +28,16 @@ export class VariableGet extends Expression {
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
-    if(this.namePath.length == 1 && !context.findVariable(this.namePath[0])) {
+    if (
+      this.namePath.value.length == 1 &&
+      !context.findVariable(this.namePath.value[0])
+    ) {
       errors.push({
         status: "error",
-        message: `Undefined variable: ${this.namePath[0]}`,
+        message: `Undefined variable: ${this.namePath.value[0]}`,
         start: this.start,
         end: this.end,
-      })
+      });
     }
     return errors;
   }

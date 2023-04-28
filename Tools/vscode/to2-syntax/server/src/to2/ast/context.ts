@@ -6,6 +6,7 @@ import { RealizedType, TO2Type, findLibraryType } from "./to2-type";
 export class ModuleContext {
   public readonly mappedConstants: Map<string, TO2Type> = new Map();
   public readonly mappedFunctions: Map<string, FunctionType> = new Map();
+  public readonly moduleAliases: Map<string, string[]> = new Map();
 
   constructor(public readonly registry: Registry) {}
 
