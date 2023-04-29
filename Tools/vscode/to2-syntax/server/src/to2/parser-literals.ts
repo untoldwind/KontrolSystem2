@@ -28,29 +28,29 @@ import { UNDERSCORE, identifier } from "./parser-common";
 
 const doubleQuote = tag('"');
 
-const escapedStringChar = alt([
+const escapedStringChar = alt(
   charsExcept1('\\"\r\n'),
   recognizeAs(tag("\\\\"), "\\"),
   recognizeAs(tag('\\"'), '"'),
   recognizeAs(tag("\\t"), "\t"),
   recognizeAs(tag("\\r"), "\r"),
   recognizeAs(tag("\\n"), "\n"),
-]);
+);
 
 export const literalString = map(
   between(doubleQuote, many0(escapedStringChar, "string char"), doubleQuote),
   (escaped, start, end) => new LiteralString(escaped.join(""), start, end)
 );
 
-const basePrefix = alt([
+const basePrefix = alt(
   recognizeAs(tag("0x"), 16),
   recognizeAs(tag("0o"), 8),
   recognizeAs(tag("0b"), 2),
   value(10),
-]);
+);
 
 export const literalInt = map(
-  seq([
+  seq(
     opt(tag("-")),
     basePrefix,
     recognize(
@@ -59,7 +59,7 @@ export const literalInt = map(
         chars0((ch) => isDigit(ch) || ch === UNDERSCORE)
       )
     ),
-  ]),
+  ),
   ([negSign, radix, digits], start, end) =>
     new LiteralInt(
       negSign
@@ -70,22 +70,22 @@ export const literalInt = map(
     )
 );
 
-const exponentSuffix = seq([oneOf("eE"), opt(oneOf("-+")), digits1]);
+const exponentSuffix = seq(oneOf("eE"), opt(oneOf("-+")), digits1);
 
 export const literalFloat = map(
   recognize(
     preceded(
       opt(oneOf("-+")),
-      alt([
-        terminated(digits0, seq([tag("."), digits1, opt(exponentSuffix)])),
+      alt(
+        terminated(digits0, seq(tag("."), digits1, opt(exponentSuffix))),
         terminated(digits1, exponentSuffix),
-      ])
+      )
     )
   ),
   (digits, start, end) => new LiteralFloat(parseFloat(digits), start, end)
 );
 
-export const literalBool = alt([
+export const literalBool = alt(
   map(
     where(identifier, (str) => str === "true", "true"),
     (_, start, end) => new LiteralBool(true, start, end)
@@ -94,4 +94,4 @@ export const literalBool = alt([
     where(identifier, (str) => str === "false", "false"),
     (_, start, end) => new LiteralBool(false, start, end)
   ),
-]);
+);

@@ -165,7 +165,7 @@ export function chain<T, OP>(
     end: InputPosition
   ) => T
 ) {
-  const restParser = seq([opParser, operantParser]);
+  const restParser = seq(opParser, operantParser);
 
   return (input: Input) => {
     const firstResult = operantParser(input);

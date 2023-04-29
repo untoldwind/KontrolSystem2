@@ -57,57 +57,57 @@ const asKeyword = between(spacing1, tag("as"), spacing1);
 
 const constKeyword = terminated(tag("const"), spacing1);
 
-const useNames = alt([
+const useNames = alt(
   recognizeAs(tag("*"), undefined),
   between(
     terminated(tag("{"), whitespace0),
     delimited1(withPosition(identifier), commaDelimiter, "<import name>"),
     preceded(whitespace0, tag("}"))
   ),
-]);
+);
 
 const useNamesDeclaration = map(
-  seq([
+  seq(
     preceded(useKeyword, useNames),
     preceded(fromKeyword, withPosition(identifierPath)),
-  ]),
+  ),
   ([names, namePath], start, end) =>
     new UseDeclaration(names, undefined, namePath, start, end)
 );
 
 const useAliasDeclaration = map(
-  seq([
+  seq(
     preceded(useKeyword, withPosition(identifierPath)),
     preceded(asKeyword, withPosition(identifier)),
-  ]),
+  ),
   ([namePath, alias], start, end) =>
     new UseDeclaration(undefined, alias, namePath, start, end)
 );
 
 const typeAlias = map(
-  seq([
+  seq(
     descriptionComment,
     preceded(whitespace0, opt(pubKeyword)),
     preceded(typeKeyword, withPosition(identifier)),
     preceded(eqDelimiter, typeRef),
-  ]),
+  ),
   ([description, pub, name, type], start, end) =>
     new TypeAlias(pub !== undefined, name, description, type, start, end)
 );
 
 const structField = map(
-  seq([
+  seq(
     descriptionComment,
     preceded(whitespace0, identifier),
     typeSpec,
     preceded(eqDelimiter, expression),
-  ]),
+  ),
   ([description, name, type, initializer], start, end) =>
     new StructField(name, type, description, initializer, start, end)
 );
 
 const structDeclaration = map(
-  seq([
+  seq(
     descriptionComment,
     preceded(whitespace0, opt(pubKeyword)),
     preceded(structKeyword, identifier),
@@ -117,7 +117,7 @@ const structDeclaration = map(
       delimited0(either(lineComment, structField), whitespace1, "fields"),
       preceded(whitespace0, tag("}"))
     ),
-  ]),
+  ),
   ([description, pub, name, constructorParameters, fields], start, end) =>
     new StructDeclaration(
       pub !== undefined,
@@ -131,7 +131,7 @@ const structDeclaration = map(
 );
 
 const implDeclaration = map(
-  seq([
+  seq(
     preceded(implKeyword, identifier),
     between(
       preceded(whitespace0, tag("{")),
@@ -142,19 +142,19 @@ const implDeclaration = map(
       ),
       preceded(whitespace0, tag("}"))
     ),
-  ]),
+  ),
   ([name, methods], start, end) =>
     new ImplDeclaration(name, methods, start, end)
 );
 
 const constDeclaration = map(
-  seq([
+  seq(
     descriptionComment,
     opt(pubKeyword),
     preceded(constKeyword, withPosition(identifier)),
     typeSpec,
     preceded(eqDelimiter, expression),
-  ]),
+  ),
   ([description, pub, name, type, expression], start, end) =>
     new ConstDeclaration(
       pub !== undefined,
@@ -167,7 +167,7 @@ const constDeclaration = map(
     )
 );
 
-const moduleItem: Parser<ModuleItem> = alt([
+const moduleItem: Parser<ModuleItem> = alt(
   useNamesDeclaration,
   useAliasDeclaration,
   functionDeclaration,
@@ -176,7 +176,7 @@ const moduleItem: Parser<ModuleItem> = alt([
   implDeclaration,
   constDeclaration,
   lineComment,
-]);
+);
 
 const moduleItems = delimitedUntil(
   moduleItem,
@@ -188,7 +188,7 @@ const moduleItems = delimitedUntil(
 
 export function module(moduleName: string): Parser<TO2ModuleNode> {
   return map(
-    seq([preceded(whitespace0, descriptionComment), moduleItems]),
+    seq(preceded(whitespace0, descriptionComment), moduleItems),
     ([description, items], start, end) =>
       new TO2ModuleNode(moduleName, description, items, start, end)
   );

@@ -5,6 +5,8 @@ import {
   Diagnostic,
   DiagnosticSeverity,
   DidChangeConfigurationParams,
+  SemanticTokens,
+  SemanticTokensParams,
   TextDocumentChangeEvent,
   TextDocuments,
 } from "vscode-languageserver";
@@ -40,6 +42,12 @@ export class LspServer {
 
     const diagnostics: Diagnostic[] = [];
 
+    if (moduleResult.value) {
+      this.documentModules.set(textDocument.uri, moduleResult.value);
+    } else {
+      this.documentModules.delete(textDocument.uri);
+    }
+    
     if (!moduleResult.success) {
       const diagnostic: Diagnostic = {
         severity: DiagnosticSeverity.Error,
@@ -56,7 +64,6 @@ export class LspServer {
       diagnostics.push(diagnostic);
     }
     if (moduleResult.value) {
-      this.documentModules.set(textDocument.uri, moduleResult.value);
       for (const validationError of moduleResult.value.validate(
         this.registry
       )) {
@@ -118,5 +125,11 @@ export class LspServer {
   onDidChange(event: TextDocumentChangeEvent<TextDocument>) {
     this.connection.console.log(event.document.uri);
     this.validateTextDocument(event.document);
+  }
+
+  onSemanticTokens(params: SemanticTokensParams): SemanticTokens {
+    return {
+      data: [],
+    };
   }
 }

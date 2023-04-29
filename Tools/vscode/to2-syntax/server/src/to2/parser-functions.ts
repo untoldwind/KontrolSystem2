@@ -30,47 +30,47 @@ const syncKeyword = terminated(tag("sync"), spacing1);
 
 const selfKeyword = tag("self");
 
-const functionPrefix = alt([
-  recognizeAs(seq([syncKeyword, pubKeyword, fnKeyword]), {
+const functionPrefix = alt(
+  recognizeAs(seq(syncKeyword, pubKeyword, fnKeyword), {
     modifier: FunctionModifier.Public,
     async: false,
   }),
-  recognizeAs(seq([syncKeyword, testKeyword, fnKeyword]), {
+  recognizeAs(seq(syncKeyword, testKeyword, fnKeyword), {
     modifier: FunctionModifier.Test,
     async: false,
   }),
-  recognizeAs(seq([pubKeyword, fnKeyword]), {
+  recognizeAs(seq(pubKeyword, fnKeyword), {
     modifier: FunctionModifier.Public,
     async: true,
   }),
-  recognizeAs(seq([pubKeyword, syncKeyword, fnKeyword]), {
+  recognizeAs(seq(pubKeyword, syncKeyword, fnKeyword), {
     modifier: FunctionModifier.Public,
     async: false,
   }),
-  recognizeAs(seq([testKeyword, fnKeyword]), {
+  recognizeAs(seq(testKeyword, fnKeyword), {
     modifier: FunctionModifier.Test,
     async: true,
   }),
-  recognizeAs(seq([testKeyword, syncKeyword, fnKeyword]), {
+  recognizeAs(seq(testKeyword, syncKeyword, fnKeyword), {
     modifier: FunctionModifier.Test,
     async: false,
   }),
-  recognizeAs(seq([syncKeyword, fnKeyword]), {
+  recognizeAs(seq(syncKeyword, fnKeyword), {
     modifier: FunctionModifier.Private,
     async: false,
   }),
-  recognizeAs(seq([fnKeyword]), {
+  recognizeAs(seq(fnKeyword), {
     modifier: FunctionModifier.Private,
     async: true,
   }),
-]);
+);
 
 const functionParameter = map(
-  seq([
+  seq(
     withPosition(identifier),
     typeSpec,
     opt(preceded(eqDelimiter, expression)),
-  ]),
+  ),
   ([name, type, defaultValue], start, end) =>
     new FunctionParameter(name, type, defaultValue, start, end)
 );
@@ -86,14 +86,14 @@ export const functionParameters = preceded(
 );
 
 export const functionDeclaration = map(
-  seq([
+  seq(
     descriptionComment,
     preceded(whitespace0, functionPrefix),
     withPosition(identifier),
     preceded(whitespace0, functionParameters),
     preceded(between(whitespace0, tag("->"), whitespace0), typeRef),
     preceded(eqDelimiter, expression),
-  ]),
+  ),
   (
     [
       description,
@@ -121,14 +121,14 @@ export const functionDeclaration = map(
 
 const methodSelfParams = preceded(
   terminated(tag("("), whitespace0),
-  alt([
+  alt(
     recognizeAs(selfKeyword, true),
     recognizeAs(preceded(constKeyword, selfKeyword), true),
     recognizeAs(preceded(letKeyword, selfKeyword), false),
-  ])
+  )
 );
 
-const methodParameters = alt([
+const methodParameters = alt(
   recognizeAs(preceded(whitespace0, tag(")")), []),
   preceded(
     commaDelimiter,
@@ -139,10 +139,10 @@ const methodParameters = alt([
       "<method parameter>"
     )
   ),
-]);
+);
 
 export const methodDeclaration = map(
-  seq([
+  seq(
     descriptionComment,
     opt(preceded(whitespace0, syncKeyword)),
     preceded(preceded(whitespace0, fnKeyword), identifier),
@@ -150,7 +150,7 @@ export const methodDeclaration = map(
     methodParameters,
     preceded(between(whitespace0, tag("->"), whitespace0), typeRef),
     preceded(eqDelimiter, expression),
-  ]),
+  ),
   (
     [description, sync, name, _, parameters, returnType, expression],
     start,

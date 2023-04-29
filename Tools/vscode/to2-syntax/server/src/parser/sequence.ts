@@ -61,7 +61,7 @@ export function between<T, P, S>(
 }
 
 export function seq<P extends any[]>(
-  items: [...{ [k in keyof P]: Parser<P[k]> }]
+  ...items: { [k in keyof P]: Parser<P[k]> }
 ): Parser<P> {
   return (input: Input) => {
     let remaining = input;

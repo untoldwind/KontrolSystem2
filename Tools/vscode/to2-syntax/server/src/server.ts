@@ -42,6 +42,30 @@ connection.onInitialize((params: InitializeParams) => {
       completionProvider: {
         resolveProvider: true,
       },
+      semanticTokensProvider: {
+        legend: {
+          tokenTypes: [
+            "keyword",
+            "operator",
+            "variable",
+            "string",
+            "number",
+            "comment",
+            "property",
+            "type",
+            "function",
+            "method",
+          ],
+          tokenModifiers: [
+            "declaration",
+            "definition",
+            "readonly",
+            "async",
+            "documentation",
+          ],
+        },
+        full: true,
+      },
     },
   };
   if (hasWorkspaceFolderCapability) {
@@ -107,6 +131,8 @@ connection.onCompletionResolve((item: CompletionItem): CompletionItem => {
   }
   return item;
 });
+
+connection.languages.semanticTokens.on(server.onSemanticTokens.bind(server));
 
 // Listen on the connection
 connection.listen();

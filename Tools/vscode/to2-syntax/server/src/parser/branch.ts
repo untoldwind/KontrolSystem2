@@ -1,8 +1,7 @@
 import { Input, Parser, ParserFailure } from ".";
-import { tag } from "./complete";
 
 export function alt<P extends any[]>(
-  alternatives: [...{ [k in keyof P]: Parser<P[k]> }]
+  ...alternatives: { [k in keyof P]: Parser<P[k]> }
 ): Parser<P[number]> {
   return (input: Input) => {
     let longest = input;
