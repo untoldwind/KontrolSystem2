@@ -1,5 +1,6 @@
 import { Expression, ModuleItem, Node, ValidationError } from ".";
 import { InputPosition, WithPosition } from "../../parser";
+import { SemanticToken } from "../../syntax-token";
 import { ModuleContext } from "./context";
 import { TO2Type } from "./to2-type";
 
@@ -38,6 +39,9 @@ export class ConstDeclaration implements Node, ModuleItem {
     }
 
     return errors;
+  }
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
   }
 }
 

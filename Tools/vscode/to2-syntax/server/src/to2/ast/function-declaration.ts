@@ -4,6 +4,7 @@ import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext, FunctionContext, ModuleContext } from "./context";
 import { FunctionType } from "./function-type";
 import { error } from "console";
+import { SemanticToken } from "../../syntax-token";
 
 export enum FunctionModifier {
   Public,
@@ -37,6 +38,9 @@ export class FunctionParameter implements Node {
     const errors: ValidationError[] = [];
 
     return errors;
+  }
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
   }
 }
 
@@ -120,6 +124,13 @@ export class FunctionDeclaration implements Node, ModuleItem {
     errors.push(...this.expression.validateBlock(blockContext));
 
     return errors;
+  }
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    for(const parameter of this.parameters) {
+      parameter.collectSemanticTokens(semanticTokens);
+    }
+    this.expression.collectSemanticTokens(semanticTokens);
   }
 }
 

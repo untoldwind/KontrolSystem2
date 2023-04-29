@@ -11,6 +11,7 @@ import {
   createConnection,
 } from "vscode-languageserver/node";
 import { LspServer } from "./lsp-server";
+import { SEMANTIC_TOKEN_MODIFIERS, SEMANTIC_TOKEN_TYPES } from "./syntax-token";
 
 const connection = createConnection(ProposedFeatures.all);
 const server = new LspServer(connection, false);
@@ -44,25 +45,8 @@ connection.onInitialize((params: InitializeParams) => {
       },
       semanticTokensProvider: {
         legend: {
-          tokenTypes: [
-            "keyword",
-            "operator",
-            "variable",
-            "string",
-            "number",
-            "comment",
-            "property",
-            "type",
-            "function",
-            "method",
-          ],
-          tokenModifiers: [
-            "declaration",
-            "definition",
-            "readonly",
-            "async",
-            "documentation",
-          ],
+          tokenTypes: [...SEMANTIC_TOKEN_TYPES],
+          tokenModifiers: [...SEMANTIC_TOKEN_MODIFIERS],
         },
         full: true,
       },

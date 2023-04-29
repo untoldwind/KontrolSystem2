@@ -5,6 +5,7 @@ import { FunctionParameter } from "./function-declaration";
 import { LineComment } from "./line-comment";
 import { InputPosition } from "../../parser";
 import { ModuleContext } from "./context";
+import { SemanticToken } from "../../syntax-token";
 
 export class StructField implements Node {
   constructor(
@@ -27,6 +28,9 @@ export class StructField implements Node {
 
     return errors;
   }
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+  }  
+
 }
 
 export class StructDeclaration implements Node, ModuleItem {
@@ -58,4 +62,8 @@ export class StructDeclaration implements Node, ModuleItem {
 
     return errors;
   }
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+  }  
+
 }

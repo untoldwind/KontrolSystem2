@@ -1,12 +1,13 @@
 import { Expression, Node, ValidationError } from ".";
 import { BUILTIN_UNIT, TO2Type } from "./to2-type";
-import { InputPosition } from "../../parser";
+import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
+import { SemanticToken } from "../../syntax-token";
 
 export class MethodCall extends Expression {
   constructor(
     public readonly target: Expression,
-    public readonly methodName: string,
+    public readonly methodName: WithPosition<string>,
     public readonly args: Expression[],
     start: InputPosition,
     end: InputPosition
@@ -32,4 +33,13 @@ export class MethodCall extends Expression {
 
     return errors;
   }
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    this.target.collectSemanticTokens(semanticTokens);
+    semanticTokens.push({ type: "method", start: this.methodName.start, length: this.methodName.end.offset - this.methodName.start.offset});
+    for(const arg of this.args) {
+      arg.collectSemanticTokens(semanticTokens);
+    }
+  }  
+
 }

@@ -2,6 +2,7 @@ import { Expression, Node, ValidationError } from ".";
 import { TO2Type, UNKNOWN_TYPE } from "./to2-type";
 import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
+import { SemanticToken } from "../../syntax-token";
 
 export class VariableGet extends Expression {
   constructor(
@@ -41,4 +42,9 @@ export class VariableGet extends Expression {
     }
     return errors;
   }
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    semanticTokens.push({ type: "variable", start: this.start, length: this.end.offset - this.start.offset});
+  }  
+
 }

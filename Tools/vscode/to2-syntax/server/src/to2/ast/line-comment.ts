@@ -2,6 +2,7 @@ import { BlockItem, ModuleItem, Node, ValidationError } from ".";
 import { BUILTIN_UNIT, TO2Type } from "./to2-type";
 import { InputPosition } from "../../parser";
 import { BlockContext, ModuleContext } from "./context";
+import { SemanticToken } from "../../syntax-token";
 
 export class LineComment implements Node, BlockItem, ModuleItem {
   public isComment: boolean = true;
@@ -29,5 +30,9 @@ export class LineComment implements Node, BlockItem, ModuleItem {
 
   public validateBlock(context: BlockContext): ValidationError[] {
     return [];
+  }
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    semanticTokens.push({ type: "comment", start: this.start, length: this.end.offset - this.start.offset});
   }
 }

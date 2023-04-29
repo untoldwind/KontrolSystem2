@@ -2,6 +2,7 @@ import { BlockItem, Expression, Node, ValidationError } from ".";
 import { BUILTIN_UNIT, TO2Type } from "./to2-type";
 import { InputPosition } from "../../parser";
 import { BlockContext } from "./context";
+import { SemanticToken } from "../../syntax-token";
 
 export class ArrayCreate extends Expression {
   constructor(
@@ -31,5 +32,8 @@ export class ArrayCreate extends Expression {
     const errors: ValidationError[] = [];
 
     return errors;
+  }
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
   }
 }

@@ -6,6 +6,7 @@ import {
   DeclarationParameterOrPlaceholder,
 } from "./variable-declaration";
 import { BlockContext } from "./context";
+import { SemanticToken } from "../../syntax-token";
 
 export class ForInDeconstruct extends Expression {
   constructor(
@@ -35,5 +36,8 @@ export class ForInDeconstruct extends Expression {
     const errors: ValidationError[] = [];
 
     return errors;
+  }
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
   }
 }

@@ -118,10 +118,14 @@ const functionTypeParameters = preceded(
 const functionType = map(
   seq(
     preceded(terminated(tag("fn"), whitespace0), functionTypeParameters),
-    preceded(between(whitespace0, tag("->"), whitespace0), typeRef),
+    preceded(between(whitespace0, tag("->"), whitespace0), typeRef)
   ),
   ([parameterTypes, returnType]) =>
-    new FunctionType(false, parameterTypes.map((type, idx) => [`param${idx + 1}`, type]), returnType)
+    new FunctionType(
+      false,
+      parameterTypes.map((type, idx) => [`param${idx + 1}`, type]),
+      returnType
+    )
 );
 
 const tupleType = map(
@@ -164,7 +168,7 @@ const typeReference = map(
         delimited0(typeRef, commaDelimiter, "<type ref>"),
         preceded(whitespace0, tag(">"))
       )
-    ),
+    )
   ),
   ([name, typeArguments], start, end) =>
     findLibraryType(name, typeArguments ?? []) ??
@@ -177,7 +181,7 @@ const topLevelTypeRef = map(
     many0(
       preceded(spacing0, between(tag("["), spacing0, tag("]"))),
       "<array type>"
-    ),
+    )
   ),
   ([baseType, arrayDim]) =>
     arrayDim.length > 0 ? new ArrayType(baseType, arrayDim.length) : baseType
@@ -191,14 +195,14 @@ export const declarationParameter = map(
   seq(
     withPosition(identifier),
     opt(preceded(between(whitespace0, tag("@"), whitespace0), identifier)),
-    opt(typeSpec),
+    opt(typeSpec)
   ),
   ([target, source, type]) => new DeclarationParameter(target, source, type)
 );
 
 export const declarationParameterOrPlaceholder = alt(
   declarationParameter,
-  recognizeAs(tag("_"), new DeclarationPlaceholder()),
+  recognizeAs(tag("_"), new DeclarationPlaceholder())
 );
 
 export const descriptionComment = map(

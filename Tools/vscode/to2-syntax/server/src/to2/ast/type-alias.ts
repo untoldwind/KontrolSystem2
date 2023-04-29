@@ -2,6 +2,7 @@ import { TO2Type } from "./to2-type";
 import { ModuleItem, Node, ValidationError } from ".";
 import { InputPosition, WithPosition } from "../../parser";
 import { ModuleContext } from "./context";
+import { SemanticToken } from "../../syntax-token";
 
 export class TypeAlias implements Node, ModuleItem {
   constructor(
@@ -24,4 +25,8 @@ export class TypeAlias implements Node, ModuleItem {
 
     return errors;
   }
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+  }  
+
 }

@@ -1,5 +1,6 @@
 import { Expression, Node, ValidationError } from ".";
 import { InputPosition } from "../../parser";
+import { SemanticToken } from "../../syntax-token";
 import { BlockContext } from "./context";
 import { BUILTIN_RANGE, TO2Type } from "./to2-type";
 
@@ -32,4 +33,8 @@ export class RangeCreate extends Expression {
 
     return errors;
   }
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+  }  
+
 }

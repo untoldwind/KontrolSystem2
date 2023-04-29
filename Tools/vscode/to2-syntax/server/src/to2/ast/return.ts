@@ -2,6 +2,7 @@ import { Expression, Node, ValidationError } from ".";
 import { BUILTIN_UNIT, TO2Type } from "./to2-type";
 import { InputPosition } from "../../parser";
 import { BlockContext } from "./context";
+import { SemanticToken } from "../../syntax-token";
 
 export class ReturnEmpty extends Expression {
   constructor(start: InputPosition, end: InputPosition) {
@@ -23,6 +24,9 @@ export class ReturnEmpty extends Expression {
 
     return errors;
   }
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+  }  
+
 }
 
 export class ReturnValue extends Expression {
@@ -49,4 +53,8 @@ export class ReturnValue extends Expression {
 
     return errors;
   }
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+  }  
+
 }

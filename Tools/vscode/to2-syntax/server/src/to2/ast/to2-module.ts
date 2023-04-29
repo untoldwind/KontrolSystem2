@@ -1,6 +1,7 @@
 import { ModuleItem, Node, ValidationError } from ".";
 import { InputPosition } from "../../parser";
 import { ModuleReference } from "../../reference";
+import { SemanticToken } from "../../syntax-token";
 import { ConstDeclaration, isConstDeclaration } from "./const-declaration";
 import { ModuleContext } from "./context";
 import {
@@ -76,6 +77,12 @@ export class TO2ModuleNode implements Node, TO2Module {
 
     return errors;
   }
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    for(const item of this.items) {
+      item.collectSemanticTokens(semanticTokens);
+    }
+  }  
 }
 
 export class ReferencedModule implements TO2Module {

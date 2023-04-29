@@ -3,6 +3,7 @@ import { LineComment } from "./line-comment";
 import { MethodDeclaration } from "./method-declaration";
 import { InputPosition } from "../../parser";
 import { ModuleContext } from "./context";
+import { SemanticToken } from "../../syntax-token";
 
 export class ImplDeclaration implements Node {
   constructor(
@@ -25,5 +26,7 @@ export class ImplDeclaration implements Node {
     const errors: ValidationError[] = [];
 
     return errors;
+  }
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
   }
 }

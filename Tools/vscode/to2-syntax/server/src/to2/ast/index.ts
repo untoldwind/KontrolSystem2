@@ -1,6 +1,7 @@
 import { TO2Type } from "./to2-type";
 import { InputPosition } from "../../parser";
 import { BlockContext, ModuleContext } from "./context";
+import { SemanticToken } from "../../syntax-token";
 
 export interface Node {
   isError?: boolean;
@@ -11,6 +12,8 @@ export interface Node {
     combine: (previousValue: T, node: Node) => T,
     initialValue: T
   ): T;
+
+  collectSemanticTokens(semanticTokens: SemanticToken[]) : void;
 }
 
 export interface BlockItem extends Node {
@@ -41,6 +44,8 @@ export abstract class Expression implements Node, BlockItem {
   ): T;
 
   public abstract validateBlock(context: BlockContext): ValidationError[];
+
+  public abstract collectSemanticTokens(semanticTokens: SemanticToken[]) : void;
 }
 
 export interface VariableContainer {

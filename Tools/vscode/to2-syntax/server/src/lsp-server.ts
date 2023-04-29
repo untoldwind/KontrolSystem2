@@ -14,6 +14,7 @@ import { TextDocumentInput } from "./parser/text-document-input";
 import { module } from "./to2/parser-module";
 import { To2LspSettings, defaultSettings } from "./settings";
 import { TO2ModuleNode } from "./to2/ast/to2-module";
+import { SemanticToken, convertSemanticTokens } from "./syntax-token";
 
 export class LspServer {
   private readonly registry = new Registry();
@@ -47,7 +48,7 @@ export class LspServer {
     } else {
       this.documentModules.delete(textDocument.uri);
     }
-    
+
     if (!moduleResult.success) {
       const diagnostic: Diagnostic = {
         severity: DiagnosticSeverity.Error,
@@ -128,8 +129,13 @@ export class LspServer {
   }
 
   onSemanticTokens(params: SemanticTokensParams): SemanticTokens {
+    const module = this.documentModules.get(params.textDocument.uri);
+    const token : SemanticToken[] = [];
+
+    module?.collectSemanticTokens(token);
+
     return {
-      data: [],
+      data: convertSemanticTokens(token),
     };
   }
 }

@@ -2,6 +2,7 @@ import { BlockItem, Expression, Node, ValidationError } from ".";
 import { BUILTIN_UNIT, TO2Type } from "./to2-type";
 import { InputPosition } from "../../parser";
 import { BlockContext } from "./context";
+import { SemanticToken } from "../../syntax-token";
 
 export class Break extends Expression {
   constructor(start: InputPosition, end: InputPosition) {
@@ -23,6 +24,10 @@ export class Break extends Expression {
     const errors: ValidationError[] = [];
 
     return errors;
+  }
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    semanticTokens.push({ type: "keyword", start: this.start, length: this.end.offset - this.start.offset})
   }
 }
 
@@ -46,5 +51,9 @@ export class Continue extends Expression {
     const errors: ValidationError[] = [];
 
     return errors;
+  }
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    semanticTokens.push({ type: "keyword", start: this.start, length: this.end.offset - this.start.offset})
   }
 }

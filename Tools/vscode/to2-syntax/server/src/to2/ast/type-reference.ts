@@ -2,6 +2,7 @@ import { RealizedType, TO2Type, UNKNOWN_TYPE } from "./to2-type";
 import { Node, ValidationError } from ".";
 import { InputPosition } from "../../parser";
 import { ModuleContext } from "./context";
+import { SemanticToken } from "../../syntax-token";
 
 export class LookupTypeReference implements Node, TO2Type {
   public name: string;
@@ -35,4 +36,8 @@ export class LookupTypeReference implements Node, TO2Type {
   public realizedType(context: ModuleContext): RealizedType {
     return context.findType(this.namePath, this.typeArguments) ?? UNKNOWN_TYPE;
   }
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+  }  
+
 }

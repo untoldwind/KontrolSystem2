@@ -63,13 +63,13 @@ const useNames = alt(
     terminated(tag("{"), whitespace0),
     delimited1(withPosition(identifier), commaDelimiter, "<import name>"),
     preceded(whitespace0, tag("}"))
-  ),
+  )
 );
 
 const useNamesDeclaration = map(
   seq(
     preceded(useKeyword, useNames),
-    preceded(fromKeyword, withPosition(identifierPath)),
+    preceded(fromKeyword, withPosition(identifierPath))
   ),
   ([names, namePath], start, end) =>
     new UseDeclaration(names, undefined, namePath, start, end)
@@ -78,7 +78,7 @@ const useNamesDeclaration = map(
 const useAliasDeclaration = map(
   seq(
     preceded(useKeyword, withPosition(identifierPath)),
-    preceded(asKeyword, withPosition(identifier)),
+    preceded(asKeyword, withPosition(identifier))
   ),
   ([namePath, alias], start, end) =>
     new UseDeclaration(undefined, alias, namePath, start, end)
@@ -89,7 +89,7 @@ const typeAlias = map(
     descriptionComment,
     preceded(whitespace0, opt(pubKeyword)),
     preceded(typeKeyword, withPosition(identifier)),
-    preceded(eqDelimiter, typeRef),
+    preceded(eqDelimiter, typeRef)
   ),
   ([description, pub, name, type], start, end) =>
     new TypeAlias(pub !== undefined, name, description, type, start, end)
@@ -100,7 +100,7 @@ const structField = map(
     descriptionComment,
     preceded(whitespace0, identifier),
     typeSpec,
-    preceded(eqDelimiter, expression),
+    preceded(eqDelimiter, expression)
   ),
   ([description, name, type, initializer], start, end) =>
     new StructField(name, type, description, initializer, start, end)
@@ -116,7 +116,7 @@ const structDeclaration = map(
       preceded(whitespace0, tag("{")),
       delimited0(either(lineComment, structField), whitespace1, "fields"),
       preceded(whitespace0, tag("}"))
-    ),
+    )
   ),
   ([description, pub, name, constructorParameters, fields], start, end) =>
     new StructDeclaration(
@@ -141,7 +141,7 @@ const implDeclaration = map(
         "methods"
       ),
       preceded(whitespace0, tag("}"))
-    ),
+    )
   ),
   ([name, methods], start, end) =>
     new ImplDeclaration(name, methods, start, end)
@@ -153,7 +153,7 @@ const constDeclaration = map(
     opt(pubKeyword),
     preceded(constKeyword, withPosition(identifier)),
     typeSpec,
-    preceded(eqDelimiter, expression),
+    preceded(eqDelimiter, expression)
   ),
   ([description, pub, name, type, expression], start, end) =>
     new ConstDeclaration(
@@ -175,7 +175,7 @@ const moduleItem: Parser<ModuleItem> = alt(
   structDeclaration,
   implDeclaration,
   constDeclaration,
-  lineComment,
+  lineComment
 );
 
 const moduleItems = delimitedUntil(

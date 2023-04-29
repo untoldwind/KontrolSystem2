@@ -2,6 +2,7 @@ import { BlockItem, Expression, Node, ValidationError } from ".";
 import { BUILTIN_UNIT, TO2Type } from "./to2-type";
 import { InputPosition } from "../../parser";
 import { BlockContext } from "./context";
+import { SemanticToken } from "../../syntax-token";
 
 export class Block extends Expression {
   constructor(
@@ -35,10 +36,17 @@ export class Block extends Expression {
     const errors: ValidationError[] = [];
     const blockContext = new BlockContext(context.module, context);
 
-    for(const item of this.items) {
+    for (const item of this.items) {
       errors.push(...item.validateBlock(blockContext));
     }
 
     return errors;
   }
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    for(const item of this.items) {
+      item.collectSemanticTokens(semanticTokens);
+    }
+  }
+
 }

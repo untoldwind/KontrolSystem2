@@ -3,6 +3,7 @@ import { Operator } from "./operator";
 import { BUILTIN_BOOL, TO2Type } from "./to2-type";
 import { InputPosition } from "../../parser";
 import { BlockContext } from "./context";
+import { SemanticToken } from "../../syntax-token";
 
 export class BinaryBool extends Expression {
   constructor(
@@ -34,4 +35,8 @@ export class BinaryBool extends Expression {
 
     return errors;
   }
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+  }
+
 }

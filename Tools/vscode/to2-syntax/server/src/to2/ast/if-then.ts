@@ -2,6 +2,7 @@ import { Expression, Node, ValidationError } from ".";
 import { BUILTIN_UNIT, TO2Type } from "./to2-type";
 import { InputPosition } from "../../parser";
 import { BlockContext } from "./context";
+import { SemanticToken } from "../../syntax-token";
 
 export class IfThen extends Expression {
   constructor(
@@ -29,6 +30,9 @@ export class IfThen extends Expression {
     const errors: ValidationError[] = [];
 
     return errors;
+  }
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
   }
 }
 
@@ -62,5 +66,8 @@ export class IfThenElse extends Expression {
     const errors: ValidationError[] = [];
 
     return errors;
+  }
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
   }
 }

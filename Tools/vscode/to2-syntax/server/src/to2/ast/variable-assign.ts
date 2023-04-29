@@ -3,6 +3,7 @@ import { BUILTIN_BOOL, TO2Type } from "./to2-type";
 import { Operator } from "./operator";
 import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
+import { SemanticToken } from "../../syntax-token";
 
 export class VariableAssign extends Expression {
   constructor(
@@ -41,4 +42,9 @@ export class VariableAssign extends Expression {
 
     return errors;
   }
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    semanticTokens.push({ type: "variable", start: this.name.start, length: this.name.end.offset - this.name.start.offset});
+    this.expression.collectSemanticTokens(semanticTokens);
+  }  
 }

@@ -8,6 +8,7 @@ import {
 } from "./to2-type";
 import { InputPosition } from "../../parser";
 import { BlockContext } from "./context";
+import { SemanticToken } from "../../syntax-token";
 
 export class LiteralBool extends Expression {
   constructor(
@@ -31,6 +32,9 @@ export class LiteralBool extends Expression {
 
   public validateBlock(context: BlockContext): ValidationError[] {
     return [];
+  }
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
   }
 }
 
@@ -57,6 +61,10 @@ export class LiteralInt extends Expression {
   public validateBlock(context: BlockContext): ValidationError[] {
     return [];
   }
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    semanticTokens.push({ type: "number", start: this.start, length: this.end.offset - this.start.offset});
+  }
 }
 
 export class LiteralFloat extends Expression {
@@ -81,6 +89,10 @@ export class LiteralFloat extends Expression {
 
   public validateBlock(context: BlockContext): ValidationError[] {
     return [];
+  }
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    semanticTokens.push({ type: "number", start: this.start, length: this.end.offset - this.start.offset});
   }
 }
 
@@ -107,4 +119,8 @@ export class LiteralString extends Expression {
   public validateBlock(context: BlockContext): ValidationError[] {
     return [];
   }
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    semanticTokens.push({ type: "string", start: this.start, length: this.end.offset - this.start.offset});
+  }  
 }

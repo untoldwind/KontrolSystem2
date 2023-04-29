@@ -2,6 +2,7 @@ import { BlockItem, Expression, Node, ValidationError } from ".";
 import { TO2Type } from "./to2-type";
 import { InputPosition } from "../../parser";
 import { BlockContext } from "./context";
+import { SemanticToken } from "../../syntax-token";
 
 export interface TupleTarget {
   target: string;
@@ -31,4 +32,9 @@ export class TupleDeconstructAssign implements Node, BlockItem {
 
     return errors;
   }
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    this.expression.collectSemanticTokens(semanticTokens);
+  }  
+
 }

@@ -7,7 +7,7 @@ import { Operator } from "./ast/operator";
 import { UnarySuffix } from "./ast/unary-suffix";
 import { IndexAssign } from "./ast/index-assign";
 import { FieldAssign } from "./ast/field-assign";
-import { InputPosition } from "../parser";
+import { InputPosition, WithPosition } from "../parser";
 
 export interface SuffixOperation {
   getExpression(
@@ -49,7 +49,7 @@ export class IndexGetSuffix implements SuffixOperation, AssignSuffixOperation {
 }
 
 export class FieldGetSuffix implements SuffixOperation, AssignSuffixOperation {
-  constructor(public readonly fieldName: string) {}
+  constructor(public readonly fieldName: WithPosition<string>) {}
   getExpression(
     target: Expression,
     start: InputPosition,
@@ -71,7 +71,7 @@ export class FieldGetSuffix implements SuffixOperation, AssignSuffixOperation {
 
 export class MethodCallSuffix implements SuffixOperation {
   constructor(
-    public readonly methodName: string,
+    public readonly methodName: WithPosition<string>,
     public readonly args: Expression[]
   ) {}
 

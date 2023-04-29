@@ -1618,9 +1618,7 @@
     "ArrayBuilder": {
       "name": "ArrayBuilder",
       "description": "Helper to create an array of initially unknown size",
-      "genericParameters": [
-        "T"
-      ],
+      "genericParameters": ["T"],
       "fields": {
         "length": {
           "name": "length",
@@ -1686,9 +1684,7 @@
     "Cell": {
       "name": "Cell",
       "description": "Holds a single value that can be mutated at any time",
-      "genericParameters": [
-        "T"
-      ],
+      "genericParameters": ["T"],
       "fields": {
         "value": {
           "name": "value",
@@ -2842,9 +2838,7 @@
         "Task": {
           "name": "Task",
           "description": "Represents a background task\n",
-          "genericParameters": [
-            "T"
-          ],
+          "genericParameters": ["T"],
           "fields": {
             "is_completed": {
               "name": "is_completed",

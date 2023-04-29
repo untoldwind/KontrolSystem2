@@ -1,13 +1,14 @@
 import { Expression, Node, ValidationError } from ".";
 import { BUILTIN_UNIT, TO2Type } from "./to2-type";
 import { Operator } from "./operator";
-import { InputPosition } from "../../parser";
+import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
+import { SemanticToken } from "../../syntax-token";
 
 export class FieldAssign extends Expression {
   constructor(
     public readonly target: Expression,
-    public readonly fieldName: string,
+    public readonly fieldName: WithPosition<string>,
     public readonly op: Operator,
     public readonly expression: Expression,
     start: InputPosition,
@@ -34,5 +35,11 @@ export class FieldAssign extends Expression {
     const errors: ValidationError[] = [];
 
     return errors;
+  }
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    this.target.collectSemanticTokens(semanticTokens);
+    semanticTokens.push({ type: "property", start: this.fieldName.start, length: this.fieldName.end.offset - this.fieldName.start.offset});
+    this.expression.collectSemanticTokens(semanticTokens);
   }
 }

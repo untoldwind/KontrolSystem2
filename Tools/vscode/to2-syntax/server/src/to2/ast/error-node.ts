@@ -1,5 +1,6 @@
 import { BlockItem, ModuleItem, Node, ValidationError } from ".";
 import { InputPosition } from "../../parser";
+import { SemanticToken } from "../../syntax-token";
 import { BlockContext, ModuleContext } from "./context";
 import { BUILTIN_UNIT, TO2Type } from "./to2-type";
 
@@ -44,6 +45,9 @@ export class ErrorNode implements Node, ModuleItem, BlockItem {
         end: this.end,
       },
     ];
+  }
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
   }
 }
 

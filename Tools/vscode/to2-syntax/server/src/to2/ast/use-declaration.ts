@@ -1,5 +1,6 @@
 import { ModuleItem, Node, ValidationError } from ".";
 import { InputPosition, WithPosition } from "../../parser";
+import { SemanticToken } from "../../syntax-token";
 import { ModuleContext } from "./context";
 
 export class UseDeclaration implements Node, ModuleItem {
@@ -68,10 +69,7 @@ export class UseDeclaration implements Node, ModuleItem {
                 end: this.end,
               });
             } else {
-              context.mappedConstants.set(
-                name.value,
-                importedConstant
-              );
+              context.mappedConstants.set(name.value, importedConstant);
             }
           }
           if (importedFunction) {
@@ -83,10 +81,7 @@ export class UseDeclaration implements Node, ModuleItem {
                 end: this.end,
               });
             } else {
-              context.mappedFunctions.set(
-                name.value,
-                importedFunction
-              );
+              context.mappedFunctions.set(name.value, importedFunction);
             }
           }
         }
@@ -95,4 +90,7 @@ export class UseDeclaration implements Node, ModuleItem {
 
     return errors;
   }
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+  }  
 }

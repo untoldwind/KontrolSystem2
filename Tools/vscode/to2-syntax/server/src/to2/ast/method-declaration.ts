@@ -1,6 +1,7 @@
 import { Expression, Node, ValidationError } from ".";
 import { TO2Type } from "./to2-type";
 import { InputPosition } from "../../parser";
+import { SemanticToken } from "../../syntax-token";
 
 export class MethodDeclaration implements Node {
   constructor(
@@ -25,4 +26,8 @@ export class MethodDeclaration implements Node {
 
     return errors;
   }
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+  }  
+
 }

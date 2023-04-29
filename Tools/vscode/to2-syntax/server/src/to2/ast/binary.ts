@@ -3,6 +3,7 @@ import { Operator } from "./operator";
 import { TO2Type, UNKNOWN_TYPE } from "./to2-type";
 import { InputPosition } from "../../parser";
 import { BlockContext } from "./context";
+import { SemanticToken } from "../../syntax-token";
 
 export class Binary extends Expression {
   constructor(
@@ -31,7 +32,7 @@ export class Binary extends Expression {
 
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
-    
+
     errors.push(...this.left.validateBlock(context));
     errors.push(...this.right.validateBlock(context));
 
@@ -47,6 +48,11 @@ export class Binary extends Expression {
     }
 
     return errors;
+  }
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    this.left.collectSemanticTokens(semanticTokens);
+    this.right.collectSemanticTokens(semanticTokens);
   }
 
   private findOperator(context: BlockContext): TO2Type | undefined {

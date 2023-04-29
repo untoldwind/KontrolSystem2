@@ -2,6 +2,7 @@ import { BlockItem, Expression, Node, ValidationError } from ".";
 import { TO2Type } from "./to2-type";
 import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
+import { SemanticToken } from "../../syntax-token";
 
 export class DeclarationParameter {
   constructor(
@@ -57,4 +58,9 @@ export class VariableDeclaration implements Node, BlockItem {
 
     return errors;
   }
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    semanticTokens.push({ type: "variable", modifiers: ["declaration"], start: this.declaration.target.start, length: this.declaration.target.end.offset - this.declaration.target.start.offset});
+    this.expression.collectSemanticTokens(semanticTokens);
+  }  
 }

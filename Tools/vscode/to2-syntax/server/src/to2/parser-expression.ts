@@ -1,5 +1,11 @@
 import { isWhiteSpace } from "unicode-properties";
-import { Input, Parser, ParserFailure, ParserResult, ParserSuccess } from "../parser";
+import {
+  Input,
+  Parser,
+  ParserFailure,
+  ParserResult,
+  ParserSuccess,
+} from "../parser";
 import { alt } from "../parser/branch";
 import { map, opt, recognizeAs, withPosition } from "../parser/combinator";
 import {
@@ -79,7 +85,7 @@ import { ForInDeconstruct } from "./ast/for-in-deconstruct";
 
 const letOrConst = alt(
   recognizeAs(letKeyword, false),
-  recognizeAs(constKeyword, true),
+  recognizeAs(constKeyword, true)
 );
 
 const variableDeclaration = map(
@@ -106,9 +112,9 @@ const variableDeclaration = map(
             isVar: false;
             decls: DeclarationParameterOrPlaceholder[];
           })
-      ),
+      )
     ),
-    preceded(eqDelimiter, expression),
+    preceded(eqDelimiter, expression)
   ),
   ([isConst, vars, expression], start, end) =>
     vars.isVar
@@ -137,7 +143,7 @@ const whileExpression = map(
       expression,
       preceded(whitespace0, tag(")"))
     ),
-    preceded(whitespace0, expression),
+    preceded(whitespace0, expression)
   ),
   ([condition, loopExpression], start, end) =>
     new While(condition, loopExpression, start, end)
@@ -171,11 +177,11 @@ const forInExpression = map(
               isVar: false;
               decls: DeclarationParameterOrPlaceholder[];
             })
-        ),
+        )
       )
     ),
     preceded(between(whitespace1, tag("in"), whitespace1), expression),
-    preceded(between(whitespace0, tag(")"), whitespace0), expression),
+    preceded(between(whitespace0, tag(")"), whitespace0), expression)
   ),
   ([vars, sourceExpression, loopExpression], start, end) =>
     vars.isVar
@@ -218,7 +224,7 @@ const block = map(
         forInExpression,
         whileExpression,
         breakExpression,
-        continueExpression,
+        continueExpression
       ),
       whitespace1,
       tag("}"),
@@ -300,13 +306,13 @@ const recordCreate = map(
       delimited1(
         seq(
           identifier,
-          preceded(between(spacing0, tag(":"), spacing0), expression),
+          preceded(between(spacing0, tag(":"), spacing0), expression)
         ),
         commaDelimiter,
         "<expression>"
       ),
       preceded(whitespace0, tag(")"))
-    ),
+    )
   ),
   ([resultType, items], start, end) =>
     new RecordCreate(resultType, items, start, end)
@@ -329,7 +335,7 @@ const arrayCreate = map(
         preceded(whitespace0, tag("]")),
         "<expression>"
       )
-    ),
+    )
   ),
   ([elementType, items], start, end) =>
     new ArrayCreate(elementType, items, start, end)
@@ -354,7 +360,7 @@ const lambdaParameters = preceded(
 const lambda = map(
   seq(
     preceded(terminated(tag("fn"), spacing0), lambdaParameters),
-    preceded(between(whitespace0, tag("->"), whitespace0), expression),
+    preceded(between(whitespace0, tag("->"), whitespace0), expression)
   ),
   ([parameters, expression], start, end) =>
     new Lambda(parameters, expression, start, end)
@@ -377,7 +383,7 @@ const term = alt(
   tupleCreate,
   recordCreate,
   variableRefOrCall,
-  lambda,
+  lambda
 );
 
 const indexSpec = map(expression, (expression) => new IndexSpec(expression));
@@ -387,8 +393,8 @@ const suffixOp = tag("?");
 const suffixOps = alt(
   map(
     seq(
-      preceded(between(whitespace0, tag("."), whitespace0), identifier),
-      opt(callArguments),
+      preceded(between(whitespace0, tag("."), whitespace0), withPosition( identifier)),
+      opt(callArguments)
     ),
     ([name, args]) =>
       args ? new MethodCallSuffix(name, args) : new FieldGetSuffix(name)
@@ -404,7 +410,7 @@ const suffixOps = alt(
     ),
     (indexSpec) => new IndexGetSuffix(indexSpec)
   ),
-  map(preceded(spacing0, suffixOp), (op) => new OperatorSuffix(op)),
+  map(preceded(spacing0, suffixOp), (op) => new OperatorSuffix(op))
 );
 
 const termWithSuffixOps = fold0(
@@ -420,7 +426,7 @@ const unaryPrefixExpr = alt(
     seq(unaryPrefixOp, preceded(whitespace0, termWithSuffixOps)),
     ([op, right], start, end) => new UnaryPrefix(op, right, start, end)
   ),
-  termWithSuffixOps,
+  termWithSuffixOps
 );
 
 const mulDivBinaryOp = between(
@@ -465,9 +471,9 @@ const rangeCreate = map(
     opt(
       seq(
         preceded(spacing0, preceded(tag(".."), opt(tag(".")))),
-        preceded(spacing0, BITBinaryExpr),
+        preceded(spacing0, BITBinaryExpr)
       )
-    ),
+    )
   ),
   ([from, rest], start, end) => {
     if (rest !== undefined) {
@@ -490,7 +496,7 @@ const unapplyExpr = map(
         preceded(spacing0, tag(")"))
       )
     ),
-    preceded(eqDelimiter, BITBinaryExpr),
+    preceded(eqDelimiter, BITBinaryExpr)
   ),
   ([pattern, extractNames, expression], start, end) =>
     new Unapply(pattern, extractNames, expression, start, end)
@@ -508,11 +514,7 @@ const compareExpr = chain(
   (left, op, right, start, end) => new Binary(left, op, right, start, end)
 );
 
-const booleanOp = between(
-  whitespace0,
-  alt(tag("&&"), tag("||")),
-  whitespace0
-);
+const booleanOp = between(whitespace0, alt(tag("&&"), tag("||")), whitespace0);
 
 const booleanExpr = chain(
   compareExpr,
@@ -524,7 +526,7 @@ const ifBody = alt(
   expression,
   returnExpression,
   breakExpression,
-  continueExpression,
+  continueExpression
 );
 
 const ifExpr = map(
@@ -535,7 +537,7 @@ const ifExpr = map(
       preceded(whitespace0, tag(")"))
     ),
     preceded(whitespace0, ifBody),
-    opt(preceded(between(whitespace1, tag("else"), whitespace1), ifBody)),
+    opt(preceded(between(whitespace1, tag("else"), whitespace1), ifBody))
   ),
   ([condition, thenExpression, elseExpression], start, end) =>
     elseExpression
@@ -554,14 +556,14 @@ const assignOp = between(
     tag("%="),
     tag("|="),
     tag("&="),
-    tag("^="),
+    tag("^=")
   ),
   whitespace0
 );
 
 const assignSuffixOps = alt(
   map(
-    preceded(between(whitespace0, tag("."), whitespace0), identifier),
+    preceded(between(whitespace0, tag("."), whitespace0), withPosition( identifier)),
     (name) => new FieldGetSuffix(name)
   ),
   map(
@@ -574,7 +576,7 @@ const assignSuffixOps = alt(
       )
     ),
     (indexSpec) => new IndexGetSuffix(indexSpec)
-  ),
+  )
 );
 
 const assignment = map(
@@ -582,26 +584,24 @@ const assignment = map(
     withPosition(identifier),
     many0(assignSuffixOps, "<suffix op>"),
     assignOp,
-    alt(booleanExpr, ifExpr),
+    alt(booleanExpr, ifExpr)
   ),
   ([variableName, suffixOps, assignOp, value], start, end) => {
     if (suffixOps.length === 0)
       return new VariableAssign(variableName, assignOp, value, start, end);
     const last = suffixOps[suffixOps.length - 1];
-    const target = suffixOps
-      .slice(0, suffixOps.length - 1)
-      .reduce<Expression>(
-        (target, op) => op.getExpression(target, start, end),
-        new VariableGet(
-          {
-            value: [variableName.value],
-            start: variableName.start,
-            end: variableName.end,
-          },
-          start,
-          end
-        )
-      );
+    const target = suffixOps.slice(0, suffixOps.length - 1).reduce<Expression>(
+      (target, op) => op.getExpression(target, start, end),
+      new VariableGet(
+        {
+          value: [variableName.value],
+          start: variableName.start,
+          end: variableName.end,
+        },
+        start,
+        end
+      )
+    );
     return last.assignExpression(target, assignOp, value, start, end);
   }
 );
@@ -613,12 +613,12 @@ const sourceTargetList = between(
       map(
         seq(
           identifier,
-          preceded(between(spacing0, tag("@"), spacing0), identifier),
+          preceded(between(spacing0, tag("@"), spacing0), identifier)
         ),
         ([source, target]) => ({ source, target })
       ),
       recognizeAs(tag("_"), { source: "", target: "" }),
-      map(identifier, (name) => ({ source: name, target: name })),
+      map(identifier, (name) => ({ source: name, target: name }))
     ),
     commaDelimiter,
     "<tuple target>"
@@ -636,7 +636,7 @@ const topLevelExpression = alt(
   tupleDeconstructAssignment,
   assignment,
   ifExpr,
-  booleanExpr,
+  booleanExpr
 );
 
 export function expression(input: Input): ParserResult<Expression> {

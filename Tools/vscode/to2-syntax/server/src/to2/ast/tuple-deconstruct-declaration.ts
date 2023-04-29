@@ -3,6 +3,7 @@ import { DeclarationParameterOrPlaceholder } from "./variable-declaration";
 import { TO2Type } from "./to2-type";
 import { InputPosition } from "../../parser";
 import { BlockContext } from "./context";
+import { SemanticToken } from "../../syntax-token";
 
 export class TupleDeconstructDeclaration implements Node, BlockItem {
   constructor(
@@ -28,4 +29,9 @@ export class TupleDeconstructDeclaration implements Node, BlockItem {
 
     return errors;
   }
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    this.expression.collectSemanticTokens(semanticTokens);
+  }  
+
 }
