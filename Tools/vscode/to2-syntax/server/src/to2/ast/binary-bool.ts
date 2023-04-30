@@ -1,14 +1,14 @@
 import { Expression, Node, ValidationError } from ".";
 import { Operator } from "./operator";
 import { BUILTIN_BOOL, TO2Type } from "./to2-type";
-import { InputPosition } from "../../parser";
+import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
 
 export class BinaryBool extends Expression {
   constructor(
     public readonly left: Expression,
-    public readonly op: Operator,
+    public readonly op: WithPosition<Operator>,
     public readonly right: Expression,
     start: InputPosition,
     end: InputPosition
@@ -33,8 +33,19 @@ export class BinaryBool extends Expression {
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
+    errors.push(...this.left.validateBlock(context));
+    errors.push(...this.right.validateBlock(context));
+
     return errors;
   }
 
-  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    this.left.collectSemanticTokens(semanticTokens);
+    semanticTokens.push({
+      type: "operator",
+      start: this.op.start,
+      length: this.op.end.offset - this.op.start.offset,
+    });
+    this.right.collectSemanticTokens(semanticTokens);
+  }
 }

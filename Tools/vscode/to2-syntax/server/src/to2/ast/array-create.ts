@@ -31,8 +31,16 @@ export class ArrayCreate extends Expression {
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
+    for (const element of this.elements) {
+      errors.push(...element.validateBlock(context));
+    }
+
     return errors;
   }
 
-  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    for (const element of this.elements) {
+      element.collectSemanticTokens(semanticTokens);
+    }
+  }
 }

@@ -1,11 +1,15 @@
 import { Expression, Node, ValidationError } from ".";
 import { BUILTIN_UNIT, TO2Type } from "./to2-type";
-import { InputPosition } from "../../parser";
+import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
 
 export class ReturnEmpty extends Expression {
-  constructor(start: InputPosition, end: InputPosition) {
+  constructor(
+    public readonly returnKeyword: WithPosition<"return">,
+    start: InputPosition,
+    end: InputPosition
+  ) {
     super(start, end);
   }
 
@@ -19,16 +23,25 @@ export class ReturnEmpty extends Expression {
   ): T {
     return combine(initialValue, this);
   }
+
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
     return errors;
   }
-  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    semanticTokens.push({
+      type: "keyword",
+      start: this.returnKeyword.start,
+      length: this.returnKeyword.end.offset - this.returnKeyword.start.offset,
+    });
+  }
 }
 
 export class ReturnValue extends Expression {
   constructor(
+    public readonly returnKeyword: WithPosition<"return">,
     public readonly returnValue: Expression,
     start: InputPosition,
     end: InputPosition
@@ -49,8 +62,17 @@ export class ReturnValue extends Expression {
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
+    errors.push(...this.returnValue.validateBlock(context));
+
     return errors;
   }
 
-  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    semanticTokens.push({
+      type: "keyword",
+      start: this.returnKeyword.start,
+      length: this.returnKeyword.end.offset - this.returnKeyword.start.offset,
+    });
+    this.returnValue.collectSemanticTokens(semanticTokens);
+  }
 }

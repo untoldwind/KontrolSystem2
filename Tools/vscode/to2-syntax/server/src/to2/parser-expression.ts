@@ -129,24 +129,25 @@ const variableDeclaration = map(
 );
 
 const returnExpression = map(
-  seq(tag("return"), opt(preceded(spacing0, expression))),
-  ([_, returnValue], start, end) =>
+  seq(withPosition(tag("return")), opt(preceded(spacing0, expression))),
+  ([returnKeyword, returnValue], start, end) =>
     returnValue
-      ? new ReturnValue(returnValue, start, end)
-      : new ReturnEmpty(start, end)
+      ? new ReturnValue(returnKeyword, returnValue, start, end)
+      : new ReturnEmpty(returnKeyword, start, end)
 );
 
 const whileExpression = map(
   seq(
+    withPosition(tag("while")),
     between(
-      preceded(tag("while"), between(whitespace0, tag("("), whitespace0)),
+      between(whitespace0, tag("("), whitespace0),
       expression,
       preceded(whitespace0, tag(")"))
     ),
     preceded(whitespace0, expression)
   ),
-  ([condition, loopExpression], start, end) =>
-    new While(condition, loopExpression, start, end)
+  ([whileKeyword, condition, loopExpression], start, end) =>
+    new While(whileKeyword, condition, loopExpression, start, end)
 );
 
 const forInExpression = map(
@@ -388,7 +389,7 @@ const term = alt(
 
 const indexSpec = map(expression, (expression) => new IndexSpec(expression));
 
-const suffixOp = tag("?");
+const suffixOp = withPosition(tag("?"));
 
 const suffixOps = alt(
   map(
@@ -422,7 +423,7 @@ const termWithSuffixOps = fold0(
   (target, suffixOp, start, end) => suffixOp.getExpression(target, start, end)
 );
 
-const unaryPrefixOp = alt(tag("-"), tag("!"), tag("~"));
+const unaryPrefixOp = withPosition(alt(tag("-"), tag("!"), tag("~")));
 
 const unaryPrefixExpr = alt(
   map(
@@ -519,7 +520,11 @@ const compareExpr = chain(
   (left, op, right, start, end) => new Binary(left, op, right, start, end)
 );
 
-const booleanOp = between(whitespace0, alt(tag("&&"), tag("||")), whitespace0);
+const booleanOp = between(
+  whitespace0,
+  withPosition(alt(tag("&&"), tag("||"))),
+  whitespace0
+);
 
 const booleanExpr = chain(
   compareExpr,
@@ -536,18 +541,26 @@ const ifBody = alt(
 
 const ifExpr = map(
   seq(
+    withPosition(tag("if")),
     between(
-      preceded(tag("if"), between(whitespace0, tag("("), whitespace0)),
+      between(whitespace0, tag("("), whitespace0),
       booleanExpr,
       preceded(whitespace0, tag(")"))
     ),
     preceded(whitespace0, ifBody),
     opt(preceded(between(whitespace1, tag("else"), whitespace1), ifBody))
   ),
-  ([condition, thenExpression, elseExpression], start, end) =>
+  ([ifKeyword, condition, thenExpression, elseExpression], start, end) =>
     elseExpression
-      ? new IfThenElse(condition, thenExpression, elseExpression, start, end)
-      : new IfThen(condition, thenExpression, start, end)
+      ? new IfThenElse(
+          ifKeyword,
+          condition,
+          thenExpression,
+          elseExpression,
+          start,
+          end
+        )
+      : new IfThen(ifKeyword, condition, thenExpression, start, end)
 );
 
 const assignOp = between(
@@ -620,13 +633,22 @@ const sourceTargetList = between(
     alt(
       map(
         seq(
-          identifier,
-          preceded(between(spacing0, tag("@"), spacing0), identifier)
+          withPosition(identifier),
+          preceded(
+            between(spacing0, tag("@"), spacing0),
+            withPosition(identifier)
+          )
         ),
-        ([source, target]) => ({ source, target })
+        ([source, target]) => ({ source: source.value, target })
       ),
-      recognizeAs(tag("_"), { source: "", target: "" }),
-      map(identifier, (name) => ({ source: name, target: name }))
+      map(withPosition(tag("_")), (tag) => ({
+        source: "",
+        target: { start: tag.start, end: tag.end, value: "" },
+      })),
+      map(withPosition(identifier), (name) => ({
+        source: name.value,
+        target: name,
+      }))
     ),
     commaDelimiter,
     "<tuple target>"

@@ -7,6 +7,7 @@ using KontrolSystem.KSP.Runtime;
 using KontrolSystem.TO2;
 using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Generator;
+using KSP.Modding;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
@@ -310,17 +311,36 @@ namespace KontrolSystem.GenRefs {
             Generic,
             Builtin,
             Standard,
+            Array,
+            Record,
+            Result,
+            Option,
+            Tuple,
         }
 
         public TypeRef(ModuleContext moduleContext, TO2Type type) {
             if (type is GenericParameter) {
                 Kind = TypeKind.Generic;
-                Module = null;
                 Name = type.Name;
             } else if (type is BuiltinType) {
                 Kind = TypeKind.Builtin;
-                Module = null;
                 Name = type.Name;
+            } else if(type is ArrayType arrayType) {
+                Kind = TypeKind.Array;
+                Parameters = new List<TypeRef> { new TypeRef(moduleContext, arrayType.ElementType) };
+            } else if (type is OptionType optionType) {
+                Kind = TypeKind.Option;
+                Parameters = new List<TypeRef> { new TypeRef(moduleContext, optionType.elementType) };
+            } else if (type is ResultType resultType) {
+                Kind = TypeKind.Result;
+                Parameters = new List<TypeRef> { new TypeRef(moduleContext, resultType.successType), new TypeRef(moduleContext, resultType.errorType) };
+            } else if (type is TupleType tupleType) {
+                Kind = TypeKind.Tuple;
+                Parameters = tupleType.itemTypes.Select(item => new TypeRef(moduleContext, item)).ToList();
+            } else if (!type.Name.StartsWith("ksp::") && type is RecordType recordType) {
+                Kind = TypeKind.Record;
+                Names = recordType.ItemTypes.Select(item => item.Key).ToList();
+                Parameters = recordType.ItemTypes.Select(item => new TypeRef(moduleContext, item.Value)).ToList();
             } else {
                 Kind = TypeKind.Standard;
                 var idx = type.Name.LastIndexOf("::", StringComparison.Ordinal);
@@ -342,6 +362,13 @@ namespace KontrolSystem.GenRefs {
         [JsonProperty("module", NullValueHandling = NullValueHandling.Ignore)]
         public string Module { get; }
 
-        [JsonProperty("name")] public string Name { get; }
+        [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)] 
+        public string Name { get; }
+        
+        [JsonProperty("names", NullValueHandling = NullValueHandling.Ignore)]
+        public List<string> Names { get; }
+        
+        [JsonProperty("parameters", NullValueHandling = NullValueHandling.Ignore)]
+        public List<TypeRef> Parameters { get; }
     }
 }

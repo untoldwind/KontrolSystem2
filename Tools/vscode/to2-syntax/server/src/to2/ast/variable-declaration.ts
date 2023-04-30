@@ -18,6 +18,12 @@ export type DeclarationParameterOrPlaceholder =
   | DeclarationParameter
   | DeclarationPlaceholder;
 
+export function isDeclarationParameter(
+  declaration: DeclarationParameterOrPlaceholder
+): declaration is DeclarationParameter {
+  return (declaration as DeclarationParameter).target !== undefined;
+}
+
 export class VariableDeclaration implements Node, BlockItem {
   constructor(
     public readonly declaration: DeclarationParameter,

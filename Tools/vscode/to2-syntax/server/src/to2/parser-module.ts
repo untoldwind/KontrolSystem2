@@ -73,6 +73,7 @@ const useNamesDeclaration = map(
       useKeyword,
       names,
       undefined,
+      undefined,
       fromKeyword,
       namePath,
       start,
@@ -84,13 +85,15 @@ const useAliasDeclaration = map(
   seq(
     useKeyword,
     withPosition(identifierPath),
-    preceded(asKeyword, withPosition(identifier))
+    withPosition(asKeyword),
+    withPosition(identifier)
   ),
-  ([useKeyword, namePath, alias], start, end) =>
+  ([useKeyword, namePath, asKeyword, alias], start, end) =>
     new UseDeclaration(
       useKeyword,
       undefined,
       alias,
+      asKeyword,
       undefined,
       namePath,
       start,

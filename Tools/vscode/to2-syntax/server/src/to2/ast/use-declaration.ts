@@ -5,10 +5,11 @@ import { ModuleContext } from "./context";
 
 export class UseDeclaration implements Node, ModuleItem {
   constructor(
-    public readonly useKeyword: WithPosition<string>,
+    public readonly useKeyword: WithPosition<"use">,
     public readonly names: WithPosition<string>[] | undefined,
     public readonly alias: WithPosition<string> | undefined,
-    public readonly fromKeyword: WithPosition<string> | undefined,
+    public readonly asKeyword: WithPosition<"as"> | undefined,
+    public readonly fromKeyword: WithPosition<"from"> | undefined,
     public readonly moduleNamePath: WithPosition<string[]>,
     public readonly start: InputPosition,
     public readonly end: InputPosition
@@ -99,6 +100,22 @@ export class UseDeclaration implements Node, ModuleItem {
       start: this.useKeyword.start,
       length: this.useKeyword.end.offset - this.useKeyword.start.offset,
     });
+    if (this.names) {
+      for (const name of this.names) {
+        semanticTokens.push({
+          type: "variable",
+          modifiers: ["declaration"],
+          start: name.start,
+          length: name.end.offset - name.start.offset,
+        });
+      }
+    }
+    if (this.asKeyword)
+      semanticTokens.push({
+        type: "keyword",
+        start: this.asKeyword.start,
+        length: this.asKeyword.end.offset - this.asKeyword.start.offset,
+      });
     if (this.fromKeyword)
       semanticTokens.push({
         type: "keyword",

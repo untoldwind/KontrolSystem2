@@ -1,11 +1,12 @@
 import { Expression, Node, ValidationError } from ".";
 import { BUILTIN_UNIT, TO2Type } from "./to2-type";
-import { InputPosition } from "../../parser";
+import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
 
 export class IfThen extends Expression {
   constructor(
+    public readonly ifKeyword: WithPosition<"if">,
     public readonly condition: Expression,
     public readonly thenExpression: Expression,
     start: InputPosition,
@@ -29,14 +30,26 @@ export class IfThen extends Expression {
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
+    errors.push(...this.condition.validateBlock(context));
+    errors.push(...this.thenExpression.validateBlock(context));
+
     return errors;
   }
 
-  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    semanticTokens.push({
+      type: "keyword",
+      start: this.ifKeyword.start,
+      length: this.ifKeyword.end.offset - this.ifKeyword.start.offset,
+    });
+    this.condition.collectSemanticTokens(semanticTokens);
+    this.thenExpression.collectSemanticTokens(semanticTokens);
+  }
 }
 
 export class IfThenElse extends Expression {
   constructor(
+    public readonly ifKeyword: WithPosition<"if">,
     public readonly condition: Expression,
     public readonly thenExpression: Expression,
     public readonly elseExpression: Expression,
@@ -64,8 +77,21 @@ export class IfThenElse extends Expression {
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
+    errors.push(...this.condition.validateBlock(context));
+    errors.push(...this.thenExpression.validateBlock(context));
+    errors.push(...this.elseExpression.validateBlock(context));
+
     return errors;
   }
 
-  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    semanticTokens.push({
+      type: "keyword",
+      start: this.ifKeyword.start,
+      length: this.ifKeyword.end.offset - this.ifKeyword.start.offset,
+    });
+    this.condition.collectSemanticTokens(semanticTokens);
+    this.thenExpression.collectSemanticTokens(semanticTokens);
+    this.elseExpression.collectSemanticTokens(semanticTokens);
+  }
 }

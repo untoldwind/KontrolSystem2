@@ -34,7 +34,13 @@ export class LiteralBool extends Expression {
     return [];
   }
 
-  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    semanticTokens.push({
+      type: "keyword",
+      start: this.start,
+      length: this.end.offset - this.start.offset,
+    });
+  }
 }
 
 export class LiteralInt extends Expression {

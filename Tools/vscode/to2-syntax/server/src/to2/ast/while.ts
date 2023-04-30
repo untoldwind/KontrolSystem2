@@ -1,11 +1,12 @@
 import { Expression, Node, ValidationError } from ".";
 import { BUILTIN_UNIT, TO2Type } from "./to2-type";
-import { InputPosition } from "../../parser";
+import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
 
 export class While extends Expression {
   constructor(
+    public readonly whileKeyword: WithPosition<string>,
     public readonly condition: Expression,
     public readonly loopExpression: Expression,
     start: InputPosition,
@@ -30,7 +31,19 @@ export class While extends Expression {
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
+    errors.push(...this.condition.validateBlock(context));
+    errors.push(...this.loopExpression.validateBlock(context));
+
     return errors;
   }
-  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    semanticTokens.push({
+      type: "keyword",
+      start: this.whileKeyword.start,
+      length: this.whileKeyword.end.offset - this.whileKeyword.start.offset,
+    });
+    
+    this.condition.collectSemanticTokens(semanticTokens);
+    this.loopExpression.collectSemanticTokens(semanticTokens);
+  }
 }

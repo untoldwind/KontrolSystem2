@@ -31,10 +31,14 @@ export class Lambda extends Expression {
       )
     );
   }
+
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
     return errors;
   }
-  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    this.expression.collectSemanticTokens(semanticTokens);
+  }
 }

@@ -66,6 +66,27 @@ export type TypeRef =
       name: string;
     }
   | {
+      kind: "Array";
+      parameters: [TypeRef];
+    }
+  | {
+      kind: "Option";
+      parameters: [TypeRef];
+    }
+  | {
+      kind: "Result";
+      parameters: [TypeRef, TypeRef];
+    }
+  | {
+      kind: "Tuple";
+      parameters: TypeRef[];
+    }
+  | {
+      kind: "Record";
+      names: string[];
+      parameters: TypeRef[];
+    }
+  | {
       kind: "Generic";
       module: string;
       name: string;

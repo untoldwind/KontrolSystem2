@@ -34,6 +34,8 @@ export class FieldAssign extends Expression {
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
+    errors.push(...this.target.validateBlock(context));
+
     return errors;
   }
 

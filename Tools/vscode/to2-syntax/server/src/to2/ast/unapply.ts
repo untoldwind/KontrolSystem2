@@ -30,5 +30,7 @@ export class Unapply extends Expression {
 
     return errors;
   }
-  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    this.expression.collectSemanticTokens(semanticTokens);
+  }
 }

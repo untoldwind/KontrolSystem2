@@ -32,8 +32,20 @@ export class ForIn extends Expression {
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
+    errors.push(...this.sourceExpression.validateBlock(context));
+    errors.push(...this.loopExpression.validateBlock(context));
+
     return errors;
   }
 
-  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    semanticTokens.push({
+      type: "variable",
+      modifiers: ["definition"],
+      start: this.variableName.start,
+      length: this.variableName.end.offset - this.variableName.start.offset,
+    });
+    this.sourceExpression.collectSemanticTokens(semanticTokens);
+    this.loopExpression.collectSemanticTokens(semanticTokens);
+  }
 }

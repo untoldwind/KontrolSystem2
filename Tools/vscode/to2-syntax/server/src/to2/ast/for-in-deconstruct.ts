@@ -1,10 +1,7 @@
 import { Expression, Node, ValidationError } from ".";
 import { BUILTIN_UNIT, TO2Type } from "./to2-type";
 import { InputPosition } from "../../parser";
-import {
-  DeclarationParameter,
-  DeclarationParameterOrPlaceholder,
-} from "./variable-declaration";
+import { DeclarationParameterOrPlaceholder } from "./variable-declaration";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
 
@@ -35,8 +32,14 @@ export class ForInDeconstruct extends Expression {
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
+    errors.push(...this.sourceExpression.validateBlock(context));
+    errors.push(...this.loopExpression.validateBlock(context));
+
     return errors;
   }
 
-  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    this.sourceExpression.collectSemanticTokens(semanticTokens);
+    this.loopExpression.collectSemanticTokens(semanticTokens);
+  }
 }

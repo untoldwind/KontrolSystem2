@@ -1,4 +1,4 @@
-import { BlockItem, Expression, Node, ValidationError } from ".";
+import { Expression, Node, ValidationError } from ".";
 import { BUILTIN_UNIT, TO2Type } from "./to2-type";
 import { InputPosition } from "../../parser";
 import { BlockContext } from "./context";
@@ -30,8 +30,16 @@ export class TupleCreate extends Expression {
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
+    for (const item of this.items) {
+      errors.push(...item.validateBlock(context));
+    }
+
     return errors;
   }
 
-  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    for (const item of this.items) {
+      item.collectSemanticTokens(semanticTokens);
+    }
+  }
 }

@@ -40,6 +40,7 @@ export class VariableGet extends Expression {
         end: this.namePath.end,
       });
     }
+
     return errors;
   }
 

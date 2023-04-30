@@ -16,8 +16,8 @@ export class VariableAssign extends Expression {
     super(start, end);
   }
 
-  resultType(): TO2Type {
-    return BUILTIN_BOOL;
+  resultType(context: BlockContext): TO2Type {
+    return this.expression.resultType(context);
   }
 
   public reduceNode<T>(

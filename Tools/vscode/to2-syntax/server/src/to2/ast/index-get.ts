@@ -31,7 +31,11 @@ export class IndexGet extends Expression {
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
+    errors.push(...this.target.validateBlock(context));
+
     return errors;
   }
-  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    this.target.collectSemanticTokens(semanticTokens);
+  }
 }

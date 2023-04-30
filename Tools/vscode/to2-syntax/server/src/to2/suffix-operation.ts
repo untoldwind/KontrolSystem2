@@ -85,7 +85,7 @@ export class MethodCallSuffix implements SuffixOperation {
 }
 
 export class OperatorSuffix implements SuffixOperation {
-  constructor(public readonly op: Operator) {}
+  constructor(public readonly op: WithPosition<Operator>) {}
 
   getExpression(
     target: Expression,

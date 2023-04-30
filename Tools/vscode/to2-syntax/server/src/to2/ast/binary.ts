@@ -41,7 +41,7 @@ export class Binary extends Expression {
       const rightType = this.right.resultType(context);
       errors.push({
         status: "error",
-        message: `Invalid operator: ${leftType.name} ${this.op} ${rightType.name} is not definied`,
+        message: `Invalid operator: ${leftType.name} ${this.op.value} ${rightType.name} is not definied`,
         start: this.start,
         end: this.end,
       });
@@ -52,6 +52,11 @@ export class Binary extends Expression {
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     this.left.collectSemanticTokens(semanticTokens);
+    semanticTokens.push({
+      type: "operator",
+      start: this.op.start,
+      length: this.op.end.offset - this.op.start.offset,
+    });
     this.right.collectSemanticTokens(semanticTokens);
   }
 
