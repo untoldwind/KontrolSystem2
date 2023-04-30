@@ -35,6 +35,8 @@ export class Lambda extends Expression {
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
+    errors.push(...this.expression.validateBlock(context));
+
     return errors;
   }
 

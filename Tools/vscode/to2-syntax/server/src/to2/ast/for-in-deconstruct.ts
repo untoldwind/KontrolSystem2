@@ -1,13 +1,15 @@
 import { Expression, Node, ValidationError } from ".";
 import { BUILTIN_UNIT, TO2Type } from "./to2-type";
-import { InputPosition } from "../../parser";
+import { InputPosition, WithPosition } from "../../parser";
 import { DeclarationParameterOrPlaceholder } from "./variable-declaration";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
 
 export class ForInDeconstruct extends Expression {
   constructor(
+    public readonly forKeyword: WithPosition<"for">,
     public readonly declarations: DeclarationParameterOrPlaceholder[],
+    public readonly inKeyword: WithPosition<"in">,
     public readonly sourceExpression: Expression,
     public readonly loopExpression: Expression,
     start: InputPosition,
@@ -16,7 +18,7 @@ export class ForInDeconstruct extends Expression {
     super(start, end);
   }
 
-  public resultType(context: BlockContext): TO2Type {
+  public resultType(): TO2Type {
     return BUILTIN_UNIT;
   }
 
@@ -39,6 +41,16 @@ export class ForInDeconstruct extends Expression {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    semanticTokens.push({
+      type: "keyword",
+      start: this.forKeyword.start,
+      length: this.forKeyword.end.offset - this.forKeyword.start.offset,
+    });
+    semanticTokens.push({
+      type: "keyword",
+      start: this.inKeyword.start,
+      length: this.inKeyword.end.offset - this.inKeyword.start.offset,
+    });
     this.sourceExpression.collectSemanticTokens(semanticTokens);
     this.loopExpression.collectSemanticTokens(semanticTokens);
   }

@@ -22,10 +22,20 @@ export class ImplDeclaration implements Node {
       combine(initialValue, this)
     );
   }
+  
   public validateModule(context: ModuleContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
+    for (const method of this.methods) {
+      errors.push(...method.validateModule(context));
+    }
+
     return errors;
   }
-  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    for (const method of this.methods) {
+      method.collectSemanticTokens(semanticTokens);
+    }
+  }
 }

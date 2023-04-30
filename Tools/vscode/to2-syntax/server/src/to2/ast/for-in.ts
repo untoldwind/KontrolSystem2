@@ -6,8 +6,10 @@ import { SemanticToken } from "../../syntax-token";
 
 export class ForIn extends Expression {
   constructor(
+    public readonly forKeyword: WithPosition<"for">,
     public readonly variableName: WithPosition<string>,
     public readonly variableType: TO2Type | undefined,
+    public readonly inKeyword: WithPosition<"in">,
     public readonly sourceExpression: Expression,
     public readonly loopExpression: Expression,
     start: InputPosition,
@@ -16,7 +18,7 @@ export class ForIn extends Expression {
     super(start, end);
   }
 
-  public resultType(context: BlockContext): TO2Type {
+  public resultType(): TO2Type {
     return BUILTIN_UNIT;
   }
 
@@ -40,10 +42,20 @@ export class ForIn extends Expression {
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     semanticTokens.push({
+      type: "keyword",
+      start: this.forKeyword.start,
+      length: this.forKeyword.end.offset - this.forKeyword.start.offset,
+    });
+    semanticTokens.push({
       type: "variable",
       modifiers: ["definition"],
       start: this.variableName.start,
       length: this.variableName.end.offset - this.variableName.start.offset,
+    });
+    semanticTokens.push({
+      type: "keyword",
+      start: this.inKeyword.start,
+      length: this.inKeyword.end.offset - this.inKeyword.start.offset,
     });
     this.sourceExpression.collectSemanticTokens(semanticTokens);
     this.loopExpression.collectSemanticTokens(semanticTokens);

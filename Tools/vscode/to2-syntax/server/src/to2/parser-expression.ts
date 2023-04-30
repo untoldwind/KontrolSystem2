@@ -152,8 +152,9 @@ const whileExpression = map(
 
 const forInExpression = map(
   seq(
+    withPosition(tag("for")),
     preceded(
-      preceded(tag("for"), between(whitespace0, tag("("), whitespace0)),
+      between(whitespace0, tag("("), whitespace0),
       alt(
         map(
           declarationParameter,
@@ -181,21 +182,30 @@ const forInExpression = map(
         )
       )
     ),
-    preceded(between(whitespace1, tag("in"), whitespace1), expression),
+    between(whitespace1, withPosition(tag("in")), whitespace1),
+    expression,
     preceded(between(whitespace0, tag(")"), whitespace0), expression)
   ),
-  ([vars, sourceExpression, loopExpression], start, end) =>
+  (
+    [forKeyword, vars, inKeyword, sourceExpression, loopExpression],
+    start,
+    end
+  ) =>
     vars.isVar
       ? new ForIn(
+          forKeyword,
           vars.decl.target,
           vars.decl.type,
+          inKeyword,
           sourceExpression,
           loopExpression,
           start,
           end
         )
       : new ForInDeconstruct(
+          forKeyword,
           vars.decls,
+          inKeyword,
           sourceExpression,
           loopExpression,
           start,
