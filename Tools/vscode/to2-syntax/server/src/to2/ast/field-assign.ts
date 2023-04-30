@@ -39,7 +39,11 @@ export class FieldAssign extends Expression {
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     this.target.collectSemanticTokens(semanticTokens);
-    semanticTokens.push({ type: "property", start: this.fieldName.start, length: this.fieldName.end.offset - this.fieldName.start.offset});
+    semanticTokens.push({
+      type: "property",
+      start: this.fieldName.start,
+      length: this.fieldName.end.offset - this.fieldName.start.offset,
+    });
     this.expression.collectSemanticTokens(semanticTokens);
   }
 }

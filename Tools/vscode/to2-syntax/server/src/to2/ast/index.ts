@@ -13,7 +13,7 @@ export interface Node {
     initialValue: T
   ): T;
 
-  collectSemanticTokens(semanticTokens: SemanticToken[]) : void;
+  collectSemanticTokens(semanticTokens: SemanticToken[]): void;
 }
 
 export interface BlockItem extends Node {
@@ -45,7 +45,7 @@ export abstract class Expression implements Node, BlockItem {
 
   public abstract validateBlock(context: BlockContext): ValidationError[];
 
-  public abstract collectSemanticTokens(semanticTokens: SemanticToken[]) : void;
+  public abstract collectSemanticTokens(semanticTokens: SemanticToken[]): void;
 }
 
 export interface VariableContainer {

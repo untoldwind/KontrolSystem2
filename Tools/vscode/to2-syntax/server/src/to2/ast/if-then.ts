@@ -32,8 +32,7 @@ export class IfThen extends Expression {
     return errors;
   }
 
-  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-  }
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
 }
 
 export class IfThenElse extends Expression {
@@ -68,6 +67,5 @@ export class IfThenElse extends Expression {
     return errors;
   }
 
-  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-  }
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
 }

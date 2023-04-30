@@ -27,6 +27,5 @@ export class ImplDeclaration implements Node {
 
     return errors;
   }
-  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-  }
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
 }

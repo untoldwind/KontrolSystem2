@@ -44,7 +44,7 @@ export class VariableDeclaration implements Node, BlockItem {
     if (context.localVariables.has(this.declaration.target.value)) {
       errors.push({
         status: "error",
-        message: `Duplicate variable ${this.declaration.target}`,
+        message: `Duplicate variable ${this.declaration.target.value}`,
         start: this.declaration.target.start,
         end: this.declaration.target.end,
       });
@@ -60,7 +60,14 @@ export class VariableDeclaration implements Node, BlockItem {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-    semanticTokens.push({ type: "variable", modifiers: ["declaration"], start: this.declaration.target.start, length: this.declaration.target.end.offset - this.declaration.target.start.offset});
+    semanticTokens.push({
+      type: "variable",
+      modifiers: ["definition"],
+      start: this.declaration.target.start,
+      length:
+        this.declaration.target.end.offset -
+        this.declaration.target.start.offset,
+    });
     this.expression.collectSemanticTokens(semanticTokens);
-  }  
+  }
 }

@@ -33,5 +33,5 @@ export class UnarySuffix extends Expression {
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     this.left.collectSemanticTokens(semanticTokens);
-  }  
+  }
 }

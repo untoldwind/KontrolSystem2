@@ -24,9 +24,7 @@ export class ReturnEmpty extends Expression {
 
     return errors;
   }
-  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-  }  
-
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
 }
 
 export class ReturnValue extends Expression {
@@ -54,7 +52,5 @@ export class ReturnValue extends Expression {
     return errors;
   }
 
-  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-  }  
-
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
 }

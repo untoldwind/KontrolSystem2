@@ -44,7 +44,11 @@ export class VariableAssign extends Expression {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-    semanticTokens.push({ type: "variable", start: this.name.start, length: this.name.end.offset - this.name.start.offset});
+    semanticTokens.push({
+      type: "variable",
+      start: this.name.start,
+      length: this.name.end.offset - this.name.start.offset,
+    });
     this.expression.collectSemanticTokens(semanticTokens);
-  }  
+  }
 }

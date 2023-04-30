@@ -19,8 +19,7 @@ import { SemanticToken, convertSemanticTokens } from "./syntax-token";
 export class LspServer {
   private readonly registry = new Registry();
   private globalSettings: To2LspSettings = defaultSettings;
-  private readonly documentSettings: Map<string, Thenable<To2LspSettings>> =
-    new Map();
+  private readonly documentSettings: Map<string, To2LspSettings> = new Map();
   private readonly documentModules: Map<string, TO2ModuleNode> = new Map();
   private readonly documents: TextDocuments<TextDocument>;
 
@@ -29,15 +28,13 @@ export class LspServer {
     public hasConfigurationCapability: boolean
   ) {
     this.documents = new TextDocuments(TextDocument);
+    this.documents.onDidOpen(this.onDidOpen.bind(this));
     this.documents.onDidClose(this.onDidClose.bind(this));
     this.documents.onDidChangeContent(this.onDidChange.bind(this));
     this.documents.listen(connection);
   }
 
   async validateTextDocument(textDocument: TextDocument): Promise<void> {
-    // In this simple example we get the settings for every validate run.
-    const settings = await this.getDocumentSettings(textDocument.uri);
-
     const input = new TextDocumentInput(textDocument);
     const moduleResult = module("<test>")(input);
 
@@ -65,6 +62,9 @@ export class LspServer {
       diagnostics.push(diagnostic);
     }
     if (moduleResult.value) {
+      // In this simple example we get the settings for every validate run.
+      const settings = await this.getDocumentSettings(textDocument.uri);
+
       for (const validationError of moduleResult.value.validate(
         this.registry
       )) {
@@ -87,19 +87,19 @@ export class LspServer {
     this.connection.sendDiagnostics({ uri: textDocument.uri, diagnostics });
   }
 
-  getDocumentSettings(resource: string): Thenable<To2LspSettings> {
+  async getDocumentSettings(resource: string): Promise<To2LspSettings> {
     if (!this.hasConfigurationCapability) {
-      return Promise.resolve(this.globalSettings);
+      return this.globalSettings;
     }
     let result = this.documentSettings.get(resource);
     if (!result) {
-      result = this.connection.workspace.getConfiguration({
+      result = await this.connection.workspace.getConfiguration({
         scopeUri: resource,
         section: "to2LspServer",
       });
-      this.documentSettings.set(resource, result);
+      if (result) this.documentSettings.set(resource, result);
     }
-    return result;
+    return result ?? this.globalSettings;
   }
 
   onDidChangeConfiguration(change: DidChangeConfigurationParams) {
@@ -123,14 +123,17 @@ export class LspServer {
     this.documentModules.delete(event.document.uri);
   }
 
+  onDidOpen(event: TextDocumentChangeEvent<TextDocument>) {
+    this.validateTextDocument(event.document);
+  }
+
   onDidChange(event: TextDocumentChangeEvent<TextDocument>) {
-    this.connection.console.log(event.document.uri);
     this.validateTextDocument(event.document);
   }
 
   onSemanticTokens(params: SemanticTokensParams): SemanticTokens {
     const module = this.documentModules.get(params.textDocument.uri);
-    const token : SemanticToken[] = [];
+    const token: SemanticToken[] = [];
 
     module?.collectSemanticTokens(token);
 

@@ -79,10 +79,10 @@ export class TO2ModuleNode implements Node, TO2Module {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-    for(const item of this.items) {
+    for (const item of this.items) {
       item.collectSemanticTokens(semanticTokens);
     }
-  }  
+  }
 }
 
 export class ReferencedModule implements TO2Module {

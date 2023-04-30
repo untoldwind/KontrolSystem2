@@ -47,8 +47,7 @@ export class ErrorNode implements Node, ModuleItem, BlockItem {
     ];
   }
 
-  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-  }
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
 }
 
 export function isErrorNode(node: Node): node is ErrorNode {

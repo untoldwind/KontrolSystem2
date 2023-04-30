@@ -36,10 +36,13 @@ export class MethodCall extends Expression {
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     this.target.collectSemanticTokens(semanticTokens);
-    semanticTokens.push({ type: "method", start: this.methodName.start, length: this.methodName.end.offset - this.methodName.start.offset});
-    for(const arg of this.args) {
+    semanticTokens.push({
+      type: "method",
+      start: this.methodName.start,
+      length: this.methodName.end.offset - this.methodName.start.offset,
+    });
+    for (const arg of this.args) {
       arg.collectSemanticTokens(semanticTokens);
     }
-  }  
-
+  }
 }

@@ -32,6 +32,5 @@ export class TupleDeconstructDeclaration implements Node, BlockItem {
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     this.expression.collectSemanticTokens(semanticTokens);
-  }  
-
+  }
 }

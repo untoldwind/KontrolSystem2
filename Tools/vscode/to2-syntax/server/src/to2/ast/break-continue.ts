@@ -27,7 +27,11 @@ export class Break extends Expression {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-    semanticTokens.push({ type: "keyword", start: this.start, length: this.end.offset - this.start.offset})
+    semanticTokens.push({
+      type: "keyword",
+      start: this.start,
+      length: this.end.offset - this.start.offset,
+    });
   }
 }
 
@@ -54,6 +58,10 @@ export class Continue extends Expression {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-    semanticTokens.push({ type: "keyword", start: this.start, length: this.end.offset - this.start.offset})
+    semanticTokens.push({
+      type: "keyword",
+      start: this.start,
+      length: this.end.offset - this.start.offset,
+    });
   }
 }

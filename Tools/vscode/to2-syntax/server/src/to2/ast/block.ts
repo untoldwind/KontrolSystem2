@@ -44,9 +44,8 @@ export class Block extends Expression {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-    for(const item of this.items) {
+    for (const item of this.items) {
       item.collectSemanticTokens(semanticTokens);
     }
   }
-
 }

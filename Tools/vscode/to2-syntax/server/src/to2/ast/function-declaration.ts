@@ -40,8 +40,7 @@ export class FunctionParameter implements Node {
     return errors;
   }
 
-  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-  }
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
 }
 
 export class FunctionDeclaration implements Node, ModuleItem {
@@ -127,7 +126,7 @@ export class FunctionDeclaration implements Node, ModuleItem {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-    for(const parameter of this.parameters) {
+    for (const parameter of this.parameters) {
       parameter.collectSemanticTokens(semanticTokens);
     }
     this.expression.collectSemanticTokens(semanticTokens);

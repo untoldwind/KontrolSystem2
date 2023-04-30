@@ -393,7 +393,10 @@ const suffixOp = tag("?");
 const suffixOps = alt(
   map(
     seq(
-      preceded(between(whitespace0, tag("."), whitespace0), withPosition( identifier)),
+      preceded(
+        between(whitespace0, tag("."), whitespace0),
+        withPosition(identifier)
+      ),
       opt(callArguments)
     ),
     ([name, args]) =>
@@ -431,7 +434,7 @@ const unaryPrefixExpr = alt(
 
 const mulDivBinaryOp = between(
   whitespace0,
-  alt(tag("*"), tag("/"), tag("%")),
+  withPosition(alt(tag("*"), tag("/"), tag("%"))),
   whitespace0
 );
 
@@ -443,7 +446,7 @@ const mulDivBinaryExpr = chain(
 
 const addSubBinaryOp = between(
   whitespace0,
-  alt(tag("+"), tag("-")),
+  withPosition(alt(tag("+"), tag("-"))),
   whitespace0
 );
 
@@ -455,7 +458,7 @@ const addSubBinaryExpr = chain(
 
 const BITOp = between(
   whitespace0,
-  alt(tag("&"), tag("|"), tag("^")),
+  withPosition(alt(tag("&"), tag("|"), tag("^"))),
   whitespace0
 );
 
@@ -504,7 +507,9 @@ const unapplyExpr = map(
 
 const compareOp = between(
   whitespace0,
-  alt(tag("=="), tag("!="), tag("<="), tag(">="), tag("<"), tag(">")),
+  withPosition(
+    alt(tag("=="), tag("!="), tag("<="), tag(">="), tag("<"), tag(">"))
+  ),
   whitespace0
 );
 
@@ -563,7 +568,10 @@ const assignOp = between(
 
 const assignSuffixOps = alt(
   map(
-    preceded(between(whitespace0, tag("."), whitespace0), withPosition( identifier)),
+    preceded(
+      between(whitespace0, tag("."), whitespace0),
+      withPosition(identifier)
+    ),
     (name) => new FieldGetSuffix(name)
   ),
   map(

@@ -1,14 +1,14 @@
 import { Expression, Node, ValidationError } from ".";
 import { Operator } from "./operator";
 import { TO2Type, UNKNOWN_TYPE } from "./to2-type";
-import { InputPosition } from "../../parser";
+import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
 
 export class Binary extends Expression {
   constructor(
     public readonly left: Expression,
-    public readonly op: Operator,
+    public readonly op: WithPosition<Operator>,
     public readonly right: Expression,
     start: InputPosition,
     end: InputPosition
@@ -62,8 +62,8 @@ export class Binary extends Expression {
       .realizedType(context.module);
 
     return (
-      leftType.findSuffixOperator(this.op, rightType) ??
-      rightType.findPrefixOperator(this.op, leftType)
+      leftType.findSuffixOperator(this.op.value, rightType) ??
+      rightType.findPrefixOperator(this.op.value, leftType)
     );
   }
 }

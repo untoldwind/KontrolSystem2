@@ -44,7 +44,10 @@ export class VariableGet extends Expression {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-    semanticTokens.push({ type: "variable", start: this.start, length: this.end.offset - this.start.offset});
-  }  
-
+    semanticTokens.push({
+      type: "variable",
+      start: this.start,
+      length: this.end.offset - this.start.offset,
+    });
+  }
 }

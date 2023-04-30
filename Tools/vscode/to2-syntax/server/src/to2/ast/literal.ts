@@ -34,8 +34,7 @@ export class LiteralBool extends Expression {
     return [];
   }
 
-  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-  }
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
 }
 
 export class LiteralInt extends Expression {
@@ -63,7 +62,11 @@ export class LiteralInt extends Expression {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-    semanticTokens.push({ type: "number", start: this.start, length: this.end.offset - this.start.offset});
+    semanticTokens.push({
+      type: "number",
+      start: this.start,
+      length: this.end.offset - this.start.offset,
+    });
   }
 }
 
@@ -92,7 +95,11 @@ export class LiteralFloat extends Expression {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-    semanticTokens.push({ type: "number", start: this.start, length: this.end.offset - this.start.offset});
+    semanticTokens.push({
+      type: "number",
+      start: this.start,
+      length: this.end.offset - this.start.offset,
+    });
   }
 }
 
@@ -121,6 +128,10 @@ export class LiteralString extends Expression {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-    semanticTokens.push({ type: "string", start: this.start, length: this.end.offset - this.start.offset});
-  }  
+    semanticTokens.push({
+      type: "string",
+      start: this.start,
+      length: this.end.offset - this.start.offset,
+    });
+  }
 }

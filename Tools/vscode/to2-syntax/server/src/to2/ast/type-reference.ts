@@ -37,7 +37,5 @@ export class LookupTypeReference implements Node, TO2Type {
     return context.findType(this.namePath, this.typeArguments) ?? UNKNOWN_TYPE;
   }
 
-  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-  }  
-
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
 }

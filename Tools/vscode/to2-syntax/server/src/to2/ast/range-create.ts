@@ -34,7 +34,5 @@ export class RangeCreate extends Expression {
     return errors;
   }
 
-  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-  }  
-
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
 }

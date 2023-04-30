@@ -43,7 +43,7 @@ import {
   methodDeclaration,
 } from "./parser-functions";
 
-const useKeyword = terminated(tag("use"), spacing1);
+const useKeyword = terminated(withPosition(tag("use")), spacing1);
 
 const typeKeyword = terminated(tag("type"), spacing1);
 
@@ -51,7 +51,7 @@ const structKeyword = terminated(tag("struct"), spacing1);
 
 const implKeyword = terminated(tag("impl"), spacing1);
 
-const fromKeyword = between(spacing1, tag("from"), spacing1);
+const fromKeyword = between(spacing1, withPosition(tag("from")), spacing1);
 
 const asKeyword = between(spacing1, tag("as"), spacing1);
 
@@ -67,21 +67,35 @@ const useNames = alt(
 );
 
 const useNamesDeclaration = map(
-  seq(
-    preceded(useKeyword, useNames),
-    preceded(fromKeyword, withPosition(identifierPath))
-  ),
-  ([names, namePath], start, end) =>
-    new UseDeclaration(names, undefined, namePath, start, end)
+  seq(useKeyword, useNames, fromKeyword, withPosition(identifierPath)),
+  ([useKeyword, names, fromKeyword, namePath], start, end) =>
+    new UseDeclaration(
+      useKeyword,
+      names,
+      undefined,
+      fromKeyword,
+      namePath,
+      start,
+      end
+    )
 );
 
 const useAliasDeclaration = map(
   seq(
-    preceded(useKeyword, withPosition(identifierPath)),
+    useKeyword,
+    withPosition(identifierPath),
     preceded(asKeyword, withPosition(identifier))
   ),
-  ([namePath, alias], start, end) =>
-    new UseDeclaration(undefined, alias, namePath, start, end)
+  ([useKeyword, namePath, alias], start, end) =>
+    new UseDeclaration(
+      useKeyword,
+      undefined,
+      alias,
+      undefined,
+      namePath,
+      start,
+      end
+    )
 );
 
 const typeAlias = map(

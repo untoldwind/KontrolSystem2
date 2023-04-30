@@ -33,5 +33,5 @@ export class UnaryPrefix extends Expression {
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     this.right.collectSemanticTokens(semanticTokens);
-  }  
+  }
 }

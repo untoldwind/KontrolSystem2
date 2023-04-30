@@ -67,11 +67,13 @@
     "bundle": "(cd client && npm run bundle) && (cd server && npm run bundle)",
     "compile": "tsc -b",
     "watch": "tsc -b -w",
+    "format": "prettier --write .",
     "postinstall": "(cd client && npm install) && (cd server && npm install)"
   },
   "devDependencies": {
-    "@types/node": "18.15.12",
+    "@types/node": "18.16.3",
     "@vscode/vsce": "2.19.0",
+    "prettier": "2.8.8",
     "typescript": "^5.0.4"
   }
 }

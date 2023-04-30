@@ -9,7 +9,7 @@ describe("TO2 parser expression", () => {
       expect.objectContaining({
         success: true,
         value: expect.objectContaining({
-          op: "+",
+          op: expect.objectContaining({ value: "+" }),
           left: expect.objectContaining({
             value: 123,
           }),
@@ -23,7 +23,7 @@ describe("TO2 parser expression", () => {
       expect.objectContaining({
         success: true,
         value: expect.objectContaining({
-          op: "-",
+          op: expect.objectContaining({ value: "-" }),
           left: expect.objectContaining({
             value: 123,
           }),
@@ -40,9 +40,9 @@ describe("TO2 parser expression", () => {
       expect.objectContaining({
         success: true,
         value: expect.objectContaining({
-          op: "+",
+          op: expect.objectContaining({ value: "+" }),
           left: expect.objectContaining({
-            op: "*",
+            op: expect.objectContaining({ value: "*" }),
             left: expect.objectContaining({
               value: 12,
             }),
@@ -51,7 +51,7 @@ describe("TO2 parser expression", () => {
             }),
           }),
           right: expect.objectContaining({
-            op: "/",
+            op: expect.objectContaining({ value: "/" }),
             left: expect.objectContaining({
               value: 67,
             }),
@@ -67,14 +67,14 @@ describe("TO2 parser expression", () => {
       expect.objectContaining({
         success: true,
         value: expect.objectContaining({
-          op: "/",
+          op: expect.objectContaining({ value: "/" }),
           left: expect.objectContaining({
-            op: "*",
+            op: expect.objectContaining({ value: "*" }),
             left: expect.objectContaining({
               value: 12,
             }),
             right: expect.objectContaining({
-              op: "-",
+              op: expect.objectContaining({ value: "-" }),
               left: expect.objectContaining({
                 value: 45,
               }),

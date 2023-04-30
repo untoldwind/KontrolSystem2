@@ -12,6 +12,7 @@ export const SEMANTIC_TOKEN_TYPES = [
   "type",
   "function",
   "method",
+  "namespace",
 ] as const;
 
 export type SemanticTokenType = (typeof SEMANTIC_TOKEN_TYPES)[number];

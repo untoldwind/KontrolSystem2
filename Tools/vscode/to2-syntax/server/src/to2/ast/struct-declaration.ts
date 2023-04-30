@@ -28,9 +28,7 @@ export class StructField implements Node {
 
     return errors;
   }
-  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-  }  
-
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
 }
 
 export class StructDeclaration implements Node, ModuleItem {
@@ -63,7 +61,5 @@ export class StructDeclaration implements Node, ModuleItem {
     return errors;
   }
 
-  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-  }  
-
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
 }

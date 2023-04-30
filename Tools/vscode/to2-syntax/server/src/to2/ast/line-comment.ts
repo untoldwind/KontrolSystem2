@@ -33,6 +33,10 @@ export class LineComment implements Node, BlockItem, ModuleItem {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-    semanticTokens.push({ type: "comment", start: this.start, length: this.end.offset - this.start.offset});
+    semanticTokens.push({
+      type: "comment",
+      start: this.start,
+      length: this.end.offset - this.start.offset,
+    });
   }
 }

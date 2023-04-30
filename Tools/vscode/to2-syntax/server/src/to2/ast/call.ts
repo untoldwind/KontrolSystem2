@@ -74,8 +74,12 @@ export class Call extends Expression {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-    semanticTokens.push({ type: "function", start: this.namePath.start, length: this.namePath.end.offset - this.namePath.start.offset});
-    for(const arg of this.args) {
+    semanticTokens.push({
+      type: "function",
+      start: this.namePath.start,
+      length: this.namePath.end.offset - this.namePath.start.offset,
+    });
+    for (const arg of this.args) {
       arg.collectSemanticTokens(semanticTokens);
     }
   }

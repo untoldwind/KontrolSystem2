@@ -26,7 +26,5 @@ export class TypeAlias implements Node, ModuleItem {
     return errors;
   }
 
-  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-  }  
-
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
 }
