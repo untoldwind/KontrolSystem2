@@ -349,7 +349,7 @@ namespace KontrolSystem.GenRefs {
             } else if (type is TupleType tupleType) {
                 Kind = TypeKind.Tuple;
                 Parameters = tupleType.itemTypes.Select(item => new TypeRef(moduleContext, item)).ToList();
-            } else if (!type.Name.StartsWith("ksp::") && type is RecordType recordType) {
+            } else if (type is RecordTupleType recordType) {
                 Kind = TypeKind.Record;
                 Names = recordType.ItemTypes.Select(item => item.Key).ToList();
                 Parameters = recordType.ItemTypes.Select(item => new TypeRef(moduleContext, item.Value)).ToList();

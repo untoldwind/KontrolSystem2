@@ -11,7 +11,7 @@ export class RecordType implements RealizedType {
 
   constructor(public readonly itemTypes: [string, TO2Type][]) {
     this.name = this.localName = `(${itemTypes
-      .map((item) => `${item[0]} : ${item[1]}`)
+      .map((item) => `${item[0]} : ${item[1].name}`)
       .join(", ")})`;
     this.description = "";
   }
