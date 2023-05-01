@@ -348,7 +348,7 @@ namespace KontrolSystem.TO2.AST {
         public string Description => "Map the content of the option";
 
         public bool IsAsync => false;
-        
+
         public bool IsConst => true;
 
         public TO2Type DeclaredReturn => new OptionType(BuiltinType.Unit);
@@ -394,7 +394,7 @@ namespace KontrolSystem.TO2.AST {
             "Continue with a second operation that also has an optional result. (Also called flat_map)";
 
         public bool IsAsync => false;
-        
+
         public bool IsConst => true;
 
         public TO2Type DeclaredReturn => new OptionType(BuiltinType.Unit);
@@ -439,9 +439,9 @@ namespace KontrolSystem.TO2.AST {
         public TypeHint ReturnHint => _ => new ResultType(optionType.elementType, BuiltinType.Unit);
 
         public string Description => "Convert the option to a result, where None is mapped to the `if_none` error";
-        
+
         public bool IsAsync => false;
-        
+
         public bool IsConst => true;
 
         public TypeHint ArgumentHint(int argumentIdx) => null;

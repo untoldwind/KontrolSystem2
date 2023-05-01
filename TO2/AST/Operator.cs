@@ -99,13 +99,15 @@ namespace KontrolSystem.TO2.AST {
         private readonly Func<TO2Type> resultTypeFactory;
         private readonly MethodInfo methodInfo;
         private readonly OpCode[] postOpCodes;
+        private readonly Func<ModuleContext, IEnumerable<RealizedType>> targetTypeArguments;
 
         public StaticMethodOperatorEmitter(Func<TO2Type> otherTypeFactory, Func<TO2Type> resultTypeFactory,
-            MethodInfo methodInfo,
+            MethodInfo methodInfo, Func<ModuleContext, IEnumerable<RealizedType>> targetTypeArguments = null,
             params OpCode[] postOpCodes) {
             this.otherTypeFactory = otherTypeFactory;
             this.resultTypeFactory = resultTypeFactory;
             this.methodInfo = methodInfo;
+            this.targetTypeArguments = targetTypeArguments;
             this.postOpCodes = postOpCodes;
         }
 
@@ -117,7 +119,14 @@ namespace KontrolSystem.TO2.AST {
         public TO2Type ResultType => resultTypeFactory();
 
         public void EmitCode(IBlockContext context, Node target) {
-            context.IL.EmitCall(OpCodes.Call, methodInfo, methodInfo.GetParameters().Length);
+            if (methodInfo.IsGenericMethod && targetTypeArguments != null) {
+                var filled = methodInfo.MakeGenericMethod(targetTypeArguments(context.ModuleContext)
+                    .Select(realizedType => realizedType.GeneratedType(context.ModuleContext)).ToArray());
+                context.IL.EmitCall(OpCodes.Call, filled, filled.GetParameters().Length);
+            } else {
+                context.IL.EmitCall(OpCodes.Call, methodInfo, methodInfo.GetParameters().Length);
+            }
+
             foreach (OpCode opCOde in postOpCodes) context.IL.Emit(opCOde);
         }
 
@@ -138,7 +147,7 @@ namespace KontrolSystem.TO2.AST {
                 return new StaticMethodOperatorEmitter(
                     () => otherTypeFactory().UnderlyingType(context).FillGenerics(context, typeArguments),
                     () => resultTypeFactory().UnderlyingType(context).FillGenerics(context, typeArguments),
-                    methodInfo.MakeGenericMethod(arguments), postOpCodes);
+                    methodInfo.MakeGenericMethod(arguments), null, postOpCodes);
             }
 
             return this;

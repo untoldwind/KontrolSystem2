@@ -192,7 +192,7 @@ namespace KontrolSystem.TO2.AST {
         }
 
         public bool IsAsync => false;
-        
+
         public bool IsConst => true;
 
         public TypeHint ReturnHint => context => new OptionType(boundEnumType);
@@ -244,7 +244,7 @@ namespace KontrolSystem.TO2.AST {
                     return REPLValueFuture.Success(
                         new REPLAny(new OptionType(boundEnumType),
                             Option.Some<object>(Enum.Parse(boundEnumType.enumType, value.stringValue, true))));
-                } catch (Exception e) {
+                } catch (Exception) {
                     return REPLValueFuture.Success(
                         new REPLAny(new OptionType(boundEnumType), Option.None<object>()));
                 }

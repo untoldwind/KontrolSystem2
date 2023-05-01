@@ -29,27 +29,27 @@ namespace KontrolSystem.TO2.AST {
                         Operator.NotEq,
                         new StaticMethodOperatorEmitter(() => String, () => Bool,
                             typeof(string).GetMethod("Equals", new[] {typeof(string), typeof(string)}),
-                            OpCodes.Ldc_I4_0, OpCodes.Ceq)
+                            null, OpCodes.Ldc_I4_0, OpCodes.Ceq)
                     }, {
                         Operator.Gt,
                         new StaticMethodOperatorEmitter(() => String, () => Bool,
                             typeof(string).GetMethod("Compare", new[] {typeof(string), typeof(string)}),
-                            OpCodes.Ldc_I4_0, OpCodes.Cgt)
+                            null, OpCodes.Ldc_I4_0, OpCodes.Cgt)
                     }, {
                         Operator.Ge,
                         new StaticMethodOperatorEmitter(() => String, () => Bool,
                             typeof(string).GetMethod("Compare", new[] {typeof(string), typeof(string)}),
-                            OpCodes.Ldc_I4_M1, OpCodes.Cgt)
+                            null,OpCodes.Ldc_I4_M1, OpCodes.Cgt)
                     }, {
                         Operator.Lt,
                         new StaticMethodOperatorEmitter(() => String, () => Bool,
                             typeof(string).GetMethod("Compare", new[] {typeof(string), typeof(string)}),
-                            OpCodes.Ldc_I4_0, OpCodes.Clt)
+                            null, OpCodes.Ldc_I4_0, OpCodes.Clt)
                     }, {
                         Operator.Le,
                         new StaticMethodOperatorEmitter(() => String, () => Bool,
                             typeof(string).GetMethod("Compare", new[] {typeof(string), typeof(string)}),
-                            OpCodes.Ldc_I4_1, OpCodes.Clt)
+                            null, OpCodes.Ldc_I4_1, OpCodes.Clt)
                     },
                 };
                 DeclaredMethods = new Dictionary<string, IMethodInvokeFactory> {

@@ -29,7 +29,7 @@ namespace KontrolSystem.TO2.AST {
                 {
                     Operator.AddAssign,
                     new StaticMethodOperatorEmitter(() => new GenericParameter("T"), () => BuiltinType.ArrayBuilder,
-                        typeof(ArrayBuilderOps).GetMethod("AddTo"), new OpCode[0])
+                        typeof(ArrayBuilderOps).GetMethod("AddTo"))
                 }
             },
             new List<(string name, IMethodInvokeFactory invoker)> {

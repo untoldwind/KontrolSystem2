@@ -117,9 +117,9 @@ namespace KontrolSystem.GenRefs {
             Fields = new Dictionary<string, FieldReference>();
             Methods = new Dictionary<string, FunctionReference>();
             if (type is ResultType)
-                GenericParameters = new [] { "R", "E" };
-            else if(type is OptionType){
-                GenericParameters = new [] { "T" };
+                GenericParameters = new[] { "R", "E" };
+            else if (type is OptionType) {
+                GenericParameters = new[] { "T" };
             } else {
                 GenericParameters = type.GenericParameters.Length > 0 ? type.GenericParameters : null;
             }
@@ -283,7 +283,7 @@ namespace KontrolSystem.GenRefs {
         }
 
         [JsonProperty("isAsync")] public bool IsAsync { get; }
-        
+
         [JsonProperty("name")] public string Name { get; }
 
         [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)] public string Description { get; }
@@ -332,7 +332,7 @@ namespace KontrolSystem.GenRefs {
             } else if (type is BuiltinType) {
                 Kind = TypeKind.Builtin;
                 Name = type.Name;
-            } else if(type is ArrayType arrayType) {
+            } else if (type is ArrayType arrayType) {
                 Kind = TypeKind.Array;
                 Parameters = new List<TypeRef> { new TypeRef(moduleContext, arrayType.ElementType) };
             } else if (type is OptionType optionType) {
@@ -369,12 +369,12 @@ namespace KontrolSystem.GenRefs {
         [JsonProperty("module", NullValueHandling = NullValueHandling.Ignore)]
         public string Module { get; }
 
-        [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)] 
+        [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
         public string Name { get; }
-        
+
         [JsonProperty("names", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> Names { get; }
-        
+
         [JsonProperty("parameters", NullValueHandling = NullValueHandling.Ignore)]
         public List<TypeRef> Parameters { get; }
     }

@@ -124,3 +124,64 @@ test sync fn test_array_reverse() -> Unit = {
     assert_int(44, reverse_arr[0])
     assert_int(22, reverse_arr[2])
 }
+
+test sync fn test_array_append() -> Unit = {
+    const int_arr1 : int[] = [ 0, 11, 22, 33, 44 ]
+    const int_arr2 = int_arr1 + 55
+
+    assert_int(5, int_arr1.length)
+    assert_int(6, int_arr2.length)
+    
+    for(i in 0...4) {
+      assert_int(i + 10 * i, int_arr1[i])
+      assert_int(i + 10 * i, int_arr2[i])
+    }
+    assert_int(55, int_arr2[5])
+}
+
+test sync fn test_array_append_mut() -> Unit = {
+    let int_arr : int[] = []
+
+    for(i in 0...4) {
+      int_arr += i + 10 * i
+    }
+
+    assert_int(5, int_arr.length)
+    
+    for(i in 0...4) {
+      assert_int(i + 10 * i, int_arr[i])
+    }
+}
+
+test sync fn test_array_concat() -> Unit = {
+    const int_arr1 : int[] = [ 0, 11, 22, 33, 44 ]
+    const int_arr2 : int[] = [ 55, 66, 77, 88 ]
+    const int_arr3 = int_arr1 + int_arr2
+
+    assert_int(5, int_arr1.length)
+    assert_int(4, int_arr2.length)
+    assert_int(9, int_arr3.length)
+    
+    for(i in 0...4) {
+      assert_int(i + 10 * i, int_arr1[i])
+    }
+    for(i in 5...8) {
+      assert_int(i + 10 * i, int_arr2[i - 5])
+      assert_int(i + 10 * i, int_arr3[i])
+    }
+}
+
+test sync fn test_array_concat_mut() -> Unit = {
+    let int_arr : int[] = []
+
+    for(i in 0...4) {
+      int_arr += [i, i * 10 + i]
+    }
+    
+    assert_int(10, int_arr.length)
+    
+    for(i in 0...4) {
+      assert_int(i, int_arr[2 * i])
+      assert_int(i + 10 * i, int_arr[2 * i + 1])
+    }
+}

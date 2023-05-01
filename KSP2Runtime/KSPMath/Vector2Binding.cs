@@ -66,7 +66,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                     Operator.NotEq,
                     new StaticMethodOperatorEmitter(() => Vector2Type, () => BuiltinType.Bool,
                         typeof(Vector2d).GetMethod("op_Equality", new[] {typeof(Vector2d), typeof(Vector2d)}),
-                        OpCodes.Ldc_I4_0, OpCodes.Ceq)
+                        null, OpCodes.Ldc_I4_0, OpCodes.Ceq)
                 },
             },
             new Dictionary<string, IMethodInvokeFactory> {

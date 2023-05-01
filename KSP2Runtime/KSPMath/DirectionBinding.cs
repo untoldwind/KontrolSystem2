@@ -59,7 +59,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                     Operator.NotEq,
                     new StaticMethodOperatorEmitter(() => DirectionType, () => BuiltinType.Bool,
                         typeof(Direction).GetMethod("op_Equality", new[] {typeof(Direction), typeof(Direction)}),
-                        OpCodes.Ldc_I4_0, OpCodes.Ceq)
+                        null, OpCodes.Ldc_I4_0, OpCodes.Ceq)
                 },
             },
             new Dictionary<string, IMethodInvokeFactory> {

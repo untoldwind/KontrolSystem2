@@ -8,10 +8,22 @@ using KontrolSystem.Parsing;
 
 namespace KontrolSystem.TO2.AST {
     public class ArrayType : RealizedType {
+        private readonly OperatorCollection allowedSuffixOperators;
+
         public TO2Type ElementType { get; }
 
         public ArrayType(TO2Type elementType, int dimension = 1) {
             ElementType = dimension > 1 ? new ArrayType(elementType, dimension - 1) : elementType;
+            allowedSuffixOperators = new OperatorCollection {
+                { Operator.Add, new StaticMethodOperatorEmitter(() => this, () => this, 
+                    typeof(ArrayMethods).GetMethod("Concat"), context => new []{ elementType.UnderlyingType(context) })},
+                { Operator.Add, new StaticMethodOperatorEmitter(() => elementType, () => this, 
+                    typeof(ArrayMethods).GetMethod("Append"), context => new []{ elementType.UnderlyingType(context) })},
+                { Operator.AddAssign, new StaticMethodOperatorEmitter(() => this, () => this, 
+                    typeof(ArrayMethods).GetMethod("Concat"), context => new []{ elementType.UnderlyingType(context) })},
+                { Operator.AddAssign, new StaticMethodOperatorEmitter(() => elementType, () => this, 
+                    typeof(ArrayMethods).GetMethod("Append"), context => new []{ elementType.UnderlyingType(context) })},
+            };
             DeclaredMethods = new Dictionary<string, IMethodInvokeFactory> {
                 {
                     "map", new BoundMethodInvokeFactory("Map the content of the array", true,
@@ -97,6 +109,8 @@ namespace KontrolSystem.TO2.AST {
         public override Dictionary<string, IMethodInvokeFactory> DeclaredMethods { get; }
 
         public override Dictionary<string, IFieldAccessFactory> DeclaredFields { get; }
+
+        public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) => allowedSuffixOperators;
 
         public override IIndexAccessEmitter AllowedIndexAccess(ModuleContext context, IndexSpec indexSpec) {
             switch (indexSpec.indexType) {
