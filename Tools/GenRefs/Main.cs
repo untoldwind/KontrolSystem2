@@ -53,6 +53,7 @@ namespace KontrolSystem.GenRefs {
             var allTypes = Builtin.Values.Concat(Modules.Values.SelectMany(module => module.Types.Values)).ToList();
 
             foreach (var typeReference in allTypes) {
+                if(typeReference.AssignableFromAny) continue;
                 foreach (var otherType in allTypes) {
                     if (otherType == typeReference) continue;
                     if (!typeReference.TO2Type.IsAssignableFrom(moduleContext, otherType.TO2Type)) continue;
@@ -124,6 +125,7 @@ namespace KontrolSystem.GenRefs {
                 GenericParameters = type.GenericParameters.Length > 0 ? type.GenericParameters : null;
             }
 
+            AssignableFromAny = type == BuiltinType.Unit;
             AssignableFrom = new List<TypeRef>();
 
             foreach (var field in type.DeclaredFields) {
@@ -178,6 +180,9 @@ namespace KontrolSystem.GenRefs {
         [JsonProperty("suffixOperators", NullValueHandling = NullValueHandling.Ignore)]
         public Dictionary<string, List<OperatorReference>> SuffixOperators { get; }
 
+        [JsonProperty("assignableFromAny")]
+        public bool AssignableFromAny { get; }
+        
         [JsonProperty("assignableFrom")]
         public List<TypeRef> AssignableFrom { get; }
 

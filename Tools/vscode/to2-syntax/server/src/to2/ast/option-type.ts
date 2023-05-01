@@ -58,4 +58,8 @@ export class OptionType implements RealizedType {
         return undefined;
     }
   }
+
+  public forInSource(): TO2Type | undefined {
+    return undefined;
+  }
 }

@@ -24,6 +24,7 @@ export interface TypeReference {
   methods: Record<string, FunctionReference>;
   prefixOperators?: Record<Operator, OperatorReference[]>;
   suffixOperators?: Record<Operator, OperatorReference[]>;
+  assignableFromAny: boolean;
   assignableFrom: TypeRef[];
 }
 

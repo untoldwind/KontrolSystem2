@@ -1,5 +1,5 @@
 import { Expression, Node, ValidationError } from ".";
-import { BUILTIN_UNIT, TO2Type } from "./to2-type";
+import { BUILTIN_UNIT, TO2Type, UNKNOWN_TYPE } from "./to2-type";
 import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
@@ -31,11 +31,51 @@ export class ForIn extends Expression {
       this.sourceExpression.reduceNode(combine, combine(initialValue, this))
     );
   }
+
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
     errors.push(...this.sourceExpression.validateBlock(context));
-    errors.push(...this.loopExpression.validateBlock(context));
+
+    const loopContext = new BlockContext(context.module, context);
+
+    if (errors.length === 0) {
+      const loopVarType = this.sourceExpression
+        .resultType(context)
+        .realizedType(context.module)
+        .forInSource()
+        ?.realizedType(context.module);
+
+      if (!loopVarType) {
+        errors.push({
+          status: "error",
+          message: `${
+            this.sourceExpression.resultType(context).name
+          } can not be used as for-in source`,
+          start: this.sourceExpression.start,
+          end: this.sourceExpression.end,
+        });
+      } else if (
+        this.variableType &&
+        this.variableType
+          .realizedType(context.module)
+          .isAssignableFrom(loopVarType)
+      ) {
+        errors.push({
+          status: "error",
+          message: `${this.variableType.name} is not assignable from ${loopVarType.name}`,
+          start: this.sourceExpression.start,
+          end: this.sourceExpression.end,
+        });
+      }
+
+      loopContext.localVariables.set(
+        this.variableName.value,
+        this.variableType ?? loopVarType ?? UNKNOWN_TYPE
+      );
+    }
+
+    errors.push(...this.loopExpression.validateBlock(loopContext));
 
     return errors;
   }

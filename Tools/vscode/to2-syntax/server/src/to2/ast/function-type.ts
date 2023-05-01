@@ -34,12 +34,15 @@ export class FunctionType implements RealizedType {
     return undefined;
   }
 
-
   public findField(name: string): TO2Type | undefined {
     return undefined;
   }
 
   public findMethod(name: string): FunctionType | undefined {
+    return undefined;
+  }
+
+  public forInSource(): TO2Type | undefined {
     return undefined;
   }
 }

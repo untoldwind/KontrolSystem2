@@ -39,6 +39,8 @@ export interface RealizedType extends TO2Type {
   findField(name: string): TO2Type | undefined;
 
   findMethod(name: string): FunctionType | undefined;
+
+  forInSource(): TO2Type | undefined;
 }
 
 export class ReferencedType implements RealizedType {
@@ -59,7 +61,8 @@ export class ReferencedType implements RealizedType {
   }
 
   public isAssignableFrom(otherType: RealizedType): boolean {
-    if (this.name === otherType.name) return true;
+    if (this.name === otherType.name || this.typeReference.assignableFromAny)
+      return true;
     for (const typeRef of this.typeReference.assignableFrom) {
       if (otherType.name === resolveTypeRef(typeRef)?.name) return true;
     }
@@ -113,6 +116,10 @@ export class ReferencedType implements RealizedType {
       methodReference.description
     );
   }
+
+  public forInSource(): TO2Type | undefined {
+    return this.name === "Range" ? BUILTIN_INT : undefined;
+  }
 }
 
 const referencedTypes: Record<string, ReferencedType> = [
@@ -156,6 +163,10 @@ export const UNKNOWN_TYPE: RealizedType = {
   },
 
   findMethod() {
+    return undefined;
+  },
+
+  forInSource() {
     return undefined;
   },
 };

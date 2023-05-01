@@ -39,6 +39,10 @@ export class RecordType implements RealizedType {
   public findMethod(name: string): FunctionType | undefined {
     return undefined;
   }
+
+  public forInSource(): TO2Type | undefined {
+    return undefined;
+  }
 }
 
 export function isRecordType(node: RealizedType): node is RecordType {

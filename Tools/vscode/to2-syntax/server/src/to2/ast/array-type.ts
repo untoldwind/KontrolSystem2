@@ -39,4 +39,8 @@ export class ArrayType implements RealizedType {
   public findMethod(name: string): FunctionType | undefined {
     return undefined;
   }
+
+  public forInSource(): TO2Type | undefined {
+    return this.elementType;
+  }
 }

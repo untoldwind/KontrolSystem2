@@ -38,6 +38,10 @@ export class TupleType implements RealizedType {
   public findMethod(name: string): FunctionType | undefined {
     return undefined;
   }
+
+  public forInSource(): TO2Type | undefined {
+    return undefined;
+  }
 }
 
 export function isTupleType(node: RealizedType): node is TupleType {
