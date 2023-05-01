@@ -81,6 +81,17 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 }
             }
             
+            [KSField]
+            public Option<ModuleCommandAdapter> CommandModule {
+                get {
+                    if (part.TryGetModuleData<PartComponentModule_Command, Data_Command>(out var data)) {
+                        return new Option<ModuleCommandAdapter>(new ModuleCommandAdapter(vesselAdapter, part, data));
+                    }
+
+                    return new Option<ModuleCommandAdapter>();
+                }
+            }
+            
             [KSField] public bool IsSolarPanel => part.IsPartSolarPanel(out var _);
 
             [KSField]

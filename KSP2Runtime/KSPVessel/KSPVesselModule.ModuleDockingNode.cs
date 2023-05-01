@@ -24,6 +24,11 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField]
             public string[] NodeTypes => dataDockingNode.NodeTypes;
 
+            [KSMethod]
+            public void ControlFromHere() {
+                vesselAdapter.vessel.SetControlOwner(part);
+            }
+            
             public string Name => part.Name;
 
             public KSPOrbitModule.IOrbit Orbit => vesselAdapter.Orbit;

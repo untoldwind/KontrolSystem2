@@ -78,6 +78,14 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                     }),
                     ("DockingState", "Current state of a docking node", typeof(Data_DockingNode.DockingState), new (Enum value, string description)[] {
                     }),
+                    ("CommandControlState", "Current state of a command module", typeof(CommandControlState), new (Enum value, string description)[] {
+                        (CommandControlState.Disabled, "Command module disabled."),
+                        (CommandControlState.NotEnoughCrew, "Command module has not enough crew."),
+                        (CommandControlState.NotEnoughResources, "Command module has not resource crew."),
+                        (CommandControlState.NoCommNetConnection, "Command module has no comm net connection."),
+                        (CommandControlState.Hibernating, "Command module is hibernating."),
+                        (CommandControlState.FullyFunctional, "Command module is functional."),
+                    }),
                 });
 
             BindingGenerator.RegisterTypeMapping(typeof(FlightCtrlState),
