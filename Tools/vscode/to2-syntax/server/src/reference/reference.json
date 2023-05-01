@@ -1765,6 +1765,16 @@
         {
           "kind": "Standard",
           "module": "ksp::vessel",
+          "name": "CommandControlState"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "CommandControlStateConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
           "name": "FlightCtrlState"
         },
         {
@@ -1806,6 +1816,11 @@
           "kind": "Standard",
           "module": "ksp::vessel",
           "name": "ModuleAirIntake"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleCommand"
         },
         {
           "kind": "Standard",
@@ -3070,6 +3085,16 @@
         {
           "kind": "Standard",
           "module": "ksp::vessel",
+          "name": "CommandControlState"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "CommandControlStateConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
           "name": "FlightCtrlState"
         },
         {
@@ -3111,6 +3136,11 @@
           "kind": "Standard",
           "module": "ksp::vessel",
           "name": "ModuleAirIntake"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleCommand"
         },
         {
           "kind": "Standard",
@@ -12026,6 +12056,16 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "CommandControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "CommandControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "FlightCtrlState"
             },
             {
@@ -12067,6 +12107,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleCommand"
             },
             {
               "kind": "Standard",
@@ -14334,6 +14379,16 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "CommandControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "CommandControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "FlightCtrlState"
             },
             {
@@ -14375,6 +14430,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleCommand"
             },
             {
               "kind": "Standard",
@@ -15706,6 +15766,16 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "CommandControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "CommandControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "FlightCtrlState"
             },
             {
@@ -15747,6 +15817,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleCommand"
             },
             {
               "kind": "Standard",
@@ -17098,6 +17173,16 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "CommandControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "CommandControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "FlightCtrlState"
             },
             {
@@ -17139,6 +17224,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleCommand"
             },
             {
               "kind": "Standard",
@@ -18470,6 +18560,16 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "CommandControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "CommandControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "FlightCtrlState"
             },
             {
@@ -18511,6 +18611,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleCommand"
             },
             {
               "kind": "Standard",
@@ -19852,6 +19957,16 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "CommandControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "CommandControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "FlightCtrlState"
             },
             {
@@ -19893,6 +20008,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleCommand"
             },
             {
               "kind": "Standard",
@@ -21324,6 +21444,16 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "CommandControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "CommandControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "FlightCtrlState"
             },
             {
@@ -21365,6 +21495,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleCommand"
             },
             {
               "kind": "Standard",
@@ -22746,6 +22881,16 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "CommandControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "CommandControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "FlightCtrlState"
             },
             {
@@ -22787,6 +22932,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleCommand"
             },
             {
               "kind": "Standard",
@@ -24128,6 +24278,16 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "CommandControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "CommandControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "FlightCtrlState"
             },
             {
@@ -24169,6 +24329,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleCommand"
             },
             {
               "kind": "Standard",
@@ -25530,6 +25695,16 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "CommandControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "CommandControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "FlightCtrlState"
             },
             {
@@ -25571,6 +25746,1438 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleCommand"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleControlSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDockingNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleEngine"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Staging"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Targetable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Vessel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselDeltaV"
+            },
+            {
+              "kind": "Record",
+              "names": [
+                "acc_pitch",
+                "acc_roll",
+                "acc_yaw",
+                "adjust_torque",
+                "angular_acceleration",
+                "center_of_mass",
+                "control_torque",
+                "enable_torque_adjust",
+                "max_pitch_omega",
+                "max_roll_omega",
+                "max_stopping_time",
+                "max_yaw_omega",
+                "measured_torque",
+                "moment_of_inertia",
+                "omega",
+                "phi",
+                "phi_pitch",
+                "phi_roll",
+                "phi_yaw",
+                "pitch_pi",
+                "pitch_rate_pi",
+                "pitch_torque_adjust",
+                "pitch_torque_calc",
+                "pitch_torque_factor",
+                "raw_torque",
+                "roll_control_angle_range",
+                "roll_pi",
+                "roll_rate_pi",
+                "roll_torque_adjust",
+                "roll_torque_calc",
+                "roll_torque_factor",
+                "target_direction",
+                "target_forward",
+                "target_rot",
+                "target_starboard",
+                "target_top",
+                "tgt_pitch_omega",
+                "tgt_pitch_torque",
+                "tgt_roll_omega",
+                "tgt_roll_torque",
+                "tgt_yaw_omega",
+                "tgt_yaw_torque",
+                "vessel",
+                "yaw_pi",
+                "yaw_rate_pi",
+                "yaw_torque_adjust",
+                "yaw_torque_calc",
+                "yaw_torque_factor"
+              ],
+              "parameters": [
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "bool"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::control",
+                  "name": "TorquePI"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::control",
+                  "name": "PIDLoop"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::control",
+                  "name": "MovingAverage"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::control",
+                  "name": "TorquePI"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::control",
+                  "name": "PIDLoop"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::control",
+                  "name": "MovingAverage"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "GlobalDirection"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Direction"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::vessel",
+                  "name": "Vessel"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::control",
+                  "name": "TorquePI"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::control",
+                  "name": "PIDLoop"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::control",
+                  "name": "MovingAverage"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                }
+              ]
+            },
+            {
+              "kind": "Record",
+              "names": [
+                "controller",
+                "manager"
+              ],
+              "parameters": [
+                {
+                  "kind": "Record",
+                  "names": [
+                    "acc_pitch",
+                    "acc_roll",
+                    "acc_yaw",
+                    "adjust_torque",
+                    "angular_acceleration",
+                    "center_of_mass",
+                    "control_torque",
+                    "enable_torque_adjust",
+                    "max_pitch_omega",
+                    "max_roll_omega",
+                    "max_stopping_time",
+                    "max_yaw_omega",
+                    "measured_torque",
+                    "moment_of_inertia",
+                    "omega",
+                    "phi",
+                    "phi_pitch",
+                    "phi_roll",
+                    "phi_yaw",
+                    "pitch_pi",
+                    "pitch_rate_pi",
+                    "pitch_torque_adjust",
+                    "pitch_torque_calc",
+                    "pitch_torque_factor",
+                    "raw_torque",
+                    "roll_control_angle_range",
+                    "roll_pi",
+                    "roll_rate_pi",
+                    "roll_torque_adjust",
+                    "roll_torque_calc",
+                    "roll_torque_factor",
+                    "target_direction",
+                    "target_forward",
+                    "target_rot",
+                    "target_starboard",
+                    "target_top",
+                    "tgt_pitch_omega",
+                    "tgt_pitch_torque",
+                    "tgt_roll_omega",
+                    "tgt_roll_torque",
+                    "tgt_yaw_omega",
+                    "tgt_yaw_torque",
+                    "vessel",
+                    "yaw_pi",
+                    "yaw_rate_pi",
+                    "yaw_torque_adjust",
+                    "yaw_torque_calc",
+                    "yaw_torque_factor"
+                  ],
+                  "parameters": [
+                    {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "Vec3"
+                    },
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "Vec3"
+                    },
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "Vec3"
+                    },
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "Vec3"
+                    },
+                    {
+                      "kind": "Builtin",
+                      "name": "bool"
+                    },
+                    {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "Vec3"
+                    },
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "Vec3"
+                    },
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "Vec3"
+                    },
+                    {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::control",
+                      "name": "TorquePI"
+                    },
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::control",
+                      "name": "PIDLoop"
+                    },
+                    {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::control",
+                      "name": "MovingAverage"
+                    },
+                    {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "Vec3"
+                    },
+                    {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::control",
+                      "name": "TorquePI"
+                    },
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::control",
+                      "name": "PIDLoop"
+                    },
+                    {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::control",
+                      "name": "MovingAverage"
+                    },
+                    {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "GlobalDirection"
+                    },
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "Vec3"
+                    },
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "Direction"
+                    },
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "Vec3"
+                    },
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "Vec3"
+                    },
+                    {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::vessel",
+                      "name": "Vessel"
+                    },
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::control",
+                      "name": "TorquePI"
+                    },
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::control",
+                      "name": "PIDLoop"
+                    },
+                    {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::control",
+                      "name": "MovingAverage"
+                    },
+                    {
+                      "kind": "Builtin",
+                      "name": "float"
+                    }
+                  ]
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::control",
+                  "name": "SteeringManager"
+                }
+              ]
+            },
+            {
+              "kind": "Record",
+              "names": [
+                "aerobraked_radius",
+                "angular_velocity",
+                "celestial_frame",
+                "decel_radius",
+                "epoch",
+                "grav_parameter",
+                "landing_radius",
+                "lat0_lon0_at_start",
+                "lat90_at_start",
+                "lot0_lon90_at_start",
+                "position",
+                "rotation_period",
+                "speed_policy"
+              ],
+              "parameters": [
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "TransformFrame"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "sync fn(ksp::math::Vec3, ksp::math",
+                  "name": "Vec3) -> float"
+                }
+              ]
+            },
+            {
+              "kind": "Record",
+              "names": [
+                "brake_time",
+                "end_latitude",
+                "end_longitude",
+                "end_time",
+                "path"
+              ],
+              "parameters": [
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Array",
+                  "parameters": [
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "GlobalPosition"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "Record",
+              "names": [
+                "body",
+                "deltav_expended",
+                "dt",
+                "max_thrust_accel",
+                "min_dt",
+                "start_dt",
+                "steps",
+                "t",
+                "v",
+                "x"
+              ],
+              "parameters": [
+                {
+                  "kind": "Record",
+                  "names": [
+                    "aerobraked_radius",
+                    "angular_velocity",
+                    "celestial_frame",
+                    "decel_radius",
+                    "epoch",
+                    "grav_parameter",
+                    "landing_radius",
+                    "lat0_lon0_at_start",
+                    "lat90_at_start",
+                    "lot0_lon90_at_start",
+                    "position",
+                    "rotation_period",
+                    "speed_policy"
+                  ],
+                  "parameters": [
+                    {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "Vec3"
+                    },
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "TransformFrame"
+                    },
+                    {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "Vec3"
+                    },
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "Vec3"
+                    },
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "Vec3"
+                    },
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "Vec3"
+                    },
+                    {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    {
+                      "kind": "Standard",
+                      "module": "sync fn(ksp::math::Vec3, ksp::math",
+                      "name": "Vec3) -> float"
+                    }
+                  ]
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "int"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "sync fn(ksp::math::Vec3, ksp::math",
+              "name": "Vec3) -> float"
+            }
+          ]
+        },
+        "CommandControlState": {
+          "name": "CommandControlState",
+          "description": "Current state of a command module",
+          "fields": {},
+          "methods": {
+            "to_string": {
+              "isAsync": false,
+              "name": "to_string",
+              "description": "String representation of the number",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            }
+          },
+          "suffixOperators": {
+            "==": [
+              {
+                "op": "==",
+                "otherType": {
+                  "kind": "Standard",
+                  "module": "ksp::vessel",
+                  "name": "CommandControlState"
+                },
+                "resultType": {
+                  "kind": "Builtin",
+                  "name": "bool"
+                }
+              }
+            ],
+            "!=": [
+              {
+                "op": "!=",
+                "otherType": {
+                  "kind": "Standard",
+                  "module": "ksp::vessel",
+                  "name": "CommandControlState"
+                },
+                "resultType": {
+                  "kind": "Builtin",
+                  "name": "bool"
+                }
+              }
+            ]
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "CommandControlStateConstants": {
+          "name": "CommandControlStateConstants",
+          "description": "",
+          "fields": {
+            "None": {
+              "name": "None",
+              "description": "",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "CommandControlState"
+              }
+            },
+            "Disabled": {
+              "name": "Disabled",
+              "description": "Command module disabled.",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "CommandControlState"
+              }
+            },
+            "NotEnoughCrew": {
+              "name": "NotEnoughCrew",
+              "description": "Command module has not enough crew.",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "CommandControlState"
+              }
+            },
+            "NotEnoughResources": {
+              "name": "NotEnoughResources",
+              "description": "Command module has not resource crew.",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "CommandControlState"
+              }
+            },
+            "NoCommNetConnection": {
+              "name": "NoCommNetConnection",
+              "description": "Command module has no comm net connection.",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "CommandControlState"
+              }
+            },
+            "Hibernating": {
+              "name": "Hibernating",
+              "description": "Command module is hibernating.",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "CommandControlState"
+              }
+            },
+            "FullyFunctional": {
+              "name": "FullyFunctional",
+              "description": "Command module is functional.",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "CommandControlState"
+              }
+            }
+          },
+          "methods": {
+            "from_string": {
+              "isAsync": false,
+              "name": "from_string",
+              "description": "Parse from string",
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "string"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "CommandControlState"
+                  }
+                ]
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": [
+            {
+              "kind": "Builtin",
+              "name": "Unit"
+            },
+            {
+              "kind": "Builtin",
+              "name": "bool"
+            },
+            {
+              "kind": "Builtin",
+              "name": "int"
+            },
+            {
+              "kind": "Builtin",
+              "name": "float"
+            },
+            {
+              "kind": "Builtin",
+              "name": "string"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Range"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "ArrayBuilder<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Cell<T>"
+            },
+            {
+              "kind": "Option",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Result",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "R"
+                },
+                {
+                  "kind": "Generic",
+                  "name": "E"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::background",
+              "name": "Task<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::math",
+              "name": "Random"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "Console"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "RgbaColor"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "MovingAverage"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "PIDLoop"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "RCSTranslateManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "SteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "ThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "TorquePI"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelSteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugBillboard"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "Debug"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "GroundMarker"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugPath"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec3"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Direction"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Matrix2x2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalAngularVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalPosition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "TransformFrame"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Body"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "GeoCoordinates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Orbit"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirectionConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceContainer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceData"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransfer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransferEntry"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::telemetry",
+              "name": "TimeSeries"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStatesConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "CommandControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "FlightCtrlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ActionGroups"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Autopilot"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "StageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Maneuver"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ManeuverNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleCommand"
             },
             {
               "kind": "Standard",
@@ -27428,6 +29035,303 @@
           "assignableFromAny": false,
           "assignableFrom": []
         },
+        "ModuleCommand": {
+          "name": "ModuleCommand",
+          "fields": {
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            },
+            "control_state": {
+              "name": "control_state",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "CommandControlState"
+              }
+            },
+            "vessel": {
+              "name": "vessel",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "Vessel"
+              }
+            },
+            "global_position": {
+              "name": "global_position",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "GlobalPosition"
+              }
+            },
+            "global_rotation": {
+              "name": "global_rotation",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "GlobalDirection"
+              }
+            },
+            "is_engine": {
+              "name": "is_engine",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "activation_stage": {
+              "name": "activation_stage",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "int"
+              }
+            },
+            "decouple_stage": {
+              "name": "decouple_stage",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "int"
+              }
+            },
+            "resources": {
+              "name": "resources",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::resource",
+                "name": "ResourceContainer"
+              }
+            },
+            "air_intake": {
+              "name": "air_intake",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ModuleAirIntake"
+                  }
+                ]
+              }
+            },
+            "docking_node": {
+              "name": "docking_node",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ModuleDockingNode"
+                  }
+                ]
+              }
+            },
+            "engine_module": {
+              "name": "engine_module",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ModuleEngine"
+                  }
+                ]
+              }
+            },
+            "control_surface": {
+              "name": "control_surface",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ModuleControlSurface"
+                  }
+                ]
+              }
+            },
+            "command_module": {
+              "name": "command_module",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ModuleCommand"
+                  }
+                ]
+              }
+            },
+            "is_solar_panel": {
+              "name": "is_solar_panel",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "solar_panel": {
+              "name": "solar_panel",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ModuleSolarPanel"
+                  }
+                ]
+              }
+            },
+            "is_fairing": {
+              "name": "is_fairing",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "fairing": {
+              "name": "fairing",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ModuleFairing"
+                  }
+                ]
+              }
+            },
+            "is_deployable": {
+              "name": "is_deployable",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "deployable": {
+              "name": "deployable",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ModuleDeployable"
+                  }
+                ]
+              }
+            },
+            "is_decoupler": {
+              "name": "is_decoupler",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "decoupler": {
+              "name": "decoupler",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ModuleDecoupler"
+                  }
+                ]
+              }
+            },
+            "is_launch_clamp": {
+              "name": "is_launch_clamp",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "launch_clamp": {
+              "name": "launch_clamp",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ModuleLaunchClamp"
+                  }
+                ]
+              }
+            },
+            "is_parachute": {
+              "name": "is_parachute",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "parachute": {
+              "name": "parachute",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ModuleParachute"
+                  }
+                ]
+              }
+            }
+          },
+          "methods": {
+            "control_from_here": {
+              "isAsync": false,
+              "name": "control_from_here",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
         "ModuleControlSurface": {
           "name": "ModuleControlSurface",
           "fields": {
@@ -27766,6 +29670,20 @@
                 ]
               }
             },
+            "command_module": {
+              "name": "command_module",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ModuleCommand"
+                  }
+                ]
+              }
+            },
             "is_solar_panel": {
               "name": "is_solar_panel",
               "readOnly": true,
@@ -27899,7 +29817,17 @@
               }
             }
           },
-          "methods": {},
+          "methods": {
+            "control_from_here": {
+              "isAsync": false,
+              "name": "control_from_here",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
+            }
+          },
           "assignableFromAny": false,
           "assignableFrom": []
         },
@@ -28401,6 +30329,20 @@
                 ]
               }
             },
+            "command_module": {
+              "name": "command_module",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ModuleCommand"
+                  }
+                ]
+              }
+            },
             "is_solar_panel": {
               "name": "is_solar_panel",
               "readOnly": true,
@@ -28537,6 +30479,11 @@
           "methods": {},
           "assignableFromAny": false,
           "assignableFrom": [
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleCommand"
+            },
             {
               "kind": "Standard",
               "module": "ksp::vessel",
@@ -29242,6 +31189,21 @@
                 ]
               }
             },
+            "command_modules": {
+              "name": "command_modules",
+              "description": "Get a list of all command module parts of the vessel.\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ModuleCommand"
+                  }
+                ]
+              }
+            },
             "docking_nodes": {
               "name": "docking_nodes",
               "description": "Get a list of all docking node parts of the vessel.\n",
@@ -29827,6 +31789,15 @@
             "kind": "Standard",
             "module": "ksp::vessel",
             "name": "DockingStateConstants"
+          }
+        },
+        "CommandControlState": {
+          "name": "CommandControlState",
+          "description": "Current state of a command module",
+          "type": {
+            "kind": "Standard",
+            "module": "ksp::vessel",
+            "name": "CommandControlStateConstants"
           }
         }
       },

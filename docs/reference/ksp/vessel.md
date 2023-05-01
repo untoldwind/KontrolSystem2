@@ -93,6 +93,46 @@ autopilotmodeconstants.from_string ( value : string ) -> Option<ksp::vessel::Aut
 
 Parse from string
 
+### CommandControlState
+
+Current state of a command module
+
+#### Methods
+
+##### to_string
+
+```rust
+commandcontrolstate.to_string ( ) -> string
+```
+
+String representation of the number
+
+### CommandControlStateConstants
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+Disabled | [ksp::vessel::CommandControlState](/reference/ksp/vessel.md#commandcontrolstate) | R/O | Command module disabled.
+FullyFunctional | [ksp::vessel::CommandControlState](/reference/ksp/vessel.md#commandcontrolstate) | R/O | Command module is functional.
+Hibernating | [ksp::vessel::CommandControlState](/reference/ksp/vessel.md#commandcontrolstate) | R/O | Command module is hibernating.
+NoCommNetConnection | [ksp::vessel::CommandControlState](/reference/ksp/vessel.md#commandcontrolstate) | R/O | Command module has no comm net connection.
+None | [ksp::vessel::CommandControlState](/reference/ksp/vessel.md#commandcontrolstate) | R/O | 
+NotEnoughCrew | [ksp::vessel::CommandControlState](/reference/ksp/vessel.md#commandcontrolstate) | R/O | Command module has not enough crew.
+NotEnoughResources | [ksp::vessel::CommandControlState](/reference/ksp/vessel.md#commandcontrolstate) | R/O | Command module has not resource crew.
+
+#### Methods
+
+##### from_string
+
+```rust
+commandcontrolstateconstants.from_string ( value : string ) -> Option<ksp::vessel::CommandControlState>
+```
+
+Parse from string
+
 ### DeltaVSituation
 
 Vessel situation for delta-v calculation
@@ -378,6 +418,69 @@ Name | Type | Read-only | Description
 enabled | bool | R/O | 
 resource_units | float | R/O | 
 
+### ModuleCommand
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+activation_stage | int | R/O | 
+air_intake | Option&lt;[ksp::vessel::ModuleAirIntake](/reference/ksp/vessel.md#moduleairintake)> | R/O | 
+command_module | Option&lt;[ksp::vessel::ModuleCommand](/reference/ksp/vessel.md#modulecommand)> | R/O | 
+control_state | [ksp::vessel::CommandControlState](/reference/ksp/vessel.md#commandcontrolstate) | R/O | 
+control_surface | Option&lt;[ksp::vessel::ModuleControlSurface](/reference/ksp/vessel.md#modulecontrolsurface)> | R/O | 
+decouple_stage | int | R/O | 
+decoupler | Option&lt;[ksp::vessel::ModuleDecoupler](/reference/ksp/vessel.md#moduledecoupler)> | R/O | 
+deployable | Option&lt;[ksp::vessel::ModuleDeployable](/reference/ksp/vessel.md#moduledeployable)> | R/O | 
+docking_node | Option&lt;[ksp::vessel::ModuleDockingNode](/reference/ksp/vessel.md#moduledockingnode)> | R/O | 
+engine_module | Option&lt;[ksp::vessel::ModuleEngine](/reference/ksp/vessel.md#moduleengine)> | R/O | 
+fairing | Option&lt;[ksp::vessel::ModuleFairing](/reference/ksp/vessel.md#modulefairing)> | R/O | 
+global_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | R/O | 
+global_rotation | [ksp::math::GlobalDirection](/reference/ksp/math.md#globaldirection) | R/O | 
+is_decoupler | bool | R/O | 
+is_deployable | bool | R/O | 
+is_engine | bool | R/O | 
+is_fairing | bool | R/O | 
+is_launch_clamp | bool | R/O | 
+is_parachute | bool | R/O | 
+is_solar_panel | bool | R/O | 
+launch_clamp | Option&lt;[ksp::vessel::ModuleLaunchClamp](/reference/ksp/vessel.md#modulelaunchclamp)> | R/O | 
+parachute | Option&lt;[ksp::vessel::ModuleParachute](/reference/ksp/vessel.md#moduleparachute)> | R/O | 
+part_name | string | R/O | 
+resources | [ksp::resource::ResourceContainer](/reference/ksp/resource.md#resourcecontainer) | R/O | 
+solar_panel | Option&lt;[ksp::vessel::ModuleSolarPanel](/reference/ksp/vessel.md#modulesolarpanel)> | R/O | 
+vessel | [ksp::vessel::Vessel](/reference/ksp/vessel.md#vessel) | R/O | 
+
+#### Methods
+
+##### control_from_here
+
+```rust
+modulecommand.control_from_here ( ) -> Unit
+```
+
+
+
+### ModuleControlSurface
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+angle_of_attack | float | R/O | 
+authority_limiter | float | R/W | 
+drag | float | R/O | 
+enable_pitch | bool | R/W | 
+enable_roll | bool | R/W | 
+enable_yaw | bool | R/W | 
+invert_control | bool | R/W | 
+lift | float | R/O | 
+part_name | string | R/O | 
+
 ### ModuleDecoupler
 
 
@@ -433,6 +536,8 @@ Name | Type | Read-only | Description
 --- | --- | --- | ---
 activation_stage | int | R/O | 
 air_intake | Option&lt;[ksp::vessel::ModuleAirIntake](/reference/ksp/vessel.md#moduleairintake)> | R/O | 
+command_module | Option&lt;[ksp::vessel::ModuleCommand](/reference/ksp/vessel.md#modulecommand)> | R/O | 
+control_surface | Option&lt;[ksp::vessel::ModuleControlSurface](/reference/ksp/vessel.md#modulecontrolsurface)> | R/O | 
 decouple_stage | int | R/O | 
 decoupler | Option&lt;[ksp::vessel::ModuleDecoupler](/reference/ksp/vessel.md#moduledecoupler)> | R/O | 
 deployable | Option&lt;[ksp::vessel::ModuleDeployable](/reference/ksp/vessel.md#moduledeployable)> | R/O | 
@@ -458,6 +563,16 @@ resources | [ksp::resource::ResourceContainer](/reference/ksp/resource.md#resour
 solar_panel | Option&lt;[ksp::vessel::ModuleSolarPanel](/reference/ksp/vessel.md#modulesolarpanel)> | R/O | 
 vessel | [ksp::vessel::Vessel](/reference/ksp/vessel.md#vessel) | R/O | 
 
+#### Methods
+
+##### control_from_here
+
+```rust
+moduledockingnode.control_from_here ( ) -> Unit
+```
+
+
+
 ### ModuleEngine
 
 
@@ -473,6 +588,7 @@ engine_modes | [ksp::vessel::EngineMode](/reference/ksp/vessel.md#enginemode)[] 
 has_ignited | bool | R/O | 
 is_flameout | bool | R/O | 
 is_operational | bool | R/O | 
+is_propellant_starved | bool | R/O | 
 is_shutdown | bool | R/O | 
 is_staged | bool | R/O | 
 max_fuel_flow | float | R/O | 
@@ -480,6 +596,7 @@ max_thrust_output_atm | float | R/O |
 max_thrust_output_vac | float | R/O | 
 min_fuel_flow | float | R/O | 
 part_name | string | R/O | 
+real_isp | float | R/O | 
 throttle_min | float | R/O | 
 
 #### Methods
@@ -709,6 +826,8 @@ Name | Type | Read-only | Description
 --- | --- | --- | ---
 activation_stage | int | R/O | 
 air_intake | Option&lt;[ksp::vessel::ModuleAirIntake](/reference/ksp/vessel.md#moduleairintake)> | R/O | 
+command_module | Option&lt;[ksp::vessel::ModuleCommand](/reference/ksp/vessel.md#modulecommand)> | R/O | 
+control_surface | Option&lt;[ksp::vessel::ModuleControlSurface](/reference/ksp/vessel.md#modulecontrolsurface)> | R/O | 
 decouple_stage | int | R/O | 
 decoupler | Option&lt;[ksp::vessel::ModuleDecoupler](/reference/ksp/vessel.md#moduledecoupler)> | R/O | 
 deployable | Option&lt;[ksp::vessel::ModuleDeployable](/reference/ksp/vessel.md#moduledeployable)> | R/O | 
@@ -849,12 +968,14 @@ angular_momentum | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get th
 angular_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get the coordinate angular velocity in the celestial frame of its main body. 
 atmosphere_density | float | R/O | 
 autopilot | [ksp::vessel::Autopilot](/reference/ksp/vessel.md#autopilot) | R/O | Collection of methods to interact with the SAS system of the vessel. 
-available_thrust | float | R/O | Returns the maximum thrust of all engines in vacuum. 
+available_thrust | float | R/O | Returns the maximum thrust of all engines in the current situation of the vessel. 
 body_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/O | The body/rotating reference frame of the vessel. 
 celestial_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/O | The celestial/non-rotating reference frame of the vessel. 
 CoM | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Position of the center of mass of the vessel. 
+command_modules | [ksp::vessel::ModuleCommand](/reference/ksp/vessel.md#modulecommand)[] | R/O | Get a list of all command module parts of the vessel. 
 control_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/O | Reference frame for the current control position. 
 control_status | [ksp::vessel::VesselControlState](/reference/ksp/vessel.md#vesselcontrolstate) | R/O | Current control status of the vessel. 
+control_surfaces | [ksp::vessel::ModuleControlSurface](/reference/ksp/vessel.md#modulecontrolsurface)[] | R/O | Get a list of all control service parts of the vessel. 
 delta_v | [ksp::vessel::VesselDeltaV](/reference/ksp/vessel.md#vesseldeltav) | R/O | Collection of methods to obtain delta-v information of the vessel. 
 docking_nodes | [ksp::vessel::ModuleDockingNode](/reference/ksp/vessel.md#moduledockingnode)[] | R/O | Get a list of all docking node parts of the vessel. 
 dynamic_pressure_kpa | float | R/O | 
@@ -1165,6 +1286,7 @@ Parse from string
 Name | Type | Description
 --- | --- | ---
 AutopilotMode | ksp::vessel::AutopilotModeConstants | Vessel autopilot (SAS) mode
+CommandControlState | ksp::vessel::CommandControlStateConstants | Current state of a command module
 DeltaVSituation | ksp::vessel::DeltaVSituationConstants | Vessel situation for delta-v calculation
 DockingState | ksp::vessel::DockingStateConstants | Current state of a docking node
 EngineType | ksp::vessel::EngineTypeConstants | Engine types

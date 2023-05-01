@@ -6,6 +6,7 @@
 * Fix `vessel.available_thrust` to calculate the thrust in the current situation (i.e. atmosphere/vacuum)
 * Support `+` and `+=` operators for array (append and concat)
 * Add binding for control surfaces (e.g. `vessel.control_surfaces`)
+* Support docking port target
 
 ## 0.3.3.3 -> 0.3.4
 
