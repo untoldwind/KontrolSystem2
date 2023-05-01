@@ -1,6 +1,6 @@
 import { Expression, Node, ValidationError } from ".";
 import { Operator } from "./operator";
-import { BUILTIN_BOOL, TO2Type } from "./to2-type";
+import { BUILTIN_UNIT, TO2Type, UNKNOWN_TYPE } from "./to2-type";
 import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
@@ -15,8 +15,8 @@ export class UnaryPrefix extends Expression {
     super(start, end);
   }
 
-  resultType(): TO2Type {
-    return BUILTIN_BOOL;
+  resultType(context: BlockContext): TO2Type {
+    return this.findOperator(context) ?? UNKNOWN_TYPE;
   }
 
   public reduceNode<T>(
@@ -35,5 +35,13 @@ export class UnaryPrefix extends Expression {
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     this.right.collectSemanticTokens(semanticTokens);
+  }
+
+  private findOperator(context: BlockContext): TO2Type | undefined {
+    const leftType = this.right
+      .resultType(context)
+      .realizedType(context.module);
+
+    return leftType.findPrefixOperator(this.op.value, BUILTIN_UNIT);
   }
 }

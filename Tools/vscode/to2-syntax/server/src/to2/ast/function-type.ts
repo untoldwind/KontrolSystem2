@@ -2,9 +2,9 @@ import { ModuleContext } from "./context";
 import { RealizedType, TO2Type } from "./to2-type";
 
 export class FunctionType implements RealizedType {
-  public isFunction: boolean = true;
-  public name: string;
-  public localName: string;
+  public readonly kind = "Function";
+  public readonly name: string;
+  public readonly localName: string;
 
   constructor(
     public readonly isAsync: boolean,
@@ -33,8 +33,17 @@ export class FunctionType implements RealizedType {
   public findPrefixOperator(): RealizedType | undefined {
     return undefined;
   }
+
+
+  public findField(name: string): TO2Type | undefined {
+    return undefined;
+  }
+
+  public findMethod(name: string): FunctionType | undefined {
+    return undefined;
+  }
 }
 
 export function isFunctionType(node: RealizedType): node is FunctionType {
-  return node.isFunction === true;
+  return node.kind === "Function";
 }

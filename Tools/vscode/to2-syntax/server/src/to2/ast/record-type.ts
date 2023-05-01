@@ -1,8 +1,10 @@
 import { WithPosition } from "../../parser";
 import { ModuleContext } from "./context";
+import { FunctionType } from "./function-type";
 import { RealizedType, TO2Type } from "./to2-type";
 
 export class RecordType implements RealizedType {
+  public readonly kind = "Record";
   public name: string;
   public localName: string;
   public description: string;
@@ -29,4 +31,16 @@ export class RecordType implements RealizedType {
   public findPrefixOperator(): RealizedType | undefined {
     return undefined;
   }
+
+  public findField(name: string): TO2Type | undefined {
+    return undefined;
+  }
+
+  public findMethod(name: string): FunctionType | undefined {
+    return undefined;
+  }
+}
+
+export function isRecordType(node: RealizedType): node is RecordType {
+  return node.kind === "Record";
 }

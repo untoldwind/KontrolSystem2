@@ -51,11 +51,11 @@
           "parameters": [
             {
               "kind": "Generic",
-              "name": "T"
+              "name": "R"
             },
             {
               "kind": "Generic",
-              "name": "U"
+              "name": "E"
             }
           ]
         },
@@ -2547,6 +2547,9 @@
     "Option": {
       "name": "Option",
       "description": "",
+      "genericParameters": [
+        "T"
+      ],
       "fields": {
         "defined": {
           "name": "defined",
@@ -2716,11 +2719,11 @@
           "parameters": [
             {
               "kind": "Generic",
-              "name": "T"
+              "name": "R"
             },
             {
               "kind": "Generic",
-              "name": "U"
+              "name": "E"
             }
           ]
         },
@@ -3929,6 +3932,10 @@
     "Result": {
       "name": "Result",
       "description": "",
+      "genericParameters": [
+        "R",
+        "E"
+      ],
       "fields": {
         "success": {
           "name": "success",
@@ -3945,7 +3952,7 @@
           "readOnly": true,
           "type": {
             "kind": "Generic",
-            "name": "T"
+            "name": "R"
           }
         },
         "error": {
@@ -3954,7 +3961,7 @@
           "readOnly": true,
           "type": {
             "kind": "Generic",
-            "name": "U"
+            "name": "E"
           }
         }
       },
@@ -3969,7 +3976,7 @@
             },
             "resultType": {
               "kind": "Generic",
-              "name": "T"
+              "name": "R"
             }
           }
         ]
@@ -12935,11 +12942,11 @@
               "parameters": [
                 {
                   "kind": "Generic",
-                  "name": "T"
+                  "name": "R"
                 },
                 {
                   "kind": "Generic",
-                  "name": "U"
+                  "name": "E"
                 }
               ]
             },
@@ -15230,11 +15237,11 @@
               "parameters": [
                 {
                   "kind": "Generic",
-                  "name": "T"
+                  "name": "R"
                 },
                 {
                   "kind": "Generic",
-                  "name": "U"
+                  "name": "E"
                 }
               ]
             },
@@ -16595,11 +16602,11 @@
               "parameters": [
                 {
                   "kind": "Generic",
-                  "name": "T"
+                  "name": "R"
                 },
                 {
                   "kind": "Generic",
-                  "name": "U"
+                  "name": "E"
                 }
               ]
             },
@@ -17980,11 +17987,11 @@
               "parameters": [
                 {
                   "kind": "Generic",
-                  "name": "T"
+                  "name": "R"
                 },
                 {
                   "kind": "Generic",
-                  "name": "U"
+                  "name": "E"
                 }
               ]
             },
@@ -19345,11 +19352,11 @@
               "parameters": [
                 {
                   "kind": "Generic",
-                  "name": "T"
+                  "name": "R"
                 },
                 {
                   "kind": "Generic",
-                  "name": "U"
+                  "name": "E"
                 }
               ]
             },
@@ -20720,11 +20727,11 @@
               "parameters": [
                 {
                   "kind": "Generic",
-                  "name": "T"
+                  "name": "R"
                 },
                 {
                   "kind": "Generic",
-                  "name": "U"
+                  "name": "E"
                 }
               ]
             },
@@ -22185,11 +22192,11 @@
               "parameters": [
                 {
                   "kind": "Generic",
-                  "name": "T"
+                  "name": "R"
                 },
                 {
                   "kind": "Generic",
-                  "name": "U"
+                  "name": "E"
                 }
               ]
             },
@@ -23600,11 +23607,11 @@
               "parameters": [
                 {
                   "kind": "Generic",
-                  "name": "T"
+                  "name": "R"
                 },
                 {
                   "kind": "Generic",
-                  "name": "U"
+                  "name": "E"
                 }
               ]
             },
@@ -24975,11 +24982,11 @@
               "parameters": [
                 {
                   "kind": "Generic",
-                  "name": "T"
+                  "name": "R"
                 },
                 {
                   "kind": "Generic",
-                  "name": "U"
+                  "name": "E"
                 }
               ]
             },
@@ -26370,11 +26377,11 @@
               "parameters": [
                 {
                   "kind": "Generic",
-                  "name": "T"
+                  "name": "R"
                 },
                 {
                   "kind": "Generic",
-                  "name": "U"
+                  "name": "E"
                 }
               ]
             },

@@ -1,6 +1,12 @@
 import { REFERENCE, TypeRef, TypeReference } from "../../reference";
+import { ArrayType } from "./array-type";
 import { ModuleContext } from "./context";
+import { FunctionType } from "./function-type";
 import { Operator } from "./operator";
+import { OptionType } from "./option-type";
+import { RecordType } from "./record-type";
+import { ResultType } from "./result-type";
+import { TupleType } from "./tuple-type";
 
 export interface TO2Type {
   name: string;
@@ -10,7 +16,15 @@ export interface TO2Type {
 }
 
 export interface RealizedType extends TO2Type {
-  isFunction?: boolean;
+  kind:
+    | "Unknown"
+    | "Standard"
+    | "Function"
+    | "Array"
+    | "Tuple"
+    | "Record"
+    | "Result"
+    | "Option";
   description: string;
 
   isAssignableFrom(otherType: RealizedType): boolean;
@@ -18,15 +32,17 @@ export interface RealizedType extends TO2Type {
   findSuffixOperator(
     op: Operator,
     rightType: RealizedType
-  ): RealizedType | undefined;
+  ): TO2Type | undefined;
 
-  findPrefixOperator(
-    op: Operator,
-    leftType: RealizedType
-  ): RealizedType | undefined;
+  findPrefixOperator(op: Operator, leftType: RealizedType): TO2Type | undefined;
+
+  findField(name: string): TO2Type | undefined;
+
+  findMethod(name: string): FunctionType | undefined;
 }
 
 export class ReferencedType implements RealizedType {
+  public readonly kind = "Standard";
   public readonly name: string;
   public readonly localName: string;
   public readonly description: string;
@@ -57,7 +73,7 @@ export class ReferencedType implements RealizedType {
   public findSuffixOperator(
     op: Operator,
     rightType: RealizedType
-  ): RealizedType | undefined {
+  ): TO2Type | undefined {
     const opRef = this.typeReference.suffixOperators?.[op]?.find((opRef) =>
       resolveTypeRef(opRef.otherType)?.isAssignableFrom(rightType)
     );
@@ -68,12 +84,34 @@ export class ReferencedType implements RealizedType {
   public findPrefixOperator(
     op: Operator,
     leftType: RealizedType
-  ): RealizedType | undefined {
+  ): TO2Type | undefined {
     const opRef = this.typeReference.suffixOperators?.[op]?.find((opRef) =>
       resolveTypeRef(opRef.otherType)?.isAssignableFrom(leftType)
     );
 
     return opRef ? resolveTypeRef(opRef.resultType) : undefined;
+  }
+
+  public findField(name: string): TO2Type | undefined {
+    const fieldReference = this.typeReference.fields[name];
+    if (!fieldReference) return undefined;
+
+    return resolveTypeRef(fieldReference.type);
+  }
+
+  public findMethod(name: string): FunctionType | undefined {
+    const methodReference = this.typeReference.methods[name];
+    if (!methodReference) return undefined;
+
+    return new FunctionType(
+      methodReference.isAsync,
+      methodReference.parameters.map((paramRef) => [
+        paramRef.name,
+        resolveTypeRef(paramRef.type) ?? UNKNOWN_TYPE,
+      ]),
+      resolveTypeRef(methodReference.returnType) ?? UNKNOWN_TYPE,
+      methodReference.description
+    );
   }
 }
 
@@ -92,6 +130,7 @@ const referencedTypes: Record<string, ReferencedType> = [
 }, {} as Record<string, ReferencedType>);
 
 export const UNKNOWN_TYPE: RealizedType = {
+  kind: "Unknown",
   name: "<unknown>",
   localName: "<unknown>",
   description: "Undeterminded type",
@@ -109,6 +148,14 @@ export const UNKNOWN_TYPE: RealizedType = {
   },
 
   findPrefixOperator() {
+    return undefined;
+  },
+
+  findField() {
+    return undefined;
+  },
+
+  findMethod() {
     return undefined;
   },
 };
@@ -135,5 +182,29 @@ export function resolveTypeRef(typeRef: TypeRef): RealizedType | undefined {
     case "Generic":
     case "Standard":
       return findLibraryType([typeRef.module, typeRef.name], []);
+    case "Array":
+      return new ArrayType(
+        resolveTypeRef(typeRef.parameters[0]) ?? UNKNOWN_TYPE
+      );
+    case "Option":
+      return new OptionType(
+        resolveTypeRef(typeRef.parameters[0]) ?? UNKNOWN_TYPE
+      );
+    case "Result":
+      return new ResultType(
+        resolveTypeRef(typeRef.parameters[0]) ?? UNKNOWN_TYPE,
+        resolveTypeRef(typeRef.parameters[1]) ?? UNKNOWN_TYPE
+      );
+    case "Tuple":
+      return new TupleType(
+        typeRef.parameters.map((param) => resolveTypeRef(param) ?? UNKNOWN_TYPE)
+      );
+    case "Record":
+      return new RecordType(
+        typeRef.parameters.map((param, idx) => [
+          typeRef.names[idx],
+          resolveTypeRef(param) ?? UNKNOWN_TYPE,
+        ])
+      );
   }
 }

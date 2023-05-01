@@ -1,10 +1,18 @@
 import { ModuleContext } from "./context";
-import { RealizedType, TO2Type } from "./to2-type";
+import { FunctionType } from "./function-type";
+import { ResultType } from "./result-type";
+import {
+  BUILTIN_BOOL,
+  BUILTIN_STRING,
+  RealizedType,
+  TO2Type,
+} from "./to2-type";
 
 export class OptionType implements RealizedType {
-  public name: string;
-  public localName: string;
-  public description: string;
+  public readonly kind = "Option";
+  public readonly name: string;
+  public readonly localName: string;
+  public readonly description: string;
 
   constructor(public readonly elementType: TO2Type) {
     this.name = this.localName = `Option<${elementType}>`;
@@ -25,5 +33,29 @@ export class OptionType implements RealizedType {
 
   public findPrefixOperator(): RealizedType | undefined {
     return undefined;
+  }
+
+  public findField(name: string): TO2Type | undefined {
+    switch (name) {
+      case "defined":
+        return BUILTIN_BOOL;
+      case "value":
+        return this.elementType;
+      default:
+        return undefined;
+    }
+  }
+
+  public findMethod(name: string): FunctionType | undefined {
+    switch (name) {
+      case "ok_or":
+        return new FunctionType(
+          false,
+          [["error", BUILTIN_STRING]],
+          new ResultType(this.elementType, BUILTIN_STRING)
+        );
+      default:
+        return undefined;
+    }
   }
 }

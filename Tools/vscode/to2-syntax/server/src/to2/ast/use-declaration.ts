@@ -87,6 +87,21 @@ export class UseDeclaration implements Node, ModuleItem {
               context.mappedFunctions.set(name.value, importedFunction);
             }
           }
+          if (importedType) {
+            if (context.typeAliases.has(name.value)) {
+              errors.push({
+                status: "error",
+                message: `Duplicate type alias ${name.value}`,
+                start: this.start,
+                end: this.end,
+              });
+            } else {
+              context.typeAliases.set(
+                name.value,
+                importedType.realizedType(context)
+              );
+            }
+          }
         }
       }
     }

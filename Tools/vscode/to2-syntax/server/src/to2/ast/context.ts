@@ -7,6 +7,7 @@ export class ModuleContext {
   public readonly mappedConstants: Map<string, TO2Type> = new Map();
   public readonly mappedFunctions: Map<string, FunctionType> = new Map();
   public readonly moduleAliases: Map<string, string[]> = new Map();
+  public readonly typeAliases: Map<string, RealizedType> = new Map();
 
   constructor(public readonly registry: Registry) {}
 
@@ -14,6 +15,9 @@ export class ModuleContext {
     namePath: string[],
     typeArguments: TO2Type[]
   ): RealizedType | undefined {
+    if (namePath.length === 1 && this.typeAliases.has(namePath[0])) {
+      return this.typeAliases.get(namePath[0]);
+    }
     return findLibraryType(namePath, typeArguments);
   }
 

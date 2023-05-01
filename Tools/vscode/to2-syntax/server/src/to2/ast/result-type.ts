@@ -1,10 +1,13 @@
 import { ModuleContext } from "./context";
+import { FunctionType } from "./function-type";
+import { Operator } from "./operator";
 import { RealizedType, TO2Type } from "./to2-type";
 
 export class ResultType implements RealizedType {
-  public name: string;
-  public localName: string;
-  public description: string;
+  public readonly kind = "Result";
+  public readonly name: string;
+  public readonly localName: string;
+  public readonly description: string;
 
   constructor(
     public readonly successType: TO2Type,
@@ -22,11 +25,19 @@ export class ResultType implements RealizedType {
     return this;
   }
 
-  public findSuffixOperator(): RealizedType | undefined {
-    return undefined;
+  findSuffixOperator(op: Operator): TO2Type | undefined {
+    return op === "?" ? this.successType : this.errorType;
   }
 
   public findPrefixOperator(): RealizedType | undefined {
+    return undefined;
+  }
+
+  public findField(name: string): TO2Type | undefined {
+    return undefined;
+  }
+
+  public findMethod(name: string): FunctionType | undefined {
     return undefined;
   }
 }

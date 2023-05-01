@@ -1,7 +1,9 @@
 import { ModuleContext } from "./context";
+import { FunctionType } from "./function-type";
 import { RealizedType, TO2Type } from "./to2-type";
 
 export class TupleType implements RealizedType {
+  public readonly kind = "Tuple";
   public name: string;
   public localName: string;
   public description: string;
@@ -28,4 +30,16 @@ export class TupleType implements RealizedType {
   public findPrefixOperator(): RealizedType | undefined {
     return undefined;
   }
+
+  public findField(name: string): TO2Type | undefined {
+    return undefined;
+  }
+
+  public findMethod(name: string): FunctionType | undefined {
+    return undefined;
+  }
+}
+
+export function isTupleType(node: RealizedType): node is TupleType {
+  return node.kind === "Tuple";
 }

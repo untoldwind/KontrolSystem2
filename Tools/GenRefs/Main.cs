@@ -39,7 +39,7 @@ namespace KontrolSystem.GenRefs {
                          BuiltinType.Unit, BuiltinType.Bool, BuiltinType.Int,
                          BuiltinType.Float, BuiltinType.String, BuiltinType.Range, BuiltinType.ArrayBuilder,
                          BuiltinType.Cell, new OptionType(new GenericParameter("T")),
-                         new ResultType(new GenericParameter("T"), new GenericParameter("U"))
+                         new ResultType(new GenericParameter("R"), new GenericParameter("E"))
                      }) {
                 Builtin.Add(type.LocalName, new TypeReference(moduleContext, type));
             }
@@ -116,7 +116,14 @@ namespace KontrolSystem.GenRefs {
             Description = type.Description;
             Fields = new Dictionary<string, FieldReference>();
             Methods = new Dictionary<string, FunctionReference>();
-            GenericParameters = type.GenericParameters.Length > 0 ? type.GenericParameters : null;
+            if (type is ResultType)
+                GenericParameters = new [] { "R", "E" };
+            else if(type is OptionType){
+                GenericParameters = new [] { "T" };
+            } else {
+                GenericParameters = type.GenericParameters.Length > 0 ? type.GenericParameters : null;
+            }
+
             AssignableFrom = new List<TypeRef>();
 
             foreach (var field in type.DeclaredFields) {

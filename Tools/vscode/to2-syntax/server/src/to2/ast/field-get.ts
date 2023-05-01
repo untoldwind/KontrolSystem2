@@ -1,5 +1,5 @@
 import { Expression, Node, ValidationError } from ".";
-import { BUILTIN_UNIT, TO2Type } from "./to2-type";
+import { TO2Type, UNKNOWN_TYPE } from "./to2-type";
 import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
@@ -15,7 +15,7 @@ export class FieldGet extends Expression {
   }
 
   public resultType(context: BlockContext): TO2Type {
-    return BUILTIN_UNIT;
+    return this.findField(context) ?? UNKNOWN_TYPE;
   }
 
   public reduceNode<T>(
@@ -30,6 +30,17 @@ export class FieldGet extends Expression {
 
     errors.push(...this.target.validateBlock(context));
 
+    if (errors.length === 0 && !this.findField(context)) {
+      errors.push({
+        status: "error",
+        message: `Undefined field ${this.fieldName.value} for type ${
+          this.target.resultType(context).name
+        }`,
+        start: this.fieldName.start,
+        end: this.fieldName.end,
+      });
+    }
+
     return errors;
   }
 
@@ -40,5 +51,13 @@ export class FieldGet extends Expression {
       start: this.fieldName.start,
       length: this.fieldName.end.offset - this.fieldName.start.offset,
     });
+  }
+
+  private findField(context: BlockContext): TO2Type | undefined {
+    const targetType = this.target
+      .resultType(context)
+      .realizedType(context.module);
+
+    return targetType.findField(this.fieldName.value);
   }
 }

@@ -3,7 +3,7 @@ import {
   DeclarationParameterOrPlaceholder,
   isDeclarationParameter,
 } from "./variable-declaration";
-import { TO2Type } from "./to2-type";
+import { TO2Type, UNKNOWN_TYPE } from "./to2-type";
 import { InputPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
@@ -16,7 +16,7 @@ export class TupleDeconstructDeclaration implements Node, BlockItem {
     public readonly start: InputPosition,
     public readonly end: InputPosition
   ) {}
-  
+
   public resultType(context: BlockContext): TO2Type {
     return this.expression.resultType(context);
   }
@@ -31,7 +31,9 @@ export class TupleDeconstructDeclaration implements Node, BlockItem {
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
-    for (const declaration of this.declarations) {
+    const resultType = this.resultType(context).realizedType(context.module);
+    for (let i = 0; i < this.declarations.length; i++) {
+      const declaration = this.declarations[i];
       if (isDeclarationParameter(declaration)) {
         if (context.localVariables.has(declaration.target.value)) {
           errors.push({
@@ -40,10 +42,15 @@ export class TupleDeconstructDeclaration implements Node, BlockItem {
             start: declaration.target.start,
             end: declaration.target.end,
           });
+        } else if (declaration.type) {
+          context.localVariables.set(
+            declaration.target.value,
+            declaration.type
+          );
         } else {
           context.localVariables.set(
             declaration.target.value,
-            this.resultType(context)
+            declaration.extractedType(resultType, i) ?? UNKNOWN_TYPE
           );
         }
       }

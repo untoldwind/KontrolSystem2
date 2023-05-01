@@ -1,8 +1,10 @@
 import { BlockItem, Expression, Node, ValidationError } from ".";
-import { TO2Type } from "./to2-type";
+import { RealizedType, TO2Type, UNKNOWN_TYPE } from "./to2-type";
 import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
+import { isTupleType } from "./tuple-type";
+import { isRecordType } from "./record-type";
 
 export class DeclarationParameter {
   constructor(
@@ -10,6 +12,18 @@ export class DeclarationParameter {
     public readonly source: string | undefined,
     public readonly type: TO2Type | undefined
   ) {}
+
+  extractedType(from: RealizedType, idx: number): TO2Type | undefined {
+    if (isTupleType(from)) {
+      return idx < from.itemTypes.length ? from.itemTypes[idx] : undefined;
+    }
+    if (isRecordType(from)) {
+      if (this.source)
+        return from.itemTypes.find((item) => item[0] === this.source)?.[1];
+      return idx < from.itemTypes.length ? from.itemTypes[idx][1] : undefined;
+    }
+    return undefined;
+  }
 }
 
 export class DeclarationPlaceholder {}
