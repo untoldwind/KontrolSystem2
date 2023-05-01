@@ -25,7 +25,18 @@ export class ErrorNode implements Node, ModuleItem, BlockItem {
     return combine(initialValue, this);
   }
 
-  public validateModule(context: ModuleContext): ValidationError[] {
+  public validateModuleFirstPass(context: ModuleContext): ValidationError[] {
+    return [
+      {
+        status: "error",
+        message: this.message,
+        start: this.start,
+        end: this.end,
+      },
+    ];
+  }
+
+  public validateModuleSecondPass(context: ModuleContext): ValidationError[] {
     return [
       {
         status: "error",

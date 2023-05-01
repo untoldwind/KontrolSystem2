@@ -79,7 +79,7 @@ export class FunctionDeclaration implements Node, ModuleItem {
     );
   }
 
-  public validateModule(context: ModuleContext): ValidationError[] {
+  public validateModuleFirstPass(context: ModuleContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
     const blockContext = new FunctionContext(context);
@@ -104,6 +104,15 @@ export class FunctionDeclaration implements Node, ModuleItem {
         )
       );
     }
+
+    return errors;
+  }
+
+  public validateModuleSecondPass(context: ModuleContext): ValidationError[] {
+    const errors: ValidationError[] = [];
+
+    const blockContext = new FunctionContext(context);
+
     for (const parameter of this.parameters) {
       errors.push(...parameter.validateBlock(blockContext));
       if (blockContext.localVariables.has(parameter.name.value)) {

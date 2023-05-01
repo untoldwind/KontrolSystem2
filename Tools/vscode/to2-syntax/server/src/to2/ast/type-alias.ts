@@ -20,7 +20,14 @@ export class TypeAlias implements Node, ModuleItem {
   ): T {
     return combine(initialValue, this);
   }
-  public validateModule(context: ModuleContext): ValidationError[] {
+
+  public validateModuleFirstPass(context: ModuleContext): ValidationError[] {
+    const errors: ValidationError[] = [];
+
+    return errors;
+  }
+
+  public validateModuleSecondPass(context: ModuleContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
     return errors;

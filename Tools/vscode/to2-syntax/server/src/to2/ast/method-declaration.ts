@@ -22,9 +22,13 @@ export class MethodDeclaration implements Node, ModuleItem {
     return this.expression.reduceNode(combine, combine(initialValue, this));
   }
 
-  validateModule(context: ModuleContext): ValidationError[] {
+  validateModuleFirstPass(context: ModuleContext): ValidationError[] {
+    return [];
+  }
+
+  validateModuleSecondPass(context: ModuleContext): ValidationError[] {
     const errors: ValidationError[] = [];
-    
+
     const blockContext = new FunctionContext(context);
 
     errors.push(...this.expression.validateBlock(blockContext));

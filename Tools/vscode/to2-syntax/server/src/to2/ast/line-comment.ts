@@ -24,7 +24,11 @@ export class LineComment implements Node, BlockItem, ModuleItem {
     return combine(initialValue, this);
   }
 
-  public validateModule(context: ModuleContext): ValidationError[] {
+  public validateModuleFirstPass(context: ModuleContext): ValidationError[] {
+    return [];
+  }
+
+  public validateModuleSecondPass(context: ModuleContext): ValidationError[] {
     return [];
   }
 

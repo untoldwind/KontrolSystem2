@@ -22,7 +22,7 @@ export class UseDeclaration implements Node, ModuleItem {
     return combine(initialValue, this);
   }
 
-  public validateModule(context: ModuleContext): ValidationError[] {
+  public validateModuleFirstPass(context: ModuleContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
     const importedModule = context.findModule(this.moduleNamePath.value);
@@ -107,6 +107,10 @@ export class UseDeclaration implements Node, ModuleItem {
     }
 
     return errors;
+  }
+
+  public validateModuleSecondPass(context: ModuleContext): ValidationError[] {
+    return [];
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {

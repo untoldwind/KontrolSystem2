@@ -195,12 +195,15 @@ const moduleItem: Parser<ModuleItem> = alt(
   lineComment
 );
 
-const moduleItems = delimitedUntil(
-  moduleItem,
-  whitespace1,
-  eof,
-  "<module item>",
-  recoverModuleItem
+const moduleItems = preceded(
+  whitespace0,
+  delimitedUntil(
+    moduleItem,
+    whitespace1,
+    eof,
+    "<module item>",
+    recoverModuleItem
+  )
 );
 
 export function module(moduleName: string): Parser<TO2ModuleNode> {

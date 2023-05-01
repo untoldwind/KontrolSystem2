@@ -55,11 +55,16 @@ export class StructDeclaration implements Node, ModuleItem {
     );
   }
 
-  public validateModule(context: ModuleContext): ValidationError[] {
+  public validateModuleFirstPass(context: ModuleContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
     return errors;
   }
 
+  public validateModuleSecondPass(context: ModuleContext): ValidationError[] {
+    const errors: ValidationError[] = [];
+
+    return errors;
+  }
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
 }

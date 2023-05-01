@@ -24,7 +24,7 @@ export class ConstDeclaration implements Node, ModuleItem {
     return this.expression.reduceNode(combine, combine(initialValue, this));
   }
 
-  public validateModule(context: ModuleContext): ValidationError[] {
+  public validateModuleFirstPass(context: ModuleContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
     if (context.mappedConstants.has(this.name.value)) {
@@ -39,6 +39,10 @@ export class ConstDeclaration implements Node, ModuleItem {
     }
 
     return errors;
+  }
+
+  public validateModuleSecondPass(context: ModuleContext): ValidationError[] {
+    return [];
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {

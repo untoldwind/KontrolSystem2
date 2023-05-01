@@ -72,7 +72,11 @@ export class TO2ModuleNode implements Node, TO2Module {
     const errors: ValidationError[] = [];
 
     for (const item of this.items) {
-      errors.push(...item.validateModule(context));
+      errors.push(...item.validateModuleFirstPass(context));
+    }
+
+    for (const item of this.items) {
+      errors.push(...item.validateModuleSecondPass(context));
     }
 
     return errors;

@@ -22,12 +22,22 @@ export class ImplDeclaration implements Node {
       combine(initialValue, this)
     );
   }
-  
-  public validateModule(context: ModuleContext): ValidationError[] {
+
+  public validateModuleFirstPass(context: ModuleContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
     for (const method of this.methods) {
-      errors.push(...method.validateModule(context));
+      errors.push(...method.validateModuleFirstPass(context));
+    }
+
+    return errors;
+  }
+
+  public validateModuleSecondPass(context: ModuleContext): ValidationError[] {
+    const errors: ValidationError[] = [];
+
+    for (const method of this.methods) {
+      errors.push(...method.validateModuleSecondPass(context));
     }
 
     return errors;

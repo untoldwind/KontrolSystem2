@@ -15,7 +15,7 @@ export class IfThen extends Expression {
     super(start, end);
   }
   public resultType(context: BlockContext): TO2Type {
-    return BUILTIN_UNIT;
+    return this.thenExpression.resultType(context);
   }
 
   public reduceNode<T>(
@@ -59,7 +59,7 @@ export class IfThenElse extends Expression {
     super(start, end);
   }
   public resultType(context: BlockContext): TO2Type {
-    return BUILTIN_UNIT;
+    return this.thenExpression.resultType(context);
   }
 
   public reduceNode<T>(

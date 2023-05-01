@@ -27,7 +27,10 @@ export interface BlockItem extends Node {
 export interface ModuleItem extends Node {
   isConstDecl?: boolean;
   isFunctionDecl?: boolean;
-  validateModule(context: ModuleContext): ValidationError[];
+
+  validateModuleFirstPass(context: ModuleContext): ValidationError[];
+
+  validateModuleSecondPass(context: ModuleContext): ValidationError[];
 }
 
 export abstract class Expression implements Node, BlockItem {
