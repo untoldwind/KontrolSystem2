@@ -5,6 +5,7 @@
 * Ensure that `Vec3.to_direction()` and `GlobalVector.to_direction()` also work for "Up"
 * Fix `vessel.available_thrust` to calculate the thrust in the current situation (i.e. atmosphere/vacuum)
 * Support `+` and `+=` operators for array (append and concat)
+* Add binding for control surfaces (e.g. `vessel.control_surfaces`)
 
 ## 0.3.3.3 -> 0.3.4
 

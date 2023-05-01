@@ -70,6 +70,17 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 }
             }
 
+            [KSField]
+            public Option<ModuleControlSurfaceAdapter> ControlSurface {
+                get {
+                    if (part.TryGetModuleData<PartComponentModule_ControlSurface, Data_ControlSurface>(out var data)) {
+                        return new Option<ModuleControlSurfaceAdapter>(new ModuleControlSurfaceAdapter(part, data));
+                    }
+
+                    return new Option<ModuleControlSurfaceAdapter>();
+                }
+            }
+            
             [KSField] public bool IsSolarPanel => part.IsPartSolarPanel(out var _);
 
             [KSField]

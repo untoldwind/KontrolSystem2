@@ -270,6 +270,15 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 return null;
             }).Where(engine => engine != null).ToArray();
 
+            [KSField(Description = "Get a list of all control service parts of the vessel.")]
+            public ModuleControlSurfaceAdapter[] ControlSurfaces => vessel.SimulationObject.PartOwner.Parts.Select(part => {
+                if (part.TryGetModuleData<PartComponentModule_ControlSurface, Data_ControlSurface>(out var dataControlSurface)) {
+                    return new ModuleControlSurfaceAdapter(part, dataControlSurface);
+                }
+
+                return null;
+            }).Where(engine => engine != null).ToArray();
+                
             [KSField(Description = "Get a list of all docking node parts of the vessel.")]
             public ModuleDockingNodeAdapter[] DockingNodes => vessel.SimulationObject.PartOwner.Parts.Select(part => {
                 if (part.IsPartDockingPort(out Data_DockingNode data)) {
