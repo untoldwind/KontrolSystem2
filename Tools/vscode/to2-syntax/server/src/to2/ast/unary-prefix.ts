@@ -30,6 +30,16 @@ export class UnaryPrefix extends Expression {
 
     errors.push(...this.right.validateBlock(context));
 
+    if (errors.length === 0 && !this.findOperator(context)) {
+      const rightType = this.right.resultType(context);
+      errors.push({
+        status: "error",
+        message: `Invalid operator: ${this.op.value} ${rightType.name} is not definied`,
+        start: this.start,
+        end: this.end,
+      });
+    }
+
     return errors;
   }
 
@@ -38,10 +48,10 @@ export class UnaryPrefix extends Expression {
   }
 
   private findOperator(context: BlockContext): TO2Type | undefined {
-    const leftType = this.right
+    const rightType = this.right
       .resultType(context)
       .realizedType(context.module);
 
-    return leftType.findPrefixOperator(this.op.value, BUILTIN_UNIT);
+    return rightType.findPrefixOperator(this.op.value, BUILTIN_UNIT);
   }
 }

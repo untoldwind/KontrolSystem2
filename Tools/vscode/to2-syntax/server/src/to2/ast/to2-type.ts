@@ -88,7 +88,7 @@ export class ReferencedType implements RealizedType {
     op: Operator,
     leftType: RealizedType
   ): TO2Type | undefined {
-    const opRef = this.typeReference.suffixOperators?.[op]?.find((opRef) =>
+    const opRef = this.typeReference.prefixOperators?.[op]?.find((opRef) =>
       resolveTypeRef(opRef.otherType)?.isAssignableFrom(leftType)
     );
 
@@ -183,6 +183,13 @@ export function findLibraryType(
   typeArguments: TO2Type[]
 ): RealizedType | undefined {
   const fullName = namePath.join("::");
+  switch (fullName) {
+    case "Option":
+      if (typeArguments.length === 1) return new OptionType(typeArguments[0]);
+    case "Result":
+      if (typeArguments.length === 2)
+        return new ResultType(typeArguments[0], typeArguments[1]);
+  }
   return referencedTypes[fullName];
 }
 

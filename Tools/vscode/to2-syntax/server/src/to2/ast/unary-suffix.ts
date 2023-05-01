@@ -30,6 +30,16 @@ export class UnarySuffix extends Expression {
 
     errors.push(...this.left.validateBlock(context));
 
+    if (errors.length === 0 && !this.findOperator(context)) {
+      const leftType = this.left.resultType(context);
+      errors.push({
+        status: "error",
+        message: `Invalid operator: ${leftType.name} ${this.op.value}  is not definied`,
+        start: this.start,
+        end: this.end,
+      });
+    }
+
     return errors;
   }
 
