@@ -12,7 +12,7 @@ namespace Experiments {
         private TimeSeriesCollection timeSeriesCollection;
         private GLUIDrawer drawer;
         private RawImage graphImage; 
-        private List<string> selectedTimeSeriesNames = new List<string>();
+        private Dictionary<string, Color> selectedTimeSeriesNames = new Dictionary<string, Color>();
         private UGUILayoutContainer savePopup;
 
         private static Color[] colors =
@@ -23,6 +23,8 @@ namespace Experiments {
             Color.white,
             Color.blue,
         };
+
+        internal int colorCounter;
         
         public void OnEnable() {
             Initialize("KontrolSystem: Telemetry", new Rect(400, 500, 600, 500));
@@ -38,7 +40,11 @@ namespace Experiments {
             graphImage.texture = drawer.Texture;
             
             timeSeries = new UIList<TimeSeries, UITimeSeriesElement>(30, element => 
-                new UITimeSeriesElement(element, () => selectedTimeSeriesNames.Add(element.Name), () => selectedTimeSeriesNames.Remove(element.Name)));
+                new UITimeSeriesElement(element, () => {
+                    var color = NextColor();
+                    selectedTimeSeriesNames.Add(element.Name, color);
+                    return color;
+                }, () => selectedTimeSeriesNames.Remove(element.Name)));
 
             var timeSeriesContainer = root.Add(UGUILayoutContainer.Vertical());
             
@@ -67,7 +73,7 @@ namespace Experiments {
                     draw.DrawText(new Vector2(draw.Width / 2, draw.Height / 2), "No data", 50, new Vector2(0.5f, 0.5f), 0, Color.yellow);
                 } else {
                     var selectedTimeSeries =
-                        timeSeriesCollection.AllTimeSeries.Where(t => selectedTimeSeriesNames.Contains(t.Name));
+                        timeSeriesCollection.AllTimeSeries.Where(t => selectedTimeSeriesNames.ContainsKey(t.Name));
                     var offsetTop = 2;
                     var offsetBottom = 18;
                     var offsetLeft = 18;
@@ -81,10 +87,10 @@ namespace Experiments {
                     draw.DrawText(new Vector2(offsetLeft, 1), startUTStr, 16, new Vector2(0, 0), 0, Color.white);
                     draw.DrawText(new Vector2(draw.Width - offsetRight, 1), endUTStr, 16, new Vector2(1, 0), 0, Color.white);
 
-                    var allValues = selectedTimeSeries.Select(t => t.Values).ToArray();
-                    var min = allValues.SelectMany(value => value).Min(v => v.Item2.min);
+                    var allValues = selectedTimeSeries.Select(t => (selectedTimeSeriesNames[t.Name], t.Values)).ToArray();
+                    var min = allValues.SelectMany(value => value.Item2).Min(v => v.Item2.min);
                     var minStr = min.ToString("F3", CultureInfo.InvariantCulture);
-                    var max = allValues.SelectMany(value => value).Max(v => v.Item2.max);
+                    var max = allValues.SelectMany(value => value.Item2).Max(v => v.Item2.max);
                     var maxStr = max.ToString("F3", CultureInfo.InvariantCulture);
 
                     draw.DrawText(new Vector2(offsetLeft - 2, offsetBottom), minStr, 16, new Vector2(0, 0), 90, Color.white);
@@ -100,15 +106,13 @@ namespace Experiments {
                         }, Color.gray);
                     }
 
-                    for (int i = 0; i < allValues.Length; i++) {
-                        var color = colors[i % colors.Length];
-
-                        draw.LineTube(allValues[i].Select(i =>
+                    foreach (var (color, values) in allValues) {
+                        draw.LineTube(values.Select(i =>
                             new Vector3((float)((i.Item1 - startUT) / xScale) + offsetLeft,
                                 (float)((i.Item2.min - min) / yScale) + offsetBottom,
                                 (float)((i.Item2.max - min) / yScale) + offsetBottom)).ToArray(), new Color(color.r, color.g, color.b, 0.5f));
 
-                        draw.Polyline(allValues[i].Select(i =>
+                        draw.Polyline(values.Select(i =>
                             new Vector2((float)((i.Item1 - startUT) / xScale) + offsetLeft,
                                 (float)((i.Item2.avg - min) / yScale) + offsetBottom)).ToArray(), color);
                     }
@@ -142,7 +146,12 @@ namespace Experiments {
 
         internal void OnTimeSeriesChanged() {
             timeSeries.Elements = timeSeriesCollection.AllTimeSeries;
-            
+        }
+
+        internal Color NextColor() {
+            var color = colors[colorCounter++];
+            colorCounter = colorCounter < colors.Length ? colorCounter : 0;
+            return color;
         }
         
         protected override void OnResize(Vector2 delta) {
@@ -159,19 +168,19 @@ namespace Experiments {
             private readonly UGUILayoutContainer root;
             private readonly UGUIToggle toggle;
 
-            public UITimeSeriesElement(TimeSeries timeSeries, Action onAdd, Action onRemove) {
+            public UITimeSeriesElement(TimeSeries timeSeries, Func<Color> onAdd, Action onRemove) {
                 this.timeSeries = timeSeries;
 
                 root = UGUILayoutContainer.Horizontal();
 
                 toggle = root.Add(UGUIToggle.Create(timeSeries.Name, (selected) => {
                     if (selected) {
-                        onAdd();
+                        toggle.CheckmarkColor = onAdd();
                     } else {
                         onRemove();
                     }
                 }), UGUILayout.Align.STRETCH, 1);
-
+                
                 var closeButton = UIFactory.Instance.CreateDeleteButton();
                 root.Add(closeButton, UGUILayout.Align.CENTER, new Vector2(24, 24));
                 closeButton.GetComponent<Button>().onClick.AddListener(() => ProgrammaticUI.timeSeriesCollection.RemoveTimeSeries(timeSeries.Name));

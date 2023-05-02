@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using KontrolSystem.KSP.Runtime.Core;
 using KontrolSystem.KSP.Runtime.KSPTelemetry;
 using KontrolSystem.KSP.Runtime.KSPUI.UGUI;
+using KontrolSystem.TO2.AST;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,7 +16,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
         private TimeSeriesCollection timeSeriesCollection;
         private GLUIDrawer drawer;
         private RawImage graphImage;
-        private HashSet<string> selectedTimeSeriesNames = new HashSet<string>();
+        private Dictionary<string, Color> selectedTimeSeriesNames = new Dictionary<string, Color>();
         private UGUILayoutContainer savePopup;
 
         private static Color[] colors =
@@ -22,10 +24,14 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
             Color.yellow,
             Color.green,
             Color.red,
-            Color.white,
             Color.blue,
+            Color.cyan,
+            Color.magenta,
+            Color.white,
         };
 
+        internal int colorCounter;
+        
         public void OnEnable() {
             Initialize("KontrolSystem: Telemetry", new Rect(400, Screen.height - 200, 600, 500));
 
@@ -42,7 +48,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
             var timeSeriesContainer = root.Add(UGUILayoutContainer.Vertical());
 
             timeSeries = new UIList<KSPTelemetryModule.TimeSeries, UITimeSeriesElement>(30, element =>
-                new UITimeSeriesElement(element, selectedTimeSeriesNames));
+                new UITimeSeriesElement(element, selectedTimeSeriesNames, NextColor));
 
             timeSeriesContainer.Add(UGUIElement.VScrollView(timeSeries, new Vector2(250, 200)), UGUILayout.Align.Stretch, 1);
             timeSeriesContainer.Add(UGUIButton.Create("Save", ToggleSavePopup), UGUILayout.Align.Start);
@@ -66,7 +72,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
         public void Update() {
             using (var draw = drawer.Draw()) {
                 var selectedTimeSeries =
-                    timeSeriesCollection.AllTimeSeries.Where(t => selectedTimeSeriesNames.Contains(t.Name)).ToArray();
+                    timeSeriesCollection.AllTimeSeries.Where(t => selectedTimeSeriesNames.ContainsKey(t.Name)).ToArray();
                 if (selectedTimeSeries.Length == 0) {
                     draw.DrawText(new Vector2(draw.Width / 2, draw.Height / 2), "No data", 50, new Vector2(0.5f, 0.5f), 0, Color.yellow);
                 } else {
@@ -83,10 +89,10 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
                     draw.DrawText(new Vector2(offsetLeft, 1), startUTStr, 18, new Vector2(0, 0), 0, Color.white);
                     draw.DrawText(new Vector2(draw.Width - offsetRight, 1), endUTStr, 18, new Vector2(1, 0), 0, Color.white);
 
-                    var allValues = selectedTimeSeries.Select(t => t.Values).ToArray();
-                    var min = allValues.SelectMany(value => value).Min(v => v.Item2.min);
+                    var allValues = selectedTimeSeries.Select(t => (selectedTimeSeriesNames[t.Name], t.Values)).ToArray();
+                    var min = allValues.SelectMany(value => value.Item2).Min(v => v.Item2.min);
                     var minStr = min.ToString("F3", CultureInfo.InvariantCulture);
-                    var max = allValues.SelectMany(value => value).Max(v => v.Item2.max);
+                    var max = allValues.SelectMany(value => value.Item2).Max(v => v.Item2.max);
                     var maxStr = max.ToString("F3", CultureInfo.InvariantCulture);
 
                     draw.DrawText(new Vector2(offsetLeft - 2, offsetBottom), minStr, 18, new Vector2(0, 0), 90, Color.white);
@@ -102,15 +108,13 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
                         }, Color.gray);
                     }
 
-                    for (int i = 0; i < allValues.Length; i++) {
-                        var color = colors[i % colors.Length];
-
-                        draw.LineTube(allValues[i].Select(i =>
+                    foreach (var (color, values) in allValues) {
+                        draw.LineTube(values.Select(i =>
                             new Vector3((float)((i.Item1 - startUT) / xScale) + offsetLeft,
                                 (float)((i.Item2.min - min) / yScale) + offsetBottom,
                                 (float)((i.Item2.max - min) / yScale) + offsetBottom)).ToArray(), new Color(color.r, color.g, color.b, 0.5f));
 
-                        draw.Polyline(allValues[i].Select(i =>
+                        draw.Polyline(values.Select(i =>
                             new Vector2((float)((i.Item1 - startUT) / xScale) + offsetLeft,
                                 (float)((i.Item2.avg - min) / yScale) + offsetBottom)).ToArray(), color);
                     }
@@ -153,6 +157,12 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
 
         }
 
+        internal Color NextColor() {
+            var color = colors[colorCounter++];
+            colorCounter = colorCounter < colors.Length ? colorCounter : 0;
+            return color;
+        }
+        
         protected override void OnResize(Vector2 delta) {
             base.OnResize(delta);
 
@@ -166,21 +176,23 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
             private readonly KSPTelemetryModule.TimeSeries timeSeries;
             private readonly UGUILayoutContainer root;
             private readonly UGUIToggle toggle;
-            private readonly HashSet<string> selectedTimeSeriesNames;
+            private readonly Dictionary<string, Color> selectedTimeSeriesNames;
 
-            public UITimeSeriesElement(KSPTelemetryModule.TimeSeries timeSeries, HashSet<string> selectedTimeSeriesNames) {
+            public UITimeSeriesElement(KSPTelemetryModule.TimeSeries timeSeries, Dictionary<string, Color> selectedTimeSeriesNames, Func<Color> nextColor) {
                 this.timeSeries = timeSeries;
                 this.selectedTimeSeriesNames = selectedTimeSeriesNames;
 
                 root = UGUILayoutContainer.Horizontal();
                 toggle = root.Add(UGUIToggle.Create(timeSeries.Name, (selected) => {
                     if (selected) {
-                        this.selectedTimeSeriesNames.Add(timeSeries.Name);
+                        var color = nextColor();
+                        this.selectedTimeSeriesNames.Add(timeSeries.Name, color);
+                        toggle.CheckmarkColor = color;
                     } else {
                         this.selectedTimeSeriesNames.Remove(timeSeries.Name);
                     }
                 }), UGUILayout.Align.Stretch, 1);
-                toggle.IsOn = this.selectedTimeSeriesNames.Contains(timeSeries.Name);
+                toggle.IsOn = this.selectedTimeSeriesNames.ContainsKey(timeSeries.Name);
 
                 var closeButton = UIFactory.Instance.CreateDeleteButton();
                 root.Add(closeButton, UGUILayout.Align.Center, new Vector2(24, 24));
@@ -195,7 +207,8 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
 
             public void Update(KSPTelemetryModule.TimeSeries element) {
                 toggle.Label = element.Name;
-                toggle.IsOn = selectedTimeSeriesNames.Contains(element.Name);
+                toggle.IsOn = selectedTimeSeriesNames.ContainsKey(element.Name);
+                toggle.CheckmarkColor = selectedTimeSeriesNames.Get(element.Name);
             }
         }
     }

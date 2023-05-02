@@ -15,7 +15,12 @@ namespace Experiments {
             minSize = new Vector2(50 + label.preferredWidth, 30);
             toggle.onValueChanged.AddListener(onChange);            
         }
-        
+
+        public Color CheckmarkColor {
+            get => toggle.graphic.color;
+            set => toggle.graphic.color = value;
+        }
+
         public string Label {
             get => label.text;
             set => label.text = value;

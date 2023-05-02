@@ -17,6 +17,11 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI {
 
         public override Vector2 MinSize => new Vector2(Math.Max(minSize.x, 50 + label.preferredWidth), Math.Max(minSize.y, 10 + label.preferredHeight));
 
+        public Color CheckmarkColor {
+            get => toggle.graphic.color;
+            set => toggle.graphic.color = value;
+        }
+        
         public string Label {
             get => label.text;
             set => label.text = value;
