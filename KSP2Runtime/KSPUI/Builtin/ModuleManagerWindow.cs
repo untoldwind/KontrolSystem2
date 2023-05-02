@@ -22,7 +22,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
 
             var mainframeState = new GameObject("MainframeState", typeof(RawImage));
             UIFactory.Layout(mainframeState, windowTransform, UIFactory.LAYOUT_START, UIFactory.LAYOUT_START,
-                5, -5, 30, 30);
+                5, -5, UIFactory.Instance.uiFontSize + 10, UIFactory.Instance.uiFontSize + 10);
             mainframeStateIcon = mainframeState.GetComponent<RawImage>();
             mainframeStateIcon.texture = UIFactory.Instance.stateActive;
 
@@ -70,7 +70,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
 
                 var horizonal = new UGUIHorizontalLayout(parent);
 
-                processList = new UIList<KontrolSystemProcessWithArguments, UIProcessElement>(30,
+                processList = new UIList<KontrolSystemProcessWithArguments, UIProcessElement>(UIFactory.Instance.uiFontSize + 10,
                     element => new UIProcessElement(element, ShowParameterPopup, CloseParameterPopup));
 
                 horizonal.Add(UGUIElement.VScrollView(processList, new Vector2(200, 200)), UGUILayout.Align.Stretch, 1);
@@ -343,17 +343,18 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
 
             internal UIProcessElement(KontrolSystemProcessWithArguments element, Action<KontrolSystemProcessWithArguments, Action> showParameters,
                 Action closeParameters) {
+                var uiFontSize = UIFactory.Instance.uiFontSize;
                 this.element = element;
 
                 root = UGUILayoutContainer.Horizontal(5);
 
-                GameObject label = UIFactory.Instance.CreateText($"{element.process.Name} ({element.process.State})", 18);
-                root.Add(label, UGUILayout.Align.Stretch, new Vector2(150, 30), 1);
+                GameObject label = UIFactory.Instance.CreateText($"{element.process.Name} ({element.process.State})", uiFontSize - 2);
+                root.Add(label, UGUILayout.Align.Stretch, new Vector2(150, uiFontSize + 10), 1);
                 this.label = label.GetComponent<TextMeshProUGUI>();
 
                 var parameters = element.process.EntrypointArgumentDescriptors(Mainframe.Instance.GameMode);
                 parameterToggle = UIFactory.Instance.CreateSelectButton(parameters.Length.ToString());
-                root.Add(parameterToggle, UGUILayout.Align.Center, new Vector2(24, 24));
+                root.Add(parameterToggle, UGUILayout.Align.Center, new Vector2( uiFontSize + 4, uiFontSize + 4));
                 parameterToggle.SetActive(parameters.Length > 0);
                 parameterToggle.GetComponent<Toggle>().onValueChanged.AddListener(isOn => {
                     if (isOn) {
@@ -367,7 +368,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
                     element.process.State == KontrolSystemProcessState.Running || element.process.State == KontrolSystemProcessState.Outdated
                         ? UIFactory.Instance.stopIcon
                         : UIFactory.Instance.startIcon);
-                root.Add(startStop, UGUILayout.Align.Center, new Vector2(24, 24));
+                root.Add(startStop, UGUILayout.Align.Center, new Vector2(uiFontSize + 4, uiFontSize + 4));
                 startStopIcon = startStop.GetComponentInChildren<RawImage>();
                 startStop.GetComponent<Button>().onClick.AddListener(() => this.element.OnStartStop());
 

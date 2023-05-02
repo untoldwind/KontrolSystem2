@@ -47,7 +47,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
 
             var timeSeriesContainer = root.Add(UGUILayoutContainer.Vertical());
 
-            timeSeries = new UIList<KSPTelemetryModule.TimeSeries, UITimeSeriesElement>(30, element =>
+            timeSeries = new UIList<KSPTelemetryModule.TimeSeries, UITimeSeriesElement>(UIFactory.Instance.uiFontSize + 10, element =>
                 new UITimeSeriesElement(element, selectedTimeSeriesNames, NextColor));
 
             timeSeriesContainer.Add(UGUIElement.VScrollView(timeSeries, new Vector2(250, 200)), UGUILayout.Align.Stretch, 1);
@@ -195,7 +195,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
                 toggle.IsOn = this.selectedTimeSeriesNames.ContainsKey(timeSeries.Name);
 
                 var closeButton = UIFactory.Instance.CreateDeleteButton();
-                root.Add(closeButton, UGUILayout.Align.Center, new Vector2(24, 24));
+                root.Add(closeButton, UGUILayout.Align.Center, new Vector2(UIFactory.Instance.uiFontSize + 4, UIFactory.Instance.uiFontSize + 4));
                 closeButton.GetComponent<Button>().onClick.AddListener(() => Mainframe.Instance.TimeSeriesCollection.RemoveTimeSeries(timeSeries.Name));
 
                 root.Layout();

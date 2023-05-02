@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.IO;
 using BepInEx;
 using BepInEx.Bootstrap;
@@ -19,16 +20,20 @@ namespace KontrolSystem.SpaceWarpMod {
         }
 
         internal string version;
+        internal ConfigFile config;
         internal ConfigEntry<bool> enableHotkey;
         internal ConfigEntry<string> stdLibPath;
         internal ConfigEntry<string> localLibPath;
         internal ConfigEntry<MonospaceFont> consoleFont;
-        internal ConfigEntry<int> consoleFontSize;
+        internal ConfigEntry<float> consoleFontSize;
         internal ConfigEntry<MonospaceFont> graphFont;
+        internal ConfigEntry<MonospaceFont> uiFont;
+        internal ConfigEntry<float> uiFontSize;
 
         internal OptionalAddons optionalAddons = new OptionalAddons();
 
         internal ConfigAdapter(PluginInfo pluginInfo, ConfigFile config) {
+            this.config = config;
             version = pluginInfo.Metadata.Version.ToString();
             enableHotkey = config.Bind("Keyboard", "enableHotKey", true, "Enable Alt-Shift-K hotkey");
             stdLibPath = config.Bind("Paths", "stdLibPath", Path.Combine(Path.GetDirectoryName(pluginInfo.Location), "to2"),
@@ -37,9 +42,11 @@ namespace KontrolSystem.SpaceWarpMod {
                 "Path of the local user library");
             consoleFont = config.Bind("Font", "consoleFont", MonospaceFont.JetBrainsMono,
                 "Font to use in console window");
-            consoleFontSize = config.Bind("Font", "consoleFontSize", 12, "Size of the console font");
-            graphFont = config.Bind("Fonts", "graphFont", MonospaceFont.JetBrainsMono, "Font to use in graphs");
-
+            consoleFontSize = config.Bind("Font", "consoleFontSize", 12f, "Size of the console font");
+            uiFont = config.Bind("Font", "uiFont", MonospaceFont.Unifont, "Default font for UI");
+            uiFontSize = config.Bind("Font", "uiFontSize", 20f, "Size of the UI font");
+            graphFont = config.Bind("Font", "graphFont", MonospaceFont.JetBrainsMono, "Font to use in graphs");
+                
             if(Chainloader.PluginInfos.TryGetValue(KSPAddonsModule.FlightPlanAdapter.ModGuid, out var fpPluginInfo)) {
                 optionalAddons.FlightPlan = (fpPluginInfo.Instance, fpPluginInfo.Metadata.Version);
             }
@@ -57,7 +64,7 @@ namespace KontrolSystem.SpaceWarpMod {
 
         public bool HotKeyEnabled => enableHotkey.Value;
 
-        public int ConsoleFontSize => consoleFontSize.Value;
+        public float ConsoleFontSize => consoleFontSize.Value;
 
         public Font ConsoleFont {
             get {
@@ -69,6 +76,8 @@ namespace KontrolSystem.SpaceWarpMod {
                 }
             }
         }
+
+
 
         public static ConfigAdapter Instance { get; private set; }
 
@@ -108,8 +117,23 @@ namespace KontrolSystem.SpaceWarpMod {
             }
         }
 
-        public Font UIFont => AssetManager.GetAsset<Font>("kontrolsystem2/kontrolsystem2/fonts/unifont.ttf");
+        public Font UIFont {
+            get {
+                switch (uiFont.Value) {
+                case MonospaceFont.Unifont:
+                    return AssetManager.GetAsset<Font>("kontrolsystem2/kontrolsystem2/fonts/unifont.ttf");
+                default:
+                    return AssetManager.GetAsset<Font>("kontrolsystem2/kontrolsystem2/fonts/jetbrainsmono-regular.ttf");
+                }
+            }
+        }
 
+        public float UIFontSize => uiFontSize.Value;
+        
+        public void OnChange(Action action) {
+            config.SettingChanged += (sender, args) => action();
+        }
+        
         private Texture2D GetTexture(string name) => AssetManager.GetAsset<Texture2D>($"kontrolsystem2/kontrolsystem2/gfx/{name}.png");
 
         internal static void Init(PluginInfo pluginInfo, ConfigFile config) {

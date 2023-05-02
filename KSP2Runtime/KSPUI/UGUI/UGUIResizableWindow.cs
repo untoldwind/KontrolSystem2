@@ -43,11 +43,11 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI {
             resizer.AddComponent<UGUIDragHandler>().Init(windowTransform, OnResize);
 
             var closeButton = UIFactory.Instance.CreateDeleteButton();
-            UIFactory.Layout(closeButton, window.transform, UIFactory.LAYOUT_END, UIFactory.LAYOUT_START, -3, -3, 30, 30);
+            UIFactory.Layout(closeButton, window.transform, UIFactory.LAYOUT_END, UIFactory.LAYOUT_START, -3, -3, UIFactory.Instance.uiFontSize + 10, UIFactory.Instance.uiFontSize + 10);
             closeButton.GetComponent<Button>().onClick.AddListener(Close);
 
-            var windowTitle = UIFactory.Instance.CreateText(title, 26, HorizontalAlignmentOptions.Center);
-            UIFactory.Layout(windowTitle, window.transform, UIFactory.LAYOUT_STRETCH, UIFactory.LAYOUT_START, 30, -2, -60, 30);
+            var windowTitle = UIFactory.Instance.CreateText(title, UIFactory.Instance.uiFontSize + 6, HorizontalAlignmentOptions.Center);
+            UIFactory.Layout(windowTitle, window.transform, UIFactory.LAYOUT_STRETCH, UIFactory.LAYOUT_START, 30, -2, -60, UIFactory.Instance.uiFontSize + 10);
         }
 
         public bool Closed => closed;
@@ -108,9 +108,9 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI {
         }
 
         internal UGUIVerticalLayout RootVerticalLayout(float gap = 10) =>
-            new UGUIVerticalLayout(windowTransform, gap, new UGUILayout.Padding(40, 20, 10, 10));
+            new UGUIVerticalLayout(windowTransform, gap, new UGUILayout.Padding(UIFactory.Instance.uiFontSize + 20, 20, 10, 10));
 
         internal UGUIHorizontalLayout RootHorizontalLayout(float gap = 10) =>
-            new UGUIHorizontalLayout(windowTransform, gap, new UGUILayout.Padding(40, 20, 10, 10));
+            new UGUIHorizontalLayout(windowTransform, gap, new UGUILayout.Padding(UIFactory.Instance.uiFontSize + 20, 20, 10, 10));
     }
 }

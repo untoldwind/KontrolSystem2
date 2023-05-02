@@ -1,9 +1,11 @@
 ﻿using System.IO;
 using KontrolSystem.KSP.Runtime.Core;
 using KontrolSystem.KSP.Runtime.KSPUI.UGUI;
+using LibNoise;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Math = System.Math;
 
 namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
     public class EditorWindow : UGUIResizableWindow {
@@ -40,7 +42,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
             TextMeshProUGUI text = childText.GetComponent<TextMeshProUGUI>();
             text.font = UIFactory.Instance.consoleFont;
             text.color = new Color(0.8382f, 0.8784f, 1);
-            text.fontSize = 14;
+            text.fontSize = Math.Min(10, UIFactory.Instance.uiFontSize - 6);
 
             editorInputField = editPanel.GetComponent<InputFieldExtended>();
             var inputColors = editorInputField.colors;
@@ -60,7 +62,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
             editorInputField.lineType = TMP_InputField.LineType.MultiLineNewline;
             editorInputField.onFocusSelectAll = false;
             editorInputField.lineLimit = 0;
-            editorInputField.pointSize = 14;
+            editorInputField.pointSize = Math.Min(10, UIFactory.Instance.uiFontSize - 6);
             editorInputField.onValueChanged.AddListener(_ => {
                 sourceAndRebootButton.Interactable = true;
             });

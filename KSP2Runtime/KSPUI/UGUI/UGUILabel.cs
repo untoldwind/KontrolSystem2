@@ -28,6 +28,6 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI {
         }
 
         public static UGUILabel Create(string label) =>
-            new UGUILabel(UIFactory.Instance.CreateText(label));
+            new UGUILabel(UIFactory.Instance.CreateText(label, UIFactory.Instance.uiFontSize));
     }
 }

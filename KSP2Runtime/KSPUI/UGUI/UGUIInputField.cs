@@ -38,7 +38,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI {
         }
 
         public static UGUIInputField Create(string value, float minWidth, UnityAction<string> onChange = null) {
-            var element = new UGUIInputField(UIFactory.Instance.CreateInputField(), new Vector2(minWidth, 30), onChange);
+            var element = new UGUIInputField(UIFactory.Instance.CreateInputField(), new Vector2(minWidth, UIFactory.Instance.uiFontSize + 10), onChange);
 
             element.Value = value;
 

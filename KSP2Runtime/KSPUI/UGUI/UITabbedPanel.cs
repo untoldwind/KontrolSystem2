@@ -36,7 +36,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI {
                 tabButtonTransform.pivot = new Vector2(0, 1);
                 tabButtonTransform.localPosition = Vector3.zero;
                 tabButtonTransform.anchoredPosition = new Vector2(5, 0);
-                tabButtonTransform.sizeDelta = new Vector2(-10, 30);
+                tabButtonTransform.sizeDelta = new Vector2(-10, UIFactory.Instance.uiFontSize + 10);
                 var tabButtonToggle = tabButton.GetComponent<Toggle>();
                 tabButtonToggle.group = toggleGroup;
                 tabButtonToggle.onValueChanged.AddListener(OnTabChange(i));
@@ -51,7 +51,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI {
                 Object.Destroy(currentTabPanel);
                 currentTabPanel = new GameObject("TabPanel", typeof(RectTransform));
                 var tabPanelTransform = UIFactory.Layout(currentTabPanel, GameObject.transform,
-                    UIFactory.LAYOUT_STRETCH, UIFactory.LAYOUT_STRETCH, 0, -40, 0, -40);
+                    UIFactory.LAYOUT_STRETCH, UIFactory.LAYOUT_STRETCH, 0, -UIFactory.Instance.uiFontSize - 20, 0, -UIFactory.Instance.uiFontSize - 20);
 
                 tabs[tabIdx].Create(tabPanelTransform);
                 currentTabIdx = tabIdx;

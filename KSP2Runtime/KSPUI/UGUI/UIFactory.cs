@@ -1,4 +1,5 @@
-﻿using KontrolSystem.KSP.Runtime.KSPTelemetry;
+﻿using System;
+using KontrolSystem.KSP.Runtime.KSPTelemetry;
 using TMPro;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
@@ -55,7 +56,13 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI {
 
         Font UIFont { get; }
 
+        float UIFontSize { get; }
+        
         Font ConsoleFont { get; }
+        
+        float ConsoleFontSize { get; }
+
+        void OnChange(Action action);
     }
 
     public class UIFactory {
@@ -69,7 +76,9 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI {
         internal readonly Sprite frameBackground;
         internal readonly TMP_FontAsset graphFont;
         internal readonly TMP_FontAsset uiFont;
+        internal readonly float uiFontSize;
         internal readonly TMP_FontAsset consoleFont;
+        internal readonly float consoleFontSize;
         internal readonly Texture2D stateInactive;
         internal readonly Texture2D stateActive;
         internal readonly Texture2D stateError;
@@ -89,6 +98,9 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI {
 
         public static void Init(UIAssetsProvider uiAssetsProvider) {
             Instance = new UIFactory(uiAssetsProvider);
+            uiAssetsProvider.OnChange(() => {
+                Instance = new UIFactory(uiAssetsProvider);
+            });
         }
 
         internal UIFactory(UIAssetsProvider uiAssetsProvider) {
@@ -97,9 +109,11 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI {
 
             uiFont = TMP_FontAsset.CreateFontAsset(uiAssetsProvider.UIFont, 90, 9, GlyphRenderMode.SDFAA_HINTED, 1024, 1024, AtlasPopulationMode.Dynamic);
             UpdateShader(uiFont, false);
+            uiFontSize = uiAssetsProvider.UIFontSize;
 
             consoleFont = TMP_FontAsset.CreateFontAsset(uiAssetsProvider.ConsoleFont, 90, 9, GlyphRenderMode.SDFAA_HINTED, 1024, 1024, AtlasPopulationMode.Dynamic);
             UpdateShader(consoleFont, false);
+            consoleFontSize = uiAssetsProvider.ConsoleFontSize;
 
             windowBackground = Make9TileSprite(uiAssetsProvider.WindowsBackground, new Vector4(30, 30, 30, 30));
             windowCloseButton = Make9TileSprite(uiAssetsProvider.WindowCloseButton, new Vector4(4, 4, 4, 4));
@@ -184,7 +198,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI {
             text.font = uiFont;
             text.horizontalAlignment = HorizontalAlignmentOptions.Center;
             text.verticalAlignment = VerticalAlignmentOptions.Middle;
-            text.fontSize = 20;
+            text.fontSize = uiFontSize;
             text.color = Color.black;
             text.enableWordWrapping = false;
 
@@ -251,7 +265,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI {
             text.font = uiFont;
             text.horizontalAlignment = HorizontalAlignmentOptions.Center;
             text.verticalAlignment = VerticalAlignmentOptions.Middle;
-            text.fontSize = 20;
+            text.fontSize = uiFontSize;
             text.color = new Color(0.7961f, 0.8706f, 1f);
             text.enableWordWrapping = false;
 
@@ -312,7 +326,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI {
             labelText.font = uiFont;
             labelText.horizontalAlignment = HorizontalAlignmentOptions.Left;
             labelText.verticalAlignment = VerticalAlignmentOptions.Middle;
-            labelText.fontSize = 20;
+            labelText.fontSize = uiFontSize;
             labelText.color = new Color(0.7961f, 0.8706f, 1f);
             labelText.enableWordWrapping = false;
 
@@ -483,7 +497,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI {
             TextMeshProUGUI text = childText.GetComponent<TextMeshProUGUI>();
             text.font = uiFont;
             text.color = new Color(0.8382f, 0.8784f, 1);
-            text.fontSize = 18;
+            text.fontSize = uiFontSize - 2;
 
             TMP_InputField inputField = root.GetComponent<InputFieldExtended>();
             var inputColors = inputField.colors;
@@ -498,7 +512,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI {
             inputField.selectionColor = new Color(0, 0.4353f, 1);
             inputField.customCaretColor = true;
             inputField.fontAsset = uiFont;
-            inputField.pointSize = 18;
+            inputField.pointSize = uiFontSize - 2;
 
             root.SetActive(true);
             var inputActions = root.AddComponent<InputFieldFocusLockInputActions>();

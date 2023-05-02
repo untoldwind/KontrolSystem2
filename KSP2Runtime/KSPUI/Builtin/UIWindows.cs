@@ -1,5 +1,7 @@
-﻿using KontrolSystem.KSP.Runtime.KSPUI.UGUI;
+﻿using KontrolSystem.KSP.Runtime.KSPGame;
+using KontrolSystem.KSP.Runtime.KSPUI.UGUI;
 using KSP.Game;
+using KSP.Messages;
 using UnityEngine.Events;
 
 namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
@@ -8,8 +10,14 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
 
         public void Awake() {
             Instance = this;
+            Game.Messages.Subscribe<GameStateChangedMessage>(OnStateChange);
         }
 
+        public void Destroy() {
+            Instance = null;
+            Game.Messages.Unsubscribe<GameStateChangedMessage>(OnStateChange);
+        }
+        
         public void Initialize(UIAssetsProvider uiAssetsProvider) {
             UIFactory.Init(uiAssetsProvider);
         }
@@ -45,6 +53,25 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
             var editorWindow = gameObject.AddComponent<EditorWindow>();
 
             editorWindow.NewFile();
+        }
+
+        public void CloseAll() {
+            foreach (var editorWindow in gameObject.GetComponents<EditorWindow>()) {
+                Destroy(editorWindow);
+            }
+
+            foreach (var telemetryWindow in gameObject.GetComponents<TelemetryWindow>()) {
+                Destroy(telemetryWindow);
+            }
+            
+            Destroy(gameObject.GetComponent<ConsoleWindow>());
+            Destroy(gameObject.GetComponent<ModuleManagerWindow>());
+        }
+        
+        private void OnStateChange(MessageCenterMessage message) {
+            if (message is GameStateChangedMessage g && g.CurrentState == GameState.MainMenu) {
+                CloseAll();
+            }
         }
     }
 }

@@ -48,7 +48,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
             consoleText.font = UIFactory.Instance.consoleFont;
             consoleText.horizontalAlignment = HorizontalAlignmentOptions.Left;
             consoleText.verticalAlignment = VerticalAlignmentOptions.Top;
-            consoleText.fontSize = 12;
+            consoleText.fontSize = UIFactory.Instance.consoleFontSize;
             consoleText.color = new Color(0.5f, 1.0f, 0.5f, 1.0f);
 
             var fontScale = consoleText.fontSize / consoleText.font.faceInfo.pointSize;
