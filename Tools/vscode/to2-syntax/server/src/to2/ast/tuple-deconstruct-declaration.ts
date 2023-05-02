@@ -4,14 +4,14 @@ import {
   isDeclarationParameter,
 } from "./variable-declaration";
 import { TO2Type, UNKNOWN_TYPE } from "./to2-type";
-import { InputPosition } from "../../parser";
+import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
 
 export class TupleDeconstructDeclaration implements Node, BlockItem {
   constructor(
+    private readonly constLetKeyword: WithPosition<"let" | "const">,
     public readonly declarations: DeclarationParameterOrPlaceholder[],
-    public readonly isConst: boolean,
     public readonly expression: Expression,
     public readonly start: InputPosition,
     public readonly end: InputPosition
@@ -61,11 +61,17 @@ export class TupleDeconstructDeclaration implements Node, BlockItem {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    semanticTokens.push({
+      type: "keyword",
+      start: this.constLetKeyword.start,
+      length:
+        this.constLetKeyword.end.offset - this.constLetKeyword.start.offset,
+    });
     for (const declaration of this.declarations) {
       if (isDeclarationParameter(declaration)) {
         semanticTokens.push({
           type: "variable",
-          modifiers: ["definition"],
+          modifiers: ["declaration"],
           start: declaration.target.start,
           length:
             declaration.target.end.offset - declaration.target.start.offset,

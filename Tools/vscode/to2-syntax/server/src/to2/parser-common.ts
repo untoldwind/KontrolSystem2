@@ -60,11 +60,11 @@ const RESERVED_KEYWORDS = new Set<string>([
   "impl",
 ]);
 
-export const pubKeyword = terminated(tag("pub"), spacing1);
+export const pubKeyword = terminated(withPosition(tag("pub")), spacing1);
 
-export const letKeyword = terminated(tag("let"), spacing1);
+export const letKeyword = terminated(withPosition(tag("let")), spacing1);
 
-export const constKeyword = terminated(tag("const"), spacing1);
+export const constKeyword = terminated(withPosition(tag("const")), spacing1);
 
 export const lineComment = map(
   between(preceded(whitespace0, tag("//")), charsExcept0("\r\n"), peekLineEnd),

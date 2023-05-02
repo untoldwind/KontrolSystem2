@@ -1,4 +1,4 @@
-import { TO2Type } from "./to2-type";
+import { RealizedType, TO2Type } from "./to2-type";
 import { InputPosition } from "../../parser";
 import { BlockContext, ModuleContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
@@ -19,9 +19,12 @@ export interface Node {
 export interface BlockItem extends Node {
   isComment?: boolean;
 
-  resultType(context: BlockContext): TO2Type;
+  resultType(context: BlockContext, typeHint?: RealizedType): TO2Type;
 
-  validateBlock(context: BlockContext): ValidationError[];
+  validateBlock(
+    context: BlockContext,
+    typeHint?: RealizedType
+  ): ValidationError[];
 }
 
 export interface ModuleItem extends Node {
@@ -46,7 +49,10 @@ export abstract class Expression implements Node, BlockItem {
     initialValue: T
   ): T;
 
-  public abstract validateBlock(context: BlockContext): ValidationError[];
+  public abstract validateBlock(
+    context: BlockContext,
+    typeHint?: RealizedType
+  ): ValidationError[];
 
   public abstract collectSemanticTokens(semanticTokens: SemanticToken[]): void;
 }

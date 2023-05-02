@@ -3,7 +3,6 @@ import { TO2Type, UNKNOWN_TYPE } from "./to2-type";
 import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext, FunctionContext, ModuleContext } from "./context";
 import { FunctionType } from "./function-type";
-import { error } from "console";
 import { SemanticToken } from "../../syntax-token";
 
 export enum FunctionModifier {
@@ -40,16 +39,24 @@ export class FunctionParameter implements Node {
     return errors;
   }
 
-  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    semanticTokens.push({
+      type: "parameter",
+      modifiers: ["definition"],
+      start: this.name.start,
+      length: this.name.end.offset - this.name.start.offset,
+    });
+  }
 }
 
 export class FunctionDeclaration implements Node, ModuleItem {
   public isFunctionDecl: boolean = true;
   public functionType: FunctionType;
+  public readonly modifier: FunctionModifier;
+  public readonly isAsync: boolean;
 
   constructor(
-    public readonly modifier: FunctionModifier,
-    public readonly isAsync: boolean,
+    private readonly prefix: WithPosition<"fn" | "sync" | "test" | "pub">[],
     public readonly name: WithPosition<string>,
     public readonly description: string,
     public readonly parameters: FunctionParameter[],
@@ -58,8 +65,15 @@ export class FunctionDeclaration implements Node, ModuleItem {
     public readonly start: InputPosition,
     public readonly end: InputPosition
   ) {
+    this.isAsync = prefix.findIndex((p) => p.value === "sync") < 0;
+    this.modifier =
+      prefix.findIndex((p) => p.value === "pub") >= 0
+        ? FunctionModifier.Public
+        : prefix.findIndex((p) => p.value === "test") >= 0
+        ? FunctionModifier.Test
+        : FunctionModifier.Private;
     this.functionType = new FunctionType(
-      isAsync,
+      this.isAsync,
       parameters.map((param) => [param.name.value, param.type ?? UNKNOWN_TYPE]),
       declaredReturn,
       description
@@ -135,6 +149,19 @@ export class FunctionDeclaration implements Node, ModuleItem {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    for (const keyword of this.prefix) {
+      semanticTokens.push({
+        type: "keyword",
+        start: keyword.start,
+        length: keyword.end.offset - keyword.start.offset,
+      });
+    }
+    semanticTokens.push({
+      type: "function",
+      modifiers: this.isAsync ? ["async", "declaration"] : ["declaration"],
+      start: this.name.start,
+      length: this.name.end.offset - this.name.start.offset,
+    });
     for (const parameter of this.parameters) {
       parameter.collectSemanticTokens(semanticTokens);
     }

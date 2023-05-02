@@ -1,12 +1,12 @@
 import { Expression, Node, ValidationError } from ".";
-import { BUILTIN_UNIT, TO2Type } from "./to2-type";
+import { BUILTIN_UNIT, TO2Type, UNKNOWN_TYPE } from "./to2-type";
 import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
 
 export class IfThen extends Expression {
   constructor(
-    public readonly ifKeyword: WithPosition<"if">,
+    private readonly ifKeyword: WithPosition<"if">,
     public readonly condition: Expression,
     public readonly thenExpression: Expression,
     start: InputPosition,
@@ -49,7 +49,7 @@ export class IfThen extends Expression {
 
 export class IfThenElse extends Expression {
   constructor(
-    public readonly ifKeyword: WithPosition<"if">,
+    private readonly ifKeyword: WithPosition<"if">,
     public readonly condition: Expression,
     public readonly thenExpression: Expression,
     public readonly elseExpression: Expression,
@@ -59,7 +59,10 @@ export class IfThenElse extends Expression {
     super(start, end);
   }
   public resultType(context: BlockContext): TO2Type {
-    return this.thenExpression.resultType(context);
+    const thenType = this.thenExpression.resultType(context);
+    return thenType === UNKNOWN_TYPE
+      ? this.elseExpression.resultType(context)
+      : thenType;
   }
 
   public reduceNode<T>(
@@ -77,8 +80,10 @@ export class IfThenElse extends Expression {
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
-    errors.push(...this.condition.validateBlock(context));
-    errors.push(...this.thenExpression.validateBlock(context));
+    const thenContext = new BlockContext(context.module, context);
+
+    errors.push(...this.condition.validateBlock(thenContext));
+    errors.push(...this.thenExpression.validateBlock(thenContext));
     errors.push(...this.elseExpression.validateBlock(context));
 
     return errors;

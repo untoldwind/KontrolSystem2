@@ -45,6 +45,11 @@ export class UnarySuffix extends Expression {
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     this.left.collectSemanticTokens(semanticTokens);
+    semanticTokens.push({
+      type: "operator",
+      start: this.op.start,
+      length: this.op.end.offset - this.op.start.offset,
+    });
   }
 
   private findOperator(context: BlockContext): TO2Type | undefined {

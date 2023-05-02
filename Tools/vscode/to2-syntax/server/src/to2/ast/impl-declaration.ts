@@ -1,12 +1,13 @@
 import { Node, ValidationError } from ".";
 import { LineComment } from "./line-comment";
 import { MethodDeclaration } from "./method-declaration";
-import { InputPosition } from "../../parser";
+import { InputPosition, WithPosition } from "../../parser";
 import { ModuleContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
 
 export class ImplDeclaration implements Node {
   constructor(
+    private readonly implKeyword: WithPosition<"impl">,
     public readonly name: string,
     public readonly methods: (LineComment | MethodDeclaration)[],
     public readonly start: InputPosition,

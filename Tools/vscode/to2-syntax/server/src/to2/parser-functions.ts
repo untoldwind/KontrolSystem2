@@ -22,47 +22,23 @@ import {
 } from "./parser-common";
 import { expression } from "./parser-expression";
 
-const fnKeyword = terminated(tag("fn"), spacing1);
+const fnKeyword = terminated(withPosition(tag("fn")), spacing1);
 
-const testKeyword = terminated(tag("test"), spacing1);
+const testKeyword = terminated(withPosition(tag("test")), spacing1);
 
-const syncKeyword = terminated(tag("sync"), spacing1);
+const syncKeyword = terminated(withPosition(tag("sync")), spacing1);
 
-const selfKeyword = tag("self");
+const selfKeyword = withPosition(tag("self"));
 
 const functionPrefix = alt(
-  recognizeAs(seq(syncKeyword, pubKeyword, fnKeyword), {
-    modifier: FunctionModifier.Public,
-    async: false,
-  }),
-  recognizeAs(seq(syncKeyword, testKeyword, fnKeyword), {
-    modifier: FunctionModifier.Test,
-    async: false,
-  }),
-  recognizeAs(seq(pubKeyword, fnKeyword), {
-    modifier: FunctionModifier.Public,
-    async: true,
-  }),
-  recognizeAs(seq(pubKeyword, syncKeyword, fnKeyword), {
-    modifier: FunctionModifier.Public,
-    async: false,
-  }),
-  recognizeAs(seq(testKeyword, fnKeyword), {
-    modifier: FunctionModifier.Test,
-    async: true,
-  }),
-  recognizeAs(seq(testKeyword, syncKeyword, fnKeyword), {
-    modifier: FunctionModifier.Test,
-    async: false,
-  }),
-  recognizeAs(seq(syncKeyword, fnKeyword), {
-    modifier: FunctionModifier.Private,
-    async: false,
-  }),
-  recognizeAs(seq(fnKeyword), {
-    modifier: FunctionModifier.Private,
-    async: true,
-  })
+  seq(syncKeyword, pubKeyword, fnKeyword),
+  seq(syncKeyword, testKeyword, fnKeyword),
+  seq(pubKeyword, fnKeyword),
+  seq(pubKeyword, syncKeyword, fnKeyword),
+  seq(testKeyword, fnKeyword),
+  seq(testKeyword, syncKeyword, fnKeyword),
+  seq(syncKeyword, fnKeyword),
+  seq(fnKeyword)
 );
 
 const functionParameter = map(
@@ -95,20 +71,12 @@ export const functionDeclaration = map(
     preceded(eqDelimiter, expression)
   ),
   (
-    [
-      description,
-      { modifier, async },
-      name,
-      parameters,
-      returnType,
-      expression,
-    ],
+    [description, functionPrefix, name, parameters, returnType, expression],
     start,
     end
   ) =>
     new FunctionDeclaration(
-      modifier,
-      async,
+      functionPrefix,
       name,
       description,
       parameters,
@@ -145,7 +113,7 @@ export const methodDeclaration = map(
   seq(
     descriptionComment,
     opt(preceded(whitespace0, syncKeyword)),
-    preceded(preceded(whitespace0, fnKeyword), identifier),
+    preceded(preceded(whitespace0, fnKeyword), withPosition(identifier)),
     preceded(whitespace0, methodSelfParams),
     methodParameters,
     preceded(between(whitespace0, tag("->"), whitespace0), typeRef),
@@ -160,6 +128,7 @@ export const methodDeclaration = map(
       sync === undefined,
       name,
       description,
+      parameters,
       returnType,
       expression,
       start,

@@ -45,3 +45,8 @@ export class ResultType implements RealizedType {
     return undefined;
   }
 }
+
+export function isResultType(type: RealizedType): type is ResultType {
+  return type.kind === "Result";
+}
+

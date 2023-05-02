@@ -1,6 +1,7 @@
 import { ModuleContext } from "./context";
 import { FunctionType } from "./function-type";
-import { RealizedType, TO2Type } from "./to2-type";
+import { BUILTIN_BOOL, RealizedType, TO2Type } from "./to2-type";
+import { OptionType } from "./option-type";
 
 export class ArrayType implements RealizedType {
   public readonly kind = "Array";
@@ -12,7 +13,7 @@ export class ArrayType implements RealizedType {
   constructor(element: TO2Type, dimension: number = 1) {
     this.elementType =
       dimension > 1 ? new ArrayType(element, dimension - 1) : element;
-    this.name = this.localName = `${this.elementType}[]`;
+    this.name = this.localName = `${this.elementType.name}[]`;
     this.description = "";
   }
 
@@ -37,6 +38,56 @@ export class ArrayType implements RealizedType {
   }
 
   public findMethod(name: string): FunctionType | undefined {
+    switch (name) {
+      case "filter":
+        return new FunctionType(
+          false,
+          [
+            [
+              "predicate",
+              new FunctionType(
+                false,
+                [["item", this.elementType]],
+                BUILTIN_BOOL
+              ),
+            ],
+          ],
+          this,
+          "Filter array based on a predicate"
+        );
+      case "find":
+        return new FunctionType(
+          false,
+          [
+            [
+              "predicate",
+              new FunctionType(
+                false,
+                [["item", this.elementType]],
+                BUILTIN_BOOL
+              ),
+            ],
+          ],
+          new OptionType(this.elementType),
+          "Find an item in the array based on a predicate"
+        );
+      case "exists":
+        return new FunctionType(
+          false,
+          [
+            [
+              "predicate",
+              new FunctionType(
+                false,
+                [["item", this.elementType]],
+                BUILTIN_BOOL
+              ),
+            ],
+          ],
+          BUILTIN_BOOL,
+          "Check if an item satisfying a predicate exists"
+        );
+    }
     return undefined;
   }
 

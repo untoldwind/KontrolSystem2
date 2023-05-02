@@ -1,14 +1,16 @@
 import { Expression, ModuleItem, Node, ValidationError } from ".";
 import { TO2Type } from "./to2-type";
-import { InputPosition } from "../../parser";
+import { InputPosition, WithPosition } from "../../parser";
 import { SemanticToken } from "../../syntax-token";
 import { BlockContext, FunctionContext, ModuleContext } from "./context";
+import { FunctionParameter } from "./function-declaration";
 
 export class MethodDeclaration implements Node, ModuleItem {
   constructor(
     public readonly isAsync: boolean,
-    public readonly name: string,
+    public readonly name: WithPosition<string>,
     public readonly description: string,
+    public readonly parameters: FunctionParameter[],
     public readonly declaredReturn: TO2Type,
     public readonly expression: Expression,
     public readonly start: InputPosition,
@@ -37,6 +39,15 @@ export class MethodDeclaration implements Node, ModuleItem {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    semanticTokens.push({
+      type: "method",
+      modifiers: this.isAsync ? ["async", "declaration"] : ["declaration"],
+      start: this.name.start,
+      length: this.name.end.offset - this.name.start.offset,
+    });
+    for (const parameter of this.parameters) {
+      parameter.collectSemanticTokens(semanticTokens);
+    }
     this.expression.collectSemanticTokens(semanticTokens);
   }
 }

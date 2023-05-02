@@ -44,6 +44,11 @@ export class UnaryPrefix extends Expression {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    semanticTokens.push({
+      type: "operator",
+      start: this.op.start,
+      length: this.op.end.offset - this.op.start.offset,
+    });
     this.right.collectSemanticTokens(semanticTokens);
   }
 

@@ -6,7 +6,7 @@ import { SemanticToken } from "../../syntax-token";
 
 export class While extends Expression {
   constructor(
-    public readonly whileKeyword: WithPosition<string>,
+    private readonly whileKeyword: WithPosition<string>,
     public readonly condition: Expression,
     public readonly loopExpression: Expression,
     start: InputPosition,
@@ -28,6 +28,7 @@ export class While extends Expression {
       this.condition.reduceNode(combine, combine(initialValue, this))
     );
   }
+  
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
@@ -36,13 +37,14 @@ export class While extends Expression {
 
     return errors;
   }
+
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     semanticTokens.push({
       type: "keyword",
       start: this.whileKeyword.start,
       length: this.whileKeyword.end.offset - this.whileKeyword.start.offset,
     });
-    
+
     this.condition.collectSemanticTokens(semanticTokens);
     this.loopExpression.collectSemanticTokens(semanticTokens);
   }

@@ -40,10 +40,6 @@ export class Call extends Expression {
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
-    for (const argExpression of this.args) {
-      errors.push(...argExpression.validateBlock(context));
-    }
-
     const variableType =
       this.namePath.value.length == 1
         ? context
@@ -68,6 +64,10 @@ export class Call extends Expression {
         start: this.namePath.start,
         end: this.namePath.end,
       });
+    } else {
+      for (const argExpression of this.args) {
+        errors.push(...argExpression.validateBlock(context));
+      }
     }
 
     return errors;

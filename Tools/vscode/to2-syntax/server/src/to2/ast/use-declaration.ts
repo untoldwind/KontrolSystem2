@@ -123,7 +123,7 @@ export class UseDeclaration implements Node, ModuleItem {
       for (const name of this.names) {
         semanticTokens.push({
           type: "variable",
-          modifiers: ["declaration"],
+          modifiers: ["definition"],
           start: name.start,
           length: name.end.offset - name.start.offset,
         });

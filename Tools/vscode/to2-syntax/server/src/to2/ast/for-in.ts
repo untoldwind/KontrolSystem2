@@ -6,7 +6,7 @@ import { SemanticToken } from "../../syntax-token";
 
 export class ForIn extends Expression {
   constructor(
-    public readonly forKeyword: WithPosition<"for">,
+    private readonly forKeyword: WithPosition<"for">,
     public readonly variableName: WithPosition<string>,
     public readonly variableType: TO2Type | undefined,
     public readonly inKeyword: WithPosition<"in">,

@@ -33,11 +33,15 @@ export class MethodCall extends Expression {
     const errors: ValidationError[] = [];
 
     errors.push(...this.target.validateBlock(context));
-    for (const argExpression of this.args) {
-      errors.push(...argExpression.validateBlock(context));
-    }
 
-    if (errors.length === 0 && !this.findMethod(context)) {
+    if (errors.length > 0) return errors;
+
+    const methodType = this.findMethod(context);
+    if (methodType) {
+      for (const argExpression of this.args) {
+        errors.push(...argExpression.validateBlock(context));
+      }
+    } else {
       errors.push({
         status: "error",
         message: `Undefined method ${this.methodName.value} for type ${

@@ -149,7 +149,8 @@ const structDeclaration = map(
 
 const implDeclaration = map(
   seq(
-    preceded(implKeyword, identifier),
+    withPosition(implKeyword),
+    identifier,
     between(
       preceded(whitespace0, tag("{")),
       delimited0(
@@ -160,8 +161,8 @@ const implDeclaration = map(
       preceded(whitespace0, tag("}"))
     )
   ),
-  ([name, methods], start, end) =>
-    new ImplDeclaration(name, methods, start, end)
+  ([implKeyword, name, methods], start, end) =>
+    new ImplDeclaration(implKeyword, name, methods, start, end)
 );
 
 const constDeclaration = map(

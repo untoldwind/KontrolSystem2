@@ -73,20 +73,15 @@ import {
   literalString,
 } from "./parser-literals";
 import {
-  AssignSuffixOperation,
   FieldGetSuffix,
   IndexGetSuffix,
   MethodCallSuffix,
   OperatorSuffix,
-  SuffixOperation,
 } from "./suffix-operation";
 import { ForIn } from "./ast/for-in";
 import { ForInDeconstruct } from "./ast/for-in-deconstruct";
 
-const letOrConst = alt(
-  recognizeAs(letKeyword, false),
-  recognizeAs(constKeyword, true)
-);
+const letOrConst = alt(letKeyword, constKeyword);
 
 const variableDeclaration = map(
   seq(
@@ -116,12 +111,12 @@ const variableDeclaration = map(
     ),
     preceded(eqDelimiter, expression)
   ),
-  ([isConst, vars, expression], start, end) =>
+  ([letOrConst, vars, expression], start, end) =>
     vars.isVar
-      ? new VariableDeclaration(vars.decl, isConst, expression, start, end)
+      ? new VariableDeclaration(letOrConst, vars.decl, expression, start, end)
       : new TupleDeconstructDeclaration(
+          letOrConst,
           vars.decls,
-          isConst,
           expression,
           start,
           end
@@ -501,7 +496,7 @@ const rangeCreate = map(
 
 const unapplyExpr = map(
   seq(
-    identifier,
+    withPosition(identifier),
     preceded(
       spacing0,
       between(

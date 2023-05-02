@@ -1,12 +1,13 @@
-import { BlockItem, Expression, Node, ValidationError } from ".";
+import { Expression, Node, ValidationError } from ".";
 import { BUILTIN_BOOL, TO2Type } from "./to2-type";
-import { InputPosition } from "../../parser";
+import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
+import { isOptionType } from "./option-type";
 
 export class Unapply extends Expression {
   constructor(
-    public readonly pattern: string,
+    public readonly pattern: WithPosition<string>,
     public readonly extractNames: string[],
     public readonly expression: Expression,
     start: InputPosition,
@@ -25,11 +26,49 @@ export class Unapply extends Expression {
   ): T {
     return this.expression.reduceNode(combine, combine(initialValue, this));
   }
+
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
+    const expressionType = this.expression
+      .resultType(context)
+      .realizedType(context.module);
+
+    switch (this.pattern.value) {
+      case "Some":
+        if (this.extractNames.length !== 1) {
+          errors.push({
+            status: "error",
+            message: "Some requires one argument",
+            start: this.pattern.start,
+            end: this.pattern.end,
+          });
+        } else if (isOptionType(expressionType)) {
+          context.localVariables.set(
+            this.extractNames[0],
+            expressionType.elementType
+          );
+        } else {
+          errors.push({
+            status: "error",
+            message: "Expected option type",
+            start: this.expression.start,
+            end: this.expression.end,
+          });
+        }
+        break;
+      default:
+        errors.push({
+          status: "error",
+          message: `Undefined pattern ${this.pattern}`,
+          start: this.pattern.start,
+          end: this.pattern.end,
+        });
+    }
+
     return errors;
   }
+
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     this.expression.collectSemanticTokens(semanticTokens);
   }

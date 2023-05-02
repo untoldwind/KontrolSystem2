@@ -5,6 +5,7 @@ export const SEMANTIC_TOKEN_TYPES = [
   "keyword",
   "operator",
   "variable",
+  "parameter",
   "string",
   "number",
   "comment",

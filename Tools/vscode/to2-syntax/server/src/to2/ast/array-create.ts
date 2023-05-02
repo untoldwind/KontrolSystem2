@@ -1,8 +1,9 @@
 import { BlockItem, Expression, Node, ValidationError } from ".";
-import { BUILTIN_UNIT, TO2Type } from "./to2-type";
+import { BUILTIN_UNIT, TO2Type, UNKNOWN_TYPE } from "./to2-type";
 import { InputPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
+import { ArrayType } from "./array-type";
 
 export class ArrayCreate extends Expression {
   constructor(
@@ -15,7 +16,7 @@ export class ArrayCreate extends Expression {
   }
 
   public resultType(context: BlockContext): TO2Type {
-    return BUILTIN_UNIT;
+    return new ArrayType(this.determineElementType(context));
   }
 
   public reduceNode<T>(
@@ -42,5 +43,15 @@ export class ArrayCreate extends Expression {
     for (const element of this.elements) {
       element.collectSemanticTokens(semanticTokens);
     }
+  }
+
+  private determineElementType(context: BlockContext) {
+    if (this.elementType) return this.elementType;
+
+    for (const element of this.elements) {
+      const elementType = element.resultType(context);
+      if (elementType !== UNKNOWN_TYPE) return elementType;
+    }
+    return UNKNOWN_TYPE;
   }
 }

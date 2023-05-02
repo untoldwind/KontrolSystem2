@@ -40,8 +40,8 @@ export function isDeclarationParameter(
 
 export class VariableDeclaration implements Node, BlockItem {
   constructor(
+    private readonly constLetKeyword: WithPosition<"let" | "const">,
     public readonly declaration: DeclarationParameter,
-    public readonly isConst: boolean,
     public readonly expression: Expression,
     public readonly start: InputPosition,
     public readonly end: InputPosition
@@ -74,15 +74,26 @@ export class VariableDeclaration implements Node, BlockItem {
         this.resultType(context)
       );
     }
-    errors.push(...this.expression.validateBlock(context));
+    errors.push(
+      ...this.expression.validateBlock(
+        context,
+        this.declaration.type?.realizedType(context.module)
+      )
+    );
 
     return errors;
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     semanticTokens.push({
+      type: "keyword",
+      start: this.constLetKeyword.start,
+      length:
+        this.constLetKeyword.end.offset - this.constLetKeyword.start.offset,
+    });
+    semanticTokens.push({
       type: "variable",
-      modifiers: ["definition"],
+      modifiers: ["declaration"],
       start: this.declaration.target.start,
       length:
         this.declaration.target.end.offset -

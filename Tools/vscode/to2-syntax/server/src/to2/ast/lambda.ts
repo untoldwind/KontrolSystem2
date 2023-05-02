@@ -1,6 +1,6 @@
 import { Expression, Node, ValidationError } from ".";
 import { FunctionParameter } from "./function-declaration";
-import { BUILTIN_UNIT, TO2Type } from "./to2-type";
+import { BUILTIN_UNIT, RealizedType, TO2Type } from "./to2-type";
 import { InputPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
@@ -15,7 +15,7 @@ export class Lambda extends Expression {
     super(start, end);
   }
 
-  public resultType(context: BlockContext): TO2Type {
+  public resultType(context: BlockContext, typeHint?: RealizedType): TO2Type {
     return BUILTIN_UNIT;
   }
 
@@ -32,7 +32,10 @@ export class Lambda extends Expression {
     );
   }
 
-  public validateBlock(context: BlockContext): ValidationError[] {
+  public validateBlock(
+    context: BlockContext,
+    typeHint?: RealizedType
+  ): ValidationError[] {
     const errors: ValidationError[] = [];
 
     errors.push(...this.expression.validateBlock(context));

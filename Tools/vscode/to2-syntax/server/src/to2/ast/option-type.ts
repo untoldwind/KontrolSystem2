@@ -63,3 +63,7 @@ export class OptionType implements RealizedType {
     return undefined;
   }
 }
+
+export function isOptionType(type: RealizedType): type is OptionType {
+  return type.kind === "Option";
+}
