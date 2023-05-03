@@ -88,6 +88,12 @@ export type TypeRef =
       parameters: TypeRef[];
     }
   | {
+      kind: "Function";
+      parameters: TypeRef[];
+      returnType: TypeRef;
+      isAsync: boolean;
+    }
+  | {
       kind: "Generic";
       name: string;
     }

@@ -328,6 +328,7 @@ namespace KontrolSystem.GenRefs {
             Result,
             Option,
             Tuple,
+            Function,
         }
 
         public TypeRef(ModuleContext moduleContext, TO2Type type) {
@@ -353,6 +354,11 @@ namespace KontrolSystem.GenRefs {
                 Kind = TypeKind.Record;
                 Names = recordType.ItemTypes.Select(item => item.Key).ToList();
                 Parameters = recordType.ItemTypes.Select(item => new TypeRef(moduleContext, item.Value)).ToList();
+            } else if (type is FunctionType functionType) {
+                Kind = TypeKind.Function;
+                Parameters = functionType.parameterTypes.Select(item => new TypeRef(moduleContext, item)).ToList();
+                ReturnType = new TypeRef(moduleContext, functionType.returnType);
+                IsAsync = functionType.isAsync;
             } else {
                 Kind = TypeKind.Standard;
                 var idx = type.Name.LastIndexOf("::", StringComparison.Ordinal);
@@ -382,5 +388,11 @@ namespace KontrolSystem.GenRefs {
 
         [JsonProperty("parameters", NullValueHandling = NullValueHandling.Ignore)]
         public List<TypeRef> Parameters { get; }
+        
+        [JsonProperty("returnType", NullValueHandling = NullValueHandling.Ignore)]
+        public TypeRef ReturnType { get; }
+        
+        [JsonProperty("isAsync", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? IsAsync { get; }
     }
 }

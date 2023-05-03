@@ -33,7 +33,7 @@ export class RecordType implements RealizedType {
   }
 
   public findField(name: string): TO2Type | undefined {
-    return undefined;
+    return this.itemTypes.find((item) => item[0] === name)?.[1];
   }
 
   public findMethod(name: string): FunctionType | undefined {

@@ -151,5 +151,13 @@ export function resolveTypeRef(
           resolveTypeRef(param) ?? UNKNOWN_TYPE,
         ])
       );
+    case "Function":
+      return new FunctionType(
+        typeRef.isAsync,
+        typeRef.parameters.map(
+          (param, idx) => [`param${idx}`, resolveTypeRef(param) ?? UNKNOWN_TYPE, false]
+        ),
+        resolveTypeRef(typeRef.returnType) ?? UNKNOWN_TYPE
+      );
   }
 }

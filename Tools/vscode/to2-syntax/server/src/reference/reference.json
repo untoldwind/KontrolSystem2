@@ -1142,9 +1142,18 @@
             {
               "name": "mapper",
               "type": {
-                "kind": "Standard",
-                "module": "",
-                "name": "sync fn(int) -> T"
+                "kind": "Function",
+                "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "int"
+                  }
+                ],
+                "returnType": {
+                  "kind": "Generic",
+                  "name": "T"
+                },
+                "isAsync": false
               },
               "hasDefault": false
             }
@@ -1281,9 +1290,18 @@
             {
               "name": "updater",
               "type": {
-                "kind": "Standard",
-                "module": "",
-                "name": "sync fn(T) -> T"
+                "kind": "Function",
+                "parameters": [
+                  {
+                    "kind": "Generic",
+                    "name": "T"
+                  }
+                ],
+                "returnType": {
+                  "kind": "Generic",
+                  "name": "T"
+                },
+                "isAsync": false
               },
               "hasDefault": false
             }
@@ -1333,9 +1351,18 @@
             {
               "name": "mapper",
               "type": {
-                "kind": "Standard",
-                "module": "",
-                "name": "sync fn(T) -> Unit"
+                "kind": "Function",
+                "parameters": [
+                  {
+                    "kind": "Generic",
+                    "name": "T"
+                  }
+                ],
+                "returnType": {
+                  "kind": "Builtin",
+                  "name": "Unit"
+                },
+                "isAsync": false
               },
               "hasDefault": false
             }
@@ -1358,9 +1385,18 @@
             {
               "name": "mapper",
               "type": {
-                "kind": "Standard",
-                "module": "",
-                "name": "sync fn(T) -> Unit"
+                "kind": "Function",
+                "parameters": [
+                  {
+                    "kind": "Generic",
+                    "name": "T"
+                  }
+                ],
+                "returnType": {
+                  "kind": "Builtin",
+                  "name": "Unit"
+                },
+                "isAsync": false
               },
               "hasDefault": false
             }
@@ -1951,9 +1987,24 @@
           "name": "ReentrySimulation"
         },
         {
-          "kind": "Standard",
-          "module": "sync fn(ksp::math::Vec3, ksp::math",
-          "name": "Vec3) -> float"
+          "kind": "Function",
+          "parameters": [
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec3"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec3"
+            }
+          ],
+          "returnType": {
+            "kind": "Builtin",
+            "name": "float"
+          },
+          "isAsync": false
         }
       ]
     },
@@ -2524,9 +2575,24 @@
           "name": "ReentrySimulation"
         },
         {
-          "kind": "Standard",
-          "module": "sync fn(ksp::math::Vec3, ksp::math",
-          "name": "Vec3) -> float"
+          "kind": "Function",
+          "parameters": [
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec3"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec3"
+            }
+          ],
+          "returnType": {
+            "kind": "Builtin",
+            "name": "float"
+          },
+          "isAsync": false
         }
       ]
     }
@@ -2616,9 +2682,13 @@
             {
               "name": "function",
               "type": {
-                "kind": "Standard",
-                "module": "",
-                "name": "sync fn() -> T"
+                "kind": "Function",
+                "parameters": [],
+                "returnType": {
+                  "kind": "Generic",
+                  "name": "T"
+                },
+                "isAsync": false
               },
               "hasDefault": false
             }
@@ -4629,9 +4699,19 @@
                 {
                   "name": "newTranslateProvider",
                   "type": {
-                    "kind": "Standard",
-                    "module": "sync fn(float) -> ksp::math",
-                    "name": "Vec3"
+                    "kind": "Function",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "float"
+                      }
+                    ],
+                    "returnType": {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "Vec3"
+                    },
+                    "isAsync": false
                   },
                   "hasDefault": false
                 }
@@ -4684,9 +4764,19 @@
                 {
                   "name": "newPitchYawRollProvider",
                   "type": {
-                    "kind": "Standard",
-                    "module": "sync fn(float) -> ksp::math",
-                    "name": "Vec3"
+                    "kind": "Function",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "float"
+                      }
+                    ],
+                    "returnType": {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "Vec3"
+                    },
+                    "isAsync": false
                   },
                   "hasDefault": false
                 }
@@ -4738,9 +4828,18 @@
                 {
                   "name": "newThrottleProvider",
                   "type": {
-                    "kind": "Standard",
-                    "module": "",
-                    "name": "sync fn(float) -> float"
+                    "kind": "Function",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "float"
+                      }
+                    ],
+                    "returnType": {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    "isAsync": false
                   },
                   "hasDefault": false
                 }
@@ -4944,9 +5043,18 @@
                 {
                   "name": "newWheelSteerProvider",
                   "type": {
-                    "kind": "Standard",
-                    "module": "",
-                    "name": "sync fn(float) -> float"
+                    "kind": "Function",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "float"
+                      }
+                    ],
+                    "returnType": {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    "isAsync": false
                   },
                   "hasDefault": false
                 }
@@ -4998,9 +5106,18 @@
                 {
                   "name": "newWheelThrottleProvider",
                   "type": {
-                    "kind": "Standard",
-                    "module": "",
-                    "name": "sync fn(float) -> float"
+                    "kind": "Function",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "float"
+                      }
+                    ],
+                    "returnType": {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    "isAsync": false
                   },
                   "hasDefault": false
                 }
@@ -5200,18 +5317,28 @@
                 {
                   "name": "startProvider",
                   "type": {
-                    "kind": "Standard",
-                    "module": "sync fn() -> ksp::math",
-                    "name": "GlobalPosition"
+                    "kind": "Function",
+                    "parameters": [],
+                    "returnType": {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "GlobalPosition"
+                    },
+                    "isAsync": false
                   },
                   "hasDefault": false
                 },
                 {
                   "name": "endProvider",
                   "type": {
-                    "kind": "Standard",
-                    "module": "sync fn() -> ksp::math",
-                    "name": "GlobalPosition"
+                    "kind": "Function",
+                    "parameters": [],
+                    "returnType": {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "GlobalPosition"
+                    },
+                    "isAsync": false
                   },
                   "hasDefault": false
                 },
@@ -5255,18 +5382,28 @@
                 {
                   "name": "startProvider",
                   "type": {
-                    "kind": "Standard",
-                    "module": "sync fn() -> ksp::math",
-                    "name": "GlobalPosition"
+                    "kind": "Function",
+                    "parameters": [],
+                    "returnType": {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "GlobalPosition"
+                    },
+                    "isAsync": false
                   },
                   "hasDefault": false
                 },
                 {
                   "name": "vectorProvider",
                   "type": {
-                    "kind": "Standard",
-                    "module": "sync fn() -> ksp::math",
-                    "name": "GlobalVector"
+                    "kind": "Function",
+                    "parameters": [],
+                    "returnType": {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "GlobalVector"
+                    },
+                    "isAsync": false
                   },
                   "hasDefault": false
                 },
@@ -5346,18 +5483,27 @@
                 {
                   "name": "positionProvider",
                   "type": {
-                    "kind": "Standard",
-                    "module": "sync fn() -> ksp::math",
-                    "name": "GlobalPosition"
+                    "kind": "Function",
+                    "parameters": [],
+                    "returnType": {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "GlobalPosition"
+                    },
+                    "isAsync": false
                   },
                   "hasDefault": false
                 },
                 {
                   "name": "textProvider",
                   "type": {
-                    "kind": "Standard",
-                    "module": "",
-                    "name": "sync fn() -> string"
+                    "kind": "Function",
+                    "parameters": [],
+                    "returnType": {
+                      "kind": "Builtin",
+                      "name": "string"
+                    },
+                    "isAsync": false
                   },
                   "hasDefault": false
                 },
@@ -5645,9 +5791,14 @@
                 {
                   "name": "startProvider",
                   "type": {
-                    "kind": "Standard",
-                    "module": "sync fn() -> ksp::math",
-                    "name": "GlobalPosition"
+                    "kind": "Function",
+                    "parameters": [],
+                    "returnType": {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "GlobalPosition"
+                    },
+                    "isAsync": false
                   },
                   "hasDefault": false
                 }
@@ -5665,9 +5816,14 @@
                 {
                   "name": "endProvider",
                   "type": {
-                    "kind": "Standard",
-                    "module": "sync fn() -> ksp::math",
-                    "name": "GlobalPosition"
+                    "kind": "Function",
+                    "parameters": [],
+                    "returnType": {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "GlobalPosition"
+                    },
+                    "isAsync": false
                   },
                   "hasDefault": false
                 }
@@ -5685,9 +5841,14 @@
                 {
                   "name": "vectorProvider",
                   "type": {
-                    "kind": "Standard",
-                    "module": "sync fn() -> ksp::math",
-                    "name": "GlobalVector"
+                    "kind": "Function",
+                    "parameters": [],
+                    "returnType": {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "GlobalVector"
+                    },
+                    "isAsync": false
                   },
                   "hasDefault": false
                 }
@@ -5768,9 +5929,13 @@
             {
               "name": "predicate",
               "type": {
-                "kind": "Standard",
-                "module": "",
-                "name": "sync fn() -> bool"
+                "kind": "Function",
+                "parameters": [],
+                "returnType": {
+                  "kind": "Builtin",
+                  "name": "bool"
+                },
+                "isAsync": false
               },
               "hasDefault": false
             }
@@ -5788,9 +5953,13 @@
             {
               "name": "predicate",
               "type": {
-                "kind": "Standard",
-                "module": "",
-                "name": "sync fn() -> bool"
+                "kind": "Function",
+                "parameters": [],
+                "returnType": {
+                  "kind": "Builtin",
+                  "name": "bool"
+                },
+                "isAsync": false
               },
               "hasDefault": false
             }
@@ -10748,9 +10917,24 @@
               "name": "ReentrySimulation"
             },
             {
-              "kind": "Standard",
-              "module": "sync fn(ksp::math::Vec3, ksp::math",
-              "name": "Vec3) -> float"
+              "kind": "Function",
+              "parameters": [
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "float"
+              },
+              "isAsync": false
             }
           ]
         },
@@ -12324,9 +12508,24 @@
               "name": "ReentrySimulation"
             },
             {
-              "kind": "Standard",
-              "module": "sync fn(ksp::math::Vec3, ksp::math",
-              "name": "Vec3) -> float"
+              "kind": "Function",
+              "parameters": [
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "float"
+              },
+              "isAsync": false
             }
           ]
         },
@@ -12964,9 +13163,24 @@
               "name": "ReentrySimulation"
             },
             {
-              "kind": "Standard",
-              "module": "sync fn(ksp::math::Vec3, ksp::math",
-              "name": "Vec3) -> float"
+              "kind": "Function",
+              "parameters": [
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "float"
+              },
+              "isAsync": false
             }
           ]
         },
@@ -13624,9 +13838,24 @@
               "name": "ReentrySimulation"
             },
             {
-              "kind": "Standard",
-              "module": "sync fn(ksp::math::Vec3, ksp::math",
-              "name": "Vec3) -> float"
+              "kind": "Function",
+              "parameters": [
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "float"
+              },
+              "isAsync": false
             }
           ]
         },
@@ -14264,9 +14493,24 @@
               "name": "ReentrySimulation"
             },
             {
-              "kind": "Standard",
-              "module": "sync fn(ksp::math::Vec3, ksp::math",
-              "name": "Vec3) -> float"
+              "kind": "Function",
+              "parameters": [
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "float"
+              },
+              "isAsync": false
             }
           ]
         },
@@ -14914,9 +15158,24 @@
               "name": "ReentrySimulation"
             },
             {
-              "kind": "Standard",
-              "module": "sync fn(ksp::math::Vec3, ksp::math",
-              "name": "Vec3) -> float"
+              "kind": "Function",
+              "parameters": [
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "float"
+              },
+              "isAsync": false
             }
           ]
         },
@@ -15654,9 +15913,24 @@
               "name": "ReentrySimulation"
             },
             {
-              "kind": "Standard",
-              "module": "sync fn(ksp::math::Vec3, ksp::math",
-              "name": "Vec3) -> float"
+              "kind": "Function",
+              "parameters": [
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "float"
+              },
+              "isAsync": false
             }
           ]
         },
@@ -16344,9 +16618,24 @@
               "name": "ReentrySimulation"
             },
             {
-              "kind": "Standard",
-              "module": "sync fn(ksp::math::Vec3, ksp::math",
-              "name": "Vec3) -> float"
+              "kind": "Function",
+              "parameters": [
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "float"
+              },
+              "isAsync": false
             }
           ]
         },
@@ -16994,9 +17283,24 @@
               "name": "ReentrySimulation"
             },
             {
-              "kind": "Standard",
-              "module": "sync fn(ksp::math::Vec3, ksp::math",
-              "name": "Vec3) -> float"
+              "kind": "Function",
+              "parameters": [
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "float"
+              },
+              "isAsync": false
             }
           ]
         },
@@ -17664,9 +17968,24 @@
               "name": "ReentrySimulation"
             },
             {
-              "kind": "Standard",
-              "module": "sync fn(ksp::math::Vec3, ksp::math",
-              "name": "Vec3) -> float"
+              "kind": "Function",
+              "parameters": [
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "float"
+              },
+              "isAsync": false
             }
           ]
         },
@@ -18344,9 +18663,24 @@
               "name": "ReentrySimulation"
             },
             {
-              "kind": "Standard",
-              "module": "sync fn(ksp::math::Vec3, ksp::math",
-              "name": "Vec3) -> float"
+              "kind": "Function",
+              "parameters": [
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                },
+                {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "float"
+              },
+              "isAsync": false
             }
           ]
         },
@@ -21658,9 +21992,19 @@
                 {
                   "name": "pitchYawRollProvider",
                   "type": {
-                    "kind": "Standard",
-                    "module": "sync fn(float) -> ksp::math",
-                    "name": "Vec3"
+                    "kind": "Function",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "float"
+                      }
+                    ],
+                    "returnType": {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "Vec3"
+                    },
+                    "isAsync": false
                   },
                   "hasDefault": false
                 }
@@ -21697,9 +22041,18 @@
                 {
                   "name": "throttleProvider",
                   "type": {
-                    "kind": "Standard",
-                    "module": "",
-                    "name": "sync fn(float) -> float"
+                    "kind": "Function",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "float"
+                      }
+                    ],
+                    "returnType": {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    "isAsync": false
                   },
                   "hasDefault": false
                 }
@@ -21737,9 +22090,19 @@
                 {
                   "name": "translateProvider",
                   "type": {
-                    "kind": "Standard",
-                    "module": "sync fn(float) -> ksp::math",
-                    "name": "Vec3"
+                    "kind": "Function",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "float"
+                      }
+                    ],
+                    "returnType": {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "Vec3"
+                    },
+                    "isAsync": false
                   },
                   "hasDefault": false
                 }
@@ -21776,9 +22139,18 @@
                 {
                   "name": "wheelSteeringProvider",
                   "type": {
-                    "kind": "Standard",
-                    "module": "",
-                    "name": "sync fn(float) -> float"
+                    "kind": "Function",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "float"
+                      }
+                    ],
+                    "returnType": {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    "isAsync": false
                   },
                   "hasDefault": false
                 }
@@ -21815,9 +22187,18 @@
                 {
                   "name": "wheelThrottleProvider",
                   "type": {
-                    "kind": "Standard",
-                    "module": "",
-                    "name": "sync fn(float) -> float"
+                    "kind": "Function",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "float"
+                      }
+                    ],
+                    "returnType": {
+                      "kind": "Builtin",
+                      "name": "float"
+                    },
+                    "isAsync": false
                   },
                   "hasDefault": false
                 }
@@ -23272,9 +23653,24 @@
               "description": "",
               "readOnly": false,
               "type": {
-                "kind": "Standard",
-                "module": "sync fn(ksp::math::Vec3, ksp::math",
-                "name": "Vec3) -> float"
+                "kind": "Function",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec3"
+                  },
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec3"
+                  }
+                ],
+                "returnType": {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                "isAsync": false
               }
             },
             "grav_parameter": {
@@ -23874,9 +24270,24 @@
             {
               "name": "speed_policy",
               "type": {
-                "kind": "Standard",
-                "module": "sync fn(ksp::math::Vec3, ksp::math",
-                "name": "Vec3) -> float"
+                "kind": "Function",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec3"
+                  },
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec3"
+                  }
+                ],
+                "returnType": {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                "isAsync": false
               },
               "hasDefault": false
             }
@@ -23920,9 +24331,24 @@
             {
               "name": "speed_policy",
               "type": {
-                "kind": "Standard",
-                "module": "sync fn(ksp::math::Vec3, ksp::math",
-                "name": "Vec3) -> float"
+                "kind": "Function",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec3"
+                  },
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec3"
+                  }
+                ],
+                "returnType": {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                "isAsync": false
               },
               "hasDefault": false
             }
@@ -24090,9 +24516,24 @@
             }
           ],
           "returnType": {
-            "kind": "Standard",
-            "module": "sync fn(ksp::math::Vec3, ksp::math",
-            "name": "Vec3) -> float"
+            "kind": "Function",
+            "parameters": [
+              {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec3"
+              },
+              {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec3"
+              }
+            ],
+            "returnType": {
+              "kind": "Builtin",
+              "name": "float"
+            },
+            "isAsync": false
           }
         },
         "safe_speed_policy": {
@@ -24126,9 +24567,24 @@
             }
           ],
           "returnType": {
-            "kind": "Standard",
-            "module": "sync fn(ksp::math::Vec3, ksp::math",
-            "name": "Vec3) -> float"
+            "kind": "Function",
+            "parameters": [
+              {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec3"
+              },
+              {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec3"
+              }
+            ],
+            "returnType": {
+              "kind": "Builtin",
+              "name": "float"
+            },
+            "isAsync": false
           }
         },
         "powered_coast_speed_policy": {
@@ -24162,9 +24618,24 @@
             }
           ],
           "returnType": {
-            "kind": "Standard",
-            "module": "sync fn(ksp::math::Vec3, ksp::math",
-            "name": "Vec3) -> float"
+            "kind": "Function",
+            "parameters": [
+              {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec3"
+              },
+              {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec3"
+              }
+            ],
+            "returnType": {
+              "kind": "Builtin",
+              "name": "float"
+            },
+            "isAsync": false
           }
         }
       }
@@ -24459,9 +24930,24 @@
             {
               "name": "speed_policy",
               "type": {
-                "kind": "Standard",
-                "module": "sync fn(ksp::math::Vec3, ksp::math",
-                "name": "Vec3) -> float"
+                "kind": "Function",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec3"
+                  },
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec3"
+                  }
+                ],
+                "returnType": {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                "isAsync": false
               },
               "hasDefault": false
             }
@@ -25521,9 +26007,22 @@
             {
               "name": "func",
               "type": {
-                "kind": "Standard",
-                "module": "",
-                "name": "sync fn(float, float) -> float"
+                "kind": "Function",
+                "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  }
+                ],
+                "returnType": {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                "isAsync": false
               },
               "hasDefault": false
             },
@@ -25602,9 +26101,22 @@
             {
               "name": "func",
               "type": {
-                "kind": "Standard",
-                "module": "",
-                "name": "sync fn(float, float) -> float"
+                "kind": "Function",
+                "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  }
+                ],
+                "returnType": {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                "isAsync": false
               },
               "hasDefault": false
             },
@@ -25687,9 +26199,22 @@
             {
               "name": "func",
               "type": {
-                "kind": "Standard",
-                "module": "",
-                "name": "sync fn(float, float) -> float"
+                "kind": "Function",
+                "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  }
+                ],
+                "returnType": {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                "isAsync": false
               },
               "hasDefault": false
             },
@@ -25865,9 +26390,18 @@
             {
               "name": "func",
               "type": {
-                "kind": "Standard",
-                "module": "",
-                "name": "sync fn(float) -> float"
+                "kind": "Function",
+                "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  }
+                ],
+                "returnType": {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                "isAsync": false
               },
               "hasDefault": false
             },
@@ -25947,9 +26481,18 @@
             {
               "name": "func",
               "type": {
-                "kind": "Standard",
-                "module": "",
-                "name": "sync fn(float) -> float"
+                "kind": "Function",
+                "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  }
+                ],
+                "returnType": {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                "isAsync": false
               },
               "hasDefault": false
             },
@@ -26007,18 +26550,57 @@
             {
               "name": "accel",
               "type": {
-                "kind": "Standard",
-                "module": "sync fn(float, ksp::math::Vec3, ksp::math::Vec3) -> ksp::math",
-                "name": "Vec3"
+                "kind": "Function",
+                "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec3"
+                  },
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec3"
+                  }
+                ],
+                "returnType": {
+                  "kind": "Standard",
+                  "module": "ksp::math",
+                  "name": "Vec3"
+                },
+                "isAsync": false
               },
               "hasDefault": false
             },
             {
               "name": "end_condition",
               "type": {
-                "kind": "Standard",
-                "module": "sync fn(float, ksp::math::Vec3, ksp::math",
-                "name": "Vec3) -> bool"
+                "kind": "Function",
+                "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec3"
+                  },
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec3"
+                  }
+                ],
+                "returnType": {
+                  "kind": "Builtin",
+                  "name": "bool"
+                },
+                "isAsync": false
               },
               "hasDefault": false
             },
