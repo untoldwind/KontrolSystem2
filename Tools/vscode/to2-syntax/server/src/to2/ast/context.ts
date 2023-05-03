@@ -13,20 +13,52 @@ export class ModuleContext {
 
   findType(
     namePath: string[],
-    typeArguments: TO2Type[]
+    typeArguments: RealizedType[]
   ): RealizedType | undefined {
     if (namePath.length === 1 && this.typeAliases.has(namePath[0])) {
       return this.typeAliases.get(namePath[0]);
     }
+    if (namePath.length === 2) {
+      const mappedModule = this.moduleAliases.get(namePath[0]);
+      if (mappedModule) {
+        return findLibraryType([...mappedModule, namePath[1]], typeArguments);
+      }
+    }
     return findLibraryType(namePath, typeArguments);
   }
 
-  findConstant(name: string): TO2Type | undefined {
-    return this.mappedConstants.get(name);
+  findConstant(namePath: string[]): TO2Type | undefined {
+    if (namePath.length === 1 && this.mappedConstants.has(namePath[0])) {
+      return this.mappedConstants.get(namePath[0]);
+    }
+    if (namePath.length === 2) {
+      const mappedModule = this.moduleAliases.get(namePath[0]);
+      if (mappedModule) {
+        return this.findModule(mappedModule)?.findConstant(namePath[1]);
+      }
+    }
+    return namePath.length > 2
+      ? this.findModule(namePath.slice(0, namePath.length - 1))?.findConstant(
+          namePath[namePath.length - 1]
+        )
+      : undefined;
   }
 
-  findFunction(name: string): FunctionType | undefined {
-    return this.mappedFunctions.get(name);
+  findFunction(namePath: string[]): FunctionType | undefined {
+    if (namePath.length === 1 && this.mappedFunctions.has(namePath[0])) {
+      return this.mappedFunctions.get(namePath[0]);
+    }
+    if (namePath.length === 2) {
+      const mappedModule = this.moduleAliases.get(namePath[0]);
+      if (mappedModule) {
+        return this.findModule(mappedModule)?.findFunction(namePath[1]);
+      }
+    }
+    return namePath.length > 2
+      ? this.findModule(namePath.slice(0, namePath.length - 1))?.findFunction(
+          namePath[namePath.length - 1]
+        )
+      : undefined;
   }
 
   findModule(namePath: string[]): TO2Module | undefined {
@@ -42,12 +74,14 @@ export class BlockContext {
     private readonly parent: BlockContext | undefined = undefined
   ) {}
 
-  public findVariable(name: string): TO2Type | undefined {
+  public findVariable(namePath: string[]): TO2Type | undefined {
     return (
-      this.localVariables.get(name) ??
-      this.parent?.findVariable(name) ??
-      this.module.findConstant(name) ??
-      this.module.findFunction(name)
+      (namePath.length === 1
+        ? this.localVariables.get(namePath[0])
+        : undefined) ??
+      this.parent?.findVariable(namePath) ??
+      this.module.findConstant(namePath) ??
+      this.module.findFunction(namePath)
     );
   }
 }

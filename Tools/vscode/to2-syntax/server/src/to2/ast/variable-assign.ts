@@ -31,7 +31,7 @@ export class VariableAssign extends Expression {
 
     errors.push(...this.expression.validateBlock(context));
 
-    if (!context.findVariable(this.name.value)) {
+    if (!context.findVariable([this.name.value])) {
       errors.push({
         status: "error",
         message: `Undefined variable: ${this.name.value}`,

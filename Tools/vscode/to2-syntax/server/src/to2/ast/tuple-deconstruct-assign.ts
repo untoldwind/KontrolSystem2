@@ -33,7 +33,7 @@ export class TupleDeconstructAssign implements Node, BlockItem {
     errors.push(...this.expression.validateBlock(context));
 
     for (const target of this.targets) {
-      if (!context.findVariable(target.target.value)) {
+      if (!context.findVariable([target.target.value])) {
         errors.push({
           status: "error",
           message: `Undefined variable: ${target.target.value}`,

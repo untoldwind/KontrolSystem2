@@ -171,7 +171,7 @@ const typeReference = map(
     )
   ),
   ([name, typeArguments], start, end) =>
-    findLibraryType(name, typeArguments ?? []) ??
+    (!typeArguments ? findLibraryType(name, []) : undefined) ??
     new LookupTypeReference(name, typeArguments ?? [], start, end)
 );
 

@@ -34,7 +34,12 @@ export class LookupTypeReference implements Node, TO2Type {
   }
 
   public realizedType(context: ModuleContext): RealizedType {
-    return context.findType(this.namePath, this.typeArguments) ?? UNKNOWN_TYPE;
+    return (
+      context.findType(
+        this.namePath,
+        this.typeArguments.map((type) => type.realizedType(context))
+      ) ?? UNKNOWN_TYPE
+    );
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}

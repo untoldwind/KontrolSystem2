@@ -6,6 +6,7 @@ import { Operator } from "./operator";
 import { OptionType } from "./option-type";
 import { RecordType } from "./record-type";
 import { ResultType } from "./result-type";
+import { ReferencedType } from "./to2-type-referenced";
 import { TupleType } from "./tuple-type";
 
 export interface TO2Type {
@@ -41,85 +42,6 @@ export interface RealizedType extends TO2Type {
   findMethod(name: string): FunctionType | undefined;
 
   forInSource(): TO2Type | undefined;
-}
-
-export class ReferencedType implements RealizedType {
-  public readonly kind = "Standard";
-  public readonly name: string;
-  public readonly localName: string;
-  public readonly description: string;
-
-  constructor(
-    private readonly typeReference: TypeReference,
-    moduleName?: string
-  ) {
-    this.localName = typeReference.name;
-    this.name = moduleName
-      ? `${moduleName}::${typeReference.name}`
-      : typeReference.name;
-    this.description = typeReference.description || "";
-  }
-
-  public isAssignableFrom(otherType: RealizedType): boolean {
-    if (this.name === otherType.name || this.typeReference.assignableFromAny)
-      return true;
-    for (const typeRef of this.typeReference.assignableFrom) {
-      if (otherType.name === resolveTypeRef(typeRef)?.name) return true;
-    }
-    return false;
-  }
-
-  public realizedType(): RealizedType {
-    return this;
-  }
-
-  public findSuffixOperator(
-    op: Operator,
-    rightType: RealizedType
-  ): TO2Type | undefined {
-    const opRef = this.typeReference.suffixOperators?.[op]?.find((opRef) =>
-      resolveTypeRef(opRef.otherType)?.isAssignableFrom(rightType)
-    );
-
-    return opRef ? resolveTypeRef(opRef.resultType) : undefined;
-  }
-
-  public findPrefixOperator(
-    op: Operator,
-    leftType: RealizedType
-  ): TO2Type | undefined {
-    const opRef = this.typeReference.prefixOperators?.[op]?.find((opRef) =>
-      resolveTypeRef(opRef.otherType)?.isAssignableFrom(leftType)
-    );
-
-    return opRef ? resolveTypeRef(opRef.resultType) : undefined;
-  }
-
-  public findField(name: string): TO2Type | undefined {
-    const fieldReference = this.typeReference.fields[name];
-    if (!fieldReference) return undefined;
-
-    return resolveTypeRef(fieldReference.type);
-  }
-
-  public findMethod(name: string): FunctionType | undefined {
-    const methodReference = this.typeReference.methods[name];
-    if (!methodReference) return undefined;
-
-    return new FunctionType(
-      methodReference.isAsync,
-      methodReference.parameters.map((paramRef) => [
-        paramRef.name,
-        resolveTypeRef(paramRef.type) ?? UNKNOWN_TYPE,
-      ]),
-      resolveTypeRef(methodReference.returnType) ?? UNKNOWN_TYPE,
-      methodReference.description
-    );
-  }
-
-  public forInSource(): TO2Type | undefined {
-    return this.name === "Range" ? BUILTIN_INT : undefined;
-  }
 }
 
 const referencedTypes: Record<string, ReferencedType> = [
@@ -180,7 +102,7 @@ export const BUILTIN_RANGE = new ReferencedType(REFERENCE.builtin["Range"]);
 
 export function findLibraryType(
   namePath: string[],
-  typeArguments: TO2Type[]
+  typeArguments: RealizedType[]
 ): RealizedType | undefined {
   const fullName = namePath.join("::");
   switch (fullName) {
@@ -190,14 +112,19 @@ export function findLibraryType(
       if (typeArguments.length === 2)
         return new ResultType(typeArguments[0], typeArguments[1]);
   }
-  return referencedTypes[fullName];
+
+  return referencedTypes[fullName]?.fillGenerics(typeArguments);
 }
 
-export function resolveTypeRef(typeRef: TypeRef): RealizedType | undefined {
+export function resolveTypeRef(
+  typeRef: TypeRef,
+  genericMap?: Record<string, RealizedType>
+): RealizedType | undefined {
   switch (typeRef.kind) {
     case "Builtin":
       return findLibraryType([typeRef.name], []);
     case "Generic":
+      return genericMap?.[typeRef.name] ?? UNKNOWN_TYPE;
     case "Standard":
       return findLibraryType([typeRef.module, typeRef.name], []);
     case "Array":

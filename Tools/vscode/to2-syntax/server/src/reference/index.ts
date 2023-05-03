@@ -89,7 +89,6 @@ export type TypeRef =
     }
   | {
       kind: "Generic";
-      module: string;
       name: string;
     }
   | {

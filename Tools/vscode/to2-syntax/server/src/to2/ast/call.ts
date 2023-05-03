@@ -16,12 +16,9 @@ export class Call extends Expression {
   }
 
   public resultType(context: BlockContext): TO2Type {
-    const variableType =
-      this.namePath.value.length == 1
-        ? context
-            .findVariable(this.namePath.value[0])
-            ?.realizedType(context.module)
-        : undefined;
+    const variableType = context
+      .findVariable(this.namePath.value)
+      ?.realizedType(context.module);
     return variableType && isFunctionType(variableType)
       ? variableType.returnType
       : UNKNOWN_TYPE;
@@ -40,12 +37,9 @@ export class Call extends Expression {
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
-    const variableType =
-      this.namePath.value.length == 1
-        ? context
-            .findVariable(this.namePath.value[0])
-            ?.realizedType(context.module)
-        : undefined;
+    const variableType = context
+      .findVariable(this.namePath.value)
+      ?.realizedType(context.module);
     if (!variableType) {
       errors.push({
         status: "error",

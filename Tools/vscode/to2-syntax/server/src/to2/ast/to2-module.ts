@@ -11,11 +11,11 @@ import {
 import { FunctionType } from "./function-type";
 import { Registry } from "./registry";
 import {
-  ReferencedType,
   TO2Type,
   UNKNOWN_TYPE,
   resolveTypeRef,
 } from "./to2-type";
+import { ReferencedType } from "./to2-type-referenced";
 
 export interface TO2Module {
   name: string;

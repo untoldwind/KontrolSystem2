@@ -14,9 +14,7 @@ export class VariableGet extends Expression {
   }
 
   public resultType(context: BlockContext): TO2Type {
-    return this.namePath.value.length == 1
-      ? context.findVariable(this.namePath.value[0]) ?? UNKNOWN_TYPE
-      : UNKNOWN_TYPE;
+    return context.findVariable(this.namePath.value) ?? UNKNOWN_TYPE;
   }
 
   public reduceNode<T>(
@@ -29,10 +27,7 @@ export class VariableGet extends Expression {
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
-    if (
-      this.namePath.value.length == 1 &&
-      !context.findVariable(this.namePath.value[0])
-    ) {
+    if (!context.findVariable(this.namePath.value)) {
       errors.push({
         status: "error",
         message: `Undefined variable: ${this.namePath.value[0]}`,
