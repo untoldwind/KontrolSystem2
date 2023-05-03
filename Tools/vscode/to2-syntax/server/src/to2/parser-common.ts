@@ -123,7 +123,7 @@ const functionType = map(
   ([parameterTypes, returnType]) =>
     new FunctionType(
       false,
-      parameterTypes.map((type, idx) => [`param${idx + 1}`, type]),
+      parameterTypes.map((type, idx) => [`param${idx + 1}`, type, false]),
       returnType
     )
 );

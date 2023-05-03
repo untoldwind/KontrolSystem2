@@ -31,7 +31,7 @@ export class MethodDeclaration implements Node, ModuleItem {
   validateModuleSecondPass(context: ModuleContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
-    const blockContext = new FunctionContext(context);
+    const blockContext = new FunctionContext(context, this.declaredReturn);
 
     errors.push(...this.expression.validateBlock(blockContext));
 

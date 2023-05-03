@@ -10,11 +10,7 @@ import {
 } from "./function-declaration";
 import { FunctionType } from "./function-type";
 import { Registry } from "./registry";
-import {
-  TO2Type,
-  UNKNOWN_TYPE,
-  resolveTypeRef,
-} from "./to2-type";
+import { TO2Type, UNKNOWN_TYPE, resolveTypeRef } from "./to2-type";
 import { ReferencedType } from "./to2-type-referenced";
 
 export interface TO2Module {
@@ -118,6 +114,7 @@ export class ReferencedModule implements TO2Module {
           functionReference.parameters.map((param) => [
             param.name,
             resolveTypeRef(param.type) ?? UNKNOWN_TYPE,
+            param.hasDefault,
           ]),
           resolveTypeRef(functionReference.returnType) ?? UNKNOWN_TYPE,
           functionReference.description

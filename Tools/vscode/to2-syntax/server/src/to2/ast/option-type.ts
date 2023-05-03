@@ -51,7 +51,7 @@ export class OptionType implements RealizedType {
       case "ok_or":
         return new FunctionType(
           false,
-          [["error", BUILTIN_STRING]],
+          [["error", BUILTIN_STRING, false]],
           new ResultType(this.elementType, BUILTIN_STRING)
         );
       default:

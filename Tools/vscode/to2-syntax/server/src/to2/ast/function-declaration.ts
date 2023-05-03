@@ -74,7 +74,11 @@ export class FunctionDeclaration implements Node, ModuleItem {
         : FunctionModifier.Private;
     this.functionType = new FunctionType(
       this.isAsync,
-      parameters.map((param) => [param.name.value, param.type ?? UNKNOWN_TYPE]),
+      parameters.map((param) => [
+        param.name.value,
+        param.type ?? UNKNOWN_TYPE,
+        param.defaultValue !== undefined,
+      ]),
       declaredReturn,
       description
     );
@@ -96,7 +100,7 @@ export class FunctionDeclaration implements Node, ModuleItem {
   public validateModuleFirstPass(context: ModuleContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
-    const blockContext = new FunctionContext(context);
+    const blockContext = new FunctionContext(context, this.declaredReturn);
 
     if (context.mappedFunctions.has(this.name.value)) {
       errors.push({
@@ -113,6 +117,7 @@ export class FunctionDeclaration implements Node, ModuleItem {
           this.parameters.map((param) => [
             param.name.value,
             param.resultType(blockContext),
+            param.defaultValue !== undefined,
           ]),
           this.declaredReturn
         )
@@ -125,7 +130,7 @@ export class FunctionDeclaration implements Node, ModuleItem {
   public validateModuleSecondPass(context: ModuleContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
-    const blockContext = new FunctionContext(context);
+    const blockContext = new FunctionContext(context, this.declaredReturn);
 
     for (const parameter of this.parameters) {
       errors.push(...parameter.validateBlock(blockContext));

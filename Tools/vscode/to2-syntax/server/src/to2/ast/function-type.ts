@@ -5,10 +5,12 @@ export class FunctionType implements RealizedType {
   public readonly kind = "Function";
   public readonly name: string;
   public readonly localName: string;
+  public readonly maxParams: number;
+  public readonly requiredParams: number;
 
   constructor(
     public readonly isAsync: boolean,
-    public readonly parameterTypes: [string, TO2Type][],
+    public readonly parameterTypes: [string, TO2Type, boolean][],
     public readonly returnType: TO2Type,
     public readonly description: string = ""
   ) {
@@ -16,6 +18,8 @@ export class FunctionType implements RealizedType {
       ", "
     )}) -> ${returnType}`;
     this.localName = this.name;
+    this.maxParams = parameterTypes.length;
+    this.requiredParams = parameterTypes.filter((param) => param[2]).length;
   }
 
   public isAssignableFrom(otherType: RealizedType): boolean {

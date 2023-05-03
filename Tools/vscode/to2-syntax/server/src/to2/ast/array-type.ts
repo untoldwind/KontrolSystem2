@@ -47,9 +47,10 @@ export class ArrayType implements RealizedType {
               "predicate",
               new FunctionType(
                 false,
-                [["item", this.elementType]],
+                [["item", this.elementType, false]],
                 BUILTIN_BOOL
               ),
+              false,
             ],
           ],
           this,
@@ -63,9 +64,10 @@ export class ArrayType implements RealizedType {
               "predicate",
               new FunctionType(
                 false,
-                [["item", this.elementType]],
+                [["item", this.elementType, false]],
                 BUILTIN_BOOL
               ),
+              false,
             ],
           ],
           new OptionType(this.elementType),
@@ -79,9 +81,10 @@ export class ArrayType implements RealizedType {
               "predicate",
               new FunctionType(
                 false,
-                [["item", this.elementType]],
+                [["item", this.elementType, false]],
                 BUILTIN_BOOL
               ),
+              false,
             ],
           ],
           BUILTIN_BOOL,

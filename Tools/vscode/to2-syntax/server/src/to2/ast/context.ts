@@ -87,7 +87,7 @@ export class BlockContext {
 }
 
 export class FunctionContext extends BlockContext {
-  constructor(module: ModuleContext) {
+  constructor(module: ModuleContext, public readonly returnType: TO2Type) {
     super(module);
   }
 }

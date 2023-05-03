@@ -87,6 +87,7 @@ export class ReferencedType implements RealizedType {
       methodReference.parameters.map((paramRef) => [
         paramRef.name,
         resolveTypeRef(paramRef.type, this.genericMap) ?? UNKNOWN_TYPE,
+        paramRef.hasDefault,
       ]),
       resolveTypeRef(methodReference.returnType, this.genericMap) ??
         UNKNOWN_TYPE,

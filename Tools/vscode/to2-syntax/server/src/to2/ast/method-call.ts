@@ -38,8 +38,29 @@ export class MethodCall extends Expression {
 
     const methodType = this.findMethod(context);
     if (methodType) {
-      for (const argExpression of this.args) {
-        errors.push(...argExpression.validateBlock(context));
+      if (this.args.length > methodType.maxParams) {
+        errors.push({
+          status: "error",
+          message: `${this.methodName.value} only takes ${methodType.maxParams} arguments`,
+          start: this.methodName.start,
+          end: this.methodName.end,
+        });
+      } else if (this.args.length < methodType.requiredParams) {
+        errors.push({
+          status: "error",
+          message: `${this.methodName.value} at least requires ${methodType.requiredParams} arguments`,
+          start: this.methodName.start,
+          end: this.methodName.end,
+        });
+      } else {
+        for (let i = 0; i < this.args.length; i++) {
+          errors.push(
+            ...this.args[i].validateBlock(
+              context,
+              methodType.parameterTypes[i][1].realizedType(context.module)
+            )
+          );
+        }
       }
     } else {
       errors.push({

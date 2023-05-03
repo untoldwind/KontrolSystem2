@@ -59,8 +59,33 @@ export class Call extends Expression {
         end: this.namePath.end,
       });
     } else {
-      for (const argExpression of this.args) {
-        errors.push(...argExpression.validateBlock(context));
+      if (this.args.length > variableType.maxParams) {
+        errors.push({
+          status: "error",
+          message: `${this.namePath.value.join("::")} only takes ${
+            variableType.maxParams
+          } arguments`,
+          start: this.namePath.start,
+          end: this.namePath.end,
+        });
+      } else if (this.args.length < variableType.requiredParams) {
+        errors.push({
+          status: "error",
+          message: `${this.namePath.value.join("::")} at least requires ${
+            variableType.requiredParams
+          } arguments`,
+          start: this.namePath.start,
+          end: this.namePath.end,
+        });
+      } else {
+        for (let i = 0; i < this.args.length; i++) {
+          errors.push(
+            ...this.args[i].validateBlock(
+              context,
+              variableType.parameterTypes[i][1].realizedType(context.module)
+            )
+          );
+        }
       }
     }
 
