@@ -32,7 +32,8 @@ export class FieldGet extends Expression {
 
     if (errors.length === 0 && !this.findField(context)) {
       errors.push({
-        status: "error",
+        status:
+          this.target.resultType(context) === UNKNOWN_TYPE ? "warn" : "error",
         message: `Undefined field ${this.fieldName.value} for type ${
           this.target.resultType(context).name
         }`,

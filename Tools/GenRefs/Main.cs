@@ -41,7 +41,7 @@ namespace KontrolSystem.GenRefs {
                          BuiltinType.Cell, new OptionType(new GenericParameter("T")),
                          new ResultType(new GenericParameter("R"), new GenericParameter("E"))
                      }) {
-                Builtin.Add(type.LocalName, new TypeReference(moduleContext, type));
+                Builtin.Add(type.LocalName, new TypeReference(moduleContext, type, type.LocalName));
             }
 
             foreach (IKontrolModule module in registry.modules.Values) {
@@ -77,13 +77,18 @@ namespace KontrolSystem.GenRefs {
             Name = module.Name;
             Description = module.Description;
             Types = new Dictionary<string, TypeReference>();
+            TypeAliases = new Dictionary<string, TypeRef>();
             Constants = new Dictionary<string, ConstantReference>();
             Functions = new Dictionary<string, FunctionReference>();
 
             foreach (string typeName in module.AllTypeNames) {
-                RealizedType type = module.FindType(typeName)?.UnderlyingType(moduleContext);
-                var typeReference = new TypeReference(moduleContext, type);
-                Types.Add(typeReference.Name, typeReference);
+                RealizedType type = module.FindType(typeName).UnderlyingType(moduleContext);
+                if (type is FunctionType functionType) {
+                    TypeAliases.Add(typeName, new TypeRef(moduleContext, functionType));
+                } else {
+                    var typeReference = new TypeReference(moduleContext, type, typeName);
+                    Types.Add(typeReference.Name, typeReference);
+                }
             }
 
             foreach (string constantName in module.AllConstantNames) {
@@ -105,15 +110,17 @@ namespace KontrolSystem.GenRefs {
 
         [JsonProperty("types")] public Dictionary<string, TypeReference> Types { get; }
 
+        [JsonProperty("typeAliases")] public Dictionary<string, TypeRef> TypeAliases { get; }
+        
         [JsonProperty("constants")] public Dictionary<string, ConstantReference> Constants { get; }
 
         [JsonProperty("functions")] public Dictionary<string, FunctionReference> Functions { get; }
     }
 
     public class TypeReference {
-        public TypeReference(ModuleContext moduleContext, RealizedType type) {
+        public TypeReference(ModuleContext moduleContext, RealizedType type, string name) {
             TO2Type = type;
-            Name = type.LocalName;
+            Name = name;
             Description = type.Description;
             Fields = new Dictionary<string, FieldReference>();
             Methods = new Dictionary<string, FunctionReference>();

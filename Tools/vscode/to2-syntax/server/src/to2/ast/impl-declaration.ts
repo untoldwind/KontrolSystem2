@@ -2,8 +2,9 @@ import { Node, ValidationError } from ".";
 import { LineComment } from "./line-comment";
 import { MethodDeclaration } from "./method-declaration";
 import { InputPosition, WithPosition } from "../../parser";
-import { ModuleContext } from "./context";
+import { ImplModuleContext, ModuleContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
+import { RecordType, isRecordType } from "./record-type";
 
 export class ImplDeclaration implements Node {
   constructor(
@@ -27,8 +28,14 @@ export class ImplDeclaration implements Node {
   public validateModuleFirstPass(context: ModuleContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
+    const structType = this.findStructType(context);
+
+    const implContext = new ImplModuleContext(
+      context,
+      structType ?? new RecordType([])
+    );
     for (const method of this.methods) {
-      errors.push(...method.validateModuleFirstPass(context));
+      errors.push(...method.validateModuleFirstPass(implContext));
     }
 
     return errors;
@@ -37,8 +44,22 @@ export class ImplDeclaration implements Node {
   public validateModuleSecondPass(context: ModuleContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
+    const structType = this.findStructType(context);
+    if (!structType) {
+      errors.push({
+        status: "error",
+        message: `Undefined struct ${this.name.value}`,
+        start: this.name.start,
+        end: this.name.end,
+      });
+    }
+
+    const implContext = new ImplModuleContext(
+      context,
+      structType ?? new RecordType([])
+    );
     for (const method of this.methods) {
-      errors.push(...method.validateModuleSecondPass(context));
+      errors.push(...method.validateModuleSecondPass(implContext));
     }
 
     return errors;
@@ -60,5 +81,13 @@ export class ImplDeclaration implements Node {
     for (const method of this.methods) {
       method.collectSemanticTokens(semanticTokens);
     }
+  }
+
+  private findStructType(context: ModuleContext): RecordType | undefined {
+    const typeAlias = context.typeAliases
+      .get(this.name.value)
+      ?.realizedType(context);
+
+    return typeAlias && isRecordType(typeAlias) ? typeAlias : undefined;
   }
 }

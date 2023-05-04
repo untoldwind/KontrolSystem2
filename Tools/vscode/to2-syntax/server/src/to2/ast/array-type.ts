@@ -98,3 +98,7 @@ export class ArrayType implements RealizedType {
     return this.elementType;
   }
 }
+
+export function isArrayType(node: RealizedType): node is ArrayType {
+  return node.kind === "Array";
+}

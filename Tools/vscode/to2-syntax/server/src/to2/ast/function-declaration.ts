@@ -100,8 +100,6 @@ export class FunctionDeclaration implements Node, ModuleItem {
   public validateModuleFirstPass(context: ModuleContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
-    const blockContext = new FunctionContext(context, this.declaredReturn);
-
     if (context.mappedFunctions.has(this.name.value)) {
       errors.push({
         status: "error",
@@ -110,6 +108,8 @@ export class FunctionDeclaration implements Node, ModuleItem {
         end: this.name.end,
       });
     } else {
+      const blockContext = new FunctionContext(context, this.declaredReturn);
+
       context.mappedFunctions.set(
         this.name.value,
         new FunctionType(

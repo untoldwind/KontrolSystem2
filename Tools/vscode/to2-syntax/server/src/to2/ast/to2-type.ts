@@ -1,4 +1,5 @@
 import { REFERENCE, TypeRef, TypeReference } from "../../reference";
+import { typeRef } from "../parser-common";
 import { ArrayType } from "./array-type";
 import { ModuleContext } from "./context";
 import { FunctionType } from "./function-type";
@@ -58,6 +59,18 @@ const referencedTypes: Record<string, ReferencedType> = [
   return acc;
 }, {} as Record<string, ReferencedType>);
 
+const referencedTypeAliases = Object.values(REFERENCE.modules)
+  .flatMap((module) =>
+    Object.entries(module.typeAliases).map(([name, typeRef]) => ({
+      name: `${module.name}::${name}`,
+      typeRef,
+    }))
+  )
+  .reduce((acc, { name, typeRef }) => {
+    acc[name] = typeRef;
+    return acc;
+  }, {} as Record<string, TypeRef>);
+
 export const UNKNOWN_TYPE: RealizedType = {
   kind: "Unknown",
   name: "<unknown>",
@@ -99,6 +112,15 @@ export const BUILTIN_INT = new ReferencedType(REFERENCE.builtin["int"]);
 export const BUILTIN_FLOAT = new ReferencedType(REFERENCE.builtin["float"]);
 export const BUILTIN_STRING = new ReferencedType(REFERENCE.builtin["string"]);
 export const BUILTIN_RANGE = new ReferencedType(REFERENCE.builtin["Range"]);
+
+export function findLibraryTypeOrAlias(
+  namePath: string[],
+  typeArguments: RealizedType[]
+): RealizedType | undefined {
+  const aliased = referencedTypeAliases[namePath.join("::")];
+  if (aliased) return resolveTypeRef(aliased);
+  return findLibraryType(namePath, typeArguments);
+}
 
 export function findLibraryType(
   namePath: string[],
@@ -154,9 +176,11 @@ export function resolveTypeRef(
     case "Function":
       return new FunctionType(
         typeRef.isAsync,
-        typeRef.parameters.map(
-          (param, idx) => [`param${idx}`, resolveTypeRef(param) ?? UNKNOWN_TYPE, false]
-        ),
+        typeRef.parameters.map((param, idx) => [
+          `param${idx}`,
+          resolveTypeRef(param) ?? UNKNOWN_TYPE,
+          false,
+        ]),
         resolveTypeRef(typeRef.returnType) ?? UNKNOWN_TYPE
       );
   }

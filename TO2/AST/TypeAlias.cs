@@ -60,7 +60,7 @@ namespace KontrolSystem.TO2.AST {
 
     public class TypeAliasDelegate : TO2Type {
         private readonly ModuleContext declaredModule;
-        private readonly TO2Type aliasedType;
+        public readonly TO2Type aliasedType;
         private bool lookingUp;
         private readonly Node target;
         public override string Description { get; }

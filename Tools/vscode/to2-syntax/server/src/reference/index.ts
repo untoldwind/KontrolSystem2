@@ -12,6 +12,7 @@ export interface ModuleReference {
   name: string;
   description?: string;
   types: Record<string, TypeReference>;
+  typeAliases: Record<string, TypeRef>;
   constants: Record<string, ConstantReference>;
   functions: Record<string, FunctionReference>;
 }

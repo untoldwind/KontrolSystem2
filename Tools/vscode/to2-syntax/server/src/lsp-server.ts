@@ -70,7 +70,10 @@ export class LspServer {
       )) {
         if (diagnostics.length < settings.maxNumberOfProblems) {
           const diagnostic: Diagnostic = {
-            severity: DiagnosticSeverity.Error,
+            severity:
+              validationError.status === "error"
+                ? DiagnosticSeverity.Error
+                : DiagnosticSeverity.Warning,
             range: {
               start: validationError.start,
               end: validationError.end,

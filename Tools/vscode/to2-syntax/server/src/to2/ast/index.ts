@@ -4,6 +4,7 @@ import { BlockContext, ModuleContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
 
 export interface Node {
+  isComment?: boolean;
   isError?: boolean;
   start: InputPosition;
   end: InputPosition;
@@ -17,8 +18,6 @@ export interface Node {
 }
 
 export interface BlockItem extends Node {
-  isComment?: boolean;
-
   resultType(context: BlockContext, typeHint?: RealizedType): TO2Type;
 
   validateBlock(

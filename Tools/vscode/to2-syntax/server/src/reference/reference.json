@@ -1985,26 +1985,6 @@
           "kind": "Standard",
           "module": "std::land::landing_simulation",
           "name": "ReentrySimulation"
-        },
-        {
-          "kind": "Function",
-          "parameters": [
-            {
-              "kind": "Standard",
-              "module": "ksp::math",
-              "name": "Vec3"
-            },
-            {
-              "kind": "Standard",
-              "module": "ksp::math",
-              "name": "Vec3"
-            }
-          ],
-          "returnType": {
-            "kind": "Builtin",
-            "name": "float"
-          },
-          "isAsync": false
         }
       ]
     },
@@ -2573,26 +2553,6 @@
           "kind": "Standard",
           "module": "std::land::landing_simulation",
           "name": "ReentrySimulation"
-        },
-        {
-          "kind": "Function",
-          "parameters": [
-            {
-              "kind": "Standard",
-              "module": "ksp::math",
-              "name": "Vec3"
-            },
-            {
-              "kind": "Standard",
-              "module": "ksp::math",
-              "name": "Vec3"
-            }
-          ],
-          "returnType": {
-            "kind": "Builtin",
-            "name": "float"
-          },
-          "isAsync": false
         }
       ]
     }
@@ -2662,6 +2622,7 @@
           "assignableFrom": []
         }
       },
+      "typeAliases": {},
       "constants": {},
       "functions": {
         "is_background": {
@@ -2705,6 +2666,7 @@
       "name": "core::logging",
       "description": "Provides basic logging. In KSP all log messages will appear in the debug console as well as the `KSP.log` file.\n",
       "types": {},
+      "typeAliases": {},
       "constants": {},
       "functions": {
         "debug": {
@@ -2863,6 +2825,7 @@
           "assignableFrom": []
         }
       },
+      "typeAliases": {},
       "constants": {
         "PI": {
           "name": "PI",
@@ -3734,6 +3697,7 @@
       "name": "core::str",
       "description": "Provided basic string manipulation and formatting.\n",
       "types": {},
+      "typeAliases": {},
       "constants": {},
       "functions": {
         "join": {
@@ -3801,6 +3765,7 @@
       "name": "core::testing",
       "description": "Provides basic assertions for testing. All functions provided by this module should be only used by `test` function.\n",
       "types": {},
+      "typeAliases": {},
       "constants": {},
       "functions": {
         "assert_true": {
@@ -4254,6 +4219,7 @@
           "assignableFrom": []
         }
       },
+      "typeAliases": {},
       "constants": {
         "WHITE": {
           "name": "WHITE",
@@ -5150,6 +5116,7 @@
           "assignableFrom": []
         }
       },
+      "typeAliases": {},
       "constants": {},
       "functions": {
         "pid_loop": {
@@ -5863,6 +5830,7 @@
           "assignableFrom": []
         }
       },
+      "typeAliases": {},
       "constants": {
         "DEBUG": {
           "name": "DEBUG",
@@ -5880,6 +5848,7 @@
       "name": "ksp::game",
       "description": "Collection to game and runtime related functions.\n",
       "types": {},
+      "typeAliases": {},
       "constants": {},
       "functions": {
         "current_time": {
@@ -5975,6 +5944,7 @@
       "name": "ksp::game::warp",
       "description": "Collection of functions to control time warp.\n",
       "types": {},
+      "typeAliases": {},
       "constants": {},
       "functions": {
         "current_index": {
@@ -8433,6 +8403,7 @@
           "assignableFrom": []
         }
       },
+      "typeAliases": {},
       "constants": {},
       "functions": {
         "vec2": {
@@ -10245,6 +10216,7 @@
           "assignableFrom": []
         }
       },
+      "typeAliases": {},
       "constants": {},
       "functions": {
         "find_body": {
@@ -10915,26 +10887,6 @@
               "kind": "Standard",
               "module": "std::land::landing_simulation",
               "name": "ReentrySimulation"
-            },
-            {
-              "kind": "Function",
-              "parameters": [
-                {
-                  "kind": "Standard",
-                  "module": "ksp::math",
-                  "name": "Vec3"
-                },
-                {
-                  "kind": "Standard",
-                  "module": "ksp::math",
-                  "name": "Vec3"
-                }
-              ],
-              "returnType": {
-                "kind": "Builtin",
-                "name": "float"
-              },
-              "isAsync": false
             }
           ]
         },
@@ -11231,6 +11183,7 @@
           "assignableFrom": []
         }
       },
+      "typeAliases": {},
       "constants": {
         "FlowDirection": {
           "name": "FlowDirection",
@@ -11331,6 +11284,7 @@
           "assignableFrom": []
         }
       },
+      "typeAliases": {},
       "constants": {},
       "functions": {
         "add_time_series": {
@@ -11447,6 +11401,7 @@
     "ksp::testing": {
       "name": "ksp::testing",
       "types": {},
+      "typeAliases": {},
       "constants": {
         "IDENTITY_COORDINATE_SYSTEM": {
           "name": "IDENTITY_COORDINATE_SYSTEM",
@@ -12506,26 +12461,6 @@
               "kind": "Standard",
               "module": "std::land::landing_simulation",
               "name": "ReentrySimulation"
-            },
-            {
-              "kind": "Function",
-              "parameters": [
-                {
-                  "kind": "Standard",
-                  "module": "ksp::math",
-                  "name": "Vec3"
-                },
-                {
-                  "kind": "Standard",
-                  "module": "ksp::math",
-                  "name": "Vec3"
-                }
-              ],
-              "returnType": {
-                "kind": "Builtin",
-                "name": "float"
-              },
-              "isAsync": false
             }
           ]
         },
@@ -13161,26 +13096,6 @@
               "kind": "Standard",
               "module": "std::land::landing_simulation",
               "name": "ReentrySimulation"
-            },
-            {
-              "kind": "Function",
-              "parameters": [
-                {
-                  "kind": "Standard",
-                  "module": "ksp::math",
-                  "name": "Vec3"
-                },
-                {
-                  "kind": "Standard",
-                  "module": "ksp::math",
-                  "name": "Vec3"
-                }
-              ],
-              "returnType": {
-                "kind": "Builtin",
-                "name": "float"
-              },
-              "isAsync": false
             }
           ]
         },
@@ -13836,26 +13751,6 @@
               "kind": "Standard",
               "module": "std::land::landing_simulation",
               "name": "ReentrySimulation"
-            },
-            {
-              "kind": "Function",
-              "parameters": [
-                {
-                  "kind": "Standard",
-                  "module": "ksp::math",
-                  "name": "Vec3"
-                },
-                {
-                  "kind": "Standard",
-                  "module": "ksp::math",
-                  "name": "Vec3"
-                }
-              ],
-              "returnType": {
-                "kind": "Builtin",
-                "name": "float"
-              },
-              "isAsync": false
             }
           ]
         },
@@ -14491,26 +14386,6 @@
               "kind": "Standard",
               "module": "std::land::landing_simulation",
               "name": "ReentrySimulation"
-            },
-            {
-              "kind": "Function",
-              "parameters": [
-                {
-                  "kind": "Standard",
-                  "module": "ksp::math",
-                  "name": "Vec3"
-                },
-                {
-                  "kind": "Standard",
-                  "module": "ksp::math",
-                  "name": "Vec3"
-                }
-              ],
-              "returnType": {
-                "kind": "Builtin",
-                "name": "float"
-              },
-              "isAsync": false
             }
           ]
         },
@@ -15156,26 +15031,6 @@
               "kind": "Standard",
               "module": "std::land::landing_simulation",
               "name": "ReentrySimulation"
-            },
-            {
-              "kind": "Function",
-              "parameters": [
-                {
-                  "kind": "Standard",
-                  "module": "ksp::math",
-                  "name": "Vec3"
-                },
-                {
-                  "kind": "Standard",
-                  "module": "ksp::math",
-                  "name": "Vec3"
-                }
-              ],
-              "returnType": {
-                "kind": "Builtin",
-                "name": "float"
-              },
-              "isAsync": false
             }
           ]
         },
@@ -15911,26 +15766,6 @@
               "kind": "Standard",
               "module": "std::land::landing_simulation",
               "name": "ReentrySimulation"
-            },
-            {
-              "kind": "Function",
-              "parameters": [
-                {
-                  "kind": "Standard",
-                  "module": "ksp::math",
-                  "name": "Vec3"
-                },
-                {
-                  "kind": "Standard",
-                  "module": "ksp::math",
-                  "name": "Vec3"
-                }
-              ],
-              "returnType": {
-                "kind": "Builtin",
-                "name": "float"
-              },
-              "isAsync": false
             }
           ]
         },
@@ -16616,26 +16451,6 @@
               "kind": "Standard",
               "module": "std::land::landing_simulation",
               "name": "ReentrySimulation"
-            },
-            {
-              "kind": "Function",
-              "parameters": [
-                {
-                  "kind": "Standard",
-                  "module": "ksp::math",
-                  "name": "Vec3"
-                },
-                {
-                  "kind": "Standard",
-                  "module": "ksp::math",
-                  "name": "Vec3"
-                }
-              ],
-              "returnType": {
-                "kind": "Builtin",
-                "name": "float"
-              },
-              "isAsync": false
             }
           ]
         },
@@ -17281,26 +17096,6 @@
               "kind": "Standard",
               "module": "std::land::landing_simulation",
               "name": "ReentrySimulation"
-            },
-            {
-              "kind": "Function",
-              "parameters": [
-                {
-                  "kind": "Standard",
-                  "module": "ksp::math",
-                  "name": "Vec3"
-                },
-                {
-                  "kind": "Standard",
-                  "module": "ksp::math",
-                  "name": "Vec3"
-                }
-              ],
-              "returnType": {
-                "kind": "Builtin",
-                "name": "float"
-              },
-              "isAsync": false
             }
           ]
         },
@@ -17966,26 +17761,6 @@
               "kind": "Standard",
               "module": "std::land::landing_simulation",
               "name": "ReentrySimulation"
-            },
-            {
-              "kind": "Function",
-              "parameters": [
-                {
-                  "kind": "Standard",
-                  "module": "ksp::math",
-                  "name": "Vec3"
-                },
-                {
-                  "kind": "Standard",
-                  "module": "ksp::math",
-                  "name": "Vec3"
-                }
-              ],
-              "returnType": {
-                "kind": "Builtin",
-                "name": "float"
-              },
-              "isAsync": false
             }
           ]
         },
@@ -18661,26 +18436,6 @@
               "kind": "Standard",
               "module": "std::land::landing_simulation",
               "name": "ReentrySimulation"
-            },
-            {
-              "kind": "Function",
-              "parameters": [
-                {
-                  "kind": "Standard",
-                  "module": "ksp::math",
-                  "name": "Vec3"
-                },
-                {
-                  "kind": "Standard",
-                  "module": "ksp::math",
-                  "name": "Vec3"
-                }
-              ],
-              "returnType": {
-                "kind": "Builtin",
-                "name": "float"
-              },
-              "isAsync": false
             }
           ]
         },
@@ -22379,6 +22134,7 @@
           "assignableFrom": []
         }
       },
+      "typeAliases": {},
       "constants": {
         "AutopilotMode": {
           "name": "AutopilotMode",
@@ -22498,6 +22254,7 @@
       "name": "log::log_helper",
       "description": "********************************************************************************************************************\n\nLOG HELPER\n\nABOUT: This script helps with treating the console a log separated by three scetions. Telemetry, Debug and Messages.\nNote that you must always call the log_init first\n\n********************************************************************************************************************",
       "types": {},
+      "typeAliases": {},
       "constants": {},
       "functions": {
         "log_init": {
@@ -22606,6 +22363,7 @@
       "name": "std::atmo",
       "description": "",
       "types": {},
+      "typeAliases": {},
       "constants": {},
       "functions": {
         "atmo_launch": {
@@ -23417,6 +23175,7 @@
           "assignableFrom": []
         }
       },
+      "typeAliases": {},
       "constants": {},
       "functions": {
         "control_steering": {
@@ -23506,6 +23265,7 @@
       "name": "std::lambert",
       "description": "",
       "types": {},
+      "typeAliases": {},
       "constants": {},
       "functions": {
         "solve_lambert": {
@@ -23934,8 +23694,8 @@
           "assignableFromAny": false,
           "assignableFrom": []
         },
-        "(brake_time : float, end_latitude : float, end_longitude : float, end_time : float, path : ksp::math::GlobalPosition[])": {
-          "name": "(brake_time : float, end_latitude : float, end_longitude : float, end_time : float, path : ksp::math::GlobalPosition[])",
+        "ReentryTrajectory": {
+          "name": "ReentryTrajectory",
           "description": "",
           "fields": {
             "brake_time": {
@@ -24211,6 +23971,7 @@
           "assignableFrom": []
         }
       },
+      "typeAliases": {},
       "constants": {},
       "functions": {
         "init_simulation": {
@@ -24410,6 +24171,7 @@
       "name": "std::land::lib",
       "description": "",
       "types": {},
+      "typeAliases": {},
       "constants": {},
       "functions": {
         "land_time_to_longitude": {
@@ -24473,14 +24235,27 @@
     "std::land::speed_policy": {
       "name": "std::land::speed_policy",
       "description": "",
-      "types": {
-        "sync fn(ksp::math::Vec3, ksp::math::Vec3) -> float": {
-          "name": "sync fn(ksp::math::Vec3, ksp::math::Vec3) -> float",
-          "description": "",
-          "fields": {},
-          "methods": {},
-          "assignableFromAny": false,
-          "assignableFrom": []
+      "types": {},
+      "typeAliases": {
+        "SpeedPolicy": {
+          "kind": "Function",
+          "parameters": [
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec3"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec3"
+            }
+          ],
+          "returnType": {
+            "kind": "Builtin",
+            "name": "float"
+          },
+          "isAsync": false
         }
       },
       "constants": {},
@@ -24644,6 +24419,7 @@
       "name": "std::land::vac",
       "description": "",
       "types": {},
+      "typeAliases": {},
       "constants": {},
       "functions": {
         "vac_land": {
@@ -25012,6 +24788,7 @@
       "name": "std::maneuvers",
       "description": "",
       "types": {},
+      "typeAliases": {},
       "constants": {},
       "functions": {
         "circularize_orbit": {
@@ -25929,6 +25706,7 @@
       "name": "std::navball",
       "description": "",
       "types": {},
+      "typeAliases": {},
       "constants": {},
       "functions": {
         "navball": {
@@ -25997,6 +25775,7 @@
       "name": "std::numerics::amoeba_optimize",
       "description": "",
       "types": {},
+      "typeAliases": {},
       "constants": {},
       "functions": {
         "amoeba_optimize_perturbation": {
@@ -26189,6 +25968,7 @@
       "name": "std::numerics::anneal_optimize",
       "description": "",
       "types": {},
+      "typeAliases": {},
       "constants": {},
       "functions": {
         "anneal_optimize": {
@@ -26334,6 +26114,7 @@
       "name": "std::numerics::bessel",
       "description": "",
       "types": {},
+      "typeAliases": {},
       "constants": {},
       "functions": {
         "J0": {
@@ -26380,6 +26161,7 @@
       "name": "std::numerics::brent_optimize",
       "description": "",
       "types": {},
+      "typeAliases": {},
       "constants": {},
       "functions": {
         "brent_optimize": {
@@ -26471,6 +26253,7 @@
       "name": "std::numerics::regula_falsi_solve",
       "description": "",
       "types": {},
+      "typeAliases": {},
       "constants": {},
       "functions": {
         "regula_falsi_solve": {
@@ -26540,6 +26323,7 @@
       "name": "std::numerics::runge_kutta",
       "description": "",
       "types": {},
+      "typeAliases": {},
       "constants": {},
       "functions": {
         "rk23": {
@@ -26683,6 +26467,7 @@
       "name": "std::rendezvous::dock",
       "description": "",
       "types": {},
+      "typeAliases": {},
       "constants": {},
       "functions": {
         "dock_vessel": {
@@ -26858,6 +26643,7 @@
       "name": "std::rendezvous::lib",
       "description": "",
       "types": {},
+      "typeAliases": {},
       "constants": {},
       "functions": {
         "rendezvous_with": {
@@ -26980,6 +26766,7 @@
       "name": "std::staging",
       "description": "Collection of helper functions to control staging of a vessel",
       "types": {},
+      "typeAliases": {},
       "constants": {},
       "functions": {
         "trigger_staging": {
@@ -27096,6 +26883,7 @@
       "name": "std::utils",
       "description": "Collection of helper functions not fitting anywhere else",
       "types": {},
+      "typeAliases": {},
       "constants": {},
       "functions": {
         "ship_is_facing": {
@@ -27252,6 +27040,7 @@
       "name": "std::vac",
       "description": "",
       "types": {},
+      "typeAliases": {},
       "constants": {},
       "functions": {
         "exec_next_node": {

@@ -3,7 +3,7 @@ import { InputPosition } from "../../parser";
 import { ModuleReference } from "../../reference";
 import { SemanticToken } from "../../syntax-token";
 import { ConstDeclaration, isConstDeclaration } from "./const-declaration";
-import { ModuleContext } from "./context";
+import { ModuleContext, RootModuleContext } from "./context";
 import {
   FunctionDeclaration,
   isFunctionDeclaration,
@@ -64,7 +64,7 @@ export class TO2ModuleNode implements Node, TO2Module {
   }
 
   public validate(registry: Registry): ValidationError[] {
-    const context = new ModuleContext(registry);
+    const context = new RootModuleContext(registry);
     const errors: ValidationError[] = [];
 
     for (const item of this.items) {
@@ -102,8 +102,12 @@ export class ReferencedModule implements TO2Module {
   }
 
   findType(name: string): TO2Type | undefined {
+    const aliased = this.moduleReference.typeAliases[name];
+    if (aliased) return resolveTypeRef(aliased);
     const typeReference = this.moduleReference.types[name];
-    return typeReference ? new ReferencedType(typeReference) : undefined;
+    return typeReference
+      ? new ReferencedType(typeReference, this.name)
+      : undefined;
   }
 
   findFunction(name: string): FunctionType | undefined {

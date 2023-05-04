@@ -40,7 +40,8 @@ export class MethodCall extends Expression {
     if (methodType) {
       if (this.args.length > methodType.maxParams) {
         errors.push({
-          status: "error",
+          status:
+            this.target.resultType(context) === UNKNOWN_TYPE ? "warn" : "error",
           message: `${this.methodName.value} only takes ${methodType.maxParams} arguments`,
           start: this.methodName.start,
           end: this.methodName.end,

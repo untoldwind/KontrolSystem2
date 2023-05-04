@@ -8,12 +8,14 @@ export class RecordType implements RealizedType {
   public name: string;
   public localName: string;
   public description: string;
+  public methods: Map<string, FunctionType>;
 
   constructor(public readonly itemTypes: [string, TO2Type][]) {
     this.name = this.localName = `(${itemTypes
       .map((item) => `${item[0]} : ${item[1].name}`)
       .join(", ")})`;
     this.description = "";
+    this.methods = new Map();
   }
 
   public isAssignableFrom(otherType: RealizedType): boolean {
@@ -37,7 +39,7 @@ export class RecordType implements RealizedType {
   }
 
   public findMethod(name: string): FunctionType | undefined {
-    return undefined;
+    return this.methods.get(name);
   }
 
   public forInSource(): TO2Type | undefined {

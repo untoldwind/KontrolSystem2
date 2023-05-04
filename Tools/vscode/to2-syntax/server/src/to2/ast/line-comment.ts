@@ -44,3 +44,6 @@ export class LineComment implements Node, BlockItem, ModuleItem {
     });
   }
 }
+export function isLineComment(type: Node): type is LineComment {
+  return !!type.isComment;
+}
