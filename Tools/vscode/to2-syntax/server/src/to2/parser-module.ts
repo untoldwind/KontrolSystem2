@@ -47,7 +47,7 @@ const useKeyword = terminated(withPosition(tag("use")), spacing1);
 
 const typeKeyword = terminated(tag("type"), spacing1);
 
-const structKeyword = terminated(tag("struct"), spacing1);
+const structKeyword = terminated(withPosition(tag("struct")), spacing1);
 
 const implKeyword = terminated(tag("impl"), spacing1);
 
@@ -127,7 +127,8 @@ const structDeclaration = map(
   seq(
     descriptionComment,
     preceded(whitespace0, opt(pubKeyword)),
-    preceded(structKeyword, identifier),
+    structKeyword,
+    withPosition(identifier),
     opt(functionParameters),
     between(
       preceded(whitespace0, tag("{")),
@@ -135,9 +136,21 @@ const structDeclaration = map(
       preceded(whitespace0, tag("}"))
     )
   ),
-  ([description, pub, name, constructorParameters, fields], start, end) =>
+  (
+    [
+      description,
+      pubKeyword,
+      structKeyword,
+      name,
+      constructorParameters,
+      fields,
+    ],
+    start,
+    end
+  ) =>
     new StructDeclaration(
-      pub !== undefined,
+      pubKeyword,
+      structKeyword,
       name,
       description,
       constructorParameters ?? [],
@@ -150,7 +163,7 @@ const structDeclaration = map(
 const implDeclaration = map(
   seq(
     withPosition(implKeyword),
-    identifier,
+    withPosition(identifier),
     between(
       preceded(whitespace0, tag("{")),
       delimited0(

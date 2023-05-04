@@ -29,9 +29,8 @@ export class VariableAssign extends Expression {
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
-    errors.push(...this.expression.validateBlock(context));
-
-    if (!context.findVariable([this.name.value])) {
+    const variableType = context.findVariable([this.name.value]);
+    if (!variableType) {
       errors.push({
         status: "error",
         message: `Undefined variable: ${this.name.value}`,
@@ -40,12 +39,20 @@ export class VariableAssign extends Expression {
       });
     }
 
+    errors.push(
+      ...this.expression.validateBlock(
+        context,
+        variableType?.realizedType(context.module)
+      )
+    );
+
     return errors;
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     semanticTokens.push({
       type: "variable",
+      modifiers: ["modification"],
       start: this.name.start,
       length: this.name.end.offset - this.name.start.offset,
     });

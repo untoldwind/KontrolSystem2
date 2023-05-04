@@ -42,7 +42,10 @@ export abstract class Expression implements Node, BlockItem {
     public readonly end: InputPosition
   ) {}
 
-  public abstract resultType(context: BlockContext): TO2Type;
+  public abstract resultType(
+    context: BlockContext,
+    typeHint?: RealizedType
+  ): TO2Type;
 
   public abstract reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,

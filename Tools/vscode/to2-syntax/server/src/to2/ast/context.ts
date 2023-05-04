@@ -9,7 +9,10 @@ export class ModuleContext {
   public readonly moduleAliases: Map<string, string[]> = new Map();
   public readonly typeAliases: Map<string, RealizedType> = new Map();
 
-  constructor(public readonly registry: Registry) {}
+  constructor(
+    public readonly registry: Registry,
+    public readonly structContext?: TO2Type
+  ) {}
 
   findType(
     namePath: string[],

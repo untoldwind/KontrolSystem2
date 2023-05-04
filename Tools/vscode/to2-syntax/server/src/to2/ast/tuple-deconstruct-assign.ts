@@ -51,6 +51,7 @@ export class TupleDeconstructAssign implements Node, BlockItem {
       if (target.target.value !== "") {
         semanticTokens.push({
           type: "variable",
+          modifiers: ["modification"],
           start: target.target.start,
           length: target.target.end.offset - target.target.start.offset,
         });

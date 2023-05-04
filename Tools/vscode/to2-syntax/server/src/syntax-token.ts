@@ -14,6 +14,7 @@ export const SEMANTIC_TOKEN_TYPES = [
   "function",
   "method",
   "namespace",
+  "struct",
 ] as const;
 
 export type SemanticTokenType = (typeof SEMANTIC_TOKEN_TYPES)[number];
@@ -30,6 +31,8 @@ export const SEMANTIC_TOKEN_MODIFIERS = [
   "readonly",
   "async",
   "documentation",
+  "modification",
+  "defaultLibrary",
 ] as const;
 
 export type SemanticTokenModifier = (typeof SEMANTIC_TOKEN_MODIFIERS)[number];

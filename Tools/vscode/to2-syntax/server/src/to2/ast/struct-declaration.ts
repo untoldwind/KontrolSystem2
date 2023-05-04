@@ -3,7 +3,7 @@ import { Expression, ModuleItem, Node, ValidationError } from ".";
 import { TO2Type } from "./to2-type";
 import { FunctionParameter } from "./function-declaration";
 import { LineComment } from "./line-comment";
-import { InputPosition } from "../../parser";
+import { InputPosition, WithPosition } from "../../parser";
 import { ModuleContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
 
@@ -33,8 +33,9 @@ export class StructField implements Node {
 
 export class StructDeclaration implements Node, ModuleItem {
   constructor(
-    public readonly exported: boolean,
-    public readonly name: string,
+    public readonly pubKeyword: WithPosition<"pub"> | undefined,
+    public readonly structKeyword: WithPosition<"struct">,
+    public readonly name: WithPosition<string>,
     public readonly description: string,
     public readonly constructorParameters: FunctionParameter[],
     public readonly fields: (LineComment | StructField)[],
@@ -66,5 +67,26 @@ export class StructDeclaration implements Node, ModuleItem {
 
     return errors;
   }
-  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
+
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    if (this.pubKeyword) {
+      semanticTokens.push({
+        type: "keyword",
+        start: this.pubKeyword.start,
+        length: this.pubKeyword.end.offset - this.pubKeyword.start.offset,
+      });
+    }
+    semanticTokens.push({
+      type: "struct",
+      modifiers: ["declaration"],
+      start: this.name.start,
+      length: this.name.end.offset - this.name.start.offset,
+    });
+
+    semanticTokens.push({
+      type: "keyword",
+      start: this.structKeyword.start,
+      length: this.structKeyword.end.offset - this.structKeyword.start.offset,
+    });
+  }
 }

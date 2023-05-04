@@ -8,7 +8,7 @@ import { SemanticToken } from "../../syntax-token";
 export class ImplDeclaration implements Node {
   constructor(
     private readonly implKeyword: WithPosition<"impl">,
-    public readonly name: string,
+    public readonly name: WithPosition<string>,
     public readonly methods: (LineComment | MethodDeclaration)[],
     public readonly start: InputPosition,
     public readonly end: InputPosition
@@ -45,6 +45,18 @@ export class ImplDeclaration implements Node {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    semanticTokens.push({
+      type: "keyword",
+      start: this.implKeyword.start,
+      length: this.implKeyword.end.offset - this.implKeyword.start.offset,
+    });
+    semanticTokens.push({
+      type: "struct",
+      modifiers: ["declaration"],
+      start: this.name.start,
+      length: this.name.end.offset - this.name.start.offset,
+    });
+
     for (const method of this.methods) {
       method.collectSemanticTokens(semanticTokens);
     }
