@@ -1,5 +1,5 @@
 import { Expression, Node, ValidationError } from ".";
-import { TO2Type, UNKNOWN_TYPE } from "./to2-type";
+import { RealizedType, TO2Type, UNKNOWN_TYPE } from "./to2-type";
 import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
@@ -13,8 +13,8 @@ export class VariableGet extends Expression {
     super(start, end);
   }
 
-  public resultType(context: BlockContext): TO2Type {
-    return context.findVariable(this.namePath.value) ?? UNKNOWN_TYPE;
+  public resultType(context: BlockContext, typeHint?: RealizedType): TO2Type {
+    return context.findVariable(this.namePath.value, typeHint) ?? UNKNOWN_TYPE;
   }
 
   public reduceNode<T>(
@@ -24,10 +24,13 @@ export class VariableGet extends Expression {
     return combine(initialValue, this);
   }
 
-  public validateBlock(context: BlockContext): ValidationError[] {
+  public validateBlock(
+    context: BlockContext,
+    typeHint?: RealizedType
+  ): ValidationError[] {
     const errors: ValidationError[] = [];
 
-    if (!context.findVariable(this.namePath.value)) {
+    if (!context.findVariable(this.namePath.value, typeHint)) {
       errors.push({
         status: "error",
         message: `Undefined variable: ${this.namePath.value[0]}`,

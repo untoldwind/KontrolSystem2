@@ -3,6 +3,7 @@ import { BUILTIN_UNIT, TO2Type, UNKNOWN_TYPE } from "./to2-type";
 import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
+import { OptionType } from "./option-type";
 
 export class IfThen extends Expression {
   constructor(
@@ -15,7 +16,7 @@ export class IfThen extends Expression {
     super(start, end);
   }
   public resultType(context: BlockContext): TO2Type {
-    return this.thenExpression.resultType(context);
+    return new OptionType(this.thenExpression.resultType(context));
   }
 
   public reduceNode<T>(

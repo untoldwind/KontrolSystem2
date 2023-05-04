@@ -1,5 +1,5 @@
 import { Expression, Node, ValidationError } from ".";
-import { BUILTIN_BOOL, TO2Type } from "./to2-type";
+import { BUILTIN_BOOL, RealizedType, TO2Type } from "./to2-type";
 import { Operator } from "./operator";
 import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
@@ -16,8 +16,8 @@ export class VariableAssign extends Expression {
     super(start, end);
   }
 
-  resultType(context: BlockContext): TO2Type {
-    return this.expression.resultType(context);
+  resultType(context: BlockContext, typeHint?: RealizedType): TO2Type {
+    return this.expression.resultType(context, typeHint);
   }
 
   public reduceNode<T>(
@@ -26,10 +26,19 @@ export class VariableAssign extends Expression {
   ): T {
     return this.expression.reduceNode(combine, combine(initialValue, this));
   }
-  public validateBlock(context: BlockContext): ValidationError[] {
+
+  public validateBlock(
+    context: BlockContext,
+    typeHint?: RealizedType
+  ): ValidationError[] {
     const errors: ValidationError[] = [];
 
-    const variableType = context.findVariable([this.name.value]);
+    const variableType = context.findVariable(
+      [this.name.value],
+      this.expression
+        .resultType(context, typeHint)
+        .realizedType(context.module)
+    );
     if (!variableType) {
       errors.push({
         status: "error",

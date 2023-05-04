@@ -1,6 +1,6 @@
 import { ModuleContext } from "./context";
 import { FunctionType } from "./function-type";
-import { BUILTIN_BOOL, RealizedType, TO2Type } from "./to2-type";
+import { BUILTIN_BOOL, RealizedType, TO2Type, UNKNOWN_TYPE } from "./to2-type";
 import { OptionType } from "./option-type";
 
 export class ArrayType implements RealizedType {
@@ -88,6 +88,23 @@ export class ArrayType implements RealizedType {
             ],
           ],
           BUILTIN_BOOL,
+          "Check if an item satisfying a predicate exists"
+        );
+      case "map":
+        return new FunctionType(
+          false,
+          [
+            [
+              "convert",
+              new FunctionType(
+                false,
+                [["item", this.elementType, false]],
+                UNKNOWN_TYPE
+              ),
+              false,
+            ],
+          ],
+          new ArrayType(UNKNOWN_TYPE),
           "Check if an item satisfying a predicate exists"
         );
     }

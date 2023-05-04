@@ -48,7 +48,7 @@ export class Block extends Expression {
 
     for (const item of this.items) {
       errors.push(...item.validateBlock(blockContext));
-      if (!item.isComment) resultType = item.resultType(context);
+      if (!item.isComment) resultType = item.resultType(blockContext);
     }
 
     return [resultType, errors];

@@ -1,8 +1,17 @@
-import { FunctionType } from "./function-type";
+import { FunctionType, isFunctionType } from "./function-type";
 import { RecordType } from "./record-type";
 import { Registry } from "./registry";
+import { ResultType } from "./result-type";
 import { TO2Module } from "./to2-module";
-import { RealizedType, TO2Type, findLibraryTypeOrAlias } from "./to2-type";
+import {
+  BUILTIN_ARRAYBUILDER,
+  BUILTIN_CELL,
+  BUILTIN_INT,
+  RealizedType,
+  TO2Type,
+  UNKNOWN_TYPE,
+  findLibraryTypeOrAlias,
+} from "./to2-type";
 
 export interface ModuleContext {
   mappedConstants: Map<string, TO2Type>;
@@ -15,7 +24,10 @@ export interface ModuleContext {
     typeArguments: RealizedType[]
   ): RealizedType | undefined;
   findConstant(namePath: string[]): TO2Type | undefined;
-  findFunction(namePath: string[]): FunctionType | undefined;
+  findFunction(
+    namePath: string[],
+    typeHint?: RealizedType
+  ): FunctionType | undefined;
   findModule(namePath: string[]): TO2Module | undefined;
 }
 
@@ -63,9 +75,61 @@ export class RootModuleContext implements ModuleContext {
       : undefined;
   }
 
-  findFunction(namePath: string[]): FunctionType | undefined {
-    if (namePath.length === 1 && this.mappedFunctions.has(namePath[0])) {
-      return this.mappedFunctions.get(namePath[0]);
+  findFunction(
+    namePath: string[],
+    typeHint?: RealizedType
+  ): FunctionType | undefined {
+    if (namePath.length === 1) {
+      if (this.mappedFunctions.has(namePath[0])) {
+        return this.mappedFunctions.get(namePath[0]);
+      } else {
+        const returnType =
+          typeHint && isFunctionType(typeHint)
+            ? typeHint.returnType
+            : undefined;
+        const args =
+          typeHint && isFunctionType(typeHint)
+            ? typeHint.parameterTypes.map((param) => param[1])
+            : [];
+        switch (namePath[0]) {
+          case "Cell":
+            if (args.length === 1) {
+              return new FunctionType(
+                false,
+                [["value", args[0], false]],
+                BUILTIN_CELL.fillGenerics([args[0].realizedType(this)])
+              );
+            }
+            break;
+          case "Ok":
+            if (args.length === 1) {
+              return new FunctionType(
+                false,
+                [["value", args[0], false]],
+                new ResultType(args[0], UNKNOWN_TYPE)
+              );
+            }
+            break;
+          case "Err":
+            if (args.length === 1) {
+              return new FunctionType(
+                false,
+                [["value", args[0], false]],
+                new ResultType(UNKNOWN_TYPE, args[0])
+              );
+            }
+            break;
+          case "ArrayBuilder":
+            if (args.length === 1) {
+              return new FunctionType(
+                false,
+                [["value", BUILTIN_INT, false]],
+                BUILTIN_ARRAYBUILDER
+              );
+            }
+            break;
+        }
+      }
     }
     if (namePath.length === 2) {
       const mappedModule = this.moduleAliases.get(namePath[0]);
@@ -112,8 +176,11 @@ export class ImplModuleContext implements ModuleContext {
     return this.root.findConstant(namePath);
   }
 
-  findFunction(namePath: string[]): FunctionType | undefined {
-    return this.root.findFunction(namePath);
+  findFunction(
+    namePath: string[],
+    typeHint?: RealizedType
+  ): FunctionType | undefined {
+    return this.root.findFunction(namePath, typeHint);
   }
 
   findModule(namePath: string[]): TO2Module | undefined {
@@ -135,14 +202,17 @@ export class BlockContext {
     private readonly parent: BlockContext | undefined = undefined
   ) {}
 
-  public findVariable(namePath: string[]): TO2Type | undefined {
+  public findVariable(
+    namePath: string[],
+    typeHint?: RealizedType
+  ): TO2Type | undefined {
     return (
       (namePath.length === 1
         ? this.localVariables.get(namePath[0])
         : undefined) ??
-      this.parent?.findVariable(namePath) ??
+      this.parent?.findVariable(namePath, typeHint) ??
       this.module.findConstant(namePath) ??
-      this.module.findFunction(namePath)
+      this.module.findFunction(namePath, typeHint)
     );
   }
 }

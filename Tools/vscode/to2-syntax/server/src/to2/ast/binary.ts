@@ -40,7 +40,10 @@ export class Binary extends Expression {
       const leftType = this.left.resultType(context);
       const rightType = this.right.resultType(context);
       errors.push({
-        status: "error",
+        status:
+          leftType === UNKNOWN_TYPE || rightType === UNKNOWN_TYPE
+            ? "warn"
+            : "error",
         message: `Invalid operator: ${leftType.name} ${this.op.value} ${rightType.name} is not definied`,
         start: this.start,
         end: this.end,

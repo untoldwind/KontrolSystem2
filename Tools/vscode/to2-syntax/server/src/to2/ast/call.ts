@@ -1,8 +1,8 @@
 import { Expression, Node, ValidationError } from ".";
-import { TO2Type, UNKNOWN_TYPE } from "./to2-type";
+import { RealizedType, TO2Type, UNKNOWN_TYPE } from "./to2-type";
 import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
-import { isFunctionType } from "./function-type";
+import { FunctionType, isFunctionType } from "./function-type";
 import { SemanticToken } from "../../syntax-token";
 
 export class Call extends Expression {
@@ -15,9 +15,20 @@ export class Call extends Expression {
     super(start, end);
   }
 
-  public resultType(context: BlockContext): TO2Type {
+  public resultType(context: BlockContext, typeHint?: RealizedType): TO2Type {
     const variableType = context
-      .findVariable(this.namePath.value)
+      .findVariable(
+        this.namePath.value,
+        new FunctionType(
+          false,
+          this.args.map((arg, idx) => [
+            `param${idx}`,
+            arg.resultType(context),
+            false,
+          ]),
+          typeHint ?? UNKNOWN_TYPE
+        )
+      )
       ?.realizedType(context.module);
     return variableType && isFunctionType(variableType)
       ? variableType.returnType
@@ -34,11 +45,25 @@ export class Call extends Expression {
     );
   }
 
-  public validateBlock(context: BlockContext): ValidationError[] {
+  public validateBlock(
+    context: BlockContext,
+    typeHint?: RealizedType
+  ): ValidationError[] {
     const errors: ValidationError[] = [];
 
     const variableType = context
-      .findVariable(this.namePath.value)
+      .findVariable(
+        this.namePath.value,
+        new FunctionType(
+          false,
+          this.args.map((arg, idx) => [
+            `param${idx}`,
+            arg.resultType(context),
+            false,
+          ]),
+          typeHint ?? UNKNOWN_TYPE
+        )
+      )
       ?.realizedType(context.module);
     if (!variableType) {
       errors.push({

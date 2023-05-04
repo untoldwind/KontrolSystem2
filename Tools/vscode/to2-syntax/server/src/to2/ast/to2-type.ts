@@ -112,6 +112,10 @@ export const BUILTIN_INT = new ReferencedType(REFERENCE.builtin["int"]);
 export const BUILTIN_FLOAT = new ReferencedType(REFERENCE.builtin["float"]);
 export const BUILTIN_STRING = new ReferencedType(REFERENCE.builtin["string"]);
 export const BUILTIN_RANGE = new ReferencedType(REFERENCE.builtin["Range"]);
+export const BUILTIN_CELL = new ReferencedType(REFERENCE.builtin["Cell"]);
+export const BUILTIN_ARRAYBUILDER = new ReferencedType(
+  REFERENCE.builtin["ArrayBuilder"]
+);
 
 export function findLibraryTypeOrAlias(
   namePath: string[],
