@@ -1,21 +1,26 @@
 import { TO2Type } from "./to2-type";
-import { ModuleItem, Node, ValidationError } from ".";
+import { ModuleItem, Node, TypeDeclaration, ValidationError } from ".";
 import { InputPosition, InputRange, WithPosition } from "../../parser";
 import { ModuleContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
 
-export class TypeAlias implements Node, ModuleItem {
+export class TypeAlias implements Node, TypeDeclaration {
+  public readonly isTypeDecl = true;
+
   public readonly range: InputRange;
+
+  public readonly name: string;
 
   constructor(
     public readonly exported: boolean,
-    public readonly name: WithPosition<string>,
+    public readonly alias: WithPosition<string>,
     public readonly description: string,
     public readonly type: TO2Type,
     start: InputPosition,
     end: InputPosition
   ) {
     this.range = new InputRange(start, end);
+    this.name = alias.value;
   }
 
   public reduceNode<T>(
@@ -28,14 +33,14 @@ export class TypeAlias implements Node, ModuleItem {
   public validateModuleFirstPass(context: ModuleContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
-    if (context.typeAliases.has(this.name.value)) {
+    if (context.typeAliases.has(this.name)) {
       errors.push({
         status: "error",
-        message: `Duplicate type name ${this.name.value}`,
-        range: this.name.range,
+        message: `Duplicate type name ${this.name}`,
+        range: this.alias.range,
       });
     } else {
-      context.typeAliases.set(this.name.value, this.type.realizedType(context));
+      context.typeAliases.set(this.name, this.type.realizedType(context));
     }
 
     return errors;

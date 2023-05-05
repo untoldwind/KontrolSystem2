@@ -14,4 +14,8 @@ export class Registry {
   public findModule(namePath: string[]): TO2Module | undefined {
     return this.modules.get(namePath.join("::"));
   }
+
+  public allModuleNames(): string[] {
+    return [...this.modules.keys()];
+  }
 }

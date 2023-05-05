@@ -1,4 +1,10 @@
-import { ModuleItem, Node, ValidationError } from ".";
+import {
+  ModuleItem,
+  Node,
+  TypeDeclaration,
+  ValidationError,
+  isTypeDeclaration,
+} from ".";
 import { InputPosition, InputRange } from "../../parser";
 import { ModuleReference } from "../../reference";
 import { SemanticToken } from "../../syntax-token";
@@ -19,14 +25,21 @@ export interface TO2Module {
 
   findConstant(name: string): TO2Type | undefined;
 
+  allConstants(): [string, TO2Type][];
+
   findType(name: string): TO2Type | undefined;
 
+  allTypes(): [string, TO2Type][];
+
   findFunction(name: string): FunctionType | undefined;
+
+  allFunctions(): [string, FunctionType][];
 }
 
 export class TO2ModuleNode implements Node, TO2Module {
   private constants: Map<string, ConstDeclaration> = new Map();
   private functions: Map<string, FunctionDeclaration> = new Map();
+  private types: Map<string, TypeDeclaration> = new Map();
   public readonly range: InputRange;
 
   constructor(
@@ -42,6 +55,7 @@ export class TO2ModuleNode implements Node, TO2Module {
       if (isConstDeclaration(item)) this.constants.set(item.name.value, item);
       if (isFunctionDeclaration(item))
         this.functions.set(item.name.value, item);
+      if (isTypeDeclaration(item)) this.types.set(item.name, item);
     }
   }
 
@@ -49,12 +63,30 @@ export class TO2ModuleNode implements Node, TO2Module {
     return this.constants.get(name)?.type;
   }
 
+  public allConstants(): [string, TO2Type][] {
+    return [...this.constants.entries()].map(([name, decl]) => [
+      name,
+      decl.type,
+    ]);
+  }
+
   public findType(name: string): TO2Type | undefined {
     return undefined;
   }
 
+  public allTypes(): [string, TO2Type][] {
+    return [...this.types.entries()].map(([name, decl]) => [name, decl.type]);
+  }
+
   public findFunction(name: string): FunctionType | undefined {
     return this.functions.get(name)?.functionType;
+  }
+
+  public allFunctions(): [string, FunctionType][] {
+    return [...this.functions.entries()].map(([name, decl]) => [
+      name,
+      decl.functionType,
+    ]);
   }
 
   public reduceNode<T>(
@@ -105,6 +137,15 @@ export class ReferencedModule implements TO2Module {
       : undefined;
   }
 
+  allConstants(): [string, TO2Type][] {
+    return Object.entries(this.moduleReference.constants).map(
+      ([name, constantReference]) => [
+        name,
+        resolveTypeRef(constantReference.type) ?? UNKNOWN_TYPE,
+      ]
+    );
+  }
+
   findType(name: string): TO2Type | undefined {
     const aliased = this.moduleReference.typeAliases[name];
     if (aliased) return resolveTypeRef(aliased);
@@ -112,6 +153,20 @@ export class ReferencedModule implements TO2Module {
     return typeReference
       ? new ReferencedType(typeReference, this.name)
       : undefined;
+  }
+
+  allTypes(): [string, TO2Type][] {
+    return [
+      ...Object.entries(this.moduleReference.typeAliases).map<
+        [string, TO2Type]
+      >(([name, aliased]) => [name, resolveTypeRef(aliased) ?? UNKNOWN_TYPE]),
+      ...Object.entries(this.moduleReference.types).map<[string, TO2Type]>(
+        ([name, typeReference]) => [
+          name,
+          new ReferencedType(typeReference, this.name),
+        ]
+      ),
+    ];
   }
 
   findFunction(name: string): FunctionType | undefined {
@@ -128,5 +183,23 @@ export class ReferencedModule implements TO2Module {
           functionReference.description
         )
       : undefined;
+  }
+
+  allFunctions(): [string, FunctionType][] {
+    return Object.entries(this.moduleReference.functions).map(
+      ([name, functionReference]) => [
+        name,
+        new FunctionType(
+          functionReference.isAsync,
+          functionReference.parameters.map((param) => [
+            param.name,
+            resolveTypeRef(param.type) ?? UNKNOWN_TYPE,
+            param.hasDefault,
+          ]),
+          resolveTypeRef(functionReference.returnType) ?? UNKNOWN_TYPE,
+          functionReference.description
+        ),
+      ]
+    );
   }
 }

@@ -51,7 +51,7 @@ export class FunctionParameter implements Node {
 }
 
 export class FunctionDeclaration implements Node, ModuleItem {
-  public isFunctionDecl: boolean = true;
+  public isFunctionDecl: true = true;
   public functionType: FunctionType;
   public readonly modifier: FunctionModifier;
   public readonly isAsync: boolean;
@@ -173,5 +173,5 @@ export class FunctionDeclaration implements Node, ModuleItem {
 export function isFunctionDeclaration(
   node: ModuleItem
 ): node is FunctionDeclaration {
-  return node.isFunctionDecl === true;
+  return !!node.isFunctionDecl;
 }

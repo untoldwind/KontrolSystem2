@@ -5,7 +5,7 @@ import { ModuleContext } from "./context";
 import { TO2Type } from "./to2-type";
 
 export class ConstDeclaration implements Node, ModuleItem {
-  public isConstDecl: boolean = true;
+  public isConstDecl: true = true;
   public readonly range: InputRange;
 
   constructor(
@@ -53,5 +53,5 @@ export class ConstDeclaration implements Node, ModuleItem {
 }
 
 export function isConstDeclaration(node: ModuleItem): node is ConstDeclaration {
-  return node.isConstDecl === true;
+  return !!node.isConstDecl;
 }

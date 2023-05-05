@@ -1,6 +1,8 @@
 import { TextDocument } from "vscode-languageserver-textdocument";
 import { Registry } from "./to2/ast/registry";
 import {
+  CompletionItem,
+  CompletionParams,
   Connection,
   Diagnostic,
   DiagnosticSeverity,
@@ -167,5 +169,19 @@ export class LspServer {
       };
 
     return undefined;
+  }
+
+  onCompleteion(params: CompletionParams): CompletionItem[] {
+    const module = this.documentModules.get(params.textDocument.uri);
+
+    if (!module) return [];
+
+    return findNodesAt(module, params.position).flatMap(
+      (node) => node.completionsAt?.(this.registry, params.position) ?? []
+    );
+  }
+
+  onCompletionResolve(item: CompletionItem): CompletionItem {
+    return item;
   }
 }

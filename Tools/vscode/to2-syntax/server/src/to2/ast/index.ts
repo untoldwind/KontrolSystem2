@@ -2,6 +2,9 @@ import { RealizedType, TO2Type } from "./to2-type";
 import { InputPosition, InputRange, WithPosition } from "../../parser";
 import { BlockContext, ModuleContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
+import { CompletionItem } from "vscode-languageserver";
+import { Position } from "vscode-languageserver-textdocument";
+import { Registry } from "./registry";
 
 export interface Node {
   readonly isComment?: boolean;
@@ -15,6 +18,8 @@ export interface Node {
   ): T;
 
   collectSemanticTokens(semanticTokens: SemanticToken[]): void;
+
+  completionsAt?(registry: Registry, position: Position): CompletionItem[];
 }
 
 export interface BlockItem extends Node {
@@ -27,12 +32,23 @@ export interface BlockItem extends Node {
 }
 
 export interface ModuleItem extends Node {
-  isConstDecl?: boolean;
-  isFunctionDecl?: boolean;
+  isConstDecl?: true;
+  isFunctionDecl?: true;
+  isTypeDecl?: true;
 
   validateModuleFirstPass(context: ModuleContext): ValidationError[];
 
   validateModuleSecondPass(context: ModuleContext): ValidationError[];
+}
+
+export interface TypeDeclaration extends ModuleItem {
+  isTypeDecl: true;
+  name: string;
+  type: TO2Type;
+}
+
+export function isTypeDeclaration(item: ModuleItem): item is TypeDeclaration {
+  return !!item.isTypeDecl;
 }
 
 export abstract class Expression implements Node, BlockItem {

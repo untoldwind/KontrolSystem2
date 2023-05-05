@@ -1,5 +1,11 @@
 import { Position } from "vscode-languageserver-textdocument";
-import { Expression, ModuleItem, Node, ValidationError } from ".";
+import {
+  Expression,
+  ModuleItem,
+  Node,
+  TypeDeclaration,
+  ValidationError,
+} from ".";
 import { TO2Type, UNKNOWN_TYPE } from "./to2-type";
 import { FunctionParameter } from "./function-declaration";
 import { LineComment, isLineComment } from "./line-comment";
@@ -38,13 +44,17 @@ export class StructField implements Node {
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
 }
 
-export class StructDeclaration implements Node, ModuleItem {
+export class StructDeclaration implements Node, TypeDeclaration {
+  public readonly isTypeDecl: true = true;
+
   public readonly range: InputRange;
+  public readonly name: string;
+  public readonly type: TO2Type;
 
   constructor(
     public readonly pubKeyword: WithPosition<"pub"> | undefined,
     public readonly structKeyword: WithPosition<"struct">,
-    public readonly name: WithPosition<string>,
+    public readonly structName: WithPosition<string>,
     public readonly description: string,
     public readonly constructorParameters: FunctionParameter[],
     public readonly fields: (LineComment | StructField)[],
@@ -52,6 +62,13 @@ export class StructDeclaration implements Node, ModuleItem {
     end: InputPosition
   ) {
     this.range = new InputRange(start, end);
+    this.name = this.structName.value;
+    this.type = new RecordType(
+      this.fields.flatMap((field) => {
+        if (isLineComment(field)) return [];
+        return [[field.name, field.type]];
+      })
+    );
   }
 
   reduceNode<T>(
@@ -70,31 +87,24 @@ export class StructDeclaration implements Node, ModuleItem {
   public validateModuleFirstPass(context: ModuleContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
-    const recordType = new RecordType(
-      this.fields.flatMap((field) => {
-        if (isLineComment(field)) return [];
-        return [[field.name, field.type]];
-      })
-    );
-
-    if (context.typeAliases.has(this.name.value)) {
+    if (context.typeAliases.has(this.name)) {
       errors.push({
         status: "error",
-        message: `Duplicate type name ${this.name.value}`,
-        range: this.name.range,
+        message: `Duplicate type name ${this.name}`,
+        range: this.structName.range,
       });
     } else {
-      context.typeAliases.set(this.name.value, recordType);
+      context.typeAliases.set(this.name, this.type.realizedType(context));
     }
-    if (context.mappedFunctions.has(this.name.value)) {
+    if (context.mappedFunctions.has(this.name)) {
       errors.push({
         status: "error",
-        message: `Duplicate function name ${this.name.value}`,
-        range: this.name.range,
+        message: `Duplicate function name ${this.name}`,
+        range: this.structName.range,
       });
     } else {
       context.mappedFunctions.set(
-        this.name.value,
+        this.structName.value,
         new FunctionType(
           false,
           this.constructorParameters.map((param) => [
@@ -102,7 +112,7 @@ export class StructDeclaration implements Node, ModuleItem {
             param.type ?? UNKNOWN_TYPE,
             param.defaultValue !== undefined,
           ]),
-          recordType
+          this.type
         )
       );
     }
@@ -121,6 +131,8 @@ export class StructDeclaration implements Node, ModuleItem {
       semanticTokens.push(this.pubKeyword.range.semanticToken("keyword"));
     }
     semanticTokens.push(this.structKeyword.range.semanticToken("keyword"));
-    semanticTokens.push(this.name.range.semanticToken("struct", "declaration"));
+    semanticTokens.push(
+      this.structName.range.semanticToken("struct", "declaration")
+    );
   }
 }
