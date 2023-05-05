@@ -2,7 +2,7 @@
   "name": "to2-syntax",
   "displayName": "to2-syntax",
   "description": "",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "MIT",
   "engines": {
     "vscode": "^1.76.0"
@@ -64,11 +64,11 @@
     ]
   },
   "scripts": {
-    "bundle": "(cd client && npm run bundle) && (cd server && npm run bundle)",
+    "bundle": "cd client && npm run bundle && cd ../server && npm run bundle",
     "compile": "tsc -b",
     "watch": "tsc -b -w",
     "format": "prettier --write .",
-    "postinstall": "(cd client && npm install) && (cd server && npm install)"
+    "postinstall": "cd client && npm install && cd ../server && npm install"
   },
   "devDependencies": {
     "@types/node": "18.16.3",

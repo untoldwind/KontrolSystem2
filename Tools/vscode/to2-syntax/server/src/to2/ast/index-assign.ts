@@ -19,7 +19,7 @@ export class IndexAssign extends Expression {
   }
 
   public resultType(context: BlockContext): TO2Type {
-    return BUILTIN_UNIT;
+    return this.expression.resultType(context);
   }
 
   public reduceNode<T>(
@@ -39,6 +39,7 @@ export class IndexAssign extends Expression {
     const errors: ValidationError[] = [];
 
     errors.push(...this.target.validateBlock(context));
+    errors.push(...this.expression.validateBlock(context));
 
     return errors;
   }

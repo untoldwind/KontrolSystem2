@@ -70,7 +70,7 @@ export class MethodCall extends Expression {
             this.methodName.value
           }(${methodType.parameterTypes
             .map(([name, type]) => `${name} : ${type.name}`)
-            .join(", ")})\``
+            .join(", ")}) -> ${methodType.returnType.name}\``
         ),
       ];
       if (methodType.description)

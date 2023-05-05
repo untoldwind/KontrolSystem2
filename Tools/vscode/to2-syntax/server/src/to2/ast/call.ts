@@ -114,7 +114,7 @@ export class Call extends Expression {
             "::"
           )}(${variableType.parameterTypes
             .map(([name, type]) => `${name} : ${type.name}`)
-            .join(", ")})\``
+            .join(", ")}) -> ${variableType.returnType.name}\``
         ),
       ];
       if (variableType.description)

@@ -1,5 +1,5 @@
 import { Expression, Node, ValidationError } from ".";
-import { BUILTIN_UNIT, TO2Type } from "./to2-type";
+import { BUILTIN_UNIT, TO2Type, UNKNOWN_TYPE } from "./to2-type";
 import { Operator } from "./operator";
 import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
@@ -18,7 +18,7 @@ export class FieldAssign extends Expression {
   }
 
   public resultType(context: BlockContext): TO2Type {
-    return BUILTIN_UNIT;
+    return this.expression.resultType(context);
   }
 
   public reduceNode<T>(
@@ -34,14 +34,42 @@ export class FieldAssign extends Expression {
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
+    const targetType = this.target
+      .resultType(context)
+      .realizedType(context.module);
+
+    const fieldType = targetType.findField(this.fieldName.value)?.realizedType(context.module);
+    if (!fieldType) {
+      errors.push({
+        status:
+        targetType === UNKNOWN_TYPE ? "warn" : "error",
+        message: `Undefined field ${this.fieldName.value} for type ${
+          targetType.name
+        }`,
+        range: this.fieldName.range,
+      });
+    } else {
+      const targetType = this.target
+        .resultType(context)
+        .realizedType(context.module);
+      this.documentation = [
+        this.fieldName.range.with(
+          `Field \`${targetType.name}.${this.fieldName.value} : ${fieldType.name}\``
+        ),
+      ];
+      if(fieldType.description)
+        this.documentation.push(this.fieldName.range.with(fieldType.description));
+    }
+
     errors.push(...this.target.validateBlock(context));
+    errors.push(...this.expression.validateBlock(context));
 
     return errors;
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     this.target.collectSemanticTokens(semanticTokens);
-    semanticTokens.push(this.fieldName.range.semanticToken("property"));
+    semanticTokens.push(this.fieldName.range.semanticToken("property", "modification"));
     this.expression.collectSemanticTokens(semanticTokens);
   }
 }

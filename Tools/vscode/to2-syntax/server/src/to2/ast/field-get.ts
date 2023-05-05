@@ -30,7 +30,8 @@ export class FieldGet extends Expression {
 
     errors.push(...this.target.validateBlock(context));
 
-    if (errors.length === 0 && !this.findField(context)) {
+    const fieldType = this.findField(context)?.realizedType(context.module);
+    if (!fieldType) {
       errors.push({
         status:
           this.target.resultType(context) === UNKNOWN_TYPE ? "warn" : "error",
@@ -39,6 +40,17 @@ export class FieldGet extends Expression {
         }`,
         range: this.fieldName.range,
       });
+    } else {
+      const targetType = this.target
+        .resultType(context)
+        .realizedType(context.module);
+      this.documentation = [
+        this.fieldName.range.with(
+          `Field \`${targetType.name}.${this.fieldName.value} : ${fieldType.name}\``
+        ),
+      ];
+      if(fieldType.description)
+        this.documentation.push(this.fieldName.range.with(fieldType.description));
     }
 
     return errors;
