@@ -9,6 +9,7 @@ import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
 
 export class TupleDeconstructDeclaration implements Node, BlockItem {
+  public documentation?: WithPosition<string>[];
   public readonly range: InputRange;
 
   constructor(
@@ -36,6 +37,7 @@ export class TupleDeconstructDeclaration implements Node, BlockItem {
     const errors: ValidationError[] = [];
 
     const resultType = this.resultType(context).realizedType(context.module);
+    this.documentation = [];
     for (let i = 0; i < this.declarations.length; i++) {
       const declaration = this.declarations[i];
       if (isDeclarationParameter(declaration)) {
@@ -45,15 +47,16 @@ export class TupleDeconstructDeclaration implements Node, BlockItem {
             message: `Duplicate variable ${declaration.target.value}`,
             range: declaration.target.range,
           });
-        } else if (declaration.type) {
-          context.localVariables.set(
-            declaration.target.value,
-            declaration.type
-          );
         } else {
-          context.localVariables.set(
-            declaration.target.value,
-            declaration.extractedType(resultType, i) ?? UNKNOWN_TYPE
+          const variableType =
+            declaration.type ??
+            declaration.extractedType(resultType, i) ??
+            UNKNOWN_TYPE;
+          context.localVariables.set(declaration.target.value, variableType);
+          this.documentation.push(
+            declaration.target.range.with(
+              `Variable declaration \`${declaration.target.value} : ${variableType.name}\``
+            )
           );
         }
       }

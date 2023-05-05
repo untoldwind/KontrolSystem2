@@ -1,12 +1,13 @@
 import { RealizedType, TO2Type } from "./to2-type";
-import { InputPosition, InputRange } from "../../parser";
+import { InputPosition, InputRange, WithPosition } from "../../parser";
 import { BlockContext, ModuleContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
 
 export interface Node {
-  isComment?: boolean;
-  isError?: boolean;
-  range: InputRange;
+  readonly isComment?: boolean;
+  readonly isError?: boolean;
+  readonly documentation?: WithPosition<string>[];
+  readonly range: InputRange;
 
   reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
@@ -14,8 +15,6 @@ export interface Node {
   ): T;
 
   collectSemanticTokens(semanticTokens: SemanticToken[]): void;
-
-  //  findNodesAt(position: InputPosition)
 }
 
 export interface BlockItem extends Node {
@@ -37,6 +36,7 @@ export interface ModuleItem extends Node {
 }
 
 export abstract class Expression implements Node, BlockItem {
+  public documentation?: WithPosition<string>[];
   public readonly range: InputRange;
 
   constructor(start: InputPosition, end: InputPosition) {

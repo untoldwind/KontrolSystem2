@@ -11,6 +11,18 @@ export class InputPosition implements Position {
     public readonly line: number,
     public readonly character: number
   ) {}
+
+  isBefore(position: Position): boolean {
+    return this.line === position.line
+      ? this.character <= position.character
+      : this.line < position.line;
+  }
+
+  isAfter(position: Position): boolean {
+    return this.line === position.line
+      ? this.character >= position.character
+      : this.line > position.line;
+  }
 }
 
 export class InputRange implements Range {
@@ -18,6 +30,10 @@ export class InputRange implements Range {
     public readonly start: InputPosition,
     public readonly end: InputPosition
   ) {}
+
+  contains(position: Position): boolean {
+    return this.start.isBefore(position) && this.end.isAfter(position);
+  }
 
   semanticToken(
     type: SemanticTokenType,
@@ -28,6 +44,13 @@ export class InputRange implements Range {
       modifiers,
       start: this.start,
       length: this.end.offset - this.start.offset,
+    };
+  }
+
+  with<T>(value: T): WithPosition<T> {
+    return {
+      range: this,
+      value,
     };
   }
 }

@@ -17,6 +17,7 @@ import { module } from "./to2/parser-module";
 import { To2LspSettings, defaultSettings } from "./settings";
 import { TO2ModuleNode } from "./to2/ast/to2-module";
 import { SemanticToken, convertSemanticTokens } from "./syntax-token";
+import { findNodesAt } from "./helper";
 
 export class LspServer {
   private readonly registry = new Registry();
@@ -147,7 +148,24 @@ export class LspServer {
   onHover(params: HoverParams): Hover | undefined {
     const module = this.documentModules.get(params.textDocument.uri);
 
-    console.log(params);
+    if (!module) return undefined;
+
+    const documentation = findNodesAt(module, params.position).flatMap((node) =>
+      node.documentation
+        ? node.documentation
+            .filter((doc) => doc.range.contains(params.position))
+            .map((doc) => doc.value)
+        : []
+    );
+
+    if (documentation.length > 0)
+      return {
+        contents: {
+          kind: "markdown",
+          value: documentation.join("\n- - -\n"),
+        },
+      };
+
     return undefined;
   }
 }

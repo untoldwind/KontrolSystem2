@@ -39,6 +39,7 @@ export function isDeclarationParameter(
 }
 
 export class VariableDeclaration implements Node, BlockItem {
+  public documentation?: WithPosition<string>[];
   public readonly range: InputRange;
 
   constructor(
@@ -72,10 +73,13 @@ export class VariableDeclaration implements Node, BlockItem {
         range: this.declaration.target.range,
       });
     } else {
-      context.localVariables.set(
-        this.declaration.target.value,
-        this.resultType(context)
-      );
+      const variableType = this.resultType(context);
+      context.localVariables.set(this.declaration.target.value, variableType);
+      this.documentation = [
+        this.declaration.target.range.with(
+          `Variable declaration \`${this.declaration.target.value} : ${variableType.name}\``
+        ),
+      ];
     }
     errors.push(
       ...this.expression.validateBlock(

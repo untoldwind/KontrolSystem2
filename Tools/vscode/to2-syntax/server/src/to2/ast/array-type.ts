@@ -1,6 +1,12 @@
 import { ModuleContext } from "./context";
 import { FunctionType } from "./function-type";
-import { BUILTIN_BOOL, RealizedType, TO2Type, UNKNOWN_TYPE } from "./to2-type";
+import {
+  BUILTIN_BOOL,
+  BUILTIN_INT,
+  RealizedType,
+  TO2Type,
+  UNKNOWN_TYPE,
+} from "./to2-type";
 import { OptionType } from "./option-type";
 
 export class ArrayType implements RealizedType {
@@ -34,7 +40,12 @@ export class ArrayType implements RealizedType {
   }
 
   public findField(name: string): TO2Type | undefined {
-    return undefined;
+    switch (name) {
+      case "length":
+        return BUILTIN_INT;
+      default:
+        return undefined;
+    }
   }
 
   public findMethod(name: string): FunctionType | undefined {

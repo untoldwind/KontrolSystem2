@@ -61,6 +61,22 @@ export class MethodCall extends Expression {
           );
         }
       }
+      const targetType = this.target
+        .resultType(context)
+        .realizedType(context.module);
+      this.documentation = [
+        this.methodName.range.with(
+          `Method \`${targetType.name}.${
+            this.methodName.value
+          }(${methodType.parameterTypes
+            .map(([name, type]) => `${name} : ${type.name}`)
+            .join(", ")})\``
+        ),
+      ];
+      if (methodType.description)
+        this.documentation.push(
+          this.methodName.range.with(methodType.description)
+        );
     } else {
       errors.push({
         status: "error",

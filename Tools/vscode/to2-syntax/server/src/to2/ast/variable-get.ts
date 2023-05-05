@@ -30,12 +30,27 @@ export class VariableGet extends Expression {
   ): ValidationError[] {
     const errors: ValidationError[] = [];
 
-    if (!context.findVariable(this.namePath.value, typeHint)) {
+    const variableType = context
+      .findVariable(this.namePath.value, typeHint)
+      ?.realizedType(context.module);
+    if (!variableType) {
       errors.push({
         status: "error",
         message: `Undefined variable: ${this.namePath.value[0]}`,
         range: this.namePath.range,
       });
+    } else {
+      this.documentation = [
+        this.namePath.range.with(
+          `Variable \`${this.namePath.value.join("::")} : ${
+            variableType.name
+          }\``
+        ),
+      ];
+      if (variableType.description)
+        this.documentation.push(
+          this.namePath.range.with(variableType.description)
+        );
     }
 
     return errors;

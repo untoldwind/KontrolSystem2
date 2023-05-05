@@ -28,6 +28,16 @@ export class TypeAlias implements Node, ModuleItem {
   public validateModuleFirstPass(context: ModuleContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
+    if (context.typeAliases.has(this.name.value)) {
+      errors.push({
+        status: "error",
+        message: `Duplicate type name ${this.name.value}`,
+        range: this.name.range,
+      });
+    } else {
+      context.typeAliases.set(this.name.value, this.type.realizedType(context));
+    }
+
     return errors;
   }
 

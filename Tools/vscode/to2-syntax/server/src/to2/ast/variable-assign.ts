@@ -37,12 +37,19 @@ export class VariableAssign extends Expression {
       [this.name.value],
       this.expression.resultType(context, typeHint).realizedType(context.module)
     );
+
     if (!variableType) {
       errors.push({
         status: "error",
         message: `Undefined variable: ${this.name.value}`,
         range: this.name.range,
       });
+    } else {
+      this.documentation = [
+        this.name.range.with(
+          `Variable \`${this.name.value} : ${variableType.name}\``
+        ),
+      ];
     }
 
     errors.push(

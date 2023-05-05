@@ -108,6 +108,19 @@ export class Call extends Expression {
           );
         }
       }
+      this.documentation = [
+        this.namePath.range.with(
+          `Function \`${this.namePath.value.join(
+            "::"
+          )}(${variableType.parameterTypes
+            .map(([name, type]) => `${name} : ${type.name}`)
+            .join(", ")})\``
+        ),
+      ];
+      if (variableType.description)
+        this.documentation.push(
+          this.namePath.range.with(variableType.description)
+        );
     }
 
     return errors;
