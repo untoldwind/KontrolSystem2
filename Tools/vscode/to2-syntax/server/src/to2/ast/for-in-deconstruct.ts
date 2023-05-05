@@ -41,16 +41,8 @@ export class ForInDeconstruct extends Expression {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-    semanticTokens.push({
-      type: "keyword",
-      start: this.forKeyword.start,
-      length: this.forKeyword.end.offset - this.forKeyword.start.offset,
-    });
-    semanticTokens.push({
-      type: "keyword",
-      start: this.inKeyword.start,
-      length: this.inKeyword.end.offset - this.inKeyword.start.offset,
-    });
+    semanticTokens.push(this.forKeyword.range.semanticToken("keyword"));
+    semanticTokens.push(this.inKeyword.range.semanticToken("keyword"));
     this.sourceExpression.collectSemanticTokens(semanticTokens);
     this.loopExpression.collectSemanticTokens(semanticTokens);
   }

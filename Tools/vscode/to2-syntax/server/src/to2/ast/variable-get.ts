@@ -34,8 +34,7 @@ export class VariableGet extends Expression {
       errors.push({
         status: "error",
         message: `Undefined variable: ${this.namePath.value[0]}`,
-        start: this.namePath.start,
-        end: this.namePath.end,
+        range: this.namePath.range,
       });
     }
 
@@ -43,10 +42,6 @@ export class VariableGet extends Expression {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-    semanticTokens.push({
-      type: "variable",
-      start: this.start,
-      length: this.end.offset - this.start.offset,
-    });
+    semanticTokens.push(this.namePath.range.semanticToken("variable"));
   }
 }

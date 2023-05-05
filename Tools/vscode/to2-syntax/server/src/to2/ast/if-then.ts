@@ -38,11 +38,7 @@ export class IfThen extends Expression {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-    semanticTokens.push({
-      type: "keyword",
-      start: this.ifKeyword.start,
-      length: this.ifKeyword.end.offset - this.ifKeyword.start.offset,
-    });
+    semanticTokens.push(this.ifKeyword.range.semanticToken("keyword"));
     this.condition.collectSemanticTokens(semanticTokens);
     this.thenExpression.collectSemanticTokens(semanticTokens);
   }
@@ -91,11 +87,7 @@ export class IfThenElse extends Expression {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-    semanticTokens.push({
-      type: "keyword",
-      start: this.ifKeyword.start,
-      length: this.ifKeyword.end.offset - this.ifKeyword.start.offset,
-    });
+    semanticTokens.push(this.ifKeyword.range.semanticToken("keyword"));
     this.condition.collectSemanticTokens(semanticTokens);
     this.thenExpression.collectSemanticTokens(semanticTokens);
     this.elseExpression.collectSemanticTokens(semanticTokens);

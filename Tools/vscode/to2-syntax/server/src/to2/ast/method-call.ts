@@ -43,15 +43,13 @@ export class MethodCall extends Expression {
           status:
             this.target.resultType(context) === UNKNOWN_TYPE ? "warn" : "error",
           message: `${this.methodName.value} only takes ${methodType.maxParams} arguments`,
-          start: this.methodName.start,
-          end: this.methodName.end,
+          range: this.methodName.range,
         });
       } else if (this.args.length < methodType.requiredParams) {
         errors.push({
           status: "error",
           message: `${this.methodName.value} at least requires ${methodType.requiredParams} arguments`,
-          start: this.methodName.start,
-          end: this.methodName.end,
+          range: this.methodName.range,
         });
       } else {
         for (let i = 0; i < this.args.length; i++) {
@@ -69,8 +67,7 @@ export class MethodCall extends Expression {
         message: `Undefined method ${this.methodName.value} for type ${
           this.target.resultType(context).name
         }`,
-        start: this.methodName.start,
-        end: this.methodName.end,
+        range: this.methodName.range,
       });
     }
 
@@ -79,11 +76,7 @@ export class MethodCall extends Expression {
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     this.target.collectSemanticTokens(semanticTokens);
-    semanticTokens.push({
-      type: "method",
-      start: this.methodName.start,
-      length: this.methodName.end.offset - this.methodName.start.offset,
-    });
+    semanticTokens.push(this.methodName.range.semanticToken("method"));
     for (const arg of this.args) {
       arg.collectSemanticTokens(semanticTokens);
     }

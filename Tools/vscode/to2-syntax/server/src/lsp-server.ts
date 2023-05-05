@@ -5,6 +5,8 @@ import {
   Diagnostic,
   DiagnosticSeverity,
   DidChangeConfigurationParams,
+  Hover,
+  HoverParams,
   SemanticTokens,
   SemanticTokensParams,
   TextDocumentChangeEvent,
@@ -74,10 +76,7 @@ export class LspServer {
               validationError.status === "error"
                 ? DiagnosticSeverity.Error
                 : DiagnosticSeverity.Warning,
-            range: {
-              start: validationError.start,
-              end: validationError.end,
-            },
+            range: validationError.range,
             message: validationError.message,
             source: "parser",
           };
@@ -143,5 +142,12 @@ export class LspServer {
     return {
       data: convertSemanticTokens(token),
     };
+  }
+
+  onHover(params: HoverParams): Hover | undefined {
+    const module = this.documentModules.get(params.textDocument.uri);
+
+    console.log(params);
+    return undefined;
   }
 }

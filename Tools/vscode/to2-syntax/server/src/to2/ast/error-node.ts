@@ -1,18 +1,21 @@
 import { BlockItem, ModuleItem, Node, ValidationError } from ".";
-import { InputPosition } from "../../parser";
+import { InputPosition, InputRange } from "../../parser";
 import { SemanticToken } from "../../syntax-token";
 import { BlockContext, ModuleContext } from "./context";
 import { BUILTIN_UNIT, TO2Type } from "./to2-type";
 
 export class ErrorNode implements Node, ModuleItem, BlockItem {
-  public isError: boolean = true;
-  public isComment: boolean = true;
+  public readonly isError: boolean = true;
+  public readonly isComment: boolean = true;
+  public readonly range: InputRange;
 
   constructor(
     public readonly message: string,
-    public readonly start: InputPosition,
-    public readonly end: InputPosition
-  ) {}
+    start: InputPosition,
+    end: InputPosition
+  ) {
+    this.range = new InputRange(start, end);
+  }
 
   resultType(): TO2Type {
     return BUILTIN_UNIT;
@@ -30,8 +33,7 @@ export class ErrorNode implements Node, ModuleItem, BlockItem {
       {
         status: "error",
         message: this.message,
-        start: this.start,
-        end: this.end,
+        range: this.range,
       },
     ];
   }
@@ -41,8 +43,7 @@ export class ErrorNode implements Node, ModuleItem, BlockItem {
       {
         status: "error",
         message: this.message,
-        start: this.start,
-        end: this.end,
+        range: this.range,
       },
     ];
   }
@@ -52,8 +53,7 @@ export class ErrorNode implements Node, ModuleItem, BlockItem {
       {
         status: "error",
         message: this.message,
-        start: this.start,
-        end: this.end,
+        range: this.range,
       },
     ];
   }

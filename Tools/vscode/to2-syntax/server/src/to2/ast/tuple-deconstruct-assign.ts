@@ -1,6 +1,6 @@
 import { BlockItem, Expression, Node, ValidationError } from ".";
 import { TO2Type } from "./to2-type";
-import { InputPosition, WithPosition } from "../../parser";
+import { InputPosition, InputRange, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
 
@@ -10,12 +10,17 @@ export interface TupleTarget {
 }
 
 export class TupleDeconstructAssign implements Node, BlockItem {
+  public readonly range: InputRange;
+
   constructor(
     public readonly targets: TupleTarget[],
     public readonly expression: Expression,
-    public readonly start: InputPosition,
-    public readonly end: InputPosition
-  ) {}
+    start: InputPosition,
+    end: InputPosition
+  ) {
+    this.range = new InputRange(start, end);
+  }
+
   public resultType(context: BlockContext): TO2Type {
     return this.expression.resultType(context);
   }
@@ -37,8 +42,7 @@ export class TupleDeconstructAssign implements Node, BlockItem {
         errors.push({
           status: "error",
           message: `Undefined variable: ${target.target.value}`,
-          start: target.target.start,
-          end: target.target.end,
+          range: target.target.range,
         });
       }
     }
@@ -49,12 +53,9 @@ export class TupleDeconstructAssign implements Node, BlockItem {
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     for (const target of this.targets) {
       if (target.target.value !== "") {
-        semanticTokens.push({
-          type: "variable",
-          modifiers: ["modification"],
-          start: target.target.start,
-          length: target.target.end.offset - target.target.start.offset,
-        });
+        semanticTokens.push(
+          target.target.range.semanticToken("variable", "modification")
+        );
       }
     }
     this.expression.collectSemanticTokens(semanticTokens);

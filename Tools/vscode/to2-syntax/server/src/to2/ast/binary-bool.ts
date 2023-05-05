@@ -41,11 +41,7 @@ export class BinaryBool extends Expression {
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     this.left.collectSemanticTokens(semanticTokens);
-    semanticTokens.push({
-      type: "operator",
-      start: this.op.start,
-      length: this.op.end.offset - this.op.start.offset,
-    });
+    semanticTokens.push(this.op.range.semanticToken("operator"));
     this.right.collectSemanticTokens(semanticTokens);
   }
 }

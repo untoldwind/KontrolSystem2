@@ -50,6 +50,7 @@ connection.onInitialize((params: InitializeParams) => {
         },
         full: true,
       },
+      hoverProvider: true,
     },
   };
   if (hasWorkspaceFolderCapability) {
@@ -116,6 +117,7 @@ connection.onCompletionResolve((item: CompletionItem): CompletionItem => {
   return item;
 });
 
+connection.onHover(server.onHover.bind(server));
 connection.languages.semanticTokens.on(server.onSemanticTokens.bind(server));
 
 // Listen on the connection

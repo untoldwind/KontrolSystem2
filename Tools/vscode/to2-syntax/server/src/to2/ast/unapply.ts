@@ -40,8 +40,7 @@ export class Unapply extends Expression {
           errors.push({
             status: "error",
             message: "Some requires one argument",
-            start: this.pattern.start,
-            end: this.pattern.end,
+            range: this.pattern.range,
           });
         } else if (isOptionType(expressionType)) {
           context.localVariables.set(
@@ -52,8 +51,7 @@ export class Unapply extends Expression {
           errors.push({
             status: "error",
             message: "Expected option type",
-            start: this.expression.start,
-            end: this.expression.end,
+            range: this.expression.range,
           });
         }
         break;
@@ -61,8 +59,7 @@ export class Unapply extends Expression {
         errors.push({
           status: "error",
           message: `Undefined pattern ${this.pattern}`,
-          start: this.pattern.start,
-          end: this.pattern.end,
+          range: this.pattern.range,
         });
     }
 

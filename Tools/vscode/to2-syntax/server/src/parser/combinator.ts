@@ -1,6 +1,7 @@
 import {
   Input,
   InputPosition,
+  InputRange,
   Parser,
   ParserFailure,
   ParserSuccess,
@@ -108,8 +109,7 @@ export function withPosition<T>(parser: Parser<T>): Parser<WithPosition<T>> {
     if (inputResult.success)
       return new ParserSuccess(inputResult.remaining, {
         value: inputResult.value,
-        start: input.position,
-        end: inputResult.remaining.position,
+        range: new InputRange(input.position, inputResult.remaining.position),
       });
     return new ParserFailure(
       inputResult.remaining,
@@ -117,8 +117,10 @@ export function withPosition<T>(parser: Parser<T>): Parser<WithPosition<T>> {
       inputResult.value
         ? {
             value: inputResult.value,
-            start: input.position,
-            end: inputResult.remaining.position,
+            range: new InputRange(
+              input.position,
+              inputResult.remaining.position
+            ),
           }
         : undefined
     );

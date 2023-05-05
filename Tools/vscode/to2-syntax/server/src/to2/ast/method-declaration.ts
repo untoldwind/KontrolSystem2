@@ -1,12 +1,13 @@
 import { Expression, ModuleItem, Node, ValidationError } from ".";
 import { TO2Type } from "./to2-type";
-import { InputPosition, WithPosition } from "../../parser";
+import { InputPosition, InputRange, WithPosition } from "../../parser";
 import { SemanticToken } from "../../syntax-token";
 import { FunctionContext, ModuleContext, isImplModuleContext } from "./context";
 import { FunctionParameter } from "./function-declaration";
 import { FunctionType } from "./function-type";
 
 export class MethodDeclaration implements Node, ModuleItem {
+  public readonly range: InputRange;
   constructor(
     public readonly isAsync: boolean,
     public readonly name: WithPosition<string>,
@@ -14,9 +15,11 @@ export class MethodDeclaration implements Node, ModuleItem {
     public readonly parameters: FunctionParameter[],
     public readonly declaredReturn: TO2Type,
     public readonly expression: Expression,
-    public readonly start: InputPosition,
-    public readonly end: InputPosition
-  ) {}
+    start: InputPosition,
+    end: InputPosition
+  ) {
+    this.range = new InputRange(start, end);
+  }
 
   reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
@@ -34,8 +37,7 @@ export class MethodDeclaration implements Node, ModuleItem {
       errors.push({
         status: "error",
         message: `Duplicate method ${this.name}`,
-        start: this.name.start,
-        end: this.name.end,
+        range: this.name.range,
       });
     } else {
       const blockContext = new FunctionContext(context, this.declaredReturn);
@@ -71,8 +73,7 @@ export class MethodDeclaration implements Node, ModuleItem {
         errors.push({
           status: "error",
           message: `Duplicate parameter name ${parameter.name}`,
-          start: parameter.name.start,
-          end: parameter.name.end,
+          range: parameter.name.range,
         });
       } else {
         blockContext.localVariables.set(
@@ -88,12 +89,11 @@ export class MethodDeclaration implements Node, ModuleItem {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-    semanticTokens.push({
-      type: "method",
-      modifiers: this.isAsync ? ["async", "declaration"] : ["declaration"],
-      start: this.name.start,
-      length: this.name.end.offset - this.name.start.offset,
-    });
+    semanticTokens.push(
+      this.isAsync
+        ? this.name.range.semanticToken("method", "async", "declaration")
+        : this.name.range.semanticToken("method", "declaration")
+    );
     for (const parameter of this.parameters) {
       parameter.collectSemanticTokens(semanticTokens);
     }

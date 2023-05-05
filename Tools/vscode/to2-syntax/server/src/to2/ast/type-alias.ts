@@ -1,18 +1,22 @@
 import { TO2Type } from "./to2-type";
 import { ModuleItem, Node, ValidationError } from ".";
-import { InputPosition, WithPosition } from "../../parser";
+import { InputPosition, InputRange, WithPosition } from "../../parser";
 import { ModuleContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
 
 export class TypeAlias implements Node, ModuleItem {
+  public readonly range: InputRange;
+
   constructor(
     public readonly exported: boolean,
     public readonly name: WithPosition<string>,
     public readonly description: string,
     public readonly type: TO2Type,
-    public readonly start: InputPosition,
-    public readonly end: InputPosition
-  ) {}
+    start: InputPosition,
+    end: InputPosition
+  ) {
+    this.range = new InputRange(start, end);
+  }
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,

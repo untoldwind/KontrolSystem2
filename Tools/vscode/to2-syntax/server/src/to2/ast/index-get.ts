@@ -39,8 +39,7 @@ export class IndexGet extends Expression {
       errors.push({
         status: targetType === UNKNOWN_TYPE ? "warn" : "error",
         message: `${targetType.name} is not array-like`,
-        start: this.target.start,
-        end: this.target.end,
+        range: this.target.range,
       });
     }
 

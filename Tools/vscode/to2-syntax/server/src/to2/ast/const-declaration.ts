@@ -1,11 +1,12 @@
 import { Expression, ModuleItem, Node, ValidationError } from ".";
-import { InputPosition, WithPosition } from "../../parser";
+import { InputPosition, InputRange, WithPosition } from "../../parser";
 import { SemanticToken } from "../../syntax-token";
 import { ModuleContext } from "./context";
 import { TO2Type } from "./to2-type";
 
 export class ConstDeclaration implements Node, ModuleItem {
   public isConstDecl: boolean = true;
+  public readonly range: InputRange;
 
   constructor(
     public readonly isPublic: boolean,
@@ -13,9 +14,11 @@ export class ConstDeclaration implements Node, ModuleItem {
     public readonly description: string,
     public readonly type: TO2Type,
     public readonly expression: Expression,
-    public readonly start: InputPosition,
-    public readonly end: InputPosition
-  ) {}
+    start: InputPosition,
+    end: InputPosition
+  ) {
+    this.range = new InputRange(start, end);
+  }
 
   reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
@@ -31,8 +34,7 @@ export class ConstDeclaration implements Node, ModuleItem {
       errors.push({
         status: "error",
         message: `Duplicate constant ${this.name}`,
-        start: this.start,
-        end: this.end,
+        range: this.range,
       });
     } else {
       context.mappedConstants.set(this.name.value, this.type);

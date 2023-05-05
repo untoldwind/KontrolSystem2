@@ -37,8 +37,7 @@ export class FieldGet extends Expression {
         message: `Undefined field ${this.fieldName.value} for type ${
           this.target.resultType(context).name
         }`,
-        start: this.fieldName.start,
-        end: this.fieldName.end,
+        range: this.fieldName.range,
       });
     }
 
@@ -47,11 +46,7 @@ export class FieldGet extends Expression {
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     this.target.collectSemanticTokens(semanticTokens);
-    semanticTokens.push({
-      type: "property",
-      start: this.fieldName.start,
-      length: this.fieldName.end.offset - this.fieldName.start.offset,
-    });
+    semanticTokens.push(this.range.semanticToken("property"));
   }
 
   private findField(context: BlockContext): TO2Type | undefined {

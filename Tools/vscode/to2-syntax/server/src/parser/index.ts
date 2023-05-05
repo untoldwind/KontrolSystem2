@@ -1,4 +1,9 @@
-import { Position } from "vscode-languageserver-textdocument";
+import { Position, Range } from "vscode-languageserver-textdocument";
+import {
+  SemanticToken,
+  SemanticTokenType,
+  SemanticTokenModifier,
+} from "../syntax-token";
 
 export class InputPosition implements Position {
   constructor(
@@ -6,6 +11,25 @@ export class InputPosition implements Position {
     public readonly line: number,
     public readonly character: number
   ) {}
+}
+
+export class InputRange implements Range {
+  constructor(
+    public readonly start: InputPosition,
+    public readonly end: InputPosition
+  ) {}
+
+  semanticToken(
+    type: SemanticTokenType,
+    ...modifiers: SemanticTokenModifier[]
+  ): SemanticToken {
+    return {
+      type,
+      modifiers,
+      start: this.start,
+      length: this.end.offset - this.start.offset,
+    };
+  }
 }
 
 export interface Input {
@@ -55,6 +79,5 @@ export type Parser<T> = (input: Input) => ParserResult<T>;
 
 export type WithPosition<T> = {
   value: T;
-  start: InputPosition;
-  end: InputPosition;
+  range: InputRange;
 };

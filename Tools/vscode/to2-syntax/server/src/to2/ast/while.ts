@@ -28,7 +28,7 @@ export class While extends Expression {
       this.condition.reduceNode(combine, combine(initialValue, this))
     );
   }
-  
+
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
@@ -39,11 +39,7 @@ export class While extends Expression {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-    semanticTokens.push({
-      type: "keyword",
-      start: this.whileKeyword.start,
-      length: this.whileKeyword.end.offset - this.whileKeyword.start.offset,
-    });
+    semanticTokens.push(this.whileKeyword.range.semanticToken("keyword"));
 
     this.condition.collectSemanticTokens(semanticTokens);
     this.loopExpression.collectSemanticTokens(semanticTokens);

@@ -1,9 +1,11 @@
 import { ModuleItem, Node, ValidationError } from ".";
-import { InputPosition, WithPosition } from "../../parser";
+import { InputPosition, InputRange, WithPosition } from "../../parser";
 import { SemanticToken } from "../../syntax-token";
 import { ModuleContext } from "./context";
 
 export class UseDeclaration implements Node, ModuleItem {
+  public readonly range: InputRange;
+
   constructor(
     public readonly useKeyword: WithPosition<"use">,
     public readonly names: WithPosition<string>[] | undefined,
@@ -11,9 +13,11 @@ export class UseDeclaration implements Node, ModuleItem {
     public readonly asKeyword: WithPosition<"as"> | undefined,
     public readonly fromKeyword: WithPosition<"from"> | undefined,
     public readonly moduleNamePath: WithPosition<string[]>,
-    public readonly start: InputPosition,
-    public readonly end: InputPosition
-  ) {}
+    start: InputPosition,
+    end: InputPosition
+  ) {
+    this.range = new InputRange(start, end);
+  }
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
@@ -30,8 +34,7 @@ export class UseDeclaration implements Node, ModuleItem {
       errors.push({
         status: "error",
         message: `Module not found: ${this.moduleNamePath.value.join("::")}`,
-        start: this.moduleNamePath.start,
-        end: this.moduleNamePath.end,
+        range: this.moduleNamePath.range,
       });
     } else {
       if (this.alias) {
@@ -39,8 +42,7 @@ export class UseDeclaration implements Node, ModuleItem {
           errors.push({
             status: "error",
             message: `Duplicate module alias: ${this.alias.value}`,
-            start: this.alias.start,
-            end: this.alias.end,
+            range: this.alias.range,
           });
         } else {
           context.moduleAliases.set(
@@ -59,8 +61,7 @@ export class UseDeclaration implements Node, ModuleItem {
             errors.push({
               status: "error",
               message: `Module ${importedModule.name} does not have an exported member ${name.value}`,
-              start: name.start,
-              end: name.end,
+              range: name.range,
             });
           }
           if (importedConstant) {
@@ -68,8 +69,7 @@ export class UseDeclaration implements Node, ModuleItem {
               errors.push({
                 status: "error",
                 message: `Duplicate constant ${name.value}`,
-                start: this.start,
-                end: this.end,
+                range: this.range,
               });
             } else {
               context.mappedConstants.set(name.value, importedConstant);
@@ -80,8 +80,7 @@ export class UseDeclaration implements Node, ModuleItem {
               errors.push({
                 status: "error",
                 message: `Duplicate function name ${name.value}`,
-                start: this.start,
-                end: this.end,
+                range: this.range,
               });
             } else {
               context.mappedFunctions.set(name.value, importedFunction);
@@ -92,8 +91,7 @@ export class UseDeclaration implements Node, ModuleItem {
               errors.push({
                 status: "error",
                 message: `Duplicate type alias ${name.value}`,
-                start: this.start,
-                end: this.end,
+                range: this.range,
               });
             } else {
               context.typeAliases.set(
@@ -114,37 +112,16 @@ export class UseDeclaration implements Node, ModuleItem {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-    semanticTokens.push({
-      type: "keyword",
-      start: this.useKeyword.start,
-      length: this.useKeyword.end.offset - this.useKeyword.start.offset,
-    });
+    semanticTokens.push(this.useKeyword.range.semanticToken("keyword"));
     if (this.names) {
       for (const name of this.names) {
-        semanticTokens.push({
-          type: "variable",
-          modifiers: ["definition"],
-          start: name.start,
-          length: name.end.offset - name.start.offset,
-        });
+        semanticTokens.push(name.range.semanticToken("variable", "definition"));
       }
     }
     if (this.asKeyword)
-      semanticTokens.push({
-        type: "keyword",
-        start: this.asKeyword.start,
-        length: this.asKeyword.end.offset - this.asKeyword.start.offset,
-      });
+      semanticTokens.push(this.asKeyword.range.semanticToken("keyword"));
     if (this.fromKeyword)
-      semanticTokens.push({
-        type: "keyword",
-        start: this.fromKeyword.start,
-        length: this.fromKeyword.end.offset - this.fromKeyword.start.offset,
-      });
-    semanticTokens.push({
-      type: "namespace",
-      start: this.moduleNamePath.start,
-      length: this.moduleNamePath.end.offset - this.moduleNamePath.start.offset,
-    });
+      semanticTokens.push(this.fromKeyword.range.semanticToken("keyword"));
+    semanticTokens.push(this.moduleNamePath.range.semanticToken("namespace"));
   }
 }

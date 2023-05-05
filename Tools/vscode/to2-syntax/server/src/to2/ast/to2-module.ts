@@ -1,5 +1,5 @@
 import { ModuleItem, Node, ValidationError } from ".";
-import { InputPosition } from "../../parser";
+import { InputPosition, InputRange } from "../../parser";
 import { ModuleReference } from "../../reference";
 import { SemanticToken } from "../../syntax-token";
 import { ConstDeclaration, isConstDeclaration } from "./const-declaration";
@@ -27,13 +27,17 @@ export interface TO2Module {
 export class TO2ModuleNode implements Node, TO2Module {
   private constants: Map<string, ConstDeclaration> = new Map();
   private functions: Map<string, FunctionDeclaration> = new Map();
+  public readonly range: InputRange;
+
   constructor(
     public readonly name: string,
     public readonly description: string,
     public readonly items: ModuleItem[],
-    public readonly start: InputPosition,
-    public readonly end: InputPosition
+    start: InputPosition,
+    end: InputPosition
   ) {
+    this.range = new InputRange(start, end);
+
     for (const item of items) {
       if (isConstDeclaration(item)) this.constants.set(item.name.value, item);
       if (isFunctionDeclaration(item))

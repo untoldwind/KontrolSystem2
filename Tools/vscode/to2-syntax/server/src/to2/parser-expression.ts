@@ -621,8 +621,7 @@ const assignment = map(
       new VariableGet(
         {
           value: [variableName.value],
-          start: variableName.start,
-          end: variableName.end,
+          range: variableName.range,
         },
         start,
         end
@@ -648,7 +647,7 @@ const sourceTargetList = between(
       ),
       map(withPosition(tag("_")), (tag) => ({
         source: "",
-        target: { start: tag.start, end: tag.end, value: "" },
+        target: { range: tag.range, value: "" },
       })),
       map(withPosition(identifier), (name) => ({
         source: name.value,

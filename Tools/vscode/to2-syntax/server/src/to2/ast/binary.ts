@@ -45,8 +45,7 @@ export class Binary extends Expression {
             ? "warn"
             : "error",
         message: `Invalid operator: ${leftType.name} ${this.op.value} ${rightType.name} is not definied`,
-        start: this.start,
-        end: this.end,
+        range: this.range,
       });
     }
 
@@ -55,11 +54,7 @@ export class Binary extends Expression {
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     this.left.collectSemanticTokens(semanticTokens);
-    semanticTokens.push({
-      type: "operator",
-      start: this.op.start,
-      length: this.op.end.offset - this.op.start.offset,
-    });
+    semanticTokens.push(this.op.range.semanticToken("operator"));
     this.right.collectSemanticTokens(semanticTokens);
   }
 

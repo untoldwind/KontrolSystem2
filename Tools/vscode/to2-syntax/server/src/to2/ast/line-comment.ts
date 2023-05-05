@@ -1,17 +1,20 @@
 import { BlockItem, ModuleItem, Node, ValidationError } from ".";
 import { BUILTIN_UNIT, TO2Type } from "./to2-type";
-import { InputPosition } from "../../parser";
+import { InputPosition, InputRange } from "../../parser";
 import { BlockContext, ModuleContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
 
 export class LineComment implements Node, BlockItem, ModuleItem {
   public isComment: boolean = true;
+  public readonly range: InputRange;
 
   constructor(
     public readonly comment: string,
-    public readonly start: InputPosition,
-    public readonly end: InputPosition
-  ) {}
+    start: InputPosition,
+    end: InputPosition
+  ) {
+    this.range = new InputRange(start, end);
+  }
 
   resultType(): TO2Type {
     return BUILTIN_UNIT;
@@ -37,13 +40,10 @@ export class LineComment implements Node, BlockItem, ModuleItem {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-    semanticTokens.push({
-      type: "comment",
-      start: this.start,
-      length: this.end.offset - this.start.offset,
-    });
+    semanticTokens.push(this.range.semanticToken("comment"));
   }
 }
+
 export function isLineComment(type: Node): type is LineComment {
   return !!type.isComment;
 }

@@ -35,8 +35,7 @@ export class UnarySuffix extends Expression {
       errors.push({
         status: "error",
         message: `Invalid operator: ${leftType.name} ${this.op.value}  is not definied`,
-        start: this.start,
-        end: this.end,
+        range: this.range,
       });
     }
 
@@ -45,11 +44,7 @@ export class UnarySuffix extends Expression {
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     this.left.collectSemanticTokens(semanticTokens);
-    semanticTokens.push({
-      type: "operator",
-      start: this.op.start,
-      length: this.op.end.offset - this.op.start.offset,
-    });
+    semanticTokens.push(this.op.range.semanticToken("operator"));
   }
 
   private findOperator(context: BlockContext): TO2Type | undefined {

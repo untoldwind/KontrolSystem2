@@ -31,11 +31,7 @@ export class ReturnEmpty extends Expression {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-    semanticTokens.push({
-      type: "keyword",
-      start: this.returnKeyword.start,
-      length: this.returnKeyword.end.offset - this.returnKeyword.start.offset,
-    });
+    semanticTokens.push(this.returnKeyword.range.semanticToken("keyword"));
   }
 }
 
@@ -68,11 +64,7 @@ export class ReturnValue extends Expression {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-    semanticTokens.push({
-      type: "keyword",
-      start: this.returnKeyword.start,
-      length: this.returnKeyword.end.offset - this.returnKeyword.start.offset,
-    });
+    semanticTokens.push(this.returnKeyword.range.semanticToken("keyword"));
     this.returnValue.collectSemanticTokens(semanticTokens);
   }
 }

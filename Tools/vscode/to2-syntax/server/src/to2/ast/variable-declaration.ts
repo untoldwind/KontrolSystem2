@@ -1,6 +1,6 @@
 import { BlockItem, Expression, Node, ValidationError } from ".";
 import { RealizedType, TO2Type, UNKNOWN_TYPE } from "./to2-type";
-import { InputPosition, WithPosition } from "../../parser";
+import { InputPosition, InputRange, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
 import { isTupleType } from "./tuple-type";
@@ -39,13 +39,17 @@ export function isDeclarationParameter(
 }
 
 export class VariableDeclaration implements Node, BlockItem {
+  public readonly range: InputRange;
+
   constructor(
     private readonly constLetKeyword: WithPosition<"let" | "const">,
     public readonly declaration: DeclarationParameter,
     public readonly expression: Expression,
-    public readonly start: InputPosition,
-    public readonly end: InputPosition
-  ) {}
+    start: InputPosition,
+    end: InputPosition
+  ) {
+    this.range = new InputRange(start, end);
+  }
 
   public resultType(context: BlockContext): TO2Type {
     return this.declaration.type ?? this.expression.resultType(context);
@@ -65,8 +69,7 @@ export class VariableDeclaration implements Node, BlockItem {
       errors.push({
         status: "error",
         message: `Duplicate variable ${this.declaration.target.value}`,
-        start: this.declaration.target.start,
-        end: this.declaration.target.end,
+        range: this.declaration.target.range,
       });
     } else {
       context.localVariables.set(
@@ -85,20 +88,10 @@ export class VariableDeclaration implements Node, BlockItem {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-    semanticTokens.push({
-      type: "keyword",
-      start: this.constLetKeyword.start,
-      length:
-        this.constLetKeyword.end.offset - this.constLetKeyword.start.offset,
-    });
-    semanticTokens.push({
-      type: "variable",
-      modifiers: ["declaration"],
-      start: this.declaration.target.start,
-      length:
-        this.declaration.target.end.offset -
-        this.declaration.target.start.offset,
-    });
+    semanticTokens.push(this.constLetKeyword.range.semanticToken("keyword"));
+    semanticTokens.push(
+      this.declaration.target.range.semanticToken("variable", "declaration")
+    );
     this.expression.collectSemanticTokens(semanticTokens);
   }
 }

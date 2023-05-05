@@ -1,6 +1,6 @@
 import { RealizedType, TO2Type, UNKNOWN_TYPE } from "./to2-type";
 import { Node, ValidationError } from ".";
-import { InputPosition } from "../../parser";
+import { InputPosition, InputRange } from "../../parser";
 import { ModuleContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
 
@@ -8,13 +8,15 @@ export class LookupTypeReference implements Node, TO2Type {
   public name: string;
   public description: string;
   public localName: string;
+  public readonly range: InputRange;
 
   constructor(
     public readonly namePath: string[],
     public readonly typeArguments: TO2Type[],
-    public readonly start: InputPosition,
-    public readonly end: InputPosition
+    start: InputPosition,
+    end: InputPosition
   ) {
+    this.range = new InputRange(start, end);
     this.name = namePath.join("::");
     this.description = "";
     this.localName = namePath.join("::");

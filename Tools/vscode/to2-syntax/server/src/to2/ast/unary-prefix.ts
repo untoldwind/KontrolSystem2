@@ -35,8 +35,7 @@ export class UnaryPrefix extends Expression {
       errors.push({
         status: "error",
         message: `Invalid operator: ${this.op.value} ${rightType.name} is not definied`,
-        start: this.start,
-        end: this.end,
+        range: this.range,
       });
     }
 
@@ -44,11 +43,7 @@ export class UnaryPrefix extends Expression {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-    semanticTokens.push({
-      type: "operator",
-      start: this.op.start,
-      length: this.op.end.offset - this.op.start.offset,
-    });
+    semanticTokens.push(this.op.range.semanticToken("operator"));
     this.right.collectSemanticTokens(semanticTokens);
   }
 

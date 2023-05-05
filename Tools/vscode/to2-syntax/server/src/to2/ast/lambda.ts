@@ -1,7 +1,7 @@
 import { Expression, Node, ValidationError } from ".";
 import { FunctionParameter } from "./function-declaration";
 import { BUILTIN_UNIT, RealizedType, TO2Type, UNKNOWN_TYPE } from "./to2-type";
-import { InputPosition } from "../../parser";
+import { InputPosition, InputRange } from "../../parser";
 import { BlockContext, FunctionContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
 import { FunctionType, isFunctionType } from "./function-type";

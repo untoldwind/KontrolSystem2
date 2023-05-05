@@ -35,16 +35,13 @@ export class VariableAssign extends Expression {
 
     const variableType = context.findVariable(
       [this.name.value],
-      this.expression
-        .resultType(context, typeHint)
-        .realizedType(context.module)
+      this.expression.resultType(context, typeHint).realizedType(context.module)
     );
     if (!variableType) {
       errors.push({
         status: "error",
         message: `Undefined variable: ${this.name.value}`,
-        start: this.name.start,
-        end: this.name.end,
+        range: this.name.range,
       });
     }
 
@@ -59,12 +56,9 @@ export class VariableAssign extends Expression {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-    semanticTokens.push({
-      type: "variable",
-      modifiers: ["modification"],
-      start: this.name.start,
-      length: this.name.end.offset - this.name.start.offset,
-    });
+    semanticTokens.push(
+      this.name.range.semanticToken("variable", "modification")
+    );
     this.expression.collectSemanticTokens(semanticTokens);
   }
 }

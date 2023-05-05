@@ -1,22 +1,27 @@
 import { Position } from "vscode-languageserver-textdocument";
 import { Expression, ModuleItem, Node, ValidationError } from ".";
-import { TO2Type } from "./to2-type";
+import { TO2Type, UNKNOWN_TYPE } from "./to2-type";
 import { FunctionParameter } from "./function-declaration";
 import { LineComment, isLineComment } from "./line-comment";
-import { InputPosition, WithPosition } from "../../parser";
+import { InputPosition, InputRange, WithPosition } from "../../parser";
 import { ModuleContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
 import { RecordType } from "./record-type";
+import { FunctionType } from "./function-type";
 
 export class StructField implements Node {
+  public readonly range: InputRange;
+
   constructor(
     public readonly name: string,
     public readonly type: TO2Type,
     public readonly description: string,
     public readonly initializer: Expression,
-    public readonly start: InputPosition,
-    public readonly end: InputPosition
-  ) {}
+    start: InputPosition,
+    end: InputPosition
+  ) {
+    this.range = new InputRange(start, end);
+  }
 
   reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
@@ -29,10 +34,13 @@ export class StructField implements Node {
 
     return errors;
   }
+
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
 }
 
 export class StructDeclaration implements Node, ModuleItem {
+  public readonly range: InputRange;
+
   constructor(
     public readonly pubKeyword: WithPosition<"pub"> | undefined,
     public readonly structKeyword: WithPosition<"struct">,
@@ -40,9 +48,11 @@ export class StructDeclaration implements Node, ModuleItem {
     public readonly description: string,
     public readonly constructorParameters: FunctionParameter[],
     public readonly fields: (LineComment | StructField)[],
-    public readonly start: InputPosition,
-    public readonly end: InputPosition
-  ) {}
+    start: InputPosition,
+    end: InputPosition
+  ) {
+    this.range = new InputRange(start, end);
+  }
 
   reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
@@ -71,11 +81,30 @@ export class StructDeclaration implements Node, ModuleItem {
       errors.push({
         status: "error",
         message: `Duplicate type name ${this.name.value}`,
-        start: this.name.start,
-        end: this.name.end,
+        range: this.name.range,
       });
     } else {
       context.typeAliases.set(this.name.value, recordType);
+    }
+    if (context.mappedFunctions.has(this.name.value)) {
+      errors.push({
+        status: "error",
+        message: `Duplicate function name ${this.name.value}`,
+        range: this.name.range,
+      });
+    } else {
+      context.mappedFunctions.set(
+        this.name.value,
+        new FunctionType(
+          false,
+          this.constructorParameters.map((param) => [
+            param.name.value,
+            param.type ?? UNKNOWN_TYPE,
+            param.defaultValue !== undefined,
+          ]),
+          recordType
+        )
+      );
     }
 
     return errors;
@@ -89,23 +118,9 @@ export class StructDeclaration implements Node, ModuleItem {
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     if (this.pubKeyword) {
-      semanticTokens.push({
-        type: "keyword",
-        start: this.pubKeyword.start,
-        length: this.pubKeyword.end.offset - this.pubKeyword.start.offset,
-      });
+      semanticTokens.push(this.pubKeyword.range.semanticToken("keyword"));
     }
-    semanticTokens.push({
-      type: "struct",
-      modifiers: ["declaration"],
-      start: this.name.start,
-      length: this.name.end.offset - this.name.start.offset,
-    });
-
-    semanticTokens.push({
-      type: "keyword",
-      start: this.structKeyword.start,
-      length: this.structKeyword.end.offset - this.structKeyword.start.offset,
-    });
+    semanticTokens.push(this.structKeyword.range.semanticToken("keyword"));
+    semanticTokens.push(this.name.range.semanticToken("struct", "declaration"));
   }
 }

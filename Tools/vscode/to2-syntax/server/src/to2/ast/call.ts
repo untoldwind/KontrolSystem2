@@ -71,8 +71,7 @@ export class Call extends Expression {
         message: `Undefined variable or function: ${this.namePath.value.join(
           "::"
         )}`,
-        start: this.namePath.start,
-        end: this.namePath.end,
+        range: this.namePath.range,
       });
     } else if (!isFunctionType(variableType)) {
       errors.push({
@@ -80,8 +79,7 @@ export class Call extends Expression {
         message: `Undefined variable: ${this.namePath.value.join(
           "::"
         )} is not callable`,
-        start: this.namePath.start,
-        end: this.namePath.end,
+        range: this.namePath.range,
       });
     } else {
       if (this.args.length > variableType.maxParams) {
@@ -90,8 +88,7 @@ export class Call extends Expression {
           message: `${this.namePath.value.join("::")} only takes ${
             variableType.maxParams
           } arguments`,
-          start: this.namePath.start,
-          end: this.namePath.end,
+          range: this.namePath.range,
         });
       } else if (this.args.length < variableType.requiredParams) {
         errors.push({
@@ -99,8 +96,7 @@ export class Call extends Expression {
           message: `${this.namePath.value.join("::")} at least requires ${
             variableType.requiredParams
           } arguments`,
-          start: this.namePath.start,
-          end: this.namePath.end,
+          range: this.namePath.range,
         });
       } else {
         for (let i = 0; i < this.args.length; i++) {
@@ -118,11 +114,7 @@ export class Call extends Expression {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-    semanticTokens.push({
-      type: "function",
-      start: this.namePath.start,
-      length: this.namePath.end.offset - this.namePath.start.offset,
-    });
+    semanticTokens.push(this.namePath.range.semanticToken("function"));
     for (const arg of this.args) {
       arg.collectSemanticTokens(semanticTokens);
     }

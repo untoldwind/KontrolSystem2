@@ -52,8 +52,7 @@ export class ForIn extends Expression {
           message: `${
             this.sourceExpression.resultType(context).name
           } can not be used as for-in source`,
-          start: this.sourceExpression.start,
-          end: this.sourceExpression.end,
+          range: this.sourceExpression.range,
         });
       } else if (
         this.variableType &&
@@ -64,8 +63,7 @@ export class ForIn extends Expression {
         errors.push({
           status: "error",
           message: `${this.variableType.name} is not assignable from ${loopVarType.name}`,
-          start: this.sourceExpression.start,
-          end: this.sourceExpression.end,
+          range: this.sourceExpression.range,
         });
       }
 
@@ -81,22 +79,11 @@ export class ForIn extends Expression {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-    semanticTokens.push({
-      type: "keyword",
-      start: this.forKeyword.start,
-      length: this.forKeyword.end.offset - this.forKeyword.start.offset,
-    });
-    semanticTokens.push({
-      type: "variable",
-      modifiers: ["definition"],
-      start: this.variableName.start,
-      length: this.variableName.end.offset - this.variableName.start.offset,
-    });
-    semanticTokens.push({
-      type: "keyword",
-      start: this.inKeyword.start,
-      length: this.inKeyword.end.offset - this.inKeyword.start.offset,
-    });
+    semanticTokens.push(this.forKeyword.range.semanticToken("keyword"));
+    semanticTokens.push(
+      this.variableName.range.semanticToken("variable", "definition")
+    );
+    semanticTokens.push(this.inKeyword.range.semanticToken("keyword"));
     this.sourceExpression.collectSemanticTokens(semanticTokens);
     this.loopExpression.collectSemanticTokens(semanticTokens);
   }

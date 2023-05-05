@@ -1,6 +1,6 @@
 import { Expression, ModuleItem, Node, ValidationError } from ".";
 import { TO2Type, UNKNOWN_TYPE } from "./to2-type";
-import { InputPosition, WithPosition } from "../../parser";
+import { InputPosition, InputRange, WithPosition } from "../../parser";
 import { BlockContext, FunctionContext, ModuleContext } from "./context";
 import { FunctionType } from "./function-type";
 import { SemanticToken } from "../../syntax-token";
@@ -12,13 +12,17 @@ export enum FunctionModifier {
 }
 
 export class FunctionParameter implements Node {
+  public readonly range: InputRange;
+
   constructor(
     public readonly name: WithPosition<string>,
     public readonly type: TO2Type | undefined,
     public readonly defaultValue: Expression | undefined,
-    public readonly start: InputPosition,
-    public readonly end: InputPosition
-  ) {}
+    start: InputPosition,
+    end: InputPosition
+  ) {
+    this.range = new InputRange(start, end);
+  }
 
   public resultType(context: BlockContext): TO2Type {
     return this.type ?? this.defaultValue?.resultType(context) ?? UNKNOWN_TYPE;
@@ -40,12 +44,9 @@ export class FunctionParameter implements Node {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
-    semanticTokens.push({
-      type: "parameter",
-      modifiers: ["definition"],
-      start: this.name.start,
-      length: this.name.end.offset - this.name.start.offset,
-    });
+    semanticTokens.push(
+      this.name.range.semanticToken("parameter", "definition")
+    );
   }
 }
 
@@ -54,6 +55,7 @@ export class FunctionDeclaration implements Node, ModuleItem {
   public functionType: FunctionType;
   public readonly modifier: FunctionModifier;
   public readonly isAsync: boolean;
+  public readonly range: InputRange;
 
   constructor(
     private readonly prefix: WithPosition<"fn" | "sync" | "test" | "pub">[],
@@ -62,9 +64,10 @@ export class FunctionDeclaration implements Node, ModuleItem {
     public readonly parameters: FunctionParameter[],
     public readonly declaredReturn: TO2Type,
     public readonly expression: Expression,
-    public readonly start: InputPosition,
-    public readonly end: InputPosition
+    start: InputPosition,
+    end: InputPosition
   ) {
+    this.range = new InputRange(start, end);
     this.isAsync = prefix.findIndex((p) => p.value === "sync") < 0;
     this.modifier =
       prefix.findIndex((p) => p.value === "pub") >= 0
@@ -104,8 +107,7 @@ export class FunctionDeclaration implements Node, ModuleItem {
       errors.push({
         status: "error",
         message: `Duplicate function ${this.name}`,
-        start: this.name.start,
-        end: this.name.end,
+        range: this.name.range,
       });
     } else {
       const blockContext = new FunctionContext(context, this.declaredReturn);
@@ -138,8 +140,7 @@ export class FunctionDeclaration implements Node, ModuleItem {
         errors.push({
           status: "error",
           message: `Duplicate parameter name ${parameter.name}`,
-          start: parameter.name.start,
-          end: parameter.name.end,
+          range: parameter.name.range,
         });
       } else {
         blockContext.localVariables.set(
@@ -155,18 +156,13 @@ export class FunctionDeclaration implements Node, ModuleItem {
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     for (const keyword of this.prefix) {
-      semanticTokens.push({
-        type: "keyword",
-        start: keyword.start,
-        length: keyword.end.offset - keyword.start.offset,
-      });
+      semanticTokens.push(keyword.range.semanticToken("keyword"));
     }
-    semanticTokens.push({
-      type: "function",
-      modifiers: this.isAsync ? ["async", "declaration"] : ["declaration"],
-      start: this.name.start,
-      length: this.name.end.offset - this.name.start.offset,
-    });
+    semanticTokens.push(
+      this.isAsync
+        ? this.name.range.semanticToken("function", "async", "declaration")
+        : this.name.range.semanticToken("function", "declaration")
+    );
     for (const parameter of this.parameters) {
       parameter.collectSemanticTokens(semanticTokens);
     }
