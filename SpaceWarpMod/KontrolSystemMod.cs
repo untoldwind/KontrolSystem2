@@ -11,12 +11,18 @@ using SpaceWarp.API.UI;
 using SpaceWarp.API.UI.Appbar;
 using UniLinq;
 using UnityEngine;
+using FlightPlan;
 
 namespace KontrolSystem.SpaceWarpMod {
 
     [BepInPlugin("com.github.untoldwind.KontrolSystem2", "KontrolSystem2", "0.3.5")]
     [BepInDependency(SpaceWarpPlugin.ModGuid, SpaceWarpPlugin.ModVer)]
+    [BepInDependency(FlightPlanPlugin.ModGuid, BepInDependency.DependencyFlags.SoftDependency)]
     public class KontrolSystemMod : BaseSpaceWarpPlugin {
+        public const string ModGuid = "com.github.untoldwind.KontrolSystem2";
+        public const string ModName = "KontrolSystem2";
+        public const string ModVersion = "0.3.5";
+        
         private ModuleManagerWindow moduleManagerWindow;
 
         public static KontrolSystemMod Instance { get; set; }

@@ -47,7 +47,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         public KSPConsoleBuffer ConsoleBuffer => consoleBuffer;
 
         public TimeSeriesCollection TimeSeriesCollection => timeSeriesCollection;
-
+        
         public bool Rebooting => rebooting;
         public TimeSpan LastRebootTime => state?.bootTime ?? TimeSpan.Zero;
         public IEnumerable<MainframeError> LastErrors => state?.errors ?? Enumerable.Empty<MainframeError>();
@@ -169,7 +169,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         public bool StartProcess(KontrolSystemProcess process, VesselComponent vessel, object[] arguments = null) {
             switch (process.State) {
             case KontrolSystemProcessState.Available:
-                KSPContext context = new KSPContext(Game, consoleBuffer, timeSeriesCollection);
+                KSPContext context = new KSPContext(Game, consoleBuffer, timeSeriesCollection, ConfigAdapter.Instance.OptionalAddons);
                 Entrypoint entrypoint = process.EntrypointFor(context.GameMode, context);
                 if (entrypoint == null) return false;
                 arguments ??= process.EntrypointArgumentDescriptors(context.GameMode).Select(arg => arg.DefaultValue).ToArray();

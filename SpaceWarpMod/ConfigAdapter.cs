@@ -2,6 +2,7 @@
 using System.IO;
 using BepInEx;
 using BepInEx.Configuration;
+using KontrolSystem.KSP.Runtime;
 using KontrolSystem.KSP.Runtime.KSPUI;
 using SpaceWarp.API.Assets;
 using TMPro;
@@ -22,6 +23,8 @@ namespace KontrolSystem.SpaceWarpMod {
         internal ConfigEntry<int> consoleFontSize;
         internal ConfigEntry<MonospaceFont> graphFont;
 
+        internal OptionalAddons optionalAddons = new OptionalAddons();
+
         internal ConfigAdapter(PluginInfo pluginInfo, ConfigFile config) {
             version = pluginInfo.Metadata.Version.ToString();
             enableHotkey = config.Bind("Keyboard", "enableHotKey", true, "Enable Alt-Shift-K hotkey");
@@ -40,6 +43,8 @@ namespace KontrolSystem.SpaceWarpMod {
         public string StdLibPath => stdLibPath.Value;
 
         public string LocalLibPath => localLibPath.Value;
+
+        public OptionalAddons OptionalAddons => optionalAddons;
 
         public bool HotKeyEnabled => enableHotkey.Value;
 

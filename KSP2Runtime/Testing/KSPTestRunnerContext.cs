@@ -77,5 +77,7 @@ namespace KontrolSystem.KSP.Runtime.Testing {
 
         public void UnhookAllAutopilots(VesselComponent vessel) {
         }
+
+        public OptionalAddons OptionalAddons => new OptionalAddons();
     }
 }

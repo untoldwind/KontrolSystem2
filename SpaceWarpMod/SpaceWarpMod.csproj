@@ -61,6 +61,9 @@
         <Reference Include="BepInEx">
             <HintPath>$(KSP2_BASE_DIR)\BepInEx\core\BepInEx.dll</HintPath>
         </Reference>
+        <Reference Include="FlightPlan">
+            <HintPath>$(KSP2_BASE_DIR)\BepInEx\plugins\flight_plan\flight_plan.dll</HintPath>
+        </Reference>
         <Reference Include="SpaceWarp">
             <HintPath>$(KSP2_BASE_DIR)\BepInEx\plugins\SpaceWarp\SpaceWarp.dll</HintPath>
         </Reference>

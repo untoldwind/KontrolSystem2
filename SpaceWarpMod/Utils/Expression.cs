@@ -19,7 +19,7 @@ namespace KontrolSystem.SpaceWarpMod.Utils {
         public static object Run(string expression) {
             var result = TO2ParserREPL.REPLItems.Parse(expression);
 
-            var kspContext = new KSPContext(Mainframe.Instance.Game, Mainframe.Instance.ConsoleBuffer, Mainframe.Instance.TimeSeriesCollection);
+            var kspContext = new KSPContext(Mainframe.Instance.Game, Mainframe.Instance.ConsoleBuffer, Mainframe.Instance.TimeSeriesCollection, ConfigAdapter.Instance.OptionalAddons);
             var registry = Mainframe.Instance.LastRegistry;
             var context = new REPLContext(registry, kspContext);
 

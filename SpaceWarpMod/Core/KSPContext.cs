@@ -58,6 +58,7 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         private readonly GameInstance gameInstance;
         private readonly KSPConsoleBuffer consoleBuffer;
         private readonly TimeSeriesCollection timeSeriesCollection;
+        private readonly OptionalAddons optionalAddons;
         private object nextYield;
         private Action onNextYieldOnce;
         private readonly Stopwatch timeStopwatch;
@@ -68,10 +69,12 @@ namespace KontrolSystem.SpaceWarpMod.Core {
         private readonly List<BackgroundKSPContext> childContexts;
         private int stackCallCount = 0;
 
-        public KSPContext(GameInstance gameInstance, KSPConsoleBuffer consoleBuffer, TimeSeriesCollection timeSeriesCollection) {
+        public KSPContext(GameInstance gameInstance, KSPConsoleBuffer consoleBuffer, TimeSeriesCollection timeSeriesCollection, OptionalAddons optionalAddons) {
             this.gameInstance = gameInstance;
             this.consoleBuffer = consoleBuffer;
             this.timeSeriesCollection = timeSeriesCollection;
+            this.optionalAddons = optionalAddons;
+            
             markers = new List<IMarker>();
             resourceTransfers = new List<KSPResourceModule.ResourceTransfer>();
             autopilotHooks = new Dictionary<VesselComponent, AutopilotHooks>();
@@ -237,6 +240,8 @@ namespace KontrolSystem.SpaceWarpMod.Core {
             vessel.SimulationObject.objVesselBehavior.OnPreAutopilotUpdate -= autopilots.RunAutopilots;
         }
 
+        public OptionalAddons OptionalAddons => optionalAddons;
+        
         public void Cleanup() {
             ClearMarkers();
             foreach (var kv in autopilotHooks) {

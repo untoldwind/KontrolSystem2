@@ -1,4 +1,5 @@
 ﻿using System;
+using KontrolSystem.KSP.Runtime.KSPAddons;
 using KontrolSystem.TO2.Runtime;
 using KontrolSystem.KSP.Runtime.KSPConsole;
 using KontrolSystem.KSP.Runtime.KSPGame;
@@ -57,6 +58,12 @@ namespace KontrolSystem.KSP.Runtime {
         void UnhookAutopilot(VesselComponent vessel, IKSPAutopilot autopilot);
 
         void UnhookAllAutopilots(VesselComponent vessel);
+        
+        OptionalAddons OptionalAddons { get; }
+    }
+
+    public class OptionalAddons {
+        public Option<KSPAddonsModule.FlightPlanAPI> FlightPlanAPI { get; }
     }
 
     public class KSPContext {
