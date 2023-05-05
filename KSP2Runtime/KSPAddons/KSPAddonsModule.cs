@@ -10,6 +10,12 @@ namespace KontrolSystem.KSP.Runtime.KSPAddons {
             Description = @"Access the ""Flight Plan"" API (https://github.com/schlosrat/FlightPlan)
                 Will be undefined if FlightPlan is not installed."
         )]
-        public static Option<FlightPlanAPI> FlightPlan() => KSPContext.CurrentContext.OptionalAddons.FlightPlanAPI;
+        public static Option<FlightPlanAdapter> FlightPlan() {
+            var (instance, version) = KSPContext.CurrentContext.OptionalAddons.FlightPlan;
+
+            if (instance != null)
+                return new Option<FlightPlanAdapter>(new FlightPlanAdapter(instance, version));
+            return new Option<FlightPlanAdapter>();
+        }
     }
 }

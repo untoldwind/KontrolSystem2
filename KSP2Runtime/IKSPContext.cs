@@ -1,16 +1,13 @@
 ﻿using System;
-using KontrolSystem.KSP.Runtime.KSPAddons;
 using KontrolSystem.TO2.Runtime;
 using KontrolSystem.KSP.Runtime.KSPConsole;
 using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.KSP.Runtime.KSPResource;
 using KontrolSystem.KSP.Runtime.KSPTelemetry;
-using KontrolSystem.TO2.Binding;
 using KSP.Game;
 using KSP.Sim.impl;
 using KSP.Sim.State;
-using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime {
     public interface IMarker {
@@ -63,7 +60,7 @@ namespace KontrolSystem.KSP.Runtime {
     }
 
     public class OptionalAddons {
-        public Option<KSPAddonsModule.FlightPlanAPI> FlightPlanAPI { get; }
+        public (object instance, Version version) FlightPlan { get; set; }
     }
 
     public class KSPContext {

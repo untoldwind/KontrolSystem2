@@ -1,8 +1,10 @@
 ﻿
 using System.IO;
 using BepInEx;
+using BepInEx.Bootstrap;
 using BepInEx.Configuration;
 using KontrolSystem.KSP.Runtime;
+using KontrolSystem.KSP.Runtime.KSPAddons;
 using KontrolSystem.KSP.Runtime.KSPUI;
 using SpaceWarp.API.Assets;
 using TMPro;
@@ -36,6 +38,10 @@ namespace KontrolSystem.SpaceWarpMod {
                 "Font to use in console window");
             consoleFontSize = config.Bind("Font", "consoleFontSize", 12, "Size of the console font");
             graphFont = config.Bind("Fonts", "graphFont", MonospaceFont.JetBrainsMono, "Font to use in graphs");
+
+            if(Chainloader.PluginInfos.TryGetValue(KSPAddonsModule.FlightPlanAdapter.ModGuid, out var fpPluginInfo)) {
+                optionalAddons.FlightPlan = (fpPluginInfo.Instance, fpPluginInfo.Metadata.Version);
+            }
         }
 
         public string Version => version;
