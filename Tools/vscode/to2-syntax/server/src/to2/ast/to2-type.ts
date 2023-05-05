@@ -1,5 +1,5 @@
-import { REFERENCE, TypeRef, TypeReference } from "../../reference";
-import { typeRef } from "../parser-common";
+import { UNKNOWN_RANGE } from "../../parser";
+import { REFERENCE, TypeRef } from "../../reference";
 import { ArrayType } from "./array-type";
 import { ModuleContext } from "./context";
 import { FunctionType } from "./function-type";
@@ -174,7 +174,10 @@ export function resolveTypeRef(
       return new RecordType(
         typeRef.parameters.map((param, idx) => [
           typeRef.names[idx],
-          resolveTypeRef(param) ?? UNKNOWN_TYPE,
+          {
+            range: UNKNOWN_RANGE,
+            value: resolveTypeRef(param) ?? UNKNOWN_TYPE,
+          },
         ])
       );
     case "Function":

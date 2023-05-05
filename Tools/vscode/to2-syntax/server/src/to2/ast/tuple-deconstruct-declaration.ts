@@ -49,7 +49,7 @@ export class TupleDeconstructDeclaration implements Node, BlockItem {
           });
         } else {
           const variableType =
-            declaration.type ??
+            declaration.type?.value ??
             declaration.extractedType(resultType, i) ??
             UNKNOWN_TYPE;
           context.localVariables.set(declaration.target.value, variableType);

@@ -60,13 +60,13 @@ export class TO2ModuleNode implements Node, TO2Module {
   }
 
   public findConstant(name: string): TO2Type | undefined {
-    return this.constants.get(name)?.type;
+    return this.constants.get(name)?.type.value;
   }
 
   public allConstants(): [string, TO2Type][] {
     return [...this.constants.entries()].map(([name, decl]) => [
       name,
-      decl.type,
+      decl.type.value,
     ]);
   }
 

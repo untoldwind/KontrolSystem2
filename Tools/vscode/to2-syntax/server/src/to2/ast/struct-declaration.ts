@@ -20,7 +20,7 @@ export class StructField implements Node {
 
   constructor(
     public readonly name: string,
-    public readonly type: TO2Type,
+    public readonly type: WithPosition<TO2Type>,
     public readonly description: string,
     public readonly initializer: Expression,
     start: InputPosition,
@@ -109,7 +109,7 @@ export class StructDeclaration implements Node, TypeDeclaration {
           false,
           this.constructorParameters.map((param) => [
             param.name.value,
-            param.type ?? UNKNOWN_TYPE,
+            param.type?.value ?? UNKNOWN_TYPE,
             param.defaultValue !== undefined,
           ]),
           this.type

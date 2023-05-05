@@ -1,10 +1,10 @@
 import { Expression, Node, ValidationError } from ".";
-import { FunctionParameter } from "./function-declaration";
-import { BUILTIN_UNIT, RealizedType, TO2Type, UNKNOWN_TYPE } from "./to2-type";
-import { InputPosition, InputRange } from "../../parser";
-import { BlockContext, FunctionContext } from "./context";
+import { InputPosition } from "../../parser";
 import { SemanticToken } from "../../syntax-token";
+import { BlockContext } from "./context";
+import { FunctionParameter } from "./function-declaration";
 import { FunctionType, isFunctionType } from "./function-type";
+import { RealizedType, TO2Type, UNKNOWN_TYPE } from "./to2-type";
 
 export class Lambda extends Expression {
   constructor(
@@ -76,7 +76,7 @@ export class Lambda extends Expression {
         const parameter = this.parameters[i];
         resolveParameters.push([
           parameter.name.value,
-          parameter.type ??
+          parameter.type?.value ??
             (i < typeHint.parameterTypes.length
               ? typeHint.parameterTypes[i][1]
               : UNKNOWN_TYPE),
@@ -87,7 +87,7 @@ export class Lambda extends Expression {
     }
     return this.parameters.map((parameter) => [
       parameter.name.value,
-      parameter.type ?? UNKNOWN_TYPE,
+      parameter.type?.value ?? UNKNOWN_TYPE,
       false,
     ]);
   }

@@ -10,7 +10,7 @@ export class DeclarationParameter {
   constructor(
     public readonly target: WithPosition<string>,
     public readonly source: string | undefined,
-    public readonly type: TO2Type | undefined
+    public readonly type: WithPosition<TO2Type> | undefined
   ) {}
 
   extractedType(from: RealizedType, idx: number): TO2Type | undefined {
@@ -19,8 +19,8 @@ export class DeclarationParameter {
     }
     if (isRecordType(from)) {
       if (this.source)
-        return from.itemTypes.find((item) => item[0] === this.source)?.[1];
-      return idx < from.itemTypes.length ? from.itemTypes[idx][1] : undefined;
+        return from.itemTypes.find((item) => item[0] === this.source)?.[1].value;
+      return idx < from.itemTypes.length ? from.itemTypes[idx][1].value : undefined;
     }
     return undefined;
   }
@@ -53,7 +53,7 @@ export class VariableDeclaration implements Node, BlockItem {
   }
 
   public resultType(context: BlockContext): TO2Type {
-    return this.declaration.type ?? this.expression.resultType(context);
+    return this.declaration.type?.value ?? this.expression.resultType(context);
   }
 
   public reduceNode<T>(
@@ -84,7 +84,7 @@ export class VariableDeclaration implements Node, BlockItem {
     errors.push(
       ...this.expression.validateBlock(
         context,
-        this.declaration.type?.realizedType(context.module)
+        this.declaration.type?.value.realizedType(context.module)
       )
     );
 

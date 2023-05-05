@@ -12,7 +12,7 @@ export class ConstDeclaration implements Node, ModuleItem {
     public readonly isPublic: boolean,
     public readonly name: WithPosition<string>,
     public readonly description: string,
-    public readonly type: TO2Type,
+    public readonly type: WithPosition<TO2Type>,
     public readonly expression: Expression,
     start: InputPosition,
     end: InputPosition
@@ -37,7 +37,7 @@ export class ConstDeclaration implements Node, ModuleItem {
         range: this.range,
       });
     } else {
-      context.mappedConstants.set(this.name.value, this.type);
+      context.mappedConstants.set(this.name.value, this.type.value);
     }
 
     return errors;

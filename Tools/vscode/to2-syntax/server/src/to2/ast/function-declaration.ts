@@ -16,7 +16,7 @@ export class FunctionParameter implements Node {
 
   constructor(
     public readonly name: WithPosition<string>,
-    public readonly type: TO2Type | undefined,
+    public readonly type: WithPosition<TO2Type> | undefined,
     public readonly defaultValue: Expression | undefined,
     start: InputPosition,
     end: InputPosition
@@ -25,7 +25,9 @@ export class FunctionParameter implements Node {
   }
 
   public resultType(context: BlockContext): TO2Type {
-    return this.type ?? this.defaultValue?.resultType(context) ?? UNKNOWN_TYPE;
+    return (
+      this.type?.value ?? this.defaultValue?.resultType(context) ?? UNKNOWN_TYPE
+    );
   }
 
   reduceNode<T>(
@@ -45,7 +47,7 @@ export class FunctionParameter implements Node {
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     semanticTokens.push(
-      this.name.range.semanticToken("parameter", "definition")
+      this.name.range.semanticToken("parameter", "declaration")
     );
   }
 }
@@ -79,7 +81,7 @@ export class FunctionDeclaration implements Node, ModuleItem {
       this.isAsync,
       parameters.map((param) => [
         param.name.value,
-        param.type ?? UNKNOWN_TYPE,
+        param.type?.value ?? UNKNOWN_TYPE,
         param.defaultValue !== undefined,
       ]),
       declaredReturn,

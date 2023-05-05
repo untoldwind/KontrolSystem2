@@ -8,7 +8,7 @@ export class ForIn extends Expression {
   constructor(
     private readonly forKeyword: WithPosition<"for">,
     public readonly variableName: WithPosition<string>,
-    public readonly variableType: TO2Type | undefined,
+    public readonly variableType: WithPosition<TO2Type> | undefined,
     public readonly inKeyword: WithPosition<"in">,
     public readonly sourceExpression: Expression,
     public readonly loopExpression: Expression,
@@ -56,20 +56,20 @@ export class ForIn extends Expression {
         });
       } else if (
         this.variableType &&
-        this.variableType
+        this.variableType.value
           .realizedType(context.module)
           .isAssignableFrom(loopVarType)
       ) {
         errors.push({
           status: "error",
-          message: `${this.variableType.name} is not assignable from ${loopVarType.name}`,
+          message: `${this.variableType.value.name} is not assignable from ${loopVarType.name}`,
           range: this.sourceExpression.range,
         });
       }
 
       loopContext.localVariables.set(
         this.variableName.value,
-        this.variableType ?? loopVarType ?? UNKNOWN_TYPE
+        this.variableType?.value ?? loopVarType ?? UNKNOWN_TYPE
       );
     }
 

@@ -102,7 +102,7 @@ export const eqDelimiter = between(whitespace0, tag("="), whitespace0);
 
 export const typeSpec = preceded(
   between(whitespace0, tag(":"), whitespace0),
-  typeRef
+  withPosition(typeRef)
 );
 
 const functionTypeParameters = preceded(

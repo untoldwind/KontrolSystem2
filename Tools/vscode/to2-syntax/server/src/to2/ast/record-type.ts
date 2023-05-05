@@ -10,9 +10,9 @@ export class RecordType implements RealizedType {
   public description: string;
   public methods: Map<string, FunctionType>;
 
-  constructor(public readonly itemTypes: [string, TO2Type][]) {
+  constructor(public readonly itemTypes: [string, WithPosition<TO2Type>][]) {
     this.name = this.localName = `(${itemTypes
-      .map((item) => `${item[0]} : ${item[1].name}`)
+      .map((item) => `${item[0]} : ${item[1].value.name}`)
       .join(", ")})`;
     this.description = "";
     this.methods = new Map();
@@ -35,7 +35,7 @@ export class RecordType implements RealizedType {
   }
 
   public findField(name: string): TO2Type | undefined {
-    return this.itemTypes.find((item) => item[0] === name)?.[1];
+    return this.itemTypes.find((item) => item[0] === name)?.[1].value;
   }
 
   public findMethod(name: string): FunctionType | undefined {

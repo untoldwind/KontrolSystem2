@@ -55,6 +55,11 @@ export class InputRange implements Range {
   }
 }
 
+export const UNKNOWN_RANGE = new InputRange(
+  new InputPosition(-1, -1, -1),
+  new InputPosition(-1, -1, -1)
+);
+
 export interface Input {
   position: InputPosition;
   available: number;
