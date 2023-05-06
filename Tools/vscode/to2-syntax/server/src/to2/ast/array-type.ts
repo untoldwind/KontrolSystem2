@@ -48,6 +48,10 @@ export class ArrayType implements RealizedType {
     }
   }
 
+  public allFieldNames(): string[] {
+    return ["length"];
+  }
+
   public findMethod(name: string): FunctionType | undefined {
     switch (name) {
       case "filter":
@@ -120,6 +124,10 @@ export class ArrayType implements RealizedType {
         );
     }
     return undefined;
+  }
+
+  public allMethodNames(): string[] {
+    return ["filter", "find", "exists", "map"];
   }
 
   public forInSource(): TO2Type | undefined {

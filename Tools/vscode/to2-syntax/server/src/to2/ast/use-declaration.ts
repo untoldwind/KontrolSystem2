@@ -1,4 +1,8 @@
-import { CompletionItem, CompletionItemKind } from "vscode-languageserver";
+import {
+  CompletionItem,
+  CompletionItemKind,
+  TextEdit,
+} from "vscode-languageserver";
 import { Position } from "vscode-languageserver-textdocument";
 import { ModuleItem, Node, ValidationError } from ".";
 import { InputPosition, InputRange, WithPosition } from "../../parser";
@@ -10,6 +14,7 @@ import { TO2Module } from "./to2-module";
 export class UseDeclaration implements Node, ModuleItem {
   public readonly range: InputRange;
   private importedModule?: TO2Module;
+  private allModuleNames?: string[];
 
   constructor(
     public readonly useKeyword: WithPosition<"use">,
@@ -41,6 +46,7 @@ export class UseDeclaration implements Node, ModuleItem {
         message: `Module not found: ${this.moduleNamePath.value.join("::")}`,
         range: this.moduleNamePath.range,
       });
+      this.allModuleNames = context.registry.allModuleNames();
     } else {
       if (this.alias) {
         if (context.moduleAliases.has(this.alias.value)) {
@@ -152,15 +158,15 @@ export class UseDeclaration implements Node, ModuleItem {
     semanticTokens.push(this.moduleNamePath.range.semanticToken("namespace"));
   }
 
-  public completionsAt(
-    registry: Registry,
-    position: Position
-  ): CompletionItem[] {
+  public completionsAt(position: Position): CompletionItem[] {
     if (this.moduleNamePath.range.contains(position)) {
-      return registry.allModuleNames().map((name) => ({
-        kind: CompletionItemKind.Module,
-        label: name,
-      }));
+      return (
+        this.allModuleNames?.map((name) => ({
+          kind: CompletionItemKind.Module,
+          label: name,
+          textEdit: TextEdit.replace(this.moduleNamePath.range, name),
+        })) ?? []
+      );
     } else if (this.names && this.importedModule) {
       for (const name of this.names) {
         if (name.range.contains(position)) {

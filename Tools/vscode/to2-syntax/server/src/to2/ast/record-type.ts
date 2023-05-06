@@ -38,8 +38,16 @@ export class RecordType implements RealizedType {
     return this.itemTypes.find((item) => item[0] === name)?.[1].value;
   }
 
+  public allFieldNames(): string[] {
+    return this.itemTypes.map((item) => item[0]);
+  }
+
   public findMethod(name: string): FunctionType | undefined {
     return this.methods.get(name);
+  }
+
+  public allMethodNames(): string[] {
+    return [...this.methods.keys()];
   }
 
   public forInSource(): TO2Type | undefined {

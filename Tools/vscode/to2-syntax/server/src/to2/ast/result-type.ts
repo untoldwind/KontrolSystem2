@@ -37,10 +37,18 @@ export class ResultType implements RealizedType {
     return undefined;
   }
 
+  public allFieldNames(): string[] {
+    return [];
+  }
+
   public findMethod(name: string): FunctionType | undefined {
     return undefined;
   }
 
+  public allMethodNames(): string[] {
+    return [];
+  }
+  
   public forInSource(): TO2Type | undefined {
     return undefined;
   }
@@ -49,4 +57,3 @@ export class ResultType implements RealizedType {
 export function isResultType(type: RealizedType): type is ResultType {
   return type.kind === "Result";
 }
-

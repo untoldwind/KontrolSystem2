@@ -3,8 +3,13 @@ import { RealizedType, TO2Type, UNKNOWN_TYPE } from "./to2-type";
 import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
+import { Position } from "vscode-languageserver-textdocument";
+import { CompletionItem, CompletionItemKind } from "vscode-languageserver";
+import { isFunctionType } from "./function-type";
 
 export class VariableGet extends Expression {
+  private allVariables?: [string, RealizedType][];
+
   constructor(
     public readonly namePath: WithPosition<string[]>,
     start: InputPosition,
@@ -39,6 +44,9 @@ export class VariableGet extends Expression {
         message: `Undefined variable: ${this.namePath.value[0]}`,
         range: this.namePath.range,
       });
+      this.allVariables = context
+        .allVariables()
+        .map(([name, type]) => [name, type.realizedType(context.module)]);
     } else {
       this.documentation = [
         this.namePath.range.with(
@@ -58,5 +66,19 @@ export class VariableGet extends Expression {
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     semanticTokens.push(this.namePath.range.semanticToken("variable"));
+  }
+
+  public completionsAt(position: Position): CompletionItem[] {
+    if (this.namePath.range.contains(position)) {
+      return (
+        this.allVariables?.map(([name, type]) => ({
+          kind: isFunctionType(type)
+            ? CompletionItemKind.Function
+            : CompletionItemKind.Variable,
+          label: name,
+        })) ?? []
+      );
+    }
+    return [];
   }
 }

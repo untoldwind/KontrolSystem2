@@ -78,6 +78,10 @@ export class ReferencedType implements RealizedType {
     return resolveTypeRef(fieldReference.type, this.genericMap);
   }
 
+  public allFieldNames(): string[] {
+    return Object.keys(this.typeReference.fields);
+  }
+
   public findMethod(name: string): FunctionType | undefined {
     const methodReference = this.typeReference.methods[name];
     if (!methodReference) return undefined;
@@ -93,6 +97,10 @@ export class ReferencedType implements RealizedType {
         UNKNOWN_TYPE,
       methodReference.description
     );
+  }
+
+  public allMethodNames(): string[] {
+    return Object.keys(this.typeReference.methods);
   }
 
   public forInSource(): TO2Type | undefined {

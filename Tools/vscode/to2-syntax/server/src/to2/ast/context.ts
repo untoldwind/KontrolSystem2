@@ -18,16 +18,19 @@ export interface ModuleContext {
   moduleAliases: Map<string, string[]>;
   mappedFunctions: Map<string, FunctionType>;
   typeAliases: Map<string, RealizedType>;
+  registry: Registry;
 
   findType(
     namePath: string[],
     typeArguments: RealizedType[]
   ): RealizedType | undefined;
   findConstant(namePath: string[]): TO2Type | undefined;
+  allConstants(): [string, TO2Type][];
   findFunction(
     namePath: string[],
     typeHint?: RealizedType
   ): FunctionType | undefined;
+  allFunctions(): [string, FunctionType][];
   findModule(namePath: string[]): TO2Module | undefined;
 }
 
@@ -73,6 +76,10 @@ export class RootModuleContext implements ModuleContext {
           namePath[namePath.length - 1]
         )
       : undefined;
+  }
+
+  allConstants(): [string, TO2Type][] {
+    return [...this.mappedConstants.entries()];
   }
 
   findFunction(
@@ -144,6 +151,10 @@ export class RootModuleContext implements ModuleContext {
       : undefined;
   }
 
+  allFunctions(): [string, FunctionType][] {
+    return [...this.mappedFunctions.entries()];
+  }
+
   findModule(namePath: string[]): TO2Module | undefined {
     return this.registry.findModule(namePath);
   }
@@ -154,11 +165,13 @@ export class ImplModuleContext implements ModuleContext {
   public readonly mappedFunctions: Map<string, FunctionType> = new Map();
   public readonly moduleAliases: Map<string, string[]> = new Map();
   public readonly typeAliases: Map<string, RealizedType> = new Map();
+  public readonly registry: Registry;
 
   constructor(
     private readonly root: ModuleContext,
     public readonly structType: RecordType
   ) {
+    this.registry = root.registry;
     this.mappedConstants = root.mappedConstants;
     this.mappedFunctions = root.mappedFunctions;
     this.moduleAliases = root.moduleAliases;
@@ -176,11 +189,19 @@ export class ImplModuleContext implements ModuleContext {
     return this.root.findConstant(namePath);
   }
 
+  allConstants(): [string, TO2Type][] {
+    return this.root.allConstants();
+  }
+
   findFunction(
     namePath: string[],
     typeHint?: RealizedType
   ): FunctionType | undefined {
     return this.root.findFunction(namePath, typeHint);
+  }
+
+  allFunctions(): [string, FunctionType][] {
+    return this.root.allFunctions();
   }
 
   findModule(namePath: string[]): TO2Module | undefined {
@@ -214,6 +235,17 @@ export class BlockContext {
       this.module.findConstant(namePath) ??
       this.module.findFunction(namePath, typeHint)
     );
+  }
+
+  public allVariables(): [string, TO2Type][] {
+    if (this.parent) {
+      return [...this.parent.allVariables(), ...this.localVariables.entries()];
+    }
+    return [
+      ...this.module.allConstants(),
+      ...this.module.allFunctions(),
+      ...this.localVariables.entries(),
+    ];
   }
 }
 

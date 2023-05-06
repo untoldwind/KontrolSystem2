@@ -3,8 +3,13 @@ import { TO2Type, UNKNOWN_TYPE } from "./to2-type";
 import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
+import { Position } from "vscode-languageserver-textdocument";
+import { CompletionItem, CompletionItemKind } from "vscode-languageserver";
 
 export class FieldGet extends Expression {
+  private allFieldNames?: string[];
+  private allMethodNames?: string[];
+
   constructor(
     public readonly target: Expression,
     public readonly fieldName: WithPosition<string>,
@@ -15,7 +20,11 @@ export class FieldGet extends Expression {
   }
 
   public resultType(context: BlockContext): TO2Type {
-    return this.findField(context) ?? UNKNOWN_TYPE;
+    const targetType = this.target
+      .resultType(context)
+      .realizedType(context.module);
+
+    return targetType.findField(this.fieldName.value) ?? UNKNOWN_TYPE;
   }
 
   public reduceNode<T>(
@@ -30,7 +39,12 @@ export class FieldGet extends Expression {
 
     errors.push(...this.target.validateBlock(context));
 
-    const fieldType = this.findField(context)?.realizedType(context.module);
+    const targetType = this.target
+      .resultType(context)
+      .realizedType(context.module);
+    const fieldType = targetType
+      .findField(this.fieldName.value)
+      ?.realizedType(context.module);
     if (!fieldType) {
       errors.push({
         status:
@@ -40,17 +54,18 @@ export class FieldGet extends Expression {
         }`,
         range: this.fieldName.range,
       });
+      this.allFieldNames = targetType.allFieldNames();
+      this.allMethodNames = targetType.allMethodNames();
     } else {
-      const targetType = this.target
-        .resultType(context)
-        .realizedType(context.module);
       this.documentation = [
         this.fieldName.range.with(
           `Field \`${targetType.name}.${this.fieldName.value} : ${fieldType.name}\``
         ),
       ];
-      if(fieldType.description)
-        this.documentation.push(this.fieldName.range.with(fieldType.description));
+      if (fieldType.description)
+        this.documentation.push(
+          this.fieldName.range.with(fieldType.description)
+        );
     }
 
     return errors;
@@ -61,11 +76,19 @@ export class FieldGet extends Expression {
     semanticTokens.push(this.range.semanticToken("property"));
   }
 
-  private findField(context: BlockContext): TO2Type | undefined {
-    const targetType = this.target
-      .resultType(context)
-      .realizedType(context.module);
-
-    return targetType.findField(this.fieldName.value);
+  public completionsAt(position: Position): CompletionItem[] {
+    if (this.fieldName.range.contains(position)) {
+      return [
+        ...(this.allFieldNames?.map((name) => ({
+          kind: CompletionItemKind.Field,
+          label: name,
+        })) ?? []),
+        ...(this.allMethodNames?.map((name) => ({
+          kind: CompletionItemKind.Method,
+          label: name,
+        })) ?? []),
+      ];
+    }
+    return [];
   }
 }

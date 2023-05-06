@@ -40,7 +40,11 @@ export interface RealizedType extends TO2Type {
 
   findField(name: string): TO2Type | undefined;
 
+  allFieldNames(): string[];
+
   findMethod(name: string): FunctionType | undefined;
+
+  allMethodNames(): string[];
 
   forInSource(): TO2Type | undefined;
 }
@@ -97,8 +101,16 @@ export const UNKNOWN_TYPE: RealizedType = {
     return undefined;
   },
 
+  allFieldNames() {
+    return [];
+  },
+
   findMethod() {
     return undefined;
+  },
+
+  allMethodNames() {
+    return [];
   },
 
   forInSource() {

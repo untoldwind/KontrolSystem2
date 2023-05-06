@@ -19,7 +19,7 @@ export interface Node {
 
   collectSemanticTokens(semanticTokens: SemanticToken[]): void;
 
-  completionsAt?(registry: Registry, position: Position): CompletionItem[];
+  completionsAt?(position: Position): CompletionItem[];
 }
 
 export interface BlockItem extends Node {

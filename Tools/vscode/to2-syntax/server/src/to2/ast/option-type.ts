@@ -46,6 +46,10 @@ export class OptionType implements RealizedType {
     }
   }
 
+  public allFieldNames(): string[] {
+    return ["defined", "value"];
+  }
+
   public findMethod(name: string): FunctionType | undefined {
     switch (name) {
       case "ok_or":
@@ -57,6 +61,10 @@ export class OptionType implements RealizedType {
       default:
         return undefined;
     }
+  }
+
+  public allMethodNames(): string[] {
+    return ["ok_or"];
   }
 
   public forInSource(): TO2Type | undefined {

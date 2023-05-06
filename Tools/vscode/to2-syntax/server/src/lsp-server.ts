@@ -177,7 +177,7 @@ export class LspServer {
     if (!module) return [];
 
     return findNodesAt(module, params.position).flatMap(
-      (node) => node.completionsAt?.(this.registry, params.position) ?? []
+      (node) => node.completionsAt?.(params.position) ?? []
     );
   }
 
