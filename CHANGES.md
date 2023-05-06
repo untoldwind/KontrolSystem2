@@ -1,5 +1,9 @@
 # Changes
 
+## 0.3.5 -> 0.3.6
+
+* Binding for FlightPlan mod
+
 ## 0.3.4 -> 0.3.5
 
 * Ensure that `Vec3.to_direction()` and `GlobalVector.to_direction()` also work for "Up"

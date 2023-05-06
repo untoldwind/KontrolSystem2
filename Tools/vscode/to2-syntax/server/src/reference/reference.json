@@ -1530,6 +1530,11 @@
         },
         {
           "kind": "Standard",
+          "module": "ksp::addons",
+          "name": "FlightPlan"
+        },
+        {
+          "kind": "Standard",
           "module": "ksp::console",
           "name": "Console"
         },
@@ -2095,6 +2100,11 @@
           "kind": "Standard",
           "module": "core::math",
           "name": "Random"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::addons",
+          "name": "FlightPlan"
         },
         {
           "kind": "Standard",
@@ -4014,6 +4024,511 @@
           "returnType": {
             "kind": "Builtin",
             "name": "Unit"
+          }
+        }
+      }
+    },
+    "ksp::addons": {
+      "name": "ksp::addons",
+      "description": "Provides access to optional addons.\n",
+      "types": {
+        "FlightPlan": {
+          "name": "FlightPlan",
+          "fields": {
+            "version": {
+              "name": "version",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            }
+          },
+          "methods": {
+            "circularize": {
+              "isAsync": false,
+              "name": "circularize",
+              "parameters": [
+                {
+                  "name": "burnUt",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "burnOffsetFactor",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "set_new_pe": {
+              "isAsync": false,
+              "name": "set_new_pe",
+              "parameters": [
+                {
+                  "name": "burnUt",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "newPe",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "burnOffsetFactor",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "set_new_ap": {
+              "isAsync": false,
+              "name": "set_new_ap",
+              "parameters": [
+                {
+                  "name": "burnUt",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "newAp",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "burnOffsetFactor",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "ellipticize": {
+              "isAsync": false,
+              "name": "ellipticize",
+              "parameters": [
+                {
+                  "name": "burnUt",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "newAp",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "newPe",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "burnOffsetFactor",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "set_inclination": {
+              "isAsync": false,
+              "name": "set_inclination",
+              "parameters": [
+                {
+                  "name": "burnUt",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "inclination",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "burnOffsetFactor",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "set_new_lan": {
+              "isAsync": false,
+              "name": "set_new_lan",
+              "parameters": [
+                {
+                  "name": "burnUt",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "newLanValue",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "burnOffsetFactor",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "set_node_longitude": {
+              "isAsync": false,
+              "name": "set_node_longitude",
+              "parameters": [
+                {
+                  "name": "burnUt",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "newNodeLongValue",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "burnOffsetFactor",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "set_new_sma": {
+              "isAsync": false,
+              "name": "set_new_sma",
+              "parameters": [
+                {
+                  "name": "burnUt",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "newSma",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "burnOffsetFactor",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "match_planes": {
+              "isAsync": false,
+              "name": "match_planes",
+              "parameters": [
+                {
+                  "name": "burnUt",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "burnOffsetFactor",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "hohmann_transfer": {
+              "isAsync": false,
+              "name": "hohmann_transfer",
+              "parameters": [
+                {
+                  "name": "burnUt",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "burnOffsetFactor",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "intercept_tgt": {
+              "isAsync": false,
+              "name": "intercept_tgt",
+              "parameters": [
+                {
+                  "name": "burnUt",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "tgtUt",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "burnOffsetFactor",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "course_correction": {
+              "isAsync": false,
+              "name": "course_correction",
+              "parameters": [
+                {
+                  "name": "burnUt",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "burnOffsetFactor",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "moon_return": {
+              "isAsync": false,
+              "name": "moon_return",
+              "parameters": [
+                {
+                  "name": "burnUt",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "burnOffsetFactor",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "match_velocity": {
+              "isAsync": false,
+              "name": "match_velocity",
+              "parameters": [
+                {
+                  "name": "burnUt",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "burnOffsetFactor",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "planetary_xfer": {
+              "isAsync": false,
+              "name": "planetary_xfer",
+              "parameters": [
+                {
+                  "name": "burnUt",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "burnOffsetFactor",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        }
+      },
+      "typeAliases": {},
+      "constants": {},
+      "functions": {
+        "flight_plan": {
+          "isAsync": false,
+          "name": "flight_plan",
+          "description": "Access the \"Flight Plan\" API (https://github.com/schlosrat/FlightPlan)\nWill be undefined if FlightPlan is not installed.\n",
+          "parameters": [],
+          "returnType": {
+            "kind": "Option",
+            "parameters": [
+              {
+                "kind": "Standard",
+                "module": "ksp::addons",
+                "name": "FlightPlan"
+              }
+            ]
           }
         }
       }
@@ -10437,6 +10952,11 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::addons",
+              "name": "FlightPlan"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::console",
               "name": "Console"
             },
@@ -12011,6 +12531,11 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::addons",
+              "name": "FlightPlan"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::console",
               "name": "Console"
             },
@@ -12643,6 +13168,11 @@
               "kind": "Standard",
               "module": "core::math",
               "name": "Random"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::addons",
+              "name": "FlightPlan"
             },
             {
               "kind": "Standard",
@@ -13301,6 +13831,11 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::addons",
+              "name": "FlightPlan"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::console",
               "name": "Console"
             },
@@ -13933,6 +14468,11 @@
               "kind": "Standard",
               "module": "core::math",
               "name": "Random"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::addons",
+              "name": "FlightPlan"
             },
             {
               "kind": "Standard",
@@ -14578,6 +15118,11 @@
               "kind": "Standard",
               "module": "core::math",
               "name": "Random"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::addons",
+              "name": "FlightPlan"
             },
             {
               "kind": "Standard",
@@ -15316,6 +15861,11 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::addons",
+              "name": "FlightPlan"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::console",
               "name": "Console"
             },
@@ -16001,6 +16551,11 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::addons",
+              "name": "FlightPlan"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::console",
               "name": "Console"
             },
@@ -16643,6 +17198,11 @@
               "kind": "Standard",
               "module": "core::math",
               "name": "Random"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::addons",
+              "name": "FlightPlan"
             },
             {
               "kind": "Standard",
@@ -17308,6 +17868,11 @@
               "kind": "Standard",
               "module": "core::math",
               "name": "Random"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::addons",
+              "name": "FlightPlan"
             },
             {
               "kind": "Standard",
@@ -17983,6 +18548,11 @@
               "kind": "Standard",
               "module": "core::math",
               "name": "Random"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::addons",
+              "name": "FlightPlan"
             },
             {
               "kind": "Standard",
