@@ -12,9 +12,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             public ModuleCommandAdapter(VesselAdapter vesselAdapter, PartComponent part, Data_Command dataCommand) : base(vesselAdapter, part) {
                 this.dataCommand = dataCommand;
             }
-
-            [KSField] public string PartName => part?.PartName ?? "Unknown";
-
+            
             [KSField] public CommandControlState ControlState => dataCommand.controlStatus.GetValue();
 
             [KSMethod]

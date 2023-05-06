@@ -10,5 +10,7 @@ namespace KontrolSystem.KSP.Runtime {
         public string LocalLibPath { get; }
 
         public ITO2Logger Logger { get; }
+        
+        public OptionalAddons OptionalAddons { get; }
     }
 }

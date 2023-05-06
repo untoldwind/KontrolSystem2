@@ -17,7 +17,7 @@ namespace KontrolSystem.KSP.Runtime.Core {
         internal readonly ITO2Logger logger;
         private readonly IKontrolModule module;
         private KontrolSystemProcessState state;
-        internal KSPContext context;
+        internal KSPCoreContext context;
         public readonly Guid id;
 
         public KontrolSystemProcess(ITO2Logger logger, IKontrolModule module) {
@@ -31,7 +31,7 @@ namespace KontrolSystem.KSP.Runtime.Core {
 
         public KontrolSystemProcessState State => state;
 
-        public void MarkRunning(KSPContext newContext) {
+        public void MarkRunning(KSPCoreContext newContext) {
             state = KontrolSystemProcessState.Running;
             context?.Cleanup();
             context = newContext;

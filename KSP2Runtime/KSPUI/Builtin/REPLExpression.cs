@@ -17,7 +17,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
         public static object Run(string expression) {
             var result = TO2ParserREPL.REPLItems.Parse(expression);
 
-            var kspContext = new KSPContext(Mainframe.Instance.Logger, Mainframe.Instance.Game, Mainframe.Instance.ConsoleBuffer, Mainframe.Instance.TimeSeriesCollection, ConfigAdapter.Instance.OptionalAddons);
+            var kspContext = new KSPCoreContext(Mainframe.Instance.Logger, Mainframe.Instance.Game, Mainframe.Instance.ConsoleBuffer, Mainframe.Instance.TimeSeriesCollection, Mainframe.Instance.OptionalAddons);
             var registry = Mainframe.Instance.LastRegistry;
             var context = new REPLContext(registry, kspContext);
 

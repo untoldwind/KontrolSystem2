@@ -51,7 +51,7 @@ namespace KontrolSystem.KSP.Runtime.Core {
             }
         }
     }
-    public class KSPContext : IKSPContext {
+    public class KSPCoreContext : IKSPContext {
         internal const int MaxCallStack = 100;
 
         private readonly ITO2Logger logger;
@@ -70,7 +70,7 @@ namespace KontrolSystem.KSP.Runtime.Core {
         private readonly List<BackgroundKSPContext> childContexts;
         private int stackCallCount;
 
-        public KSPContext(ITO2Logger logger, GameInstance gameInstance, KSPConsoleBuffer consoleBuffer, TimeSeriesCollection timeSeriesCollection, OptionalAddons optionalAddons) {
+        public KSPCoreContext(ITO2Logger logger, GameInstance gameInstance, KSPConsoleBuffer consoleBuffer, TimeSeriesCollection timeSeriesCollection, OptionalAddons optionalAddons) {
             this.logger = logger;
             this.gameInstance = gameInstance;
             this.consoleBuffer = consoleBuffer;
@@ -317,8 +317,8 @@ namespace KontrolSystem.KSP.Runtime.Core {
             }
         }
         public void FunctionEnter(string name, object[] arguments) {
-            if (Interlocked.Increment(ref stackCallCount) > KSPContext.MaxCallStack) {
-                throw new StackOverflowException($"Exceed stack count: {KSPContext.MaxCallStack}");
+            if (Interlocked.Increment(ref stackCallCount) > KSPCoreContext.MaxCallStack) {
+                throw new StackOverflowException($"Exceed stack count: {KSPCoreContext.MaxCallStack}");
             }
         }
 

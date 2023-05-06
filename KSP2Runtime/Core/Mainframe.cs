@@ -66,6 +66,8 @@ namespace KontrolSystem.KSP.Runtime.Core {
 
         public ITO2Logger Logger => config.Logger;
 
+        public OptionalAddons OptionalAddons => config.OptionalAddons;
+        
         public string Version => config.Version;
 
         public string LocalLibPath => config.LocalLibPath;
@@ -198,11 +200,7 @@ namespace KontrolSystem.KSP.Runtime.Core {
         public bool StartProcess(KontrolSystemProcess process, VesselComponent vessel = null, object[] arguments = null) {
             switch (process.State) {
             case KontrolSystemProcessState.Available:
-<<<<<<< HEAD:SpaceWarpMod/Core/Mainframe.cs
-                KSPContext context = new KSPContext(Game, consoleBuffer, timeSeriesCollection, ConfigAdapter.Instance.OptionalAddons);
-=======
-                KSPContext context = new KSPContext(process.logger, Game, consoleBuffer, timeSeriesCollection);
->>>>>>> 3fe35a0 (Add scroll assets):KSP2Runtime/Core/Mainframe.cs
+                KSPCoreContext context = new KSPCoreContext(process.logger, Game, consoleBuffer, timeSeriesCollection, config.OptionalAddons);
                 Entrypoint entrypoint = process.EntrypointFor(context.GameMode, context);
                 if (entrypoint == null) return false;
                 arguments ??= process.EntrypointArgumentDescriptors(context.GameMode).Select(arg => arg.DefaultValue).ToArray();

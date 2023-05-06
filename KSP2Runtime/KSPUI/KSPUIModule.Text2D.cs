@@ -6,8 +6,6 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
     public partial class KSPUIModule {
         [KSClass]
         public class Text2D : GLUIDrawer.IGLUIDrawable {
-            private string text;
-
             public Text2D(Vector2d position, string text, double fontSize, Vector2d pivot, double degrees, KSPConsoleModule.RgbaColor color) {
                 Color = color;
                 Position = position;
