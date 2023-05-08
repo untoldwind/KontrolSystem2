@@ -31,7 +31,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
         };
 
         internal int colorCounter;
-        
+
         public void OnEnable() {
             Initialize("KontrolSystem: Telemetry", new Rect(400, Screen.height - 200, 600, 500));
 
@@ -162,7 +162,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
             colorCounter = colorCounter < colors.Length ? colorCounter : 0;
             return color;
         }
-        
+
         protected override void OnResize(Vector2 delta) {
             base.OnResize(delta);
 

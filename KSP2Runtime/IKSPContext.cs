@@ -58,7 +58,7 @@ namespace KontrolSystem.KSP.Runtime {
         void UnhookAutopilot(VesselComponent vessel, IKSPAutopilot autopilot);
 
         void UnhookAllAutopilots(VesselComponent vessel);
-        
+
         OptionalAddons OptionalAddons { get; }
     }
 

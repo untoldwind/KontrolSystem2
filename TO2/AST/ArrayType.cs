@@ -15,13 +15,13 @@ namespace KontrolSystem.TO2.AST {
         public ArrayType(TO2Type elementType, int dimension = 1) {
             ElementType = dimension > 1 ? new ArrayType(elementType, dimension - 1) : elementType;
             allowedSuffixOperators = new OperatorCollection {
-                { Operator.Add, new StaticMethodOperatorEmitter(() => this, () => this, 
+                { Operator.Add, new StaticMethodOperatorEmitter(() => this, () => this,
                     typeof(ArrayMethods).GetMethod("Concat"), context => new []{ elementType.UnderlyingType(context) })},
-                { Operator.Add, new StaticMethodOperatorEmitter(() => elementType, () => this, 
+                { Operator.Add, new StaticMethodOperatorEmitter(() => elementType, () => this,
                     typeof(ArrayMethods).GetMethod("Append"), context => new []{ elementType.UnderlyingType(context) })},
-                { Operator.AddAssign, new StaticMethodOperatorEmitter(() => this, () => this, 
+                { Operator.AddAssign, new StaticMethodOperatorEmitter(() => this, () => this,
                     typeof(ArrayMethods).GetMethod("Concat"), context => new []{ elementType.UnderlyingType(context) })},
-                { Operator.AddAssign, new StaticMethodOperatorEmitter(() => elementType, () => this, 
+                { Operator.AddAssign, new StaticMethodOperatorEmitter(() => elementType, () => this,
                     typeof(ArrayMethods).GetMethod("Append"), context => new []{ elementType.UnderlyingType(context) })},
             };
             DeclaredMethods = new Dictionary<string, IMethodInvokeFactory> {

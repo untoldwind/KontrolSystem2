@@ -46,7 +46,7 @@ namespace KontrolSystem.KSP.Runtime.Core {
         public KSPConsoleBuffer ConsoleBuffer => consoleBuffer;
 
         public TimeSeriesCollection TimeSeriesCollection => timeSeriesCollection;
-        
+
         public bool Rebooting => rebooting;
         public TimeSpan LastRebootTime => state?.bootTime ?? TimeSpan.Zero;
         public IEnumerable<MainframeError> LastErrors => state?.errors ?? Enumerable.Empty<MainframeError>();
@@ -67,7 +67,7 @@ namespace KontrolSystem.KSP.Runtime.Core {
         public ITO2Logger Logger => config.Logger;
 
         public OptionalAddons OptionalAddons => config.OptionalAddons;
-        
+
         public string Version => config.Version;
 
         public string LocalLibPath => config.LocalLibPath;

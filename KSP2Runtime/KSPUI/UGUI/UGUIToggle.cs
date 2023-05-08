@@ -21,7 +21,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI {
             get => toggle.graphic.color;
             set => toggle.graphic.color = value;
         }
-        
+
         public string Label {
             get => label.text;
             set => label.text = value;

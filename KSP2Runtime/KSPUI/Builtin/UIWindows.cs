@@ -17,7 +17,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
             Instance = null;
             Game.Messages.Unsubscribe<GameStateChangedMessage>(OnStateChange);
         }
-        
+
         public void Initialize(UIAssetsProvider uiAssetsProvider) {
             UIFactory.Init(uiAssetsProvider);
         }
@@ -63,11 +63,11 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
             foreach (var telemetryWindow in gameObject.GetComponents<TelemetryWindow>()) {
                 Destroy(telemetryWindow);
             }
-            
+
             Destroy(gameObject.GetComponent<ConsoleWindow>());
             Destroy(gameObject.GetComponent<ModuleManagerWindow>());
         }
-        
+
         private void OnStateChange(MessageCenterMessage message) {
             if (message is GameStateChangedMessage g && g.CurrentState == GameState.MainMenu) {
                 CloseAll();

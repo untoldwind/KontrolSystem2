@@ -57,9 +57,9 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI {
         Font UIFont { get; }
 
         float UIFontSize { get; }
-        
+
         Font ConsoleFont { get; }
-        
+
         float ConsoleFontSize { get; }
 
         void OnChange(Action action);

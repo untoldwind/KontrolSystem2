@@ -354,7 +354,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
 
                 var parameters = element.process.EntrypointArgumentDescriptors(Mainframe.Instance.GameMode);
                 parameterToggle = UIFactory.Instance.CreateSelectButton(parameters.Length.ToString());
-                root.Add(parameterToggle, UGUILayout.Align.Center, new Vector2( uiFontSize + 4, uiFontSize + 4));
+                root.Add(parameterToggle, UGUILayout.Align.Center, new Vector2(uiFontSize + 4, uiFontSize + 4));
                 parameterToggle.SetActive(parameters.Length > 0);
                 parameterToggle.GetComponent<Toggle>().onValueChanged.AddListener(isOn => {
                     if (isOn) {

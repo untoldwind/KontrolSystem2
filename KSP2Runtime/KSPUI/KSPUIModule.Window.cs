@@ -18,7 +18,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             }
 
             [KSField] public bool IsClosed => window.Closed;
-            
+
             [KSMethod]
             public void Close() {
                 window.Close();

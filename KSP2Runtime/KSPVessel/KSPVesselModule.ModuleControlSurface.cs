@@ -45,11 +45,11 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 get => dataControlSurface.AuthorityLimiter.GetValue();
                 set => dataControlSurface.AuthorityLimiter.SetValue((float)value);
             }
-            
+
             [KSField] public double Lift => dataControlSurface.LiftScalar.GetValue();
-            
+
             [KSField] public double Drag => dataControlSurface.DragScalar.GetValue();
-            
+
             [KSField] public double AngleOfAttack => dataControlSurface.AoA.GetValue();
         }
     }

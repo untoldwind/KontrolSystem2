@@ -46,8 +46,8 @@ namespace KontrolSystem.SpaceWarpMod {
             uiFont = config.Bind("Font", "uiFont", MonospaceFont.Unifont, "Default font for UI");
             uiFontSize = config.Bind("Font", "uiFontSize", 20f, "Size of the UI font");
             graphFont = config.Bind("Font", "graphFont", MonospaceFont.JetBrainsMono, "Font to use in graphs");
-                
-            if(Chainloader.PluginInfos.TryGetValue(KSPAddonsModule.FlightPlanAdapter.ModGuid, out var fpPluginInfo)) {
+
+            if (Chainloader.PluginInfos.TryGetValue(KSPAddonsModule.FlightPlanAdapter.ModGuid, out var fpPluginInfo)) {
                 optionalAddons.FlightPlan = (fpPluginInfo.Instance, fpPluginInfo.Metadata.Version);
             }
         }
@@ -59,7 +59,7 @@ namespace KontrolSystem.SpaceWarpMod {
         public string LocalLibPath => localLibPath.Value;
 
         public OptionalAddons OptionalAddons => optionalAddons;
-        
+
         public ITO2Logger Logger => LoggerAdapter.Instance;
 
         public bool HotKeyEnabled => enableHotkey.Value;
@@ -129,11 +129,11 @@ namespace KontrolSystem.SpaceWarpMod {
         }
 
         public float UIFontSize => uiFontSize.Value;
-        
+
         public void OnChange(Action action) {
             config.SettingChanged += (sender, args) => action();
         }
-        
+
         private Texture2D GetTexture(string name) => AssetManager.GetAsset<Texture2D>($"kontrolsystem2/kontrolsystem2/gfx/{name}.png");
 
         internal static void Init(PluginInfo pluginInfo, ConfigFile config) {

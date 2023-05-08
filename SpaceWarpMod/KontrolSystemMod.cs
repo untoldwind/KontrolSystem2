@@ -20,7 +20,7 @@ namespace KontrolSystem.SpaceWarpMod {
         public const string ModGuid = "com.github.untoldwind.KontrolSystem2";
         public const string ModName = "KontrolSystem2";
         public const string ModVersion = "0.4.0.2";
-        
+
         private ModuleManagerWindow moduleManagerWindow;
         private UIWindows uiWindows;
 

@@ -76,7 +76,7 @@ namespace KontrolSystem.KSP.Runtime.Core {
             this.consoleBuffer = consoleBuffer;
             this.timeSeriesCollection = timeSeriesCollection;
             this.optionalAddons = optionalAddons;
-            
+
             markers = new List<IMarker>();
             resourceTransfers = new List<KSPResourceModule.ResourceTransfer>();
             windows = new List<KSPUIModule.Window>();
@@ -248,7 +248,7 @@ namespace KontrolSystem.KSP.Runtime.Core {
         }
 
         public OptionalAddons OptionalAddons => optionalAddons;
-        
+
         public void Cleanup() {
             ClearMarkers();
             foreach (var kv in autopilotHooks) {

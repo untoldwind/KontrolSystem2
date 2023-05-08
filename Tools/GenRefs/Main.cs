@@ -53,7 +53,7 @@ namespace KontrolSystem.GenRefs {
             var allTypes = Builtin.Values.Concat(Modules.Values.SelectMany(module => module.Types.Values)).ToList();
 
             foreach (var typeReference in allTypes) {
-                if(typeReference.AssignableFromAny) continue;
+                if (typeReference.AssignableFromAny) continue;
                 foreach (var otherType in allTypes) {
                     if (otherType == typeReference) continue;
                     if (!typeReference.TO2Type.IsAssignableFrom(moduleContext, otherType.TO2Type)) continue;
@@ -111,7 +111,7 @@ namespace KontrolSystem.GenRefs {
         [JsonProperty("types")] public Dictionary<string, TypeReference> Types { get; }
 
         [JsonProperty("typeAliases")] public Dictionary<string, TypeRef> TypeAliases { get; }
-        
+
         [JsonProperty("constants")] public Dictionary<string, ConstantReference> Constants { get; }
 
         [JsonProperty("functions")] public Dictionary<string, FunctionReference> Functions { get; }
@@ -189,7 +189,7 @@ namespace KontrolSystem.GenRefs {
 
         [JsonProperty("assignableFromAny")]
         public bool AssignableFromAny { get; }
-        
+
         [JsonProperty("assignableFrom")]
         public List<TypeRef> AssignableFrom { get; }
 
@@ -267,7 +267,7 @@ namespace KontrolSystem.GenRefs {
             Description = constant.Description;
             Type = new TypeRef(moduleContext, constant.Type);
         }
-        
+
         [JsonProperty("name")] public string Name { get; }
 
         [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)] public string Description { get; }
@@ -395,10 +395,10 @@ namespace KontrolSystem.GenRefs {
 
         [JsonProperty("parameters", NullValueHandling = NullValueHandling.Ignore)]
         public List<TypeRef> Parameters { get; }
-        
+
         [JsonProperty("returnType", NullValueHandling = NullValueHandling.Ignore)]
         public TypeRef ReturnType { get; }
-        
+
         [JsonProperty("isAsync", NullValueHandling = NullValueHandling.Ignore)]
         public bool? IsAsync { get; }
     }

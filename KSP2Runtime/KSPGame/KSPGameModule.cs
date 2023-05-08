@@ -8,7 +8,7 @@ namespace KontrolSystem.KSP.Runtime.KSPGame {
     [KSModule("ksp::game",
         Description = "Collection to game and runtime related functions."
     )]
-    public class KSPGameModule {
+    public partial class KSPGameModule {
         [KSFunction(
             Description = "Get the current universal time (UT) in seconds from start."
         )]
@@ -62,5 +62,9 @@ namespace KontrolSystem.KSP.Runtime.KSPGame {
             });
             return new Future.Success<object>(null);
         }
+
+        [KSConstant("MAINFRAME", Description = "KontrolSystem mainframe")]
+        public static readonly MainframeAdapter MainframeInstance = new MainframeAdapter();
+
     }
 }

@@ -51,7 +51,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI {
         }
 
         public bool Closed => closed;
-        
+
         public virtual void OnDisable() {
             Destroy(window);
         }

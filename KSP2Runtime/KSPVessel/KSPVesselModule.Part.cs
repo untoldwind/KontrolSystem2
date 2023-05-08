@@ -80,7 +80,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                     return new Option<ModuleControlSurfaceAdapter>();
                 }
             }
-            
+
             [KSField]
             public Option<ModuleCommandAdapter> CommandModule {
                 get {
@@ -91,7 +91,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                     return new Option<ModuleCommandAdapter>();
                 }
             }
-            
+
             [KSField] public bool IsSolarPanel => part.IsPartSolarPanel(out var _);
 
             [KSField]
