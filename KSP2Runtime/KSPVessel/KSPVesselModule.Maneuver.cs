@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using KontrolSystem.KSP.Runtime.Core;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
@@ -30,7 +31,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             }
 
             [KSMethod]
-            public Result<ManeuverNodeAdapter, string>
+            public Future<Result<ManeuverNodeAdapter, string>>
                 Add(double ut, double radialOut, double normal, double prograde) {
                 ManeuverNodeData maneuverNodeData = new ManeuverNodeData(vesselAdapter.vessel.GlobalId, false, ut);
 
@@ -39,12 +40,21 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 maneuverPlan.AddNode(maneuverNodeData, true);
                 vesselAdapter.vessel.Orbiter.ManeuverPlanSolver.UpdateManeuverTrajectory();
 
-                return Result.Ok<ManeuverNodeAdapter, string>(new ManeuverNodeAdapter(vesselAdapter, maneuverNodeData));
+                var result =
+                    Result.Ok<ManeuverNodeAdapter, string>(new ManeuverNodeAdapter(vesselAdapter, maneuverNodeData));
+                if (KSPContext.CurrentContext.Game.Map.TryGetMapCore(out var mapCore)) {
+                    return new DelayedAction<Result<ManeuverNodeAdapter, string>>(KSPContext.CurrentContext, result, 1,
+                        2,
+                        () => {
+                            mapCore.map3D.ManeuverManager.CreateGizmoForLocation(maneuverNodeData);
+                        });
+                } 
+                return new Future.Success<Result<ManeuverNodeAdapter, string>>(result);
             }
 
 
             [KSMethod]
-            public Result<ManeuverNodeAdapter, string> AddBurnVector(double ut, Vector3d burnVector) {
+            public Future<Result<ManeuverNodeAdapter, string>> AddBurnVector(double ut, Vector3d burnVector) {
                 KSPOrbitModule.IOrbit orbit = new OrbitWrapper(vesselAdapter.context, vesselAdapter.vessel.Orbiter.PatchedConicSolver.FindPatchContainingUT(ut) ?? vesselAdapter.vessel.Orbit);
                 ManeuverNodeData maneuverNodeData = new ManeuverNodeData(vesselAdapter.vessel.GlobalId, false, ut);
 
@@ -54,9 +64,17 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                     Vector3d.Dot(orbit.Prograde(ut), burnVector)
                 );
                 vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.AddNodeToVessel(maneuverNodeData);
-                //                maneuverPlan.AddNode(maneuverNodeData);
 
-                return Result.Ok<ManeuverNodeAdapter, string>(new ManeuverNodeAdapter(vesselAdapter, maneuverNodeData));
+                var result =
+                    Result.Ok<ManeuverNodeAdapter, string>(new ManeuverNodeAdapter(vesselAdapter, maneuverNodeData));
+                if (KSPContext.CurrentContext.Game.Map.TryGetMapCore(out var mapCore)) {
+                    return new DelayedAction<Result<ManeuverNodeAdapter, string>>(KSPContext.CurrentContext, result, 1,
+                        2,
+                        () => {
+                            mapCore.map3D.ManeuverManager.CreateGizmoForLocation(maneuverNodeData);
+                        });
+                } 
+                return new Future.Success<Result<ManeuverNodeAdapter, string>>(result);
             }
         }
     }
