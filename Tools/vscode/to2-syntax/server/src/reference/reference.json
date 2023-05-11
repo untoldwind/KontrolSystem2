@@ -1610,6 +1610,21 @@
         },
         {
           "kind": "Standard",
+          "module": "ksp::game",
+          "name": "Mainframe"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::game",
+          "name": "Process"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::game",
+          "name": "ProcessArgument"
+        },
+        {
+          "kind": "Standard",
           "module": "ksp::math",
           "name": "Vec2"
         },
@@ -1712,6 +1727,116 @@
           "kind": "Standard",
           "module": "ksp::telemetry",
           "name": "TimeSeries"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::up",
+          "name": "Align"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::up",
+          "name": "AlignConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "Button"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "Canvas"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "Container"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "Gradient"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "StringInputField"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "IntInputField"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "FloatInputField"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "Label"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "Line2D"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "PixelLine2D"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "Polygon2D"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "Rect2D"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "Slider"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "Text2D"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "Toggle"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "Translate2D"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "Scale2D"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "Rotate2D"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "ValueRaster2D"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "Window"
         },
         {
           "kind": "Standard",
@@ -2183,6 +2308,21 @@
         },
         {
           "kind": "Standard",
+          "module": "ksp::game",
+          "name": "Mainframe"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::game",
+          "name": "Process"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::game",
+          "name": "ProcessArgument"
+        },
+        {
+          "kind": "Standard",
           "module": "ksp::math",
           "name": "Vec2"
         },
@@ -2285,6 +2425,116 @@
           "kind": "Standard",
           "module": "ksp::telemetry",
           "name": "TimeSeries"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::up",
+          "name": "Align"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::up",
+          "name": "AlignConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "Button"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "Canvas"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "Container"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "Gradient"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "StringInputField"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "IntInputField"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "FloatInputField"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "Label"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "Line2D"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "PixelLine2D"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "Polygon2D"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "Rect2D"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "Slider"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "Text2D"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "Toggle"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "Translate2D"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "Scale2D"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "Rotate2D"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "ValueRaster2D"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "Window"
         },
         {
           "kind": "Standard",
@@ -4745,6 +4995,15 @@
             "name": "RgbaColor"
           }
         },
+        "BLACK": {
+          "name": "BLACK",
+          "description": "Color black\n",
+          "type": {
+            "kind": "Standard",
+            "module": "ksp::console",
+            "name": "RgbaColor"
+          }
+        },
         "RED": {
           "name": "RED",
           "description": "Color red\n",
@@ -4836,7 +5095,7 @@
                 "kind": "Builtin",
                 "name": "float"
               },
-              "hasDefault": false
+              "hasDefault": true
             }
           ],
           "returnType": {
@@ -6362,9 +6621,144 @@
     "ksp::game": {
       "name": "ksp::game",
       "description": "Collection to game and runtime related functions.\n",
-      "types": {},
+      "types": {
+        "Mainframe": {
+          "name": "Mainframe",
+          "fields": {},
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "Process": {
+          "name": "Process",
+          "fields": {
+            "name": {
+              "name": "name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            },
+            "is_running": {
+              "name": "is_running",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "arguments": {
+              "name": "arguments",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::game",
+                    "name": "ProcessArgument"
+                  }
+                ]
+              }
+            }
+          },
+          "methods": {
+            "start": {
+              "isAsync": false,
+              "name": "start",
+              "parameters": [
+                {
+                  "name": "forVessel",
+                  "type": {
+                    "kind": "Option",
+                    "parameters": [
+                      {
+                        "kind": "Standard",
+                        "module": "ksp::vessel",
+                        "name": "Vessel"
+                      }
+                    ]
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "arguments",
+                  "type": {
+                    "kind": "Array",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "string"
+                      }
+                    ]
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "stop": {
+              "isAsync": false,
+              "name": "stop",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "ProcessArgument": {
+          "name": "ProcessArgument",
+          "fields": {
+            "name": {
+              "name": "name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            },
+            "type": {
+              "name": "type",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            },
+            "default_value": {
+              "name": "default_value",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        }
+      },
       "typeAliases": {},
-      "constants": {},
+      "constants": {
+        "MAINFRAME": {
+          "name": "MAINFRAME",
+          "description": "KontrolSystem mainframe\n",
+          "type": {
+            "kind": "Standard",
+            "module": "ksp::game",
+            "name": "Mainframe"
+          }
+        }
+      },
       "functions": {
         "current_time": {
           "isAsync": false,
@@ -11032,6 +11426,21 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Process"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ProcessArgument"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::math",
               "name": "Vec2"
             },
@@ -11129,6 +11538,116 @@
               "kind": "Standard",
               "module": "ksp::telemetry",
               "name": "TimeSeries"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::up",
+              "name": "Align"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::up",
+              "name": "AlignConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Button"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Canvas"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Container"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Gradient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "StringInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "IntInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "FloatInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Label"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Line2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "PixelLine2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Polygon2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rect2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Slider"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Text2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Toggle"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Translate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Scale2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rotate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "ValueRaster2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Window"
             },
             {
               "kind": "Standard",
@@ -12255,6 +12774,4180 @@
         }
       }
     },
+    "ksp::ui": {
+      "name": "ksp::ui",
+      "types": {
+        "Align": {
+          "name": "Align",
+          "description": "Alignment of the element in off direction (horizontal for vertical container and vice versa)",
+          "fields": {},
+          "methods": {
+            "to_string": {
+              "isAsync": false,
+              "name": "to_string",
+              "description": "String representation of the number",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            }
+          },
+          "suffixOperators": {
+            "==": [
+              {
+                "op": "==",
+                "otherType": {
+                  "kind": "Standard",
+                  "module": "ksp::up",
+                  "name": "Align"
+                },
+                "resultType": {
+                  "kind": "Builtin",
+                  "name": "bool"
+                }
+              }
+            ],
+            "!=": [
+              {
+                "op": "!=",
+                "otherType": {
+                  "kind": "Standard",
+                  "module": "ksp::up",
+                  "name": "Align"
+                },
+                "resultType": {
+                  "kind": "Builtin",
+                  "name": "bool"
+                }
+              }
+            ]
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "AlignConstants": {
+          "name": "AlignConstants",
+          "description": "",
+          "fields": {
+            "Start": {
+              "name": "Start",
+              "description": "Align the element to start of container (left/top).",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::up",
+                "name": "Align"
+              }
+            },
+            "Center": {
+              "name": "Center",
+              "description": "Align the element to the center of the container.",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::up",
+                "name": "Align"
+              }
+            },
+            "End": {
+              "name": "End",
+              "description": "Align the element to end of container (right/bottom).",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::up",
+                "name": "Align"
+              }
+            },
+            "Stretch": {
+              "name": "Stretch",
+              "description": "Strech the element to full size of container",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::up",
+                "name": "Align"
+              }
+            }
+          },
+          "methods": {
+            "from_string": {
+              "isAsync": false,
+              "name": "from_string",
+              "description": "Parse from string",
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "string"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::up",
+                    "name": "Align"
+                  }
+                ]
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": [
+            {
+              "kind": "Builtin",
+              "name": "Unit"
+            },
+            {
+              "kind": "Builtin",
+              "name": "bool"
+            },
+            {
+              "kind": "Builtin",
+              "name": "int"
+            },
+            {
+              "kind": "Builtin",
+              "name": "float"
+            },
+            {
+              "kind": "Builtin",
+              "name": "string"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Range"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "ArrayBuilder<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Cell<T>"
+            },
+            {
+              "kind": "Option",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Result",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "R"
+                },
+                {
+                  "kind": "Generic",
+                  "name": "E"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::background",
+              "name": "Task<T>"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::math",
+              "name": "Random"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::addons",
+              "name": "FlightPlan"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "Console"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "RgbaColor"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "MovingAverage"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "PIDLoop"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "RCSTranslateManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "SteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "ThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "TorquePI"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelSteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugBillboard"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "Debug"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "GroundMarker"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugPath"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Process"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ProcessArgument"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec3"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Direction"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Matrix2x2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalAngularVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalPosition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "TransformFrame"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Body"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "GeoCoordinates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Orbit"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirectionConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceContainer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceData"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransfer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransferEntry"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::telemetry",
+              "name": "TimeSeries"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::up",
+              "name": "Align"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Button"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Canvas"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Container"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Gradient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "StringInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "IntInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "FloatInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Label"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Line2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "PixelLine2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Polygon2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rect2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Slider"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Text2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Toggle"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Translate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Scale2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rotate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "ValueRaster2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Window"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStatesConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "CommandControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "CommandControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "FlightCtrlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ActionGroups"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Autopilot"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "StageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Maneuver"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ManeuverNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleCommand"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleControlSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDockingNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleEngine"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Staging"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Targetable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Vessel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringController"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringControl"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "BodyParameters"
+            },
+            {
+              "kind": "Record",
+              "names": [
+                "brake_time",
+                "end_latitude",
+                "end_longitude",
+                "end_time",
+                "path"
+              ],
+              "parameters": [
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Array",
+                  "parameters": [
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "GlobalPosition"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "ReentrySimulation"
+            }
+          ]
+        },
+        "Button": {
+          "name": "Button",
+          "fields": {
+            "font_size": {
+              "name": "font_size",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "label": {
+              "name": "label",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            },
+            "enabled": {
+              "name": "enabled",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            }
+          },
+          "methods": {
+            "on_click": {
+              "isAsync": false,
+              "name": "on_click",
+              "parameters": [
+                {
+                  "name": "onClick",
+                  "type": {
+                    "kind": "Function",
+                    "parameters": [],
+                    "returnType": {
+                      "kind": "Builtin",
+                      "name": "Unit"
+                    },
+                    "isAsync": false
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "Canvas": {
+          "name": "Canvas",
+          "fields": {
+            "min_size": {
+              "name": "min_size",
+              "readOnly": false,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec2"
+              }
+            },
+            "width": {
+              "name": "width",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "height": {
+              "name": "height",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            }
+          },
+          "methods": {
+            "clear": {
+              "isAsync": false,
+              "name": "clear",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
+            },
+            "add_line": {
+              "isAsync": false,
+              "name": "add_line",
+              "parameters": [
+                {
+                  "name": "points",
+                  "type": {
+                    "kind": "Array",
+                    "parameters": [
+                      {
+                        "kind": "Standard",
+                        "module": "ksp::math",
+                        "name": "Vec2"
+                      }
+                    ]
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "strokeColor",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::console",
+                    "name": "RgbaColor"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "closed",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "bool"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "thickness",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Line2D"
+              }
+            },
+            "add_pixel_line": {
+              "isAsync": false,
+              "name": "add_pixel_line",
+              "parameters": [
+                {
+                  "name": "points",
+                  "type": {
+                    "kind": "Array",
+                    "parameters": [
+                      {
+                        "kind": "Standard",
+                        "module": "ksp::math",
+                        "name": "Vec2"
+                      }
+                    ]
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "strokeColor",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::console",
+                    "name": "RgbaColor"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "closed",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "bool"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "PixelLine2D"
+              }
+            },
+            "add_rect": {
+              "isAsync": false,
+              "name": "add_rect",
+              "parameters": [
+                {
+                  "name": "point1",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "point2",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "fillColor",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::console",
+                    "name": "RgbaColor"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Rect2D"
+              }
+            },
+            "add_polygon": {
+              "isAsync": false,
+              "name": "add_polygon",
+              "parameters": [
+                {
+                  "name": "points",
+                  "type": {
+                    "kind": "Array",
+                    "parameters": [
+                      {
+                        "kind": "Standard",
+                        "module": "ksp::math",
+                        "name": "Vec2"
+                      }
+                    ]
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "fillColor",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::console",
+                    "name": "RgbaColor"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Polygon2D"
+              }
+            },
+            "add_text": {
+              "isAsync": false,
+              "name": "add_text",
+              "parameters": [
+                {
+                  "name": "position",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "text",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "string"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "fontSize",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "color",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::console",
+                    "name": "RgbaColor"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "degrees",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "pivot",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Text2D"
+              }
+            },
+            "add_translate": {
+              "isAsync": false,
+              "name": "add_translate",
+              "parameters": [
+                {
+                  "name": "translate",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Translate2D"
+              }
+            },
+            "add_scale": {
+              "isAsync": false,
+              "name": "add_scale",
+              "parameters": [
+                {
+                  "name": "scale",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Scale2D"
+              }
+            },
+            "add_rotate": {
+              "isAsync": false,
+              "name": "add_rotate",
+              "parameters": [
+                {
+                  "name": "degrees",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Rotate2D"
+              }
+            },
+            "add_value_raster": {
+              "isAsync": false,
+              "name": "add_value_raster",
+              "parameters": [
+                {
+                  "name": "point1",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "point2",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "values",
+                  "type": {
+                    "kind": "Array",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "float"
+                      }
+                    ]
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "width",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "int"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "height",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "int"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "gradientWrapper",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::ui",
+                    "name": "Gradient"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "ValueRaster2D"
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "Container": {
+          "name": "Container",
+          "fields": {},
+          "methods": {
+            "add_horizontal": {
+              "isAsync": false,
+              "name": "add_horizontal",
+              "parameters": [
+                {
+                  "name": "gap",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::up",
+                    "name": "Align"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "stretch",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Container"
+              }
+            },
+            "add_vertical": {
+              "isAsync": false,
+              "name": "add_vertical",
+              "parameters": [
+                {
+                  "name": "gap",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::up",
+                    "name": "Align"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "stretch",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Container"
+              }
+            },
+            "add_horizontal_panel": {
+              "isAsync": false,
+              "name": "add_horizontal_panel",
+              "parameters": [
+                {
+                  "name": "gap",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::up",
+                    "name": "Align"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "stretch",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Container"
+              }
+            },
+            "add_vertical_panel": {
+              "isAsync": false,
+              "name": "add_vertical_panel",
+              "parameters": [
+                {
+                  "name": "gap",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::up",
+                    "name": "Align"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "stretch",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Container"
+              }
+            },
+            "add_label": {
+              "isAsync": false,
+              "name": "add_label",
+              "parameters": [
+                {
+                  "name": "label",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "string"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::up",
+                    "name": "Align"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "stretch",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Label"
+              }
+            },
+            "add_button": {
+              "isAsync": false,
+              "name": "add_button",
+              "parameters": [
+                {
+                  "name": "label",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "string"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::up",
+                    "name": "Align"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "stretch",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Button"
+              }
+            },
+            "add_toggle": {
+              "isAsync": false,
+              "name": "add_toggle",
+              "parameters": [
+                {
+                  "name": "label",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "string"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::up",
+                    "name": "Align"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "stretch",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Toggle"
+              }
+            },
+            "add_string_input": {
+              "isAsync": false,
+              "name": "add_string_input",
+              "parameters": [
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::up",
+                    "name": "Align"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "stretch",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "StringInputField"
+              }
+            },
+            "add_int_input": {
+              "isAsync": false,
+              "name": "add_int_input",
+              "parameters": [
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::up",
+                    "name": "Align"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "stretch",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "IntInputField"
+              }
+            },
+            "add_float_input": {
+              "isAsync": false,
+              "name": "add_float_input",
+              "parameters": [
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::up",
+                    "name": "Align"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "stretch",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "FloatInputField"
+              }
+            },
+            "add_horizontal_slider": {
+              "isAsync": false,
+              "name": "add_horizontal_slider",
+              "parameters": [
+                {
+                  "name": "min",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "max",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::up",
+                    "name": "Align"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "stretch",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Slider"
+              }
+            },
+            "add_canvas": {
+              "isAsync": false,
+              "name": "add_canvas",
+              "parameters": [
+                {
+                  "name": "minWidth",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "minHeight",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::up",
+                    "name": "Align"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "stretch",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Canvas"
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "Gradient": {
+          "name": "Gradient",
+          "fields": {},
+          "methods": {
+            "add_color": {
+              "isAsync": false,
+              "name": "add_color",
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "color",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::console",
+                    "name": "RgbaColor"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "StringInputField": {
+          "name": "StringInputField",
+          "fields": {
+            "value": {
+              "name": "value",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            },
+            "font_size": {
+              "name": "font_size",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "enabled": {
+              "name": "enabled",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            }
+          },
+          "methods": {
+            "on_change": {
+              "isAsync": false,
+              "name": "on_change",
+              "parameters": [
+                {
+                  "name": "onChange",
+                  "type": {
+                    "kind": "Function",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "string"
+                      }
+                    ],
+                    "returnType": {
+                      "kind": "Builtin",
+                      "name": "Unit"
+                    },
+                    "isAsync": false
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
+            },
+            "bind": {
+              "isAsync": false,
+              "name": "bind",
+              "parameters": [
+                {
+                  "name": "boundValue",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "",
+                    "name": "Cell<T>"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "StringInputField"
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "IntInputField": {
+          "name": "IntInputField",
+          "fields": {
+            "value": {
+              "name": "value",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "int"
+              }
+            },
+            "font_size": {
+              "name": "font_size",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "enabled": {
+              "name": "enabled",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            }
+          },
+          "methods": {
+            "on_change": {
+              "isAsync": false,
+              "name": "on_change",
+              "parameters": [
+                {
+                  "name": "onChange",
+                  "type": {
+                    "kind": "Function",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "float"
+                      }
+                    ],
+                    "returnType": {
+                      "kind": "Builtin",
+                      "name": "Unit"
+                    },
+                    "isAsync": false
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
+            },
+            "bind": {
+              "isAsync": false,
+              "name": "bind",
+              "parameters": [
+                {
+                  "name": "boundValue",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "",
+                    "name": "Cell<T>"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "IntInputField"
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "FloatInputField": {
+          "name": "FloatInputField",
+          "fields": {
+            "value": {
+              "name": "value",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "font_size": {
+              "name": "font_size",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "enabled": {
+              "name": "enabled",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            }
+          },
+          "methods": {
+            "on_change": {
+              "isAsync": false,
+              "name": "on_change",
+              "parameters": [
+                {
+                  "name": "onChange",
+                  "type": {
+                    "kind": "Function",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "float"
+                      }
+                    ],
+                    "returnType": {
+                      "kind": "Builtin",
+                      "name": "Unit"
+                    },
+                    "isAsync": false
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
+            },
+            "bind": {
+              "isAsync": false,
+              "name": "bind",
+              "parameters": [
+                {
+                  "name": "boundValue",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "",
+                    "name": "Cell<T>"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "FloatInputField"
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "Label": {
+          "name": "Label",
+          "fields": {
+            "font_size": {
+              "name": "font_size",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "text": {
+              "name": "text",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            }
+          },
+          "methods": {
+            "bind": {
+              "isAsync": false,
+              "name": "bind",
+              "parameters": [
+                {
+                  "name": "boundValue",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "",
+                    "name": "Cell<T>"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "format",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "string"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Label"
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "Line2D": {
+          "name": "Line2D",
+          "fields": {
+            "stroke_color": {
+              "name": "stroke_color",
+              "readOnly": false,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::console",
+                "name": "RgbaColor"
+              }
+            },
+            "points": {
+              "name": "points",
+              "readOnly": false,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  }
+                ]
+              }
+            },
+            "closed": {
+              "name": "closed",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "thickness": {
+              "name": "thickness",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "PixelLine2D": {
+          "name": "PixelLine2D",
+          "fields": {
+            "stroke_color": {
+              "name": "stroke_color",
+              "readOnly": false,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::console",
+                "name": "RgbaColor"
+              }
+            },
+            "points": {
+              "name": "points",
+              "readOnly": false,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  }
+                ]
+              }
+            },
+            "closed": {
+              "name": "closed",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "Polygon2D": {
+          "name": "Polygon2D",
+          "fields": {
+            "fill_color": {
+              "name": "fill_color",
+              "readOnly": false,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::console",
+                "name": "RgbaColor"
+              }
+            },
+            "points": {
+              "name": "points",
+              "readOnly": false,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  }
+                ]
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "Rect2D": {
+          "name": "Rect2D",
+          "fields": {
+            "point1": {
+              "name": "point1",
+              "readOnly": false,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec2"
+              }
+            },
+            "point2": {
+              "name": "point2",
+              "readOnly": false,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec2"
+              }
+            },
+            "fill_color": {
+              "name": "fill_color",
+              "readOnly": false,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::console",
+                "name": "RgbaColor"
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "Slider": {
+          "name": "Slider",
+          "fields": {
+            "value": {
+              "name": "value",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "enabled": {
+              "name": "enabled",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            }
+          },
+          "methods": {
+            "on_change": {
+              "isAsync": false,
+              "name": "on_change",
+              "parameters": [
+                {
+                  "name": "onChange",
+                  "type": {
+                    "kind": "Function",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "float"
+                      }
+                    ],
+                    "returnType": {
+                      "kind": "Builtin",
+                      "name": "Unit"
+                    },
+                    "isAsync": false
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
+            },
+            "bind": {
+              "isAsync": false,
+              "name": "bind",
+              "parameters": [
+                {
+                  "name": "boundValue",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "",
+                    "name": "Cell<T>"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Slider"
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "Text2D": {
+          "name": "Text2D",
+          "fields": {
+            "position": {
+              "name": "position",
+              "readOnly": false,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec2"
+              }
+            },
+            "color": {
+              "name": "color",
+              "readOnly": false,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::console",
+                "name": "RgbaColor"
+              }
+            },
+            "text": {
+              "name": "text",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            },
+            "font_size": {
+              "name": "font_size",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "pivot": {
+              "name": "pivot",
+              "readOnly": false,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec2"
+              }
+            },
+            "degrees": {
+              "name": "degrees",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "Toggle": {
+          "name": "Toggle",
+          "fields": {
+            "font_size": {
+              "name": "font_size",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "label": {
+              "name": "label",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            },
+            "value": {
+              "name": "value",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "enabled": {
+              "name": "enabled",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            }
+          },
+          "methods": {
+            "on_change": {
+              "isAsync": false,
+              "name": "on_change",
+              "parameters": [
+                {
+                  "name": "onChange",
+                  "type": {
+                    "kind": "Function",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "bool"
+                      }
+                    ],
+                    "returnType": {
+                      "kind": "Builtin",
+                      "name": "Unit"
+                    },
+                    "isAsync": false
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
+            },
+            "bind": {
+              "isAsync": false,
+              "name": "bind",
+              "parameters": [
+                {
+                  "name": "boundValue",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "",
+                    "name": "Cell<T>"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Toggle"
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "Translate2D": {
+          "name": "Translate2D",
+          "fields": {
+            "translate": {
+              "name": "translate",
+              "readOnly": false,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec2"
+              }
+            }
+          },
+          "methods": {
+            "clear": {
+              "isAsync": false,
+              "name": "clear",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
+            },
+            "add_line": {
+              "isAsync": false,
+              "name": "add_line",
+              "parameters": [
+                {
+                  "name": "points",
+                  "type": {
+                    "kind": "Array",
+                    "parameters": [
+                      {
+                        "kind": "Standard",
+                        "module": "ksp::math",
+                        "name": "Vec2"
+                      }
+                    ]
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "strokeColor",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::console",
+                    "name": "RgbaColor"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "closed",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "bool"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "thickness",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Line2D"
+              }
+            },
+            "add_pixel_line": {
+              "isAsync": false,
+              "name": "add_pixel_line",
+              "parameters": [
+                {
+                  "name": "points",
+                  "type": {
+                    "kind": "Array",
+                    "parameters": [
+                      {
+                        "kind": "Standard",
+                        "module": "ksp::math",
+                        "name": "Vec2"
+                      }
+                    ]
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "strokeColor",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::console",
+                    "name": "RgbaColor"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "closed",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "bool"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "PixelLine2D"
+              }
+            },
+            "add_rect": {
+              "isAsync": false,
+              "name": "add_rect",
+              "parameters": [
+                {
+                  "name": "point1",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "point2",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "fillColor",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::console",
+                    "name": "RgbaColor"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Rect2D"
+              }
+            },
+            "add_polygon": {
+              "isAsync": false,
+              "name": "add_polygon",
+              "parameters": [
+                {
+                  "name": "points",
+                  "type": {
+                    "kind": "Array",
+                    "parameters": [
+                      {
+                        "kind": "Standard",
+                        "module": "ksp::math",
+                        "name": "Vec2"
+                      }
+                    ]
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "fillColor",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::console",
+                    "name": "RgbaColor"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Polygon2D"
+              }
+            },
+            "add_text": {
+              "isAsync": false,
+              "name": "add_text",
+              "parameters": [
+                {
+                  "name": "position",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "text",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "string"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "fontSize",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "color",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::console",
+                    "name": "RgbaColor"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "degrees",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "pivot",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Text2D"
+              }
+            },
+            "add_translate": {
+              "isAsync": false,
+              "name": "add_translate",
+              "parameters": [
+                {
+                  "name": "translate",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Translate2D"
+              }
+            },
+            "add_scale": {
+              "isAsync": false,
+              "name": "add_scale",
+              "parameters": [
+                {
+                  "name": "scale",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Scale2D"
+              }
+            },
+            "add_rotate": {
+              "isAsync": false,
+              "name": "add_rotate",
+              "parameters": [
+                {
+                  "name": "degrees",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Rotate2D"
+              }
+            },
+            "add_value_raster": {
+              "isAsync": false,
+              "name": "add_value_raster",
+              "parameters": [
+                {
+                  "name": "point1",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "point2",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "values",
+                  "type": {
+                    "kind": "Array",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "float"
+                      }
+                    ]
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "width",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "int"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "height",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "int"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "gradientWrapper",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::ui",
+                    "name": "Gradient"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "ValueRaster2D"
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "Scale2D": {
+          "name": "Scale2D",
+          "fields": {
+            "scale": {
+              "name": "scale",
+              "readOnly": false,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec2"
+              }
+            },
+            "pivot": {
+              "name": "pivot",
+              "readOnly": false,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec2"
+              }
+            }
+          },
+          "methods": {
+            "clear": {
+              "isAsync": false,
+              "name": "clear",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
+            },
+            "add_line": {
+              "isAsync": false,
+              "name": "add_line",
+              "parameters": [
+                {
+                  "name": "points",
+                  "type": {
+                    "kind": "Array",
+                    "parameters": [
+                      {
+                        "kind": "Standard",
+                        "module": "ksp::math",
+                        "name": "Vec2"
+                      }
+                    ]
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "strokeColor",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::console",
+                    "name": "RgbaColor"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "closed",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "bool"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "thickness",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Line2D"
+              }
+            },
+            "add_pixel_line": {
+              "isAsync": false,
+              "name": "add_pixel_line",
+              "parameters": [
+                {
+                  "name": "points",
+                  "type": {
+                    "kind": "Array",
+                    "parameters": [
+                      {
+                        "kind": "Standard",
+                        "module": "ksp::math",
+                        "name": "Vec2"
+                      }
+                    ]
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "strokeColor",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::console",
+                    "name": "RgbaColor"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "closed",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "bool"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "PixelLine2D"
+              }
+            },
+            "add_rect": {
+              "isAsync": false,
+              "name": "add_rect",
+              "parameters": [
+                {
+                  "name": "point1",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "point2",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "fillColor",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::console",
+                    "name": "RgbaColor"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Rect2D"
+              }
+            },
+            "add_polygon": {
+              "isAsync": false,
+              "name": "add_polygon",
+              "parameters": [
+                {
+                  "name": "points",
+                  "type": {
+                    "kind": "Array",
+                    "parameters": [
+                      {
+                        "kind": "Standard",
+                        "module": "ksp::math",
+                        "name": "Vec2"
+                      }
+                    ]
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "fillColor",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::console",
+                    "name": "RgbaColor"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Polygon2D"
+              }
+            },
+            "add_text": {
+              "isAsync": false,
+              "name": "add_text",
+              "parameters": [
+                {
+                  "name": "position",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "text",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "string"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "fontSize",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "color",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::console",
+                    "name": "RgbaColor"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "degrees",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "pivot",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Text2D"
+              }
+            },
+            "add_translate": {
+              "isAsync": false,
+              "name": "add_translate",
+              "parameters": [
+                {
+                  "name": "translate",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Translate2D"
+              }
+            },
+            "add_scale": {
+              "isAsync": false,
+              "name": "add_scale",
+              "parameters": [
+                {
+                  "name": "scale",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Scale2D"
+              }
+            },
+            "add_rotate": {
+              "isAsync": false,
+              "name": "add_rotate",
+              "parameters": [
+                {
+                  "name": "degrees",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Rotate2D"
+              }
+            },
+            "add_value_raster": {
+              "isAsync": false,
+              "name": "add_value_raster",
+              "parameters": [
+                {
+                  "name": "point1",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "point2",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "values",
+                  "type": {
+                    "kind": "Array",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "float"
+                      }
+                    ]
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "width",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "int"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "height",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "int"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "gradientWrapper",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::ui",
+                    "name": "Gradient"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "ValueRaster2D"
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "Rotate2D": {
+          "name": "Rotate2D",
+          "fields": {
+            "degrees": {
+              "name": "degrees",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "pivot": {
+              "name": "pivot",
+              "readOnly": false,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec2"
+              }
+            }
+          },
+          "methods": {
+            "clear": {
+              "isAsync": false,
+              "name": "clear",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
+            },
+            "add_line": {
+              "isAsync": false,
+              "name": "add_line",
+              "parameters": [
+                {
+                  "name": "points",
+                  "type": {
+                    "kind": "Array",
+                    "parameters": [
+                      {
+                        "kind": "Standard",
+                        "module": "ksp::math",
+                        "name": "Vec2"
+                      }
+                    ]
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "strokeColor",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::console",
+                    "name": "RgbaColor"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "closed",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "bool"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "thickness",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Line2D"
+              }
+            },
+            "add_pixel_line": {
+              "isAsync": false,
+              "name": "add_pixel_line",
+              "parameters": [
+                {
+                  "name": "points",
+                  "type": {
+                    "kind": "Array",
+                    "parameters": [
+                      {
+                        "kind": "Standard",
+                        "module": "ksp::math",
+                        "name": "Vec2"
+                      }
+                    ]
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "strokeColor",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::console",
+                    "name": "RgbaColor"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "closed",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "bool"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "PixelLine2D"
+              }
+            },
+            "add_rect": {
+              "isAsync": false,
+              "name": "add_rect",
+              "parameters": [
+                {
+                  "name": "point1",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "point2",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "fillColor",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::console",
+                    "name": "RgbaColor"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Rect2D"
+              }
+            },
+            "add_polygon": {
+              "isAsync": false,
+              "name": "add_polygon",
+              "parameters": [
+                {
+                  "name": "points",
+                  "type": {
+                    "kind": "Array",
+                    "parameters": [
+                      {
+                        "kind": "Standard",
+                        "module": "ksp::math",
+                        "name": "Vec2"
+                      }
+                    ]
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "fillColor",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::console",
+                    "name": "RgbaColor"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Polygon2D"
+              }
+            },
+            "add_text": {
+              "isAsync": false,
+              "name": "add_text",
+              "parameters": [
+                {
+                  "name": "position",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "text",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "string"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "fontSize",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "color",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::console",
+                    "name": "RgbaColor"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "degrees",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "pivot",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Text2D"
+              }
+            },
+            "add_translate": {
+              "isAsync": false,
+              "name": "add_translate",
+              "parameters": [
+                {
+                  "name": "translate",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Translate2D"
+              }
+            },
+            "add_scale": {
+              "isAsync": false,
+              "name": "add_scale",
+              "parameters": [
+                {
+                  "name": "scale",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Scale2D"
+              }
+            },
+            "add_rotate": {
+              "isAsync": false,
+              "name": "add_rotate",
+              "parameters": [
+                {
+                  "name": "degrees",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Rotate2D"
+              }
+            },
+            "add_value_raster": {
+              "isAsync": false,
+              "name": "add_value_raster",
+              "parameters": [
+                {
+                  "name": "point1",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "point2",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::math",
+                    "name": "Vec2"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "values",
+                  "type": {
+                    "kind": "Array",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "float"
+                      }
+                    ]
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "width",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "int"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "height",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "int"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "gradientWrapper",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::ui",
+                    "name": "Gradient"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "ValueRaster2D"
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "ValueRaster2D": {
+          "name": "ValueRaster2D",
+          "fields": {
+            "raster_width": {
+              "name": "raster_width",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "int"
+              }
+            },
+            "raster_height": {
+              "name": "raster_height",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "int"
+              }
+            },
+            "point1": {
+              "name": "point1",
+              "readOnly": false,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec2"
+              }
+            },
+            "point2": {
+              "name": "point2",
+              "readOnly": false,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec2"
+              }
+            },
+            "gradient": {
+              "name": "gradient",
+              "readOnly": false,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Gradient"
+              }
+            },
+            "values": {
+              "name": "values",
+              "readOnly": false,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  }
+                ]
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "Window": {
+          "name": "Window",
+          "fields": {
+            "is_closed": {
+              "name": "is_closed",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            }
+          },
+          "methods": {
+            "close": {
+              "isAsync": false,
+              "name": "close",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
+            },
+            "add_horizontal": {
+              "isAsync": false,
+              "name": "add_horizontal",
+              "parameters": [
+                {
+                  "name": "gap",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::up",
+                    "name": "Align"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "stretch",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Container"
+              }
+            },
+            "add_vertical": {
+              "isAsync": false,
+              "name": "add_vertical",
+              "parameters": [
+                {
+                  "name": "gap",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::up",
+                    "name": "Align"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "stretch",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Container"
+              }
+            },
+            "add_horizontal_panel": {
+              "isAsync": false,
+              "name": "add_horizontal_panel",
+              "parameters": [
+                {
+                  "name": "gap",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::up",
+                    "name": "Align"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "stretch",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Container"
+              }
+            },
+            "add_vertical_panel": {
+              "isAsync": false,
+              "name": "add_vertical_panel",
+              "parameters": [
+                {
+                  "name": "gap",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::up",
+                    "name": "Align"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "stretch",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Container"
+              }
+            },
+            "add_label": {
+              "isAsync": false,
+              "name": "add_label",
+              "parameters": [
+                {
+                  "name": "label",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "string"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::up",
+                    "name": "Align"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "stretch",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Label"
+              }
+            },
+            "add_button": {
+              "isAsync": false,
+              "name": "add_button",
+              "parameters": [
+                {
+                  "name": "label",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "string"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::up",
+                    "name": "Align"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "stretch",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Button"
+              }
+            },
+            "add_toggle": {
+              "isAsync": false,
+              "name": "add_toggle",
+              "parameters": [
+                {
+                  "name": "label",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "string"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::up",
+                    "name": "Align"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "stretch",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Toggle"
+              }
+            },
+            "add_string_input": {
+              "isAsync": false,
+              "name": "add_string_input",
+              "parameters": [
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::up",
+                    "name": "Align"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "stretch",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "StringInputField"
+              }
+            },
+            "add_int_input": {
+              "isAsync": false,
+              "name": "add_int_input",
+              "parameters": [
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::up",
+                    "name": "Align"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "stretch",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "IntInputField"
+              }
+            },
+            "add_float_input": {
+              "isAsync": false,
+              "name": "add_float_input",
+              "parameters": [
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::up",
+                    "name": "Align"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "stretch",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "FloatInputField"
+              }
+            },
+            "add_horizontal_slider": {
+              "isAsync": false,
+              "name": "add_horizontal_slider",
+              "parameters": [
+                {
+                  "name": "min",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "max",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::up",
+                    "name": "Align"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "stretch",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Slider"
+              }
+            },
+            "add_canvas": {
+              "isAsync": false,
+              "name": "add_canvas",
+              "parameters": [
+                {
+                  "name": "minWidth",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "minHeight",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::up",
+                    "name": "Align"
+                  },
+                  "hasDefault": false
+                },
+                {
+                  "name": "stretch",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Canvas"
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        }
+      },
+      "typeAliases": {},
+      "constants": {
+        "Align": {
+          "name": "Align",
+          "description": "Alignment of the element in off direction (horizontal for vertical container and vice versa)",
+          "type": {
+            "kind": "Standard",
+            "module": "ksp::up",
+            "name": "AlignConstants"
+          }
+        }
+      },
+      "functions": {
+        "screen_size": {
+          "isAsync": false,
+          "name": "screen_size",
+          "parameters": [],
+          "returnType": {
+            "kind": "Standard",
+            "module": "ksp::math",
+            "name": "Vec2"
+          }
+        },
+        "open_window": {
+          "isAsync": false,
+          "name": "open_window",
+          "parameters": [
+            {
+              "name": "title",
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              },
+              "hasDefault": false
+            },
+            {
+              "name": "x",
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              },
+              "hasDefault": false
+            },
+            {
+              "name": "y",
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              },
+              "hasDefault": false
+            },
+            {
+              "name": "width",
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              },
+              "hasDefault": false
+            },
+            {
+              "name": "height",
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              },
+              "hasDefault": false
+            }
+          ],
+          "returnType": {
+            "kind": "Standard",
+            "module": "ksp::ui",
+            "name": "Window"
+          }
+        },
+        "open_centered_window": {
+          "isAsync": false,
+          "name": "open_centered_window",
+          "parameters": [
+            {
+              "name": "title",
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              },
+              "hasDefault": false
+            },
+            {
+              "name": "width",
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              },
+              "hasDefault": false
+            },
+            {
+              "name": "height",
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              },
+              "hasDefault": false
+            }
+          ],
+          "returnType": {
+            "kind": "Standard",
+            "module": "ksp::ui",
+            "name": "Window"
+          }
+        },
+        "gradient": {
+          "isAsync": false,
+          "name": "gradient",
+          "parameters": [
+            {
+              "name": "start",
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::console",
+                "name": "RgbaColor"
+              },
+              "hasDefault": false
+            },
+            {
+              "name": "end",
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::console",
+                "name": "RgbaColor"
+              },
+              "hasDefault": false
+            }
+          ],
+          "returnType": {
+            "kind": "Standard",
+            "module": "ksp::ui",
+            "name": "Gradient"
+          }
+        }
+      }
+    },
     "ksp::vessel": {
       "name": "ksp::vessel",
       "description": "Collection of types and functions to get information and control in-game vessels.\n",
@@ -12611,6 +17304,21 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Process"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ProcessArgument"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::math",
               "name": "Vec2"
             },
@@ -12713,6 +17421,116 @@
               "kind": "Standard",
               "module": "ksp::telemetry",
               "name": "TimeSeries"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::up",
+              "name": "Align"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::up",
+              "name": "AlignConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Button"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Canvas"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Container"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Gradient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "StringInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "IntInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "FloatInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Label"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Line2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "PixelLine2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Polygon2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rect2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Slider"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Text2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Toggle"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Translate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Scale2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rotate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "ValueRaster2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Window"
             },
             {
               "kind": "Standard",
@@ -13251,6 +18069,21 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Process"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ProcessArgument"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::math",
               "name": "Vec2"
             },
@@ -13353,6 +18186,116 @@
               "kind": "Standard",
               "module": "ksp::telemetry",
               "name": "TimeSeries"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::up",
+              "name": "Align"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::up",
+              "name": "AlignConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Button"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Canvas"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Container"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Gradient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "StringInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "IntInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "FloatInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Label"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Line2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "PixelLine2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Polygon2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rect2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Slider"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Text2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Toggle"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Translate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Scale2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rotate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "ValueRaster2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Window"
             },
             {
               "kind": "Standard",
@@ -13911,6 +18854,21 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Process"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ProcessArgument"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::math",
               "name": "Vec2"
             },
@@ -14013,6 +18971,116 @@
               "kind": "Standard",
               "module": "ksp::telemetry",
               "name": "TimeSeries"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::up",
+              "name": "Align"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::up",
+              "name": "AlignConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Button"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Canvas"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Container"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Gradient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "StringInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "IntInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "FloatInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Label"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Line2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "PixelLine2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Polygon2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rect2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Slider"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Text2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Toggle"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Translate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Scale2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rotate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "ValueRaster2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Window"
             },
             {
               "kind": "Standard",
@@ -14551,6 +19619,21 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Process"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ProcessArgument"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::math",
               "name": "Vec2"
             },
@@ -14653,6 +19736,116 @@
               "kind": "Standard",
               "module": "ksp::telemetry",
               "name": "TimeSeries"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::up",
+              "name": "Align"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::up",
+              "name": "AlignConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Button"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Canvas"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Container"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Gradient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "StringInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "IntInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "FloatInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Label"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Line2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "PixelLine2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Polygon2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rect2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Slider"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Text2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Toggle"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Translate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Scale2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rotate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "ValueRaster2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Window"
             },
             {
               "kind": "Standard",
@@ -15201,6 +20394,21 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Process"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ProcessArgument"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::math",
               "name": "Vec2"
             },
@@ -15303,6 +20511,116 @@
               "kind": "Standard",
               "module": "ksp::telemetry",
               "name": "TimeSeries"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::up",
+              "name": "Align"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::up",
+              "name": "AlignConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Button"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Canvas"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Container"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Gradient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "StringInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "IntInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "FloatInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Label"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Line2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "PixelLine2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Polygon2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rect2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Slider"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Text2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Toggle"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Translate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Scale2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rotate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "ValueRaster2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Window"
             },
             {
               "kind": "Standard",
@@ -15941,6 +21259,21 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Process"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ProcessArgument"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::math",
               "name": "Vec2"
             },
@@ -16043,6 +21376,116 @@
               "kind": "Standard",
               "module": "ksp::telemetry",
               "name": "TimeSeries"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::up",
+              "name": "Align"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::up",
+              "name": "AlignConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Button"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Canvas"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Container"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Gradient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "StringInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "IntInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "FloatInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Label"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Line2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "PixelLine2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Polygon2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rect2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Slider"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Text2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Toggle"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Translate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Scale2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rotate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "ValueRaster2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Window"
             },
             {
               "kind": "Standard",
@@ -16631,6 +22074,21 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Process"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ProcessArgument"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::math",
               "name": "Vec2"
             },
@@ -16733,6 +22191,116 @@
               "kind": "Standard",
               "module": "ksp::telemetry",
               "name": "TimeSeries"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::up",
+              "name": "Align"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::up",
+              "name": "AlignConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Button"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Canvas"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Container"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Gradient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "StringInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "IntInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "FloatInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Label"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Line2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "PixelLine2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Polygon2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rect2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Slider"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Text2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Toggle"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Translate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Scale2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rotate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "ValueRaster2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Window"
             },
             {
               "kind": "Standard",
@@ -17281,6 +22849,21 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Process"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ProcessArgument"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::math",
               "name": "Vec2"
             },
@@ -17383,6 +22966,116 @@
               "kind": "Standard",
               "module": "ksp::telemetry",
               "name": "TimeSeries"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::up",
+              "name": "Align"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::up",
+              "name": "AlignConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Button"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Canvas"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Container"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Gradient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "StringInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "IntInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "FloatInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Label"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Line2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "PixelLine2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Polygon2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rect2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Slider"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Text2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Toggle"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Translate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Scale2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rotate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "ValueRaster2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Window"
             },
             {
               "kind": "Standard",
@@ -17951,6 +23644,21 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Process"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ProcessArgument"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::math",
               "name": "Vec2"
             },
@@ -18053,6 +23761,116 @@
               "kind": "Standard",
               "module": "ksp::telemetry",
               "name": "TimeSeries"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::up",
+              "name": "Align"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::up",
+              "name": "AlignConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Button"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Canvas"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Container"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Gradient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "StringInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "IntInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "FloatInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Label"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Line2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "PixelLine2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Polygon2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rect2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Slider"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Text2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Toggle"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Translate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Scale2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rotate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "ValueRaster2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Window"
             },
             {
               "kind": "Standard",
@@ -18631,6 +24449,21 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Process"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ProcessArgument"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::math",
               "name": "Vec2"
             },
@@ -18733,6 +24566,116 @@
               "kind": "Standard",
               "module": "ksp::telemetry",
               "name": "TimeSeries"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::up",
+              "name": "Align"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::up",
+              "name": "AlignConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Button"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Canvas"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Container"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Gradient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "StringInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "IntInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "FloatInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Label"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Line2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "PixelLine2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Polygon2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rect2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Slider"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Text2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Toggle"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Translate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Scale2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rotate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "ValueRaster2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Window"
             },
             {
               "kind": "Standard",
@@ -19765,7 +25708,7 @@
               }
             },
             "add": {
-              "isAsync": false,
+              "isAsync": true,
               "name": "add",
               "parameters": [
                 {
@@ -19817,7 +25760,7 @@
               }
             },
             "add_burn_vector": {
-              "isAsync": false,
+              "isAsync": true,
               "name": "add_burn_vector",
               "parameters": [
                 {
@@ -19986,14 +25929,6 @@
         "ModuleCommand": {
           "name": "ModuleCommand",
           "fields": {
-            "part_name": {
-              "name": "part_name",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "string"
-              }
-            },
             "control_state": {
               "name": "control_state",
               "readOnly": true,
@@ -20010,6 +25945,14 @@
                 "kind": "Standard",
                 "module": "ksp::vessel",
                 "name": "Vessel"
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
               }
             },
             "global_position": {

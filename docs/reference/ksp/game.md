@@ -3,6 +3,63 @@
 Collection to game and runtime related functions.
 
 
+## Types
+
+
+### Mainframe
+
+
+
+### Process
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+arguments | [ksp::game::ProcessArgument](/reference/ksp/game.md#processargument)[] | R/O | 
+is_running | bool | R/O | 
+name | string | R/O | 
+
+#### Methods
+
+##### start
+
+```rust
+process.start ( forVessel : Option<ksp::vessel::Vessel>,
+                arguments : string[] ) -> bool
+```
+
+
+
+##### stop
+
+```rust
+process.stop ( ) -> bool
+```
+
+
+
+### ProcessArgument
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+default_value | string | R/O | 
+name | string | R/O | 
+type | string | R/O | 
+
+## Constants
+
+Name | Type | Description
+--- | --- | ---
+MAINFRAME | ksp::game::Mainframe | KontrolSystem mainframe 
+
+
 ## Functions
 
 
