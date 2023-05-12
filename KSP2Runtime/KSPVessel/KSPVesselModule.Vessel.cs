@@ -486,6 +486,9 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSMethod]
             public void ReleaseControl() => context.UnhookAllAutopilots(vessel);
 
+            [KSMethod(Description = "Make this vessel the active vessel.")]
+            public bool MakeActive() => KSPContext.CurrentContext.Game.ViewController.SetActiveVehicle(vessel);
+
             [KSMethod]
             public void OverrideInputPitch(double value) => FlightInputHandler.OverrideInputPitch((float)value);
 

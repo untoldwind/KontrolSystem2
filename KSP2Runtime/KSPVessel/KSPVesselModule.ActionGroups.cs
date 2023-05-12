@@ -3,6 +3,7 @@ using KSP.Sim;
 using KSP.Sim.impl;
 using KSP.Input;
 using KSP.Game;
+using KSP.Sim.State;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel {
     public partial class KSPVesselModule {
@@ -20,8 +21,13 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField]
             public bool Rcs {
-                get => KSPContext.CurrentContext.Game.ViewController.DataProvider.TelemetryDataProvider.RCSEnabled.GetValue();
-                set => KSPContext.CurrentContext.Game.ViewController.DataProvider.TelemetryDataProvider.RCSEnabled.SetValueInternal(value);
+                get => vessel.IsRCSEnabled;
+                set {
+                   vessel.SetActionGroup(KSPActionGroup.RCS, value);
+                   vessel.SetState(new VesselState() {
+                       isRCSEnabled = value
+                   }, null);
+                }
             }
 
             [KSField]
