@@ -1,6 +1,6 @@
 use { Vessel, Targetable, ModuleDockingNode, DockingState } from ksp::vessel
 use { DEBUG } from ksp::debug
-use { CONSOLE, RED, BLUE } from ksp::console
+use { CONSOLE, RED, BLUE, YELLOW } from ksp::console
 use { sleep, wait_until, current_time } from ksp::game
 use { global_look_dir_up, vec3 } from ksp::math 
 use { ship_is_facing } from std::utils
@@ -20,6 +20,7 @@ pub fn dock_vessel(vessel : Vessel, target : Targetable) -> Result<Unit, string>
 
     DEBUG.add_vector(fn() -> target_port.global_position, fn() -> target_port.global_rotation.vector * 10, RED, "", 1)
     DEBUG.add_vector(fn() -> target_port.global_position, fn() ->target_port.global_rotation.up_vector * 10, BLUE, "", 1)
+
 
     vessel.actions.sas = false
     vessel.actions.rcs = false
@@ -69,8 +70,6 @@ pub fn dock_move_correct_side(vessel : Vessel, target_port : ModuleDockingNode) 
     const console_row = CONSOLE.cursor_row
     CONSOLE.move_cursor(console_row + 12, 0)
 
-    const frame = vessel.main_body.celestial_frame
-
     vessel.actions.rcs = true
 
     const dock_x = pid_loop(0.8, 0, 0.4, -1, 1)
@@ -79,7 +78,7 @@ pub fn dock_move_correct_side(vessel : Vessel, target_port : ModuleDockingNode) 
     
     const rcs_manager = vessel.manage_rcs_translate(fn(delta_t) -> {
         const vel_diff = vessel.orbital_velocity - target_port.vessel.orbital_velocity
-        const target_pos = target_port.global_position.to_local(frame) - vessel.global_position.to_local(frame)
+        const target_pos = target_port.position - vessel.position
         const x = target_pos * vessel.facing.right_vector
         const y = -target_pos * vessel.facing.up_vector
         const z = target_pos * vessel.facing.vector
@@ -113,7 +112,7 @@ pub fn dock_move_correct_side(vessel : Vessel, target_port : ModuleDockingNode) 
     })
 
     wait_until(fn() -> {
-        const target_pos = target_port.global_position.to_local(frame) - vessel.global_position.to_local(frame)
+        const target_pos = target_port.position - vessel.position
         const x = target_pos * vessel.facing.right_vector
         const y = -target_pos * vessel.facing.up_vector
         const z = target_pos * vessel.facing.vector
@@ -129,8 +128,6 @@ pub fn dock_approach(vessel : Vessel, target_port : ModuleDockingNode) -> Result
     const console_row = CONSOLE.cursor_row
     CONSOLE.move_cursor(console_row + 1, 0)
 
-    const frame = vessel.main_body.celestial_frame
-
     vessel.actions.rcs = true
 
     const dock_x = pid_loop(0.4, 0.1, 0.4, -1, 1)
@@ -139,7 +136,7 @@ pub fn dock_approach(vessel : Vessel, target_port : ModuleDockingNode) -> Result
     
     const rcs_manager = vessel.manage_rcs_translate(fn(delta_t) -> {
         const vel_diff = vessel.orbital_velocity - target_port.vessel.orbital_velocity
-        const target_pos = target_port.global_position.to_local(frame) - vessel.global_position.to_local(frame)
+        const target_pos = target_port.position - vessel.position
         const x = target_pos * vessel.facing.right_vector
         const y = -target_pos * vessel.facing.up_vector
         const z = target_pos * vessel.facing.vector

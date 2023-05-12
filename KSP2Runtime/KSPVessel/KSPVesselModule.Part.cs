@@ -24,7 +24,12 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField] public string PartName => part.PartName;
 
-            [KSField] public Position GlobalPosition => part.SimulationObject.Position;
+            [KSField(Description = "Get position of the part in celestial frame of the main body.")]
+            public Vector3d Position =>
+                vesselAdapter.vessel.mainBody.coordinateSystem.ToLocalPosition(part.SimulationObject.Position);
+
+            [KSField(Description = "Get coordinate independent position of the part.")] 
+            public Position GlobalPosition => part.SimulationObject.Position;
 
             [KSField] public RotationWrapper GlobalRotation => new RotationWrapper(new Rotation(part.SimulationObject.transform.bodyFrame, ControlFacingRotation));
 
