@@ -28,6 +28,28 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 .OkOr("No active vessel");
         }
 
+        [KSFunction(
+            Description = "Get all vessels in range of the current view.")]
+        public static VesselAdapter[] GetVesselsInRange() {
+            var context = KSPContext.CurrentContext;
+
+            foreach (var vessel in context.Game.ViewController.VesselsInRange) {
+                UnityEngine.Debug.Log($"{vessel.Name} ${vessel.Guid}");
+            }
+            return context.Game.ViewController.VesselsInRange
+                .Select(vessel => new VesselAdapter(context, vessel)).ToArray();
+        }
+
+        [KSFunction(
+            Description = "Get all vessels owned by the current player.")]
+        public static VesselAdapter[] GetAllOwnedVessels() {
+            var context = KSPContext.CurrentContext;
+
+            return context.Game.UniverseModel.GetAllOwnedVessels(context.Game.LocalPlayer.PlayerId)
+                .Where(vessel => vessel.SimulationObject != null && vessel.SimulationObject.IsVessel)
+                .Select(vessel => new VesselAdapter(context, vessel)).ToArray();
+        }
+
         public static (IEnumerable<RealizedType>, IEnumerable<IKontrolConstant>) DirectBindings() {
             var (enumTypes, enumConstants) = BindingGenerator.RegisterEnumTypeMappings("ksp::vessel",
                 new[] {

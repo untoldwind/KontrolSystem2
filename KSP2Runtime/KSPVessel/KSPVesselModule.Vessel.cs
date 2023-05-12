@@ -45,11 +45,20 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 staging = new StagingAdapter(this);
             }
 
+            [KSField(Description = "Unique vessel id")]
+            public string Id => vessel.GlobalId.ToString();
+
             [KSField(Description = "The name of the vessel.")]
             public string Name => vessel.Name;
 
             [KSField(Description = "Check if the vessel is currently active.")]
             public bool IsActive => vessel.SimulationObject.IsActiveVessel;
+
+            [KSField(Description = "Check if the vessel is controllable.")]
+            public bool IsControllable => vessel.IsControllable;
+
+            [KSField(Description = "Check if the vessel is flyging.")]
+            public bool IsFlying => vessel.IsFlying;
 
             [KSField(Description = "Current control status of the vessel.")]
             public VesselControlState ControlStatus => vessel.ControlStatus;
