@@ -25955,8 +25955,19 @@
                 "name": "string"
               }
             },
+            "position": {
+              "name": "position",
+              "description": "Get position of the part in celestial frame of the main body.\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec3"
+              }
+            },
             "global_position": {
               "name": "global_position",
+              "description": "Get coordinate independent position of the part.\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -26454,8 +26465,19 @@
                 "name": "string"
               }
             },
+            "position": {
+              "name": "position",
+              "description": "Get position of the part in celestial frame of the main body.\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec3"
+              }
+            },
             "global_position": {
               "name": "global_position",
+              "description": "Get coordinate independent position of the part.\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -27113,8 +27135,19 @@
                 "name": "string"
               }
             },
+            "position": {
+              "name": "position",
+              "description": "Get position of the part in celestial frame of the main body.\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec3"
+              }
+            },
             "global_position": {
               "name": "global_position",
+              "description": "Get coordinate independent position of the part.\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -27548,6 +27581,15 @@
           "name": "Vessel",
           "description": "Represents an in-game vessel, which might be a rocket, plane, rover ... or actually just a Kerbal in a spacesuite.\n",
           "fields": {
+            "id": {
+              "name": "id",
+              "description": "Unique vessel id\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            },
             "name": {
               "name": "name",
               "description": "The name of the vessel.\n",
@@ -27560,6 +27602,24 @@
             "is_active": {
               "name": "is_active",
               "description": "Check if the vessel is currently active.\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "is_controllable": {
+              "name": "is_controllable",
+              "description": "Check if the vessel is controllable.\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "is_flying": {
+              "name": "is_flying",
+              "description": "Check if the vessel is flyging.\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -27684,6 +27744,16 @@
                 "kind": "Standard",
                 "module": "ksp::math",
                 "name": "TransformFrame"
+              }
+            },
+            "position": {
+              "name": "position",
+              "description": "Coordinate position of the vessel in the celestial frame of the main body.\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec3"
               }
             },
             "global_position": {
@@ -28486,6 +28556,16 @@
                 "name": "Unit"
               }
             },
+            "make_active": {
+              "isAsync": false,
+              "name": "make_active",
+              "description": "Make this vessel the active vessel.\n",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
             "override_input_pitch": {
               "isAsync": false,
               "name": "override_input_pitch",
@@ -28757,6 +28837,38 @@
               {
                 "kind": "Builtin",
                 "name": "string"
+              }
+            ]
+          }
+        },
+        "get_vessels_in_range": {
+          "isAsync": false,
+          "name": "get_vessels_in_range",
+          "description": "Get all vessels in range of the current view.\n",
+          "parameters": [],
+          "returnType": {
+            "kind": "Array",
+            "parameters": [
+              {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "Vessel"
+              }
+            ]
+          }
+        },
+        "get_all_owned_vessels": {
+          "isAsync": false,
+          "name": "get_all_owned_vessels",
+          "description": "Get all vessels owned by the current player.\n",
+          "parameters": [],
+          "returnType": {
+            "kind": "Array",
+            "parameters": [
+              {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "Vessel"
               }
             ]
           }

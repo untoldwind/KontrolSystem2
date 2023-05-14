@@ -1,5 +1,15 @@
 # Changes
 
+## 0.4.1 -> 0.4.1.1
+
+* Add `get_vessels_in_range()` and `get_all_owned_vessels()` functions to `ksp::vessel`
+* Add `Vessel.make_active()`
+
+## ß.3.6 -> 0.4.1
+
+* UI overhaul
+* Add `ksp::ui` to create UI via scripts
+
 ## 0.3.5 -> 0.3.6
 
 * Binding for FlightPlan mod
