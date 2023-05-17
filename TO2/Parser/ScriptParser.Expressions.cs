@@ -228,11 +228,11 @@ namespace KontrolSystem.TO2.Parser {
             (left, op, right, start, end) => new BinaryBool(left, op, right, start, end));
 
         private static readonly Parser<Expression> IfBody = Alt(Expression, ReturnExpression, BreakExpression,
-            ContinueExpression);
+            ContinueExpression).Between(LineComments.Then(WhiteSpaces0), LineComments);
 
         private static readonly Parser<Expression> IfExpr = Seq(
             Tag("if").Then(WhiteSpaces0).Then(Char('(')).Then(WhiteSpaces0).Then(BooleanExpr),
-            WhiteSpaces0.Then(Char(')')).Then(WhiteSpaces0).Then(Alt(IfBody)),
+            WhiteSpaces0.Then(Char(')')).Then(WhiteSpaces0).Then(IfBody),
             Opt(WhiteSpaces1.Then(Tag("else")).Then(WhiteSpaces1).Then(IfBody))
         ).Map((items, start, end) => {
             if (items.Item3.IsDefined)

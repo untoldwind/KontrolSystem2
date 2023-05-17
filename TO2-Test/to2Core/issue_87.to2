@@ -1,0 +1,13 @@
+use * from core::testing
+
+test sync fn test_issue_87() -> Unit = {
+    let b: int = 1234
+    let a1 = if(b == 1234) "Was eq" else "Was not eq" 
+    let a2 = if(b != 1234)   // Comment1 
+        "Was eq"             // Comment2
+    else                     // Comment3
+        "Was not eq"         // Comment4
+
+    assert_string("Was eq", a1)
+    assert_string("Was not eq", a2)
+}
