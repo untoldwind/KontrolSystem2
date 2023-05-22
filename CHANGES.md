@@ -1,5 +1,10 @@
 # Changes
 
+## 0.4.1.1 ->
+
+* Fix parsing issue with line commends in if-else cases
+* Add `MAINFRAME.available_processes` and `MAINFRAME.find_process` to launch scripts programatically
+
 ## 0.4.1 -> 0.4.1.1
 
 * Add `get_vessels_in_range()` and `get_all_owned_vessels()` functions to `ksp::vessel`

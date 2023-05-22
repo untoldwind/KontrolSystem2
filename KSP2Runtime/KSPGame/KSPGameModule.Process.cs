@@ -54,12 +54,30 @@ namespace KontrolSystem.KSP.Runtime.KSPGame {
                         }
                     }
                 }
-                return Mainframe.Instance.StartProcess(process, forVessel.value?.vessel, argumentObjs);
+
+                var context = KSPContext.CurrentContext;
+                bool result;
+                try {
+                    result = Mainframe.Instance.StartProcess(process, forVessel.value?.vessel, argumentObjs);
+                } finally {
+                    ContextHolder.CurrentContext.Value = context;
+                }
+
+                return result;
             }
 
             [KSMethod]
             public bool Stop() {
-                return Mainframe.Instance.StopProcess(process);
+                var context = KSPContext.CurrentContext;
+                bool result;
+
+                try {
+                    result = Mainframe.Instance.StopProcess(process);
+                } finally {
+                    ContextHolder.CurrentContext.Value = context; 
+                }
+
+                return result;
             }
         }
     }
