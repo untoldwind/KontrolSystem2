@@ -6624,8 +6624,48 @@
       "types": {
         "Mainframe": {
           "name": "Mainframe",
-          "fields": {},
-          "methods": {},
+          "fields": {
+            "available_processes": {
+              "name": "available_processes",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::game",
+                    "name": "Process"
+                  }
+                ]
+              }
+            }
+          },
+          "methods": {
+            "find_process": {
+              "isAsync": false,
+              "name": "find_process",
+              "parameters": [
+                {
+                  "name": "name",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "string"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::game",
+                    "name": "Process"
+                  }
+                ]
+              }
+            }
+          },
           "assignableFromAny": false,
           "assignableFrom": []
         },

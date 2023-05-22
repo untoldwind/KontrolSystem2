@@ -10,6 +10,22 @@ Collection to game and runtime related functions.
 
 
 
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+available_processes | [ksp::game::Process](/reference/ksp/game.md#process)[] | R/O | 
+
+#### Methods
+
+##### find_process
+
+```rust
+mainframe.find_process ( name : string ) -> Option<ksp::game::Process>
+```
+
+
+
 ### Process
 
 

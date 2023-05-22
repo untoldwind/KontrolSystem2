@@ -13,13 +13,13 @@ using KontrolSystem.KSP.Runtime.KSPAddons;
 
 namespace KontrolSystem.SpaceWarpMod {
 
-    [BepInPlugin("com.github.untoldwind.KontrolSystem2", "KontrolSystem2", "0.4.1.1")]
+    [BepInPlugin("com.github.untoldwind.KontrolSystem2", "KontrolSystem2", "0.4.1.2")]
     [BepInDependency(SpaceWarpPlugin.ModGuid, SpaceWarpPlugin.ModVer)]
     [BepInDependency(KSPAddonsModule.FlightPlanAdapter.ModGuid, BepInDependency.DependencyFlags.SoftDependency)]
     public class KontrolSystemMod : BaseSpaceWarpPlugin {
         public const string ModGuid = "com.github.untoldwind.KontrolSystem2";
         public const string ModName = "KontrolSystem2";
-        public const string ModVersion = "0.4.1.1";
+        public const string ModVersion = "0.4.1.2";
 
         private ModuleManagerWindow moduleManagerWindow;
         private UIWindows uiWindows;
