@@ -29,7 +29,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
         public double PeriapsisRadius => orbit.Periapsis;
 
-        public double SemiMajorAxis => orbit.SemiMinorAxis;
+        public double SemiMajorAxis => orbit.semiMajorAxis;
 
         public double Inclination => orbit.inclination;
 
