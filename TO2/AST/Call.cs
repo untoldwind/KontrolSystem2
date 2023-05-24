@@ -111,7 +111,7 @@ namespace KontrolSystem.TO2.AST {
                 return;
             }
 
-            TO2Type variable = ReferencedVariable(context);
+            TO2Type variable = ReferencedVariable(context)?.UnderlyingType(context.ModuleContext);
 
             if (variable != null) {
                 if (!(variable is FunctionType)) {
