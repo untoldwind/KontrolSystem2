@@ -39,7 +39,25 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField] public long DecoupleStage => part.DecoupleStage;
 
-            [KSField]
+            [KSField(Description = "Indicate if the part has splashed")]
+            public bool Splashed => part.Splashed;
+
+            [KSField(Description = "Dry mass of the part")] public double DryMass => part.DryMass;
+
+            [KSField(Description = "Resource mass of the part")] public double ResourceMass => part.ResourceMass;
+
+            [KSField(Description = "Green mass (Kerbals) of the part")]
+            public double GreenMass => part.GreenMass;
+
+            [KSField(Description = "Total mass of the part")]
+            public double TotalMass => part.TotalMass;
+
+            [KSField(Description = "Temperature of the part")]
+            public double Temperature => part.Temperature;
+
+            [KSField(Description = "Maximum temperature of the part")]
+            public double MaxTemperature => part.MaxTemp;
+            
             public KSPResourceModule.ResourceContainerAdapter Resources => new KSPResourceModule.ResourceContainerAdapter(part);
 
             [KSField]
