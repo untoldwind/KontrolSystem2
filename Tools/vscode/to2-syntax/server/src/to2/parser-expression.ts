@@ -63,6 +63,7 @@ import {
   identifierPath,
   letKeyword,
   lineComment,
+  lineComments,
   typeRef,
   typeSpec,
 } from "./parser-common";
@@ -537,11 +538,10 @@ const booleanExpr = chain(
   (left, op, right, start, end) => new BinaryBool(left, op, right, start, end)
 );
 
-const ifBody = alt(
-  expression,
-  returnExpression,
-  breakExpression,
-  continueExpression
+const ifBody = between(
+  terminated(lineComments, whitespace0),
+  alt(expression, returnExpression, breakExpression, continueExpression),
+  lineComments
 );
 
 const ifExpr = map(

@@ -1,3 +1,4 @@
+import { InlayHint } from "vscode-languageserver";
 import {
   ModuleItem,
   Node,

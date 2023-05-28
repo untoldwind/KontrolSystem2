@@ -2,7 +2,7 @@
   "name": "to2-syntax",
   "displayName": "to2-syntax",
   "description": "",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "license": "MIT",
   "engines": {
     "vscode": "^1.76.0"
@@ -64,6 +64,7 @@
     ]
   },
   "scripts": {
+    "clean": "cd client && npm run clean && cd ../server && npm run clean",
     "bundle": "cd client && npm run bundle && cd ../server && npm run bundle",
     "compile": "tsc -b",
     "watch": "tsc -b -w",

@@ -26048,13 +26048,67 @@
                 "name": "int"
               }
             },
-            "resources": {
-              "name": "resources",
+            "splashed": {
+              "name": "splashed",
+              "description": "Indicate if the part has splashed\n",
               "readOnly": true,
               "type": {
-                "kind": "Standard",
-                "module": "ksp::resource",
-                "name": "ResourceContainer"
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "dry_mass": {
+              "name": "dry_mass",
+              "description": "Dry mass of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "resource_mass": {
+              "name": "resource_mass",
+              "description": "Resource mass of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "green_mass": {
+              "name": "green_mass",
+              "description": "Green mass (Kerbals) of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "total_mass": {
+              "name": "total_mass",
+              "description": "Total mass of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "temperature": {
+              "name": "temperature",
+              "description": "Temperature of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "max_temperature": {
+              "name": "max_temperature",
+              "description": "Maximum temperature of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
               }
             },
             "air_intake": {
@@ -26558,13 +26612,67 @@
                 "name": "int"
               }
             },
-            "resources": {
-              "name": "resources",
+            "splashed": {
+              "name": "splashed",
+              "description": "Indicate if the part has splashed\n",
               "readOnly": true,
               "type": {
-                "kind": "Standard",
-                "module": "ksp::resource",
-                "name": "ResourceContainer"
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "dry_mass": {
+              "name": "dry_mass",
+              "description": "Dry mass of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "resource_mass": {
+              "name": "resource_mass",
+              "description": "Resource mass of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "green_mass": {
+              "name": "green_mass",
+              "description": "Green mass (Kerbals) of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "total_mass": {
+              "name": "total_mass",
+              "description": "Total mass of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "temperature": {
+              "name": "temperature",
+              "description": "Temperature of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "max_temperature": {
+              "name": "max_temperature",
+              "description": "Maximum temperature of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
               }
             },
             "air_intake": {
@@ -27228,13 +27336,67 @@
                 "name": "int"
               }
             },
-            "resources": {
-              "name": "resources",
+            "splashed": {
+              "name": "splashed",
+              "description": "Indicate if the part has splashed\n",
               "readOnly": true,
               "type": {
-                "kind": "Standard",
-                "module": "ksp::resource",
-                "name": "ResourceContainer"
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "dry_mass": {
+              "name": "dry_mass",
+              "description": "Dry mass of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "resource_mass": {
+              "name": "resource_mass",
+              "description": "Resource mass of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "green_mass": {
+              "name": "green_mass",
+              "description": "Green mass (Kerbals) of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "total_mass": {
+              "name": "total_mass",
+              "description": "Total mass of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "temperature": {
+              "name": "temperature",
+              "description": "Temperature of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "max_temperature": {
+              "name": "max_temperature",
+              "description": "Maximum temperature of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
               }
             },
             "air_intake": {

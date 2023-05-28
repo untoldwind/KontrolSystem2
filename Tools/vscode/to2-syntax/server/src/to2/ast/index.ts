@@ -2,15 +2,15 @@ import { RealizedType, TO2Type } from "./to2-type";
 import { InputPosition, InputRange, WithPosition } from "../../parser";
 import { BlockContext, ModuleContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
-import { CompletionItem } from "vscode-languageserver";
+import { CompletionItem, InlayHint } from "vscode-languageserver";
 import { Position } from "vscode-languageserver-textdocument";
-import { Registry } from "./registry";
 
 export interface Node {
   readonly isComment?: boolean;
   readonly isError?: boolean;
   readonly documentation?: WithPosition<string>[];
   readonly range: InputRange;
+  readonly inlayHints?: InlayHint[];
 
   reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,

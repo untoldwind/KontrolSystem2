@@ -22,11 +22,12 @@
     "prettier": "2.8.8",
     "ts-jest": "29.1.0",
     "unicode-properties": "1.4.1",
-    "esbuild": "0.17.18",
-    "rimraf": "5.0.0"
+    "esbuild": "0.17.19",
+    "rimraf": "5.0.1"
   },
   "scripts": {
-    "bundle": "tsc --noEmit && rimraf out && esbuild src/server.ts --bundle --sourcemap --outdir=out --platform=node",
+    "clean": "rimraf out",
+    "bundle": "tsc --noEmit && rimraf out && esbuild src/lsp-server.ts --bundle --sourcemap --outdir=out --platform=node",
     "test": "jest",
     "format": "prettier --write ."
   }

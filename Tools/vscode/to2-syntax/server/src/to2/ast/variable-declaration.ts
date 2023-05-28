@@ -5,6 +5,7 @@ import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
 import { isTupleType } from "./tuple-type";
 import { isRecordType } from "./record-type";
+import { InlayHint } from "vscode-languageserver";
 
 export class DeclarationParameter {
   constructor(
@@ -19,8 +20,11 @@ export class DeclarationParameter {
     }
     if (isRecordType(from)) {
       if (this.source)
-        return from.itemTypes.find((item) => item[0] === this.source)?.[1].value;
-      return idx < from.itemTypes.length ? from.itemTypes[idx][1].value : undefined;
+        return from.itemTypes.find((item) => item[0] === this.source)?.[1]
+          .value;
+      return idx < from.itemTypes.length
+        ? from.itemTypes[idx][1].value
+        : undefined;
     }
     return undefined;
   }
@@ -41,6 +45,7 @@ export function isDeclarationParameter(
 export class VariableDeclaration implements Node, BlockItem {
   public documentation?: WithPosition<string>[];
   public readonly range: InputRange;
+  public inlayHints: InlayHint[] | undefined;
 
   constructor(
     private readonly constLetKeyword: WithPosition<"let" | "const">,
@@ -74,6 +79,16 @@ export class VariableDeclaration implements Node, BlockItem {
       });
     } else {
       const variableType = this.resultType(context);
+
+      if (!this.declaration.type && variableType !== UNKNOWN_TYPE) {
+        this.inlayHints = [
+          {
+            position: this.declaration.target.range.end,
+            label: ` : ${variableType.localName}`,
+          },
+        ];
+      }
+
       context.localVariables.set(this.declaration.target.value, variableType);
       this.documentation = [
         this.declaration.target.range.with(

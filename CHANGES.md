@@ -6,6 +6,7 @@
   * `splashed`, `temperature`, `max_temperature`, `dry_mass`, `resource_mass`, `total_mass`
 * Fix function type aliases (#91)
 * Fix usage of constants in default parameters (#92)
+* Support inlay hints in LSP server
 
 ## 0.4.1.1 -> 0.4.1.2
 
