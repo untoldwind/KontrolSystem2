@@ -40,6 +40,8 @@ namespace KontrolSystem.TO2 {
             Context context = new Context(this);
             DeclaredKontrolModule declaredKontrolModule = ModuleGenerator.DeclareModule(context, to2Module, Path.Combine(baseDir, file));
             ModuleGenerator.ImportTypes(declaredKontrolModule);
+            ModuleGenerator.DeclareConstants(declaredKontrolModule);
+            ModuleGenerator.ImportConstants(declaredKontrolModule);
             ModuleGenerator.DeclareFunctions(declaredKontrolModule);
             ModuleGenerator.ImportFunctions(declaredKontrolModule);
             ModuleGenerator.VerifyFunctions(declaredKontrolModule);
@@ -68,6 +70,14 @@ namespace KontrolSystem.TO2 {
             foreach (DeclaredKontrolModule declared in declaredModules) {
                 // ... so that types can be imported by other modules
                 ModuleGenerator.ImportTypes(declared);
+            }
+
+            foreach (DeclaredKontrolModule declared in declaredModules) {
+                ModuleGenerator.DeclareConstants(declared);
+            }
+
+            foreach (DeclaredKontrolModule declared in declaredModules) {
+                ModuleGenerator.ImportConstants(declared);
             }
 
             foreach (DeclaredKontrolModule declared in declaredModules) {

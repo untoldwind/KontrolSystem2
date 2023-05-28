@@ -1,5 +1,12 @@
 # Changes
 
+## 0.4.1.2 ->
+
+* Add additional part information
+  * `splashed`, `temperature`, `max_temperature`, `dry_mass`, `resource_mass`, `total_mass`
+* Fix function type aliases (#91)
+* Fix usage of constants in default parameters (#92)
+
 ## 0.4.1.1 -> 0.4.1.2
 
 * Fix parsing issue with line commends in if-else cases

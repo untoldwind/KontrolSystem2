@@ -26,9 +26,9 @@ namespace KontrolSystem.TO2.Generator {
             if (errors.Any()) throw new CompilationErrorException(errors);
         }
 
-        public static void DeclareFunctions(DeclaredKontrolModule declaredModule) {
+        public static void DeclareConstants(DeclaredKontrolModule declaredModule) {
             ModuleContext moduleContext = declaredModule.moduleContext;
-
+            
             foreach (ConstDeclaration constant in declaredModule.to2Module.constants) {
                 FieldInfo runtimeField = moduleContext.typeBuilder.DefineField($"const_{constant.name}",
                     constant.type.GeneratedType(moduleContext),
@@ -51,7 +51,19 @@ namespace KontrolSystem.TO2.Generator {
                 moduleContext.mappedConstants.Add(declaredConstant.Name, declaredConstant);
                 declaredModule.declaredConstants.Add(declaredConstant.Name, declaredConstant);
             }
+        }
 
+        public static void ImportConstants(DeclaredKontrolModule declaredModule) {
+            ModuleContext moduleContext = declaredModule.moduleContext;
+
+            List<StructuralError> errors = declaredModule.to2Module.TryImportConstants(moduleContext);
+
+            if (errors.Any()) throw new CompilationErrorException(errors);
+        }
+
+        public static void DeclareFunctions(DeclaredKontrolModule declaredModule) {
+            ModuleContext moduleContext = declaredModule.moduleContext;
+            
             foreach (FunctionDeclaration function in declaredModule.to2Module.functions) {
                 IBlockContext methodContext = moduleContext.CreateMethodContext(function.modifier, function.isAsync,
                     function.name, function.declaredReturn, function.parameters);
@@ -91,11 +103,7 @@ namespace KontrolSystem.TO2.Generator {
         public static void ImportFunctions(DeclaredKontrolModule declaredModule) {
             ModuleContext moduleContext = declaredModule.moduleContext;
 
-            List<StructuralError> errors = declaredModule.to2Module.TryImportConstants(moduleContext);
-
-            if (errors.Any()) throw new CompilationErrorException(errors);
-
-            errors = declaredModule.to2Module.TryImportFunctions(moduleContext);
+            List<StructuralError> errors = declaredModule.to2Module.TryImportFunctions(moduleContext);
 
             if (errors.Any()) throw new CompilationErrorException(errors);
         }
