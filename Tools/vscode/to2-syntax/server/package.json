@@ -12,6 +12,7 @@
     "url": "https://github.com/untoldwind/KontrolSystem2"
   },
   "dependencies": {
+    "vscode-uri": "3.0.7",
     "vscode-languageserver": "^8.1.0",
     "vscode-languageserver-textdocument": "^1.0.8"
   },

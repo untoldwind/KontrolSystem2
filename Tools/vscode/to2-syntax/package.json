@@ -2,7 +2,7 @@
   "name": "to2-syntax",
   "displayName": "to2-syntax",
   "description": "",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "license": "MIT",
   "engines": {
     "vscode": "^1.76.0"
@@ -23,6 +23,12 @@
       "type": "object",
       "title": "TO2 configuration",
       "properties": {
+        "to2LspServer.libraryPath": {
+          "scope": "window",
+          "type": "string",
+          "default": "",
+          "description": "TO2 library folder"
+        },
         "to2LspServer.maxNumberOfProblems": {
           "scope": "resource",
           "type": "number",
