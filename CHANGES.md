@@ -1,6 +1,6 @@
 # Changes
 
-## 0.4.1.2 ->
+## 0.4.1.2 -> 0.4.1.3
 
 * Add additional part information
   * `splashed`, `temperature`, `max_temperature`, `dry_mass`, `resource_mass`, `total_mass`
