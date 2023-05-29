@@ -1,5 +1,5 @@
 import { Node, ValidationError } from ".";
-import { LineComment } from "./line-comment";
+import { LineComment, isLineComment } from "./line-comment";
 import { MethodDeclaration } from "./method-declaration";
 import { InputPosition, InputRange, WithPosition } from "../../parser";
 import { ImplModuleContext, ModuleContext } from "./context";
@@ -40,6 +40,9 @@ export class ImplDeclaration implements Node {
     );
     for (const method of this.methods) {
       errors.push(...method.validateModuleFirstPass(implContext));
+      if (!isLineComment(method)) {
+        structType?.methods?.set(method.name.value, method.functionType());
+      }
     }
 
     return errors;

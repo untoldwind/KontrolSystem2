@@ -15,8 +15,13 @@ export class IfThen extends Expression {
   ) {
     super(start, end);
   }
+
   public resultType(context: BlockContext): TO2Type {
-    return new OptionType(this.thenExpression.resultType(context));
+    const thenContext = new BlockContext(context.module, context);
+
+    this.condition.validateBlock(thenContext);
+
+    return new OptionType(this.thenExpression.resultType(thenContext));
   }
 
   public reduceNode<T>(
@@ -28,11 +33,14 @@ export class IfThen extends Expression {
       this.condition.reduceNode(combine, combine(initialValue, this))
     );
   }
+
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
-    errors.push(...this.condition.validateBlock(context));
-    errors.push(...this.thenExpression.validateBlock(context));
+    const thenContext = new BlockContext(context.module, context);
+
+    errors.push(...this.condition.validateBlock(thenContext));
+    errors.push(...this.thenExpression.validateBlock(thenContext));
 
     return errors;
   }
@@ -56,7 +64,11 @@ export class IfThenElse extends Expression {
     super(start, end);
   }
   public resultType(context: BlockContext): TO2Type {
-    const thenType = this.thenExpression.resultType(context);
+    const thenContext = new BlockContext(context.module, context);
+
+    this.condition.validateBlock(thenContext);
+
+    const thenType = this.thenExpression.resultType(thenContext);
     return thenType === UNKNOWN_TYPE
       ? this.elseExpression.resultType(context)
       : thenType;
@@ -74,6 +86,7 @@ export class IfThenElse extends Expression {
       )
     );
   }
+
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 

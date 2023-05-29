@@ -1,5 +1,5 @@
 import { Expression, ModuleItem, Node, ValidationError } from ".";
-import { TO2Type } from "./to2-type";
+import { TO2Type, UNKNOWN_TYPE } from "./to2-type";
 import { InputPosition, InputRange, WithPosition } from "../../parser";
 import { SemanticToken } from "../../syntax-token";
 import { FunctionContext, ModuleContext, isImplModuleContext } from "./context";
@@ -19,6 +19,18 @@ export class MethodDeclaration implements Node, ModuleItem {
     end: InputPosition
   ) {
     this.range = new InputRange(start, end);
+  }
+
+  functionType(): FunctionType {
+    return new FunctionType(
+      this.isAsync,
+      this.parameters.map((p) => [
+        p.name.value,
+        p.type?.value ?? UNKNOWN_TYPE,
+        p.defaultValue !== undefined,
+      ]),
+      this.declaredReturn
+    );
   }
 
   reduceNode<T>(

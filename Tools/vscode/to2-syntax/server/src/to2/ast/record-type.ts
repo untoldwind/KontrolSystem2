@@ -10,12 +10,15 @@ export class RecordType implements RealizedType {
   public description: string;
   public methods: Map<string, FunctionType>;
 
-  constructor(public readonly itemTypes: [string, WithPosition<TO2Type>][]) {
+  constructor(
+    public readonly itemTypes: [string, WithPosition<TO2Type>][],
+    methods?: Map<string, FunctionType>
+  ) {
     this.name = this.localName = `(${itemTypes
       .map((item) => `${item[0]} : ${item[1].value.localName}`)
       .join(", ")})`;
     this.description = "";
-    this.methods = new Map();
+    this.methods = methods ?? new Map();
   }
 
   public isAssignableFrom(otherType: RealizedType): boolean {
@@ -27,7 +30,8 @@ export class RecordType implements RealizedType {
       this.itemTypes.map(([name, type]) => [
         name,
         { range: type.range, value: type.value.realizedType(context) },
-      ])
+      ]),
+      this.methods
     );
   }
 
@@ -44,7 +48,8 @@ export class RecordType implements RealizedType {
             .realizedType(context)
             .fillGenerics(context, genericMap),
         },
-      ])
+      ]),
+      this.methods
     );
   }
 
