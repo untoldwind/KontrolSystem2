@@ -20,6 +20,7 @@ export interface TO2Type {
 export interface RealizedType extends TO2Type {
   kind:
     | "Unknown"
+    | "Generic"
     | "Standard"
     | "Function"
     | "Array"
@@ -47,6 +48,91 @@ export interface RealizedType extends TO2Type {
   allMethodNames(): string[];
 
   forInSource(): TO2Type | undefined;
+
+  fillGenerics(
+    context: ModuleContext,
+    genericMap: Record<string, RealizedType>
+  ): RealizedType;
+
+  guessGeneric(
+    context: ModuleContext,
+    genericMap: Record<string, RealizedType>,
+    realizedType: RealizedType
+  ): void;
+}
+
+export class GenericParameter implements RealizedType {
+  public readonly kind = "Generic";
+  public readonly description = "";
+  public readonly localName: string;
+
+  constructor(public readonly name: string) {
+    this.localName = name;
+  }
+
+  isAssignableFrom(otherType: RealizedType): boolean {
+    return false;
+  }
+
+  findSuffixOperator(op: Operator): TO2Type | undefined {
+    return undefined;
+  }
+
+  public findPrefixOperator(): RealizedType | undefined {
+    return undefined;
+  }
+
+  findField(name: string): TO2Type | undefined {
+    return undefined;
+  }
+
+  allFieldNames(): string[] {
+    return [];
+  }
+
+  findMethod(name: string): FunctionType | undefined {
+    return undefined;
+  }
+
+  allMethodNames(): string[] {
+    return [];
+  }
+
+  forInSource(): TO2Type | undefined {
+    return undefined;
+  }
+
+  realizedType(context: ModuleContext): RealizedType {
+    return this;
+  }
+
+  fillGenerics(
+    context: ModuleContext,
+    genericMap: Record<string, RealizedType>
+  ): RealizedType {
+    return genericMap.hasOwnProperty(this.name) ? genericMap[this.name] : this;
+  }
+
+  guessGeneric(
+    context: ModuleContext,
+    genericMap: Record<string, RealizedType>,
+    realizedType: RealizedType
+  ) {
+    if (realizedType === UNKNOWN_TYPE) return;
+    if (isGenericParameter(realizedType)) {
+      if (genericMap.hasOwnProperty(realizedType.name)) {
+        genericMap[this.name] = genericMap[realizedType.name];
+      }
+    } else {
+      genericMap[this.name] = realizedType;
+    }
+  }
+}
+
+export function isGenericParameter(
+  node: RealizedType | undefined
+): node is GenericParameter {
+  return node !== undefined && node.kind === "Generic";
 }
 
 const referencedTypes: Record<string, ReferencedType> = [
@@ -116,6 +202,12 @@ export const UNKNOWN_TYPE: RealizedType = {
   forInSource() {
     return undefined;
   },
+
+  fillGenerics() {
+    return this;
+  },
+
+  guessGeneric() {},
 };
 
 export const BUILTIN_UNIT = new ReferencedType(REFERENCE.builtin["Unit"]);
@@ -151,7 +243,7 @@ export function findLibraryType(
         return new ResultType(typeArguments[0], typeArguments[1]);
   }
 
-  return referencedTypes[fullName]?.fillGenerics(typeArguments);
+  return referencedTypes[fullName]?.fillGenericArguments(typeArguments);
 }
 
 export function resolveTypeRef(
@@ -162,7 +254,7 @@ export function resolveTypeRef(
     case "Builtin":
       return findLibraryType([typeRef.name], []);
     case "Generic":
-      return genericMap?.[typeRef.name] ?? UNKNOWN_TYPE;
+      return genericMap?.[typeRef.name] ?? new GenericParameter(typeRef.name);
     case "Standard":
       return findLibraryType([typeRef.module, typeRef.name], []);
     case "Array":

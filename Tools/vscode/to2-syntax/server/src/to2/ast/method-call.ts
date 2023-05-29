@@ -1,9 +1,9 @@
 import { Expression, Node, ValidationError } from ".";
-import { BUILTIN_UNIT, TO2Type, UNKNOWN_TYPE } from "./to2-type";
 import { InputPosition, WithPosition } from "../../parser";
-import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
+import { BlockContext } from "./context";
 import { FunctionType, isFunctionType } from "./function-type";
+import { RealizedType, TO2Type, UNKNOWN_TYPE } from "./to2-type";
 
 export class MethodCall extends Expression {
   constructor(
@@ -16,8 +16,14 @@ export class MethodCall extends Expression {
     super(start, end);
   }
 
-  public resultType(context: BlockContext): TO2Type {
-    return this.findMethod(context)?.returnType ?? UNKNOWN_TYPE;
+  public resultType(context: BlockContext, typeHint?: RealizedType): TO2Type {
+    return (
+      this.findMethod(context)?.guessReturnType(
+        context.module,
+        this.args.map((arg) => arg.resultType(context)),
+        typeHint
+      ) ?? UNKNOWN_TYPE
+    );
   }
 
   public reduceNode<T>(

@@ -73,9 +73,8 @@ namespace KontrolSystem.TO2.AST {
 
         public override Dictionary<string, IFieldAccessFactory> DeclaredFields => allowedFields;
 
-        public override string[] GenericParameters => typeParameters
-            .SelectMany(t => (t as GenericParameter)?.Name.Yield() ?? Enumerable.Empty<string>()).ToArray();
-
+        public override TO2Type[] GenericParameters => typeParameters.ToArray<TO2Type>();
+        
         public override RealizedType
             FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) {
             if (runtimeType.IsGenericType) {

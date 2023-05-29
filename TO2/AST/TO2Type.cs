@@ -112,7 +112,7 @@ namespace KontrolSystem.TO2.AST {
         public override IFieldAccessFactory FindField(ModuleContext context, string fieldName) =>
             DeclaredFields.Get(fieldName);
 
-        public virtual string[] GenericParameters => new string[0];
+        public virtual TO2Type[] GenericParameters => Array.Empty<TO2Type>();
 
         public virtual RealizedType
             FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) => this;

@@ -13,7 +13,8 @@ export class ResultType implements RealizedType {
     public readonly successType: TO2Type,
     public readonly errorType: TO2Type
   ) {
-    this.name = this.localName = `Result<${successType}, ${errorType}>`;
+    this.name =
+      this.localName = `Result<${successType.localName}, ${errorType.localName}>`;
     this.description = "";
   }
 
@@ -22,7 +23,43 @@ export class ResultType implements RealizedType {
   }
 
   public realizedType(context: ModuleContext): RealizedType {
-    return this;
+    return new ResultType(
+      this.successType.realizedType(context),
+      this.errorType.realizedType(context)
+    );
+  }
+
+  public fillGenerics(
+    context: ModuleContext,
+    genericMap: Record<string, RealizedType>
+  ): RealizedType {
+    return new ResultType(
+      this.successType.realizedType(context).fillGenerics(context, genericMap),
+      this.errorType.realizedType(context).fillGenerics(context, genericMap)
+    );
+  }
+
+  public guessGeneric(
+    context: ModuleContext,
+    genericMap: Record<string, RealizedType>,
+    realizedType: RealizedType
+  ): void {
+    if (isResultType(realizedType)) {
+      this.successType
+        .realizedType(context)
+        .guessGeneric(
+          context,
+          genericMap,
+          realizedType.successType.realizedType(context)
+        );
+      this.errorType
+        .realizedType(context)
+        .guessGeneric(
+          context,
+          genericMap,
+          realizedType.errorType.realizedType(context)
+        );
+    }
   }
 
   findSuffixOperator(op: Operator): TO2Type | undefined {
@@ -48,7 +85,7 @@ export class ResultType implements RealizedType {
   public allMethodNames(): string[] {
     return [];
   }
-  
+
   public forInSource(): TO2Type | undefined {
     return undefined;
   }

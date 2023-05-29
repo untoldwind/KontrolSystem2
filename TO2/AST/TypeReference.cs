@@ -96,7 +96,7 @@ namespace KontrolSystem.TO2.AST {
                 });
             }
 
-            string[] typeParameterNames = realizedType.GenericParameters;
+            TO2Type[] typeParameterNames = realizedType.GenericParameters;
             if (typeParameterNames.Length != typeArguments.Count) {
                 throw new CompilationErrorException(new List<StructuralError> {
                     new StructuralError(
@@ -110,7 +110,7 @@ namespace KontrolSystem.TO2.AST {
 
             Dictionary<string, RealizedType> namedTypeArguments = new Dictionary<string, RealizedType>();
             for (int i = 0; i < typeArguments.Count; i++) {
-                namedTypeArguments.Add(typeParameterNames[i], typeArguments[i].UnderlyingType(context));
+                namedTypeArguments.Add(typeParameterNames[i].Name, typeArguments[i].UnderlyingType(context));
             }
 
             return realizedType.FillGenerics(context, namedTypeArguments);
@@ -134,7 +134,7 @@ namespace KontrolSystem.TO2.AST {
         public override RealizedType UnderlyingType(ModuleContext context) {
             Dictionary<string, RealizedType> arguments = referencedType.GenericParameters
                 .Zip(declaredTypeArguments, (name, type) => (name, type.UnderlyingType(context)))
-                .ToDictionary(i => i.Item1, i => i.Item2);
+                .ToDictionary(i => i.Item1.Name, i => i.Item2);
 
             return referencedType.FillGenerics(context, arguments);
         }
@@ -155,10 +155,7 @@ namespace KontrolSystem.TO2.AST {
         public override IFieldAccessFactory FindField(ModuleContext context, string fieldName) =>
             UnderlyingType(context).FindField(context, fieldName);
 
-        public override string[] GenericParameters => declaredTypeArguments.SelectMany(t => {
-            GenericParameter genericParameter = t as GenericParameter;
-            return genericParameter?.Name.Yield() ?? Enumerable.Empty<string>();
-        }).ToArray();
+        public override TO2Type[] GenericParameters => declaredTypeArguments.ToArray();
 
         public override RealizedType
             FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) =>

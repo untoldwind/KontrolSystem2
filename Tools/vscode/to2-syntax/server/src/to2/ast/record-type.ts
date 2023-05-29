@@ -12,7 +12,7 @@ export class RecordType implements RealizedType {
 
   constructor(public readonly itemTypes: [string, WithPosition<TO2Type>][]) {
     this.name = this.localName = `(${itemTypes
-      .map((item) => `${item[0]} : ${item[1].value.name}`)
+      .map((item) => `${item[0]} : ${item[1].value.localName}`)
       .join(", ")})`;
     this.description = "";
     this.methods = new Map();
@@ -23,7 +23,51 @@ export class RecordType implements RealizedType {
   }
 
   public realizedType(context: ModuleContext): RealizedType {
-    return this;
+    return new RecordType(
+      this.itemTypes.map(([name, type]) => [
+        name,
+        { range: type.range, value: type.value.realizedType(context) },
+      ])
+    );
+  }
+
+  public fillGenerics(
+    context: ModuleContext,
+    genericMap: Record<string, RealizedType>
+  ): RealizedType {
+    return new RecordType(
+      this.itemTypes.map(([name, type]) => [
+        name,
+        {
+          range: type.range,
+          value: type.value
+            .realizedType(context)
+            .fillGenerics(context, genericMap),
+        },
+      ])
+    );
+  }
+
+  public guessGeneric(
+    context: ModuleContext,
+    genericMap: Record<string, RealizedType>,
+    realizedType: RealizedType
+  ): void {
+    if (isRecordType(realizedType)) {
+      for (
+        let i = 0;
+        i < this.itemTypes.length && i < realizedType.itemTypes.length;
+        i++
+      ) {
+        this.itemTypes[i][1].value
+          .realizedType(context)
+          .guessGeneric(
+            context,
+            genericMap,
+            realizedType.itemTypes[i][1].value.realizedType(context)
+          );
+      }
+    }
   }
 
   public findSuffixOperator(): RealizedType | undefined {

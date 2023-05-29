@@ -20,7 +20,40 @@ export class TupleType implements RealizedType {
   }
 
   public realizedType(context: ModuleContext): RealizedType {
-    return this;
+    return new TupleType(this.itemTypes.map((t) => t.realizedType(context)));
+  }
+
+  public fillGenerics(
+    context: ModuleContext,
+    genericMap: Record<string, RealizedType>
+  ): RealizedType {
+    return new TupleType(
+      this.itemTypes.map((t) =>
+        t.realizedType(context).fillGenerics(context, genericMap)
+      )
+    );
+  }
+
+  public guessGeneric(
+    context: ModuleContext,
+    genericMap: Record<string, RealizedType>,
+    realizedType: RealizedType
+  ): void {
+    if (isTupleType(realizedType)) {
+      for (
+        let i = 0;
+        i < this.itemTypes.length && i < realizedType.itemTypes.length;
+        i++
+      ) {
+        this.itemTypes[i]
+          .realizedType(context)
+          .guessGeneric(
+            context,
+            genericMap,
+            realizedType.itemTypes[i].realizedType(context)
+          );
+      }
+    }
   }
 
   public findSuffixOperator(): RealizedType | undefined {

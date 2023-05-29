@@ -15,7 +15,7 @@ export class OptionType implements RealizedType {
   public readonly description: string;
 
   constructor(public readonly elementType: TO2Type) {
-    this.name = this.localName = `Option<${elementType.name}>`;
+    this.name = this.localName = `Option<${elementType.localName}>`;
     this.description = "";
   }
 
@@ -24,7 +24,32 @@ export class OptionType implements RealizedType {
   }
 
   public realizedType(context: ModuleContext): RealizedType {
-    return this;
+    return new OptionType(this.elementType.realizedType(context));
+  }
+
+  public fillGenerics(
+    context: ModuleContext,
+    genericMap: Record<string, RealizedType>
+  ): RealizedType {
+    return new OptionType(
+      this.elementType.realizedType(context).fillGenerics(context, genericMap)
+    );
+  }
+
+  public guessGeneric(
+    context: ModuleContext,
+    genericMap: Record<string, RealizedType>,
+    realizedType: RealizedType
+  ): void {
+    if (isOptionType(realizedType)) {
+      this.elementType
+        .realizedType(context)
+        .guessGeneric(
+          context,
+          genericMap,
+          realizedType.elementType.realizedType(context)
+        );
+    }
   }
 
   public findSuffixOperator(): RealizedType | undefined {

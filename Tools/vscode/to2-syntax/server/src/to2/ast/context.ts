@@ -104,7 +104,7 @@ export class RootModuleContext implements ModuleContext {
               return new FunctionType(
                 false,
                 [["value", args[0], false]],
-                BUILTIN_CELL.fillGenerics([args[0].realizedType(this)])
+                BUILTIN_CELL.fillGenericArguments([args[0].realizedType(this)])
               );
             }
             break;

@@ -30,8 +30,12 @@ export class Call extends Expression {
         )
       )
       ?.realizedType(context.module);
-    return variableType && isFunctionType(variableType)
-      ? variableType.returnType
+    return isFunctionType(variableType)
+      ? variableType.guessReturnType(
+          context.module,
+          this.args.map((arg) => arg.resultType(context)),
+          typeHint
+        )
       : UNKNOWN_TYPE;
   }
 
@@ -113,8 +117,8 @@ export class Call extends Expression {
           `Function \`${this.namePath.value.join(
             "::"
           )}(${variableType.parameterTypes
-            .map(([name, type]) => `${name} : ${type.name}`)
-            .join(", ")}) -> ${variableType.returnType.name}\``
+            .map(([name, type]) => `${name} : ${type.localName}`)
+            .join(", ")}) -> ${variableType.returnType.localName}\``
         ),
       ];
       if (variableType.description)

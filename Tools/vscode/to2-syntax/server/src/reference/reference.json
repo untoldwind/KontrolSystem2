@@ -1207,7 +1207,13 @@
           "returnType": {
             "kind": "Standard",
             "module": "",
-            "name": "ArrayBuilder<T>"
+            "name": "ArrayBuilder",
+            "parameters": [
+              {
+                "kind": "Generic",
+                "name": "T"
+              }
+            ]
           }
         },
         "result": {
@@ -1237,7 +1243,13 @@
             "resultType": {
               "kind": "Standard",
               "module": "",
-              "name": "ArrayBuilder<T>"
+              "name": "ArrayBuilder",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             }
           }
         ]
@@ -1309,7 +1321,13 @@
           "returnType": {
             "kind": "Standard",
             "module": "",
-            "name": "Cell<T>"
+            "name": "Cell",
+            "parameters": [
+              {
+                "kind": "Generic",
+                "name": "T"
+              }
+            ]
           }
         }
       },
@@ -1498,12 +1516,24 @@
         {
           "kind": "Standard",
           "module": "",
-          "name": "ArrayBuilder<T>"
+          "name": "ArrayBuilder",
+          "parameters": [
+            {
+              "kind": "Generic",
+              "name": "T"
+            }
+          ]
         },
         {
           "kind": "Standard",
           "module": "",
-          "name": "Cell<T>"
+          "name": "Cell",
+          "parameters": [
+            {
+              "kind": "Generic",
+              "name": "T"
+            }
+          ]
         },
         {
           "kind": "Result",
@@ -1521,7 +1551,13 @@
         {
           "kind": "Standard",
           "module": "core::background",
-          "name": "Task<T>"
+          "name": "Task",
+          "parameters": [
+            {
+              "kind": "Generic",
+              "name": "T"
+            }
+          ]
         },
         {
           "kind": "Standard",
@@ -2200,12 +2236,24 @@
         {
           "kind": "Standard",
           "module": "",
-          "name": "ArrayBuilder<T>"
+          "name": "ArrayBuilder",
+          "parameters": [
+            {
+              "kind": "Generic",
+              "name": "T"
+            }
+          ]
         },
         {
           "kind": "Standard",
           "module": "",
-          "name": "Cell<T>"
+          "name": "Cell",
+          "parameters": [
+            {
+              "kind": "Generic",
+              "name": "T"
+            }
+          ]
         },
         {
           "kind": "Option",
@@ -2219,7 +2267,13 @@
         {
           "kind": "Standard",
           "module": "core::background",
-          "name": "Task<T>"
+          "name": "Task",
+          "parameters": [
+            {
+              "kind": "Generic",
+              "name": "T"
+            }
+          ]
         },
         {
           "kind": "Standard",
@@ -2917,7 +2971,13 @@
           "returnType": {
             "kind": "Standard",
             "module": "core::background",
-            "name": "Task<T>"
+            "name": "Task",
+            "parameters": [
+              {
+                "kind": "Generic",
+                "name": "T"
+              }
+            ]
           }
         }
       }
@@ -11345,12 +11405,24 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "ArrayBuilder<T>"
+              "name": "ArrayBuilder",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
               "module": "",
-              "name": "Cell<T>"
+              "name": "Cell",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Option",
@@ -11377,7 +11449,13 @@
             {
               "kind": "Standard",
               "module": "core::background",
-              "name": "Task<T>"
+              "name": "Task",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
@@ -12968,12 +13046,24 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "ArrayBuilder<T>"
+              "name": "ArrayBuilder",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
               "module": "",
-              "name": "Cell<T>"
+              "name": "Cell",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Option",
@@ -13000,7 +13090,13 @@
             {
               "kind": "Standard",
               "module": "core::background",
-              "name": "Task<T>"
+              "name": "Task",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
@@ -14576,7 +14672,13 @@
                   "type": {
                     "kind": "Standard",
                     "module": "",
-                    "name": "Cell<T>"
+                    "name": "Cell",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "string"
+                      }
+                    ]
                   },
                   "hasDefault": false
                 }
@@ -14657,7 +14759,13 @@
                   "type": {
                     "kind": "Standard",
                     "module": "",
-                    "name": "Cell<T>"
+                    "name": "Cell",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "int"
+                      }
+                    ]
                   },
                   "hasDefault": false
                 }
@@ -14738,7 +14846,13 @@
                   "type": {
                     "kind": "Standard",
                     "module": "",
-                    "name": "Cell<T>"
+                    "name": "Cell",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "float"
+                      }
+                    ]
                   },
                   "hasDefault": false
                 }
@@ -14783,7 +14897,13 @@
                   "type": {
                     "kind": "Standard",
                     "module": "",
-                    "name": "Cell<T>"
+                    "name": "Cell",
+                    "parameters": [
+                      {
+                        "kind": "Generic",
+                        "name": "T"
+                      }
+                    ]
                   },
                   "hasDefault": false
                 },
@@ -15016,7 +15136,13 @@
                   "type": {
                     "kind": "Standard",
                     "module": "",
-                    "name": "Cell<T>"
+                    "name": "Cell",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "float"
+                      }
+                    ]
                   },
                   "hasDefault": false
                 }
@@ -15164,7 +15290,13 @@
                   "type": {
                     "kind": "Standard",
                     "module": "",
-                    "name": "Cell<T>"
+                    "name": "Cell",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "bool"
+                      }
+                    ]
                   },
                   "hasDefault": false
                 }
@@ -17223,12 +17355,24 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "ArrayBuilder<T>"
+              "name": "ArrayBuilder",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
               "module": "",
-              "name": "Cell<T>"
+              "name": "Cell",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Option",
@@ -17255,7 +17399,13 @@
             {
               "kind": "Standard",
               "module": "core::background",
-              "name": "Task<T>"
+              "name": "Task",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
@@ -17988,12 +18138,24 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "ArrayBuilder<T>"
+              "name": "ArrayBuilder",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
               "module": "",
-              "name": "Cell<T>"
+              "name": "Cell",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Option",
@@ -18020,7 +18182,13 @@
             {
               "kind": "Standard",
               "module": "core::background",
-              "name": "Task<T>"
+              "name": "Task",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
@@ -18773,12 +18941,24 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "ArrayBuilder<T>"
+              "name": "ArrayBuilder",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
               "module": "",
-              "name": "Cell<T>"
+              "name": "Cell",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Option",
@@ -18805,7 +18985,13 @@
             {
               "kind": "Standard",
               "module": "core::background",
-              "name": "Task<T>"
+              "name": "Task",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
@@ -19538,12 +19724,24 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "ArrayBuilder<T>"
+              "name": "ArrayBuilder",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
               "module": "",
-              "name": "Cell<T>"
+              "name": "Cell",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Option",
@@ -19570,7 +19768,13 @@
             {
               "kind": "Standard",
               "module": "core::background",
-              "name": "Task<T>"
+              "name": "Task",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
@@ -20313,12 +20517,24 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "ArrayBuilder<T>"
+              "name": "ArrayBuilder",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
               "module": "",
-              "name": "Cell<T>"
+              "name": "Cell",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Option",
@@ -20345,7 +20561,13 @@
             {
               "kind": "Standard",
               "module": "core::background",
-              "name": "Task<T>"
+              "name": "Task",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
@@ -21178,12 +21400,24 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "ArrayBuilder<T>"
+              "name": "ArrayBuilder",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
               "module": "",
-              "name": "Cell<T>"
+              "name": "Cell",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Option",
@@ -21210,7 +21444,13 @@
             {
               "kind": "Standard",
               "module": "core::background",
-              "name": "Task<T>"
+              "name": "Task",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
@@ -21993,12 +22233,24 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "ArrayBuilder<T>"
+              "name": "ArrayBuilder",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
               "module": "",
-              "name": "Cell<T>"
+              "name": "Cell",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Option",
@@ -22025,7 +22277,13 @@
             {
               "kind": "Standard",
               "module": "core::background",
-              "name": "Task<T>"
+              "name": "Task",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
@@ -22768,12 +23026,24 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "ArrayBuilder<T>"
+              "name": "ArrayBuilder",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
               "module": "",
-              "name": "Cell<T>"
+              "name": "Cell",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Option",
@@ -22800,7 +23070,13 @@
             {
               "kind": "Standard",
               "module": "core::background",
-              "name": "Task<T>"
+              "name": "Task",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
@@ -23563,12 +23839,24 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "ArrayBuilder<T>"
+              "name": "ArrayBuilder",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
               "module": "",
-              "name": "Cell<T>"
+              "name": "Cell",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Option",
@@ -23595,7 +23883,13 @@
             {
               "kind": "Standard",
               "module": "core::background",
-              "name": "Task<T>"
+              "name": "Task",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
@@ -24368,12 +24662,24 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "ArrayBuilder<T>"
+              "name": "ArrayBuilder",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
               "module": "",
-              "name": "Cell<T>"
+              "name": "Cell",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Option",
@@ -24400,7 +24706,13 @@
             {
               "kind": "Standard",
               "module": "core::background",
-              "name": "Task<T>"
+              "name": "Task",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",

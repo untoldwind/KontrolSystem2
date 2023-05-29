@@ -3,6 +3,7 @@ import { FunctionType } from "./function-type";
 import {
   BUILTIN_BOOL,
   BUILTIN_INT,
+  GenericParameter,
   RealizedType,
   TO2Type,
   UNKNOWN_TYPE,
@@ -19,7 +20,7 @@ export class ArrayType implements RealizedType {
   constructor(element: TO2Type, dimension: number = 1) {
     this.elementType =
       dimension > 1 ? new ArrayType(element, dimension - 1) : element;
-    this.name = this.localName = `${this.elementType.name}[]`;
+    this.name = this.localName = `${this.elementType.localName}[]`;
     this.description = "";
   }
 
@@ -28,7 +29,32 @@ export class ArrayType implements RealizedType {
   }
 
   public realizedType(context: ModuleContext): RealizedType {
-    return this;
+    return new ArrayType(this.elementType.realizedType(context));
+  }
+
+  public fillGenerics(
+    context: ModuleContext,
+    genericMap: Record<string, RealizedType>
+  ): RealizedType {
+    return new ArrayType(
+      this.elementType.realizedType(context).fillGenerics(context, genericMap)
+    );
+  }
+
+  guessGeneric(
+    context: ModuleContext,
+    genericMap: Record<string, RealizedType>,
+    realizedType: RealizedType
+  ): void {
+    if (isArrayType(realizedType)) {
+      this.elementType
+        .realizedType(context)
+        .guessGeneric(
+          context,
+          genericMap,
+          realizedType.elementType.realizedType(context)
+        );
+    }
   }
 
   public findSuffixOperator(): RealizedType | undefined {
@@ -114,12 +140,12 @@ export class ArrayType implements RealizedType {
               new FunctionType(
                 false,
                 [["item", this.elementType, false]],
-                UNKNOWN_TYPE
+                new GenericParameter("T")
               ),
               false,
             ],
           ],
-          new ArrayType(UNKNOWN_TYPE),
+          new ArrayType(new GenericParameter("T")),
           "Check if an item satisfying a predicate exists"
         );
     }

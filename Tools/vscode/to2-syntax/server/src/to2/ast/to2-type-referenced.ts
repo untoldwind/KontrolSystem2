@@ -1,4 +1,5 @@
 import { TypeReference } from "../../reference";
+import { ModuleContext } from "./context";
 import { FunctionType } from "./function-type";
 import { Operator } from "./operator";
 import {
@@ -24,6 +25,11 @@ export class ReferencedType implements RealizedType {
     this.name = moduleName
       ? `${moduleName}::${typeReference.name}`
       : typeReference.name;
+    if (typeReference.genericParameters) {
+      this.localName += `<${typeReference.genericParameters
+        .map((p) => genericMap?.[p]?.localName ?? p)
+        .join(", ")}>`;
+    }
     this.description = typeReference.description || "";
   }
 
@@ -107,7 +113,17 @@ export class ReferencedType implements RealizedType {
     return this.name === "Range" ? BUILTIN_INT : undefined;
   }
 
-  fillGenerics(typeParameters: RealizedType[]): RealizedType {
+  public fillGenerics(
+    context: ModuleContext,
+    genericMap: Record<string, RealizedType>
+  ): RealizedType {
+    return new ReferencedType(this.typeReference, this.moduleName, {
+      ...this.genericMap,
+      ...genericMap,
+    });
+  }
+
+  public fillGenericArguments(typeParameters: RealizedType[]): RealizedType {
     if (
       !this.typeReference.genericParameters ||
       this.typeReference.genericParameters.length !== typeParameters.length
@@ -120,4 +136,10 @@ export class ReferencedType implements RealizedType {
     }
     return new ReferencedType(this.typeReference, this.moduleName, genericMap);
   }
+
+  public guessGeneric(
+    context: ModuleContext,
+    genericMap: Record<string, RealizedType>,
+    realizedType: RealizedType
+  ): void {}
 }

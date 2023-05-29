@@ -44,7 +44,7 @@ namespace KontrolSystem.TO2.Test {
 
             Assert.Equal("SimpleGeneric", type.LocalName);
             Assert.Equal("module::SimpleGeneric<T>", type.Name);
-            Assert.Equal(new[] { "T" }, type.GenericParameters);
+            Assert.Equal(new[] { "T" }, type.GenericParameters.Select(t => t.Name));
             Assert.False(type.IsValid(moduleContext));
             Assert.Equal(typeof(SimpleGeneric<>), type.GeneratedType(moduleContext));
 
@@ -55,7 +55,7 @@ namespace KontrolSystem.TO2.Test {
             Assert.Equal("SimpleGeneric", filledType.LocalName);
             Assert.Equal("module::SimpleGeneric<int>", filledType.Name);
             Assert.True(filledType.IsValid(moduleContext));
-            Assert.Empty(filledType.GenericParameters);
+            Assert.Equal(new[] { "int" }, filledType.GenericParameters.Select(t => t.Name));
             Assert.Equal(typeof(SimpleGeneric<long>), filledType.GeneratedType(moduleContext));
 
             RealizedType aliased = type.FillGenerics(moduleContext, new Dictionary<string, RealizedType> {
@@ -65,7 +65,7 @@ namespace KontrolSystem.TO2.Test {
             Assert.Equal("SimpleGeneric", aliased.LocalName);
             Assert.Equal("module::SimpleGeneric<U>", aliased.Name);
             Assert.False(aliased.IsValid(moduleContext));
-            Assert.Equal(new[] { "U" }, aliased.GenericParameters);
+            Assert.Equal(new[] { "U" }, aliased.GenericParameters.Select(t => t.Name));
             Assert.Equal(typeof(SimpleGeneric<>), aliased.GeneratedType(moduleContext));
 
             RealizedType filledType2 = aliased.FillGenerics(moduleContext, new Dictionary<string, RealizedType> {
@@ -75,7 +75,7 @@ namespace KontrolSystem.TO2.Test {
             Assert.Equal("SimpleGeneric", filledType2.LocalName);
             Assert.Equal("module::SimpleGeneric<string>", filledType2.Name);
             Assert.True(filledType2.IsValid(moduleContext));
-            Assert.Empty(filledType2.GenericParameters);
+            Assert.Equal(new [] { "string" }, filledType2.GenericParameters.Select(t => t.Name));
             Assert.Equal(typeof(SimpleGeneric<string>), filledType2.GeneratedType(moduleContext));
 
             Assert.Equal(new Dictionary<string, RealizedType> {
