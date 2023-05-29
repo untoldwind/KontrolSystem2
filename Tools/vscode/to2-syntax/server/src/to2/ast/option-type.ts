@@ -15,7 +15,7 @@ export class OptionType implements RealizedType {
   public readonly description: string;
 
   constructor(public readonly elementType: TO2Type) {
-    this.name = this.localName = `Option<${elementType}>`;
+    this.name = this.localName = `Option<${elementType.name}>`;
     this.description = "";
   }
 

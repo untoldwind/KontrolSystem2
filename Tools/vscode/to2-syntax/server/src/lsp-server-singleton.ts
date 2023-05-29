@@ -46,7 +46,7 @@ export class LspServerSingleton {
   private readonly documentSettings: Map<string, To2LspSettings> = new Map();
   private readonly documentModules: Map<string, TO2ModuleNode> = new Map();
   private readonly documents: TextDocuments<TextDocument>;
-  private workspaceFolders: Set<string> = new Set();
+  private workspaceFolders: Map<string, Map<string, TO2ModuleNode>> = new Map();
 
   constructor(private readonly connection: Connection) {
     this.documents = new TextDocuments(TextDocument);
@@ -71,7 +71,7 @@ export class LspServerSingleton {
   }
 
   async validateTextDocument(textDocument: TextDocument): Promise<void> {
-    const moduleResult = this.parseModule(textDocument);
+    const moduleResult = this.parseModule(textDocument, true);
 
     const diagnostics: Diagnostic[] = [];
 
@@ -132,10 +132,13 @@ export class LspServerSingleton {
     return result ?? this.globalSettings;
   }
 
-  parseModule(textDocument: TextDocument): ParserResult<TO2ModuleNode> {
+  parseModule(
+    textDocument: TextDocument,
+    override: boolean
+  ): ParserResult<TO2ModuleNode> {
     const input = new TextDocumentInput(textDocument);
     let moduleName = "<unknown>";
-    for (const workspaceUri of this.workspaceFolders) {
+    for (const workspaceUri of this.workspaceFolders.keys()) {
       if (
         textDocument.uri.startsWith(workspaceUri) &&
         textDocument.uri.endsWith(".to2")
@@ -146,9 +149,10 @@ export class LspServerSingleton {
         break;
       }
     }
-    const moduleResult = module(moduleName)(input);
+    const moduleResult = module(textDocument.uri, moduleName)(input);
     if (moduleResult.value) {
-      this.documentModules.set(textDocument.uri, moduleResult.value);
+      if (override || !this.documentModules.has(textDocument.uri))
+        this.documentModules.set(textDocument.uri, moduleResult.value);
     } else {
       this.documentModules.delete(textDocument.uri);
     }
@@ -159,7 +163,7 @@ export class LspServerSingleton {
     const workspacePath = uriToPath(workspaceUri);
     if (!workspacePath) return;
 
-    this.workspaceFolders.add(workspaceUri);
+    this.workspaceFolders.set(workspaceUri, new Map());
     const progress = this.hasWorkDonwCapability
       ? await this.connection.window.createWorkDoneProgress()
       : undefined;
@@ -186,7 +190,7 @@ export class LspServerSingleton {
             0,
             content
           );
-          this.parseModule(textDocument);
+          this.parseModule(textDocument, false);
         }
       }
     }

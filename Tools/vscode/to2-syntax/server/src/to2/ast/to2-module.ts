@@ -1,4 +1,4 @@
-import { InlayHint } from "vscode-languageserver";
+import { DocumentUri, InlayHint } from "vscode-languageserver";
 import {
   ModuleItem,
   Node,
@@ -44,6 +44,7 @@ export class TO2ModuleNode implements Node, TO2Module {
   public readonly range: InputRange;
 
   constructor(
+    public readonly documentUri: DocumentUri,
     public readonly name: string,
     public readonly description: string,
     public readonly items: ModuleItem[],

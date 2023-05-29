@@ -1,3 +1,4 @@
+import { DocumentUri } from "vscode-languageserver";
 import { Parser, ParserFailure, ParserSuccess } from "../parser";
 import { alt } from "../parser/branch";
 import {
@@ -220,11 +221,11 @@ const moduleItems = preceded(
   )
 );
 
-export function module(moduleName: string): Parser<TO2ModuleNode> {
+export function module(documentUri: DocumentUri, moduleName: string): Parser<TO2ModuleNode> {
   return map(
     seq(preceded(whitespace0, descriptionComment), moduleItems),
     ([description, items], start, end) =>
-      new TO2ModuleNode(moduleName, description, items, start, end)
+      new TO2ModuleNode(documentUri, moduleName, description, items, start, end)
   );
 }
 

@@ -14,9 +14,9 @@ export class FunctionType implements RealizedType {
     public readonly returnType: TO2Type,
     public readonly description: string = ""
   ) {
-    this.name = `${isAsync ? "" : "sync "}fn(${parameterTypes.join(
-      ", "
-    )}) -> ${returnType}`;
+    this.name = `${isAsync ? "" : "sync "}fn(${parameterTypes
+      .map((parameter) => parameter[1].name)
+      .join(", ")}) -> ${returnType.name}`;
     this.localName = this.name;
     this.maxParams = parameterTypes.length;
     this.requiredParams = parameterTypes.filter((param) => param[2]).length;
