@@ -1,3 +1,4 @@
+import { WithDefinitionRef } from "./definition-ref";
 import { FunctionType, isFunctionType } from "./function-type";
 import { RecordType } from "./record-type";
 import { Registry } from "./registry";
@@ -14,9 +15,9 @@ import {
 } from "./to2-type";
 
 export interface ModuleContext {
-  mappedConstants: Map<string, TO2Type>;
+  mappedConstants: Map<string, WithDefinitionRef<TO2Type>>;
   moduleAliases: Map<string, string[]>;
-  mappedFunctions: Map<string, FunctionType>;
+  mappedFunctions: Map<string, WithDefinitionRef<FunctionType>>;
   typeAliases: Map<string, RealizedType>;
   registry: Registry;
 
@@ -24,19 +25,23 @@ export interface ModuleContext {
     namePath: string[],
     typeArguments: RealizedType[]
   ): RealizedType | undefined;
-  findConstant(namePath: string[]): TO2Type | undefined;
+  findConstant(namePath: string[]): WithDefinitionRef<TO2Type> | undefined;
   allConstants(): [string, TO2Type][];
   findFunction(
     namePath: string[],
     typeHint?: RealizedType
-  ): FunctionType | undefined;
+  ): WithDefinitionRef<FunctionType> | undefined;
   allFunctions(): [string, FunctionType][];
   findModule(namePath: string[]): TO2Module | undefined;
 }
 
 export class RootModuleContext implements ModuleContext {
-  public readonly mappedConstants: Map<string, TO2Type> = new Map();
-  public readonly mappedFunctions: Map<string, FunctionType> = new Map();
+  public readonly mappedConstants: Map<string, WithDefinitionRef<TO2Type>> =
+    new Map();
+  public readonly mappedFunctions: Map<
+    string,
+    WithDefinitionRef<FunctionType>
+  > = new Map();
   public readonly moduleAliases: Map<string, string[]> = new Map();
   public readonly typeAliases: Map<string, RealizedType> = new Map();
 
@@ -61,7 +66,7 @@ export class RootModuleContext implements ModuleContext {
     return findLibraryTypeOrAlias(namePath, typeArguments);
   }
 
-  findConstant(namePath: string[]): TO2Type | undefined {
+  findConstant(namePath: string[]): WithDefinitionRef<TO2Type> | undefined {
     if (namePath.length === 1 && this.mappedConstants.has(namePath[0])) {
       return this.mappedConstants.get(namePath[0]);
     }
@@ -79,13 +84,16 @@ export class RootModuleContext implements ModuleContext {
   }
 
   allConstants(): [string, TO2Type][] {
-    return [...this.mappedConstants.entries()];
+    return [...this.mappedConstants.entries()].map(([name, constant]) => [
+      name,
+      constant.value,
+    ]);
   }
 
   findFunction(
     namePath: string[],
     typeHint?: RealizedType
-  ): FunctionType | undefined {
+  ): WithDefinitionRef<FunctionType> | undefined {
     if (namePath.length === 1) {
       if (this.mappedFunctions.has(namePath[0])) {
         return this.mappedFunctions.get(namePath[0]);
@@ -101,38 +109,48 @@ export class RootModuleContext implements ModuleContext {
         switch (namePath[0]) {
           case "Cell":
             if (args.length === 1) {
-              return new FunctionType(
-                false,
-                [["value", args[0], false]],
-                BUILTIN_CELL.fillGenericArguments([args[0].realizedType(this)])
-              );
+              return {
+                value: new FunctionType(
+                  false,
+                  [["value", args[0], false]],
+                  BUILTIN_CELL.fillGenericArguments([
+                    args[0].realizedType(this),
+                  ])
+                ),
+              };
             }
             break;
           case "Ok":
             if (args.length === 1) {
-              return new FunctionType(
-                false,
-                [["value", args[0], false]],
-                new ResultType(args[0], UNKNOWN_TYPE)
-              );
+              return {
+                value: new FunctionType(
+                  false,
+                  [["value", args[0], false]],
+                  new ResultType(args[0], UNKNOWN_TYPE)
+                ),
+              };
             }
             break;
           case "Err":
             if (args.length === 1) {
-              return new FunctionType(
-                false,
-                [["value", args[0], false]],
-                new ResultType(UNKNOWN_TYPE, args[0])
-              );
+              return {
+                value: new FunctionType(
+                  false,
+                  [["value", args[0], false]],
+                  new ResultType(UNKNOWN_TYPE, args[0])
+                ),
+              };
             }
             break;
           case "ArrayBuilder":
             if (args.length === 1) {
-              return new FunctionType(
-                false,
-                [["value", BUILTIN_INT, false]],
-                BUILTIN_ARRAYBUILDER
-              );
+              return {
+                value: new FunctionType(
+                  false,
+                  [["value", BUILTIN_INT, false]],
+                  BUILTIN_ARRAYBUILDER
+                ),
+              };
             }
             break;
         }
@@ -152,7 +170,10 @@ export class RootModuleContext implements ModuleContext {
   }
 
   allFunctions(): [string, FunctionType][] {
-    return [...this.mappedFunctions.entries()];
+    return [...this.mappedFunctions.entries()].map(([name, func]) => [
+      name,
+      func.value,
+    ]);
   }
 
   findModule(namePath: string[]): TO2Module | undefined {
@@ -161,8 +182,12 @@ export class RootModuleContext implements ModuleContext {
 }
 
 export class ImplModuleContext implements ModuleContext {
-  public readonly mappedConstants: Map<string, TO2Type> = new Map();
-  public readonly mappedFunctions: Map<string, FunctionType> = new Map();
+  public readonly mappedConstants: Map<string, WithDefinitionRef<TO2Type>> =
+    new Map();
+  public readonly mappedFunctions: Map<
+    string,
+    WithDefinitionRef<FunctionType>
+  > = new Map();
   public readonly moduleAliases: Map<string, string[]> = new Map();
   public readonly typeAliases: Map<string, RealizedType> = new Map();
   public readonly registry: Registry;
@@ -185,7 +210,7 @@ export class ImplModuleContext implements ModuleContext {
     return this.root.findType(namePath, typeArguments);
   }
 
-  findConstant(namePath: string[]): TO2Type | undefined {
+  findConstant(namePath: string[]): WithDefinitionRef<TO2Type> | undefined {
     return this.root.findConstant(namePath);
   }
 
@@ -196,7 +221,7 @@ export class ImplModuleContext implements ModuleContext {
   findFunction(
     namePath: string[],
     typeHint?: RealizedType
-  ): FunctionType | undefined {
+  ): WithDefinitionRef<FunctionType> | undefined {
     return this.root.findFunction(namePath, typeHint);
   }
 
@@ -216,7 +241,8 @@ export function isImplModuleContext(
 }
 
 export class BlockContext {
-  public readonly localVariables: Map<string, TO2Type> = new Map();
+  public readonly localVariables: Map<string, WithDefinitionRef<TO2Type>> =
+    new Map();
 
   constructor(
     public readonly module: ModuleContext,
@@ -226,7 +252,7 @@ export class BlockContext {
   public findVariable(
     namePath: string[],
     typeHint?: RealizedType
-  ): TO2Type | undefined {
+  ): WithDefinitionRef<TO2Type> | undefined {
     return (
       (namePath.length === 1
         ? this.localVariables.get(namePath[0])
@@ -238,13 +264,16 @@ export class BlockContext {
   }
 
   public allVariables(): [string, TO2Type][] {
+    const localVars: [string, TO2Type][] = [
+      ...this.localVariables.entries(),
+    ].map(([name, variable]) => [name, variable.value]);
     if (this.parent) {
-      return [...this.parent.allVariables(), ...this.localVariables.entries()];
+      return [...this.parent.allVariables(), ...localVars];
     }
     return [
       ...this.module.allConstants(),
       ...this.module.allFunctions(),
-      ...this.localVariables.entries(),
+      ...localVars,
     ];
   }
 }

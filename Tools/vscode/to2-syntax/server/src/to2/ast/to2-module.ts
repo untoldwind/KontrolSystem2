@@ -19,12 +19,13 @@ import { FunctionType } from "./function-type";
 import { Registry } from "./registry";
 import { TO2Type, UNKNOWN_TYPE, resolveTypeRef } from "./to2-type";
 import { ReferencedType } from "./to2-type-referenced";
+import { WithDefinitionRef } from "./definition-ref";
 
 export interface TO2Module {
   name: string;
   description: string;
 
-  findConstant(name: string): TO2Type | undefined;
+  findConstant(name: string): WithDefinitionRef<TO2Type> | undefined;
 
   allConstants(): [string, TO2Type][];
 
@@ -32,7 +33,7 @@ export interface TO2Module {
 
   allTypes(): [string, TO2Type][];
 
-  findFunction(name: string): FunctionType | undefined;
+  findFunction(name: string): WithDefinitionRef<FunctionType> | undefined;
 
   allFunctions(): [string, FunctionType][];
 }
@@ -61,8 +62,10 @@ export class TO2ModuleNode implements Node, TO2Module {
     }
   }
 
-  public findConstant(name: string): TO2Type | undefined {
-    return this.constants.get(name)?.type.value;
+  public findConstant(name: string): WithDefinitionRef<TO2Type> | undefined {
+    const decl = this.constants.get(name);
+
+    return decl ? { value: decl.type.value } : undefined;
   }
 
   public allConstants(): [string, TO2Type][] {
@@ -80,8 +83,12 @@ export class TO2ModuleNode implements Node, TO2Module {
     return [...this.types.entries()].map(([name, decl]) => [name, decl.type]);
   }
 
-  public findFunction(name: string): FunctionType | undefined {
-    return this.functions.get(name)?.functionType;
+  public findFunction(
+    name: string
+  ): WithDefinitionRef<FunctionType> | undefined {
+    const decl = this.functions.get(name);
+
+    return decl ? { value: decl.functionType } : undefined;
   }
 
   public allFunctions(): [string, FunctionType][] {
@@ -132,11 +139,12 @@ export class ReferencedModule implements TO2Module {
     this.description = moduleReference.description || "";
   }
 
-  findConstant(name: string): TO2Type | undefined {
+  findConstant(name: string): WithDefinitionRef<TO2Type> | undefined {
     const constantReference = this.moduleReference.constants[name];
-    return constantReference
+    const type = constantReference
       ? resolveTypeRef(constantReference.type)
       : undefined;
+    return type ? { value: type } : undefined;
   }
 
   allConstants(): [string, TO2Type][] {
@@ -171,19 +179,21 @@ export class ReferencedModule implements TO2Module {
     ];
   }
 
-  findFunction(name: string): FunctionType | undefined {
+  findFunction(name: string): WithDefinitionRef<FunctionType> | undefined {
     const functionReference = this.moduleReference.functions[name];
     return functionReference
-      ? new FunctionType(
-          functionReference.isAsync,
-          functionReference.parameters.map((param) => [
-            param.name,
-            resolveTypeRef(param.type) ?? UNKNOWN_TYPE,
-            param.hasDefault,
-          ]),
-          resolveTypeRef(functionReference.returnType) ?? UNKNOWN_TYPE,
-          functionReference.description
-        )
+      ? {
+          value: new FunctionType(
+            functionReference.isAsync,
+            functionReference.parameters.map((param) => [
+              param.name,
+              resolveTypeRef(param.type) ?? UNKNOWN_TYPE,
+              param.hasDefault,
+            ]),
+            resolveTypeRef(functionReference.returnType) ?? UNKNOWN_TYPE,
+            functionReference.description
+          ),
+        }
       : undefined;
   }
 

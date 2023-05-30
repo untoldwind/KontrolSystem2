@@ -1,11 +1,14 @@
 import { Expression, Node, ValidationError } from ".";
 import { RealizedType, TO2Type, UNKNOWN_TYPE } from "./to2-type";
-import { InputPosition, WithPosition } from "../../parser";
+import { InputPosition, InputRange, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { FunctionType, isFunctionType } from "./function-type";
 import { SemanticToken } from "../../syntax-token";
+import { DefinitionRef } from "./definition-ref";
 
 export class Call extends Expression {
+  reference?: { sourceRange: InputRange; definition: DefinitionRef };
+
   constructor(
     public readonly namePath: WithPosition<string[]>,
     public readonly args: Expression[],
@@ -16,8 +19,8 @@ export class Call extends Expression {
   }
 
   public resultType(context: BlockContext, typeHint?: RealizedType): TO2Type {
-    const variableType = context
-      .findVariable(
+    const { definition, value: variableType } =
+      context.findVariable(
         this.namePath.value,
         new FunctionType(
           false,
@@ -28,10 +31,18 @@ export class Call extends Expression {
           ]),
           typeHint ?? UNKNOWN_TYPE
         )
-      )
-      ?.realizedType(context.module);
-    return isFunctionType(variableType)
-      ? variableType.guessReturnType(
+      ) ?? {};
+
+    if (definition) {
+      this.reference = {
+        sourceRange: this.namePath.range,
+        definition,
+      };
+    }
+
+    const realizedType = variableType?.realizedType(context.module);
+    return isFunctionType(realizedType)
+      ? realizedType.guessReturnType(
           context.module,
           this.args.map((arg) => arg.resultType(context)),
           typeHint
@@ -55,8 +66,8 @@ export class Call extends Expression {
   ): ValidationError[] {
     const errors: ValidationError[] = [];
 
-    const variableType = context
-      .findVariable(
+    const { definition, value: variableType } =
+      context.findVariable(
         this.namePath.value,
         new FunctionType(
           false,
@@ -67,9 +78,9 @@ export class Call extends Expression {
           ]),
           typeHint ?? UNKNOWN_TYPE
         )
-      )
-      ?.realizedType(context.module);
-    if (!variableType) {
+      ) ?? {};
+    const realizedType = variableType?.realizedType(context.module);
+    if (!realizedType) {
       errors.push({
         status: "error",
         message: `Undefined variable or function: ${this.namePath.value.join(
@@ -77,7 +88,7 @@ export class Call extends Expression {
         )}`,
         range: this.namePath.range,
       });
-    } else if (!isFunctionType(variableType)) {
+    } else if (!isFunctionType(realizedType)) {
       errors.push({
         status: "error",
         message: `Undefined variable: ${this.namePath.value.join(
@@ -86,19 +97,19 @@ export class Call extends Expression {
         range: this.namePath.range,
       });
     } else {
-      if (this.args.length > variableType.maxParams) {
+      if (this.args.length > realizedType.maxParams) {
         errors.push({
           status: "error",
           message: `${this.namePath.value.join("::")} only takes ${
-            variableType.maxParams
+            realizedType.maxParams
           } arguments`,
           range: this.namePath.range,
         });
-      } else if (this.args.length < variableType.requiredParams) {
+      } else if (this.args.length < realizedType.requiredParams) {
         errors.push({
           status: "error",
           message: `${this.namePath.value.join("::")} at least requires ${
-            variableType.requiredParams
+            realizedType.requiredParams
           } arguments`,
           range: this.namePath.range,
         });
@@ -107,7 +118,7 @@ export class Call extends Expression {
           errors.push(
             ...this.args[i].validateBlock(
               context,
-              variableType.parameterTypes[i][1].realizedType(context.module)
+              realizedType.parameterTypes[i][1].realizedType(context.module)
             )
           );
         }
@@ -116,14 +127,14 @@ export class Call extends Expression {
         this.namePath.range.with(
           `Function \`${this.namePath.value.join(
             "::"
-          )}(${variableType.parameterTypes
+          )}(${realizedType.parameterTypes
             .map(([name, type]) => `${name} : ${type.localName}`)
-            .join(", ")}) -> ${variableType.returnType.localName}\``
+            .join(", ")}) -> ${realizedType.returnType.localName}\``
         ),
       ];
-      if (variableType.description)
+      if (realizedType.description)
         this.documentation.push(
-          this.namePath.range.with(variableType.description)
+          this.namePath.range.with(realizedType.description)
         );
     }
 

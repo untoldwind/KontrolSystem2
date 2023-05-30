@@ -4,6 +4,7 @@ import { BlockContext, ModuleContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
 import { CompletionItem, InlayHint } from "vscode-languageserver";
 import { Position } from "vscode-languageserver-textdocument";
+import { DefinitionRef } from "./definition-ref";
 
 export interface Node {
   readonly isComment?: boolean;
@@ -11,6 +12,7 @@ export interface Node {
   readonly documentation?: WithPosition<string>[];
   readonly range: InputRange;
   readonly inlayHints?: InlayHint[];
+  readonly reference?: { sourceRange: InputRange; definition: DefinitionRef };
 
   reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,

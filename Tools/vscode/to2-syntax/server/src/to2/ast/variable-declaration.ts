@@ -84,12 +84,16 @@ export class VariableDeclaration implements Node, BlockItem {
         this.inlayHints = [
           {
             position: this.declaration.target.range.end,
-            label: ` : ${variableType.localName}`,
+            label: `: ${variableType.localName}`,
+            paddingLeft: true,
           },
         ];
       }
 
-      context.localVariables.set(this.declaration.target.value, variableType);
+      context.localVariables.set(this.declaration.target.value, {
+        definition: { range: this.declaration.target.range },
+        value: variableType,
+      });
       this.documentation = [
         this.declaration.target.range.with(
           `Variable declaration \`${this.declaration.target.value} : ${variableType.name}\``

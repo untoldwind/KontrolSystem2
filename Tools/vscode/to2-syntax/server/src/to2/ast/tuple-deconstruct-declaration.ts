@@ -59,10 +59,14 @@ export class TupleDeconstructDeclaration implements Node, BlockItem {
           if (variableType !== UNKNOWN_TYPE) {
             this.inlayHints.push({
               position: declaration.target.range.end,
-              label: ` : ${variableType.localName}`,
+              label: `: ${variableType.localName}`,
+              paddingLeft: true,
             });
           }
-          context.localVariables.set(declaration.target.value, variableType);
+          context.localVariables.set(declaration.target.value, {
+            definition: { range: declaration.target.range },
+            value: variableType,
+          });
           this.documentation.push(
             declaration.target.range.with(
               `Variable declaration \`${declaration.target.value} : ${variableType.name}\``

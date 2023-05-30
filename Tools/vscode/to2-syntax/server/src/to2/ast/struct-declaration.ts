@@ -103,9 +103,9 @@ export class StructDeclaration implements Node, TypeDeclaration {
         range: this.structName.range,
       });
     } else {
-      context.mappedFunctions.set(
-        this.structName.value,
-        new FunctionType(
+      context.mappedFunctions.set(this.structName.value, {
+        definition: { range: this.structName.range },
+        value: new FunctionType(
           false,
           this.constructorParameters.map((param) => [
             param.name.value,
@@ -113,8 +113,8 @@ export class StructDeclaration implements Node, TypeDeclaration {
             param.defaultValue !== undefined,
           ]),
           this.type
-        )
-      );
+        ),
+      });
     }
 
     return errors;

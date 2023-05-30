@@ -67,10 +67,10 @@ export class ForIn extends Expression {
         });
       }
 
-      loopContext.localVariables.set(
-        this.variableName.value,
-        this.variableType?.value ?? loopVarType ?? UNKNOWN_TYPE
-      );
+      loopContext.localVariables.set(this.variableName.value, {
+        definition: { range: this.variableName.range },
+        value: this.variableType?.value ?? loopVarType ?? UNKNOWN_TYPE,
+      });
     }
 
     errors.push(...this.loopExpression.validateBlock(loopContext));

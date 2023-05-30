@@ -1,14 +1,16 @@
 import { Expression, Node, ValidationError } from ".";
 import { RealizedType, TO2Type, UNKNOWN_TYPE } from "./to2-type";
-import { InputPosition, WithPosition } from "../../parser";
+import { InputPosition, InputRange, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
 import { Position } from "vscode-languageserver-textdocument";
 import { CompletionItem, CompletionItemKind } from "vscode-languageserver";
 import { isFunctionType } from "./function-type";
+import { DefinitionRef } from "./definition-ref";
 
 export class VariableGet extends Expression {
   private allVariables?: [string, RealizedType][];
+  reference?: { sourceRange: InputRange; definition: DefinitionRef };
 
   constructor(
     public readonly namePath: WithPosition<string[]>,
@@ -19,7 +21,9 @@ export class VariableGet extends Expression {
   }
 
   public resultType(context: BlockContext, typeHint?: RealizedType): TO2Type {
-    return context.findVariable(this.namePath.value, typeHint) ?? UNKNOWN_TYPE;
+    return (
+      context.findVariable(this.namePath.value, typeHint)?.value ?? UNKNOWN_TYPE
+    );
   }
 
   public reduceNode<T>(
@@ -35,10 +39,17 @@ export class VariableGet extends Expression {
   ): ValidationError[] {
     const errors: ValidationError[] = [];
 
-    const variableType = context
-      .findVariable(this.namePath.value, typeHint)
-      ?.realizedType(context.module);
-    if (!variableType) {
+    const { definition, value: variableType } =
+      context.findVariable(this.namePath.value, typeHint) ?? {};
+    const realizedType = variableType?.realizedType(context.module);
+
+    if (definition) {
+      this.reference = {
+        sourceRange: this.range,
+        definition,
+      };
+    }
+    if (!realizedType) {
       errors.push({
         status: "error",
         message: `Undefined variable: ${this.namePath.value[0]}`,
@@ -51,13 +62,13 @@ export class VariableGet extends Expression {
       this.documentation = [
         this.namePath.range.with(
           `Variable \`${this.namePath.value.join("::")} : ${
-            variableType.name
+            realizedType.name
           }\``
         ),
       ];
-      if (variableType.description)
+      if (realizedType.description)
         this.documentation.push(
-          this.namePath.range.with(variableType.description)
+          this.namePath.range.with(realizedType.description)
         );
     }
 

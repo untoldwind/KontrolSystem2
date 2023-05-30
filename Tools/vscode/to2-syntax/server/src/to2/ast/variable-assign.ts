@@ -1,11 +1,14 @@
 import { Expression, Node, ValidationError } from ".";
 import { BUILTIN_BOOL, RealizedType, TO2Type } from "./to2-type";
 import { Operator } from "./operator";
-import { InputPosition, WithPosition } from "../../parser";
+import { InputPosition, InputRange, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
+import { DefinitionRef } from "./definition-ref";
 
 export class VariableAssign extends Expression {
+  reference?: { sourceRange: InputRange; definition: DefinitionRef };
+
   constructor(
     public readonly name: WithPosition<string>,
     public readonly op: Operator,
@@ -33,10 +36,19 @@ export class VariableAssign extends Expression {
   ): ValidationError[] {
     const errors: ValidationError[] = [];
 
-    const variableType = context.findVariable(
-      [this.name.value],
-      this.expression.resultType(context, typeHint).realizedType(context.module)
-    );
+    const { definition, value: variableType } =
+      context.findVariable(
+        [this.name.value],
+        this.expression
+          .resultType(context, typeHint)
+          .realizedType(context.module)
+      ) ?? {};
+    if (definition) {
+      this.reference = {
+        sourceRange: this.name.range,
+        definition,
+      };
+    }
 
     if (!variableType) {
       errors.push({

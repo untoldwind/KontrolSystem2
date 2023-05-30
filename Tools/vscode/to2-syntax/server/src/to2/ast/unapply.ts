@@ -43,10 +43,10 @@ export class Unapply extends Expression {
             range: this.pattern.range,
           });
         } else if (isOptionType(expressionType)) {
-          context.localVariables.set(
-            this.extractNames[0],
-            expressionType.elementType
-          );
+          context.localVariables.set(this.extractNames[0], {
+            definition: { range: this.pattern.range },
+            value: expressionType.elementType,
+          });
         } else {
           errors.push({
             status: "error",

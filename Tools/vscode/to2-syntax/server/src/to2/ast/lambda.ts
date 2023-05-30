@@ -21,7 +21,7 @@ export class Lambda extends Expression {
 
     const resolved = this.resolveParameters(typeHint);
     for (const parameter of resolved) {
-      lambdaContext.localVariables.set(parameter[0], parameter[1]);
+      lambdaContext.localVariables.set(parameter[0], { value: parameter[1] });
     }
     const returnType =
       typeHint &&
@@ -55,7 +55,7 @@ export class Lambda extends Expression {
 
     const resolved = this.resolveParameters(typeHint);
     for (const parameter of resolved) {
-      lambdaContext.localVariables.set(parameter[0], parameter[1]);
+      lambdaContext.localVariables.set(parameter[0], { value: parameter[1] });
     }
 
     errors.push(...this.expression.validateBlock(lambdaContext));

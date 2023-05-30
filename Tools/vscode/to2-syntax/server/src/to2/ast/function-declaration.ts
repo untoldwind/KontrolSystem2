@@ -114,9 +114,9 @@ export class FunctionDeclaration implements Node, ModuleItem {
     } else {
       const blockContext = new FunctionContext(context, this.declaredReturn);
 
-      context.mappedFunctions.set(
-        this.name.value,
-        new FunctionType(
+      context.mappedFunctions.set(this.name.value, {
+        definition: { range: this.name.range },
+        value: new FunctionType(
           this.isAsync,
           this.parameters.map((param) => [
             param.name.value,
@@ -124,8 +124,8 @@ export class FunctionDeclaration implements Node, ModuleItem {
             param.defaultValue !== undefined,
           ]),
           this.declaredReturn
-        )
-      );
+        ),
+      });
     }
 
     return errors;
@@ -145,10 +145,10 @@ export class FunctionDeclaration implements Node, ModuleItem {
           range: parameter.name.range,
         });
       } else {
-        blockContext.localVariables.set(
-          parameter.name.value,
-          parameter.resultType(blockContext)
-        );
+        blockContext.localVariables.set(parameter.name.value, {
+          definition: { range: parameter.name.range },
+          value: parameter.resultType(blockContext),
+        });
       }
     }
     errors.push(...this.expression.validateBlock(blockContext));

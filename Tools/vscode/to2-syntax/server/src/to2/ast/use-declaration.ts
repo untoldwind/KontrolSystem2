@@ -118,7 +118,7 @@ export class UseDeclaration implements Node, ModuleItem {
           importedConstant,
         ] of this.importedModule.allConstants()) {
           if (!context.mappedConstants.has(name)) {
-            context.mappedConstants.set(name, importedConstant);
+            context.mappedConstants.set(name, { value: importedConstant });
           }
         }
         for (const [
@@ -126,7 +126,7 @@ export class UseDeclaration implements Node, ModuleItem {
           importedFunction,
         ] of this.importedModule.allFunctions()) {
           if (!context.mappedFunctions.has(name)) {
-            context.mappedFunctions.set(name, importedFunction);
+            context.mappedFunctions.set(name, { value: importedFunction });
           }
         }
         for (const [name, importedType] of this.importedModule.allTypes()) {

@@ -1,7 +1,10 @@
+import * as fs from "fs/promises";
+import * as path from "path";
 import {
   CompletionItem,
   CompletionParams,
   Connection,
+  DefinitionParams,
   Diagnostic,
   DiagnosticSeverity,
   DidChangeConfigurationNotification,
@@ -12,6 +15,7 @@ import {
   InitializeResult,
   InlayHint,
   InlayHintParams,
+  LocationLink,
   SemanticTokens,
   SemanticTokensParams,
   TextDocumentChangeEvent,
@@ -20,6 +24,7 @@ import {
 } from "vscode-languageserver";
 import { TextDocument } from "vscode-languageserver-textdocument";
 import { findNodesAt } from "./helper";
+import { ParserResult } from "./parser";
 import { TextDocumentInput } from "./parser/text-document-input";
 import { To2LspSettings, defaultSettings } from "./settings";
 import {
@@ -29,12 +34,9 @@ import {
   convertSemanticTokens,
 } from "./syntax-token";
 import { Registry } from "./to2/ast/registry";
-import { TO2Module, TO2ModuleNode } from "./to2/ast/to2-module";
+import { TO2ModuleNode } from "./to2/ast/to2-module";
 import { module } from "./to2/parser-module";
 import { pathToUri, uriToPath } from "./utils";
-import * as fs from "fs/promises";
-import * as path from "path";
-import { ParserResult } from "./parser";
 
 export class LspServerSingleton {
   private readonly registry = new Registry();
@@ -66,6 +68,7 @@ export class LspServerSingleton {
     connection.onCompletion(this.onCompleteion.bind(this));
     connection.onCompletionResolve(this.onCompletionResolve.bind(this));
     connection.onHover(this.onHover.bind(this));
+    connection.onDefinition(this.onDefinition.bind(this));
     connection.languages.inlayHint.on(this.onInlayHint.bind(this));
     connection.languages.semanticTokens.on(this.onSemanticTokens.bind(this));
   }
@@ -234,6 +237,7 @@ export class LspServerSingleton {
         },
         hoverProvider: true,
         inlayHintProvider: true,
+        definitionProvider: true,
       },
     };
     if (this.hasWorkspaceFolderCapability) {
@@ -338,6 +342,27 @@ export class LspServerSingleton {
       };
 
     return undefined;
+  }
+
+  onDefinition(params: DefinitionParams): LocationLink[] {
+    const module = this.documentModules.get(params.textDocument.uri);
+
+    if (!module) return [];
+
+    return findNodesAt(module, params.position).flatMap((node) => {
+      if (node.reference) {
+        console.log(node.reference);
+        return [
+          LocationLink.create(
+            params.textDocument.uri,
+            node.reference.definition.range,
+            node.reference.definition.range,
+            node.reference.sourceRange
+          ),
+        ];
+      }
+      return [];
+    });
   }
 
   onCompleteion(params: CompletionParams): CompletionItem[] {

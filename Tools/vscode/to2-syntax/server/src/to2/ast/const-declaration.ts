@@ -37,7 +37,10 @@ export class ConstDeclaration implements Node, ModuleItem {
         range: this.range,
       });
     } else {
-      context.mappedConstants.set(this.name.value, this.type.value);
+      context.mappedConstants.set(this.name.value, {
+        definition: { range: this.name.range },
+        value: this.type.value,
+      });
     }
 
     return errors;
