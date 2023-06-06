@@ -206,6 +206,22 @@ export class LspServerSingleton {
     progress?.done();
   }
 
+  async updateConfig(config: To2LspSettings) {
+    this.globalSettings = config;
+
+    if (config.libraryPath.length === 0) return;
+    try {
+      const stat = await fs.stat(config.libraryPath);
+      if (!stat.isDirectory()) return;
+      const libraryUri = pathToUri(config.libraryPath, this.documents);
+      if (!this.workspaceFolders.has(libraryUri)) {
+        this.indexWorkspace(libraryUri);
+      }
+    } catch {
+      return;
+    }
+  }
+
   onInitialize(params: InitializeParams): InitializeResult {
     const capabilities = params.capabilities;
 
@@ -266,6 +282,9 @@ export class LspServerSingleton {
         DidChangeConfigurationNotification.type,
         undefined
       );
+      this.connection.workspace
+        .getConfiguration("to2LspServer")
+        .then(this.updateConfig.bind(this));
     }
     if (this.hasWorkspaceFolderCapability) {
       this.connection.workspace.onDidChangeWorkspaceFolders((event) => {
@@ -291,9 +310,7 @@ export class LspServerSingleton {
       // Reset all cached document settings
       this.documentSettings.clear();
     } else {
-      this.globalSettings = <To2LspSettings>(
-        (change.settings.to2LspServer || defaultSettings)
-      );
+      this.updateConfig(change.settings.to2LspServer || defaultSettings);
     }
 
     // Revalidate all open text documents
