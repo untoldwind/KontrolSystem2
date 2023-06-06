@@ -53,4 +53,8 @@ export class TypeAlias implements Node, TypeDeclaration {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
+
+  public setModuleName(moduleName: string) {
+    this.type.setModuleName?.(moduleName);
+  }
 }

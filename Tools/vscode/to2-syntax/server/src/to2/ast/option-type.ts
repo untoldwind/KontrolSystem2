@@ -1,4 +1,5 @@
 import { ModuleContext } from "./context";
+import { WithDefinitionRef } from "./definition-ref";
 import { FunctionType } from "./function-type";
 import { ResultType } from "./result-type";
 import {
@@ -60,12 +61,12 @@ export class OptionType implements RealizedType {
     return undefined;
   }
 
-  public findField(name: string): TO2Type | undefined {
+  public findField(name: string): WithDefinitionRef<TO2Type> | undefined {
     switch (name) {
       case "defined":
-        return BUILTIN_BOOL;
+        return { value: BUILTIN_BOOL };
       case "value":
-        return this.elementType;
+        return { value: this.elementType };
       default:
         return undefined;
     }
@@ -75,14 +76,16 @@ export class OptionType implements RealizedType {
     return ["defined", "value"];
   }
 
-  public findMethod(name: string): FunctionType | undefined {
+  public findMethod(name: string): WithDefinitionRef<FunctionType> | undefined {
     switch (name) {
       case "ok_or":
-        return new FunctionType(
-          false,
-          [["error", BUILTIN_STRING, false]],
-          new ResultType(this.elementType, BUILTIN_STRING)
-        );
+        return {
+          value: new FunctionType(
+            false,
+            [["error", BUILTIN_STRING, false]],
+            new ResultType(this.elementType, BUILTIN_STRING)
+          ),
+        };
       default:
         return undefined;
     }

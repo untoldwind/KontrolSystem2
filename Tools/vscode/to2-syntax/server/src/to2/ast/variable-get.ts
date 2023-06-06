@@ -10,7 +10,7 @@ import { DefinitionRef } from "./definition-ref";
 
 export class VariableGet extends Expression {
   private allVariables?: [string, RealizedType][];
-  reference?: { sourceRange: InputRange; definition: DefinitionRef };
+  public reference?: { sourceRange: InputRange; definition: DefinitionRef };
 
   constructor(
     public readonly namePath: WithPosition<string[]>,
@@ -45,7 +45,7 @@ export class VariableGet extends Expression {
 
     if (definition) {
       this.reference = {
-        sourceRange: this.range,
+        sourceRange: this.namePath.range,
         definition,
       };
     }

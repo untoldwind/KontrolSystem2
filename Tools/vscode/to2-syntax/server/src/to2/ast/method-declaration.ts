@@ -54,18 +54,21 @@ export class MethodDeclaration implements Node, ModuleItem {
     } else {
       const blockContext = new FunctionContext(context, this.declaredReturn);
 
-      context.structType.methods.set(
-        this.name.value,
-        new FunctionType(
+      context.structType.methods.set(this.name.value, {
+        definition: {
+          moduleName: context.moduleName,
+          range: this.name.range,
+        },
+        value: new FunctionType(
           this.isAsync,
           this.parameters.map((param) => [
             param.name.value,
-            param.resultType(blockContext),
+            param.resultType(blockContext).realizedType(context),
             param.defaultValue !== undefined,
           ]),
-          this.declaredReturn
-        )
-      );
+          this.declaredReturn.realizedType(context)
+        ),
+      });
     }
 
     return [];
@@ -117,4 +120,6 @@ export class MethodDeclaration implements Node, ModuleItem {
     }
     this.expression.collectSemanticTokens(semanticTokens);
   }
+
+  public setModuleName(moduleName: string) {}
 }

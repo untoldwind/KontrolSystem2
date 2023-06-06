@@ -1,5 +1,6 @@
 import { TypeReference } from "../../reference";
 import { ModuleContext } from "./context";
+import { WithDefinitionRef } from "./definition-ref";
 import { FunctionType } from "./function-type";
 import { Operator } from "./operator";
 import {
@@ -77,32 +78,35 @@ export class ReferencedType implements RealizedType {
       : undefined;
   }
 
-  public findField(name: string): TO2Type | undefined {
+  public findField(name: string): WithDefinitionRef<TO2Type> | undefined {
     const fieldReference = this.typeReference.fields[name];
     if (!fieldReference) return undefined;
 
-    return resolveTypeRef(fieldReference.type, this.genericMap);
+    const resolved = resolveTypeRef(fieldReference.type, this.genericMap);
+    return resolved ? { value: resolved } : undefined;
   }
 
   public allFieldNames(): string[] {
     return Object.keys(this.typeReference.fields);
   }
 
-  public findMethod(name: string): FunctionType | undefined {
+  public findMethod(name: string): WithDefinitionRef<FunctionType> | undefined {
     const methodReference = this.typeReference.methods[name];
     if (!methodReference) return undefined;
 
-    return new FunctionType(
-      methodReference.isAsync,
-      methodReference.parameters.map((paramRef) => [
-        paramRef.name,
-        resolveTypeRef(paramRef.type, this.genericMap) ?? UNKNOWN_TYPE,
-        paramRef.hasDefault,
-      ]),
-      resolveTypeRef(methodReference.returnType, this.genericMap) ??
-        UNKNOWN_TYPE,
-      methodReference.description
-    );
+    return {
+      value: new FunctionType(
+        methodReference.isAsync,
+        methodReference.parameters.map((paramRef) => [
+          paramRef.name,
+          resolveTypeRef(paramRef.type, this.genericMap) ?? UNKNOWN_TYPE,
+          paramRef.hasDefault,
+        ]),
+        resolveTypeRef(methodReference.returnType, this.genericMap) ??
+          UNKNOWN_TYPE,
+        methodReference.description
+      ),
+    };
   }
 
   public allMethodNames(): string[] {

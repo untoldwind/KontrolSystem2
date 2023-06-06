@@ -55,6 +55,7 @@ export class TO2ModuleNode implements Node, TO2Module {
     this.range = new InputRange(start, end);
 
     for (const item of items) {
+      item.setModuleName(name);
       if (isConstDeclaration(item)) this.constants.set(item.name.value, item);
       if (isFunctionDeclaration(item))
         this.functions.set(item.name.value, item);

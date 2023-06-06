@@ -149,7 +149,7 @@ const recordType = map(
     delimited1(
       preceded(
         opt(terminated(lineComment, whitespace0)),
-        seq(identifier, typeSpec)
+        seq(withPosition(identifier), typeSpec)
       ),
       commaDelimiter,
       "<identifier : type>"

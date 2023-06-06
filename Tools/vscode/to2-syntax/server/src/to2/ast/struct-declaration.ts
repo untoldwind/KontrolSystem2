@@ -19,7 +19,7 @@ export class StructField implements Node {
   public readonly range: InputRange;
 
   constructor(
-    public readonly name: string,
+    public readonly name: WithPosition<string>,
     public readonly type: WithPosition<TO2Type>,
     public readonly description: string,
     public readonly initializer: Expression,
@@ -139,5 +139,9 @@ export class StructDeclaration implements Node, TypeDeclaration {
     semanticTokens.push(
       this.structName.range.semanticToken("struct", "declaration")
     );
+  }
+
+  public setModuleName(moduleName: string) {
+    this.type.setModuleName?.(moduleName);
   }
 }

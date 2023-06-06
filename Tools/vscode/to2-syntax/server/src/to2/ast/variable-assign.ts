@@ -7,7 +7,7 @@ import { SemanticToken } from "../../syntax-token";
 import { DefinitionRef } from "./definition-ref";
 
 export class VariableAssign extends Expression {
-  reference?: { sourceRange: InputRange; definition: DefinitionRef };
+  public reference?: { sourceRange: InputRange; definition: DefinitionRef };
 
   constructor(
     public readonly name: WithPosition<string>,

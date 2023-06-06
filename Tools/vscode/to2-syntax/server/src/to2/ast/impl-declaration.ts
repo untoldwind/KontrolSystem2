@@ -40,9 +40,6 @@ export class ImplDeclaration implements Node {
     );
     for (const method of this.methods) {
       errors.push(...method.validateModuleFirstPass(implContext));
-      if (!isLineComment(method)) {
-        structType?.methods?.set(method.name.value, method.functionType());
-      }
     }
 
     return errors;
@@ -86,5 +83,11 @@ export class ImplDeclaration implements Node {
       ?.realizedType(context);
 
     return typeAlias && isRecordType(typeAlias) ? typeAlias : undefined;
+  }
+
+  public setModuleName(moduleName: string) {
+    for (const method of this.methods) {
+      method.setModuleName(moduleName);
+    }
   }
 }

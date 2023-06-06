@@ -116,7 +116,7 @@ const typeAlias = map(
 const structField = map(
   seq(
     descriptionComment,
-    preceded(whitespace0, identifier),
+    preceded(whitespace0, withPosition(identifier)),
     typeSpec,
     preceded(eqDelimiter, expression)
   ),

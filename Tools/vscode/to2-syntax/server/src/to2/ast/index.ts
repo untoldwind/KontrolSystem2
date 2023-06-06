@@ -41,6 +41,8 @@ export interface ModuleItem extends Node {
   validateModuleFirstPass(context: ModuleContext): ValidationError[];
 
   validateModuleSecondPass(context: ModuleContext): ValidationError[];
+
+  setModuleName(moduleName: string): void;
 }
 
 export interface TypeDeclaration extends ModuleItem {

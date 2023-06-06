@@ -1,11 +1,14 @@
 import { Expression, Node, ValidationError } from ".";
-import { BUILTIN_UNIT, TO2Type, UNKNOWN_TYPE } from "./to2-type";
-import { Operator } from "./operator";
-import { InputPosition, WithPosition } from "../../parser";
-import { BlockContext } from "./context";
+import { InputPosition, InputRange, WithPosition } from "../../parser";
 import { SemanticToken } from "../../syntax-token";
+import { BlockContext } from "./context";
+import { DefinitionRef } from "./definition-ref";
+import { Operator } from "./operator";
+import { TO2Type, UNKNOWN_TYPE } from "./to2-type";
 
 export class FieldAssign extends Expression {
+  public reference?: { sourceRange: InputRange; definition: DefinitionRef };
+
   constructor(
     public readonly target: Expression,
     public readonly fieldName: WithPosition<string>,
@@ -38,10 +41,16 @@ export class FieldAssign extends Expression {
       .resultType(context)
       .realizedType(context.module);
 
-    const fieldType = targetType
-      .findField(this.fieldName.value)
-      ?.realizedType(context.module);
-    if (!fieldType) {
+    const { definition, value: fieldType } =
+      targetType.findField(this.fieldName.value) ?? {};
+    if (definition) {
+      this.reference = {
+        sourceRange: this.fieldName.range,
+        definition,
+      };
+    }
+    const fieldRealized = fieldType?.realizedType(context.module);
+    if (!fieldRealized) {
       errors.push({
         status: targetType === UNKNOWN_TYPE ? "warn" : "error",
         message: `Undefined field ${this.fieldName.value} for type ${targetType.name}`,
@@ -53,12 +62,12 @@ export class FieldAssign extends Expression {
         .realizedType(context.module);
       this.documentation = [
         this.fieldName.range.with(
-          `Field \`${targetType.name}.${this.fieldName.value} : ${fieldType.name}\``
+          `Field \`${targetType.name}.${this.fieldName.value} : ${fieldRealized.name}\``
         ),
       ];
-      if (fieldType.description)
+      if (fieldRealized.description)
         this.documentation.push(
-          this.fieldName.range.with(fieldType.description)
+          this.fieldName.range.with(fieldRealized.description)
         );
     }
 

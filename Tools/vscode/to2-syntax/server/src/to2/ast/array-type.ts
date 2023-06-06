@@ -9,6 +9,7 @@ import {
   UNKNOWN_TYPE,
 } from "./to2-type";
 import { OptionType } from "./option-type";
+import { WithDefinitionRef } from "./definition-ref";
 
 export class ArrayType implements RealizedType {
   public readonly kind = "Array";
@@ -65,10 +66,10 @@ export class ArrayType implements RealizedType {
     return undefined;
   }
 
-  public findField(name: string): TO2Type | undefined {
+  public findField(name: string): WithDefinitionRef<TO2Type> | undefined {
     switch (name) {
       case "length":
-        return BUILTIN_INT;
+        return { value: BUILTIN_INT };
       default:
         return undefined;
     }
@@ -78,76 +79,84 @@ export class ArrayType implements RealizedType {
     return ["length"];
   }
 
-  public findMethod(name: string): FunctionType | undefined {
+  public findMethod(name: string): WithDefinitionRef<FunctionType> | undefined {
     switch (name) {
       case "filter":
-        return new FunctionType(
-          false,
-          [
+        return {
+          value: new FunctionType(
+            false,
             [
-              "predicate",
-              new FunctionType(
+              [
+                "predicate",
+                new FunctionType(
+                  false,
+                  [["item", this.elementType, false]],
+                  BUILTIN_BOOL
+                ),
                 false,
-                [["item", this.elementType, false]],
-                BUILTIN_BOOL
-              ),
-              false,
+              ],
             ],
-          ],
-          this,
-          "Filter array based on a predicate"
-        );
+            this,
+            "Filter array based on a predicate"
+          ),
+        };
       case "find":
-        return new FunctionType(
-          false,
-          [
+        return {
+          value: new FunctionType(
+            false,
             [
-              "predicate",
-              new FunctionType(
+              [
+                "predicate",
+                new FunctionType(
+                  false,
+                  [["item", this.elementType, false]],
+                  BUILTIN_BOOL
+                ),
                 false,
-                [["item", this.elementType, false]],
-                BUILTIN_BOOL
-              ),
-              false,
+              ],
             ],
-          ],
-          new OptionType(this.elementType),
-          "Find an item in the array based on a predicate"
-        );
+            new OptionType(this.elementType),
+            "Find an item in the array based on a predicate"
+          ),
+        };
       case "exists":
-        return new FunctionType(
-          false,
-          [
+        return {
+          value: new FunctionType(
+            false,
             [
-              "predicate",
-              new FunctionType(
+              [
+                "predicate",
+                new FunctionType(
+                  false,
+                  [["item", this.elementType, false]],
+                  BUILTIN_BOOL
+                ),
                 false,
-                [["item", this.elementType, false]],
-                BUILTIN_BOOL
-              ),
-              false,
+              ],
             ],
-          ],
-          BUILTIN_BOOL,
-          "Check if an item satisfying a predicate exists"
-        );
+            BUILTIN_BOOL,
+            "Check if an item satisfying a predicate exists"
+          ),
+        };
       case "map":
-        return new FunctionType(
-          false,
-          [
+        return {
+          value: new FunctionType(
+            false,
             [
-              "convert",
-              new FunctionType(
+              [
+                "convert",
+                new FunctionType(
+                  false,
+                  [["item", this.elementType, false]],
+                  new GenericParameter("T")
+                ),
                 false,
-                [["item", this.elementType, false]],
-                new GenericParameter("T")
-              ),
-              false,
+              ],
             ],
-          ],
-          new ArrayType(new GenericParameter("T")),
-          "Check if an item satisfying a predicate exists"
-        );
+            new ArrayType(new GenericParameter("T")),
+            "Check if an item satisfying a predicate exists"
+          ),
+        };
     }
     return undefined;
   }

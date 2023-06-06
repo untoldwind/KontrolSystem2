@@ -2,6 +2,7 @@ import { UNKNOWN_RANGE } from "../../parser";
 import { REFERENCE, TypeRef } from "../../reference";
 import { ArrayType } from "./array-type";
 import { ModuleContext } from "./context";
+import { WithDefinitionRef } from "./definition-ref";
 import { FunctionType } from "./function-type";
 import { Operator } from "./operator";
 import { OptionType } from "./option-type";
@@ -15,6 +16,8 @@ export interface TO2Type {
   localName: string;
 
   realizedType(context: ModuleContext): RealizedType;
+
+  setModuleName?(moduleName: string): void;
 }
 
 export interface RealizedType extends TO2Type {
@@ -39,11 +42,11 @@ export interface RealizedType extends TO2Type {
 
   findPrefixOperator(op: Operator, leftType: RealizedType): TO2Type | undefined;
 
-  findField(name: string): TO2Type | undefined;
+  findField(name: string): WithDefinitionRef<TO2Type> | undefined;
 
   allFieldNames(): string[];
 
-  findMethod(name: string): FunctionType | undefined;
+  findMethod(name: string): WithDefinitionRef<FunctionType> | undefined;
 
   allMethodNames(): string[];
 
@@ -82,7 +85,7 @@ export class GenericParameter implements RealizedType {
     return undefined;
   }
 
-  findField(name: string): TO2Type | undefined {
+  findField(name: string): WithDefinitionRef<TO2Type> | undefined {
     return undefined;
   }
 
@@ -90,7 +93,7 @@ export class GenericParameter implements RealizedType {
     return [];
   }
 
-  findMethod(name: string): FunctionType | undefined {
+  findMethod(name: string): WithDefinitionRef<FunctionType> | undefined {
     return undefined;
   }
 
@@ -277,7 +280,7 @@ export function resolveTypeRef(
     case "Record":
       return new RecordType(
         typeRef.parameters.map((param, idx) => [
-          typeRef.names[idx],
+          { range: UNKNOWN_RANGE, value: typeRef.names[idx] },
           {
             range: UNKNOWN_RANGE,
             value: resolveTypeRef(param) ?? UNKNOWN_TYPE,

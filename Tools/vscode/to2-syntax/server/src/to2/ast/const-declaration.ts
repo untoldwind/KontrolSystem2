@@ -53,6 +53,10 @@ export class ConstDeclaration implements Node, ModuleItem {
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     this.expression.collectSemanticTokens(semanticTokens);
   }
+
+  public setModuleName(moduleName: string) {
+    this.type.value.setModuleName?.(moduleName);
+  }
 }
 
 export function isConstDeclaration(node: ModuleItem): node is ConstDeclaration {

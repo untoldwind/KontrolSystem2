@@ -1,4 +1,5 @@
 import { ModuleContext } from "./context";
+import { WithDefinitionRef } from "./definition-ref";
 import { FunctionType } from "./function-type";
 import { Operator } from "./operator";
 import { RealizedType, TO2Type } from "./to2-type";
@@ -70,7 +71,7 @@ export class ResultType implements RealizedType {
     return undefined;
   }
 
-  public findField(name: string): TO2Type | undefined {
+  public findField(name: string): WithDefinitionRef<TO2Type> | undefined {
     return undefined;
   }
 
@@ -78,7 +79,7 @@ export class ResultType implements RealizedType {
     return [];
   }
 
-  public findMethod(name: string): FunctionType | undefined {
+  public findMethod(name: string): WithDefinitionRef<FunctionType> | undefined {
     return undefined;
   }
 

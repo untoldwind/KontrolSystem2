@@ -174,6 +174,8 @@ export class FunctionDeclaration implements Node, ModuleItem {
     }
     this.expression.collectSemanticTokens(semanticTokens);
   }
+
+  public setModuleName(moduleName: string) {}
 }
 
 export function isFunctionDeclaration(

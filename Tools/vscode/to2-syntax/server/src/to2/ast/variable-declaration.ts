@@ -20,7 +20,7 @@ export class DeclarationParameter {
     }
     if (isRecordType(from)) {
       if (this.source)
-        return from.itemTypes.find((item) => item[0] === this.source)?.[1]
+        return from.itemTypes.find((item) => item[0].value === this.source)?.[1]
           .value;
       return idx < from.itemTypes.length
         ? from.itemTypes[idx][1].value
