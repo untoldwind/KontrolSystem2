@@ -91,7 +91,10 @@ export class VariableDeclaration implements Node, BlockItem {
       }
 
       context.localVariables.set(this.declaration.target.value, {
-        definition: { range: this.declaration.target.range },
+        definition: {
+          moduleName: context.module.moduleName,
+          range: this.declaration.target.range,
+        },
         value: variableType,
       });
       this.documentation = [

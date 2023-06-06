@@ -38,14 +38,13 @@ export class FieldAssign extends Expression {
       .resultType(context)
       .realizedType(context.module);
 
-    const fieldType = targetType.findField(this.fieldName.value)?.realizedType(context.module);
+    const fieldType = targetType
+      .findField(this.fieldName.value)
+      ?.realizedType(context.module);
     if (!fieldType) {
       errors.push({
-        status:
-        targetType === UNKNOWN_TYPE ? "warn" : "error",
-        message: `Undefined field ${this.fieldName.value} for type ${
-          targetType.name
-        }`,
+        status: targetType === UNKNOWN_TYPE ? "warn" : "error",
+        message: `Undefined field ${this.fieldName.value} for type ${targetType.name}`,
         range: this.fieldName.range,
       });
     } else {
@@ -57,8 +56,10 @@ export class FieldAssign extends Expression {
           `Field \`${targetType.name}.${this.fieldName.value} : ${fieldType.name}\``
         ),
       ];
-      if(fieldType.description)
-        this.documentation.push(this.fieldName.range.with(fieldType.description));
+      if (fieldType.description)
+        this.documentation.push(
+          this.fieldName.range.with(fieldType.description)
+        );
     }
 
     errors.push(...this.target.validateBlock(context));
@@ -69,7 +70,9 @@ export class FieldAssign extends Expression {
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     this.target.collectSemanticTokens(semanticTokens);
-    semanticTokens.push(this.fieldName.range.semanticToken("property", "modification"));
+    semanticTokens.push(
+      this.fieldName.range.semanticToken("property", "modification")
+    );
     this.expression.collectSemanticTokens(semanticTokens);
   }
 }

@@ -114,17 +114,18 @@ export class FunctionDeclaration implements Node, ModuleItem {
     } else {
       const blockContext = new FunctionContext(context, this.declaredReturn);
 
+      this.functionType = new FunctionType(
+        this.isAsync,
+        this.parameters.map((param) => [
+          param.name.value,
+          param.resultType(blockContext).realizedType(context),
+          param.defaultValue !== undefined,
+        ]),
+        this.declaredReturn.realizedType(context)
+      );
       context.mappedFunctions.set(this.name.value, {
-        definition: { range: this.name.range },
-        value: new FunctionType(
-          this.isAsync,
-          this.parameters.map((param) => [
-            param.name.value,
-            param.resultType(blockContext),
-            param.defaultValue !== undefined,
-          ]),
-          this.declaredReturn
-        ),
+        definition: { moduleName: context.moduleName, range: this.name.range },
+        value: this.functionType,
       });
     }
 
@@ -146,7 +147,10 @@ export class FunctionDeclaration implements Node, ModuleItem {
         });
       } else {
         blockContext.localVariables.set(parameter.name.value, {
-          definition: { range: parameter.name.range },
+          definition: {
+            moduleName: context.moduleName,
+            range: parameter.name.range,
+          },
           value: parameter.resultType(blockContext),
         });
       }

@@ -33,6 +33,9 @@ export class Call extends Expression {
         )
       ) ?? {};
 
+    if (this.namePath.value.join("::") === "control_steering") {
+      console.log(">>>>", definition, variableType);
+    }
     if (definition) {
       this.reference = {
         sourceRange: this.namePath.range,

@@ -1,6 +1,9 @@
 export interface To2LspSettings {
-  libraryPath: string
+  libraryPath: string;
   maxNumberOfProblems: number;
 }
 
-export const defaultSettings: To2LspSettings = { libraryPath: "", maxNumberOfProblems: 1000 };
+export const defaultSettings: To2LspSettings = {
+  libraryPath: "",
+  maxNumberOfProblems: 1000,
+};

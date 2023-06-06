@@ -44,7 +44,10 @@ export class Unapply extends Expression {
           });
         } else if (isOptionType(expressionType)) {
           context.localVariables.set(this.extractNames[0], {
-            definition: { range: this.pattern.range },
+            definition: {
+              moduleName: context.module.moduleName,
+              range: this.pattern.range,
+            },
             value: expressionType.elementType,
           });
         } else {

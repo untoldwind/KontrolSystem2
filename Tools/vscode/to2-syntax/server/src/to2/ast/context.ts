@@ -15,6 +15,7 @@ import {
 } from "./to2-type";
 
 export interface ModuleContext {
+  moduleName: string;
   mappedConstants: Map<string, WithDefinitionRef<TO2Type>>;
   moduleAliases: Map<string, string[]>;
   mappedFunctions: Map<string, WithDefinitionRef<FunctionType>>;
@@ -45,7 +46,10 @@ export class RootModuleContext implements ModuleContext {
   public readonly moduleAliases: Map<string, string[]> = new Map();
   public readonly typeAliases: Map<string, RealizedType> = new Map();
 
-  constructor(public readonly registry: Registry) {}
+  constructor(
+    public readonly moduleName: string,
+    public readonly registry: Registry
+  ) {}
 
   findType(
     namePath: string[],
@@ -182,6 +186,7 @@ export class RootModuleContext implements ModuleContext {
 }
 
 export class ImplModuleContext implements ModuleContext {
+  public readonly moduleName: string;
   public readonly mappedConstants: Map<string, WithDefinitionRef<TO2Type>> =
     new Map();
   public readonly mappedFunctions: Map<
@@ -196,6 +201,7 @@ export class ImplModuleContext implements ModuleContext {
     private readonly root: ModuleContext,
     public readonly structType: RecordType
   ) {
+    this.moduleName = root.moduleName;
     this.registry = root.registry;
     this.mappedConstants = root.mappedConstants;
     this.mappedFunctions = root.mappedFunctions;

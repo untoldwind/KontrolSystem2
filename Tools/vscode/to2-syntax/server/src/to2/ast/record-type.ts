@@ -12,11 +12,13 @@ export class RecordType implements RealizedType {
 
   constructor(
     public readonly itemTypes: [string, WithPosition<TO2Type>][],
-    methods?: Map<string, FunctionType>
+    methods?: Map<string, FunctionType>,
+    structName?: string
   ) {
-    this.name = this.localName = `(${itemTypes
+    this.name = `(${itemTypes
       .map((item) => `${item[0]} : ${item[1].value.localName}`)
       .join(", ")})`;
+    this.localName = structName ?? this.name;
     this.description = "";
     this.methods = methods ?? new Map();
   }
@@ -31,7 +33,8 @@ export class RecordType implements RealizedType {
         name,
         { range: type.range, value: type.value.realizedType(context) },
       ]),
-      this.methods
+      this.methods,
+      this.localName
     );
   }
 
@@ -49,7 +52,8 @@ export class RecordType implements RealizedType {
             .fillGenerics(context, genericMap),
         },
       ]),
-      this.methods
+      this.methods,
+      this.localName
     );
   }
 

@@ -221,7 +221,10 @@ const moduleItems = preceded(
   )
 );
 
-export function module(documentUri: DocumentUri, moduleName: string): Parser<TO2ModuleNode> {
+export function module(
+  documentUri: DocumentUri,
+  moduleName: string
+): Parser<TO2ModuleNode> {
   return map(
     seq(preceded(whitespace0, descriptionComment), moduleItems),
     ([description, items], start, end) =>

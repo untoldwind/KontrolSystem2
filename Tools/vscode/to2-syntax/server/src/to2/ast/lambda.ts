@@ -1,5 +1,5 @@
 import { Expression, Node, ValidationError } from ".";
-import { InputPosition } from "../../parser";
+import { InputPosition, WithPosition } from "../../parser";
 import { SemanticToken } from "../../syntax-token";
 import { BlockContext } from "./context";
 import { FunctionParameter } from "./function-declaration";
@@ -21,7 +21,13 @@ export class Lambda extends Expression {
 
     const resolved = this.resolveParameters(typeHint);
     for (const parameter of resolved) {
-      lambdaContext.localVariables.set(parameter[0], { value: parameter[1] });
+      lambdaContext.localVariables.set(parameter[0].value, {
+        definition: {
+          moduleName: context.module.moduleName,
+          range: parameter[0].range,
+        },
+        value: parameter[1],
+      });
     }
     const returnType =
       typeHint &&
@@ -29,7 +35,15 @@ export class Lambda extends Expression {
       typeHint.returnType !== UNKNOWN_TYPE
         ? typeHint.returnType
         : this.expression.resultType(lambdaContext);
-    return new FunctionType(false, resolved, returnType);
+    return new FunctionType(
+      false,
+      resolved.map(([name, type, hasDefault]) => [
+        name.value,
+        type,
+        hasDefault,
+      ]),
+      returnType
+    );
   }
 
   public reduceNode<T>(
@@ -55,7 +69,13 @@ export class Lambda extends Expression {
 
     const resolved = this.resolveParameters(typeHint);
     for (const parameter of resolved) {
-      lambdaContext.localVariables.set(parameter[0], { value: parameter[1] });
+      lambdaContext.localVariables.set(parameter[0].value, {
+        definition: {
+          moduleName: context.module.moduleName,
+          range: parameter[0].range,
+        },
+        value: parameter[1],
+      });
     }
 
     errors.push(...this.expression.validateBlock(lambdaContext));
@@ -69,13 +89,13 @@ export class Lambda extends Expression {
 
   private resolveParameters(
     typeHint?: RealizedType
-  ): [string, TO2Type, boolean][] {
+  ): [WithPosition<string>, TO2Type, boolean][] {
     if (typeHint && isFunctionType(typeHint)) {
-      const resolveParameters: [string, TO2Type, boolean][] = [];
+      const resolveParameters: [WithPosition<string>, TO2Type, boolean][] = [];
       for (let i = 0; i < this.parameters.length; i++) {
         const parameter = this.parameters[i];
         resolveParameters.push([
-          parameter.name.value,
+          parameter.name,
           parameter.type?.value ??
             (i < typeHint.parameterTypes.length
               ? typeHint.parameterTypes[i][1]
@@ -86,7 +106,7 @@ export class Lambda extends Expression {
       return resolveParameters;
     }
     return this.parameters.map((parameter) => [
-      parameter.name.value,
+      parameter.name,
       parameter.type?.value ?? UNKNOWN_TYPE,
       false,
     ]);

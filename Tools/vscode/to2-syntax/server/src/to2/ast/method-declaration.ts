@@ -78,7 +78,10 @@ export class MethodDeclaration implements Node, ModuleItem {
 
     const blockContext = new FunctionContext(context, this.declaredReturn);
 
-    blockContext.localVariables.set("self", { value: context.structType });
+    blockContext.localVariables.set("self", {
+      definition: { moduleName: context.moduleName, range: this.name.range },
+      value: context.structType,
+    });
     for (const parameter of this.parameters) {
       errors.push(...parameter.validateBlock(blockContext));
       if (blockContext.localVariables.has(parameter.name.value)) {
@@ -89,7 +92,10 @@ export class MethodDeclaration implements Node, ModuleItem {
         });
       } else {
         blockContext.localVariables.set(parameter.name.value, {
-          definition: { range: parameter.name.range },
+          definition: {
+            moduleName: context.moduleName,
+            range: parameter.name.range,
+          },
           value: parameter.resultType(blockContext),
         });
       }

@@ -64,7 +64,10 @@ export class TupleDeconstructDeclaration implements Node, BlockItem {
             });
           }
           context.localVariables.set(declaration.target.value, {
-            definition: { range: declaration.target.range },
+            definition: {
+              moduleName: context.module.moduleName,
+              range: declaration.target.range,
+            },
             value: variableType,
           });
           this.documentation.push(

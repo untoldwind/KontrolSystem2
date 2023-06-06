@@ -1,8 +1,8 @@
 import { REFERENCE } from "../../reference";
-import { ReferencedModule, TO2Module } from "./to2-module";
+import { ReferencedModule, TO2Module, TO2ModuleNode } from "./to2-module";
 
 export class Registry {
-  private readonly modules: Map<string, TO2Module> = new Map();
+  public readonly modules: Map<string, TO2Module> = new Map();
 
   constructor() {
     for (const moduleReference of Object.values(REFERENCE.modules)) {

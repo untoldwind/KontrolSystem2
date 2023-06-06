@@ -1175,9 +1175,7 @@
     "ArrayBuilder": {
       "name": "ArrayBuilder",
       "description": "Helper to create an array of initially unknown size",
-      "genericParameters": [
-        "T"
-      ],
+      "genericParameters": ["T"],
       "fields": {
         "length": {
           "name": "length",
@@ -1260,9 +1258,7 @@
     "Cell": {
       "name": "Cell",
       "description": "Holds a single value that can be mutated at any time",
-      "genericParameters": [
-        "T"
-      ],
+      "genericParameters": ["T"],
       "fields": {
         "value": {
           "name": "value",
@@ -1337,9 +1333,7 @@
     "Option": {
       "name": "Option",
       "description": "",
-      "genericParameters": [
-        "T"
-      ],
+      "genericParameters": ["T"],
       "fields": {
         "defined": {
           "name": "defined",
@@ -2157,10 +2151,7 @@
     "Result": {
       "name": "Result",
       "description": "",
-      "genericParameters": [
-        "R",
-        "E"
-      ],
+      "genericParameters": ["R", "E"],
       "fields": {
         "success": {
           "name": "success",
@@ -2879,9 +2870,7 @@
         "Task": {
           "name": "Task",
           "description": "Represents a background task\n",
-          "genericParameters": [
-            "T"
-          ],
+          "genericParameters": ["T"],
           "fields": {
             "is_completed": {
               "name": "is_completed",
@@ -30457,11 +30446,7 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": [
-              "iters",
-              "v1",
-              "v2"
-            ],
+            "names": ["iters", "v1", "v2"],
             "parameters": [
               {
                 "kind": "Builtin",
@@ -30813,10 +30798,7 @@
               ],
               "returnType": {
                 "kind": "Record",
-                "names": [
-                  "latitude",
-                  "longitude"
-                ],
+                "names": ["latitude", "longitude"],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -31950,10 +31932,7 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": [
-                  "delta_v",
-                  "UT"
-                ],
+                "names": ["delta_v", "UT"],
                 "parameters": [
                   {
                     "kind": "Standard",
@@ -31993,10 +31972,7 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": [
-                  "delta_v",
-                  "UT"
-                ],
+                "names": ["delta_v", "UT"],
                 "parameters": [
                   {
                     "kind": "Standard",
@@ -32227,11 +32203,7 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": [
-                  "delta_v",
-                  "TT",
-                  "UT"
-                ],
+                "names": ["delta_v", "TT", "UT"],
                 "parameters": [
                   {
                     "kind": "Standard",
@@ -32300,11 +32272,7 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": [
-                  "delta_v",
-                  "TT",
-                  "UT"
-                ],
+                "names": ["delta_v", "TT", "UT"],
                 "parameters": [
                   {
                     "kind": "Standard",
@@ -32373,11 +32341,7 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": [
-                  "delta_v",
-                  "TT",
-                  "UT"
-                ],
+                "names": ["delta_v", "TT", "UT"],
                 "parameters": [
                   {
                     "kind": "Standard",
@@ -32497,10 +32461,7 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": [
-              "start_velocity",
-              "target_velocity"
-            ],
+            "names": ["start_velocity", "target_velocity"],
             "parameters": [
               {
                 "kind": "Standard",
@@ -32604,10 +32565,7 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": [
-              "delta_v",
-              "UT"
-            ],
+            "names": ["delta_v", "UT"],
             "parameters": [
               {
                 "kind": "Standard",
@@ -32684,10 +32642,7 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": [
-              "delta_v",
-              "UT"
-            ],
+            "names": ["delta_v", "UT"],
             "parameters": [
               {
                 "kind": "Standard",
@@ -32727,10 +32682,7 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": [
-              "delta_v",
-              "UT"
-            ],
+            "names": ["delta_v", "UT"],
             "parameters": [
               {
                 "kind": "Standard",
@@ -32770,10 +32722,7 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": [
-              "delta_v",
-              "UT"
-            ],
+            "names": ["delta_v", "UT"],
             "parameters": [
               {
                 "kind": "Standard",
@@ -32816,10 +32765,7 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": [
-                  "delta_v",
-                  "UT"
-                ],
+                "names": ["delta_v", "UT"],
                 "parameters": [
                   {
                     "kind": "Standard",
@@ -32984,11 +32930,7 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": [
-                  "iters",
-                  "x",
-                  "y"
-                ],
+                "names": ["iters", "x", "y"],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -33074,11 +33016,7 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": [
-                  "iters",
-                  "x",
-                  "y"
-                ],
+                "names": ["iters", "x", "y"],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -33190,18 +33128,11 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": [
-              "best",
-              "points"
-            ],
+            "names": ["best", "points"],
             "parameters": [
               {
                 "kind": "Record",
-                "names": [
-                  "f",
-                  "x",
-                  "y"
-                ],
+                "names": ["f", "x", "y"],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -33222,11 +33153,7 @@
                 "parameters": [
                   {
                     "kind": "Record",
-                    "names": [
-                      "f",
-                      "x",
-                      "y"
-                    ],
+                    "names": ["f", "x", "y"],
                     "parameters": [
                       {
                         "kind": "Builtin",
@@ -33364,10 +33291,7 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": [
-                  "fx",
-                  "x"
-                ],
+                "names": ["fx", "x"],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -33575,11 +33499,7 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": [
-                  "position",
-                  "t",
-                  "velocity"
-                ],
+                "names": ["position", "t", "velocity"],
                 "parameters": [
                   {
                     "kind": "Standard",
@@ -33676,10 +33596,7 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": [
-                  "target_port",
-                  "vessel_port"
-                ],
+                "names": ["target_port", "vessel_port"],
                 "parameters": [
                   {
                     "kind": "Standard",
@@ -34252,10 +34169,7 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": [
-              "burn_time",
-              "half_burn_time"
-            ],
+            "names": ["burn_time", "half_burn_time"],
             "parameters": [
               {
                 "kind": "Builtin",

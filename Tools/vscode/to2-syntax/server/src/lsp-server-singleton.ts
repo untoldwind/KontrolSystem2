@@ -22,7 +22,7 @@ import {
   TextDocumentSyncKind,
   TextDocuments,
 } from "vscode-languageserver";
-import { TextDocument } from "vscode-languageserver-textdocument";
+import { DocumentUri, TextDocument } from "vscode-languageserver-textdocument";
 import { findNodesAt } from "./helper";
 import { ParserResult } from "./parser";
 import { TextDocumentInput } from "./parser/text-document-input";
@@ -34,7 +34,7 @@ import {
   convertSemanticTokens,
 } from "./syntax-token";
 import { Registry } from "./to2/ast/registry";
-import { TO2ModuleNode } from "./to2/ast/to2-module";
+import { TO2ModuleNode, isTO2ModuleNode } from "./to2/ast/to2-module";
 import { module } from "./to2/parser-module";
 import { pathToUri, uriToPath } from "./utils";
 
@@ -46,9 +46,9 @@ export class LspServerSingleton {
   private hasConfigurationCapability = false;
   private hasWorkDonwCapability = false;
   private readonly documentSettings: Map<string, To2LspSettings> = new Map();
-  private readonly documentModules: Map<string, TO2ModuleNode> = new Map();
+  private readonly modulesByUri: Map<string, TO2ModuleNode> = new Map();
   private readonly documents: TextDocuments<TextDocument>;
-  private workspaceFolders: Map<string, Map<string, TO2ModuleNode>> = new Map();
+  private workspaceFolders: Set<DocumentUri> = new Set();
 
   constructor(private readonly connection: Connection) {
     this.documents = new TextDocuments(TextDocument);
@@ -141,7 +141,7 @@ export class LspServerSingleton {
   ): ParserResult<TO2ModuleNode> {
     const input = new TextDocumentInput(textDocument);
     let moduleName = "<unknown>";
-    for (const workspaceUri of this.workspaceFolders.keys()) {
+    for (const workspaceUri of this.workspaceFolders) {
       if (
         textDocument.uri.startsWith(workspaceUri) &&
         textDocument.uri.endsWith(".to2")
@@ -154,10 +154,14 @@ export class LspServerSingleton {
     }
     const moduleResult = module(textDocument.uri, moduleName)(input);
     if (moduleResult.value) {
-      if (override || !this.documentModules.has(textDocument.uri))
-        this.documentModules.set(textDocument.uri, moduleResult.value);
+      if (override || !this.modulesByUri.has(textDocument.uri))
+        this.modulesByUri.set(textDocument.uri, moduleResult.value);
+
+      this.registry.modules.set(moduleResult.value.name, moduleResult.value);
     } else {
-      this.documentModules.delete(textDocument.uri);
+      const existing = this.modulesByUri.get(textDocument.uri);
+      if (existing) this.registry.modules.delete(existing.name);
+      this.modulesByUri.delete(textDocument.uri);
     }
     return moduleResult;
   }
@@ -166,7 +170,7 @@ export class LspServerSingleton {
     const workspacePath = uriToPath(workspaceUri);
     if (!workspacePath) return;
 
-    this.workspaceFolders.set(workspaceUri, new Map());
+    this.workspaceFolders.add(workspaceUri);
     const progress = this.hasWorkDonwCapability
       ? await this.connection.window.createWorkDoneProgress()
       : undefined;
@@ -193,7 +197,8 @@ export class LspServerSingleton {
             0,
             content
           );
-          this.parseModule(textDocument, false);
+          const moduleResult = this.parseModule(textDocument, false);
+          if (moduleResult.value) moduleResult.value.validate(this.registry);
         }
       }
     }
@@ -247,6 +252,9 @@ export class LspServerSingleton {
         },
       };
     }
+    params.workspaceFolders?.forEach((workspaceFolder) =>
+      this.workspaceFolders.add(workspaceFolder.uri)
+    );
 
     return result;
   }
@@ -296,7 +304,6 @@ export class LspServerSingleton {
 
   onDidClose(event: TextDocumentChangeEvent<TextDocument>) {
     this.documentSettings.delete(event.document.uri);
-    this.documentModules.delete(event.document.uri);
   }
 
   onDidOpen(event: TextDocumentChangeEvent<TextDocument>) {
@@ -310,7 +317,7 @@ export class LspServerSingleton {
   async onSemanticTokens(
     params: SemanticTokensParams
   ): Promise<SemanticTokens> {
-    const module = this.documentModules.get(params.textDocument.uri);
+    const module = this.modulesByUri.get(params.textDocument.uri);
     const token: SemanticToken[] = [];
 
     module?.collectSemanticTokens(token);
@@ -321,7 +328,7 @@ export class LspServerSingleton {
   }
 
   onHover(params: HoverParams): Hover | undefined {
-    const module = this.documentModules.get(params.textDocument.uri);
+    const module = this.modulesByUri.get(params.textDocument.uri);
 
     if (!module) return undefined;
 
@@ -345,28 +352,36 @@ export class LspServerSingleton {
   }
 
   onDefinition(params: DefinitionParams): LocationLink[] {
-    const module = this.documentModules.get(params.textDocument.uri);
+    const module = this.modulesByUri.get(params.textDocument.uri);
 
     if (!module) return [];
 
-    return findNodesAt(module, params.position).flatMap((node) => {
-      if (node.reference) {
-        console.log(node.reference);
+    return findNodesAt(module, params.position)
+      .filter(
+        (node) =>
+          node.reference !== undefined &&
+          node.reference.sourceRange.contains(params.position)
+      )
+      .flatMap((node) => {
+        const reference = node.reference;
+        if (!reference) return [];
+        const module = this.registry.modules.get(
+          reference.definition.moduleName
+        );
+        if (!module || !isTO2ModuleNode(module)) return [];
         return [
           LocationLink.create(
-            params.textDocument.uri,
-            node.reference.definition.range,
-            node.reference.definition.range,
-            node.reference.sourceRange
+            module.documentUri,
+            node.reference!!.definition.range,
+            node.reference!!.definition.range,
+            node.reference!!.sourceRange
           ),
         ];
-      }
-      return [];
-    });
+      });
   }
 
   onCompleteion(params: CompletionParams): CompletionItem[] {
-    const module = this.documentModules.get(params.textDocument.uri);
+    const module = this.modulesByUri.get(params.textDocument.uri);
 
     if (!module) return [];
 
@@ -380,7 +395,7 @@ export class LspServerSingleton {
   }
 
   onInlayHint(params: InlayHintParams): InlayHint[] {
-    const module = this.documentModules.get(params.textDocument.uri);
+    const module = this.modulesByUri.get(params.textDocument.uri);
 
     return (
       module?.reduceNode((inlayHints, node) => {

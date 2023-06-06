@@ -27,7 +27,7 @@ export interface TO2Module {
 
   findConstant(name: string): WithDefinitionRef<TO2Type> | undefined;
 
-  allConstants(): [string, TO2Type][];
+  allConstants(): [string, WithDefinitionRef<TO2Type>][];
 
   findType(name: string): TO2Type | undefined;
 
@@ -35,7 +35,7 @@ export interface TO2Module {
 
   findFunction(name: string): WithDefinitionRef<FunctionType> | undefined;
 
-  allFunctions(): [string, FunctionType][];
+  allFunctions(): [string, WithDefinitionRef<FunctionType>][];
 }
 
 export class TO2ModuleNode implements Node, TO2Module {
@@ -65,13 +65,21 @@ export class TO2ModuleNode implements Node, TO2Module {
   public findConstant(name: string): WithDefinitionRef<TO2Type> | undefined {
     const decl = this.constants.get(name);
 
-    return decl ? { value: decl.type.value } : undefined;
+    return decl
+      ? {
+          definition: { moduleName: this.name, range: decl.name.range },
+          value: decl.type.value,
+        }
+      : undefined;
   }
 
-  public allConstants(): [string, TO2Type][] {
+  public allConstants(): [string, WithDefinitionRef<TO2Type>][] {
     return [...this.constants.entries()].map(([name, decl]) => [
       name,
-      decl.type.value,
+      {
+        definition: { moduleName: this.name, range: decl.name.range },
+        value: decl.type.value,
+      },
     ]);
   }
 
@@ -88,13 +96,21 @@ export class TO2ModuleNode implements Node, TO2Module {
   ): WithDefinitionRef<FunctionType> | undefined {
     const decl = this.functions.get(name);
 
-    return decl ? { value: decl.functionType } : undefined;
+    return decl
+      ? {
+          definition: { moduleName: this.name, range: decl.name.range },
+          value: decl.functionType,
+        }
+      : undefined;
   }
 
-  public allFunctions(): [string, FunctionType][] {
+  public allFunctions(): [string, WithDefinitionRef<FunctionType>][] {
     return [...this.functions.entries()].map(([name, decl]) => [
       name,
-      decl.functionType,
+      {
+        definition: { moduleName: this.name, range: decl.name.range },
+        value: decl.functionType,
+      },
     ]);
   }
 
@@ -109,7 +125,7 @@ export class TO2ModuleNode implements Node, TO2Module {
   }
 
   public validate(registry: Registry): ValidationError[] {
-    const context = new RootModuleContext(registry);
+    const context = new RootModuleContext(this.name, registry);
     const errors: ValidationError[] = [];
 
     for (const item of this.items) {
@@ -130,6 +146,10 @@ export class TO2ModuleNode implements Node, TO2Module {
   }
 }
 
+export function isTO2ModuleNode(module: TO2Module): module is TO2ModuleNode {
+  return (module as TO2ModuleNode).documentUri !== undefined;
+}
+
 export class ReferencedModule implements TO2Module {
   public readonly name: string;
   public readonly description: string;
@@ -147,11 +167,11 @@ export class ReferencedModule implements TO2Module {
     return type ? { value: type } : undefined;
   }
 
-  allConstants(): [string, TO2Type][] {
+  allConstants(): [string, WithDefinitionRef<TO2Type>][] {
     return Object.entries(this.moduleReference.constants).map(
       ([name, constantReference]) => [
         name,
-        resolveTypeRef(constantReference.type) ?? UNKNOWN_TYPE,
+        { value: resolveTypeRef(constantReference.type) ?? UNKNOWN_TYPE },
       ]
     );
   }
@@ -197,20 +217,22 @@ export class ReferencedModule implements TO2Module {
       : undefined;
   }
 
-  allFunctions(): [string, FunctionType][] {
+  allFunctions(): [string, WithDefinitionRef<FunctionType>][] {
     return Object.entries(this.moduleReference.functions).map(
       ([name, functionReference]) => [
         name,
-        new FunctionType(
-          functionReference.isAsync,
-          functionReference.parameters.map((param) => [
-            param.name,
-            resolveTypeRef(param.type) ?? UNKNOWN_TYPE,
-            param.hasDefault,
-          ]),
-          resolveTypeRef(functionReference.returnType) ?? UNKNOWN_TYPE,
-          functionReference.description
-        ),
+        {
+          value: new FunctionType(
+            functionReference.isAsync,
+            functionReference.parameters.map((param) => [
+              param.name,
+              resolveTypeRef(param.type) ?? UNKNOWN_TYPE,
+              param.hasDefault,
+            ]),
+            resolveTypeRef(functionReference.returnType) ?? UNKNOWN_TYPE,
+            functionReference.description
+          ),
+        },
       ]
     );
   }

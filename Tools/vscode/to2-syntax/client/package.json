@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@types/vscode": "^1.77.0",
-    "@vscode/test-electron": "^2.3.0",
+    "@vscode/test-electron": "^2.3.2",
     "esbuild": "0.17.19",
     "rimraf": "5.0.1"
   },

@@ -67,7 +67,9 @@ export class StructDeclaration implements Node, TypeDeclaration {
       this.fields.flatMap((field) => {
         if (isLineComment(field)) return [];
         return [[field.name, field.type]];
-      })
+      }),
+      undefined,
+      this.name
     );
   }
 
@@ -104,7 +106,10 @@ export class StructDeclaration implements Node, TypeDeclaration {
       });
     } else {
       context.mappedFunctions.set(this.structName.value, {
-        definition: { range: this.structName.range },
+        definition: {
+          moduleName: context.moduleName,
+          range: this.structName.range,
+        },
         value: new FunctionType(
           false,
           this.constructorParameters.map((param) => [

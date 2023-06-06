@@ -1,6 +1,7 @@
 import { type } from "os";
 import { ModuleContext } from "./context";
 import { RealizedType, TO2Type } from "./to2-type";
+import { WithPosition } from "../../parser";
 
 export class FunctionType implements RealizedType {
   public readonly kind = "Function";
@@ -27,7 +28,7 @@ export class FunctionType implements RealizedType {
     return this.name === otherType.name;
   }
 
-  public realizedType(context: ModuleContext): RealizedType {
+  public realizedType(context: ModuleContext): FunctionType {
     return new FunctionType(
       this.isAsync,
       this.parameterTypes.map(([name, type, hasDefault]) => [
