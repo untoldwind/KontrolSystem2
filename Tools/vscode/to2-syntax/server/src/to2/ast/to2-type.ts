@@ -281,10 +281,7 @@ export function resolveTypeRef(
       return new RecordType(
         typeRef.parameters.map((param, idx) => [
           { range: UNKNOWN_RANGE, value: typeRef.names[idx] },
-          {
-            range: UNKNOWN_RANGE,
-            value: resolveTypeRef(param) ?? UNKNOWN_TYPE,
-          },
+          resolveTypeRef(param) ?? UNKNOWN_TYPE,
         ])
       );
     case "Function":

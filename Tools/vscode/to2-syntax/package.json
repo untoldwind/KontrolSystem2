@@ -26,7 +26,7 @@
         "to2LspServer.libraryPath": {
           "scope": "window",
           "type": "string",
-          "default": "",
+          "default": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Kerbal Space Program 2\\BepInEx\\plugins\\KontrolSystem2\\to2",
           "description": "TO2 library folder"
         },
         "to2LspServer.maxNumberOfProblems": {

@@ -3,6 +3,7 @@ import { BUILTIN_UNIT, TO2Type } from "./to2-type";
 import { InputPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
+import { TupleType } from "./tuple-type";
 
 export class TupleCreate extends Expression {
   constructor(
@@ -14,7 +15,7 @@ export class TupleCreate extends Expression {
   }
 
   public resultType(context: BlockContext): TO2Type {
-    return BUILTIN_UNIT;
+    return new TupleType(this.items.map((item) => item.resultType(context)));
   }
 
   public reduceNode<T>(

@@ -20,11 +20,10 @@ export class DeclarationParameter {
     }
     if (isRecordType(from)) {
       if (this.source)
-        return from.itemTypes.find((item) => item[0].value === this.source)?.[1]
-          .value;
-      return idx < from.itemTypes.length
-        ? from.itemTypes[idx][1].value
-        : undefined;
+        return from.itemTypes.find(
+          (item) => item[0].value === this.source
+        )?.[1];
+      return idx < from.itemTypes.length ? from.itemTypes[idx][1] : undefined;
     }
     return undefined;
   }

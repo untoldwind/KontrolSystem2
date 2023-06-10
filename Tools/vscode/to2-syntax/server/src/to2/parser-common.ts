@@ -156,7 +156,7 @@ const recordType = map(
     ),
     preceded(whitespace0, tag(")"))
   ),
-  (items) => new RecordType(items)
+  (items) => new RecordType(items.map(([name, type]) => [name, type.value]))
 );
 
 const typeReference = map(

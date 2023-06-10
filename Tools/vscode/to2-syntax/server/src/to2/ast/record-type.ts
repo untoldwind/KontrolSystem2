@@ -12,7 +12,7 @@ export class RecordType implements RealizedType {
   public methods: Map<string, WithDefinitionRef<FunctionType>>;
 
   constructor(
-    public readonly itemTypes: [WithPosition<string>, WithPosition<TO2Type>][],
+    public readonly itemTypes: [WithPosition<string>, TO2Type][],
     methods?: Map<string, WithDefinitionRef<FunctionType>>,
     public readonly structName?: string,
     private moduleName: string = "<unknown>"
@@ -20,7 +20,7 @@ export class RecordType implements RealizedType {
     this.name = this.localName =
       structName ??
       `(${itemTypes
-        .map((item) => `${item[0].value} : ${item[1].value.localName}`)
+        .map((item) => `${item[0].value} : ${item[1].localName}`)
         .join(", ")})`;
     this.description = "";
     this.methods = methods ?? new Map();
@@ -32,10 +32,7 @@ export class RecordType implements RealizedType {
 
   public realizedType(context: ModuleContext): RealizedType {
     return new RecordType(
-      this.itemTypes.map(([name, type]) => [
-        name,
-        { range: type.range, value: type.value.realizedType(context) },
-      ]),
+      this.itemTypes.map(([name, type]) => [name, type.realizedType(context)]),
       this.methods,
       this.structName,
       this.moduleName
@@ -49,12 +46,7 @@ export class RecordType implements RealizedType {
     return new RecordType(
       this.itemTypes.map(([name, type]) => [
         name,
-        {
-          range: type.range,
-          value: type.value
-            .realizedType(context)
-            .fillGenerics(context, genericMap),
-        },
+        type.realizedType(context).fillGenerics(context, genericMap),
       ]),
       this.methods,
       this.structName,
@@ -73,12 +65,12 @@ export class RecordType implements RealizedType {
         i < this.itemTypes.length && i < realizedType.itemTypes.length;
         i++
       ) {
-        this.itemTypes[i][1].value
+        this.itemTypes[i][1]
           .realizedType(context)
           .guessGeneric(
             context,
             genericMap,
-            realizedType.itemTypes[i][1].value.realizedType(context)
+            realizedType.itemTypes[i][1].realizedType(context)
           );
       }
     }
@@ -99,7 +91,7 @@ export class RecordType implements RealizedType {
 
     return {
       definition: { moduleName: this.moduleName, range: field[0].range },
-      value: field[1].value,
+      value: field[1],
     };
   }
 

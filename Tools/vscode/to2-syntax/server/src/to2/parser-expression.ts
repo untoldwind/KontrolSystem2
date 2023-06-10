@@ -312,7 +312,7 @@ const recordCreate = map(
       terminated(tag("("), whitespace0),
       delimited1(
         seq(
-          identifier,
+          withPosition(identifier),
           preceded(between(spacing0, tag(":"), spacing0), expression)
         ),
         commaDelimiter,

@@ -1,13 +1,14 @@
-import { BlockItem, Expression, Node, ValidationError } from ".";
-import { BUILTIN_UNIT, TO2Type } from "./to2-type";
-import { InputPosition } from "../../parser";
-import { BlockContext } from "./context";
+import { Expression, Node, ValidationError } from ".";
+import { InputPosition, WithPosition } from "../../parser";
 import { SemanticToken } from "../../syntax-token";
+import { BlockContext } from "./context";
+import { RecordType } from "./record-type";
+import { TO2Type } from "./to2-type";
 
 export class RecordCreate extends Expression {
   constructor(
     public readonly declaredResult: TO2Type | undefined,
-    public readonly items: [string, Expression][],
+    public readonly items: [WithPosition<string>, Expression][],
     start: InputPosition,
     end: InputPosition
   ) {
@@ -15,7 +16,9 @@ export class RecordCreate extends Expression {
   }
 
   public resultType(context: BlockContext): TO2Type {
-    return BUILTIN_UNIT;
+    return new RecordType(
+      this.items.map(([name, item]) => [name, item.resultType(context)])
+    );
   }
 
   public reduceNode<T>(

@@ -66,7 +66,7 @@ export class StructDeclaration implements Node, TypeDeclaration {
     this.type = new RecordType(
       this.fields.flatMap((field) => {
         if (isLineComment(field)) return [];
-        return [[field.name, field.type]];
+        return [[field.name, field.type.value]];
       }),
       undefined,
       this.name
