@@ -237,8 +237,8 @@ namespace KontrolSystem.KSP.Runtime.Core {
             switch (process.State) {
             case KontrolSystemProcessState.Running:
             case KontrolSystemProcessState.Outdated:
-                if (coroutines.ContainsKey(process.id)) {
-                    StopCoroutine(coroutines[process.id]);
+                if (coroutines.TryGetValue(process.id, out var coroutine)) {
+                    StopCoroutine(coroutine);
                     OnProcessDone(process, "Aborted by pilot");
                 }
 
@@ -251,8 +251,8 @@ namespace KontrolSystem.KSP.Runtime.Core {
         public void StopAll() {
             if (processes == null) return;
             foreach (KontrolSystemProcess process in processes) {
-                if (coroutines.ContainsKey(process.id)) {
-                    StopCoroutine(coroutines[process.id]);
+                if (coroutines.TryGetValue(process.id, out var coroutine)) {
+                    StopCoroutine(coroutine);
                     OnProcessDone(process, "Aborted by pilot", false);
                 }
             }
