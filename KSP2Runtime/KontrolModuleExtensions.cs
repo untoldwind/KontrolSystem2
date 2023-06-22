@@ -64,7 +64,7 @@ namespace KontrolSystem.KSP.Runtime {
             }
         }
 
-        public static EntrypointArgumentDescriptor[] GetEntrypointParameterDescriptors(this IKontrolModule module, GameMode gameMode, ITO2Logger logger = null) {
+        public static EntrypointArgumentDescriptor[] GetEntrypointParameterDescriptors(this IKontrolModule module, KSPGameMode gameMode, ITO2Logger logger = null) {
             try {
                 var name = GetEntrypointFunctionName(gameMode);
                 IKontrolFunction function = module.FindFunction(name);
@@ -96,18 +96,18 @@ namespace KontrolSystem.KSP.Runtime {
             return Array.Empty<EntrypointArgumentDescriptor>();
         }
 
-        public static int GetEntrypointArgumentCount(this IKontrolModule module, GameMode gameMode) {
+        public static int GetEntrypointArgumentCount(this IKontrolModule module, KSPGameMode gameMode) {
             string name = GetEntrypointFunctionName(gameMode);
             IKontrolFunction function = module.FindFunction(name);
             return function?.Parameters?.Count ?? 0;
         }
 
-        private static string GetEntrypointFunctionName(GameMode gameMode) {
+        private static string GetEntrypointFunctionName(KSPGameMode gameMode) {
             return gameMode switch {
-                GameMode.VAB => MainEditor,
-                GameMode.Tracking => MainTracking,
-                GameMode.KSC => MainKsc,
-                GameMode.Flight => MainFlight,
+                KSPGameMode.VAB => MainEditor,
+                KSPGameMode.Tracking => MainTracking,
+                KSPGameMode.KSC => MainKsc,
+                KSPGameMode.Flight => MainFlight,
                 _ => null
             };
         }

@@ -72,7 +72,7 @@ namespace KontrolSystem.KSP.Runtime.Core {
 
         public string LocalLibPath => config.LocalLibPath;
 
-        public GameMode GameMode => GameModeAdapter.GameModeFromState(Game.GlobalGameState.GetState());
+        public KSPGameMode GameMode => GameModeAdapter.GameModeFromState(Game.GlobalGameState.GetState());
 
         public void Awake() {
             Instance = this;
@@ -191,7 +191,7 @@ namespace KontrolSystem.KSP.Runtime.Core {
             }
         }
 
-        public IEnumerable<KontrolSystemProcess> ListProcesses(GameMode gameMode, VesselComponent vessel) {
+        public IEnumerable<KontrolSystemProcess> ListProcesses(KSPGameMode gameMode, VesselComponent vessel) {
             return processes != null
                 ? processes.Where(p => p.AvailableFor(gameMode, vessel))
                 : Enumerable.Empty<KontrolSystemProcess>();
@@ -225,7 +225,7 @@ namespace KontrolSystem.KSP.Runtime.Core {
             }
         }
 
-        public void TriggerBoot(GameMode gameMode, VesselComponent vessel) {
+        public void TriggerBoot(KSPGameMode gameMode, VesselComponent vessel) {
             KontrolSystemProcess bootProcess = processes?.FirstOrDefault(p => p.IsBootFor(gameMode, vessel));
 
             if (bootProcess?.State != KontrolSystemProcessState.Available) return;
@@ -272,8 +272,8 @@ namespace KontrolSystem.KSP.Runtime.Core {
 
         private void OnStateChange(MessageCenterMessage message) {
             if (message is GameStateChangedMessage g) {
-                GameMode prevMode = GameModeAdapter.GameModeFromState(g.PreviousState);
-                GameMode currentMode = GameModeAdapter.GameModeFromState(g.CurrentState);
+                KSPGameMode prevMode = GameModeAdapter.GameModeFromState(g.PreviousState);
+                KSPGameMode currentMode = GameModeAdapter.GameModeFromState(g.CurrentState);
 
                 if (prevMode != currentMode) {
                     config?.Logger?.Info($"Stop all processes due to mode change {prevMode} -> {currentMode}");

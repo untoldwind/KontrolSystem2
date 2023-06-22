@@ -1,7 +1,7 @@
 ﻿using KSP.Game;
 
 namespace KontrolSystem.KSP.Runtime.KSPGame {
-    public enum GameMode {
+    public enum KSPGameMode {
         Unknown,
         KSC,
         VAB,
@@ -10,17 +10,17 @@ namespace KontrolSystem.KSP.Runtime.KSPGame {
     }
 
     public static class GameModeAdapter {
-        public static GameMode GameModeFromState(GameState state) {
+        public static KSPGameMode GameModeFromState(GameState state) {
             switch (state) {
-            case GameState.KerbalSpaceCenter: return GameMode.KSC;
-            case GameState.TrackingStation: return GameMode.Tracking;
-            case GameState.VehicleAssemblyBuilder: return GameMode.VAB;
+            case GameState.KerbalSpaceCenter: return KSPGameMode.KSC;
+            case GameState.TrackingStation: return KSPGameMode.Tracking;
+            case GameState.VehicleAssemblyBuilder: return KSPGameMode.VAB;
             case GameState.Launchpad:
             case GameState.Runway:
             case GameState.FlightView:
-            case GameState.Map3DView: return GameMode.Flight;
+            case GameState.Map3DView: return KSPGameMode.Flight;
             default:
-                return GameMode.Unknown;
+                return KSPGameMode.Unknown;
             }
         }
     }

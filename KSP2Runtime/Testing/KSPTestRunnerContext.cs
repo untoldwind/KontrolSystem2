@@ -35,7 +35,7 @@ namespace KontrolSystem.KSP.Runtime.Testing {
 
         public GameInstance Game => throw new NotSupportedException("Game is no available in test-mode");
 
-        public GameMode GameMode => GameMode.Unknown;
+        public KSPGameMode GameMode => KSPGameMode.Unknown;
 
         public KSPConsoleBuffer ConsoleBuffer => consoleBuffer;
 

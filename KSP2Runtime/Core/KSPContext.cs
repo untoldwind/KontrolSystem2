@@ -127,7 +127,7 @@ namespace KontrolSystem.KSP.Runtime.Core {
 
         public GameInstance Game => gameInstance;
 
-        public GameMode GameMode => GameModeAdapter.GameModeFromState(Game.GlobalGameState.GetState());
+        public KSPGameMode GameMode => GameModeAdapter.GameModeFromState(Game.GlobalGameState.GetState());
 
         public double UniversalTime => Game.SpaceSimulation.UniverseModel.UniversalTime;
 

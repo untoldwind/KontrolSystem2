@@ -25,7 +25,7 @@ namespace KontrolSystem.KSP.Runtime {
     public interface IKSPContext : IContext {
         GameInstance Game { get; }
 
-        GameMode GameMode { get; }
+        KSPGameMode GameMode { get; }
 
         VesselComponent ActiveVessel { get; }
 

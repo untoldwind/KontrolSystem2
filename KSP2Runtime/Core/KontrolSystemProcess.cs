@@ -53,29 +53,29 @@ namespace KontrolSystem.KSP.Runtime.Core {
             context = null;
         }
 
-        public Entrypoint EntrypointFor(GameMode gameMode, IKSPContext newContext) {
+        public Entrypoint EntrypointFor(KSPGameMode gameMode, IKSPContext newContext) {
             switch (gameMode) {
-            case GameMode.KSC: return module.GetKSCEntrypoint(newContext);
-            case GameMode.VAB:
+            case KSPGameMode.KSC: return module.GetKSCEntrypoint(newContext);
+            case KSPGameMode.VAB:
                 return module.GetEditorEntrypoint(newContext);
-            case GameMode.Tracking: return module.GetTrackingEntrypoint(newContext);
-            case GameMode.Flight:
+            case KSPGameMode.Tracking: return module.GetTrackingEntrypoint(newContext);
+            case KSPGameMode.Flight:
                 return module.GetFlightEntrypoint(newContext);
             default:
                 return null;
             }
         }
 
-        public int EntrypointArgumentCount(GameMode gameMode) => module.GetEntrypointArgumentCount(gameMode);
+        public int EntrypointArgumentCount(KSPGameMode gameMode) => module.GetEntrypointArgumentCount(gameMode);
 
-        public EntrypointArgumentDescriptor[] EntrypointArgumentDescriptors(GameMode gameMode) => module.GetEntrypointParameterDescriptors(gameMode);
+        public EntrypointArgumentDescriptor[] EntrypointArgumentDescriptors(KSPGameMode gameMode) => module.GetEntrypointParameterDescriptors(gameMode);
 
-        public bool AvailableFor(GameMode gameMode, VesselComponent vessel) {
+        public bool AvailableFor(KSPGameMode gameMode, VesselComponent vessel) {
             switch (gameMode) {
-            case GameMode.KSC: return module.HasKSCEntrypoint();
-            case GameMode.VAB: return module.HasEditorEntrypoint();
-            case GameMode.Tracking: return module.HasTrackingEntrypoint();
-            case GameMode.Flight:
+            case KSPGameMode.KSC: return module.HasKSCEntrypoint();
+            case KSPGameMode.VAB: return module.HasEditorEntrypoint();
+            case KSPGameMode.Tracking: return module.HasTrackingEntrypoint();
+            case KSPGameMode.Flight:
                 return !module.Name.StartsWith("boot::") && module.HasFlightEntrypoint() ||
                        module.IsBootFlightEntrypointFor(vessel);
             default:
@@ -83,9 +83,9 @@ namespace KontrolSystem.KSP.Runtime.Core {
             }
         }
 
-        public bool IsBootFor(GameMode gameMode, VesselComponent vessel) {
+        public bool IsBootFor(KSPGameMode gameMode, VesselComponent vessel) {
             switch (gameMode) {
-            case GameMode.Flight: return module.IsBootFlightEntrypointFor(vessel);
+            case KSPGameMode.Flight: return module.IsBootFlightEntrypointFor(vessel);
             default: return false;
             }
         }
