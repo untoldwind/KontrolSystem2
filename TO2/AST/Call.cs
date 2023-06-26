@@ -47,7 +47,7 @@ namespace KontrolSystem.TO2.AST {
             IKontrolConstant constant = ReferencedConstant(context.ModuleContext);
             if (constant != null) return (constant.Type as FunctionType)?.returnType ?? BuiltinType.Unit;
 
-            TO2Type variable = ReferencedVariable(context);
+            TO2Type variable = ReferencedVariable(context)?.UnderlyingType(context.ModuleContext);
             if (variable != null) return (variable as FunctionType)?.returnType ?? BuiltinType.Unit;
 
             IKontrolFunction function = ReferencedFunction(context.ModuleContext);

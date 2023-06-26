@@ -106,7 +106,7 @@ namespace KontrolSystem.TO2.AST {
 
             for (int i = 0; i < parameters.Count; i++) {
                 if (parameters[i].type == null) continue;
-                if (!lambdaType.parameterTypes[i].IsAssignableFrom(context.ModuleContext, parameters[i].type))
+                if (!lambdaType.parameterTypes[i].UnderlyingType(context.ModuleContext).IsAssignableFrom(context.ModuleContext, parameters[i].type.UnderlyingType(context.ModuleContext)))
                     context.AddError(new StructuralError(
                         StructuralError.ErrorType.InvalidType,
                         $"Expected parameter {parameters[i].name} of lambda to have type {lambdaType.parameterTypes[i]}, found {parameters[i].type}",
