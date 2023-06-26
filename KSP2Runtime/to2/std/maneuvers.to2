@@ -314,7 +314,7 @@ pub sync fn match_inclination(start : Orbit, target : Orbit) -> (delta_v: Vec3, 
     const v_dir = if(an_UT < dn_UT)         
         target.orbit_normal.cross(start.relative_position(an_UT).normalized)
     else
-        -target.orbit_normal.cross(start.relative_position(dn_UT).normalized)
+        target.orbit_normal.cross(start.relative_position(dn_UT).normalized)
     const UT = math::min(an_UT, dn_UT)
     
     const v = start.orbital_velocity(UT)
