@@ -1,5 +1,20 @@
 # Changes
 
+## 0.4.2.1 ->
+
+* Ensure that logging backend is only invoked in main thread
+  * This prevents dead-lock if logging from backend thread
+
+## 0.4.2.1
+
+Bug fixes:
+* Further improve type-inference (#91)
+* Fix match_inclination detla-v calculation (#94)
+
+## 0.4.2
+
+* Compatibility with 0.1.3.0
+
 ## 0.4.1.2 -> 0.4.1.3
 
 * Add additional part information

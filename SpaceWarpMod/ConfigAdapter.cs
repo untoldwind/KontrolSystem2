@@ -4,6 +4,7 @@ using System.IO;
 using BepInEx;
 using BepInEx.Bootstrap;
 using BepInEx.Configuration;
+using BepInEx.Logging;
 using KontrolSystem.KSP.Runtime;
 using KontrolSystem.KSP.Runtime.KSPAddons;
 using KontrolSystem.KSP.Runtime.KSPUI;
@@ -32,8 +33,11 @@ namespace KontrolSystem.SpaceWarpMod {
 
         internal OptionalAddons optionalAddons = new OptionalAddons();
 
-        internal ConfigAdapter(PluginInfo pluginInfo, ConfigFile config) {
+        internal LoggerAdapter loggerAdapter;
+        
+        internal ConfigAdapter(PluginInfo pluginInfo, ConfigFile config, LoggerAdapter loggerAdapter) {
             this.config = config;
+            this.loggerAdapter = loggerAdapter;
             version = pluginInfo.Metadata.Version.ToString();
             enableHotkey = config.Bind("Keyboard", "enableHotKey", true, "Enable Alt-Shift-K hotkey");
             stdLibPath = config.Bind("Paths", "stdLibPath", Path.Combine(Path.GetDirectoryName(pluginInfo.Location), "to2"),
@@ -60,7 +64,7 @@ namespace KontrolSystem.SpaceWarpMod {
 
         public OptionalAddons OptionalAddons => optionalAddons;
 
-        public ITO2Logger Logger => LoggerAdapter.Instance;
+        public ITO2Logger Logger => loggerAdapter;
 
         public bool HotKeyEnabled => enableHotkey.Value;
 
@@ -136,8 +140,10 @@ namespace KontrolSystem.SpaceWarpMod {
 
         private Texture2D GetTexture(string name) => AssetManager.GetAsset<Texture2D>($"kontrolsystem2/kontrolsystem2/gfx/{name}.png");
 
-        internal static void Init(PluginInfo pluginInfo, ConfigFile config) {
-            Instance = new ConfigAdapter(pluginInfo, config);
+        public void SetLoggerBackend(ManualLogSource backend) => loggerAdapter.Backend = backend;
+        
+        internal static void Init(PluginInfo pluginInfo, ConfigFile config, LoggerAdapter loggerAdapter) {
+            Instance = new ConfigAdapter(pluginInfo, config, loggerAdapter);
         }
     }
 }

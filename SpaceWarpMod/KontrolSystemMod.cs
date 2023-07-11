@@ -30,14 +30,14 @@ namespace KontrolSystem.SpaceWarpMod {
             { GameState.Invalid, GameState.Flag, GameState.Loading, GameState.PhotoMode, GameState.WarmUpLoading, GameState.MainMenu, GameState.TrainingCenter };
 
         public void Awake() {
-            ConfigAdapter.Init(Info, Config);
+            ConfigAdapter.Init(Info, Config, gameObject.AddComponent<LoggerAdapter>());
         }
 
         public override void OnInitialized() {
             Instance = this;
-
-            LoggerAdapter.Instance.Backend = Logger;
-            LoggerAdapter.Instance.Info("Initialize KontrolSystemMod");
+            
+            ConfigAdapter.Instance.SetLoggerBackend(Logger);
+            ConfigAdapter.Instance.Logger.Info("Initialize KontrolSystemMod");
 
             uiWindows ??= gameObject.AddComponent<UIWindows>();
             uiWindows.Initialize(ConfigAdapter.Instance);
