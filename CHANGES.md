@@ -4,6 +4,7 @@
 
 * Ensure that logging backend is only invoked in main thread
   * This prevents dead-lock if logging from backend thread
+* `^` operator now behaves like `pow` instead of bit-xor. Also has higher precedence over `*` and `/` (addresses #95)
 
 ## 0.4.2.1
 

@@ -84,9 +84,11 @@ namespace KontrolSystem.TO2.AST {
                         Operator.Le,
                         new DirectOperatorEmitter(() => Float, () => BuiltinType.Bool, REPLFloat.Leq, OpCodes.Cgt,
                             OpCodes.Ldc_I4_0, OpCodes.Ceq)
-                    },
-                    {
-                        Operator.BitXor,
+                    }, {
+                        Operator.Pow,
+                        new StaticMethodOperatorEmitter(() => Float, () => Float, typeof(Math).GetMethod("Pow"))
+                    }, {
+                        Operator.PowAssign,
                         new StaticMethodOperatorEmitter(() => Float, () => Float, typeof(Math).GetMethod("Pow"))
                     },
                 };

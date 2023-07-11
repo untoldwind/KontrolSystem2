@@ -71,4 +71,10 @@ test sync fn test_pow() -> Unit = {
     const b = 34.0 ^ 1.5
     
     assert_float(a, b)
+    
+    assert_float(256.0, 2.0 ^ 8)
+    assert_float(1280.0, 5 * 2.0 ^ 8)
+    assert_float(0.5, 2.0 ^ -1)
+    assert_float(0.25, 2.0 ^ -2)
+    assert_float(0.25, 1.0 / 2.0 ^ 2)
 }
