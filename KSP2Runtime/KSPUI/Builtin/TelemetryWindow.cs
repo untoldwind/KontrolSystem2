@@ -67,6 +67,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
             base.OnDisable();
 
             timeSeriesCollection.changed.RemoveListener(OnTimeSeriesChanged);
+            drawer.Dispose();
         }
 
         public void Update() {
@@ -154,7 +155,6 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
 
         internal void OnTimeSeriesChanged() {
             timeSeries.Elements = timeSeriesCollection.AllTimeSeries;
-
         }
 
         internal Color NextColor() {

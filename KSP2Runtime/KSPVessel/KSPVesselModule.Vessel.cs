@@ -327,7 +327,6 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                         if (vessel != null) return new Option<IKSPTargetable>(new VesselAdapter(context, vessel));
                         if (body != null) return new Option<IKSPTargetable>(new BodyWrapper(context, body));
                         if (part != null && part.IsPartDockingPort(out var dockingPort)) {
-                            UnityEngine.Debug.Log($"Vessel: {part.PartOwner.SimulationObject.Vessel} {part} {dockingPort}");
                             return new Option<IKSPTargetable>(
                                 new ModuleDockingNodeAdapter(
                                     new VesselAdapter(KSPContext.CurrentContext, part.PartOwner.SimulationObject.Vessel), part,

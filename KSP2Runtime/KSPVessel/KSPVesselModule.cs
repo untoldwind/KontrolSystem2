@@ -33,9 +33,6 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
         public static VesselAdapter[] GetVesselsInRange() {
             var context = KSPContext.CurrentContext;
 
-            foreach (var vessel in context.Game.ViewController.VesselsInRange) {
-                UnityEngine.Debug.Log($"{vessel.Name} ${vessel.Guid}");
-            }
             return context.Game.ViewController.VesselsInRange
                 .Select(vessel => new VesselAdapter(context, vessel)).ToArray();
         }

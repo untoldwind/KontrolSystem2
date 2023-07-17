@@ -54,6 +54,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
                 GL.LoadPixelMatrix(0, width, height, 0);
                 currentTransform = Matrix4x4.Translate(new Vector3(0, height)) * Matrix4x4.Scale(new Vector3(1, -1));
                 GL.MultMatrix(currentTransform);
+
             }
 
             public int Width => width;
@@ -119,6 +120,8 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
                 var textSize = TextSize(text, size);
                 var lineHeight = textFont.faceInfo.lineHeight;
                 var scale = size / lineHeight;
+                textFont.material.SetFloat(ShaderUtilities.ID_ScaleX, 1.0f / scale);
+                textFont.material.SetFloat(ShaderUtilities.ID_ScaleY, 1.0f / scale);
                 textFont.material.SetPass(0);
                 GL.PushMatrix();
 
