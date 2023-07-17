@@ -135,7 +135,7 @@ namespace KontrolSystem.KSP.Runtime.Core {
 
         public KSPConsoleBuffer ConsoleBuffer => consoleBuffer;
 
-        public TimeSeriesCollection TimeSeriesCollection { get; }
+        public TimeSeriesCollection TimeSeriesCollection => timeSeriesCollection;
 
         public KSPOrbitModule.IBody FindBody(string name) {
             var body = Game.ViewController.GetBodyByName(name);
