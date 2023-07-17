@@ -1,6 +1,10 @@
 # Changes
 
-## 0.4.2.1 ->
+## 0.4.2.2 -> 0.4.2.3
+
+* Fix `ksp::telemetry::add_time_series` (telemetry)
+
+## 0.4.2.1 -> 0.4.2.2
 
 * Ensure that logging backend is only invoked in main thread
   * This prevents dead-lock if logging from backend thread
