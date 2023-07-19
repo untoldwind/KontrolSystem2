@@ -140,17 +140,17 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
                     if (glyph == null) continue;
 
                     GL.TexCoord2(glyph.glyphRect.x / atlasWidth, (glyph.glyphRect.y + glyph.glyphRect.height) / atlasHeight);
-                    GL.MultiTexCoord2(1, 0, 0.2f);
+                    GL.MultiTexCoord2(1, 0, 0.8f);
                     GL.Vertex3(x + glyph.metrics.horizontalBearingX, y + glyph.metrics.horizontalBearingY, 0);
                     GL.TexCoord2(glyph.glyphRect.x / atlasWidth, glyph.glyphRect.y / atlasHeight);
-                    GL.MultiTexCoord2(1, 0, 0.2f);
+                    GL.MultiTexCoord2(1, 0, 0.8f);
                     GL.Vertex3(x + glyph.metrics.horizontalBearingX, y - glyph.metrics.height + glyph.metrics.horizontalBearingY, 0);
                     GL.TexCoord2((glyph.glyphRect.x + glyph.glyphRect.width) / atlasWidth, glyph.glyphRect.y / atlasHeight);
-                    GL.MultiTexCoord2(1, 0, 0.2f);
+                    GL.MultiTexCoord2(1, 0, 0.8f);
                     GL.Vertex3(x + glyph.metrics.horizontalBearingX + glyph.metrics.width, y - glyph.metrics.height + glyph.metrics.horizontalBearingY, 0);
                     GL.TexCoord2((glyph.glyphRect.x + glyph.glyphRect.width) / atlasWidth,
                         (glyph.glyphRect.y + glyph.glyphRect.height) / atlasHeight);
-                    GL.MultiTexCoord2(1, 0, 0.2f);
+                    GL.MultiTexCoord2(1, 0, 0.8f);
                     GL.Vertex3(x + glyph.metrics.horizontalBearingX + glyph.metrics.width, y + glyph.metrics.horizontalBearingY, 0);
 
                     x += glyph.metrics.horizontalAdvance;
