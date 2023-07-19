@@ -1,5 +1,9 @@
 # Changes
 
+## 0.4.2.3 -> 0.4.2.4
+
+* Fix blurry labels in telemetry display (addresses #98) 
+
 ## 0.4.2.2 -> 0.4.2.3
 
 * Fix `ksp::telemetry::add_time_series` (telemetry)
