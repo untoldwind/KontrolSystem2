@@ -358,6 +358,14 @@ namespace KontrolSystem.TO2.Runtime {
             throw new REPLException(node, $"Can not preform int bit and on non-int: {left.Type.Name} {right.Type.Name}");
         }
 
+        public static IREPLValue BitXor(Node node, IREPLValue left, IREPLValue right) {
+            if (left is REPLInt li && right is REPLInt ri) {
+                return new REPLInt(li.intValue ^ ri.intValue);
+            }
+
+            throw new REPLException(node, $"Can not preform int bit xor on non-int: {left.Type.Name} {right.Type.Name}");
+        }
+        
         public static IREPLValue Eq(Node node, IREPLValue left, IREPLValue right) {
             if (left is REPLInt li && right is REPLInt ri) {
                 return new REPLBool(li.intValue == ri.intValue);

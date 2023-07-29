@@ -127,7 +127,7 @@ impl ReentrySimulation {
     sync fn run(self) -> ReentryTrajectory = {
         const frame = self.body.celestial_frame
         const brake_time = self.t
-        const max_t = self.t + 2 * PI * sqrt(self.x.magnitude ^ 3.0 / self.body.grav_parameter)
+        const max_t = self.t + 2 * PI * sqrt(self.x.magnitude ** 3.0 / self.body.grav_parameter)
         let builder : ArrayBuilder<GlobalPosition> = ArrayBuilder(100)
         
         builder.append(self.x.to_position(frame))

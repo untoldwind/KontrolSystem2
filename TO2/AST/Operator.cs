@@ -24,8 +24,10 @@ namespace KontrolSystem.TO2.AST {
         BitOrAssign, // |=
         BitAnd, // &
         BitAndAssign, // &=
-        Pow, // ^
-        PowAssign, // ^=
+        BitXor, // **
+        BitXorAssign, // **=
+        Pow, // **
+        PowAssign, // **=
         Eq, // ==
         NotEq, // !=
         Lt, // <

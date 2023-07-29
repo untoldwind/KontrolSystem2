@@ -64,6 +64,12 @@ namespace KontrolSystem.TO2.AST {
                         Operator.BitAndAssign,
                         new DirectOperatorEmitter(() => Int, () => Int, REPLInt.BitAnd, OpCodes.And)
                     }, {
+                        Operator.BitXor,
+                        new DirectOperatorEmitter(() => Int, () => Int, REPLInt.BitXor, OpCodes.Xor)
+                    }, {
+                        Operator.BitXorAssign,
+                        new DirectOperatorEmitter(() => Int, () => Int, REPLInt.BitXor, OpCodes.Xor)
+                    }, {
                         Operator.Pow,
                         new StaticMethodOperatorEmitter(() => Int, () => Int, typeof(DirectBindingMath).GetMethod("IntPow"))
                     }, {

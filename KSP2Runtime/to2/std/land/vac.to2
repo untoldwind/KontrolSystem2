@@ -72,7 +72,7 @@ pub fn vac_land_prepare_deorbit(vessel : Vessel, landing_site : GeoCoordinates) 
     const r1 = vessel.orbit.semi_major_axis
     const r2 = deorbit_radius
 
-    const pt = 0.5 * ((r1 + r2) / (2 * r2)) ^ 1.5
+    const pt = 0.5 * ((r1 + r2) / (2 * r2)) ** 1.5
     const sp = sqrt( (4 * PI * PI * r2 * r2 * r2) / vessel.main_body.grav_parameter )
     const deorbit_travel_time = pt * sp / 2
     const phi = deorbit_travel_time / vessel.main_body.rotation_period * 360.0

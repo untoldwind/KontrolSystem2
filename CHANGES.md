@@ -1,5 +1,12 @@
 # Changes
 
+## 0.4.2.4 ->
+
+* Cleanup ambiguity of the the `^` operator
+  * `^` is now bitwise xor and only defined for integers with the same precedence as `&` and `|`
+  * For float and integer there is a new `**` operator which is a shorthand for `pow` and has a higher precedence than
+    `*` and `/`
+
 ## 0.4.2.3 -> 0.4.2.4
 
 * Fix blurry labels in telemetry display (addresses #98) 

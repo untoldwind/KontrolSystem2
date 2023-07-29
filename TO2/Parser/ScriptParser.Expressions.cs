@@ -165,7 +165,7 @@ namespace KontrolSystem.TO2.Parser {
         );
 
         private static readonly Parser<Operator> PowBinaryOp = Alt(
-            Char('^').To(Operator.Pow)
+            Tag("**").To(Operator.Pow)
         ).Between(WhiteSpaces0, WhiteSpaces0);
             
         private static readonly Parser<Expression> PowExpr = Chain(UnaryPrefixExpr, PowBinaryOp,
@@ -190,7 +190,8 @@ namespace KontrolSystem.TO2.Parser {
 
         private static readonly Parser<Operator> BITOp = Alt(
             Char('&').To(Operator.BitAnd),
-            Char('|').To(Operator.BitOr)
+            Char('|').To(Operator.BitOr),
+            Char('^').To(Operator.BitXor)
         ).Between(WhiteSpaces0, WhiteSpaces0);
 
         private static readonly Parser<Expression> BITBinaryExpr = Chain(AddSubBinaryExpr, BITOp,
@@ -255,7 +256,8 @@ namespace KontrolSystem.TO2.Parser {
             Tag("%=").To(Operator.ModAssign),
             Tag("|=").To(Operator.BitOrAssign),
             Tag("&=").To(Operator.BitAndAssign),
-            Tag("^=").To(Operator.PowAssign)
+            Tag("&=").To(Operator.BitXorAssign),
+            Tag("**=").To(Operator.PowAssign)
         ).Between(WhiteSpaces0, WhiteSpaces0);
 
         private static readonly Parser<IAssignSuffixOperation> AssignSuffixOps = Alt(

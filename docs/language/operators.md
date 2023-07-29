@@ -9,6 +9,12 @@ Precedence affects the order how things are evaluated. The most basic example is
 * `-` prefix (e.g. `-a`) is a negation, which can be done on `int`, `float`, `ksp::math::Vec2`, `ksp::math::Vec3`
 * `!` prefix (e.g. `!condition`) is a logical not, which can be done on `bool`
 
+## Power of (version >= 0.4.3)
+
+* `**` (e.g. `a ** b`) raises `a` to the power of `b`
+  * `int ** int` result `int`
+  * `float ** float` result `float`
+
 ## Multiplication / division / modulo: `*`, `/`, `%`
 
 * `*` (e.g. `a * b`) multiplies two values, which is allowed for
