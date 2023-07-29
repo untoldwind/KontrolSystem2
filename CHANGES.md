@@ -1,6 +1,6 @@
 # Changes
 
-## 0.4.2.4 ->
+## 0.4.2.4 -> 0.4.3
 
 * Cleanup ambiguity of the the `^` operator
   * `^` is now bitwise xor and only defined for integers with the same precedence as `&` and `|`
