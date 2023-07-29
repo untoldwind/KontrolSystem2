@@ -14,7 +14,7 @@ export class MethodCall extends Expression {
     public readonly methodName: WithPosition<string>,
     public readonly args: Expression[],
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     super(start, end);
   }
@@ -24,18 +24,18 @@ export class MethodCall extends Expression {
       this.findMethod(context)?.value.guessReturnType(
         context.module,
         this.args.map((arg) => arg.resultType(context)),
-        typeHint
+        typeHint,
       ) ?? UNKNOWN_TYPE
     );
   }
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.args.reduce(
       (prev, arg) => arg.reduceNode(combine, prev),
-      this.target.reduceNode(combine, combine(initialValue, this))
+      this.target.reduceNode(combine, combine(initialValue, this)),
     );
   }
 
@@ -73,8 +73,8 @@ export class MethodCall extends Expression {
           errors.push(
             ...this.args[i].validateBlock(
               context,
-              methodType.parameterTypes[i][1].realizedType(context.module)
-            )
+              methodType.parameterTypes[i][1].realizedType(context.module),
+            ),
           );
         }
       }
@@ -87,12 +87,12 @@ export class MethodCall extends Expression {
             this.methodName.value
           }(${methodType.parameterTypes
             .map(([name, type]) => `${name} : ${type.name}`)
-            .join(", ")}) -> ${methodType.returnType.name}\``
+            .join(", ")}) -> ${methodType.returnType.name}\``,
         ),
       ];
       if (methodType.description)
         this.documentation.push(
-          this.methodName.range.with(methodType.description)
+          this.methodName.range.with(methodType.description),
         );
     } else {
       errors.push({
@@ -116,7 +116,7 @@ export class MethodCall extends Expression {
   }
 
   private findMethod(
-    context: BlockContext
+    context: BlockContext,
   ): WithDefinitionRef<FunctionType> | undefined {
     const targetType = this.target
       .resultType(context)

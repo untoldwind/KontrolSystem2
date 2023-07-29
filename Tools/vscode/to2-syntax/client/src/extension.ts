@@ -12,7 +12,7 @@ let client: LanguageClient;
 export function activate(context: ExtensionContext) {
   // The server is implemented in node
   const serverModule = context.asAbsolutePath(
-    path.join("server", "out", "lsp-server.js")
+    path.join("server", "out", "lsp-server.js"),
   );
 
   // If the extension is launched in debug mode then the debug server options are used
@@ -40,7 +40,7 @@ export function activate(context: ExtensionContext) {
     "to2LspServer",
     "TO2 lsp server",
     serverOptions,
-    clientOptions
+    clientOptions,
   );
 
   // Start the client. This will also launch the server

@@ -16,7 +16,7 @@ export class TupleDeconstructAssign implements Node, BlockItem {
     public readonly targets: TupleTarget[],
     public readonly expression: Expression,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     this.range = new InputRange(start, end);
   }
@@ -27,7 +27,7 @@ export class TupleDeconstructAssign implements Node, BlockItem {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.expression.reduceNode(combine, combine(initialValue, this));
   }
@@ -54,7 +54,7 @@ export class TupleDeconstructAssign implements Node, BlockItem {
     for (const target of this.targets) {
       if (target.target.value !== "") {
         semanticTokens.push(
-          target.target.range.semanticToken("variable", "modification")
+          target.target.range.semanticToken("variable", "modification"),
         );
       }
     }

@@ -50,7 +50,7 @@ export class TO2ModuleNode implements Node, TO2Module {
     public readonly description: string,
     public readonly items: ModuleItem[],
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     this.range = new InputRange(start, end);
 
@@ -93,7 +93,7 @@ export class TO2ModuleNode implements Node, TO2Module {
   }
 
   public findFunction(
-    name: string
+    name: string,
   ): WithDefinitionRef<FunctionType> | undefined {
     const decl = this.functions.get(name);
 
@@ -117,11 +117,11 @@ export class TO2ModuleNode implements Node, TO2Module {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.items.reduce(
       (prev, item) => item.reduceNode(combine, prev),
-      combine(initialValue, this)
+      combine(initialValue, this),
     );
   }
 
@@ -173,7 +173,7 @@ export class ReferencedModule implements TO2Module {
       ([name, constantReference]) => [
         name,
         { value: resolveTypeRef(constantReference.type) ?? UNKNOWN_TYPE },
-      ]
+      ],
     );
   }
 
@@ -195,7 +195,7 @@ export class ReferencedModule implements TO2Module {
         ([name, typeReference]) => [
           name,
           new ReferencedType(typeReference, this.name),
-        ]
+        ],
       ),
     ];
   }
@@ -212,7 +212,7 @@ export class ReferencedModule implements TO2Module {
               param.hasDefault,
             ]),
             resolveTypeRef(functionReference.returnType) ?? UNKNOWN_TYPE,
-            functionReference.description
+            functionReference.description,
           ),
         }
       : undefined;
@@ -231,10 +231,10 @@ export class ReferencedModule implements TO2Module {
               param.hasDefault,
             ]),
             resolveTypeRef(functionReference.returnType) ?? UNKNOWN_TYPE,
-            functionReference.description
+            functionReference.description,
           ),
         },
-      ]
+      ],
     );
   }
 }

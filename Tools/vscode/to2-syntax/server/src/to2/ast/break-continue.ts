@@ -15,7 +15,7 @@ export class Break extends Expression {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return combine(initialValue, this);
   }
@@ -42,7 +42,7 @@ export class Continue extends Expression {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return combine(initialValue, this);
   }

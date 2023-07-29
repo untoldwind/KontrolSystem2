@@ -2,7 +2,7 @@ import { Input, Parser, ParserFailure, ParserSuccess } from ".";
 
 export function preceded<T, U>(
   prefix: Parser<T>,
-  parser: Parser<U>
+  parser: Parser<U>,
 ): Parser<U> {
   return (input: Input) => {
     const prefixResult = prefix(input);
@@ -10,7 +10,7 @@ export function preceded<T, U>(
       return new ParserFailure<U>(
         prefixResult.remaining,
         prefixResult.expected,
-        undefined
+        undefined,
       );
     return parser(prefixResult.remaining);
   };
@@ -18,7 +18,7 @@ export function preceded<T, U>(
 
 export function terminated<T, U>(
   parser: Parser<T>,
-  suffix: Parser<U>
+  suffix: Parser<U>,
 ): Parser<T> {
   return (input: Input) => {
     const inputResult = parser(input);
@@ -28,7 +28,7 @@ export function terminated<T, U>(
       return new ParserFailure(
         suffixResult.remaining,
         suffixResult.expected,
-        inputResult.value
+        inputResult.value,
       );
     return new ParserSuccess(suffixResult.remaining, inputResult.value);
   };
@@ -37,7 +37,7 @@ export function terminated<T, U>(
 export function between<T, P, S>(
   prefix: Parser<P>,
   parser: Parser<T>,
-  suffix: Parser<S>
+  suffix: Parser<S>,
 ): Parser<T> {
   return (input: Input) => {
     const prefixResult = prefix(input);
@@ -45,7 +45,7 @@ export function between<T, P, S>(
       return new ParserFailure<T>(
         prefixResult.remaining,
         prefixResult.expected,
-        undefined
+        undefined,
       );
     const inputResult = parser(prefixResult.remaining);
     if (!inputResult.success) return inputResult;
@@ -54,7 +54,7 @@ export function between<T, P, S>(
       return new ParserFailure(
         suffixResult.remaining,
         suffixResult.expected,
-        inputResult.value
+        inputResult.value,
       );
     return new ParserSuccess(suffixResult.remaining, inputResult.value);
   };
@@ -75,13 +75,13 @@ export function seq<P extends any[]>(
           return new ParserFailure<P>(
             itemResult.remaining,
             itemResult.expected,
-            result as P
+            result as P,
           );
         }
         return new ParserFailure<P>(
           itemResult.remaining,
           itemResult.expected,
-          undefined
+          undefined,
         );
       }
       result.push(itemResult.value);

@@ -12,7 +12,7 @@ export class ResultType implements RealizedType {
 
   constructor(
     public readonly successType: TO2Type,
-    public readonly errorType: TO2Type
+    public readonly errorType: TO2Type,
   ) {
     this.name =
       this.localName = `Result<${successType.localName}, ${errorType.localName}>`;
@@ -26,24 +26,24 @@ export class ResultType implements RealizedType {
   public realizedType(context: ModuleContext): RealizedType {
     return new ResultType(
       this.successType.realizedType(context),
-      this.errorType.realizedType(context)
+      this.errorType.realizedType(context),
     );
   }
 
   public fillGenerics(
     context: ModuleContext,
-    genericMap: Record<string, RealizedType>
+    genericMap: Record<string, RealizedType>,
   ): RealizedType {
     return new ResultType(
       this.successType.realizedType(context).fillGenerics(context, genericMap),
-      this.errorType.realizedType(context).fillGenerics(context, genericMap)
+      this.errorType.realizedType(context).fillGenerics(context, genericMap),
     );
   }
 
   public guessGeneric(
     context: ModuleContext,
     genericMap: Record<string, RealizedType>,
-    realizedType: RealizedType
+    realizedType: RealizedType,
   ): void {
     if (isResultType(realizedType)) {
       this.successType
@@ -51,14 +51,14 @@ export class ResultType implements RealizedType {
         .guessGeneric(
           context,
           genericMap,
-          realizedType.successType.realizedType(context)
+          realizedType.successType.realizedType(context),
         );
       this.errorType
         .realizedType(context)
         .guessGeneric(
           context,
           genericMap,
-          realizedType.errorType.realizedType(context)
+          realizedType.errorType.realizedType(context),
         );
     }
   }

@@ -11,7 +11,7 @@ export class LineComment implements Node, BlockItem, ModuleItem {
   constructor(
     public readonly comment: string,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     this.range = new InputRange(start, end);
   }
@@ -22,7 +22,7 @@ export class LineComment implements Node, BlockItem, ModuleItem {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return combine(initialValue, this);
   }

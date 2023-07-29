@@ -9,7 +9,7 @@ export class InputPosition implements Position {
   constructor(
     public readonly offset: number,
     public readonly line: number,
-    public readonly character: number
+    public readonly character: number,
   ) {}
 
   isBefore(position: Position): boolean {
@@ -28,7 +28,7 @@ export class InputPosition implements Position {
 export class InputRange implements Range {
   constructor(
     public readonly start: InputPosition,
-    public readonly end: InputPosition
+    public readonly end: InputPosition,
   ) {}
 
   contains(position: Position): boolean {
@@ -57,7 +57,7 @@ export class InputRange implements Range {
 
 export const UNKNOWN_RANGE = new InputRange(
   new InputPosition(-1, -1, -1),
-  new InputPosition(-1, -1, -1)
+  new InputPosition(-1, -1, -1),
 );
 
 export interface Input {
@@ -71,7 +71,10 @@ export interface Input {
 export class ParserSuccess<T> {
   success: true = true;
 
-  constructor(public readonly remaining: Input, public readonly value: T) {
+  constructor(
+    public readonly remaining: Input,
+    public readonly value: T,
+  ) {
     this.remaining = remaining;
     this.value = value;
   }
@@ -87,7 +90,7 @@ export class ParserFailure<T> {
   constructor(
     public readonly remaining: Input,
     public readonly expected: string,
-    public readonly value: T | undefined
+    public readonly value: T | undefined,
   ) {
     this.expected = expected;
   }
@@ -96,7 +99,7 @@ export class ParserFailure<T> {
     return new ParserFailure<U>(
       this.remaining,
       this.expected,
-      this.value ? mapper(this.value) : undefined
+      this.value ? mapper(this.value) : undefined,
     );
   }
 }

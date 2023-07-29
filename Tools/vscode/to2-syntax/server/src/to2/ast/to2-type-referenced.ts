@@ -20,7 +20,7 @@ export class ReferencedType implements RealizedType {
   constructor(
     private readonly typeReference: TypeReference,
     private readonly moduleName?: string,
-    private readonly genericMap?: Record<string, RealizedType>
+    private readonly genericMap?: Record<string, RealizedType>,
   ) {
     this.localName = typeReference.name;
     this.name = moduleName
@@ -50,12 +50,13 @@ export class ReferencedType implements RealizedType {
 
   public findSuffixOperator(
     op: Operator,
-    rightType: RealizedType
+    rightType: RealizedType,
   ): TO2Type | undefined {
-    const opRef = this.typeReference.suffixOperators?.[op]?.find((opRef) =>
-      resolveTypeRef(opRef.otherType, this.genericMap)?.isAssignableFrom(
-        rightType
-      )
+    const opRef = this.typeReference.suffixOperators?.[op]?.find(
+      (opRef) =>
+        resolveTypeRef(opRef.otherType, this.genericMap)?.isAssignableFrom(
+          rightType,
+        ),
     );
 
     return opRef
@@ -65,12 +66,13 @@ export class ReferencedType implements RealizedType {
 
   public findPrefixOperator(
     op: Operator,
-    leftType: RealizedType
+    leftType: RealizedType,
   ): TO2Type | undefined {
-    const opRef = this.typeReference.prefixOperators?.[op]?.find((opRef) =>
-      resolveTypeRef(opRef.otherType, this.genericMap)?.isAssignableFrom(
-        leftType
-      )
+    const opRef = this.typeReference.prefixOperators?.[op]?.find(
+      (opRef) =>
+        resolveTypeRef(opRef.otherType, this.genericMap)?.isAssignableFrom(
+          leftType,
+        ),
     );
 
     return opRef
@@ -104,7 +106,7 @@ export class ReferencedType implements RealizedType {
         ]),
         resolveTypeRef(methodReference.returnType, this.genericMap) ??
           UNKNOWN_TYPE,
-        methodReference.description
+        methodReference.description,
       ),
     };
   }
@@ -119,7 +121,7 @@ export class ReferencedType implements RealizedType {
 
   public fillGenerics(
     context: ModuleContext,
-    genericMap: Record<string, RealizedType>
+    genericMap: Record<string, RealizedType>,
   ): RealizedType {
     return new ReferencedType(this.typeReference, this.moduleName, {
       ...this.genericMap,
@@ -144,6 +146,6 @@ export class ReferencedType implements RealizedType {
   public guessGeneric(
     context: ModuleContext,
     genericMap: Record<string, RealizedType>,
-    realizedType: RealizedType
+    realizedType: RealizedType,
   ): void {}
 }

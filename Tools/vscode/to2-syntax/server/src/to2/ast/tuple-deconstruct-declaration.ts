@@ -19,7 +19,7 @@ export class TupleDeconstructDeclaration implements Node, BlockItem {
     public readonly declarations: DeclarationParameterOrPlaceholder[],
     public readonly expression: Expression,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     this.range = new InputRange(start, end);
   }
@@ -30,7 +30,7 @@ export class TupleDeconstructDeclaration implements Node, BlockItem {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.expression.reduceNode(combine, combine(initialValue, this));
   }
@@ -72,8 +72,8 @@ export class TupleDeconstructDeclaration implements Node, BlockItem {
           });
           this.documentation.push(
             declaration.target.range.with(
-              `Variable declaration \`${declaration.target.value} : ${variableType.name}\``
-            )
+              `Variable declaration \`${declaration.target.value} : ${variableType.name}\``,
+            ),
           );
         }
       }
@@ -88,7 +88,7 @@ export class TupleDeconstructDeclaration implements Node, BlockItem {
     for (const declaration of this.declarations) {
       if (isDeclarationParameter(declaration)) {
         semanticTokens.push(
-          declaration.target.range.semanticToken("variable", "declaration")
+          declaration.target.range.semanticToken("variable", "declaration"),
         );
       }
     }

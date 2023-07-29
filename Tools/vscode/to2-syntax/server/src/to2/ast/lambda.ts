@@ -11,7 +11,7 @@ export class Lambda extends Expression {
     public readonly parameters: FunctionParameter[],
     public readonly expression: Expression,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     super(start, end);
   }
@@ -42,26 +42,26 @@ export class Lambda extends Expression {
         type,
         hasDefault,
       ]),
-      returnType
+      returnType,
     );
   }
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.expression.reduceNode(
       combine,
       this.parameters.reduce(
         (prev, param) => param.reduceNode(combine, prev),
-        combine(initialValue, this)
-      )
+        combine(initialValue, this),
+      ),
     );
   }
 
   public validateBlock(
     context: BlockContext,
-    typeHint?: RealizedType
+    typeHint?: RealizedType,
   ): ValidationError[] {
     const errors: ValidationError[] = [];
 
@@ -88,7 +88,7 @@ export class Lambda extends Expression {
   }
 
   private resolveParameters(
-    typeHint?: RealizedType
+    typeHint?: RealizedType,
   ): [WithPosition<string>, TO2Type, boolean][] {
     if (typeHint && isFunctionType(typeHint)) {
       const resolveParameters: [WithPosition<string>, TO2Type, boolean][] = [];

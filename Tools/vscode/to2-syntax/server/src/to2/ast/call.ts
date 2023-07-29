@@ -13,7 +13,7 @@ export class Call extends Expression {
     public readonly namePath: WithPosition<string[]>,
     public readonly args: Expression[],
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     super(start, end);
   }
@@ -29,8 +29,8 @@ export class Call extends Expression {
             arg.resultType(context),
             false,
           ]),
-          typeHint ?? UNKNOWN_TYPE
-        )
+          typeHint ?? UNKNOWN_TYPE,
+        ),
       ) ?? {};
 
     if (definition) {
@@ -45,24 +45,24 @@ export class Call extends Expression {
       ? realizedType.guessReturnType(
           context.module,
           this.args.map((arg) => arg.resultType(context)),
-          typeHint
+          typeHint,
         )
       : UNKNOWN_TYPE;
   }
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.args.reduce(
       (prev, arg) => arg.reduceNode(combine, prev),
-      combine(initialValue, this)
+      combine(initialValue, this),
     );
   }
 
   public validateBlock(
     context: BlockContext,
-    typeHint?: RealizedType
+    typeHint?: RealizedType,
   ): ValidationError[] {
     const errors: ValidationError[] = [];
 
@@ -76,15 +76,15 @@ export class Call extends Expression {
             arg.resultType(context),
             false,
           ]),
-          typeHint ?? UNKNOWN_TYPE
-        )
+          typeHint ?? UNKNOWN_TYPE,
+        ),
       ) ?? {};
     const realizedType = variableType?.realizedType(context.module);
     if (!realizedType) {
       errors.push({
         status: "error",
         message: `Undefined variable or function: ${this.namePath.value.join(
-          "::"
+          "::",
         )}`,
         range: this.namePath.range,
       });
@@ -92,7 +92,7 @@ export class Call extends Expression {
       errors.push({
         status: "error",
         message: `Undefined variable: ${this.namePath.value.join(
-          "::"
+          "::",
         )} is not callable`,
         range: this.namePath.range,
       });
@@ -118,23 +118,23 @@ export class Call extends Expression {
           errors.push(
             ...this.args[i].validateBlock(
               context,
-              realizedType.parameterTypes[i][1].realizedType(context.module)
-            )
+              realizedType.parameterTypes[i][1].realizedType(context.module),
+            ),
           );
         }
       }
       this.documentation = [
         this.namePath.range.with(
           `Function \`${this.namePath.value.join(
-            "::"
+            "::",
           )}(${realizedType.parameterTypes
             .map(([name, type]) => `${name} : ${type.localName}`)
-            .join(", ")}) -> ${realizedType.returnType.localName}\``
+            .join(", ")}) -> ${realizedType.returnType.localName}\``,
         ),
       ];
       if (realizedType.description)
         this.documentation.push(
-          this.namePath.range.with(realizedType.description)
+          this.namePath.range.with(realizedType.description),
         );
     }
 

@@ -10,24 +10,24 @@ export class RecordCreate extends Expression {
     public readonly declaredResult: TO2Type | undefined,
     public readonly items: [WithPosition<string>, Expression][],
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     super(start, end);
   }
 
   public resultType(context: BlockContext): TO2Type {
     return new RecordType(
-      this.items.map(([name, item]) => [name, item.resultType(context)])
+      this.items.map(([name, item]) => [name, item.resultType(context)]),
     );
   }
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.items.reduce(
       (prev, item) => item[1].reduceNode(combine, prev),
-      combine(initialValue, this)
+      combine(initialValue, this),
     );
   }
   public validateBlock(context: BlockContext): ValidationError[] {

@@ -24,14 +24,14 @@ export class UseDeclaration implements Node, ModuleItem {
     public readonly fromKeyword: WithPosition<"from"> | undefined,
     public readonly moduleNamePath: WithPosition<string[]>,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     this.range = new InputRange(start, end);
   }
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return combine(initialValue, this);
   }
@@ -58,7 +58,7 @@ export class UseDeclaration implements Node, ModuleItem {
         } else {
           context.moduleAliases.set(
             this.alias.value,
-            this.moduleNamePath.value
+            this.moduleNamePath.value,
           );
         }
       }
@@ -107,7 +107,7 @@ export class UseDeclaration implements Node, ModuleItem {
             } else {
               context.typeAliases.set(
                 name.value,
-                importedType.realizedType(context)
+                importedType.realizedType(context),
               );
             }
           }

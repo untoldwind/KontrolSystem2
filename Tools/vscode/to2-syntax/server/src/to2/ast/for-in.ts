@@ -13,7 +13,7 @@ export class ForIn extends Expression {
     public readonly sourceExpression: Expression,
     public readonly loopExpression: Expression,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     super(start, end);
   }
@@ -24,11 +24,11 @@ export class ForIn extends Expression {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.loopExpression.reduceNode(
       combine,
-      this.sourceExpression.reduceNode(combine, combine(initialValue, this))
+      this.sourceExpression.reduceNode(combine, combine(initialValue, this)),
     );
   }
 
@@ -84,7 +84,7 @@ export class ForIn extends Expression {
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     semanticTokens.push(this.forKeyword.range.semanticToken("keyword"));
     semanticTokens.push(
-      this.variableName.range.semanticToken("variable", "definition")
+      this.variableName.range.semanticToken("variable", "definition"),
     );
     semanticTokens.push(this.inKeyword.range.semanticToken("keyword"));
     this.sourceExpression.collectSemanticTokens(semanticTokens);

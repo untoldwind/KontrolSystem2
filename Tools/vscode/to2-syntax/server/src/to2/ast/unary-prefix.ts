@@ -10,7 +10,7 @@ export class UnaryPrefix extends Expression {
     public readonly op: WithPosition<Operator>,
     public readonly right: Expression,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     super(start, end);
   }
@@ -21,7 +21,7 @@ export class UnaryPrefix extends Expression {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.right.reduceNode(combine, combine(initialValue, this));
   }

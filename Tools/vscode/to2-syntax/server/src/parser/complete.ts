@@ -7,7 +7,7 @@ import { Input, Parser, ParserFailure, ParserResult, ParserSuccess } from ".";
 
 export function char(
   predicate: (charCode: number) => boolean,
-  expected: string
+  expected: string,
 ): Parser<string> {
   return (input: Input) => {
     if (input.available < 1) return new ParserFailure(input, expected, "");
@@ -24,7 +24,7 @@ export function oneOf(candidates: string): Parser<string> {
 }
 
 export function chars0(
-  predicate: (charCode: number) => boolean
+  predicate: (charCode: number) => boolean,
 ): Parser<string> {
   return (input: Input) => {
     let count = input.findNext((ch) => !predicate(ch));
@@ -35,7 +35,7 @@ export function chars0(
 
 export function chars1(
   predicate: (charCode: number) => boolean,
-  expected: string
+  expected: string,
 ): Parser<string> {
   return (input: Input) => {
     let count = input.findNext((ch) => !predicate(ch));
@@ -54,7 +54,7 @@ export function charsExcept1(forbidden: string): Parser<string> {
   const forbiddenCodes = toCharCodes(forbidden);
   return chars1(
     (ch) => forbiddenCodes.indexOf(ch) < 0,
-    `any character except ${forbidden}`
+    `any character except ${forbidden}`,
   );
 }
 
@@ -80,7 +80,7 @@ export const spacing0 = chars0((ch) => ch === TAB || getCategory(ch) === "Zs");
 
 export const spacing1 = chars1(
   (ch) => ch === TAB || getCategory(ch) === "Zs",
-  "<space>"
+  "<space>",
 );
 
 export function tag<T extends string>(tag: T): Parser<T> {

@@ -16,7 +16,7 @@ export class MethodDeclaration implements Node, ModuleItem {
     public readonly declaredReturn: TO2Type,
     public readonly expression: Expression,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     this.range = new InputRange(start, end);
   }
@@ -29,13 +29,13 @@ export class MethodDeclaration implements Node, ModuleItem {
         p.type?.value ?? UNKNOWN_TYPE,
         p.defaultValue !== undefined,
       ]),
-      this.declaredReturn
+      this.declaredReturn,
     );
   }
 
   reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.expression.reduceNode(combine, combine(initialValue, this));
   }
@@ -66,7 +66,7 @@ export class MethodDeclaration implements Node, ModuleItem {
             param.resultType(blockContext).realizedType(context),
             param.defaultValue !== undefined,
           ]),
-          this.declaredReturn.realizedType(context)
+          this.declaredReturn.realizedType(context),
         ),
       });
     }
@@ -113,7 +113,7 @@ export class MethodDeclaration implements Node, ModuleItem {
     semanticTokens.push(
       this.isAsync
         ? this.name.range.semanticToken("method", "async", "declaration")
-        : this.name.range.semanticToken("method", "declaration")
+        : this.name.range.semanticToken("method", "declaration"),
     );
     for (const parameter of this.parameters) {
       parameter.collectSemanticTokens(semanticTokens);

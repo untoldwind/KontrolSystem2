@@ -11,7 +11,7 @@ export class DeclarationParameter {
   constructor(
     public readonly target: WithPosition<string>,
     public readonly source: string | undefined,
-    public readonly type: WithPosition<TO2Type> | undefined
+    public readonly type: WithPosition<TO2Type> | undefined,
   ) {}
 
   extractedType(from: RealizedType, idx: number): TO2Type | undefined {
@@ -21,7 +21,7 @@ export class DeclarationParameter {
     if (isRecordType(from)) {
       if (this.source)
         return from.itemTypes.find(
-          (item) => item[0].value === this.source
+          (item) => item[0].value === this.source,
         )?.[1];
       return idx < from.itemTypes.length ? from.itemTypes[idx][1] : undefined;
     }
@@ -36,7 +36,7 @@ export type DeclarationParameterOrPlaceholder =
   | DeclarationPlaceholder;
 
 export function isDeclarationParameter(
-  declaration: DeclarationParameterOrPlaceholder
+  declaration: DeclarationParameterOrPlaceholder,
 ): declaration is DeclarationParameter {
   return (declaration as DeclarationParameter).target !== undefined;
 }
@@ -51,7 +51,7 @@ export class VariableDeclaration implements Node, BlockItem {
     public readonly declaration: DeclarationParameter,
     public readonly expression: Expression,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     this.range = new InputRange(start, end);
   }
@@ -62,7 +62,7 @@ export class VariableDeclaration implements Node, BlockItem {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.expression.reduceNode(combine, combine(initialValue, this));
   }
@@ -98,15 +98,15 @@ export class VariableDeclaration implements Node, BlockItem {
       });
       this.documentation = [
         this.declaration.target.range.with(
-          `Variable declaration \`${this.declaration.target.value} : ${variableType.name}\``
+          `Variable declaration \`${this.declaration.target.value} : ${variableType.name}\``,
         ),
       ];
     }
     errors.push(
       ...this.expression.validateBlock(
         context,
-        this.declaration.type?.value.realizedType(context.module)
-      )
+        this.declaration.type?.value.realizedType(context.module),
+      ),
     );
 
     return errors;
@@ -115,7 +115,7 @@ export class VariableDeclaration implements Node, BlockItem {
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     semanticTokens.push(this.constLetKeyword.range.semanticToken("keyword"));
     semanticTokens.push(
-      this.declaration.target.range.semanticToken("variable", "declaration")
+      this.declaration.target.range.semanticToken("variable", "declaration"),
     );
     this.expression.collectSemanticTokens(semanticTokens);
   }

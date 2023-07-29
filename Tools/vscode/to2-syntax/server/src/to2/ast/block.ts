@@ -10,7 +10,7 @@ export class Block extends Expression {
   constructor(
     public readonly items: BlockItem[],
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     super(start, end);
   }
@@ -21,11 +21,11 @@ export class Block extends Expression {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.items.reduce(
       (prev, item) => item.reduceNode(combine, prev),
-      combine(initialValue, this)
+      combine(initialValue, this),
     );
   }
 

@@ -14,18 +14,18 @@ export class ImplDeclaration implements Node {
     public readonly name: WithPosition<string>,
     public readonly methods: (LineComment | MethodDeclaration)[],
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     this.range = new InputRange(start, end);
   }
 
   reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.methods.reduce(
       (prev, method) => method.reduceNode(combine, prev),
-      combine(initialValue, this)
+      combine(initialValue, this),
     );
   }
 
@@ -36,7 +36,7 @@ export class ImplDeclaration implements Node {
 
     const implContext = new ImplModuleContext(
       context,
-      structType ?? new RecordType([])
+      structType ?? new RecordType([]),
     );
     for (const method of this.methods) {
       errors.push(...method.validateModuleFirstPass(implContext));
@@ -59,7 +59,7 @@ export class ImplDeclaration implements Node {
 
     const implContext = new ImplModuleContext(
       context,
-      structType ?? new RecordType([])
+      structType ?? new RecordType([]),
     );
     for (const method of this.methods) {
       errors.push(...method.validateModuleSecondPass(implContext));

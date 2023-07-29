@@ -8,7 +8,7 @@ export class ReturnEmpty extends Expression {
   constructor(
     public readonly returnKeyword: WithPosition<"return">,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     super(start, end);
   }
@@ -19,7 +19,7 @@ export class ReturnEmpty extends Expression {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return combine(initialValue, this);
   }
@@ -40,7 +40,7 @@ export class ReturnValue extends Expression {
     public readonly returnKeyword: WithPosition<"return">,
     public readonly returnValue: Expression,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     super(start, end);
   }
@@ -50,7 +50,7 @@ export class ReturnValue extends Expression {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.returnValue.reduceNode(combine, combine(initialValue, this));
   }

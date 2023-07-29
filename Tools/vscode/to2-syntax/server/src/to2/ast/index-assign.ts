@@ -13,7 +13,7 @@ export class IndexAssign extends Expression {
     public readonly op: Operator,
     public readonly expression: Expression,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     super(start, end);
   }
@@ -24,14 +24,14 @@ export class IndexAssign extends Expression {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.expression.reduceNode(
       combine,
       this.indexSpec.reduceNode(
         combine,
-        this.target.reduceNode(combine, combine(initialValue, this))
-      )
+        this.target.reduceNode(combine, combine(initialValue, this)),
+      ),
     );
   }
 

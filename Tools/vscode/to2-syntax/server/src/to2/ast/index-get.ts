@@ -11,7 +11,7 @@ export class IndexGet extends Expression {
     public readonly target: Expression,
     public readonly indexSpec: IndexSpec,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     super(start, end);
   }
@@ -22,11 +22,11 @@ export class IndexGet extends Expression {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.indexSpec.reduceNode(
       combine,
-      this.target.reduceNode(combine, combine(initialValue, this))
+      this.target.reduceNode(combine, combine(initialValue, this)),
     );
   }
 

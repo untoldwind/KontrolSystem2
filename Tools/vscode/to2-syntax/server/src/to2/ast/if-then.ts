@@ -11,7 +11,7 @@ export class IfThen extends Expression {
     public readonly condition: Expression,
     public readonly thenExpression: Expression,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     super(start, end);
   }
@@ -26,11 +26,11 @@ export class IfThen extends Expression {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.thenExpression.reduceNode(
       combine,
-      this.condition.reduceNode(combine, combine(initialValue, this))
+      this.condition.reduceNode(combine, combine(initialValue, this)),
     );
   }
 
@@ -59,7 +59,7 @@ export class IfThenElse extends Expression {
     public readonly thenExpression: Expression,
     public readonly elseExpression: Expression,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     super(start, end);
   }
@@ -76,14 +76,14 @@ export class IfThenElse extends Expression {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.elseExpression.reduceNode(
       combine,
       this.thenExpression.reduceNode(
         combine,
-        this.condition.reduceNode(combine, combine(initialValue, this))
-      )
+        this.condition.reduceNode(combine, combine(initialValue, this)),
+      ),
     );
   }
 

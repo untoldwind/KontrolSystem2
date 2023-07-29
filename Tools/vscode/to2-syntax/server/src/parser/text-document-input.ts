@@ -9,14 +9,14 @@ export class TextDocumentInput implements Input {
   constructor(
     private readonly source: TextDocument,
     public readonly offset: number = 0,
-    sourceText: string | undefined = undefined
+    sourceText: string | undefined = undefined,
   ) {
     this.sourceText = sourceText ?? source.getText();
     const textPosition = source.positionAt(offset);
     this.position = new InputPosition(
       offset,
       textPosition.line,
-      textPosition.character
+      textPosition.character,
     );
     this.available = this.sourceText.length - offset;
   }
@@ -38,7 +38,7 @@ export class TextDocumentInput implements Input {
     return new TextDocumentInput(
       this.source,
       this.offset + count,
-      this.sourceText
+      this.sourceText,
     );
   }
 }

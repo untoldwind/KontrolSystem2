@@ -17,7 +17,7 @@ export class TypeAlias implements Node, TypeDeclaration {
     public readonly description: string,
     public readonly type: TO2Type,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     this.range = new InputRange(start, end);
     this.name = alias.value;
@@ -25,7 +25,7 @@ export class TypeAlias implements Node, TypeDeclaration {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return combine(initialValue, this);
   }

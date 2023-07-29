@@ -15,7 +15,7 @@ export class RecordType implements RealizedType {
     public readonly itemTypes: [WithPosition<string>, TO2Type][],
     methods?: Map<string, WithDefinitionRef<FunctionType>>,
     public readonly structName?: string,
-    private moduleName: string = "<unknown>"
+    private moduleName: string = "<unknown>",
   ) {
     this.name = this.localName =
       structName ??
@@ -35,13 +35,13 @@ export class RecordType implements RealizedType {
       this.itemTypes.map(([name, type]) => [name, type.realizedType(context)]),
       this.methods,
       this.structName,
-      this.moduleName
+      this.moduleName,
     );
   }
 
   public fillGenerics(
     context: ModuleContext,
-    genericMap: Record<string, RealizedType>
+    genericMap: Record<string, RealizedType>,
   ): RealizedType {
     return new RecordType(
       this.itemTypes.map(([name, type]) => [
@@ -50,14 +50,14 @@ export class RecordType implements RealizedType {
       ]),
       this.methods,
       this.structName,
-      this.moduleName
+      this.moduleName,
     );
   }
 
   public guessGeneric(
     context: ModuleContext,
     genericMap: Record<string, RealizedType>,
-    realizedType: RealizedType
+    realizedType: RealizedType,
   ): void {
     if (isRecordType(realizedType)) {
       for (
@@ -70,7 +70,7 @@ export class RecordType implements RealizedType {
           .guessGeneric(
             context,
             genericMap,
-            realizedType.itemTypes[i][1].realizedType(context)
+            realizedType.itemTypes[i][1].realizedType(context),
           );
       }
     }

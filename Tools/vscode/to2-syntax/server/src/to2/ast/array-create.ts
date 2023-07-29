@@ -10,7 +10,7 @@ export class ArrayCreate extends Expression {
     public readonly elementType: TO2Type | undefined,
     public readonly elements: Expression[],
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     super(start, end);
   }
@@ -21,11 +21,11 @@ export class ArrayCreate extends Expression {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.elements.reduce(
       (prev, element) => element.reduceNode(combine, prev),
-      combine(initialValue, this)
+      combine(initialValue, this),
     );
   }
 

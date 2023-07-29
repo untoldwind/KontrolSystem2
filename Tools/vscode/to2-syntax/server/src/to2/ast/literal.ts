@@ -14,7 +14,7 @@ export class LiteralBool extends Expression {
   constructor(
     public readonly value: boolean,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     super(start, end);
   }
@@ -25,7 +25,7 @@ export class LiteralBool extends Expression {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return combine(initialValue, this);
   }
@@ -43,7 +43,7 @@ export class LiteralInt extends Expression {
   constructor(
     public readonly value: number,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     super(start, end);
   }
@@ -54,7 +54,7 @@ export class LiteralInt extends Expression {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return combine(initialValue, this);
   }
@@ -72,7 +72,7 @@ export class LiteralFloat extends Expression {
   constructor(
     public readonly value: number,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     super(start, end);
   }
@@ -83,7 +83,7 @@ export class LiteralFloat extends Expression {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return combine(initialValue, this);
   }
@@ -101,7 +101,7 @@ export class LiteralString extends Expression {
   constructor(
     public readonly value: string,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     super(start, end);
   }
@@ -112,7 +112,7 @@ export class LiteralString extends Expression {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return combine(initialValue, this);
   }

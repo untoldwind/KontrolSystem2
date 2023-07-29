@@ -12,7 +12,7 @@ export function manyM_N<T>(
   minCount: number | undefined,
   maxCount: number | undefined,
   item: Parser<T>,
-  description: string
+  description: string,
 ): Parser<T[]> {
   return (input: Input) => {
     let remaining = input;
@@ -33,14 +33,14 @@ export function manyM_N<T>(
       return new ParserFailure(
         remaining,
         `Expected at least ${minCount} ${description}`,
-        result
+        result,
       );
     }
     if (maxCount && result.length > maxCount) {
       return new ParserFailure(
         remaining,
         `Expected at most ${maxCount} ${description}`,
-        result
+        result,
       );
     }
 
@@ -61,7 +61,7 @@ export function delimitedM_N<T, D>(
   maxCount: number | undefined,
   item: Parser<T>,
   delimiter: Parser<D>,
-  description: string
+  description: string,
 ): Parser<T[]> {
   return (input: Input) => {
     let remaining = input;
@@ -85,14 +85,14 @@ export function delimitedM_N<T, D>(
       return new ParserFailure(
         remaining,
         `Expected at least ${minCount} ${description}`,
-        result
+        result,
       );
     }
     if (maxCount && result.length > maxCount) {
       return new ParserFailure(
         remaining,
         `Expected at most ${maxCount} ${description}`,
-        result
+        result,
       );
     }
 
@@ -103,7 +103,7 @@ export function delimitedM_N<T, D>(
 export function delimited0<T, D>(
   item: Parser<T>,
   delimiter: Parser<D>,
-  description: string
+  description: string,
 ): Parser<T[]> {
   return delimitedM_N(undefined, undefined, item, delimiter, description);
 }
@@ -111,7 +111,7 @@ export function delimited0<T, D>(
 export function delimited1<T, D>(
   item: Parser<T>,
   delimiter: Parser<D>,
-  description: string
+  description: string,
 ): Parser<T[]> {
   return delimitedM_N(1, undefined, item, delimiter, description);
 }
@@ -123,8 +123,8 @@ export function fold0<T, S>(
     collect: T,
     current: S,
     start: InputPosition,
-    end: InputPosition
-  ) => T
+    end: InputPosition,
+  ) => T,
 ): Parser<T> {
   return (input: Input) => {
     let result = initial(input);
@@ -144,8 +144,8 @@ export function fold0<T, S>(
           result.value,
           suffixResult.value,
           result.remaining.position,
-          suffixResult.remaining.position
-        )
+          suffixResult.remaining.position,
+        ),
       );
       suffixResult = suffix(suffixResult.remaining);
     }
@@ -162,8 +162,8 @@ export function chain<T, OP>(
     op: OP,
     right: T,
     start: InputPosition,
-    end: InputPosition
-  ) => T
+    end: InputPosition,
+  ) => T,
 ) {
   const restParser = seq(opParser, operantParser);
 
@@ -188,7 +188,7 @@ export function chain<T, OP>(
         op,
         operant,
         remaining.position,
-        restResult.remaining.position
+        restResult.remaining.position,
       );
       remaining = restResult.remaining;
 
@@ -204,7 +204,7 @@ export function delimitedUntil<T, D, E>(
   delimiter: Parser<D>,
   end: Parser<E>,
   description: string,
-  recover?: (failure: ParserFailure<T | D>) => ParserSuccess<T>
+  recover?: (failure: ParserFailure<T | D>) => ParserSuccess<T>,
 ): Parser<T[]> {
   return (input: Input) => {
     let remaining = input;
@@ -226,7 +226,7 @@ export function delimitedUntil<T, D, E>(
           return new ParserFailure(
             itemResult.remaining,
             itemResult.expected,
-            result
+            result,
           );
       } else {
         if (remaining.position.offset === itemResult.remaining.position.offset)
@@ -250,7 +250,7 @@ export function delimitedUntil<T, D, E>(
           return new ParserFailure(
             delimiterResult.remaining,
             delimiterResult.expected,
-            result
+            result,
           );
       } else remaining = delimiterResult.remaining;
 

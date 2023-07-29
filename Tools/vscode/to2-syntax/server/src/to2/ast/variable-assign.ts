@@ -14,7 +14,7 @@ export class VariableAssign extends Expression {
     public readonly op: Operator,
     public readonly expression: Expression,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     super(start, end);
   }
@@ -25,14 +25,14 @@ export class VariableAssign extends Expression {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.expression.reduceNode(combine, combine(initialValue, this));
   }
 
   public validateBlock(
     context: BlockContext,
-    typeHint?: RealizedType
+    typeHint?: RealizedType,
   ): ValidationError[] {
     const errors: ValidationError[] = [];
 
@@ -41,7 +41,7 @@ export class VariableAssign extends Expression {
         [this.name.value],
         this.expression
           .resultType(context, typeHint)
-          .realizedType(context.module)
+          .realizedType(context.module),
       ) ?? {};
     if (definition) {
       this.reference = {
@@ -59,7 +59,7 @@ export class VariableAssign extends Expression {
     } else {
       this.documentation = [
         this.name.range.with(
-          `Variable \`${this.name.value} : ${variableType.name}\``
+          `Variable \`${this.name.value} : ${variableType.name}\``,
         ),
       ];
     }
@@ -67,8 +67,8 @@ export class VariableAssign extends Expression {
     errors.push(
       ...this.expression.validateBlock(
         context,
-        variableType?.realizedType(context.module)
-      )
+        variableType?.realizedType(context.module),
+      ),
     );
 
     return errors;
@@ -76,7 +76,7 @@ export class VariableAssign extends Expression {
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     semanticTokens.push(
-      this.name.range.semanticToken("variable", "modification")
+      this.name.range.semanticToken("variable", "modification"),
     );
     this.expression.collectSemanticTokens(semanticTokens);
   }

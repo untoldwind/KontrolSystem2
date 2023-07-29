@@ -7,7 +7,7 @@ export class StringInput implements Input {
 
   constructor(
     private readonly source: string,
-    public readonly offset: number = 0
+    public readonly offset: number = 0,
   ) {
     this.source = source;
     this.offset = offset;

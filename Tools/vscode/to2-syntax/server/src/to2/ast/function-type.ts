@@ -15,7 +15,7 @@ export class FunctionType implements RealizedType {
     public readonly isAsync: boolean,
     public readonly parameterTypes: [string, TO2Type, boolean][],
     public readonly returnType: TO2Type,
-    public readonly description: string = ""
+    public readonly description: string = "",
   ) {
     this.name = `${isAsync ? "" : "sync "}fn(${parameterTypes
       .map((parameter) => parameter[1].localName)
@@ -38,13 +38,13 @@ export class FunctionType implements RealizedType {
         hasDefault,
       ]),
       this.returnType.realizedType(context),
-      this.description
+      this.description,
     );
   }
 
   public fillGenerics(
     context: ModuleContext,
-    genericMap: Record<string, RealizedType>
+    genericMap: Record<string, RealizedType>,
   ): RealizedType {
     return new FunctionType(
       this.isAsync,
@@ -54,14 +54,14 @@ export class FunctionType implements RealizedType {
         hasDefault,
       ]),
       this.returnType.realizedType(context).fillGenerics(context, genericMap),
-      this.description
+      this.description,
     );
   }
 
   public guessGeneric(
     context: ModuleContext,
     genericMap: Record<string, RealizedType>,
-    realizedType: RealizedType
+    realizedType: RealizedType,
   ): void {
     if (isFunctionType(realizedType)) {
       this.returnType
@@ -69,7 +69,7 @@ export class FunctionType implements RealizedType {
         .guessGeneric(
           context,
           genericMap,
-          realizedType.returnType.realizedType(context)
+          realizedType.returnType.realizedType(context),
         );
       for (
         let i = 0;
@@ -82,7 +82,7 @@ export class FunctionType implements RealizedType {
           .guessGeneric(
             context,
             genericMap,
-            realizedType.parameterTypes[i][1].realizedType(context)
+            realizedType.parameterTypes[i][1].realizedType(context),
           );
       }
     }
@@ -119,7 +119,7 @@ export class FunctionType implements RealizedType {
   public guessReturnType(
     context: ModuleContext,
     args: TO2Type[],
-    typeHint: RealizedType | undefined
+    typeHint: RealizedType | undefined,
   ): RealizedType {
     const genericMap: Record<string, RealizedType> = {};
 
@@ -140,7 +140,7 @@ export class FunctionType implements RealizedType {
 }
 
 export function isFunctionType(
-  node: RealizedType | undefined
+  node: RealizedType | undefined,
 ): node is FunctionType {
   return node !== undefined && node.kind === "Function";
 }

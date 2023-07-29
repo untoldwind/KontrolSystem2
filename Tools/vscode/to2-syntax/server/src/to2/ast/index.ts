@@ -16,7 +16,7 @@ export interface Node {
 
   reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T;
 
   collectSemanticTokens(semanticTokens: SemanticToken[]): void;
@@ -29,7 +29,7 @@ export interface BlockItem extends Node {
 
   validateBlock(
     context: BlockContext,
-    typeHint?: RealizedType
+    typeHint?: RealizedType,
   ): ValidationError[];
 }
 
@@ -65,17 +65,17 @@ export abstract class Expression implements Node, BlockItem {
 
   public abstract resultType(
     context: BlockContext,
-    typeHint?: RealizedType
+    typeHint?: RealizedType,
   ): TO2Type;
 
   public abstract reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T;
 
   public abstract validateBlock(
     context: BlockContext,
-    typeHint?: RealizedType
+    typeHint?: RealizedType,
   ): ValidationError[];
 
   public abstract collectSemanticTokens(semanticTokens: SemanticToken[]): void;

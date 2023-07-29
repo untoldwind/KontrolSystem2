@@ -13,7 +13,7 @@ export interface SuffixOperation {
   getExpression(
     target: Expression,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ): Expression;
 }
 
@@ -23,7 +23,7 @@ export interface AssignSuffixOperation extends SuffixOperation {
     op: Operator,
     value: Expression,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ): Expression;
 }
 
@@ -32,7 +32,7 @@ export class IndexGetSuffix implements SuffixOperation, AssignSuffixOperation {
   getExpression(
     target: Expression,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ): Expression {
     return new IndexGet(target, this.indexSpec, start, end);
   }
@@ -42,7 +42,7 @@ export class IndexGetSuffix implements SuffixOperation, AssignSuffixOperation {
     op: Operator,
     value: Expression,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ): Expression {
     return new IndexAssign(target, this.indexSpec, op, value, start, end);
   }
@@ -53,7 +53,7 @@ export class FieldGetSuffix implements SuffixOperation, AssignSuffixOperation {
   getExpression(
     target: Expression,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ): Expression {
     return new FieldGet(target, this.fieldName, start, end);
   }
@@ -63,7 +63,7 @@ export class FieldGetSuffix implements SuffixOperation, AssignSuffixOperation {
     op: Operator,
     value: Expression,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ): Expression {
     return new FieldAssign(target, this.fieldName, op, value, start, end);
   }
@@ -72,13 +72,13 @@ export class FieldGetSuffix implements SuffixOperation, AssignSuffixOperation {
 export class MethodCallSuffix implements SuffixOperation {
   constructor(
     public readonly methodName: WithPosition<string>,
-    public readonly args: Expression[]
+    public readonly args: Expression[],
   ) {}
 
   getExpression(
     target: Expression,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ): Expression {
     return new MethodCall(target, this.methodName, this.args, start, end);
   }
@@ -90,7 +90,7 @@ export class OperatorSuffix implements SuffixOperation {
   getExpression(
     target: Expression,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ): Expression {
     return new UnarySuffix(target, this.op, start, end);
   }

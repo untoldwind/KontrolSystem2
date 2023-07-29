@@ -22,7 +22,7 @@ export function alt<P extends any[]>(
     return new ParserFailure<P[keyof P]>(
       longest,
       expected.join(" or "),
-      undefined
+      undefined,
     );
   };
 }

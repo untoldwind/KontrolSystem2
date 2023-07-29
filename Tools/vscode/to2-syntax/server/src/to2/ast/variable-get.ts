@@ -15,7 +15,7 @@ export class VariableGet extends Expression {
   constructor(
     public readonly namePath: WithPosition<string[]>,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     super(start, end);
   }
@@ -28,14 +28,14 @@ export class VariableGet extends Expression {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return combine(initialValue, this);
   }
 
   public validateBlock(
     context: BlockContext,
-    typeHint?: RealizedType
+    typeHint?: RealizedType,
   ): ValidationError[] {
     const errors: ValidationError[] = [];
 
@@ -63,12 +63,12 @@ export class VariableGet extends Expression {
         this.namePath.range.with(
           `Variable \`${this.namePath.value.join("::")} : ${
             realizedType.name
-          }\``
+          }\``,
         ),
       ];
       if (realizedType.description)
         this.documentation.push(
-          this.namePath.range.with(realizedType.description)
+          this.namePath.range.with(realizedType.description),
         );
     }
 

@@ -17,7 +17,7 @@ export class FieldGet extends Expression {
     public readonly target: Expression,
     public readonly fieldName: WithPosition<string>,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     super(start, end);
   }
@@ -32,7 +32,7 @@ export class FieldGet extends Expression {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.target.reduceNode(combine, combine(initialValue, this));
   }
@@ -68,12 +68,12 @@ export class FieldGet extends Expression {
     } else {
       this.documentation = [
         this.fieldName.range.with(
-          `Field \`${targetType.name}.${this.fieldName.value} : ${fieldRealized.name}\``
+          `Field \`${targetType.name}.${this.fieldName.value} : ${fieldRealized.name}\``,
         ),
       ];
       if (fieldRealized.description)
         this.documentation.push(
-          this.fieldName.range.with(fieldRealized.description)
+          this.fieldName.range.with(fieldRealized.description),
         );
     }
 

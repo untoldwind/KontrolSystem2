@@ -5,7 +5,7 @@ export class IndexSpec {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.start.reduceNode(combine, initialValue);
   }

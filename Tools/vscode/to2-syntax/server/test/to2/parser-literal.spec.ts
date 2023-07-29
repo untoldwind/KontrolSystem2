@@ -16,7 +16,7 @@ describe("TO2 parser literals", () => {
         value: expect.objectContaining({
           value: "",
         }),
-      })
+      }),
     );
     expect(literalString(new StringInput(`"abcdefgh01234"`))).toEqual(
       expect.objectContaining({
@@ -24,7 +24,7 @@ describe("TO2 parser literals", () => {
         value: expect.objectContaining({
           value: "abcdefgh01234",
         }),
-      })
+      }),
     );
     expect(literalString(new StringInput(`"abdc\\"edf\\ngh\\tzu"`))).toEqual(
       expect.objectContaining({
@@ -32,7 +32,7 @@ describe("TO2 parser literals", () => {
         value: expect.objectContaining({
           value: 'abdc"edf\ngh\tzu',
         }),
-      })
+      }),
     );
   });
 
@@ -44,7 +44,7 @@ describe("TO2 parser literals", () => {
         value: expect.objectContaining({
           value: 123456,
         }),
-      })
+      }),
     );
     expect(literalInt(new StringInput(`-123_456`))).toEqual(
       expect.objectContaining({
@@ -52,7 +52,7 @@ describe("TO2 parser literals", () => {
         value: expect.objectContaining({
           value: -123456,
         }),
-      })
+      }),
     );
     expect(literalInt(new StringInput(`0x12_34_56`))).toEqual(
       expect.objectContaining({
@@ -60,7 +60,7 @@ describe("TO2 parser literals", () => {
         value: expect.objectContaining({
           value: 1193046,
         }),
-      })
+      }),
     );
     expect(literalInt(new StringInput(`-0x123456`))).toEqual(
       expect.objectContaining({
@@ -68,7 +68,7 @@ describe("TO2 parser literals", () => {
         value: expect.objectContaining({
           value: -1193046,
         }),
-      })
+      }),
     );
     expect(literalInt(new StringInput(`0o123456`))).toEqual(
       expect.objectContaining({
@@ -76,7 +76,7 @@ describe("TO2 parser literals", () => {
         value: expect.objectContaining({
           value: 42798,
         }),
-      })
+      }),
     );
     expect(literalInt(new StringInput(`0b1010010011`))).toEqual(
       expect.objectContaining({
@@ -84,7 +84,7 @@ describe("TO2 parser literals", () => {
         value: expect.objectContaining({
           value: 659,
         }),
-      })
+      }),
     );
   });
 
@@ -96,7 +96,7 @@ describe("TO2 parser literals", () => {
         value: expect.objectContaining({
           value: 123.456,
         }),
-      })
+      }),
     );
     expect(literalFloat(new StringInput(`-123.456`))).toEqual(
       expect.objectContaining({
@@ -104,7 +104,7 @@ describe("TO2 parser literals", () => {
         value: expect.objectContaining({
           value: -123.456,
         }),
-      })
+      }),
     );
     expect(literalFloat(new StringInput(`1.23456E4`))).toEqual(
       expect.objectContaining({
@@ -112,7 +112,7 @@ describe("TO2 parser literals", () => {
         value: expect.objectContaining({
           value: 12345.6,
         }),
-      })
+      }),
     );
   });
 
@@ -124,7 +124,7 @@ describe("TO2 parser literals", () => {
         value: expect.objectContaining({
           value: false,
         }),
-      })
+      }),
     );
     expect(literalBool(new StringInput(`true`))).toEqual(
       expect.objectContaining({
@@ -132,7 +132,7 @@ describe("TO2 parser literals", () => {
         value: expect.objectContaining({
           value: true,
         }),
-      })
+      }),
     );
   });
 });

@@ -35,17 +35,17 @@ export class ArrayType implements RealizedType {
 
   public fillGenerics(
     context: ModuleContext,
-    genericMap: Record<string, RealizedType>
+    genericMap: Record<string, RealizedType>,
   ): RealizedType {
     return new ArrayType(
-      this.elementType.realizedType(context).fillGenerics(context, genericMap)
+      this.elementType.realizedType(context).fillGenerics(context, genericMap),
     );
   }
 
   guessGeneric(
     context: ModuleContext,
     genericMap: Record<string, RealizedType>,
-    realizedType: RealizedType
+    realizedType: RealizedType,
   ): void {
     if (isArrayType(realizedType)) {
       this.elementType
@@ -53,7 +53,7 @@ export class ArrayType implements RealizedType {
         .guessGeneric(
           context,
           genericMap,
-          realizedType.elementType.realizedType(context)
+          realizedType.elementType.realizedType(context),
         );
     }
   }
@@ -91,13 +91,13 @@ export class ArrayType implements RealizedType {
                 new FunctionType(
                   false,
                   [["item", this.elementType, false]],
-                  BUILTIN_BOOL
+                  BUILTIN_BOOL,
                 ),
                 false,
               ],
             ],
             this,
-            "Filter array based on a predicate"
+            "Filter array based on a predicate",
           ),
         };
       case "find":
@@ -110,13 +110,13 @@ export class ArrayType implements RealizedType {
                 new FunctionType(
                   false,
                   [["item", this.elementType, false]],
-                  BUILTIN_BOOL
+                  BUILTIN_BOOL,
                 ),
                 false,
               ],
             ],
             new OptionType(this.elementType),
-            "Find an item in the array based on a predicate"
+            "Find an item in the array based on a predicate",
           ),
         };
       case "exists":
@@ -129,13 +129,13 @@ export class ArrayType implements RealizedType {
                 new FunctionType(
                   false,
                   [["item", this.elementType, false]],
-                  BUILTIN_BOOL
+                  BUILTIN_BOOL,
                 ),
                 false,
               ],
             ],
             BUILTIN_BOOL,
-            "Check if an item satisfying a predicate exists"
+            "Check if an item satisfying a predicate exists",
           ),
         };
       case "map":
@@ -148,13 +148,13 @@ export class ArrayType implements RealizedType {
                 new FunctionType(
                   false,
                   [["item", this.elementType, false]],
-                  new GenericParameter("T")
+                  new GenericParameter("T"),
                 ),
                 false,
               ],
             ],
             new ArrayType(new GenericParameter("T")),
-            "Check if an item satisfying a predicate exists"
+            "Check if an item satisfying a predicate exists",
           ),
         };
     }

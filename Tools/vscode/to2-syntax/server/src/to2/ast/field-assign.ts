@@ -15,7 +15,7 @@ export class FieldAssign extends Expression {
     public readonly op: Operator,
     public readonly expression: Expression,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     super(start, end);
   }
@@ -26,11 +26,11 @@ export class FieldAssign extends Expression {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.expression.reduceNode(
       combine,
-      this.target.reduceNode(combine, combine(initialValue, this))
+      this.target.reduceNode(combine, combine(initialValue, this)),
     );
   }
 
@@ -62,12 +62,12 @@ export class FieldAssign extends Expression {
         .realizedType(context.module);
       this.documentation = [
         this.fieldName.range.with(
-          `Field \`${targetType.name}.${this.fieldName.value} : ${fieldRealized.name}\``
+          `Field \`${targetType.name}.${this.fieldName.value} : ${fieldRealized.name}\``,
         ),
       ];
       if (fieldRealized.description)
         this.documentation.push(
-          this.fieldName.range.with(fieldRealized.description)
+          this.fieldName.range.with(fieldRealized.description),
         );
     }
 
@@ -80,7 +80,7 @@ export class FieldAssign extends Expression {
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     this.target.collectSemanticTokens(semanticTokens);
     semanticTokens.push(
-      this.fieldName.range.semanticToken("property", "modification")
+      this.fieldName.range.semanticToken("property", "modification"),
     );
     this.expression.collectSemanticTokens(semanticTokens);
   }

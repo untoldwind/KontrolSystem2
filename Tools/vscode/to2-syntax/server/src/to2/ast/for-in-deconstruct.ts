@@ -13,7 +13,7 @@ export class ForInDeconstruct extends Expression {
     public readonly sourceExpression: Expression,
     public readonly loopExpression: Expression,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     super(start, end);
   }
@@ -24,11 +24,11 @@ export class ForInDeconstruct extends Expression {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.loopExpression.reduceNode(
       combine,
-      this.sourceExpression.reduceNode(combine, combine(initialValue, this))
+      this.sourceExpression.reduceNode(combine, combine(initialValue, this)),
     );
   }
   public validateBlock(context: BlockContext): ValidationError[] {

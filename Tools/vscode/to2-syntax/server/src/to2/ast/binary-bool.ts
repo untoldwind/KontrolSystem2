@@ -11,7 +11,7 @@ export class BinaryBool extends Expression {
     public readonly op: WithPosition<Operator>,
     public readonly right: Expression,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     super(start, end);
   }
@@ -22,11 +22,11 @@ export class BinaryBool extends Expression {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.left.reduceNode(
       combine,
-      this.right.reduceNode(combine, combine(initialValue, this))
+      this.right.reduceNode(combine, combine(initialValue, this)),
     );
   }
 

@@ -85,7 +85,7 @@ export class LspServerSingleton {
           start: moduleResult.remaining.position,
           end: textDocument.positionAt(
             moduleResult.remaining.position.offset +
-              moduleResult.remaining.available
+              moduleResult.remaining.available,
           ),
         },
         message: moduleResult.expected,
@@ -96,7 +96,7 @@ export class LspServerSingleton {
 
     if (moduleResult.value) {
       for (const validationError of moduleResult.value.validate(
-        this.registry
+        this.registry,
       )) {
         // In this simple example we get the settings for every validate run.
         const settings = await this.getDocumentSettings(textDocument.uri);
@@ -137,7 +137,7 @@ export class LspServerSingleton {
 
   parseModule(
     textDocument: TextDocument,
-    override: boolean
+    override: boolean,
   ): ParserResult<TO2ModuleNode> {
     const input = new TextDocumentInput(textDocument);
     let moduleName = "<unknown>";
@@ -195,7 +195,7 @@ export class LspServerSingleton {
             pathToUri(filePath, this.documents),
             "to2",
             0,
-            content
+            content,
           );
           const moduleResult = this.parseModule(textDocument, false);
           if (moduleResult.value) moduleResult.value.validate(this.registry);
@@ -269,7 +269,7 @@ export class LspServerSingleton {
       };
     }
     params.workspaceFolders?.forEach((workspaceFolder) =>
-      this.workspaceFolders.add(workspaceFolder.uri)
+      this.workspaceFolders.add(workspaceFolder.uri),
     );
 
     return result;
@@ -280,7 +280,7 @@ export class LspServerSingleton {
       // Register for all configuration changes.
       this.connection.client.register(
         DidChangeConfigurationNotification.type,
-        undefined
+        undefined,
       );
       this.connection.workspace
         .getConfiguration("to2LspServer")
@@ -289,17 +289,17 @@ export class LspServerSingleton {
     if (this.hasWorkspaceFolderCapability) {
       this.connection.workspace.onDidChangeWorkspaceFolders((event) => {
         event.added.forEach((workspaceFolder) =>
-          this.indexWorkspace(workspaceFolder.uri)
+          this.indexWorkspace(workspaceFolder.uri),
         );
         event.removed.forEach((workspaceFolder) =>
-          this.workspaceFolders.delete(workspaceFolder.uri)
+          this.workspaceFolders.delete(workspaceFolder.uri),
         );
       });
       this.connection.workspace
         .getWorkspaceFolders()
         .then((workspaceFolders) => {
           workspaceFolders?.forEach((workspaceFolder) =>
-            this.indexWorkspace(workspaceFolder.uri)
+            this.indexWorkspace(workspaceFolder.uri),
           );
         });
     }
@@ -332,7 +332,7 @@ export class LspServerSingleton {
   }
 
   async onSemanticTokens(
-    params: SemanticTokensParams
+    params: SemanticTokensParams,
   ): Promise<SemanticTokens> {
     const module = this.modulesByUri.get(params.textDocument.uri);
     const token: SemanticToken[] = [];
@@ -349,12 +349,13 @@ export class LspServerSingleton {
 
     if (!module) return undefined;
 
-    const documentation = findNodesAt(module, params.position).flatMap((node) =>
-      node.documentation
-        ? node.documentation
-            .filter((doc) => doc.range.contains(params.position))
-            .map((doc) => doc.value)
-        : []
+    const documentation = findNodesAt(module, params.position).flatMap(
+      (node) =>
+        node.documentation
+          ? node.documentation
+              .filter((doc) => doc.range.contains(params.position))
+              .map((doc) => doc.value)
+          : [],
     );
 
     if (documentation.length > 0)
@@ -377,13 +378,13 @@ export class LspServerSingleton {
       .filter(
         (node) =>
           node.reference !== undefined &&
-          node.reference.sourceRange.contains(params.position)
+          node.reference.sourceRange.contains(params.position),
       )
       .flatMap((node) => {
         const reference = node.reference;
         if (!reference) return [];
         const module = this.registry.modules.get(
-          reference.definition.moduleName
+          reference.definition.moduleName,
         );
         if (!module || !isTO2ModuleNode(module)) return [];
         return [
@@ -391,7 +392,7 @@ export class LspServerSingleton {
             module.documentUri,
             node.reference!!.definition.range,
             node.reference!!.definition.range,
-            node.reference!!.sourceRange
+            node.reference!!.sourceRange,
           ),
         ];
       });
@@ -403,7 +404,7 @@ export class LspServerSingleton {
     if (!module) return [];
 
     return findNodesAt(module, params.position).flatMap(
-      (node) => node.completionsAt?.(params.position) ?? []
+      (node) => node.completionsAt?.(params.position) ?? [],
     );
   }
 

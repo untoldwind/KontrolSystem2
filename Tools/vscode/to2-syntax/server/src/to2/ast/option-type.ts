@@ -30,17 +30,17 @@ export class OptionType implements RealizedType {
 
   public fillGenerics(
     context: ModuleContext,
-    genericMap: Record<string, RealizedType>
+    genericMap: Record<string, RealizedType>,
   ): RealizedType {
     return new OptionType(
-      this.elementType.realizedType(context).fillGenerics(context, genericMap)
+      this.elementType.realizedType(context).fillGenerics(context, genericMap),
     );
   }
 
   public guessGeneric(
     context: ModuleContext,
     genericMap: Record<string, RealizedType>,
-    realizedType: RealizedType
+    realizedType: RealizedType,
   ): void {
     if (isOptionType(realizedType)) {
       this.elementType
@@ -48,7 +48,7 @@ export class OptionType implements RealizedType {
         .guessGeneric(
           context,
           genericMap,
-          realizedType.elementType.realizedType(context)
+          realizedType.elementType.realizedType(context),
         );
     }
   }
@@ -83,7 +83,7 @@ export class OptionType implements RealizedType {
           value: new FunctionType(
             false,
             [["error", BUILTIN_STRING, false]],
-            new ResultType(this.elementType, BUILTIN_STRING)
+            new ResultType(this.elementType, BUILTIN_STRING),
           ),
         };
       default:

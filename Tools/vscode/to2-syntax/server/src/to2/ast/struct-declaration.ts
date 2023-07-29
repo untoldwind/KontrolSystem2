@@ -24,14 +24,14 @@ export class StructField implements Node {
     public readonly description: string,
     public readonly initializer: Expression,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     this.range = new InputRange(start, end);
   }
 
   reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.initializer.reduceNode(combine, combine(initialValue, this));
   }
@@ -59,7 +59,7 @@ export class StructDeclaration implements Node, TypeDeclaration {
     public readonly constructorParameters: FunctionParameter[],
     public readonly fields: (LineComment | StructField)[],
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     this.range = new InputRange(start, end);
     this.name = this.structName.value;
@@ -69,20 +69,20 @@ export class StructDeclaration implements Node, TypeDeclaration {
         return [[field.name, field.type.value]];
       }),
       undefined,
-      this.name
+      this.name,
     );
   }
 
   reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.fields.reduce(
       (prev, field) => field.reduceNode(combine, prev),
       this.constructorParameters.reduce(
         (prev, param) => param.reduceNode(combine, prev),
-        combine(initialValue, this)
-      )
+        combine(initialValue, this),
+      ),
     );
   }
 
@@ -117,7 +117,7 @@ export class StructDeclaration implements Node, TypeDeclaration {
             param.type?.value ?? UNKNOWN_TYPE,
             param.defaultValue !== undefined,
           ]),
-          this.type
+          this.type,
         ),
       });
     }
@@ -137,7 +137,7 @@ export class StructDeclaration implements Node, TypeDeclaration {
     }
     semanticTokens.push(this.structKeyword.range.semanticToken("keyword"));
     semanticTokens.push(
-      this.structName.range.semanticToken("struct", "declaration")
+      this.structName.range.semanticToken("struct", "declaration"),
     );
   }
 

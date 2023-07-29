@@ -17,7 +17,7 @@ describe("TO2 parser expression", () => {
             value: 456,
           }),
         }),
-      })
+      }),
     );
     expect(expression(new StringInput(`123 - 456`))).toEqual(
       expect.objectContaining({
@@ -31,7 +31,7 @@ describe("TO2 parser expression", () => {
             value: 456,
           }),
         }),
-      })
+      }),
     );
   });
 
@@ -60,7 +60,7 @@ describe("TO2 parser expression", () => {
             }),
           }),
         }),
-      })
+      }),
     );
 
     expect(expression(new StringInput(`12 * (45 - 67) / 89`))).toEqual(
@@ -87,7 +87,7 @@ describe("TO2 parser expression", () => {
             value: 89,
           }),
         }),
-      })
+      }),
     );
   });
 });

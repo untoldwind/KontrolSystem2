@@ -44,7 +44,7 @@ expect.extend({
 
   toHaveRemaining(
     received: ParserResult<any>,
-    remaining: string
+    remaining: string,
   ): jest.CustomMatcherResult {
     const pass: boolean =
       received.success &&
@@ -52,7 +52,7 @@ expect.extend({
     const message: () => string = () => {
       if (received.success) {
         const actualRemaining = received.remaining.take(
-          received.remaining.available
+          received.remaining.available,
         );
         if (actualRemaining !== remaining) {
           return `Unexpected remaining input: "${actualRemaining}" != "${remaining}"`;

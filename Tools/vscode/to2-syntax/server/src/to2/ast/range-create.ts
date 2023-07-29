@@ -10,7 +10,7 @@ export class RangeCreate extends Expression {
     public readonly to: Expression,
     public readonly inclusive: boolean,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     super(start, end);
   }
@@ -21,11 +21,11 @@ export class RangeCreate extends Expression {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.from.reduceNode(
       combine,
-      this.to.reduceNode(combine, combine(initialValue, this))
+      this.to.reduceNode(combine, combine(initialValue, this)),
     );
   }
   public validateBlock(context: BlockContext): ValidationError[] {

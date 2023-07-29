@@ -38,17 +38,17 @@ const functionPrefix = alt(
   seq(testKeyword, fnKeyword),
   seq(testKeyword, syncKeyword, fnKeyword),
   seq(syncKeyword, fnKeyword),
-  seq(fnKeyword)
+  seq(fnKeyword),
 );
 
 const functionParameter = map(
   seq(
     withPosition(identifier),
     typeSpec,
-    opt(preceded(eqDelimiter, expression))
+    opt(preceded(eqDelimiter, expression)),
   ),
   ([name, type, defaultValue], start, end) =>
-    new FunctionParameter(name, type, defaultValue, start, end)
+    new FunctionParameter(name, type, defaultValue, start, end),
 );
 
 export const functionParameters = preceded(
@@ -57,8 +57,8 @@ export const functionParameters = preceded(
     functionParameter,
     commaDelimiter,
     preceded(whitespace0, tag(")")),
-    "<function parameter>"
-  )
+    "<function parameter>",
+  ),
 );
 
 export const functionDeclaration = map(
@@ -68,12 +68,12 @@ export const functionDeclaration = map(
     withPosition(identifier),
     preceded(whitespace0, functionParameters),
     preceded(between(whitespace0, tag("->"), whitespace0), typeRef),
-    preceded(eqDelimiter, expression)
+    preceded(eqDelimiter, expression),
   ),
   (
     [description, functionPrefix, name, parameters, returnType, expression],
     start,
-    end
+    end,
   ) =>
     new FunctionDeclaration(
       functionPrefix,
@@ -83,8 +83,8 @@ export const functionDeclaration = map(
       returnType,
       expression,
       start,
-      end
-    )
+      end,
+    ),
 );
 
 const methodSelfParams = preceded(
@@ -92,8 +92,8 @@ const methodSelfParams = preceded(
   alt(
     recognizeAs(selfKeyword, true),
     recognizeAs(preceded(constKeyword, selfKeyword), true),
-    recognizeAs(preceded(letKeyword, selfKeyword), false)
-  )
+    recognizeAs(preceded(letKeyword, selfKeyword), false),
+  ),
 );
 
 const methodParameters = alt(
@@ -104,9 +104,9 @@ const methodParameters = alt(
       functionParameter,
       commaDelimiter,
       preceded(whitespace0, tag(")")),
-      "<method parameter>"
-    )
-  )
+      "<method parameter>",
+    ),
+  ),
 );
 
 export const methodDeclaration = map(
@@ -117,12 +117,12 @@ export const methodDeclaration = map(
     preceded(whitespace0, methodSelfParams),
     methodParameters,
     preceded(between(whitespace0, tag("->"), whitespace0), typeRef),
-    preceded(eqDelimiter, expression)
+    preceded(eqDelimiter, expression),
   ),
   (
     [description, sync, name, _, parameters, returnType, expression],
     start,
-    end
+    end,
   ) =>
     new MethodDeclaration(
       sync === undefined,
@@ -132,6 +132,6 @@ export const methodDeclaration = map(
       returnType,
       expression,
       start,
-      end
-    )
+      end,
+    ),
 );

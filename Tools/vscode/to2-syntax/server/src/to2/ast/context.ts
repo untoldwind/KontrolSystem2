@@ -24,13 +24,13 @@ export interface ModuleContext {
 
   findType(
     namePath: string[],
-    typeArguments: RealizedType[]
+    typeArguments: RealizedType[],
   ): RealizedType | undefined;
   findConstant(namePath: string[]): WithDefinitionRef<TO2Type> | undefined;
   allConstants(): [string, TO2Type][];
   findFunction(
     namePath: string[],
-    typeHint?: RealizedType
+    typeHint?: RealizedType,
   ): WithDefinitionRef<FunctionType> | undefined;
   allFunctions(): [string, FunctionType][];
   findModule(namePath: string[]): TO2Module | undefined;
@@ -48,12 +48,12 @@ export class RootModuleContext implements ModuleContext {
 
   constructor(
     public readonly moduleName: string,
-    public readonly registry: Registry
+    public readonly registry: Registry,
   ) {}
 
   findType(
     namePath: string[],
-    typeArguments: RealizedType[]
+    typeArguments: RealizedType[],
   ): RealizedType | undefined {
     if (namePath.length === 1 && this.typeAliases.has(namePath[0])) {
       return this.typeAliases.get(namePath[0]);
@@ -63,7 +63,7 @@ export class RootModuleContext implements ModuleContext {
       if (mappedModule) {
         return findLibraryTypeOrAlias(
           [...mappedModule, namePath[1]],
-          typeArguments
+          typeArguments,
         );
       }
     }
@@ -82,7 +82,7 @@ export class RootModuleContext implements ModuleContext {
     }
     return namePath.length > 2
       ? this.findModule(namePath.slice(0, namePath.length - 1))?.findConstant(
-          namePath[namePath.length - 1]
+          namePath[namePath.length - 1],
         )
       : undefined;
   }
@@ -96,7 +96,7 @@ export class RootModuleContext implements ModuleContext {
 
   findFunction(
     namePath: string[],
-    typeHint?: RealizedType
+    typeHint?: RealizedType,
   ): WithDefinitionRef<FunctionType> | undefined {
     if (namePath.length === 1) {
       if (this.mappedFunctions.has(namePath[0])) {
@@ -119,7 +119,7 @@ export class RootModuleContext implements ModuleContext {
                   [["value", args[0], false]],
                   BUILTIN_CELL.fillGenericArguments([
                     args[0].realizedType(this),
-                  ])
+                  ]),
                 ),
               };
             }
@@ -130,7 +130,7 @@ export class RootModuleContext implements ModuleContext {
                 value: new FunctionType(
                   false,
                   [["value", args[0], false]],
-                  new ResultType(args[0], UNKNOWN_TYPE)
+                  new ResultType(args[0], UNKNOWN_TYPE),
                 ),
               };
             }
@@ -141,7 +141,7 @@ export class RootModuleContext implements ModuleContext {
                 value: new FunctionType(
                   false,
                   [["value", args[0], false]],
-                  new ResultType(UNKNOWN_TYPE, args[0])
+                  new ResultType(UNKNOWN_TYPE, args[0]),
                 ),
               };
             }
@@ -152,7 +152,7 @@ export class RootModuleContext implements ModuleContext {
                 value: new FunctionType(
                   false,
                   [["value", BUILTIN_INT, false]],
-                  BUILTIN_ARRAYBUILDER
+                  BUILTIN_ARRAYBUILDER,
                 ),
               };
             }
@@ -168,7 +168,7 @@ export class RootModuleContext implements ModuleContext {
     }
     return namePath.length > 2
       ? this.findModule(namePath.slice(0, namePath.length - 1))?.findFunction(
-          namePath[namePath.length - 1]
+          namePath[namePath.length - 1],
         )
       : undefined;
   }
@@ -199,7 +199,7 @@ export class ImplModuleContext implements ModuleContext {
 
   constructor(
     private readonly root: ModuleContext,
-    public readonly structType: RecordType
+    public readonly structType: RecordType,
   ) {
     this.moduleName = root.moduleName;
     this.registry = root.registry;
@@ -211,7 +211,7 @@ export class ImplModuleContext implements ModuleContext {
 
   findType(
     namePath: string[],
-    typeArguments: RealizedType[]
+    typeArguments: RealizedType[],
   ): RealizedType | undefined {
     return this.root.findType(namePath, typeArguments);
   }
@@ -226,7 +226,7 @@ export class ImplModuleContext implements ModuleContext {
 
   findFunction(
     namePath: string[],
-    typeHint?: RealizedType
+    typeHint?: RealizedType,
   ): WithDefinitionRef<FunctionType> | undefined {
     return this.root.findFunction(namePath, typeHint);
   }
@@ -241,7 +241,7 @@ export class ImplModuleContext implements ModuleContext {
 }
 
 export function isImplModuleContext(
-  context: ModuleContext
+  context: ModuleContext,
 ): context is ImplModuleContext {
   return (context as ImplModuleContext).structType !== undefined;
 }
@@ -252,12 +252,12 @@ export class BlockContext {
 
   constructor(
     public readonly module: ModuleContext,
-    private readonly parent: BlockContext | undefined = undefined
+    private readonly parent: BlockContext | undefined = undefined,
   ) {}
 
   public findVariable(
     namePath: string[],
-    typeHint?: RealizedType
+    typeHint?: RealizedType,
   ): WithDefinitionRef<TO2Type> | undefined {
     return (
       (namePath.length === 1
@@ -285,7 +285,10 @@ export class BlockContext {
 }
 
 export class FunctionContext extends BlockContext {
-  constructor(module: ModuleContext, public readonly returnType: TO2Type) {
+  constructor(
+    module: ModuleContext,
+    public readonly returnType: TO2Type,
+  ) {
     super(module);
   }
 }

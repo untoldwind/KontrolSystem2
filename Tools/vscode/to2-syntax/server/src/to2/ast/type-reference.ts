@@ -14,7 +14,7 @@ export class LookupTypeReference implements Node, TO2Type {
     public readonly namePath: string[],
     public readonly typeArguments: TO2Type[],
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     this.range = new InputRange(start, end);
     this.name = namePath.join("::");
@@ -24,7 +24,7 @@ export class LookupTypeReference implements Node, TO2Type {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return combine(initialValue, this);
   }
@@ -39,7 +39,7 @@ export class LookupTypeReference implements Node, TO2Type {
     return (
       context.findType(
         this.namePath,
-        this.typeArguments.map((type) => type.realizedType(context))
+        this.typeArguments.map((type) => type.realizedType(context)),
       ) ?? UNKNOWN_TYPE
     );
   }

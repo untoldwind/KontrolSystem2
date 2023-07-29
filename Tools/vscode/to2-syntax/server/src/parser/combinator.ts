@@ -18,7 +18,7 @@ export function recognize<T>(parser: Parser<T>): Parser<string> {
     if (result.success) {
       return new ParserSuccess(
         result.remaining,
-        input.take(result.remaining.position.offset - input.position.offset)
+        input.take(result.remaining.position.offset - input.position.offset),
       );
     }
     return new ParserFailure(result.remaining, result.expected, "");
@@ -27,7 +27,7 @@ export function recognize<T>(parser: Parser<T>): Parser<string> {
 
 export function recognizeAs<T, U>(
   parser: Parser<T>,
-  replacement: U
+  replacement: U,
 ): Parser<U> {
   return (input: Input) => {
     const result = parser(input);
@@ -41,7 +41,7 @@ export function recognizeAs<T, U>(
 export function where<T>(
   parser: Parser<T>,
   predicate: (result: T) => boolean,
-  expected: string
+  expected: string,
 ): Parser<T> {
   return (input: Input) => {
     const result = parser(input);
@@ -53,21 +53,21 @@ export function where<T>(
 
 export function map<T, U>(
   parser: Parser<T>,
-  convert: (result: T, start: InputPosition, end: InputPosition) => U
+  convert: (result: T, start: InputPosition, end: InputPosition) => U,
 ): Parser<U> {
   return (input: Input) => {
     const result = parser(input);
     if (result.success)
       return new ParserSuccess(
         result.remaining,
-        convert(result.value, input.position, result.remaining.position)
+        convert(result.value, input.position, result.remaining.position),
       );
     return new ParserFailure(
       result.remaining,
       result.expected,
       result.value
         ? convert(result.value, input.position, result.remaining.position)
-        : undefined
+        : undefined,
     );
   };
 }
@@ -94,7 +94,7 @@ export function either<L, R>(left: Parser<L>, right: Parser<R>): Parser<L | R> {
 
 export function recover<T>(
   parser: Parser<T>,
-  onFailure: (failure: ParserFailure<T>) => ParserSuccess<T>
+  onFailure: (failure: ParserFailure<T>) => ParserSuccess<T>,
 ): Parser<T> {
   return (input: Input) => {
     const inputResult = parser(input);
@@ -119,10 +119,10 @@ export function withPosition<T>(parser: Parser<T>): Parser<WithPosition<T>> {
             value: inputResult.value,
             range: new InputRange(
               input.position,
-              inputResult.remaining.position
+              inputResult.remaining.position,
             ),
           }
-        : undefined
+        : undefined,
     );
   };
 }

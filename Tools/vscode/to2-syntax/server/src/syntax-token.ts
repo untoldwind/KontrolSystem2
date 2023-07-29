@@ -20,10 +20,13 @@ export const SEMANTIC_TOKEN_TYPES = [
 export type SemanticTokenType = (typeof SEMANTIC_TOKEN_TYPES)[number];
 
 const semanticTokenMap: Record<SemanticTokenType, number> =
-  SEMANTIC_TOKEN_TYPES.reduce((result, token, idx) => {
-    result[token] = idx;
-    return result;
-  }, {} as Record<SemanticTokenType, number>);
+  SEMANTIC_TOKEN_TYPES.reduce(
+    (result, token, idx) => {
+      result[token] = idx;
+      return result;
+    },
+    {} as Record<SemanticTokenType, number>,
+  );
 
 export const SEMANTIC_TOKEN_MODIFIERS = [
   "declaration",
@@ -38,10 +41,13 @@ export const SEMANTIC_TOKEN_MODIFIERS = [
 export type SemanticTokenModifier = (typeof SEMANTIC_TOKEN_MODIFIERS)[number];
 
 const semanticTokenModifierMap: Record<SemanticTokenModifier, number> =
-  SEMANTIC_TOKEN_MODIFIERS.reduce((result, token, idx) => {
-    result[token] = 1 << idx;
-    return result;
-  }, {} as Record<SemanticTokenModifier, number>);
+  SEMANTIC_TOKEN_MODIFIERS.reduce(
+    (result, token, idx) => {
+      result[token] = 1 << idx;
+      return result;
+    },
+    {} as Record<SemanticTokenModifier, number>,
+  );
 
 export interface SemanticToken {
   type: SemanticTokenType;
@@ -66,7 +72,7 @@ export function convertSemanticTokens(tokens: SemanticToken[]): uinteger[] {
     result[i + 4] = token.modifiers
       ? token.modifiers.reduce(
           (acc, modifer) => (acc |= semanticTokenModifierMap[modifer]),
-          0
+          0,
         )
       : 0;
 

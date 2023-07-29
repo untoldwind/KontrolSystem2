@@ -63,8 +63,8 @@ const useNames = alt(
   between(
     terminated(tag("{"), whitespace0),
     delimited1(withPosition(identifier), commaDelimiter, "<import name>"),
-    preceded(whitespace0, tag("}"))
-  )
+    preceded(whitespace0, tag("}")),
+  ),
 );
 
 const useNamesDeclaration = map(
@@ -78,8 +78,8 @@ const useNamesDeclaration = map(
       fromKeyword,
       namePath,
       start,
-      end
-    )
+      end,
+    ),
 );
 
 const useAliasDeclaration = map(
@@ -87,7 +87,7 @@ const useAliasDeclaration = map(
     useKeyword,
     withPosition(identifierPath),
     withPosition(asKeyword),
-    withPosition(identifier)
+    withPosition(identifier),
   ),
   ([useKeyword, namePath, asKeyword, alias], start, end) =>
     new UseDeclaration(
@@ -98,8 +98,8 @@ const useAliasDeclaration = map(
       undefined,
       namePath,
       start,
-      end
-    )
+      end,
+    ),
 );
 
 const typeAlias = map(
@@ -107,10 +107,10 @@ const typeAlias = map(
     descriptionComment,
     preceded(whitespace0, opt(pubKeyword)),
     preceded(typeKeyword, withPosition(identifier)),
-    preceded(eqDelimiter, typeRef)
+    preceded(eqDelimiter, typeRef),
   ),
   ([description, pub, name, type], start, end) =>
-    new TypeAlias(pub !== undefined, name, description, type, start, end)
+    new TypeAlias(pub !== undefined, name, description, type, start, end),
 );
 
 const structField = map(
@@ -118,10 +118,10 @@ const structField = map(
     descriptionComment,
     preceded(whitespace0, withPosition(identifier)),
     typeSpec,
-    preceded(eqDelimiter, expression)
+    preceded(eqDelimiter, expression),
   ),
   ([description, name, type, initializer], start, end) =>
-    new StructField(name, type, description, initializer, start, end)
+    new StructField(name, type, description, initializer, start, end),
 );
 
 const structDeclaration = map(
@@ -134,8 +134,8 @@ const structDeclaration = map(
     between(
       preceded(whitespace0, tag("{")),
       delimited0(either(lineComment, structField), whitespace1, "fields"),
-      preceded(whitespace0, tag("}"))
-    )
+      preceded(whitespace0, tag("}")),
+    ),
   ),
   (
     [
@@ -147,7 +147,7 @@ const structDeclaration = map(
       fields,
     ],
     start,
-    end
+    end,
   ) =>
     new StructDeclaration(
       pubKeyword,
@@ -157,8 +157,8 @@ const structDeclaration = map(
       constructorParameters ?? [],
       fields,
       start,
-      end
-    )
+      end,
+    ),
 );
 
 const implDeclaration = map(
@@ -170,13 +170,13 @@ const implDeclaration = map(
       delimited0(
         either(lineComment, methodDeclaration),
         whitespace1,
-        "methods"
+        "methods",
       ),
-      preceded(whitespace0, tag("}"))
-    )
+      preceded(whitespace0, tag("}")),
+    ),
   ),
   ([implKeyword, name, methods], start, end) =>
-    new ImplDeclaration(implKeyword, name, methods, start, end)
+    new ImplDeclaration(implKeyword, name, methods, start, end),
 );
 
 const constDeclaration = map(
@@ -185,7 +185,7 @@ const constDeclaration = map(
     opt(pubKeyword),
     preceded(constKeyword, withPosition(identifier)),
     typeSpec,
-    preceded(eqDelimiter, expression)
+    preceded(eqDelimiter, expression),
   ),
   ([description, pub, name, type, expression], start, end) =>
     new ConstDeclaration(
@@ -195,8 +195,8 @@ const constDeclaration = map(
       type,
       expression,
       start,
-      end
-    )
+      end,
+    ),
 );
 
 const moduleItem: Parser<ModuleItem> = alt(
@@ -207,7 +207,7 @@ const moduleItem: Parser<ModuleItem> = alt(
   structDeclaration,
   implDeclaration,
   constDeclaration,
-  lineComment
+  lineComment,
 );
 
 const moduleItems = preceded(
@@ -217,32 +217,39 @@ const moduleItems = preceded(
     whitespace1,
     eof,
     "<module item>",
-    recoverModuleItem
-  )
+    recoverModuleItem,
+  ),
 );
 
 export function module(
   documentUri: DocumentUri,
-  moduleName: string
+  moduleName: string,
 ): Parser<TO2ModuleNode> {
   return map(
     seq(preceded(whitespace0, descriptionComment), moduleItems),
     ([description, items], start, end) =>
-      new TO2ModuleNode(documentUri, moduleName, description, items, start, end)
+      new TO2ModuleNode(
+        documentUri,
+        moduleName,
+        description,
+        items,
+        start,
+        end,
+      ),
   );
 }
 
 function recoverModuleItem(
-  failure: ParserFailure<ModuleItem | string>
+  failure: ParserFailure<ModuleItem | string>,
 ): ParserSuccess<ModuleItem> {
   const remaining = failure.remaining;
   const nextNL = remaining.findNext((ch) => ch === NL);
   const recoverAt = remaining.advance(
-    nextNL >= 0 ? nextNL : remaining.available
+    nextNL >= 0 ? nextNL : remaining.available,
   );
 
   return new ParserSuccess(
     recoverAt,
-    new ErrorNode(failure.expected, remaining.position, recoverAt.position)
+    new ErrorNode(failure.expected, remaining.position, recoverAt.position),
   );
 }

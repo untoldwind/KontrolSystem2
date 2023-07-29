@@ -15,7 +15,7 @@ export function uriToPath(stringUri: DocumentUri): string | undefined {
 
 export function pathToUri(
   filepath: string,
-  documents: TextDocuments<TextDocument> | undefined
+  documents: TextDocuments<TextDocument> | undefined,
 ): DocumentUri {
   if (filepath.startsWith("zipfile:")) {
     return filepath;

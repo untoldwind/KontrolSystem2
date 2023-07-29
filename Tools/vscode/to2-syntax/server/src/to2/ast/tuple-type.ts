@@ -26,19 +26,19 @@ export class TupleType implements RealizedType {
 
   public fillGenerics(
     context: ModuleContext,
-    genericMap: Record<string, RealizedType>
+    genericMap: Record<string, RealizedType>,
   ): RealizedType {
     return new TupleType(
       this.itemTypes.map((t) =>
-        t.realizedType(context).fillGenerics(context, genericMap)
-      )
+        t.realizedType(context).fillGenerics(context, genericMap),
+      ),
     );
   }
 
   public guessGeneric(
     context: ModuleContext,
     genericMap: Record<string, RealizedType>,
-    realizedType: RealizedType
+    realizedType: RealizedType,
   ): void {
     if (isTupleType(realizedType)) {
       for (
@@ -51,7 +51,7 @@ export class TupleType implements RealizedType {
           .guessGeneric(
             context,
             genericMap,
-            realizedType.itemTypes[i].realizedType(context)
+            realizedType.itemTypes[i].realizedType(context),
           );
       }
     }
