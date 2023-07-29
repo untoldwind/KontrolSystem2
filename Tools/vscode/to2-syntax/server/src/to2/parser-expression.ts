@@ -442,6 +442,14 @@ const unaryPrefixExpr = alt(
   termWithSuffixOps,
 );
 
+const powBinaryOp = between(whitespace0, withPosition(tag("**")), whitespace0);
+
+const powBinaryExpr = chain(
+  unaryPrefixExpr,
+  powBinaryOp,
+  (left, op, right, start, end) => new Binary(left, op, right, start, end),
+);
+
 const mulDivBinaryOp = between(
   whitespace0,
   withPosition(alt(tag("*"), tag("/"), tag("%"))),
@@ -449,7 +457,7 @@ const mulDivBinaryOp = between(
 );
 
 const mulDivBinaryExpr = chain(
-  unaryPrefixExpr,
+  powBinaryExpr,
   mulDivBinaryOp,
   (left, op, right, start, end) => new Binary(left, op, right, start, end),
 );
@@ -583,6 +591,7 @@ const assignOp = between(
     tag("|="),
     tag("&="),
     tag("^="),
+    tag("**="),
   ),
   whitespace0,
 );

@@ -2,7 +2,7 @@
   "name": "to2-lsp-client",
   "description": "VSCode part of a language server",
   "license": "MIT",
-  "version": "0.0.2",
+  "version": "0.0.8",
   "publisher": "kontrolsystem2",
   "repository": {
     "type": "git",

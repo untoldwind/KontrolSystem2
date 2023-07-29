@@ -2,7 +2,7 @@
   "name": "to2-syntax",
   "displayName": "to2-syntax",
   "description": "",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "license": "MIT",
   "engines": {
     "vscode": "^1.76.0"
@@ -71,7 +71,7 @@
   },
   "scripts": {
     "clean": "cd client && npm run clean && cd ../server && npm run clean",
-    "bundle": "cd client && npm run bundle && cd ../server && npm run bundle",
+    "bundle": "cd client && npm run bundle && cd ../server && npm run bundle && cd .. && vsce package",
     "compile": "tsc -b",
     "watch": "tsc -b -w",
     "format": "prettier --write .",

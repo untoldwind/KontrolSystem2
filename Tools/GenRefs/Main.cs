@@ -234,6 +234,8 @@ namespace KontrolSystem.GenRefs {
                 Operator.BitAndAssign => "&=",
                 Operator.BitXor => "^",
                 Operator.BitXorAssign => "^=",
+                Operator.Pow => "**",
+                Operator.PowAssign => "**=",
                 Operator.Eq => "==",
                 Operator.NotEq => "!=",
                 Operator.Lt => "<",
