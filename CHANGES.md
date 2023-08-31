@@ -1,5 +1,9 @@
 # Changes
 
+## 0.4.3 -> 0.4.4
+
+* Compatibility with v0.1.4.0
+
 ## 0.4.2.4 -> 0.4.3
 
 * Cleanup ambiguity of the the `^` operator

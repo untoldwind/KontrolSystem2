@@ -129,7 +129,7 @@ namespace KontrolSystem.KSP.Runtime.Core {
 
         public KSPGameMode GameMode => GameModeAdapter.GameModeFromState(Game.GlobalGameState.GetState());
 
-        public double UniversalTime => Game.SpaceSimulation.UniverseModel.UniversalTime;
+        public double UniversalTime => Game.SpaceSimulation.UniverseModel.UniverseTime;
 
         public VesselComponent ActiveVessel => gameInstance.ViewController.GetActiveSimVessel(true);
 
