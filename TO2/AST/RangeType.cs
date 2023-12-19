@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Reflection.Emit;
 using KontrolSystem.TO2.Generator;
 using KontrolSystem.TO2.Runtime;
@@ -37,7 +36,7 @@ namespace KontrolSystem.TO2.AST {
 
         public override RealizedType UnderlyingType(ModuleContext context) => this;
 
-        public override Type GeneratedType(ModuleContext context) => typeof(Range);
+        public override System.Type GeneratedType(ModuleContext context) => typeof(Range);
 
         public override IIndexAccessEmitter AllowedIndexAccess(ModuleContext context, IndexSpec indexSpec) => null;
 
