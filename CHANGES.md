@@ -1,5 +1,9 @@
 # Changes
 
+## 0.4.4 -> 0.5.0
+
+* Compatibility with v0.2.0.0
+
 ## 0.4.3 -> 0.4.4
 
 * Compatibility with v0.1.4.0

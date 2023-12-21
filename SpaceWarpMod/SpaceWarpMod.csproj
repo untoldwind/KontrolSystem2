@@ -61,8 +61,11 @@
         <Reference Include="BepInEx">
             <HintPath>$(KSP2_BASE_DIR)\BepInEx\core\BepInEx.dll</HintPath>
         </Reference>
-        <Reference Include="SpaceWarp">
-            <HintPath>$(KSP2_BASE_DIR)\BepInEx\plugins\SpaceWarp\SpaceWarp.dll</HintPath>
+        <Reference Include="SpaceWarp.Core">
+            <HintPath>$(KSP2_BASE_DIR)\BepInEx\plugins\SpaceWarp\SpaceWarp.Core.dll</HintPath>
+        </Reference>
+        <Reference Include="SpaceWarp.UI">
+            <HintPath>$(KSP2_BASE_DIR)\BepInEx\plugins\SpaceWarp\modules\SpaceWarp.UI.dll</HintPath>
         </Reference>
     </ItemGroup>
     <ItemGroup>
