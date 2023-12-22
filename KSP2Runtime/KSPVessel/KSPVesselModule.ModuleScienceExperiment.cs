@@ -25,14 +25,8 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField]
             public KSPScienceModule.ExperimentAdapter[] Experiments =>
-                dataScienceExperiment.Experiments.SelectMany(experiment => {
-                    ExperimentDefinition experimentDefinition = ModuleData.Game.ScienceManager.ScienceExperimentsDataStore.GetExperimentDefinition(experiment.ExperimentDefinitionID);
-                    if (experimentDefinition != null) {
-                        return new KSPScienceModule.ExperimentAdapter(experimentDefinition, experiment).Yield();
-                    }
-
-                    return Enumerable.Empty<KSPScienceModule.ExperimentAdapter>();
-                }).ToArray();
+                dataScienceExperiment.ExperimentStandings.Zip(dataScienceExperiment.Experiments,
+                    (standing, config) => new KSPScienceModule.ExperimentAdapter(part.SimulationObject, standing, config)).ToArray();
         }
     }
 }

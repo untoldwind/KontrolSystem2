@@ -4,6 +4,7 @@ using KontrolSystem.TO2;
 using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Binding;
 using KSP.Game.Science;
+using KSP.Modules;
 using KSP.Sim.ResourceSystem;
 
 namespace KontrolSystem.KSP.Runtime.KSPScience {
@@ -15,10 +16,24 @@ namespace KontrolSystem.KSP.Runtime.KSPScience {
         public static (IEnumerable<RealizedType>, IEnumerable<IKontrolConstant>) DirectBindings() {
             var (enumTypes, enumConstants) = BindingGenerator.RegisterEnumTypeMappings("ksp::resource",
                 new[] {
-                    ("FlowDirection", "Resource flow direction", typeof(FlowDirection), new (Enum value, string description)[] {
+                    ("ScienceExperimentType", "Science experiment type", typeof(ScienceExperimentType), new (Enum value, string description)[] {
                         (ScienceExperimentType.DataType, "Science experiment producing data"),
                         (ScienceExperimentType.SampleType, "Science experiment producing sample"),
                         (ScienceExperimentType.Both, "Science experiment producing both sample and data"),
+                    }),
+                    ("ExperimentState", "Science experiment state", typeof(ExperimentState), new (Enum value, string description)[] {
+                        (ExperimentState.NONE, "Unknown state"),
+                        (ExperimentState.INVALIDLOCATION, "Location not valid"),
+                        (ExperimentState.READY, "Experiment is ready to run"),
+                        (ExperimentState.RUNNING, "Experiment is running"),
+                        (ExperimentState.PAUSED, "Experiment is paused"),
+                        (ExperimentState.OUTOFRESOURCE, "Experiment ran out of resources"),
+                        (ExperimentState.LOCATIONCHANGED, "Experiment location changed"),
+                        (ExperimentState.INSUFFICIENTCREW, "Experiment requires more available crew members"),
+                        (ExperimentState.NOCONTROL, "Experiment requires control of the vessel"),
+                        (ExperimentState.INSUFFICIENTSTORAGE, "Not enough storage capacity for experiment"),
+                        (ExperimentState.ALREADYSTORED, "Experiment has already stored results"),
+                        (ExperimentState.BLOCKED, "Experiment is blocked"),
                     }),
                 });
 
