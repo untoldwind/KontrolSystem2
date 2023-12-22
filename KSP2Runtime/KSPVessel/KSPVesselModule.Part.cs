@@ -126,6 +126,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             public bool IsScienceExperiment =>
                 part.TryGetModuleData<PartComponentModule_ScienceExperiment, Data_ScienceExperiment>(out var _);
 
+            [KSField]
             public Option<ModuleScienceExperimentAdapter> ScienceExperiment {
                 get {
                     if (part.TryGetModuleData<PartComponentModule_ScienceExperiment, Data_ScienceExperiment>(

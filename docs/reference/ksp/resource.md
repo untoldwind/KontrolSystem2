@@ -50,6 +50,8 @@ Parse from string
 Name | Type | Read-only | Description
 --- | --- | --- | ---
 list | [ksp::resource::ResourceData](/reference/ksp/resource.md#resourcedata)[] | R/O | 
+stored_total_mass | float | R/O | 
+stored_total_thermal_mass | float | R/O | 
 
 #### Methods
 

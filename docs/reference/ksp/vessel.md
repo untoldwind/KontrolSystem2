@@ -447,6 +447,7 @@ is_engine | bool | R/O |
 is_fairing | bool | R/O | 
 is_launch_clamp | bool | R/O | 
 is_parachute | bool | R/O | 
+is_science_experiment | bool | R/O | 
 is_solar_panel | bool | R/O | 
 launch_clamp | Option&lt;[ksp::vessel::ModuleLaunchClamp](/reference/ksp/vessel.md#modulelaunchclamp)> | R/O | 
 max_temperature | float | R/O | Maximum temperature of the part 
@@ -454,9 +455,13 @@ parachute | Option&lt;[ksp::vessel::ModuleParachute](/reference/ksp/vessel.md#mo
 part_name | string | R/O | 
 position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get position of the part in celestial frame of the main body. 
 resource_mass | float | R/O | Resource mass of the part 
+resource_thermal_mass | float | R/O | 
+resources | [ksp::resource::ResourceContainer](/reference/ksp/resource.md#resourcecontainer) | R/O | 
+science_experiment | Option&lt;[ksp::vessel::ModuleScienceExperiment](/reference/ksp/vessel.md#modulescienceexperiment)> | R/O | 
 solar_panel | Option&lt;[ksp::vessel::ModuleSolarPanel](/reference/ksp/vessel.md#modulesolarpanel)> | R/O | 
 splashed | bool | R/O | Indicate if the part has splashed 
 temperature | float | R/O | Temperature of the part 
+thermal_mass | float | R/O | 
 total_mass | float | R/O | Total mass of the part 
 vessel | [ksp::vessel::Vessel](/reference/ksp/vessel.md#vessel) | R/O | 
 
@@ -563,6 +568,7 @@ is_engine | bool | R/O |
 is_fairing | bool | R/O | 
 is_launch_clamp | bool | R/O | 
 is_parachute | bool | R/O | 
+is_science_experiment | bool | R/O | 
 is_solar_panel | bool | R/O | 
 launch_clamp | Option&lt;[ksp::vessel::ModuleLaunchClamp](/reference/ksp/vessel.md#modulelaunchclamp)> | R/O | 
 max_temperature | float | R/O | Maximum temperature of the part 
@@ -571,9 +577,13 @@ parachute | Option&lt;[ksp::vessel::ModuleParachute](/reference/ksp/vessel.md#mo
 part_name | string | R/O | 
 position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get position of the part in celestial frame of the main body. 
 resource_mass | float | R/O | Resource mass of the part 
+resource_thermal_mass | float | R/O | 
+resources | [ksp::resource::ResourceContainer](/reference/ksp/resource.md#resourcecontainer) | R/O | 
+science_experiment | Option&lt;[ksp::vessel::ModuleScienceExperiment](/reference/ksp/vessel.md#modulescienceexperiment)> | R/O | 
 solar_panel | Option&lt;[ksp::vessel::ModuleSolarPanel](/reference/ksp/vessel.md#modulesolarpanel)> | R/O | 
 splashed | bool | R/O | Indicate if the part has splashed 
 temperature | float | R/O | Temperature of the part 
+thermal_mass | float | R/O | 
 total_mass | float | R/O | Total mass of the part 
 vessel | [ksp::vessel::Vessel](/reference/ksp/vessel.md#vessel) | R/O | 
 
@@ -706,6 +716,18 @@ moduleparachute.repack ( ) -> bool
 ```
 
 
+
+### ModuleScienceExperiment
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+experiments | [ksp::science::Experiment](/reference/ksp/science.md#experiment)[] | R/O | 
+is_deployed | bool | R/O | 
+part_name | string | R/O | 
 
 ### ModuleSolarPanel
 
@@ -858,6 +880,7 @@ is_engine | bool | R/O |
 is_fairing | bool | R/O | 
 is_launch_clamp | bool | R/O | 
 is_parachute | bool | R/O | 
+is_science_experiment | bool | R/O | 
 is_solar_panel | bool | R/O | 
 launch_clamp | Option&lt;[ksp::vessel::ModuleLaunchClamp](/reference/ksp/vessel.md#modulelaunchclamp)> | R/O | 
 max_temperature | float | R/O | Maximum temperature of the part 
@@ -865,9 +888,13 @@ parachute | Option&lt;[ksp::vessel::ModuleParachute](/reference/ksp/vessel.md#mo
 part_name | string | R/O | 
 position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get position of the part in celestial frame of the main body. 
 resource_mass | float | R/O | Resource mass of the part 
+resource_thermal_mass | float | R/O | 
+resources | [ksp::resource::ResourceContainer](/reference/ksp/resource.md#resourcecontainer) | R/O | 
+science_experiment | Option&lt;[ksp::vessel::ModuleScienceExperiment](/reference/ksp/vessel.md#modulescienceexperiment)> | R/O | 
 solar_panel | Option&lt;[ksp::vessel::ModuleSolarPanel](/reference/ksp/vessel.md#modulesolarpanel)> | R/O | 
 splashed | bool | R/O | Indicate if the part has splashed 
 temperature | float | R/O | Temperature of the part 
+thermal_mass | float | R/O | 
 total_mass | float | R/O | Total mass of the part 
 vessel | [ksp::vessel::Vessel](/reference/ksp/vessel.md#vessel) | R/O | 
 

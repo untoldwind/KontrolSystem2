@@ -1800,6 +1800,26 @@
         },
         {
           "kind": "Standard",
+          "module": "ksp::resource",
+          "name": "FlowDirection"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::resource",
+          "name": "FlowDirectionConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::science",
+          "name": "Experiment"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::science",
+          "name": "ExperimentDefinition"
+        },
+        {
+          "kind": "Standard",
           "module": "ksp::telemetry",
           "name": "TimeSeries"
         },
@@ -2102,6 +2122,11 @@
           "kind": "Standard",
           "module": "ksp::vessel",
           "name": "ModuleParachute"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleScienceExperiment"
         },
         {
           "kind": "Standard",
@@ -2516,6 +2541,26 @@
         },
         {
           "kind": "Standard",
+          "module": "ksp::resource",
+          "name": "FlowDirection"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::resource",
+          "name": "FlowDirectionConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::science",
+          "name": "Experiment"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::science",
+          "name": "ExperimentDefinition"
+        },
+        {
+          "kind": "Standard",
           "module": "ksp::telemetry",
           "name": "TimeSeries"
         },
@@ -2818,6 +2863,11 @@
           "kind": "Standard",
           "module": "ksp::vessel",
           "name": "ModuleParachute"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleScienceExperiment"
         },
         {
           "kind": "Standard",
@@ -11360,7 +11410,13 @@
             ]
           },
           "assignableFromAny": false,
-          "assignableFrom": []
+          "assignableFrom": [
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            }
+          ]
         },
         "FlowDirectionConstants": {
           "name": "FlowDirectionConstants",
@@ -11693,6 +11749,26 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirectionConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "Experiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentDefinition"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::telemetry",
               "name": "TimeSeries"
             },
@@ -11999,6 +12075,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleScienceExperiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleSolarPanel"
             },
             {
@@ -12101,6 +12182,22 @@
                     "name": "ResourceData"
                   }
                 ]
+              }
+            },
+            "stored_total_mass": {
+              "name": "stored_total_mass",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "stored_total_thermal_mass": {
+              "name": "stored_total_thermal_mass",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
               }
             }
           },
@@ -12403,6 +12500,920 @@
           }
         }
       }
+    },
+    "ksp::science": {
+      "name": "ksp::science",
+      "description": "Collection of types and functions to get information and manipulate in-game science experiments.\n",
+      "types": {
+        "FlowDirection": {
+          "name": "FlowDirection",
+          "description": "Resource flow direction",
+          "fields": {},
+          "methods": {
+            "to_string": {
+              "isAsync": false,
+              "name": "to_string",
+              "description": "String representation of the number",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            }
+          },
+          "suffixOperators": {
+            "==": [
+              {
+                "op": "==",
+                "otherType": {
+                  "kind": "Standard",
+                  "module": "ksp::resource",
+                  "name": "FlowDirection"
+                },
+                "resultType": {
+                  "kind": "Builtin",
+                  "name": "bool"
+                }
+              }
+            ],
+            "!=": [
+              {
+                "op": "!=",
+                "otherType": {
+                  "kind": "Standard",
+                  "module": "ksp::resource",
+                  "name": "FlowDirection"
+                },
+                "resultType": {
+                  "kind": "Builtin",
+                  "name": "bool"
+                }
+              }
+            ]
+          },
+          "assignableFromAny": false,
+          "assignableFrom": [
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            }
+          ]
+        },
+        "FlowDirectionConstants": {
+          "name": "FlowDirectionConstants",
+          "description": "",
+          "fields": {
+            "FLOW_INBOUND": {
+              "name": "FLOW_INBOUND",
+              "description": "",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::resource",
+                "name": "FlowDirection"
+              }
+            },
+            "FLOW_OUTBOUND": {
+              "name": "FLOW_OUTBOUND",
+              "description": "Science experiment producing data",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::resource",
+                "name": "FlowDirection"
+              }
+            }
+          },
+          "methods": {
+            "from_string": {
+              "isAsync": false,
+              "name": "from_string",
+              "description": "Parse from string",
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "string"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::resource",
+                    "name": "FlowDirection"
+                  }
+                ]
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": [
+            {
+              "kind": "Builtin",
+              "name": "Unit"
+            },
+            {
+              "kind": "Builtin",
+              "name": "bool"
+            },
+            {
+              "kind": "Builtin",
+              "name": "int"
+            },
+            {
+              "kind": "Builtin",
+              "name": "float"
+            },
+            {
+              "kind": "Builtin",
+              "name": "string"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Range"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "ArrayBuilder",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Cell",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Option",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Result",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "R"
+                },
+                {
+                  "kind": "Generic",
+                  "name": "E"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::background",
+              "name": "Task",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::math",
+              "name": "Random"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::addons",
+              "name": "FlightPlan"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "Console"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "RgbaColor"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "MovingAverage"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "PIDLoop"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "RCSTranslateManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "SteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "ThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "TorquePI"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelSteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugBillboard"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "Debug"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "GroundMarker"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugPath"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Process"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ProcessArgument"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec3"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Direction"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Matrix2x2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalAngularVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalPosition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "TransformFrame"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Body"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "GeoCoordinates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Orbit"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirectionConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceContainer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceData"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransfer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransferEntry"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "Experiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::telemetry",
+              "name": "TimeSeries"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::up",
+              "name": "Align"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::up",
+              "name": "AlignConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Button"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Canvas"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Container"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Gradient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "StringInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "IntInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "FloatInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Label"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Line2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "PixelLine2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Polygon2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rect2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Slider"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Text2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Toggle"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Translate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Scale2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rotate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "ValueRaster2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Window"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStatesConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "CommandControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "CommandControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "FlightCtrlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ActionGroups"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Autopilot"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "StageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Maneuver"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ManeuverNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleCommand"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleControlSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDockingNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleEngine"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleScienceExperiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Staging"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Targetable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Vessel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringController"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringControl"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "BodyParameters"
+            },
+            {
+              "kind": "Record",
+              "names": [
+                "brake_time",
+                "end_latitude",
+                "end_longitude",
+                "end_time",
+                "path"
+              ],
+              "parameters": [
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Array",
+                  "parameters": [
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "GlobalPosition"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "ReentrySimulation"
+            }
+          ]
+        },
+        "Experiment": {
+          "name": "Experiment",
+          "description": "Represents an in-game science experiment.\n",
+          "fields": {
+            "definition": {
+              "name": "definition",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::science",
+                "name": "ExperimentDefinition"
+              }
+            },
+            "crew_required": {
+              "name": "crew_required",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "int"
+              }
+            },
+            "time_to_complete": {
+              "name": "time_to_complete",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "ExperimentDefinition": {
+          "name": "ExperimentDefinition",
+          "description": "Represents definition of an in-game science experiment.\n",
+          "fields": {
+            "id": {
+              "name": "id",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            },
+            "display_name": {
+              "name": "display_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            },
+            "data_value": {
+              "name": "data_value",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "sample_value": {
+              "name": "sample_value",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "transmission_size": {
+              "name": "transmission_size",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "requires_eva": {
+              "name": "requires_eva",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        }
+      },
+      "typeAliases": {},
+      "constants": {
+        "FlowDirection": {
+          "name": "FlowDirection",
+          "description": "Resource flow direction",
+          "type": {
+            "kind": "Standard",
+            "module": "ksp::resource",
+            "name": "FlowDirectionConstants"
+          }
+        }
+      },
+      "functions": {}
     },
     "ksp::telemetry": {
       "name": "ksp::telemetry",
@@ -13339,6 +14350,26 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirectionConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "Experiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentDefinition"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::telemetry",
               "name": "TimeSeries"
             },
@@ -13636,6 +14667,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -17648,6 +18684,26 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirectionConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "Experiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentDefinition"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::telemetry",
               "name": "TimeSeries"
             },
@@ -17945,6 +19001,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -18431,6 +19492,26 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirectionConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "Experiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentDefinition"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::telemetry",
               "name": "TimeSeries"
             },
@@ -18728,6 +19809,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -19234,6 +20320,26 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirectionConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "Experiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentDefinition"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::telemetry",
               "name": "TimeSeries"
             },
@@ -19531,6 +20637,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -20017,6 +21128,26 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirectionConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "Experiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentDefinition"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::telemetry",
               "name": "TimeSeries"
             },
@@ -20314,6 +21445,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -20810,6 +21946,26 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirectionConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "Experiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentDefinition"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::telemetry",
               "name": "TimeSeries"
             },
@@ -21107,6 +22263,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -21693,6 +22854,26 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirectionConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "Experiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentDefinition"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::telemetry",
               "name": "TimeSeries"
             },
@@ -21990,6 +23171,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -22526,6 +23712,26 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirectionConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "Experiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentDefinition"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::telemetry",
               "name": "TimeSeries"
             },
@@ -22823,6 +24029,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -23319,6 +24530,26 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirectionConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "Experiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentDefinition"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::telemetry",
               "name": "TimeSeries"
             },
@@ -23616,6 +24847,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -24132,6 +25368,26 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirectionConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "Experiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentDefinition"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::telemetry",
               "name": "TimeSeries"
             },
@@ -24429,6 +25685,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -24955,6 +26216,26 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirectionConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "Experiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentDefinition"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::telemetry",
               "name": "TimeSeries"
             },
@@ -25252,6 +26533,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -26462,6 +27748,31 @@
                 "name": "float"
               }
             },
+            "thermal_mass": {
+              "name": "thermal_mass",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "resource_thermal_mass": {
+              "name": "resource_thermal_mass",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "resources": {
+              "name": "resources",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::resource",
+                "name": "ResourceContainer"
+              }
+            },
             "air_intake": {
               "name": "air_intake",
               "readOnly": true,
@@ -26528,6 +27839,28 @@
                     "kind": "Standard",
                     "module": "ksp::vessel",
                     "name": "ModuleCommand"
+                  }
+                ]
+              }
+            },
+            "is_science_experiment": {
+              "name": "is_science_experiment",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "science_experiment": {
+              "name": "science_experiment",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ModuleScienceExperiment"
                   }
                 ]
               }
@@ -27026,6 +28359,31 @@
                 "name": "float"
               }
             },
+            "thermal_mass": {
+              "name": "thermal_mass",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "resource_thermal_mass": {
+              "name": "resource_thermal_mass",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "resources": {
+              "name": "resources",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::resource",
+                "name": "ResourceContainer"
+              }
+            },
             "air_intake": {
               "name": "air_intake",
               "readOnly": true,
@@ -27092,6 +28450,28 @@
                     "kind": "Standard",
                     "module": "ksp::vessel",
                     "name": "ModuleCommand"
+                  }
+                ]
+              }
+            },
+            "is_science_experiment": {
+              "name": "is_science_experiment",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "science_experiment": {
+              "name": "science_experiment",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ModuleScienceExperiment"
                   }
                 ]
               }
@@ -27576,6 +28956,44 @@
           "assignableFromAny": false,
           "assignableFrom": []
         },
+        "ModuleScienceExperiment": {
+          "name": "ModuleScienceExperiment",
+          "fields": {
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            },
+            "is_deployed": {
+              "name": "is_deployed",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "experiments": {
+              "name": "experiments",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::science",
+                    "name": "Experiment"
+                  }
+                ]
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
         "ModuleSolarPanel": {
           "name": "ModuleSolarPanel",
           "fields": {
@@ -27750,6 +29168,31 @@
                 "name": "float"
               }
             },
+            "thermal_mass": {
+              "name": "thermal_mass",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "resource_thermal_mass": {
+              "name": "resource_thermal_mass",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "resources": {
+              "name": "resources",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::resource",
+                "name": "ResourceContainer"
+              }
+            },
             "air_intake": {
               "name": "air_intake",
               "readOnly": true,
@@ -27816,6 +29259,28 @@
                     "kind": "Standard",
                     "module": "ksp::vessel",
                     "name": "ModuleCommand"
+                  }
+                ]
+              }
+            },
+            "is_science_experiment": {
+              "name": "is_science_experiment",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "science_experiment": {
+              "name": "science_experiment",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ModuleScienceExperiment"
                   }
                 ]
               }

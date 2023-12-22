@@ -1,5 +1,11 @@
 # Changes
 
+## 0.5.0 -> 0.5.0.1
+
+* Fix part resources fields (#99)
+* Fix exception in maneuver node creation (#100)
+* Basic bindings for science parts
+
 ## 0.4.4 -> 0.5.0
 
 * Compatibility with v0.2.0.0
