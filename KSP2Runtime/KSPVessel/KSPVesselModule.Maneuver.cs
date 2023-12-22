@@ -48,7 +48,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                         () => {
                             mapCore.map3D.ManeuverManager.CreateGizmoForLocation(maneuverNodeData);
                         });
-                } 
+                }
                 return new Future.Success<Result<ManeuverNodeAdapter, string>>(result);
             }
 
@@ -73,7 +73,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                         () => {
                             mapCore.map3D.ManeuverManager.CreateGizmoForLocation(maneuverNodeData);
                         });
-                } 
+                }
                 return new Future.Success<Result<ManeuverNodeAdapter, string>>(result);
             }
         }

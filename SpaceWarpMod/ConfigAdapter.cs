@@ -34,7 +34,7 @@ namespace KontrolSystem.SpaceWarpMod {
         internal OptionalAddons optionalAddons = new OptionalAddons();
 
         internal LoggerAdapter loggerAdapter;
-        
+
         internal ConfigAdapter(PluginInfo pluginInfo, ConfigFile config, LoggerAdapter loggerAdapter) {
             this.config = config;
             this.loggerAdapter = loggerAdapter;
@@ -141,7 +141,7 @@ namespace KontrolSystem.SpaceWarpMod {
         private Texture2D GetTexture(string name) => AssetManager.GetAsset<Texture2D>($"kontrolsystem2/kontrolsystem2/gfx/{name}.png");
 
         public void SetLoggerBackend(ManualLogSource backend) => loggerAdapter.Backend = backend;
-        
+
         internal static void Init(PluginInfo pluginInfo, ConfigFile config, LoggerAdapter loggerAdapter) {
             Instance = new ConfigAdapter(pluginInfo, config, loggerAdapter);
         }

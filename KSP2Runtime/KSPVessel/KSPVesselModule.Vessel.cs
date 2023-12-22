@@ -91,8 +91,8 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField(Description = "Reference frame for the horizon at the current position of the vessel.")]
             public ITransformFrame HorizonFrame => vessel.SimulationObject.Telemetry.HorizonFrame;
-            
-            [KSField(Description = "Coordinate position of the vessel in the celestial frame of the main body.")] 
+
+            [KSField(Description = "Coordinate position of the vessel in the celestial frame of the main body.")]
             public Vector3d Position =>
                 vessel.mainBody.coordinateSystem.ToLocalPosition(vessel.SimulationObject.Position);
 

@@ -23,7 +23,7 @@ namespace KontrolSystem.KSP.Runtime.KSPResource {
 
             [KSField]
             public double StoredTotalThermalMass => resourceContainer.GetStoredResourcesTotalThermalMass();
-                
+
             [KSMethod]
             public void DumpAll() {
                 resourceContainer.DumpAllResources();

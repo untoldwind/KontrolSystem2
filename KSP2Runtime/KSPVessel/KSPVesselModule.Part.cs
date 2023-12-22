@@ -28,7 +28,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             public Vector3d Position =>
                 vesselAdapter.vessel.mainBody.coordinateSystem.ToLocalPosition(part.SimulationObject.Position);
 
-            [KSField(Description = "Get coordinate independent position of the part.")] 
+            [KSField(Description = "Get coordinate independent position of the part.")]
             public Position GlobalPosition => part.SimulationObject.Position;
 
             [KSField] public RotationWrapper GlobalRotation => new RotationWrapper(new Rotation(part.SimulationObject.transform.bodyFrame, ControlFacingRotation));
@@ -63,7 +63,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField]
             public double ResourceThermalMass => part.ResourceThermalMass;
-            
+
             [KSField]
             public KSPResourceModule.ResourceContainerAdapter Resources => new KSPResourceModule.ResourceContainerAdapter(part);
 
@@ -126,17 +126,17 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             public bool IsScienceExperiment =>
                 part.TryGetModuleData<PartComponentModule_ScienceExperiment, Data_ScienceExperiment>(out var _);
 
-            public Option<ModuleScienceExperimentPanelAdapter> ScienceExperiment {
+            public Option<ModuleScienceExperimentAdapter> ScienceExperiment {
                 get {
                     if (part.TryGetModuleData<PartComponentModule_ScienceExperiment, Data_ScienceExperiment>(
                             out Data_ScienceExperiment data)) {
-                        return new Option<ModuleScienceExperimentPanelAdapter>(new ModuleScienceExperimentPanelAdapter(part, data));
+                        return new Option<ModuleScienceExperimentAdapter>(new ModuleScienceExperimentAdapter(part, data));
                     }
-                    
-                    return new Option<ModuleScienceExperimentPanelAdapter>();
+
+                    return new Option<ModuleScienceExperimentAdapter>();
                 }
             }
-            
+
             [KSField] public bool IsSolarPanel => part.IsPartSolarPanel(out var _);
 
             [KSField]

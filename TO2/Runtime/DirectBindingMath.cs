@@ -95,7 +95,7 @@ namespace KontrolSystem.TO2.Runtime {
                 tmp = tmp * tmp * (((exp <<= 1) < 0) ? bas : 1);
             return tmp;
         }
-        
+
         public static IKontrolModule Module {
             get {
                 BindingGenerator.RegisterTypeMapping(typeof(Random), RandomBinding.RandomType);

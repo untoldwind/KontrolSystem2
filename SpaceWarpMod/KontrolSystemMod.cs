@@ -35,7 +35,7 @@ namespace KontrolSystem.SpaceWarpMod {
 
         public override void OnInitialized() {
             Instance = this;
-            
+
             ConfigAdapter.Instance.SetLoggerBackend(Logger);
             ConfigAdapter.Instance.Logger.Info("Initialize KontrolSystemMod");
 
@@ -44,7 +44,7 @@ namespace KontrolSystem.SpaceWarpMod {
 
             var mainframe = gameObject.AddComponent<Mainframe>();
             mainframe.Initialize(ConfigAdapter.Instance);
-            
+
             Appbar.RegisterAppButton("Kontrol System 2", "BTN-KontrolSystem", AssetManager.GetAsset<Texture2D>($"{SpaceWarpMetadata.ModID}/images/icon.png"),
                 toggle => {
                     if (toggle) {

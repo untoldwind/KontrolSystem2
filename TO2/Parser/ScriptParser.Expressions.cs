@@ -167,7 +167,7 @@ namespace KontrolSystem.TO2.Parser {
         private static readonly Parser<Operator> PowBinaryOp = Alt(
             Tag("**").To(Operator.Pow)
         ).Between(WhiteSpaces0, WhiteSpaces0);
-            
+
         private static readonly Parser<Expression> PowExpr = Chain(UnaryPrefixExpr, PowBinaryOp,
             (left, op, right, start, end) => new Binary(left, op, right, start, end));
 

@@ -18,6 +18,9 @@
         <Reference Include="System">
             <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\System.dll</HintPath>
         </Reference>
+        <Reference Include="System.Core">
+            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\System.Core.dll</HintPath>
+        </Reference>
         <Reference Include="mscorlib">
             <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\mscorlib.dll</HintPath>
         </Reference>

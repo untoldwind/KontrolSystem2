@@ -75,7 +75,7 @@ namespace KontrolSystem.TO2.Test {
             Assert.Equal("SimpleGeneric", filledType2.LocalName);
             Assert.Equal("module::SimpleGeneric<string>", filledType2.Name);
             Assert.True(filledType2.IsValid(moduleContext));
-            Assert.Equal(new [] { "string" }, filledType2.GenericParameters.Select(t => t.Name));
+            Assert.Equal(new[] { "string" }, filledType2.GenericParameters.Select(t => t.Name));
             Assert.Equal(typeof(SimpleGeneric<string>), filledType2.GeneratedType(moduleContext));
 
             Assert.Equal(new Dictionary<string, RealizedType> {

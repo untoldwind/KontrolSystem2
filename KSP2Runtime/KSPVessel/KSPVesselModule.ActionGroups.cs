@@ -23,10 +23,10 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             public bool Rcs {
                 get => vessel.IsRCSEnabled;
                 set {
-                   vessel.SetActionGroup(KSPActionGroup.RCS, value);
-                   vessel.SetState(new VesselState() {
-                       isRCSEnabled = value
-                   }, null);
+                    vessel.SetActionGroup(KSPActionGroup.RCS, value);
+                    vessel.SetState(new VesselState() {
+                        isRCSEnabled = value
+                    }, null);
                 }
             }
 

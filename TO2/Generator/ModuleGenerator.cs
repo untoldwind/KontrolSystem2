@@ -28,7 +28,7 @@ namespace KontrolSystem.TO2.Generator {
 
         public static void DeclareConstants(DeclaredKontrolModule declaredModule) {
             ModuleContext moduleContext = declaredModule.moduleContext;
-            
+
             foreach (ConstDeclaration constant in declaredModule.to2Module.constants) {
                 FieldInfo runtimeField = moduleContext.typeBuilder.DefineField($"const_{constant.name}",
                     constant.type.GeneratedType(moduleContext),
@@ -63,7 +63,7 @@ namespace KontrolSystem.TO2.Generator {
 
         public static void DeclareFunctions(DeclaredKontrolModule declaredModule) {
             ModuleContext moduleContext = declaredModule.moduleContext;
-            
+
             foreach (FunctionDeclaration function in declaredModule.to2Module.functions) {
                 IBlockContext methodContext = moduleContext.CreateMethodContext(function.modifier, function.isAsync,
                     function.name, function.declaredReturn, function.parameters);

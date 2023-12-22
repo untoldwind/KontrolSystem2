@@ -32,7 +32,7 @@ namespace KontrolSystem.KSP.Runtime.KSPGame {
                 object[] argumentObjs = null;
                 if (arguments != null) {
                     argumentObjs = new object[Math.Min(this.arguments.Length, arguments.Length)];
-                    
+
                     for (int i = 0; i < argumentObjs.Length; i++) {
                         switch (this.arguments[i].Type) {
                         case "int":
@@ -74,7 +74,7 @@ namespace KontrolSystem.KSP.Runtime.KSPGame {
                 try {
                     result = Mainframe.Instance.StopProcess(process);
                 } finally {
-                    ContextHolder.CurrentContext.Value = context; 
+                    ContextHolder.CurrentContext.Value = context;
                 }
 
                 return result;
