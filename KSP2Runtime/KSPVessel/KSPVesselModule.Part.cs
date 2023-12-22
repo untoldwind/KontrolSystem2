@@ -57,6 +57,12 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField(Description = "Maximum temperature of the part")]
             public double MaxTemperature => part.MaxTemp;
+
+            [KSField]
+            public double ThermalMass => part.ThermalMass;
+
+            [KSField]
+            public double ResourceThermalMass => part.ResourceThermalMass;
             
             [KSField]
             public KSPResourceModule.ResourceContainerAdapter Resources => new KSPResourceModule.ResourceContainerAdapter(part);

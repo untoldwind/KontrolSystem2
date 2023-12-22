@@ -18,6 +18,12 @@ namespace KontrolSystem.KSP.Runtime.KSPResource {
             [KSField]
             public ResourceDataAdapter[] List => resourceContainer.GetAllResourcesContainedData().Select(data => new ResourceDataAdapter(this, data)).ToArray();
 
+            [KSField]
+            public double StoredTotalMass => resourceContainer.GetStoredResourcesTotalMass();
+
+            [KSField]
+            public double StoredTotalThermalMass => resourceContainer.GetStoredResourcesTotalThermalMass();
+                
             [KSMethod]
             public void DumpAll() {
                 resourceContainer.DumpAllResources();
