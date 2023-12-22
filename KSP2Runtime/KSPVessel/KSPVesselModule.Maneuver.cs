@@ -6,6 +6,7 @@ using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
 using KSP.Sim.impl;
 using KSP.Sim.Maneuver;
+using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel {
     public partial class KSPVesselModule {
@@ -58,6 +59,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 KSPOrbitModule.IOrbit orbit = new OrbitWrapper(vesselAdapter.context, vesselAdapter.vessel.Orbiter.PatchedConicSolver.FindPatchContainingUT(ut) ?? vesselAdapter.vessel.Orbit);
                 ManeuverNodeData maneuverNodeData = new ManeuverNodeData(vesselAdapter.vessel.GlobalId, false, ut);
 
+                maneuverNodeData.InitializeTransform();
                 maneuverNodeData.BurnVector = new Vector3d(
                     Vector3d.Dot(orbit.RadialPlus(ut), burnVector),
                     Vector3d.Dot(orbit.NormalPlus(ut), burnVector),
