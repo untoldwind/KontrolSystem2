@@ -122,6 +122,21 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 }
             }
 
+            [KSField]
+            public bool IsScienceExperiment =>
+                part.TryGetModuleData<PartComponentModule_ScienceExperiment, Data_ScienceExperiment>(out var _);
+
+            public Option<ModuleScienceExperimentPanelAdapter> ScienceExperiment {
+                get {
+                    if (part.TryGetModuleData<PartComponentModule_ScienceExperiment, Data_ScienceExperiment>(
+                            out Data_ScienceExperiment data)) {
+                        return new Option<ModuleScienceExperimentPanelAdapter>(new ModuleScienceExperimentPanelAdapter(part, data));
+                    }
+                    
+                    return new Option<ModuleScienceExperimentPanelAdapter>();
+                }
+            }
+            
             [KSField] public bool IsSolarPanel => part.IsPartSolarPanel(out var _);
 
             [KSField]
