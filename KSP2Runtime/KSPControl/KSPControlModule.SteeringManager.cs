@@ -31,6 +31,9 @@ namespace KontrolSystem.KSP.Runtime.KSPControl {
                 c.pitch = (float)DirectBindingMath.Clamp(translate.x, -1, 1);
                 c.yaw = (float)DirectBindingMath.Clamp(translate.y, -1, 1);
                 c.roll = (float)DirectBindingMath.Clamp(translate.z, -1, 1);
+                c.inputPitch = (float)DirectBindingMath.Clamp(translate.x, -1, 1);
+                c.inputYaw = (float)DirectBindingMath.Clamp(translate.y, -1, 1);
+                c.inputRoll = (float)DirectBindingMath.Clamp(translate.z, -1, 1);
             }
         }
     }
