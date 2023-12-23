@@ -1,5 +1,12 @@
 # Changes
 
+## 0.5.0.1 -> 0.5.1
+
+* Tweak SteeringManager to also control grid fins (#101)
+  * ... might require some further tweaking
+* Improve binding for science experiments
+  * Also allowing science experiments to be run via script
+
 ## 0.5.0 -> 0.5.0.1
 
 * Fix part resources fields (#99)

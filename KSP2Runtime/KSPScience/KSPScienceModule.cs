@@ -35,6 +35,14 @@ namespace KontrolSystem.KSP.Runtime.KSPScience {
                         (ExperimentState.ALREADYSTORED, "Experiment has already stored results"),
                         (ExperimentState.BLOCKED, "Experiment is blocked"),
                     }),
+                    ("ScienceSituation", "Situation of a science experiment", typeof(ScienceSitutation), new (Enum value, string description)[] {
+                        (ScienceSitutation.None, "No specific situation required"),
+                        (ScienceSitutation.HighOrbit, "Experiment in high orbit"),
+                        (ScienceSitutation.LowOrbit, "Experiment in low orbit"),
+                        (ScienceSitutation.Atmosphere, "Experiment inside an atmosphere"),
+                        (ScienceSitutation.Splashed, "Experiment while splashed"),
+                        (ScienceSitutation.Landed, "Experiment while landed"),
+                    }),
                 });
 
             return (enumTypes, enumConstants);
