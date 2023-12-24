@@ -85,7 +85,7 @@ export class TO2ModuleNode implements Node, TO2Module {
   }
 
   public findType(name: string): TO2Type | undefined {
-    return undefined;
+    return this.types.get(name)?.type
   }
 
   public allTypes(): [string, TO2Type][] {
