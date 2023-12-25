@@ -1,5 +1,9 @@
 # Changes
 
+## 0.5.1 ->
+
+* Improve vscode extension/lsp-server
+
 ## 0.5.0.1 -> 0.5.1
 
 * Tweak SteeringManager to also control grid fins (#101)
@@ -72,7 +76,7 @@ Bug fixes:
 * Add `get_vessels_in_range()` and `get_all_owned_vessels()` functions to `ksp::vessel`
 * Add `Vessel.make_active()`
 
-## ß.3.6 -> 0.4.1
+## 0.3.6 -> 0.4.1
 
 * UI overhaul
 * Add `ksp::ui` to create UI via scripts

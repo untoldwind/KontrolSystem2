@@ -48,8 +48,9 @@ export class StructDeclaration implements Node, TypeDeclaration {
   public readonly isTypeDecl: true = true;
 
   public readonly range: InputRange;
-  public readonly name: string;
+  public readonly name: WithPosition<string>;
   public readonly type: TO2Type;
+  public readonly constructorType: FunctionType;
 
   constructor(
     public readonly pubKeyword: WithPosition<"pub"> | undefined,
@@ -62,14 +63,23 @@ export class StructDeclaration implements Node, TypeDeclaration {
     end: InputPosition,
   ) {
     this.range = new InputRange(start, end);
-    this.name = this.structName.value;
+    this.name = this.structName;
     this.type = new RecordType(
       this.fields.flatMap((field) => {
         if (isLineComment(field)) return [];
         return [[field.name, field.type.value]];
       }),
       undefined,
-      this.name,
+      this.name.value,
+    );
+    this.constructorType = new FunctionType(
+      false,
+      this.constructorParameters.map((param) => [
+        param.name.value,
+        param.type?.value ?? UNKNOWN_TYPE,
+        param.defaultValue !== undefined,
+      ]),
+      this.type,
     );
   }
 
@@ -89,16 +99,16 @@ export class StructDeclaration implements Node, TypeDeclaration {
   public validateModuleFirstPass(context: ModuleContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
-    if (context.typeAliases.has(this.name)) {
+    if (context.typeAliases.has(this.name.value)) {
       errors.push({
         status: "error",
         message: `Duplicate type name ${this.name}`,
         range: this.structName.range,
       });
     } else {
-      context.typeAliases.set(this.name, this.type.realizedType(context));
+      context.typeAliases.set(this.name.value, this.type.realizedType(context));
     }
-    if (context.mappedFunctions.has(this.name)) {
+    if (context.mappedFunctions.has(this.name.value)) {
       errors.push({
         status: "error",
         message: `Duplicate function name ${this.name}`,
@@ -110,15 +120,7 @@ export class StructDeclaration implements Node, TypeDeclaration {
           moduleName: context.moduleName,
           range: this.structName.range,
         },
-        value: new FunctionType(
-          false,
-          this.constructorParameters.map((param) => [
-            param.name.value,
-            param.type?.value ?? UNKNOWN_TYPE,
-            param.defaultValue !== undefined,
-          ]),
-          this.type,
-        ),
+        value: this.constructorType,
       });
     }
 

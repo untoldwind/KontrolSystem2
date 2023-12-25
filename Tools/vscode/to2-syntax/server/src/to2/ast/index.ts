@@ -5,6 +5,7 @@ import { SemanticToken } from "../../syntax-token";
 import { CompletionItem, InlayHint } from "vscode-languageserver";
 import { Position } from "vscode-languageserver-textdocument";
 import { DefinitionRef } from "./definition-ref";
+import { FunctionType } from "./function-type";
 
 export interface Node {
   readonly isComment?: boolean;
@@ -47,8 +48,9 @@ export interface ModuleItem extends Node {
 
 export interface TypeDeclaration extends ModuleItem {
   isTypeDecl: true;
-  name: string;
+  name: WithPosition<string>;
   type: TO2Type;
+  constructorType?: FunctionType;
 }
 
 export function isTypeDeclaration(item: ModuleItem): item is TypeDeclaration {

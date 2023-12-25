@@ -9,7 +9,7 @@ export class TypeAlias implements Node, TypeDeclaration {
 
   public readonly range: InputRange;
 
-  public readonly name: string;
+  public readonly name: WithPosition<string>;
 
   constructor(
     public readonly exported: boolean,
@@ -20,7 +20,7 @@ export class TypeAlias implements Node, TypeDeclaration {
     end: InputPosition,
   ) {
     this.range = new InputRange(start, end);
-    this.name = alias.value;
+    this.name = alias;
   }
 
   public reduceNode<T>(
@@ -33,14 +33,14 @@ export class TypeAlias implements Node, TypeDeclaration {
   public validateModuleFirstPass(context: ModuleContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
-    if (context.typeAliases.has(this.name)) {
+    if (context.typeAliases.has(this.name.value)) {
       errors.push({
         status: "error",
         message: `Duplicate type name ${this.name}`,
         range: this.alias.range,
       });
     } else {
-      context.typeAliases.set(this.name, this.type.realizedType(context));
+      context.typeAliases.set(this.name.value, this.type.realizedType(context));
     }
 
     return errors;

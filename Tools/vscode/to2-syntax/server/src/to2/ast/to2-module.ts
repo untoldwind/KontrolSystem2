@@ -29,9 +29,9 @@ export interface TO2Module {
 
   allConstants(): [string, WithDefinitionRef<TO2Type>][];
 
-  findType(name: string): TO2Type | undefined;
+  findType(name: string): WithDefinitionRef<TO2Type> | undefined;
 
-  allTypes(): [string, TO2Type][];
+  allTypes(): [string, WithDefinitionRef<TO2Type>][];
 
   findFunction(name: string): WithDefinitionRef<FunctionType> | undefined;
 
@@ -40,7 +40,7 @@ export interface TO2Module {
 
 export class TO2ModuleNode implements Node, TO2Module {
   private constants: Map<string, ConstDeclaration> = new Map();
-  private functions: Map<string, FunctionDeclaration> = new Map();
+  private functions: Map<string, WithDefinitionRef<FunctionType>> = new Map();
   private types: Map<string, TypeDeclaration> = new Map();
   public readonly range: InputRange;
 
@@ -58,8 +58,19 @@ export class TO2ModuleNode implements Node, TO2Module {
       item.setModuleName(name);
       if (isConstDeclaration(item)) this.constants.set(item.name.value, item);
       if (isFunctionDeclaration(item))
-        this.functions.set(item.name.value, item);
-      if (isTypeDeclaration(item)) this.types.set(item.name, item);
+        this.functions.set(item.name.value, {
+          definition: { moduleName: this.name, range: item.name.range },
+          value: item.functionType,
+        });
+      if (isTypeDeclaration(item)) {
+        this.types.set(item.name.value, item);
+        if (item.constructorType) {
+          this.functions.set(item.name.value, {
+            definition: { moduleName: this.name, range: item.name.range },
+            value: item.constructorType,
+          });
+        }
+      }
     }
   }
 
@@ -84,35 +95,35 @@ export class TO2ModuleNode implements Node, TO2Module {
     ]);
   }
 
-  public findType(name: string): TO2Type | undefined {
-    return this.types.get(name)?.type;
+  public findType(name: string): WithDefinitionRef<TO2Type> | undefined {
+    const decl = this.types.get(name);
+
+    return decl
+      ? {
+          definition: { moduleName: this.name, range: decl.name.range },
+          value: decl.type,
+        }
+      : undefined;
   }
 
-  public allTypes(): [string, TO2Type][] {
-    return [...this.types.entries()].map(([name, decl]) => [name, decl.type]);
+  public allTypes(): [string, WithDefinitionRef<TO2Type>][] {
+    return [...this.types.entries()].map(([name, decl]) => [
+      name,
+      {
+        definition: { moduleName: this.name, range: decl.name.range },
+        value: decl.type,
+      },
+    ]);
   }
 
   public findFunction(
     name: string,
   ): WithDefinitionRef<FunctionType> | undefined {
-    const decl = this.functions.get(name);
-
-    return decl
-      ? {
-          definition: { moduleName: this.name, range: decl.name.range },
-          value: decl.functionType,
-        }
-      : undefined;
+    return this.functions.get(name);
   }
 
   public allFunctions(): [string, WithDefinitionRef<FunctionType>][] {
-    return [...this.functions.entries()].map(([name, decl]) => [
-      name,
-      {
-        definition: { moduleName: this.name, range: decl.name.range },
-        value: decl.functionType,
-      },
-    ]);
+    return [...this.functions.entries()];
   }
 
   public reduceNode<T>(
@@ -177,26 +188,34 @@ export class ReferencedModule implements TO2Module {
     );
   }
 
-  findType(name: string): TO2Type | undefined {
+  findType(name: string): WithDefinitionRef<TO2Type> | undefined {
     const aliased = this.moduleReference.typeAliases[name];
-    if (aliased) return resolveTypeRef(aliased);
+    if (aliased) {
+      const value = resolveTypeRef(aliased);
+
+      return value ? { value } : undefined;
+    }
+
     const typeReference = this.moduleReference.types[name];
     return typeReference
-      ? new ReferencedType(typeReference, this.name)
+      ? { value: new ReferencedType(typeReference, this.name) }
       : undefined;
   }
 
-  allTypes(): [string, TO2Type][] {
+  allTypes(): [string, WithDefinitionRef<TO2Type>][] {
     return [
       ...Object.entries(this.moduleReference.typeAliases).map<
-        [string, TO2Type]
-      >(([name, aliased]) => [name, resolveTypeRef(aliased) ?? UNKNOWN_TYPE]),
-      ...Object.entries(this.moduleReference.types).map<[string, TO2Type]>(
-        ([name, typeReference]) => [
-          name,
-          new ReferencedType(typeReference, this.name),
-        ],
-      ),
+        [string, WithDefinitionRef<TO2Type>]
+      >(([name, aliased]) => [
+        name,
+        { value: resolveTypeRef(aliased) ?? UNKNOWN_TYPE },
+      ]),
+      ...Object.entries(this.moduleReference.types).map<
+        [string, WithDefinitionRef<TO2Type>]
+      >(([name, typeReference]) => [
+        name,
+        { value: new ReferencedType(typeReference, this.name) },
+      ]),
     ];
   }
 

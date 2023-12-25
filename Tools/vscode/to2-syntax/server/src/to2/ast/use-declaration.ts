@@ -107,7 +107,7 @@ export class UseDeclaration implements Node, ModuleItem {
             } else {
               context.typeAliases.set(
                 name.value,
-                importedType.realizedType(context),
+                importedType.value.realizedType(context),
               );
             }
           }
@@ -131,7 +131,7 @@ export class UseDeclaration implements Node, ModuleItem {
         }
         for (const [name, importedType] of this.importedModule.allTypes()) {
           if (!context.typeAliases.has(name)) {
-            context.typeAliases.set(name, importedType.realizedType(context));
+            context.typeAliases.set(name, importedType.value.realizedType(context));
           }
         }
       }
