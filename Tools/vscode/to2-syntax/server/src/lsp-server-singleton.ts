@@ -178,6 +178,7 @@ export class LspServerSingleton {
     progress?.begin("Indexing", 0, workspacePath, true);
 
     const stack: string[] = [workspacePath];
+    const indexedModules: TO2ModuleNode[] = [];
 
     while (progress === undefined || !progress.token.isCancellationRequested) {
       const dir = stack.shift();
@@ -190,6 +191,7 @@ export class LspServerSingleton {
           stack.push(path.join(dir, file.name));
         } else if (file.isFile() && file.name.endsWith(".to2")) {
           const filePath = path.join(dir, file.name);
+
           const content = await fs.readFile(filePath, "utf-8");
           const textDocument = TextDocument.create(
             pathToUri(filePath, this.documents),
@@ -198,9 +200,14 @@ export class LspServerSingleton {
             content,
           );
           const moduleResult = this.parseModule(textDocument, false);
-          if (moduleResult.value) moduleResult.value.validate(this.registry);
+          if (moduleResult.value) indexedModules.push(moduleResult.value);
         }
       }
+    }
+
+    for (const module of indexedModules) {
+      if (progress && progress.token.isCancellationRequested) break;
+      module.validate(this.registry);
     }
 
     progress?.done();
