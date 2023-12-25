@@ -1,5 +1,6 @@
 import { WithDefinitionRef } from "./definition-ref";
 import { FunctionType, isFunctionType } from "./function-type";
+import { OptionType } from "./option-type";
 import { RecordType } from "./record-type";
 import { Registry } from "./registry";
 import { ResultType } from "./result-type";
@@ -111,6 +112,28 @@ export class RootModuleContext implements ModuleContext {
             ? typeHint.parameterTypes.map((param) => param[1])
             : [];
         switch (namePath[0]) {
+          case "Some":
+            if (args.length === 1) {
+              return {
+                value: new FunctionType(
+                  false,
+                  [["value", args[0], false]],
+                  new OptionType(args[0]),
+                ),
+              };
+            }
+            break;
+          case "None":
+            if (args.length === 0) {
+              return {
+                value: new FunctionType(
+                  false,
+                  [],
+                  new OptionType(UNKNOWN_TYPE),
+                ),
+              };
+            }
+            break;
           case "Cell":
             if (args.length === 1) {
               return {
