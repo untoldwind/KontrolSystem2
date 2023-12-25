@@ -75,8 +75,8 @@ export class FunctionDeclaration implements Node, ModuleItem {
       prefix.findIndex((p) => p.value === "pub") >= 0
         ? FunctionModifier.Public
         : prefix.findIndex((p) => p.value === "test") >= 0
-        ? FunctionModifier.Test
-        : FunctionModifier.Private;
+          ? FunctionModifier.Test
+          : FunctionModifier.Private;
     this.functionType = new FunctionType(
       this.isAsync,
       parameters.map((param) => [

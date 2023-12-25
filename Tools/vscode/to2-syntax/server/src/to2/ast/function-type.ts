@@ -1,7 +1,5 @@
-import { type } from "os";
 import { ModuleContext } from "./context";
 import { RealizedType, TO2Type } from "./to2-type";
-import { WithPosition } from "../../parser";
 import { WithDefinitionRef } from "./definition-ref";
 
 export class FunctionType implements RealizedType {

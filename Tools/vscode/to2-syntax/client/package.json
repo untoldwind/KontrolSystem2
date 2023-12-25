@@ -12,13 +12,13 @@
     "vscode": "^1.75.0"
   },
   "dependencies": {
-    "vscode-languageclient": "^8.1.0"
+    "vscode-languageclient": "^9.0.1"
   },
   "devDependencies": {
-    "@types/vscode": "^1.80.0",
-    "@vscode/test-electron": "^2.3.3",
-    "esbuild": "0.18.17",
-    "rimraf": "5.0.1"
+    "@types/vscode": "^1.85.0",
+    "@vscode/test-electron": "^2.3.8",
+    "esbuild": "0.19.10",
+    "rimraf": "5.0.5"
   },
   "scripts": {
     "clean": "rimraf out",
