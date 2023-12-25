@@ -32,13 +32,13 @@ namespace KontrolSystem.TO2.AST {
                 foreach (var kv in items) {
                     string itemName = kv.Key;
                     kv.Value.TypeHint = context => {
-                        RecordType expectedRecord = declaredResult as RecordType ??
+                        RecordType expectedRecord = declaredResult?.UnderlyingType(context.ModuleContext) as RecordType ??
                                                     typeHint?.Invoke(context) as RecordType ??
                                                     (typeHint?.Invoke(context) as ResultType)
                                                     ?.successType as RecordType;
                         SortedDictionary<string, TO2Type> itemTypes = expectedRecord?.ItemTypes;
 
-                        return itemTypes.Get(itemName)?.UnderlyingType(context.ModuleContext);
+                        return itemTypes?.Get(itemName)?.UnderlyingType(context.ModuleContext);
                     };
                 }
             }

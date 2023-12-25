@@ -8,6 +8,7 @@ struct Test1(g: int) {
     f2: float = 0.75 * g
     s1: string = g.to_string()
     s2: string = ""
+    o1: Option<float> = None()
 }
 
 impl Test1 {
@@ -21,7 +22,7 @@ impl Test1 {
 }
 
 test sync fn test_test1_struct() -> Unit = {
-    const t1 = <Test1>(i1: 12, i2: 34, f1: 45.67, f2: 89.01, s1: "string1", s2: "string2")
+    const t1 = <Test1>(i1: 12, i2: 34, f1: 45.67, f2: 89.01, s1: "string1", s2: "string2", o1: Some(0.1))
     
     assert_int(12, t1.i1)
     assert_int(34, t1.i2)
@@ -29,6 +30,8 @@ test sync fn test_test1_struct() -> Unit = {
     assert_float(89.01, t1.f2)
     assert_string("string1", t1.s1)
     assert_string("string2", t1.s2)
+    assert_true(t1.o1.defined)
+    assert_float(0.1, t1.o1.value)
     
     assert_int(1234, t1.immutable1())
     assert_int(24, t1.immutable2(2))
@@ -43,13 +46,15 @@ test sync fn test_test1_struct_constructor() -> Unit = {
     assert_float(4.5, t1.f2)
     assert_string("6", t1.s1)
     assert_string("", t1.s2)
+    assert_false(t1.o1.defined)
 }
 
 test sync fn test_test1_struct_mutate() -> Unit = {
-    let t1 = <Test1>(i1: 12, i2: 34, f1: 45.67, f2: 89.01, s1: "string1", s2: "string2")
+    let t1 = <Test1>(i1: 12, i2: 34, f1: 45.67, f2: 89.01, s1: "string1", s2: "string2", o1: None())
 
     assert_int(12, t1.i1)
     assert_int(34, t1.i2)
+    assert_false(t1.o1.defined)
     
     t1.set_i1(45)
     

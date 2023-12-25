@@ -407,4 +407,5 @@ ASALocalRun/
 
 *.dll
 .env
+.envrc
 .venv

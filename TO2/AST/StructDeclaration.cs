@@ -43,8 +43,10 @@ namespace KontrolSystem.TO2.AST {
             this.description = description;
             this.constructorParameters = constructorParameters;
             this.fields = fields;
-            foreach (var field in fields.Where(e => e.IsRight).Select(e => e.Right))
+            foreach (var field in fields.Where(e => e.IsRight).Select(e => e.Right)) {
                 field.initializer.VariableContainer = this;
+                field.initializer.TypeHint = context => field.type.UnderlyingType(context.ModuleContext);
+            }
         }
 
         public IVariableContainer ParentContainer => null;
