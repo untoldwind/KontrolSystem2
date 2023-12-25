@@ -3,6 +3,8 @@
 ## 0.5.1 ->
 
 * Improve vscode extension/lsp-server
+* Improve type inference in structs (#104)
+* Improve handling of if ... else if ... (#105)
 
 ## 0.5.0.1 -> 0.5.1
 

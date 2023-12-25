@@ -219,7 +219,12 @@ namespace KontrolSystem.TO2.AST {
         public TO2Type FindVariableLocal(IBlockContext context, string name) =>
             condition.GetScopeVariables(context)?.Get(name);
 
-        public override TO2Type ResultType(IBlockContext context) => thenExpression.ResultType(context);
+        public override TO2Type ResultType(IBlockContext context) {
+            TO2Type thenType = thenExpression.ResultType(context).UnderlyingType(context.ModuleContext);
+            TO2Type elseType = elseExpression.ResultType(context).UnderlyingType(context.ModuleContext);
+
+            return (!(thenType is OptionType) && elseType is OptionType) ? new OptionType(thenType) : thenType;
+        }
 
         public override void Prepare(IBlockContext context) {
         }
@@ -289,8 +294,12 @@ namespace KontrolSystem.TO2.AST {
 
             if (context.HasErrors) return;
 
-            TO2Type thenType = thenExpression.ResultType(thenContext);
-            TO2Type elseType = elseExpression.ResultType(elseContext);
+            TO2Type thenType = thenExpression.ResultType(thenContext).UnderlyingType(context.ModuleContext);
+            TO2Type elseType = elseExpression.ResultType(elseContext).UnderlyingType(context.ModuleContext);
+            bool wrapOption = (!(thenType is OptionType) && elseType is OptionType);
+
+            if (wrapOption) thenType = new OptionType(thenType);
+
             if (!dropResult) {
                 if (!thenType.IsAssignableFrom(context.ModuleContext, elseType)) {
                     context.AddError(new StructuralError(
@@ -304,11 +313,27 @@ namespace KontrolSystem.TO2.AST {
 
             if (context.HasErrors) return;
 
-            LabelRef thenEnd = context.IL.DefineLabel(thenCount.opCodes < 124);
+            LabelRef thenEnd = context.IL.DefineLabel(!dropResult && wrapOption ? thenCount.opCodes < 114 : thenCount.opCodes < 124);
             LabelRef elseEnd = context.IL.DefineLabel(elseCount.opCodes < 124);
 
             context.IL.Emit(thenEnd.isShort ? OpCodes.Brfalse_S : OpCodes.Brfalse, thenEnd);
-            thenExpression.EmitCode(thenContext, dropResult);
+            if (!dropResult && wrapOption) {
+                Type generatedType = thenType.GeneratedType(thenContext.ModuleContext);
+                using ITempLocalRef tempResult = thenContext.IL.TempLocal(generatedType);
+
+                thenExpression.Prepare(thenContext);
+                tempResult.EmitLoadPtr(context);
+                thenContext.IL.Emit(OpCodes.Dup);
+                thenContext.IL.Emit(OpCodes.Initobj, generatedType, 1, 0);
+                thenContext.IL.Emit(OpCodes.Dup);
+                thenContext.IL.Emit(OpCodes.Ldc_I4_1);
+                thenContext.IL.Emit(OpCodes.Stfld, generatedType.GetField("defined"));
+                thenExpression.EmitCode(thenContext, false);
+                thenContext.IL.Emit(OpCodes.Stfld, generatedType.GetField("value"));
+                tempResult.EmitLoad(thenContext);
+            } else {
+                thenExpression.EmitCode(thenContext, dropResult);
+            }
             context.IL.Emit(elseEnd.isShort ? OpCodes.Br_S : OpCodes.Br, elseEnd);
             context.IL.MarkLabel(thenEnd);
             if (!dropResult) context.IL.AdjustStack(-1); // Then leave its result on the stack, so is else supposed to

@@ -44,11 +44,12 @@ namespace KontrolSystem.KSP.Runtime.KSPScience {
             public ResearchLocationAdapter[] ValidLocations =>
                 experimentStanding.ExperimentDefinition.ValidLocations
                     .Select(location => new ResearchLocationAdapter(location)).ToArray();
-            
+
             [KSField] public bool RegionRequired => experimentStanding.RegionRequired;
 
-            [KSField] public Option<ResearchLocationAdapter> ExperimentLocation => 
-                experimentStanding.ExperimentLocation != null ? 
+            [KSField]
+            public Option<ResearchLocationAdapter> ExperimentLocation =>
+                experimentStanding.ExperimentLocation != null ?
                     new Option<ResearchLocationAdapter>(new ResearchLocationAdapter(experimentStanding.ExperimentLocation)) :
                     new Option<ResearchLocationAdapter>();
 

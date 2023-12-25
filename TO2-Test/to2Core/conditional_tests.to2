@@ -47,3 +47,27 @@ test sync fn test_if_result() -> Unit = {
     assert_true(result.defined)
     assert_string("Greater 300", result.value)
 }
+
+sync fn if_else_cascade(a: int) -> string = if(a < 0) "Less Null" else if(a > 0) "Greater Null" else "Null"
+
+test sync fn test_if_else_cascade() -> Unit = {
+    assert_string("Less Null", if_else_cascade(-2))
+    assert_string("Greater Null", if_else_cascade(1))
+    assert_string("Null", if_else_cascade(0))
+}
+
+sync fn if_else_open(a: int) -> Option<string> = if(a < 0) "Less Null" else if(a > 0) "Greater Null"
+
+test sync fn test_if_else_open() -> Unit = {
+    const result1 = if_else_open(-10)
+    const result2 = if_else_open(2)
+    const result3 = if_else_open(0)
+    
+    assert_true(result1.defined)
+    assert_string("Less Null", result1.value)
+    
+    assert_true(result2.defined)
+    assert_string("Greater Null", result2.value)
+
+    assert_false(result3.defined)
+}
