@@ -20,7 +20,7 @@ export class FunctionType implements RealizedType {
       .join(", ")}) -> ${returnType.localName}`;
     this.localName = this.name;
     this.maxParams = parameterTypes.length;
-    this.requiredParams = parameterTypes.filter((param) => param[2]).length;
+    this.requiredParams = parameterTypes.filter((param) => !param[2]).length;
   }
 
   public isAssignableFrom(otherType: RealizedType): boolean {

@@ -14,7 +14,7 @@ namespace KontrolSystem.KSP.Runtime.KSPScience {
     public partial class KSPScienceModule {
 
         public static (IEnumerable<RealizedType>, IEnumerable<IKontrolConstant>) DirectBindings() {
-            var (enumTypes, enumConstants) = BindingGenerator.RegisterEnumTypeMappings("ksp::resource",
+            var (enumTypes, enumConstants) = BindingGenerator.RegisterEnumTypeMappings("ksp::science",
                 new[] {
                     ("ScienceExperimentType", "Science experiment type", typeof(ScienceExperimentType), new (Enum value, string description)[] {
                         (ScienceExperimentType.DataType, "Science experiment producing data"),

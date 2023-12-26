@@ -115,12 +115,20 @@ export class Call extends Expression {
         });
       } else {
         for (let i = 0; i < this.args.length; i++) {
-          errors.push(
-            ...this.args[i].validateBlock(
-              context,
-              realizedType.parameterTypes[i][1].realizedType(context.module),
-            ),
+          const parameterType = realizedType.parameterTypes[i][1].realizedType(
+            context.module,
           );
+          errors.push(...this.args[i].validateBlock(context, parameterType));
+          const argResult = this.args[i]
+            .resultType(context, parameterType)
+            .realizedType(context.module);
+          if (!parameterType.isAssignableFrom(argResult)) {
+            errors.push({
+              status: "error",
+              message: `Parameter ${realizedType.parameterTypes[i][0]}: ${argResult.name} is not assignable to ${parameterType.name}`,
+              range: this.args[i].range,
+            });
+          }
         }
       }
       this.documentation = [

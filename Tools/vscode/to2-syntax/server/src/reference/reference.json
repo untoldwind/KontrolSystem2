@@ -1800,32 +1800,32 @@
         },
         {
           "kind": "Standard",
-          "module": "ksp::resource",
+          "module": "ksp::science",
           "name": "ScienceExperimentType"
         },
         {
           "kind": "Standard",
-          "module": "ksp::resource",
+          "module": "ksp::science",
           "name": "ScienceExperimentTypeConstants"
         },
         {
           "kind": "Standard",
-          "module": "ksp::resource",
+          "module": "ksp::science",
           "name": "ExperimentState"
         },
         {
           "kind": "Standard",
-          "module": "ksp::resource",
+          "module": "ksp::science",
           "name": "ExperimentStateConstants"
         },
         {
           "kind": "Standard",
-          "module": "ksp::resource",
+          "module": "ksp::science",
           "name": "ScienceSituation"
         },
         {
           "kind": "Standard",
-          "module": "ksp::resource",
+          "module": "ksp::science",
           "name": "ScienceSituationConstants"
         },
         {
@@ -2566,32 +2566,32 @@
         },
         {
           "kind": "Standard",
-          "module": "ksp::resource",
+          "module": "ksp::science",
           "name": "ScienceExperimentType"
         },
         {
           "kind": "Standard",
-          "module": "ksp::resource",
+          "module": "ksp::science",
           "name": "ScienceExperimentTypeConstants"
         },
         {
           "kind": "Standard",
-          "module": "ksp::resource",
+          "module": "ksp::science",
           "name": "ExperimentState"
         },
         {
           "kind": "Standard",
-          "module": "ksp::resource",
+          "module": "ksp::science",
           "name": "ExperimentStateConstants"
         },
         {
           "kind": "Standard",
-          "module": "ksp::resource",
+          "module": "ksp::science",
           "name": "ScienceSituation"
         },
         {
           "kind": "Standard",
-          "module": "ksp::resource",
+          "module": "ksp::science",
           "name": "ScienceSituationConstants"
         },
         {
@@ -11793,32 +11793,32 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceExperimentType"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceExperimentTypeConstants"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ExperimentState"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ExperimentStateConstants"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceSituation"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceSituationConstants"
             },
             {
@@ -12596,7 +12596,7 @@
                 "op": "==",
                 "otherType": {
                   "kind": "Standard",
-                  "module": "ksp::resource",
+                  "module": "ksp::science",
                   "name": "ScienceExperimentType"
                 },
                 "resultType": {
@@ -12610,7 +12610,7 @@
                 "op": "!=",
                 "otherType": {
                   "kind": "Standard",
-                  "module": "ksp::resource",
+                  "module": "ksp::science",
                   "name": "ScienceExperimentType"
                 },
                 "resultType": {
@@ -12633,7 +12633,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::resource",
+                "module": "ksp::science",
                 "name": "ScienceExperimentType"
               }
             },
@@ -12643,7 +12643,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::resource",
+                "module": "ksp::science",
                 "name": "ScienceExperimentType"
               }
             },
@@ -12653,7 +12653,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::resource",
+                "module": "ksp::science",
                 "name": "ScienceExperimentType"
               }
             }
@@ -12678,7 +12678,7 @@
                 "parameters": [
                   {
                     "kind": "Standard",
-                    "module": "ksp::resource",
+                    "module": "ksp::science",
                     "name": "ScienceExperimentType"
                   }
                 ]
@@ -12969,27 +12969,27 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceExperimentType"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ExperimentState"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ExperimentStateConstants"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceSituation"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceSituationConstants"
             },
             {
@@ -13429,7 +13429,7 @@
                 "op": "==",
                 "otherType": {
                   "kind": "Standard",
-                  "module": "ksp::resource",
+                  "module": "ksp::science",
                   "name": "ExperimentState"
                 },
                 "resultType": {
@@ -13443,7 +13443,7 @@
                 "op": "!=",
                 "otherType": {
                   "kind": "Standard",
-                  "module": "ksp::resource",
+                  "module": "ksp::science",
                   "name": "ExperimentState"
                 },
                 "resultType": {
@@ -13466,7 +13466,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::resource",
+                "module": "ksp::science",
                 "name": "ExperimentState"
               }
             },
@@ -13476,7 +13476,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::resource",
+                "module": "ksp::science",
                 "name": "ExperimentState"
               }
             },
@@ -13486,7 +13486,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::resource",
+                "module": "ksp::science",
                 "name": "ExperimentState"
               }
             },
@@ -13496,7 +13496,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::resource",
+                "module": "ksp::science",
                 "name": "ExperimentState"
               }
             },
@@ -13506,7 +13506,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::resource",
+                "module": "ksp::science",
                 "name": "ExperimentState"
               }
             },
@@ -13516,7 +13516,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::resource",
+                "module": "ksp::science",
                 "name": "ExperimentState"
               }
             },
@@ -13526,7 +13526,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::resource",
+                "module": "ksp::science",
                 "name": "ExperimentState"
               }
             },
@@ -13536,7 +13536,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::resource",
+                "module": "ksp::science",
                 "name": "ExperimentState"
               }
             },
@@ -13546,7 +13546,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::resource",
+                "module": "ksp::science",
                 "name": "ExperimentState"
               }
             },
@@ -13556,7 +13556,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::resource",
+                "module": "ksp::science",
                 "name": "ExperimentState"
               }
             },
@@ -13566,7 +13566,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::resource",
+                "module": "ksp::science",
                 "name": "ExperimentState"
               }
             },
@@ -13576,7 +13576,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::resource",
+                "module": "ksp::science",
                 "name": "ExperimentState"
               }
             }
@@ -13601,7 +13601,7 @@
                 "parameters": [
                   {
                     "kind": "Standard",
-                    "module": "ksp::resource",
+                    "module": "ksp::science",
                     "name": "ExperimentState"
                   }
                 ]
@@ -13892,27 +13892,27 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceExperimentType"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceExperimentTypeConstants"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ExperimentState"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceSituation"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceSituationConstants"
             },
             {
@@ -14352,7 +14352,7 @@
                 "op": "==",
                 "otherType": {
                   "kind": "Standard",
-                  "module": "ksp::resource",
+                  "module": "ksp::science",
                   "name": "ScienceSituation"
                 },
                 "resultType": {
@@ -14366,7 +14366,7 @@
                 "op": "!=",
                 "otherType": {
                   "kind": "Standard",
-                  "module": "ksp::resource",
+                  "module": "ksp::science",
                   "name": "ScienceSituation"
                 },
                 "resultType": {
@@ -14389,7 +14389,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::resource",
+                "module": "ksp::science",
                 "name": "ScienceSituation"
               }
             },
@@ -14399,7 +14399,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::resource",
+                "module": "ksp::science",
                 "name": "ScienceSituation"
               }
             },
@@ -14409,7 +14409,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::resource",
+                "module": "ksp::science",
                 "name": "ScienceSituation"
               }
             },
@@ -14419,7 +14419,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::resource",
+                "module": "ksp::science",
                 "name": "ScienceSituation"
               }
             },
@@ -14429,7 +14429,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::resource",
+                "module": "ksp::science",
                 "name": "ScienceSituation"
               }
             },
@@ -14439,7 +14439,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::resource",
+                "module": "ksp::science",
                 "name": "ScienceSituation"
               }
             }
@@ -14464,7 +14464,7 @@
                 "parameters": [
                   {
                     "kind": "Standard",
-                    "module": "ksp::resource",
+                    "module": "ksp::science",
                     "name": "ScienceSituation"
                   }
                 ]
@@ -14755,27 +14755,27 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceExperimentType"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceExperimentTypeConstants"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ExperimentState"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ExperimentStateConstants"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceSituation"
             },
             {
@@ -15259,7 +15259,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::resource",
+                "module": "ksp::science",
                 "name": "ExperimentState"
               }
             },
@@ -15268,7 +15268,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::resource",
+                "module": "ksp::science",
                 "name": "ExperimentState"
               }
             },
@@ -15431,7 +15431,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::resource",
+                "module": "ksp::science",
                 "name": "ScienceSituation"
               }
             }
@@ -15448,7 +15448,7 @@
           "description": "Science experiment type",
           "type": {
             "kind": "Standard",
-            "module": "ksp::resource",
+            "module": "ksp::science",
             "name": "ScienceExperimentTypeConstants"
           }
         },
@@ -15457,7 +15457,7 @@
           "description": "Science experiment state",
           "type": {
             "kind": "Standard",
-            "module": "ksp::resource",
+            "module": "ksp::science",
             "name": "ExperimentStateConstants"
           }
         },
@@ -15466,7 +15466,7 @@
           "description": "Situation of a science experiment",
           "type": {
             "kind": "Standard",
-            "module": "ksp::resource",
+            "module": "ksp::science",
             "name": "ScienceSituationConstants"
           }
         }
@@ -16408,32 +16408,32 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceExperimentType"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceExperimentTypeConstants"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ExperimentState"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ExperimentStateConstants"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceSituation"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceSituationConstants"
             },
             {
@@ -20767,32 +20767,32 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceExperimentType"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceExperimentTypeConstants"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ExperimentState"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ExperimentStateConstants"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceSituation"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceSituationConstants"
             },
             {
@@ -21600,32 +21600,32 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceExperimentType"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceExperimentTypeConstants"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ExperimentState"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ExperimentStateConstants"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceSituation"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceSituationConstants"
             },
             {
@@ -22453,32 +22453,32 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceExperimentType"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceExperimentTypeConstants"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ExperimentState"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ExperimentStateConstants"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceSituation"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceSituationConstants"
             },
             {
@@ -23286,32 +23286,32 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceExperimentType"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceExperimentTypeConstants"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ExperimentState"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ExperimentStateConstants"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceSituation"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceSituationConstants"
             },
             {
@@ -24129,32 +24129,32 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceExperimentType"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceExperimentTypeConstants"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ExperimentState"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ExperimentStateConstants"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceSituation"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceSituationConstants"
             },
             {
@@ -25062,32 +25062,32 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceExperimentType"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceExperimentTypeConstants"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ExperimentState"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ExperimentStateConstants"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceSituation"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceSituationConstants"
             },
             {
@@ -25945,32 +25945,32 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceExperimentType"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceExperimentTypeConstants"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ExperimentState"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ExperimentStateConstants"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceSituation"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceSituationConstants"
             },
             {
@@ -26788,32 +26788,32 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceExperimentType"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceExperimentTypeConstants"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ExperimentState"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ExperimentStateConstants"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceSituation"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceSituationConstants"
             },
             {
@@ -27651,32 +27651,32 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceExperimentType"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceExperimentTypeConstants"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ExperimentState"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ExperimentStateConstants"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceSituation"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceSituationConstants"
             },
             {
@@ -28524,32 +28524,32 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceExperimentType"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceExperimentTypeConstants"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ExperimentState"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ExperimentStateConstants"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceSituation"
             },
             {
               "kind": "Standard",
-              "module": "ksp::resource",
+              "module": "ksp::science",
               "name": "ScienceSituationConstants"
             },
             {
