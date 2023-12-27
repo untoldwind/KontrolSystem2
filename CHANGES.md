@@ -1,6 +1,6 @@
 # Changes
 
-## 0.5.1 ->
+## 0.5.1 -> 0.5.1.1
 
 * Improve vscode extension/lsp-server
 * Improve type inference in structs (#104)
