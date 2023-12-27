@@ -1,6 +1,7 @@
 import { ModuleContext } from "./context";
 import { WithDefinitionRef } from "./definition-ref";
 import { FunctionType } from "./function-type";
+import { Operator } from "./operator";
 import { ResultType } from "./result-type";
 import {
   BUILTIN_BOOL,
@@ -53,8 +54,15 @@ export class OptionType implements RealizedType {
     }
   }
 
-  public findSuffixOperator(): RealizedType | undefined {
-    return undefined;
+  public findSuffixOperator( 
+    op: Operator,
+    rightType: RealizedType
+): TO2Type | undefined {
+    if (op === "|" && rightType.name === this.elementType.name) {
+      return this.elementType
+    } else {
+      return undefined
+    }
   }
 
   public findPrefixOperator(): RealizedType | undefined {
