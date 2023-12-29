@@ -178,6 +178,7 @@ export class LspServerSingleton {
     progress?.begin("Indexing", 0, workspacePath, true);
 
     const stack: string[] = [workspacePath];
+    const indexedModules: TO2ModuleNode[] = [];
 
     while (progress === undefined || !progress.token.isCancellationRequested) {
       const dir = stack.shift();
@@ -198,9 +199,16 @@ export class LspServerSingleton {
             0,
             content,
           );
-          this.parseModule(textDocument, false);
+          const parseResult = this.parseModule(textDocument, false);
+          if (parseResult.success) {
+            indexedModules.push(parseResult.value);
+          }
         }
       }
+    }
+
+    for (const module of indexedModules) {
+      module.validate(this.registry);
     }
 
     for (const document of this.documents.all()) {

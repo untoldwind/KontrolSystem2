@@ -40,7 +40,7 @@ export interface TO2Module {
 
 export class TO2ModuleNode implements Node, TO2Module {
   private constants: Map<string, ConstDeclaration> = new Map();
-  private functions: Map<string, WithDefinitionRef<FunctionType>> = new Map();
+  private functions: Map<string, FunctionDeclaration> = new Map();
   private types: Map<string, TypeDeclaration> = new Map();
   public readonly range: InputRange;
 
@@ -58,19 +58,8 @@ export class TO2ModuleNode implements Node, TO2Module {
       item.setModuleName(name);
       if (isConstDeclaration(item)) this.constants.set(item.name.value, item);
       if (isFunctionDeclaration(item))
-        this.functions.set(item.name.value, {
-          definition: { moduleName: this.name, range: item.name.range },
-          value: item.functionType,
-        });
-      if (isTypeDeclaration(item)) {
-        this.types.set(item.name.value, item);
-        if (item.constructorType) {
-          this.functions.set(item.name.value, {
-            definition: { moduleName: this.name, range: item.name.range },
-            value: item.constructorType,
-          });
-        }
-      }
+        this.functions.set(item.name.value, item);
+      if (isTypeDeclaration(item)) this.types.set(item.name.value, item);
     }
   }
 
@@ -119,11 +108,47 @@ export class TO2ModuleNode implements Node, TO2Module {
   public findFunction(
     name: string,
   ): WithDefinitionRef<FunctionType> | undefined {
-    return this.functions.get(name);
+    const functionDecl = this.functions.get(name);
+    if (functionDecl) {
+      return {
+        definition: { moduleName: this.name, range: functionDecl.name.range },
+        value: functionDecl.functionType,
+      };
+    }
+    const typeDecl = this.types.get(name);
+    if (typeDecl && typeDecl?.constructorType) {
+      return {
+        definition: { moduleName: this.name, range: typeDecl.name.range },
+        value: typeDecl.constructorType,
+      };
+    }
+
+    return undefined;
   }
 
   public allFunctions(): [string, WithDefinitionRef<FunctionType>][] {
-    return [...this.functions.entries()];
+    const result: [string, WithDefinitionRef<FunctionType>][] = [];
+
+    for (const [name, decl] of this.functions.entries()) {
+      result.push([
+        name,
+        {
+          definition: { moduleName: this.name, range: decl.name.range },
+          value: decl.functionType,
+        },
+      ]);
+    }
+    for (const [name, decl] of this.types.entries()) {
+      if (!decl.constructorType) continue;
+      result.push([
+        name,
+        {
+          definition: { moduleName: this.name, range: decl.name.range },
+          value: decl.constructorType,
+        },
+      ]);
+    }
+    return result;
   }
 
   public reduceNode<T>(

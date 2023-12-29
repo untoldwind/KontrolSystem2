@@ -8,7 +8,6 @@ import { ModuleItem, Node, ValidationError } from ".";
 import { InputPosition, InputRange, WithPosition } from "../../parser";
 import { SemanticToken } from "../../syntax-token";
 import { ModuleContext } from "./context";
-import { Registry } from "./registry";
 import { TO2Module } from "./to2-module";
 
 export class UseDeclaration implements Node, ModuleItem {
@@ -94,6 +93,7 @@ export class UseDeclaration implements Node, ModuleItem {
                 range: this.range,
               });
             } else {
+              importedFunction.definition?.moduleName;
               context.mappedFunctions.set(name.value, importedFunction);
             }
           }
@@ -131,7 +131,10 @@ export class UseDeclaration implements Node, ModuleItem {
         }
         for (const [name, importedType] of this.importedModule.allTypes()) {
           if (!context.typeAliases.has(name)) {
-            context.typeAliases.set(name, importedType.value.realizedType(context));
+            context.typeAliases.set(
+              name,
+              importedType.value.realizedType(context),
+            );
           }
         }
       }
