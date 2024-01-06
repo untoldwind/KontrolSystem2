@@ -1,5 +1,9 @@
 # Changes
 
+## 0.5.1.1 -> 0.5.1.2
+
+* Fix `vessel.maneuver.add` (#108)
+
 ## 0.5.1 -> 0.5.1.1
 
 * Improve vscode extension/lsp-server
