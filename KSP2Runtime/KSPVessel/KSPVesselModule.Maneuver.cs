@@ -36,6 +36,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 Add(double ut, double radialOut, double normal, double prograde) {
                 ManeuverNodeData maneuverNodeData = new ManeuverNodeData(vesselAdapter.vessel.GlobalId, false, ut);
 
+                maneuverNodeData.InitializeTransform();
                 maneuverNodeData.BurnVector = new Vector3d(radialOut, normal, prograde);
 
                 maneuverPlan.AddNode(maneuverNodeData, true);
