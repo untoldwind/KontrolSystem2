@@ -1,6 +1,5 @@
 ﻿using System;
 using KontrolSystem.KSP.Runtime.KSPMath;
-using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
 using KSP.Sim;
 using KSP.Sim.impl;
@@ -24,7 +23,27 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
         public PatchTransitionType StartTransition => orbit.PatchStartTransition;
 
         public PatchTransitionType EndTransition => orbit.PatchEndTransition;
-        
+
+        public Option<KSPOrbitModule.IOrbit> PreviousPatch {
+            get {
+                var previous = orbit.PreviousPatch;
+
+                return previous is { ActivePatch: true } && previous is PatchedConicsOrbit prevOrbit 
+                    ? new Option<KSPOrbitModule.IOrbit>(new OrbitWrapper(context, prevOrbit))
+                    : new Option<KSPOrbitModule.IOrbit>();
+            }
+        }
+
+        public Option<KSPOrbitModule.IOrbit> NextPatch {
+            get {
+                var next = orbit.NextPatch;
+
+                return next is { ActivePatch: true } && next is PatchedConicsOrbit nextOrbit
+                    ? new Option<KSPOrbitModule.IOrbit>(new OrbitWrapper(context, nextOrbit))
+                    : new Option<KSPOrbitModule.IOrbit>();
+            }
+        }
+
         public Option<double> Apoapsis => orbit.eccentricity < 1 ? Option.Some(orbit.ApoapsisArl) : Option.None<double>();
 
         public double Periapsis => orbit.PeriapsisArl;

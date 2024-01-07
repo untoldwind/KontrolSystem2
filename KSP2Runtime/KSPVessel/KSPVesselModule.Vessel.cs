@@ -80,6 +80,12 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField(Description = "Current orbit or orbit patch of the vessel.")]
             public KSPOrbitModule.IOrbit Orbit => new OrbitWrapper(context, vessel.Orbit);
 
+            [KSField(Description = "Get the entire trajectory of the vessel containing all orbit patches.")]
+            public KSPOrbitModule.IOrbit[] Trajectory => vessel.Orbiter.PatchedConicSolver.CurrentTrajectory
+                .Where(patch => patch.ActivePatch)
+                .Select(patch => (KSPOrbitModule.IOrbit)new OrbitWrapper(context, patch))
+                .ToArray();
+
             [KSField(Description = "The celestial/non-rotating reference frame of the vessel.")]
             public ITransformFrame CelestialFrame => vessel.transform.celestialFrame;
 

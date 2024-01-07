@@ -18,7 +18,9 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 maneuverPlan = this.vesselAdapter.vessel.SimulationObject.ManeuverPlan;
             }
 
-            [KSField]
+            [KSField(Description = "Get the planed trajectory of the vessel if all maneuvers are successfully executed." +
+                                   "The list of orbit patch will always start after the first maneuvering node." +
+                                   "I.e. if not maneuvers are planed this list will be empty.")]
             public KSPOrbitModule.IOrbit[] Trajectory {
                 get {
                     return vesselAdapter.vessel.Orbiter.ManeuverPlanSolver.PatchedConicsList

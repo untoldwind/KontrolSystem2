@@ -26,6 +26,12 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             [KSField(Description = "Get transition type at the end of the orbit patch")]
             public PatchTransitionType EndTransition { get; }
 
+            [KSField(Description = "Get the previous orbit patch of the trajectory (if available)")]
+            public Option<IOrbit> PreviousPatch { get; }
+
+            [KSField(Description = "Get the next orbit patch of the trajectory (if available)")]
+            public Option<IOrbit> NextPatch { get; }
+            
             [KSField(Description = "Apoapsis of the orbit above sealevel of the `reference_body`. Is not defined for a hyperbolic orbit")]
             Option<double> Apoapsis { get; }
 
