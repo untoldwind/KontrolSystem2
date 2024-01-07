@@ -20,6 +20,12 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             [KSField(Description = "Universal time of the start of the orbit, in case it is an orbit-patch")]
             public double EndUt { get; }
 
+            [KSField(Description = "Get transition type at the beginning of the orbit patch")]
+            public PatchTransitionType StartTransition { get; }
+
+            [KSField(Description = "Get transition type at the end of the orbit patch")]
+            public PatchTransitionType EndTransition { get; }
+
             [KSField(Description = "Apoapsis of the orbit above sealevel of the `reference_body`. Is not defined for a hyperbolic orbit")]
             Option<double> Apoapsis { get; }
 

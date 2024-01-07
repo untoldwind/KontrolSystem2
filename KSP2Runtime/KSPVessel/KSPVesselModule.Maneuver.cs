@@ -1,12 +1,10 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using KontrolSystem.KSP.Runtime.Core;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
 using KSP.Sim.impl;
 using KSP.Sim.Maneuver;
-using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel {
     public partial class KSPVesselModule {
@@ -20,6 +18,15 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 maneuverPlan = this.vesselAdapter.vessel.SimulationObject.ManeuverPlan;
             }
 
+            [KSField]
+            public KSPOrbitModule.IOrbit[] Trajectory {
+                get {
+                    return vesselAdapter.vessel.Orbiter.ManeuverPlanSolver.PatchedConicsList
+                        .Where(patch => patch.ActivePatch)
+                        .Select(patch => (KSPOrbitModule.IOrbit)new OrbitWrapper(vesselAdapter.context, patch))
+                        .ToArray();
+                }
+            }
             [KSField]
             public ManeuverNodeAdapter[] Nodes => maneuverPlan.GetNodes().Select(node => new ManeuverNodeAdapter(vesselAdapter, node)).ToArray();
 

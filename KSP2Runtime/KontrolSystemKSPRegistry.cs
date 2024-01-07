@@ -9,6 +9,7 @@ namespace KontrolSystem.KSP.Runtime {
 
             registry.RegisterModule(KSPMathModule.Instance.module);
 
+            var (orbitTypes, orbitConstants) = KSPOrbit.KSPOrbitModule.DirectBindings();
             var (vesselTypes, vesselConstants) = KSPVessel.KSPVesselModule.DirectBindings();
             var (resourceTypes, resourceConstants) = KSPResource.KSPResourceModule.DirectBindings();
             var (scienceTypes, scienceConstants) = KSPScience.KSPScienceModule.DirectBindings();
@@ -16,7 +17,7 @@ namespace KontrolSystem.KSP.Runtime {
             registry.RegisterModule(
                 BindingGenerator.BindModule(typeof(KSPConsole.KSPConsoleModule)));
             registry.RegisterModule(
-                BindingGenerator.BindModule(typeof(KSPOrbit.KSPOrbitModule)));
+                BindingGenerator.BindModule(typeof(KSPOrbit.KSPOrbitModule), orbitTypes, orbitConstants));
             registry.RegisterModule(
                 BindingGenerator.BindModule(typeof(KSPControl.KSPControlModule)));
             registry.RegisterModule(

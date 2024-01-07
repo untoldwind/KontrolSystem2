@@ -21,6 +21,10 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
         public double EndUt => orbit.EndUT;
 
+        public PatchTransitionType StartTransition => orbit.PatchStartTransition;
+
+        public PatchTransitionType EndTransition => orbit.PatchEndTransition;
+        
         public Option<double> Apoapsis => orbit.eccentricity < 1 ? Option.Some(orbit.ApoapsisArl) : Option.None<double>();
 
         public double Periapsis => orbit.PeriapsisArl;
