@@ -1,5 +1,22 @@
 # Changes
 
+## 0.5.1.2 -> 0.5.2
+
+* Improve `vessel.maneuver.add` and `vessel.maneuver.add_burn_vector` to use the
+  correct orbit patch in case multiple maneuvers are planed ahead.
+* Add `vessel.maneuver.remove_all()` helper to remove all maneuver nodes at once
+* Add `vessel.trajectory` field containing all the orbit patches of the current
+  trajectory of the vessel (i.e. where the vessel will end up if it stays on its
+  current course without intervention).
+* Add `vessel.maneuver.trajectory` field containing all the orbit patches if all
+  maneuvers are successfully executed.
+  * This list will always start after the first maneuver node. I.e. if there are
+    no planed maneuvers it will be empty.
+* Add `orbit.start_transition` and `orbit.end_transition` fields representing the
+  patch transition at the start and end.
+* Add `orbit.previous_patch` and `orbit.next_patch` fields (both `Option<Orbit>`)
+  to get the previous/next patch if available.
+
 ## 0.5.1.1 -> 0.5.1.2
 
 * Fix `vessel.maneuver.add` (#108)
