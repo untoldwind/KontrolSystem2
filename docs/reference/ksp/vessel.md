@@ -347,6 +347,7 @@ z | float | R/W | Setting for z-translation (-1 - 1)
 Name | Type | Read-only | Description
 --- | --- | --- | ---
 nodes | [ksp::vessel::ManeuverNode](/reference/ksp/vessel.md#maneuvernode)[] | R/O | 
+trajectory | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit)[] | R/O | Get the planed trajectory of the vessel if all maneuvers are successfully executed.The list of orbit patch will always start after the first maneuvering node.I.e. if not maneuvers are planed this list will be empty. 
 
 #### Methods
 
@@ -376,6 +377,15 @@ maneuver.add_burn_vector ( ut : float,
 maneuver.next_node ( ) -> Result<ksp::vessel::ManeuverNode, string>
 ```
 
+
+
+##### remove_all
+
+```rust
+maneuver.remove_all ( ) -> Unit
+```
+
+Remove all maneuver nodes
 
 
 ### ManeuverNode
@@ -1068,6 +1078,7 @@ static_pressure_kpa | float | R/O |
 surface_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Surface velocity of the vessel relative to the main body. This is equivalent of expressing the `global_velocity` in the body frame of the main body. 
 target | Option&lt;[ksp::vessel::Targetable](/reference/ksp/vessel.md#targetable)> | R/W | Get the currently selected target of the vessel, if there is one. 
 total_torque | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get the available torque of relative to its control frame. 
+trajectory | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit)[] | R/O | Get the entire trajectory of the vessel containing all orbit patches. 
 up | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get the horizon up vector in the celestial frame of the main body. 
 vertical_speed | float | R/O | Get the vertical speed of the vessel. 
 vertical_surface_speed | float | R/O | 
