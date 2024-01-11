@@ -38,7 +38,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 var nodes = maneuverPlan.GetNodes().ToList();
                 vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.RemoveNodesFromVessel(vesselAdapter.vessel.GlobalId, nodes);
             }
-            
+
             [KSMethod]
             public Result<ManeuverNodeAdapter, string> NextNode() {
                 ManeuverNodeData node = maneuverPlan.GetNodes().FirstOrDefault();
@@ -53,14 +53,14 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 ManeuverPlanSolver maneuverPlanSolver = vesselAdapter.vessel.Orbiter.ManeuverPlanSolver;
                 IPatchedOrbit patch;
                 maneuverPlanSolver.FindPatchContainingUt(ut, maneuverPlanSolver.PatchedConicsList, out patch, out int _);
-                
+
                 ManeuverNodeData maneuverNodeData = new ManeuverNodeData(vesselAdapter.vessel.GlobalId, patch is PatchedConicsOrbit _, ut);
                 maneuverNodeData.InitializeTransform();
 
                 if (patch is PatchedConicsOrbit) {
-                    maneuverNodeData.ManeuverTrajectoryPatch =(PatchedConicsOrbit) patch;
+                    maneuverNodeData.ManeuverTrajectoryPatch = (PatchedConicsOrbit)patch;
                 }
-                
+
                 maneuverNodeData.BurnVector = new Vector3d(radialOut, normal, prograde);
 
                 vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.AddNodeToVessel(maneuverNodeData);
@@ -83,18 +83,18 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 ManeuverPlanSolver maneuverPlanSolver = vesselAdapter.vessel.Orbiter.ManeuverPlanSolver;
                 IPatchedOrbit patch;
                 maneuverPlanSolver.FindPatchContainingUt(ut, maneuverPlanSolver.PatchedConicsList, out patch, out int _);
-                
+
                 ManeuverNodeData maneuverNodeData = new ManeuverNodeData(vesselAdapter.vessel.GlobalId, patch is PatchedConicsOrbit _, ut);
                 maneuverNodeData.InitializeTransform();
-                
-                KSPOrbitModule.IOrbit orbit; 
+
+                KSPOrbitModule.IOrbit orbit;
                 if (patch is PatchedConicsOrbit) {
-                    maneuverNodeData.ManeuverTrajectoryPatch =(PatchedConicsOrbit) patch;
+                    maneuverNodeData.ManeuverTrajectoryPatch = (PatchedConicsOrbit)patch;
                     orbit = new OrbitWrapper(vesselAdapter.context, (PatchedConicsOrbit)patch);
                 } else {
                     orbit = new OrbitWrapper(vesselAdapter.context, vesselAdapter.vessel.Orbiter.PatchedConicSolver.FindPatchContainingUT(ut) ?? vesselAdapter.vessel.Orbit);
                 }
-                
+
                 maneuverNodeData.BurnVector = new Vector3d(
                     Vector3d.Dot(orbit.RadialPlus(ut), burnVector),
                     Vector3d.Dot(orbit.NormalPlus(ut), burnVector),

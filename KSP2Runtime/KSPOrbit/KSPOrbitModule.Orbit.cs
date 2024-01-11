@@ -31,7 +31,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
             [KSField(Description = "Get the next orbit patch of the trajectory (if available)")]
             public Option<IOrbit> NextPatch { get; }
-            
+
             [KSField(Description = "Apoapsis of the orbit above sealevel of the `reference_body`. Is not defined for a hyperbolic orbit")]
             Option<double> Apoapsis { get; }
 

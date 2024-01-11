@@ -28,7 +28,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             get {
                 var previous = orbit.PreviousPatch;
 
-                return previous is { ActivePatch: true } && previous is PatchedConicsOrbit prevOrbit 
+                return previous is { ActivePatch: true } && previous is PatchedConicsOrbit prevOrbit
                     ? new Option<KSPOrbitModule.IOrbit>(new OrbitWrapper(context, prevOrbit))
                     : new Option<KSPOrbitModule.IOrbit>();
             }
