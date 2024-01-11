@@ -26,35 +26,35 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             public double Time {
                 get => maneuverNode.Time;
                 set => vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.UpdateTimeOnNode(maneuverNode, value, 
-                    new Dictionary<Guid, GizmoData>.ValueCollection(new Dictionary<Guid, GizmoData>()));
+                    FakeGizmoData());
             }
 
             [KSField]
             public double Prograde {
                 get => maneuverNode.BurnVector.z;
                 set => vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.UpdateChangeOnNode(maneuverNode, new Vector3d(0, 0, value - maneuverNode.BurnVector.z), 
-                    new Dictionary<Guid, GizmoData>.ValueCollection(new Dictionary<Guid, GizmoData>()));
+                    FakeGizmoData());
             }
 
             [KSField]
             public double Normal {
                 get => maneuverNode.BurnVector.y;
                 set => vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.UpdateChangeOnNode(maneuverNode, new Vector3d(0, value - maneuverNode.BurnVector.y, 0), 
-                    new Dictionary<Guid, GizmoData>.ValueCollection(new Dictionary<Guid, GizmoData>()));
+                    FakeGizmoData());
             }
 
             [KSField]
             public double RadialOut {
                 get => maneuverNode.BurnVector.x;
                 set => vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.UpdateChangeOnNode(maneuverNode, new Vector3d(value - maneuverNode.BurnVector.x, 0, 0), 
-                    new Dictionary<Guid, GizmoData>.ValueCollection(new Dictionary<Guid, GizmoData>()));
+                    FakeGizmoData());
             }
 
             [KSField("ETA")]
             public double Eta {
                 get => maneuverNode.Time - vesselAdapter.context.UniversalTime;
                 set => vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.UpdateTimeOnNode(maneuverNode,
-                    value + vesselAdapter.context.UniversalTime, new Dictionary<Guid, GizmoData>.ValueCollection(new Dictionary<Guid, GizmoData>()));
+                    value + vesselAdapter.context.UniversalTime, FakeGizmoData());
             }
 
             [KSField]
@@ -74,7 +74,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                         Vector3d.Dot(orbit.RadialPlus(maneuverNode.Time), value) - maneuverNode.BurnVector.x,
                         Vector3d.Dot(orbit.NormalPlus(maneuverNode.Time), value) - maneuverNode.BurnVector.y,
                         Vector3d.Dot(orbit.Prograde(maneuverNode.Time), value) - maneuverNode.BurnVector.z
-                    ), new Dictionary<Guid, GizmoData>.ValueCollection(new Dictionary<Guid, GizmoData>()));
+                    ), FakeGizmoData());
                 }
             }
 
@@ -93,7 +93,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                         Vector3d.Dot(orbit.RadialPlus(maneuverNode.Time), local) - maneuverNode.BurnVector.x,
                         Vector3d.Dot(orbit.NormalPlus(maneuverNode.Time), local) - maneuverNode.BurnVector.y,
                         Vector3d.Dot(orbit.Prograde(maneuverNode.Time), local) - maneuverNode.BurnVector.z
-                        ), new Dictionary<Guid, GizmoData>.ValueCollection(new Dictionary<Guid, GizmoData>()));
+                        ), FakeGizmoData());
                 }
             }
 
@@ -115,6 +115,14 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             public void Remove() {
                 vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.RemoveNodesFromVessel(vesselAdapter.vessel.GlobalId, new List<ManeuverNodeData>() { maneuverNode });
                 //                vesselAdapter.vessel.SimulationObject.ManeuverPlan.RemoveNode(maneuverNode, false);
+            }
+
+            private Dictionary<Guid, GizmoData>.ValueCollection FakeGizmoData() {
+                var fakeGizmos = new Dictionary<Guid, GizmoData>();
+                foreach (var node in vesselAdapter.vessel.SimulationObject.ManeuverPlan.GetNodes()) {
+                    fakeGizmos.Add(Guid.NewGuid(), new GizmoData(node, null));
+                }
+                return new Dictionary<Guid, GizmoData>.ValueCollection(fakeGizmos);
             }
         }
     }
