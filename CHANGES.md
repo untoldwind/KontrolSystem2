@@ -1,5 +1,9 @@
 # Changes
 
+## 0.5.2 ->
+
+* Fix update for maneuver node data in map-view (#111)
+
 ## 0.5.1.2 -> 0.5.2
 
 * Improve `vessel.maneuver.add` and `vessel.maneuver.add_burn_vector` to use the
