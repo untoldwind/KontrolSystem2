@@ -1,6 +1,6 @@
 # Changes
 
-## 0.5.2 ->
+## 0.5.2 -> 0.5.2.2
 
 * Fix update for maneuver node data in map-view (#111)
 
