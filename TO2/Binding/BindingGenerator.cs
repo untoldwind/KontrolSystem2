@@ -113,7 +113,7 @@ namespace KontrolSystem.TO2.Binding {
                 if (ksField == null) continue;
 
                 boundType.allowedFields.Add(ksField.Name ?? ToSnakeCase(property.Name),
-                    BindProperty(NormalizeDescription(ksField.Description), boundType.runtimeType, property));
+                    BindProperty(NormalizeDescription(ksField.Description), boundType.runtimeType, property, ksField.IsAsyncStore));
             }
         }
 
@@ -135,10 +135,10 @@ namespace KontrolSystem.TO2.Binding {
             }
         }
 
-        static IFieldAccessFactory BindProperty(string description, Type type, PropertyInfo property) {
+        static IFieldAccessFactory BindProperty(string description, Type type, PropertyInfo property, bool isAsyncStore) {
             RealizedType result = MapNativeType(property.PropertyType);
 
-            return new BoundPropertyLikeFieldAccessFactory(description, () => result, type, property);
+            return new BoundPropertyLikeFieldAccessFactory(description, () => result, type, property, isAsyncStore);
         }
 
         public static void RegisterTypeMapping(Type type, RealizedType to2Type) {

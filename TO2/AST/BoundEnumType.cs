@@ -163,6 +163,8 @@ namespace KontrolSystem.TO2.AST {
 
         public bool CanStore => false;
 
+        public bool IsAsyncStore => false;
+
         public void EmitLoad(IBlockContext context) {
             context.IL.Emit(OpCodes.Ldc_I4, value);
         }
