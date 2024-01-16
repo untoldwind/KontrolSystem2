@@ -1,4 +1,5 @@
-﻿using System.Reflection.Emit;
+﻿using System;
+using System.Reflection.Emit;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
 using KontrolSystem.TO2.Runtime;
@@ -83,6 +84,16 @@ namespace KontrolSystem.TO2.AST {
                 return;
             }
 
+            if (fieldAccess.IsAsyncStore && !context.IsAsync) {
+                context.AddError(new StructuralError(
+                    StructuralError.ErrorType.NoSuchFunction,
+                    $"Type '{targetType.Name}' field '{fieldName}' can not be changed in a sync context",
+                    Start,
+                    End
+                ));
+                return;
+            }
+            
             if (target is IAssignContext assignContext) {
                 if (fieldAccess.RequiresPtr && assignContext.IsConst(context)) {
                     context.AddError(new StructuralError(
@@ -132,9 +143,24 @@ namespace KontrolSystem.TO2.AST {
 
                     fieldAccess.EmitStore(context);
 
+                    if (fieldAccess.IsAsyncStore) {
+                        context.IL.Emit(OpCodes.Ldnull);
+                        context.IL.EmitNew(OpCodes.Newobj,
+                            typeof(Future.Success<object>).GetConstructor(new[] { typeof(object) }));
+                        context.RegisterAsyncResume(BuiltinType.Unit);
+                        context.IL.Emit(OpCodes.Pop);
+                    }
+
                     tmpResult.EmitLoad(context);
                 } else {
                     fieldAccess.EmitStore(context);
+                    if (fieldAccess.IsAsyncStore) {
+                        context.IL.Emit(OpCodes.Ldnull);
+                        context.IL.EmitNew(OpCodes.Newobj,
+                            typeof(Future.Success<object>).GetConstructor(new[] { typeof(object) }));
+                        context.RegisterAsyncResume(BuiltinType.Unit);
+                        context.IL.Emit(OpCodes.Pop);
+                    }
                 }
             } else {
                 IOperatorEmitter operatorEmitter = fieldAccess.FieldType.AllowedSuffixOperators(context.ModuleContext)
@@ -173,9 +199,26 @@ namespace KontrolSystem.TO2.AST {
 
                     fieldAccess.EmitStore(context);
 
+                    if (fieldAccess.IsAsyncStore) {
+                        context.IL.Emit(OpCodes.Ldnull);
+                        context.IL.EmitNew(OpCodes.Newobj,
+                            typeof(Future.Success<object>).GetConstructor(new[] { typeof(object) }));
+                        context.RegisterAsyncResume(BuiltinType.Unit);
+                        context.IL.Emit(OpCodes.Pop);
+                    }
+
                     tmpResult.EmitLoad(context);
                 } else {
                     fieldAccess.EmitStore(context);
+                    
+                    if (fieldAccess.IsAsyncStore) {
+                        context.IL.Emit(OpCodes.Ldnull);
+                        context.IL.EmitNew(OpCodes.Newobj,
+                            typeof(Future.Success<object>).GetConstructor(new[] { typeof(object) }));
+                        context.RegisterAsyncResume(BuiltinType.Unit);
+                        context.IL.Emit(OpCodes.Pop);
+                    }
+                    
                 }
             }
         }

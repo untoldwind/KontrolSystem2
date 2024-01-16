@@ -13,6 +13,8 @@ namespace KontrolSystem.TO2.AST {
         bool RequiresPtr { get; }
 
         bool CanStore { get; }
+        
+        bool IsAsyncStore { get;  }
 
         void EmitLoad(IBlockContext context);
 
@@ -76,6 +78,8 @@ namespace KontrolSystem.TO2.AST {
         public bool RequiresPtr => false;
 
         public bool CanStore => false;
+
+        public bool IsAsyncStore => false;
 
         public void EmitLoad(IBlockContext context) {
             foreach (OpCode opCode in loadOpCodes) {
@@ -170,6 +174,8 @@ namespace KontrolSystem.TO2.AST {
 
         public bool CanStore => !fieldInfos.Last().IsInitOnly;
 
+        public bool IsAsyncStore => false;
+
         public void EmitLoad(IBlockContext context) {
             foreach (FieldInfo fieldInfo in fieldInfos)
                 context.IL.Emit(OpCodes.Ldfld, fieldInfo);
@@ -218,6 +224,7 @@ namespace KontrolSystem.TO2.AST {
         private readonly Func<RealizedType> fieldType;
         private readonly MethodInfo getter;
         private readonly MethodInfo setter;
+        private readonly bool isAsyncStore;
         private readonly OpCode[] opCodes;
         private readonly Type methodTarget;
         private readonly string description;
@@ -230,9 +237,22 @@ namespace KontrolSystem.TO2.AST {
             this.getter = getter ??
                           throw new ArgumentException($"Getter is null for {description} in type {fieldType}");
             this.setter = setter;
+            isAsyncStore = false;
             this.opCodes = opCodes;
         }
 
+        public BoundPropertyLikeFieldAccessFactory(string description, Func<RealizedType> fieldType, Type methodTarget,
+            MethodInfo getter, MethodInfo setter, bool isAsyncStore, params OpCode[] opCodes) {
+            this.description = description;
+            this.fieldType = fieldType;
+            this.methodTarget = methodTarget;
+            this.getter = getter ??
+                          throw new ArgumentException($"Getter is null for {description} in type {fieldType}");
+            this.setter = setter;
+            this.isAsyncStore = isAsyncStore;
+            this.opCodes = opCodes;
+        }
+        
         public BoundPropertyLikeFieldAccessFactory(string description, Func<RealizedType> fieldType, Type methodTarget,
             PropertyInfo propertyInfo, params OpCode[] opCodes) {
             if (propertyInfo == null)
@@ -242,9 +262,22 @@ namespace KontrolSystem.TO2.AST {
             this.methodTarget = methodTarget;
             getter = propertyInfo.GetMethod;
             setter = propertyInfo.SetMethod;
+            isAsyncStore = false;
             this.opCodes = opCodes;
         }
 
+        public BoundPropertyLikeFieldAccessFactory(string description, Func<RealizedType> fieldType, Type methodTarget,
+            PropertyInfo propertyInfo, bool isAsyncStore, params OpCode[] opCodes) {
+            if (propertyInfo == null)
+                throw new ArgumentException($"PropertyInfo is null for {description} in type {fieldType}");
+            this.description = description;
+            this.fieldType = fieldType;
+            this.methodTarget = methodTarget;
+            getter = propertyInfo.GetMethod;
+            setter = propertyInfo.SetMethod;
+            this.isAsyncStore = isAsyncStore;
+            this.opCodes = opCodes;
+        }        
         public TO2Type DeclaredType => fieldType();
 
         public string Description => description;
@@ -252,7 +285,7 @@ namespace KontrolSystem.TO2.AST {
         public bool CanStore => setter != null;
 
         public IFieldAccessEmitter Create(ModuleContext context) =>
-            new BoundPropertyLikeFieldAccessEmitter(fieldType(), methodTarget, getter, setter, opCodes);
+            new BoundPropertyLikeFieldAccessEmitter(fieldType(), methodTarget, getter, setter, isAsyncStore, opCodes);
 
         public IFieldAccessFactory FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) {
             if (methodTarget.IsGenericTypeDefinition) {
@@ -280,7 +313,7 @@ namespace KontrolSystem.TO2.AST {
 
                 return new BoundPropertyLikeFieldAccessFactory(description,
                     () => fieldType().FillGenerics(context, typeArguments), genericTarget, genericGetterMethod,
-                    genericSetterMethod, opCodes);
+                    genericSetterMethod, isAsyncStore, opCodes);
             }
 
             return this;
@@ -295,17 +328,19 @@ namespace KontrolSystem.TO2.AST {
         public RealizedType FieldType { get; }
 
         public BoundPropertyLikeFieldAccessEmitter(RealizedType fieldType, Type methodTarget, MethodInfo getter,
-            MethodInfo setter,
-            OpCode[] opCodes) {
+            MethodInfo setter, bool isAsyncStore, OpCode[] opCodes) {
             FieldType = fieldType;
             this.methodTarget = methodTarget;
             this.getter = getter;
             this.setter = setter;
             this.opCodes = opCodes;
+            IsAsyncStore = isAsyncStore;
         }
 
         public bool CanStore => setter != null;
 
+        public bool IsAsyncStore { get; }
+        
         public bool RequiresPtr =>
             methodTarget.IsValueType && (getter.CallingConvention & CallingConventions.HasThis) != 0;
 

@@ -51,6 +51,8 @@
         public string Name { get; }
 
         public string Description { get; set; }
+        
+        public bool IsAsyncStore { get; set; }
     }
 
     [System.AttributeUsage(System.AttributeTargets.Parameter)]

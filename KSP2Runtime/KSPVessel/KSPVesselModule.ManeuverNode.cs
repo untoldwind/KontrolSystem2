@@ -22,35 +22,35 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 this.maneuverNode = maneuverNode;
             }
 
-            [KSField]
+            [KSField(IsAsyncStore = true)]
             public double Time {
                 get => maneuverNode.Time;
                 set => vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.UpdateTimeOnNode(maneuverNode, value,
                     FakeGizmoData());
             }
 
-            [KSField]
+            [KSField(IsAsyncStore = true)]
             public double Prograde {
                 get => maneuverNode.BurnVector.z;
                 set => vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.UpdateChangeOnNode(maneuverNode, new Vector3d(0, 0, value - maneuverNode.BurnVector.z),
                     FakeGizmoData());
             }
 
-            [KSField]
+            [KSField(IsAsyncStore = true)]
             public double Normal {
                 get => maneuverNode.BurnVector.y;
                 set => vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.UpdateChangeOnNode(maneuverNode, new Vector3d(0, value - maneuverNode.BurnVector.y, 0),
                     FakeGizmoData());
             }
 
-            [KSField]
+            [KSField(IsAsyncStore = true)]
             public double RadialOut {
                 get => maneuverNode.BurnVector.x;
                 set => vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.UpdateChangeOnNode(maneuverNode, new Vector3d(value - maneuverNode.BurnVector.x, 0, 0),
                     FakeGizmoData());
             }
 
-            [KSField("ETA")]
+            [KSField("ETA", IsAsyncStore = true)]
             public double Eta {
                 get => maneuverNode.Time - vesselAdapter.context.UniversalTime;
                 set => vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.UpdateTimeOnNode(maneuverNode,
@@ -60,7 +60,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField]
             public KSPOrbitModule.IOrbit OrbitPatch => new OrbitWrapper(vesselAdapter.context, vesselAdapter.vessel.Orbiter.PatchedConicSolver.FindPatchContainingUT(maneuverNode.Time) ?? vesselAdapter.vessel.Orbit);
 
-            [KSField]
+            [KSField(IsAsyncStore = true)]
             public Vector3d BurnVector {
                 get {
                     KSPOrbitModule.IOrbit orbit = new OrbitWrapper(vesselAdapter.context, vesselAdapter.vessel.Orbiter.PatchedConicSolver.FindPatchContainingUT(maneuverNode.Time) ?? vesselAdapter.vessel.Orbit);
@@ -78,7 +78,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 }
             }
 
-            [KSField]
+            [KSField(IsAsyncStore = true)]
             public VelocityAtPosition GlobalBurnVector {
                 get {
                     KSPOrbitModule.IOrbit orbit = new OrbitWrapper(vesselAdapter.context, vesselAdapter.vessel.Orbiter.PatchedConicSolver.FindPatchContainingUT(maneuverNode.Time) ?? vesselAdapter.vessel.Orbit);
@@ -120,7 +120,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             private Dictionary<Guid, GizmoData>.ValueCollection FakeGizmoData() {
                 var fakeGizmos = new Dictionary<Guid, GizmoData>();
                 foreach (var node in vesselAdapter.vessel.SimulationObject.ManeuverPlan.GetNodes()) {
-                    fakeGizmos.Add(Guid.NewGuid(), new GizmoData(node, null));
+                    fakeGizmos.Add(node.NodeID, new GizmoData(node, null));
                 }
                 return new Dictionary<Guid, GizmoData>.ValueCollection(fakeGizmos);
             }
