@@ -79,6 +79,16 @@ namespace KontrolSystem.TO2.Runtime {
             return result;
         }
 
+        public static T[] Slice<T>(T[] source, long start, long end) {
+            start = start < 0 ? 0 : start;
+            end = end < 0 || end > source.Length ? source.Length : end;
+            if (start >= end)
+                return new T[0];
+            T[] result = new T[end - start];
+            Array.Copy(source, start, result, 0, end - start);
+            return result;
+        }
+
         public static string ArrayToString<T>(T[] array) {
             StringBuilder builder = new StringBuilder("[");
 

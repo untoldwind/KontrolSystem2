@@ -73,6 +73,15 @@ namespace KontrolSystem.TO2.AST {
                         false, typeof(ArrayMethods), typeof(ArrayMethods).GetMethod("Exists"),
                         context => ("T", ElementType.UnderlyingType(context)).Yield())
                 }, {
+                    "slice",
+                    new BoundMethodInvokeFactory("Get a slice of the array", true, () => new ArrayType(ElementType),
+                        () => new List<RealizedParameter> {
+                            new RealizedParameter("start", BuiltinType.Int),
+                            new RealizedParameter("end", BuiltinType.Int, new IntDefaultValue(-1))
+                        }, false, typeof(ArrayMethods),
+                        typeof(ArrayMethods).GetMethod("Slice"),
+                        context => ("T", ElementType.UnderlyingType(context)).Yield())
+                }, {
                     "sort",
                     new BoundMethodInvokeFactory("Sort the array (if possible) and returns", true, () => new ArrayType(ElementType),
                         () => new List<RealizedParameter>(), false, typeof(ArrayMethods),
