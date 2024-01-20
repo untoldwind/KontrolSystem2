@@ -145,7 +145,7 @@ namespace KontrolSystem.TO2.AST {
         public TypeHint ArgumentHint(int argumentIdx) {
             List<RealizedParameter> p = parameters();
 
-            return context => argumentIdx >= 0 && argumentIdx < p.Count ? p[argumentIdx].type : null;
+            return context => argumentIdx >= 0 && argumentIdx < p.Count ? p[argumentIdx].type.FillGenerics(context.ModuleContext, context.InferredGenerics) : null;
         }
 
         public TO2Type DeclaredReturn => resultType();

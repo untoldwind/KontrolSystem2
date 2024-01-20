@@ -42,8 +42,16 @@ namespace KontrolSystem.TO2.AST {
             IMethodInvokeFactory method = targetType.FindMethod(context.ModuleContext, methodName);
 
             if (method != null) {
-                IMethodInvokeEmitter methodInvoker = method.Create(context,
-                    arguments.Select(arg => arg.ResultType(context)).ToList(), this);
+                IBlockContext argumentContext = context.CreateChildContext();
+                List<TO2Type> resolvedTypes = new List<TO2Type>();
+                foreach (var (arg, param) in arguments.Zip(method.DeclaredParameters, (expression, parameter) => (expression, parameter.type) )) {
+                    TO2Type type = arg.ResultType(argumentContext);
+                    if (param is GenericParameter generic) {
+                        argumentContext.InferredGenerics.TryAdd(generic.Name, type.UnderlyingType(context.ModuleContext));
+                    }
+                    resolvedTypes.Add(type);
+                }
+                IMethodInvokeEmitter methodInvoker = method.Create(argumentContext, resolvedTypes, this);
 
                 if (methodInvoker != null) return methodInvoker.ResultType;
             }

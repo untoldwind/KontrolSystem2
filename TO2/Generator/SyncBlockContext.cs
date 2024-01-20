@@ -25,6 +25,7 @@ namespace KontrolSystem.TO2.Generator {
             variables = parent.variables.ToDictionary(entry => entry.Key, entry => entry.Value);
             errors = parent.errors;
             this.innerLoop = innerLoop;
+            InferredGenerics = new Dictionary<string, RealizedType>();
         }
 
         public SyncBlockContext(ModuleContext moduleContext) {
@@ -35,6 +36,7 @@ namespace KontrolSystem.TO2.Generator {
             variables = new Dictionary<string, IBlockVariable>();
             errors = new List<StructuralError>();
             innerLoop = null;
+            InferredGenerics = new Dictionary<string, RealizedType>();
         }
 
         protected SyncBlockContext(ModuleContext moduleContext, IILEmitter il) {
@@ -45,6 +47,7 @@ namespace KontrolSystem.TO2.Generator {
             variables = new Dictionary<string, IBlockVariable>();
             errors = new List<StructuralError>();
             innerLoop = null;
+            InferredGenerics = new Dictionary<string, RealizedType>();
         }
 
         public SyncBlockContext(ModuleContext moduleContext, FunctionModifier modifier, bool isAsync, string methodName,
@@ -147,6 +150,8 @@ namespace KontrolSystem.TO2.Generator {
 
             return variable;
         }
+
+        public Dictionary<string, RealizedType> InferredGenerics { get; }
 
         public void RegisterAsyncResume(TO2Type returnType) {
         }

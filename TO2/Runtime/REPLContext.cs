@@ -76,10 +76,11 @@ namespace KontrolSystem.TO2.Runtime {
         private readonly List<StructuralError> errors;
         private readonly VariableLookup variableLookup;
 
-        public REPLBlockContext(REPLModuleContext moduleContext, VariableLookup variableLookup) {
+        public REPLBlockContext(REPLModuleContext moduleContext, VariableLookup variableLookup, List<StructuralError> errors = null) {
             this.moduleContext = moduleContext;
             this.variableLookup = variableLookup;
-            errors = new List<StructuralError>();
+            this.errors = errors ?? new List<StructuralError>();
+            InferredGenerics = new Dictionary<string, RealizedType>();
         }
 
         public ModuleContext ModuleContext => moduleContext;
@@ -95,7 +96,7 @@ namespace KontrolSystem.TO2.Runtime {
 
         public List<StructuralError> AllErrors => errors;
 
-        public IBlockContext CreateChildContext() => throw new REPLException("Child block context");
+        public IBlockContext CreateChildContext() => new REPLBlockContext(moduleContext, variableLookup, errors);
 
         public IBlockContext CreateLoopContext(LabelRef start, LabelRef end) => throw new REPLException("Loop block context");
 
@@ -112,6 +113,8 @@ namespace KontrolSystem.TO2.Runtime {
         public IBlockVariable DeclaredVariable(string name, bool isConst, RealizedType to2Type) => throw new REPLException("No declare block variables");
 
         public void RegisterAsyncResume(TO2Type returnType) => throw new REPLException("No async resume");
+
+        public Dictionary<string, RealizedType> InferredGenerics { get; }
     }
 }
 

@@ -38,5 +38,7 @@ namespace KontrolSystem.TO2.Generator {
         IBlockVariable DeclaredVariable(string name, bool isConst, RealizedType to2Type);
 
         void RegisterAsyncResume(TO2Type returnType);
+
+        Dictionary<string, RealizedType> InferredGenerics { get; }
     }
 }

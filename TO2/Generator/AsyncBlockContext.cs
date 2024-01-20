@@ -86,6 +86,7 @@ namespace KontrolSystem.TO2.Generator {
             storeState = parent.storeState;
             notReady = parent.notReady;
             resume = parent.resume;
+            InferredGenerics = new Dictionary<string, RealizedType>();
         }
 
         private AsyncBlockContext(AsyncBlockContext parent, IILEmitter il, (LabelRef start, LabelRef end)? innerLoop) {
@@ -103,6 +104,7 @@ namespace KontrolSystem.TO2.Generator {
             storeState = parent.storeState;
             notReady = parent.notReady;
             resume = parent.resume;
+            InferredGenerics = new Dictionary<string, RealizedType>();
         }
 
         public AsyncBlockContext(ModuleContext moduleContext, FunctionModifier modifier, string methodName,
@@ -127,6 +129,7 @@ namespace KontrolSystem.TO2.Generator {
             storeState = il.DefineLabel(false);
             notReady = il.DefineLabel(false);
             resume = il.DefineLabel(false);
+            InferredGenerics = new Dictionary<string, RealizedType>();
         }
 
         public ModuleContext ModuleContext => moduleContext;
@@ -223,5 +226,7 @@ namespace KontrolSystem.TO2.Generator {
 
             asyncResumes?.Add(new AsyncResume(resumeLabel, il.DefineLabel(false), futureField, futureResultVar));
         }
+
+        public Dictionary<string, RealizedType> InferredGenerics { get; }
     }
 }
