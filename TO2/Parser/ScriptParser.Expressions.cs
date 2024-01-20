@@ -149,8 +149,8 @@ namespace KontrolSystem.TO2.Parser {
             Spacing0.Then(SuffixOp).Map(op => new OperatorSuffix(op) as ISuffixOperation)
         );
 
-        private static readonly Parser<Expression> TermWithSuffixOps = Term.Fold0(SuffixOps,
-            (target, suffixOp, start, end) => suffixOp.GetExpression(target, start, end));
+        private static readonly Parser<Expression> TermWithSuffixOps = Terminated(Term.Fold0(Terminated(SuffixOps, LineComments),
+            (target, suffixOp, start, end) => suffixOp.GetExpression(target, start, end)), LineComments);
 
         private static readonly Parser<Operator> UnaryPrefixOp = Alt(
             Char('-').To(Operator.Neg),
@@ -159,7 +159,7 @@ namespace KontrolSystem.TO2.Parser {
         );
 
         private static readonly Parser<Expression> UnaryPrefixExpr = Alt(
-            Seq(UnaryPrefixOp, WhiteSpaces0.Then(TermWithSuffixOps)).Map((items, start, end) =>
+            Seq(UnaryPrefixOp, WhiteSpaces0.Then(LineComments).Then(TermWithSuffixOps)).Map((items, start, end) =>
                 new UnaryPrefix(items.Item1, items.Item2, start, end)),
             TermWithSuffixOps
         );

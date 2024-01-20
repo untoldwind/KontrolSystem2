@@ -1,0 +1,25 @@
+use { Vessel } from ksp::vessel
+
+pub struct Stage(vessel: Vessel) {
+    ship: Vessel = vessel
+}
+
+impl Stage {
+
+    fn partialFlameout(self, stage: int) -> bool = {
+        return self.ship.parts.filter(fn(p) ->  p.activation_stage == stage         // all parts in this stage
+                                            &&  p.engine_module.defined)            // which are engines
+                                .map(fn(p) ->   p.engine_module.value.has_ignited   // engine have been started
+                                            &&  p.engine_module.value.is_flameout)  // engine fuel is depleted
+                                .filter(fn(s) -> s) // s == true                    // keep only those which are flameout
+                                .length > 0                                         // if there is at least one
+    }
+    // fn partialFlameout(self, stage: int) -> bool = {
+    //     return self.ship.parts.filter(fn(p) ->  p.activation_stage == stage
+    //                                         &&  p.engine_module.defined)
+    //                             .map(fn(p) ->   p.engine_module.value.has_ignited
+    //                                         &&  p.engine_module.value.is_flameout)
+    //                             .filter(fn(s) -> s)
+    //                             .length > 0
+    // }
+}

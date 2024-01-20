@@ -25,28 +25,28 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField]
             public double Time {
                 get => maneuverNode.Time;
-                set => vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.UpdateTimeOnNode(maneuverNode, value, 
+                set => vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.UpdateTimeOnNode(maneuverNode, value,
                     FakeGizmoData());
             }
 
             [KSField]
             public double Prograde {
                 get => maneuverNode.BurnVector.z;
-                set => vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.UpdateChangeOnNode(maneuverNode, new Vector3d(0, 0, value - maneuverNode.BurnVector.z), 
+                set => vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.UpdateChangeOnNode(maneuverNode, new Vector3d(0, 0, value - maneuverNode.BurnVector.z),
                     FakeGizmoData());
             }
 
             [KSField]
             public double Normal {
                 get => maneuverNode.BurnVector.y;
-                set => vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.UpdateChangeOnNode(maneuverNode, new Vector3d(0, value - maneuverNode.BurnVector.y, 0), 
+                set => vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.UpdateChangeOnNode(maneuverNode, new Vector3d(0, value - maneuverNode.BurnVector.y, 0),
                     FakeGizmoData());
             }
 
             [KSField]
             public double RadialOut {
                 get => maneuverNode.BurnVector.x;
-                set => vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.UpdateChangeOnNode(maneuverNode, new Vector3d(value - maneuverNode.BurnVector.x, 0, 0), 
+                set => vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.UpdateChangeOnNode(maneuverNode, new Vector3d(value - maneuverNode.BurnVector.x, 0, 0),
                     FakeGizmoData());
             }
 
