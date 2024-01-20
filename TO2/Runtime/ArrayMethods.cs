@@ -60,6 +60,25 @@ namespace KontrolSystem.TO2.Runtime {
             return result;
         }
 
+        public static T[] Sort<T>(T[] array) {
+            T[] result = new T[array.Length];
+            array.CopyTo(result, 0);
+            try {
+                Array.Sort(result);
+            } catch (InvalidOperationException) {
+                // Ignore
+            }
+
+            return result;
+        }
+
+        public static U Reduce<T, U>(T[] source, U initial, Func<U, T, U> reducer) {
+            U result = initial;
+            for (int i = 0; i < source.Length; i++)
+                result = reducer(result, source[i]);
+            return result;
+        }
+
         public static string ArrayToString<T>(T[] array) {
             StringBuilder builder = new StringBuilder("[");
 

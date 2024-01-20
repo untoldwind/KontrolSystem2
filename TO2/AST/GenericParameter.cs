@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using KontrolSystem.TO2.Generator;
 using KontrolSystem.Parsing;
 
@@ -19,6 +20,6 @@ namespace KontrolSystem.TO2.AST {
             Dictionary<string, RealizedType> typeArguments) => typeArguments.Get(name) ?? this;
 
         public override IEnumerable<(string name, RealizedType type)> InferGenericArgument(ModuleContext context,
-            RealizedType concreteType) => (name, concreteType).Yield();
+            RealizedType concreteType) => concreteType != null ? (name, concreteType).Yield() : Enumerable.Empty<(string name, RealizedType concreteType)>();
     }
 }

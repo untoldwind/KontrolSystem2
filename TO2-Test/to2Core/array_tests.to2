@@ -185,3 +185,22 @@ test sync fn test_array_concat_mut() -> Unit = {
       assert_int(i + 10 * i, int_arr[2 * i + 1])
     }
 }
+
+test sync fn test_array_sort() -> Unit = {
+    let int_arr = [ 17, 11, 3, 7, 5, 13 ]
+    let str_arr = [ "bla", "abc", "zuzu", "test" ]
+
+    let sorted_int_arr = int_arr.sort()
+    let sorted_str_arr = str_arr.sort()
+    
+    assert_string("[3, 5, 7, 11, 13, 17]", sorted_int_arr.to_string())
+    assert_string("[abc, bla, test, zuzu]", sorted_str_arr.to_string())
+}
+
+test sync fn test_array_reduce() -> Unit = {
+    let int_arr = [ 17, 11, 3, 7, 5, 13 ]
+    
+    let sum = int_arr.reduce(0, fn(sum : int, item: int) -> sum + item)
+    
+    assert_int(56, sum)
+}

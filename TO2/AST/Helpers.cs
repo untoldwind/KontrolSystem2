@@ -14,12 +14,12 @@ namespace KontrolSystem.TO2.AST {
             return dictionary.TryGetValue(key, out var value) ? value : defaultValue;
         }
 
-        public static (MethodInfo genericMethod, RealizedType genericResult, List<RealizedParameter> genericParameters)
-            MakeGeneric(
-                IBlockContext context,
-                RealizedType declaredResult, List<RealizedParameter> parameters, MethodInfo methodInfo,
-                RealizedType desiredResult, IEnumerable<TO2Type> arguments,
-                IEnumerable<(string name, RealizedType type)> targetTypeArguments, Node node) {
+        public static Dictionary<string, RealizedType> InferrTypes(IBlockContext context,
+            RealizedType declaredResult, List<RealizedParameter> parameters, MethodInfo methodInfo,
+            RealizedType desiredResult, IEnumerable<TO2Type> arguments,
+            IEnumerable<(string name, RealizedType type)> targetTypeArguments, Node node) {
+
+            Dictionary<string, RealizedType> inferredDict = new Dictionary<string, RealizedType>();
             if (methodInfo.IsGenericMethod) {
                 string[] genericNames = methodInfo.GetGenericArguments().Select(t => t.Name).ToArray();
                 IEnumerable<(string name, RealizedType type)> inferred =
@@ -29,7 +29,7 @@ namespace KontrolSystem.TO2.AST {
                         parameters.Zip(arguments,
                             (parameter, argument) => parameter.type.InferGenericArgument(context.ModuleContext,
                                 argument.UnderlyingType(context.ModuleContext))).SelectMany(t => t)));
-                Dictionary<string, RealizedType> inferredDict = new Dictionary<string, RealizedType>();
+
                 foreach (var kv in inferred) {
                     if (inferredDict.ContainsKey(kv.name)) {
                         if (!inferredDict[kv.name].IsAssignableFrom(context.ModuleContext, kv.type))
@@ -43,6 +43,21 @@ namespace KontrolSystem.TO2.AST {
                         inferredDict.Add(kv.name, kv.type);
                     }
                 }
+            }
+            return inferredDict;
+        }
+
+        public static (MethodInfo genericMethod, RealizedType genericResult, List<RealizedParameter> genericParameters)
+            MakeGeneric(
+                IBlockContext context,
+                RealizedType declaredResult, List<RealizedParameter> parameters, MethodInfo methodInfo,
+                RealizedType desiredResult, IEnumerable<TO2Type> arguments,
+                IEnumerable<(string name, RealizedType type)> targetTypeArguments, Node node) {
+            if (methodInfo.IsGenericMethod) {
+                string[] genericNames = methodInfo.GetGenericArguments().Select(t => t.Name).ToArray();
+                Dictionary<string, RealizedType> inferredDict = InferrTypes(context, declaredResult, parameters,
+                    methodInfo,
+                    desiredResult, arguments, targetTypeArguments, node);
 
                 foreach (string name in genericNames)
                     if (!inferredDict.ContainsKey(name))
