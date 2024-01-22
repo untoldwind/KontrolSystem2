@@ -27,7 +27,4 @@ pub fn atmo_launch_ascent ( vessel : ksp::vessel::Vessel,
                             high_turn : float ) -> Unit
 ```
 
-Perform a rocket launch ascent from an atmosphere.
 
-Note: The rocket will not end up in a stable orbit and most likely crash if no further action
-is taken.

@@ -456,7 +456,7 @@ Calculate the cross/other product with `other` vector.
 ##### distance_to
 
 ```rust
-vec3.distance_to ( other : ksp::math::Vec3 ) -> ksp::math::Vec3
+vec3.distance_to ( other : ksp::math::Vec3 ) -> float
 ```
 
 Calculate the distance between this and `other` vector.

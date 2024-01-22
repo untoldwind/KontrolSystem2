@@ -63,7 +63,7 @@ steeringcontrol.set_heading ( degrees_from_north : float,
 
 ### SteeringController
 
-Adaptation of the steering controller in kOS.
+
 
 #### Fields
 
@@ -216,4 +216,4 @@ pub sync fn SteeringController ( vessel : ksp::vessel::Vessel,
                                  target_direction : ksp::math::GlobalDirection ) -> std::control::steering::SteeringController
 ```
 
-Adaptation of the steering controller in kOS.
+

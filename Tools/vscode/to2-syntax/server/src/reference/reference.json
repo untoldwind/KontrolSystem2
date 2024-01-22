@@ -7660,9 +7660,8 @@
                 }
               ],
               "returnType": {
-                "kind": "Standard",
-                "module": "ksp::math",
-                "name": "Vec3"
+                "kind": "Builtin",
+                "name": "float"
               }
             },
             "exclude_from": {
@@ -11692,7 +11691,7 @@
             "global_position": {
               "isAsync": false,
               "name": "global_position",
-              "description": "Get the coordinate independent position at a given universal time `ut`\n",
+              "description": "Get the coordinate independent position at a given universal time `ut`.\nNote: This takes the motion of the parent body into account.\n",
               "parameters": [
                 {
                   "name": "ut",
@@ -11709,10 +11708,30 @@
                 "name": "GlobalPosition"
               }
             },
+            "global_relative_position": {
+              "isAsync": false,
+              "name": "global_relative_position",
+              "description": "Shorthand for `orbit.global_position(ut) - orbit.reference_body.orbit.global_position(ut)`\n",
+              "parameters": [
+                {
+                  "name": "ut",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "GlobalVector"
+              }
+            },
             "global_velocity": {
               "isAsync": false,
               "name": "global_velocity",
-              "description": "Get the coordinate independent velocity at a given universal time `ut`\n",
+              "description": "Get the coordinate independent velocity at a given universal time `ut`.\nNote: This takes the motion of the parent body into account.\n",
               "parameters": [
                 {
                   "name": "ut",
@@ -34579,7 +34598,7 @@
         "atmo_launch_ascent": {
           "isAsync": false,
           "name": "atmo_launch_ascent",
-          "description": "Perform a rocket launch ascent from an atmosphere.\n\nNote: The rocket will not end up in a stable orbit and most likely crash if no further action\nis taken.",
+          "description": "",
           "parameters": [
             {
               "name": "vessel",
@@ -34636,7 +34655,7 @@
       "types": {
         "SteeringController": {
           "name": "SteeringController",
-          "description": "Adaptation of the steering controller in kOS.",
+          "description": "",
           "fields": {
             "target_direction": {
               "name": "target_direction",
@@ -35351,7 +35370,7 @@
         "SteeringController": {
           "isAsync": false,
           "name": "SteeringController",
-          "description": "Adaptation of the steering controller in kOS.",
+          "description": "",
           "parameters": [
             {
               "name": "vessel",
@@ -36986,7 +37005,7 @@
         "circularize_orbit_pe": {
           "isAsync": false,
           "name": "circularize_orbit_pe",
-          "description": "Calculate the required delta-v and time to change the given `orbit`\nto a (mostly) circular orbit at the next periapsis",
+          "description": "",
           "parameters": [
             {
               "name": "orbit",
@@ -37029,7 +37048,7 @@
         "circularize_orbit_at": {
           "isAsync": false,
           "name": "circularize_orbit_at",
-          "description": "Calculate the required delta-v to change the given `orbit`\nto a (mostly) circular orbit at a given universal time `UT`.",
+          "description": "",
           "parameters": [
             {
               "name": "orbit",
@@ -37058,7 +37077,7 @@
         "ellipticize": {
           "isAsync": false,
           "name": "ellipticize",
-          "description": "Calculate the required delta-v to change the `apoapsis` and `periapsis` of the given `orbit`\nat time `UT`.",
+          "description": "",
           "parameters": [
             {
               "name": "orbit",
@@ -37103,7 +37122,7 @@
         "change_periapsis": {
           "isAsync": false,
           "name": "change_periapsis",
-          "description": "Calculate the required delta-v to change the periapsis of an `orbit`\nto `periapsis_radius` at time `UT`",
+          "description": "",
           "parameters": [
             {
               "name": "orbit",
@@ -37149,7 +37168,7 @@
         "change_apoapsis": {
           "isAsync": false,
           "name": "change_apoapsis",
-          "description": "Calculate the required delta-v to change the apoapsis of an `orbit`\nto `apoapsis_radius` at time `UT`",
+          "description": "",
           "parameters": [
             {
               "name": "orbit",
@@ -37195,7 +37214,7 @@
         "bi_impulsive_transfer_near": {
           "isAsync": false,
           "name": "bi_impulsive_transfer_near",
-          "description": "Calculate delta-v to intercept a `target` orbit starting nearly at time `UT` with\na nearly transfer time of `TT`. `UT` and `TT` will be optimized for a minimal delta-v for\nacceleration and deacceleration.",
+          "description": "",
           "parameters": [
             {
               "name": "start",
@@ -37268,7 +37287,7 @@
         "bi_impulsive_transfer": {
           "isAsync": false,
           "name": "bi_impulsive_transfer",
-          "description": "Calculate delta-v to intercept a `target` orbit starting after `min_UT`.\nActual starting and transfer time will be optimized for a minimal delta-v for\nacceleration and deacceleration.\n\nWill result in an error if maneuver nodes cannot be created\n(e.g. because command or tracking facility has not been sufficiently upgraded)",
+          "description": "",
           "parameters": [
             {
               "name": "start",
@@ -37460,7 +37479,7 @@
         "intercept_at": {
           "isAsync": false,
           "name": "intercept_at",
-          "description": "Calculate required delta-v to intercept `target` orbit at time `target_UT` from `start` orbit at time `start_UT`.\n`offset_distance` may be used to define a desired distance to the target.",
+          "description": "",
           "parameters": [
             {
               "name": "start",
@@ -37528,7 +37547,7 @@
         "ideal_ejection": {
           "isAsync": false,
           "name": "ideal_ejection",
-          "description": "Calculate the ideal ejection from a (nearly) circular orbit around a given `body`, `radius` and `normal` vector.\nThe resulting orbit is choosen so that the vessel will have a given `exit_velocity` on the SOI radius at time `UT`.",
+          "description": "",
           "parameters": [
             {
               "name": "body",
@@ -39083,7 +39102,7 @@
         "global_ship_is_facing": {
           "isAsync": false,
           "name": "global_ship_is_facing",
-          "description": "Determine if `vessel` is facing a given direction. (Coordinate independent version)\n\n* `max_deviation_degrees` sets a limit how many degrees the angle may differ\n* `max_angular_velocity` sets a limit how much the `vessel` may still be turning",
+          "description": "",
           "parameters": [
             {
               "name": "vessel",
@@ -39128,7 +39147,7 @@
         "remove_all_nodes": {
           "isAsync": false,
           "name": "remove_all_nodes",
-          "description": "Removes all maneuvering nodes from the flight plan of a `vessel`.",
+          "description": "",
           "parameters": [
             {
               "name": "vessel",
@@ -39224,7 +39243,7 @@
         "estimate_burn_time": {
           "isAsync": false,
           "name": "estimate_burn_time",
-          "description": "Estimate the required burn time for a desired `delta_v` in vacuum.\n\n* `stage_delay` is the assumed amount of seconds required for staging\n* `throttle_limit` is a limit for the throttle to be considered",
+          "description": "",
           "parameters": [
             {
               "name": "vessel",

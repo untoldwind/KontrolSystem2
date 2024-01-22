@@ -235,7 +235,8 @@ For a hyperbolic orbit, the returned value is any number.
 orbit.global_position ( ut : float ) -> ksp::math::GlobalPosition
 ```
 
-Get the coordinate independent position at a given universal time `ut`
+Get the coordinate independent position at a given universal time `ut`.
+Note: This takes the motion of the parent body into account.
 
 
 ##### global_position_for_true_anomaly
@@ -247,13 +248,23 @@ orbit.global_position_for_true_anomaly ( trueAnomaly : float ) -> ksp::math::Glo
 Get the coordinate independent position for a given `trueAnomaly`
 
 
+##### global_relative_position
+
+```rust
+orbit.global_relative_position ( ut : float ) -> ksp::math::GlobalVector
+```
+
+Shorthand for `orbit.global_position(ut) - orbit.reference_body.orbit.global_position(ut)`
+
+
 ##### global_velocity
 
 ```rust
 orbit.global_velocity ( ut : float ) -> ksp::math::GlobalVelocity
 ```
 
-Get the coordinate independent velocity at a given universal time `ut`
+Get the coordinate independent velocity at a given universal time `ut`.
+Note: This takes the motion of the parent body into account.
 
 
 ##### horizontal
