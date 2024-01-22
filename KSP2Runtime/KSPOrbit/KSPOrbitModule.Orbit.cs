@@ -86,6 +86,9 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
                 Note: This takes the motion of the parent body into account.")]
             Position GlobalPosition(double ut);
 
+            [KSMethod(Description = @"Shorthand for `orbit.global_position(ut) - orbit.reference_body.orbit.global_position(ut)`")]
+            Vector GlobalRelativePosition(double ut);
+
             [KSMethod(Description = @"Get the coordinate independent velocity at a given universal time `ut`.
                 Note: This takes the motion of the parent body into account.")]
             VelocityAtPosition GlobalVelocity(double ut);

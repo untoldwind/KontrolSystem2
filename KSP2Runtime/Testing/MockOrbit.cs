@@ -331,6 +331,8 @@ namespace KontrolSystem.KSP.Runtime.Testing {
             return bodyPosition + new Vector(ReferenceFrame, RelativePosition(ut));
         }
 
+        public Vector GlobalRelativePosition(double ut) => new Vector(ReferenceFrame, RelativePosition(ut));
+
         public VelocityAtPosition GlobalVelocity(double ut) => new VelocityAtPosition(new Velocity(ReferenceFrame.motionFrame, GetOrbitalVelocityAtUT(ut).SwapYAndZ), GlobalPosition(ut));
 
         public Vector3d OrbitalVelocity(double ut) => GetOrbitalVelocityAtUT(ut).SwapYAndZ;

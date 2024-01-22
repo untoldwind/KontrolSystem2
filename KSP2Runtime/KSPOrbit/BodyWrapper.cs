@@ -39,7 +39,18 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
         public Vector GlobalRight => body.transform.celestialFrame.right;
 
-        [KSField] public KSPOrbitModule.IOrbit Orbit => new OrbitWrapper(context, body.Orbit);
+        [KSField]
+        public KSPOrbitModule.IOrbit Orbit {
+            get {
+                var orbit = body.Orbit;
+
+                if (orbit != null) {
+                    return new OrbitWrapper(context, orbit);
+                }
+
+                return new StaticOrbit(context, body);
+            }
+        }
 
         public bool HasAtmosphere => body.hasAtmosphere;
 

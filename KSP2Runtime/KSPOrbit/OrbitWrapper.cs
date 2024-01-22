@@ -83,9 +83,12 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             new Position(ReferenceFrame,
                 orbit.GetRelativePositionFromTrueAnomaly(trueAnomaly * DirectBindingMath.DegToRad));
 
-        public Position GlobalPosition(double ut) => new Position(ReferenceFrame, orbit.GetRelativePositionAtUTZup(ut).SwapYAndZ);
+        public Position GlobalPosition(double ut) => ReferenceBody.Orbit.GlobalPosition(ut) + GlobalRelativePosition(ut);
 
-        public VelocityAtPosition GlobalVelocity(double ut) => new VelocityAtPosition(new Velocity(ReferenceFrame.motionFrame, orbit.GetOrbitalVelocityAtUTZup(ut).SwapYAndZ), GlobalPosition(ut));
+        public Vector GlobalRelativePosition(double ut) =>
+            new Vector(ReferenceFrame, orbit.GetRelativePositionAtUTZup(ut).SwapYAndZ);
+
+        public VelocityAtPosition GlobalVelocity(double ut) => new VelocityAtPosition(new Velocity(orbit.ReferenceFrame.motionFrame, orbit.GetFrameVelAtUTZup(ut).SwapYAndZ), GlobalPosition(ut));
 
         public Vector3d OrbitalVelocity(double ut) => ReferenceFrame.ToLocalPosition(orbit.ReferenceFrame, orbit.GetOrbitalVelocityAtUTZup(ut).SwapYAndZ);
 

@@ -11,6 +11,8 @@
 * Fix handling of comments in chained method calls (#113)
 * Fix type resolution for imported constants (#107)
 * Ensure that non-global coordinates are in the celestial frame of the main body (addresses #117)
+* Breaking change: Fix take motion of parent body into account for `orbit.global_position(ut)` (#116)
+  * If you have used `orbit.global_position(ut)` before you might want to use `orbit.global_relative_position` instead
 
 ## 0.5.2 -> 0.5.2.2
 

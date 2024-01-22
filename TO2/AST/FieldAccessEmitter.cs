@@ -13,8 +13,8 @@ namespace KontrolSystem.TO2.AST {
         bool RequiresPtr { get; }
 
         bool CanStore { get; }
-        
-        bool IsAsyncStore { get;  }
+
+        bool IsAsyncStore { get; }
 
         void EmitLoad(IBlockContext context);
 
@@ -252,7 +252,7 @@ namespace KontrolSystem.TO2.AST {
             this.isAsyncStore = isAsyncStore;
             this.opCodes = opCodes;
         }
-        
+
         public BoundPropertyLikeFieldAccessFactory(string description, Func<RealizedType> fieldType, Type methodTarget,
             PropertyInfo propertyInfo, params OpCode[] opCodes) {
             if (propertyInfo == null)
@@ -277,7 +277,7 @@ namespace KontrolSystem.TO2.AST {
             setter = propertyInfo.SetMethod;
             this.isAsyncStore = isAsyncStore;
             this.opCodes = opCodes;
-        }        
+        }
         public TO2Type DeclaredType => fieldType();
 
         public string Description => description;
@@ -340,7 +340,7 @@ namespace KontrolSystem.TO2.AST {
         public bool CanStore => setter != null;
 
         public bool IsAsyncStore { get; }
-        
+
         public bool RequiresPtr =>
             methodTarget.IsValueType && (getter.CallingConvention & CallingConventions.HasThis) != 0;
 

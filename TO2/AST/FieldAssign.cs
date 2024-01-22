@@ -93,7 +93,7 @@ namespace KontrolSystem.TO2.AST {
                 ));
                 return;
             }
-            
+
             if (target is IAssignContext assignContext) {
                 if (fieldAccess.RequiresPtr && assignContext.IsConst(context)) {
                     context.AddError(new StructuralError(
@@ -210,7 +210,7 @@ namespace KontrolSystem.TO2.AST {
                     tmpResult.EmitLoad(context);
                 } else {
                     fieldAccess.EmitStore(context);
-                    
+
                     if (fieldAccess.IsAsyncStore) {
                         context.IL.Emit(OpCodes.Ldnull);
                         context.IL.EmitNew(OpCodes.Newobj,
@@ -218,7 +218,7 @@ namespace KontrolSystem.TO2.AST {
                         context.RegisterAsyncResume(BuiltinType.Unit);
                         context.IL.Emit(OpCodes.Pop);
                     }
-                    
+
                 }
             }
         }

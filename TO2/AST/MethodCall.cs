@@ -44,7 +44,7 @@ namespace KontrolSystem.TO2.AST {
             if (method != null) {
                 IBlockContext argumentContext = context.CreateChildContext();
                 List<TO2Type> resolvedTypes = new List<TO2Type>();
-                foreach (var (arg, param) in arguments.Zip(method.DeclaredParameters, (expression, parameter) => (expression, parameter.type) )) {
+                foreach (var (arg, param) in arguments.Zip(method.DeclaredParameters, (expression, parameter) => (expression, parameter.type))) {
                     TO2Type type = arg.ResultType(argumentContext);
                     if (param is GenericParameter generic) {
                         argumentContext.InferredGenerics.TryAdd(generic.Name, type.UnderlyingType(context.ModuleContext));

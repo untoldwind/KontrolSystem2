@@ -60,7 +60,7 @@ namespace KontrolSystem.TO2.AST {
                 ));
                 return BuiltinType.Unit;
             }
-            
+
             (_, RealizedType genericResult, _) = Helpers.MakeGeneric(context,
                 function.ReturnType, function.Parameters, function.RuntimeMethod,
                 typeHint?.Invoke(context), arguments.Select(e => e.ResultType(context)),
