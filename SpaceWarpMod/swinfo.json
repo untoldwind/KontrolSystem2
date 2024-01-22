@@ -4,7 +4,7 @@
   "name": "Kontrol System",
   "description": "Autopilot scripting framework",
   "source": "https://github.com/untoldwind/KontrolSystem2",
-  "version": "0.5.2.3",
+  "version": "0.5.2.4",
   "dependencies": [],
   "ksp2_version": {
     "min": "0",
