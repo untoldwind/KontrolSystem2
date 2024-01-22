@@ -10,6 +10,7 @@
 * Add `.reduce` method for array (#114): Example: `[1,2,3,4].reduce(0, fn(a, e) -> a + e) == 10`
 * Fix handling of comments in chained method calls (#113)
 * Fix type resolution for imported constants (#107)
+* Ensure that non-global coordinates are in the celestial frame of the main body (addresses #117)
 
 ## 0.5.2 -> 0.5.2.2
 

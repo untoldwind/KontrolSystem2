@@ -96,7 +96,7 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                         lineObj.layer = 27;
                         mapWidthMult = 1500 / space.Map3DScaleInv;
                     } else {
-                        var frame = KSPContext.CurrentContext.ActiveVessel.transform?.coordinateSystem;
+                        var frame = KSPContext.CurrentContext.ActiveVessel.transform?.celestialFrame;
                         points = Path.Where((x, i) => i % nStep == 0).Select(p => frame.ToLocalPosition(p)).ToArray();
                         lineObj.layer = 0;
                     }

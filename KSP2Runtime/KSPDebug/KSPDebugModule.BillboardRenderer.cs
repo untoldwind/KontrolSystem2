@@ -78,7 +78,7 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                         billboardObj.layer = 27;
                         mapWidthMult = 1500 / space.Map3DScaleInv;
                     } else {
-                        var frame = KSPContext.CurrentContext.ActiveVessel.transform?.coordinateSystem;
+                        var frame = KSPContext.CurrentContext.ActiveVessel.transform?.celestialFrame;
                         positionLocal = frame.ToLocalPosition(position);
                         billboardObj.layer = 0;
                     }

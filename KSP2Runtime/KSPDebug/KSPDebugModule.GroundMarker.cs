@@ -53,7 +53,7 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                     up = (space.TranslateSimPositionToMapPosition(position + surfaceNormal) - localPos).normalized;
                     bodyUp = (space.TranslateSimPositionToMapPosition(position + GeoCoordinates.Body.GlobalUp) - localPos).normalized;
                 } else {
-                    var frame = KSPContext.CurrentContext.ActiveVessel.transform?.coordinateSystem;
+                    var frame = KSPContext.CurrentContext.ActiveVessel.transform?.celestialFrame;
                     localPos = frame.ToLocalPosition(position);
                     up = frame.ToLocalVector(surfaceNormal);
                     bodyUp = frame.ToLocalVector(GeoCoordinates.Body.GlobalUp);

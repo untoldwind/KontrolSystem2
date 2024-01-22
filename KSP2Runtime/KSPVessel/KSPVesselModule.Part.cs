@@ -26,7 +26,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField(Description = "Get position of the part in celestial frame of the main body.")]
             public Vector3d Position =>
-                vesselAdapter.vessel.mainBody.coordinateSystem.ToLocalPosition(part.SimulationObject.Position);
+                vesselAdapter.vessel.mainBody.transform.celestialFrame.ToLocalPosition(part.SimulationObject.Position);
 
             [KSField(Description = "Get coordinate independent position of the part.")]
             public Position GlobalPosition => part.SimulationObject.Position;

@@ -190,7 +190,7 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug {
                         hatObj.layer = 27;
                         mapWidthMult = 1500 / space.Map3DScaleInv;
                     } else {
-                        var frame = KSPContext.CurrentContext.ActiveVessel.transform?.coordinateSystem;
+                        var frame = KSPContext.CurrentContext.ActiveVessel.transform?.celestialFrame;
                         startLocal = frame.ToLocalPosition(start);
                         vectorLocal = frame.ToLocalPosition(end) - startLocal;
                         lineObj.layer = 0;

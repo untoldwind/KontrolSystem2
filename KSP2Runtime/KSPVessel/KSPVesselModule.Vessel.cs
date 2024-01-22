@@ -100,7 +100,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField(Description = "Coordinate position of the vessel in the celestial frame of the main body.")]
             public Vector3d Position =>
-                vessel.mainBody.coordinateSystem.ToLocalPosition(vessel.SimulationObject.Position);
+                vessel.mainBody.transform.celestialFrame.ToLocalPosition(vessel.SimulationObject.Position);
 
             [KSField(Description = "Coordinate independent position of the vessel.")]
             public Position GlobalPosition => vessel.SimulationObject.Position;
@@ -111,17 +111,17 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField(Description = @"Orbital velocity of the vessel relative to the main body.
                 This is equivalent of expressing the `global_velocity` in the celestial frame of the main body.")]
-            public Vector3d OrbitalVelocity => vessel.mainBody.coordinateSystem.ToLocalVector(vessel.OrbitalVelocity);
+            public Vector3d OrbitalVelocity => vessel.mainBody.transform.celestialFrame.ToLocalVector(vessel.OrbitalVelocity);
 
             [KSField(Description = @"Surface velocity of the vessel relative to the main body.
                 This is equivalent of expressing the `global_velocity` in the body frame of the main body.")]
-            public Vector3d SurfaceVelocity => vessel.mainBody.coordinateSystem.ToLocalVector(vessel.SurfaceVelocity);
+            public Vector3d SurfaceVelocity => vessel.mainBody.transform.celestialFrame.ToLocalVector(vessel.SurfaceVelocity);
 
             [KSField(Description = "Total mass of the vessel.")]
             public double Mass => vessel.totalMass;
 
             [KSField("CoM", Description = "Position of the center of mass of the vessel.")]
-            public Vector3d CoM => vessel.mainBody.coordinateSystem.ToLocalPosition(vessel.CenterOfMass);
+            public Vector3d CoM => vessel.mainBody.transform.celestialFrame.ToLocalPosition(vessel.CenterOfMass);
 
             [KSField(Description = "Coordinate independent position of the center of mass.")]
             public Position GlobalCenterOfMass => vessel.CenterOfMass;
@@ -197,16 +197,16 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 new KSPOrbitModule.GeoCoordinates(MainBody, vessel.Latitude, vessel.Longitude);
 
             [KSField(Description = "Get the horizon up vector in the celestial frame of the main body.")]
-            public Vector3d Up => vessel.mainBody.coordinateSystem
+            public Vector3d Up => vessel.mainBody.transform.celestialFrame
                 .ToLocalVector(vessel.SimulationObject.Telemetry.HorizonUp);
 
             [KSField(Description = "Get the horizon north vector in the celestial frame of the main body.")]
             public Vector3d North =>
-                vessel.mainBody.coordinateSystem.ToLocalVector(vessel.SimulationObject.Telemetry.HorizonNorth);
+                vessel.mainBody.transform.celestialFrame.ToLocalVector(vessel.SimulationObject.Telemetry.HorizonNorth);
 
             [KSField(Description = "Get the horizon east vector in the celestial frame of the main body.")]
             public Vector3d East =>
-                vessel.mainBody.coordinateSystem.ToLocalVector(vessel.SimulationObject.Telemetry.HorizonEast);
+                vessel.mainBody.transform.celestialFrame.ToLocalVector(vessel.SimulationObject.Telemetry.HorizonEast);
 
             [KSField(Description = "Get the coordinate system independent horizon up vector.")]
             public Vector GlobalUp => vessel.SimulationObject.Telemetry.HorizonUp;
@@ -231,7 +231,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSMethod(Description = @"Calculate a direction in the celestial frame of the main body based on
                 heading, pitch an roll relative to the horizon.")]
             public Direction HeadingDirection(double degreesFromNorth, double pitchAboveHorizon, double roll) {
-                var q = vessel.mainBody.coordinateSystem.ToLocalRotation(HorizonFrame,
+                var q = vessel.mainBody.transform.celestialFrame.ToLocalRotation(HorizonFrame,
                     QuaternionD.Euler(-pitchAboveHorizon, degreesFromNorth, roll));
                 return new Direction(q);
             }
@@ -239,7 +239,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField(Description = "Get the current facing direction of the vessel in the celestial frame of its main body.")]
             public Direction Facing {
                 get {
-                    QuaternionD vesselRotation = vessel.mainBody.coordinateSystem
+                    QuaternionD vesselRotation = vessel.mainBody.transform.celestialFrame
                         .ToLocalRotation(vessel.ControlTransform.bodyFrame, QuaternionD.identity);
                     QuaternionD vesselFacing = QuaternionD.Inverse(QuaternionD.Euler(90, 0, 0) *
                                                                    QuaternionD.Inverse(vesselRotation));
@@ -258,7 +258,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             public RotationWrapper GlobalFacing {
                 get {
                     var rotation = new Rotation(vessel.ControlTransform.bodyFrame, ControlFacingRotation);
-                    rotation.Reframe(vessel.mainBody.coordinateSystem);
+                    rotation.Reframe(vessel.mainBody.transform.celestialFrame);
                     return new RotationWrapper(rotation);
                 }
             }

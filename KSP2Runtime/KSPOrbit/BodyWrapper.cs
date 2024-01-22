@@ -23,7 +23,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
         public double RotationPeriod => body.rotationPeriod;
 
-        public Vector3d Position => body.coordinateSystem.ToLocalPosition(body.Position);
+        public Vector3d Position => body.transform.celestialFrame.ToLocalPosition(body.Position);
 
         public Vector3d AngularVelocity => body.celestialMotionFrame.ToLocalAngularVelocity(body.AngularVelocity);
 
@@ -59,7 +59,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
         public double TerrainHeight(double lat, double lon) => body.SurfaceProvider.GetTerrainAltitudeFromCenter(lat, lon) - body.radius;
 
         public Vector3d SurfacePosition(double latitude, double longitude, double altitude) =>
-            body.GetWorldSurfacePosition(latitude, longitude, altitude, body.coordinateSystem);
+            body.GetWorldSurfacePosition(latitude, longitude, altitude, body.transform.celestialFrame);
 
         public Position GlobalSurfacePosition(double latitude, double longitude, double altitude) => new Position(body.transform.celestialFrame, body.GetSurfaceNVector(latitude, longitude) * (body.radius + altitude));
 

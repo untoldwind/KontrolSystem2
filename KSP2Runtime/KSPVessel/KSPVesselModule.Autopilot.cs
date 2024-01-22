@@ -34,10 +34,10 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             public Vector3d TargetOrientation {
                 get {
                     var sas = vesselAdapter.vessel.Autopilot?.SAS;
-                    return sas != null ? vesselAdapter.vessel.mainBody.coordinateSystem
+                    return sas != null ? vesselAdapter.vessel.mainBody.transform.celestialFrame
                         .ToLocalVector(sas.ReferenceFrame, sas.TargetOrientation) : vesselAdapter.Facing.Vector;
                 }
-                set => vesselAdapter.vessel.Autopilot?.SAS?.SetTargetOrientation(new Vector(vesselAdapter.vessel.mainBody.coordinateSystem, value), false);
+                set => vesselAdapter.vessel.Autopilot?.SAS?.SetTargetOrientation(new Vector(vesselAdapter.vessel.mainBody.transform.celestialFrame, value), false);
             }
 
             [KSField]
@@ -53,10 +53,10 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             public Direction LockDirection {
                 get {
                     var sas = vesselAdapter.vessel.Autopilot?.SAS;
-                    return sas != null ? new Direction(vesselAdapter.vessel.mainBody.coordinateSystem
+                    return sas != null ? new Direction(vesselAdapter.vessel.mainBody.transform.celestialFrame
                         .ToLocalRotation(sas.ReferenceFrame, sas.LockedRotation * ControlFacingRotation)) : vesselAdapter.Facing;
                 }
-                set => vesselAdapter.vessel.Autopilot?.SAS?.LockRotation(new Rotation(vesselAdapter.vessel.mainBody.coordinateSystem, value.Rotation * QuaternionD.Inverse(ControlFacingRotation)));
+                set => vesselAdapter.vessel.Autopilot?.SAS?.LockRotation(new Rotation(vesselAdapter.vessel.mainBody.transform.celestialFrame, value.Rotation * QuaternionD.Inverse(ControlFacingRotation)));
             }
 
             [KSField]
@@ -65,7 +65,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                     var sas = vesselAdapter.vessel.Autopilot?.SAS;
                     return sas != null ? new RotationWrapper(new Rotation(sas.ReferenceFrame, sas.LockedRotation * ControlFacingRotation)) : vesselAdapter.GlobalFacing;
                 }
-                set => vesselAdapter.vessel.Autopilot?.SAS?.LockRotation(new Rotation(vesselAdapter.vessel.mainBody.coordinateSystem, vesselAdapter.vessel.mainBody.coordinateSystem.ToLocalRotation(value.Rotation) * QuaternionD.Inverse(ControlFacingRotation)));
+                set => vesselAdapter.vessel.Autopilot?.SAS?.LockRotation(new Rotation(vesselAdapter.vessel.mainBody.transform.celestialFrame, vesselAdapter.vessel.mainBody.transform.celestialFrame.ToLocalRotation(value.Rotation) * QuaternionD.Inverse(ControlFacingRotation)));
             }
         }
     }
