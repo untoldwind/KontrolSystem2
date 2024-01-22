@@ -1,5 +1,15 @@
 # Changes
 
+## 0.5.2.2 ->
+
+* Fix/tweak update of maneuver node data (#111)
+* Add `.sort` method for array (#114). Example: `[10,6,5].sort() == [5,6,10]`
+* Add `.slice` method for array (#114). Examples:
+    * `[00, 11, 22, 33, 44].slice(2) == [22,33,44]`
+    * `[00, 11, 22, 33, 44].slice(1, 3) == [11,22]`
+* Add `.reduce` method for array (#114): Example: `[1,2,3,4].reduce(0, fn(a, e) -> a + e) == 10`
+* Fix handling of comments in chained method calls (#113)
+
 ## 0.5.2 -> 0.5.2.2
 
 * Fix update for maneuver node data in map-view (#111)
