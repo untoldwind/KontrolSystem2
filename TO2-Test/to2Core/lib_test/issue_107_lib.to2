@@ -1,0 +1,22 @@
+pub type FancyConst = int
+
+pub const FancyConstHolder: (Foo: FancyConst, Bar: FancyConst) = (
+    Foo: 0,
+    Bar: 1
+)
+
+pub fn foobar(p: FancyConst) -> Option<bool> = {
+    if (p == FancyConstHolder.Foo)
+        return Some(true)
+    else if (p == FancyConstHolder.Bar)
+        return Some(false)
+    return None()
+}
+
+pub type ResultType = (
+    a: int
+)
+
+pub fn foo() -> ResultType = {
+    (a: 123)
+}

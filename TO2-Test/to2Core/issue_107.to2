@@ -1,0 +1,10 @@
+use {FancyConstHolder, foobar, foo} from lib_test::issue_107_lib
+
+fn fancyFunc() -> Unit = {
+    foobar(FancyConstHolder.Foo)
+}
+
+fn bar() -> Unit = {
+    let a = foo()
+    let b = a.a
+}
