@@ -110,7 +110,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                 }, {
                     "distance_to",
                     new BoundMethodInvokeFactory("Calculate the distance between this and `other` vector.", true,
-                        () => Vector3Type,
+                        () => BuiltinType.Float, 
                         () => new List<RealizedParameter> {new RealizedParameter("other", Vector3Type)}, false,
                         typeof(Vector3d), typeof(Vector3d).GetMethod("Distance"))
                 }, {
