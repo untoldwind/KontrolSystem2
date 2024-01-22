@@ -82,10 +82,12 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             [KSMethod(Description = "Get the relative orbital velocity at a given universal time `ut`")]
             Vector3d OrbitalVelocity(double ut);
 
-            [KSMethod(Description = "Get the coordinate independent position at a given universal time `ut`")]
+            [KSMethod(Description = @"Get the coordinate independent position at a given universal time `ut`. 
+                Note: This takes the motion of the parent body into account.")]
             Position GlobalPosition(double ut);
 
-            [KSMethod(Description = "Get the coordinate independent velocity at a given universal time `ut`")]
+            [KSMethod(Description = @"Get the coordinate independent velocity at a given universal time `ut`.
+                Note: This takes the motion of the parent body into account.")]
             VelocityAtPosition GlobalVelocity(double ut);
 
             [KSMethod(Description = "Get relative position at a given universal time `ut`")]
