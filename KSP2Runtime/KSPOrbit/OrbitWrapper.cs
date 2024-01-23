@@ -72,12 +72,12 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
         public ITransformFrame ReferenceFrame => orbit.ReferenceFrame;
 
-        public Vector3d OrbitNormal => ReferenceFrame.ToLocalPosition(orbit.ReferenceFrame, -orbit.GetRelativeOrbitNormal().SwapYAndZ);
+        public Vector3d OrbitNormal => -orbit.GetRelativeOrbitNormal().SwapYAndZ;
 
-        public Vector3d RelativePosition(double ut) => ReferenceFrame.ToLocalPosition(orbit.ReferenceFrame, orbit.GetRelativePositionAtUTZup(ut).SwapYAndZ);
+        public Vector3d RelativePosition(double ut) => orbit.GetRelativePositionAtUTZup(ut).SwapYAndZ;
 
         public Vector3d RelativePositionForTrueAnomaly(double trueAnomaly) =>
-            ReferenceFrame.ToLocalPosition(orbit.ReferenceFrame, orbit.GetRelativePositionFromTrueAnomaly(trueAnomaly * DirectBindingMath.DegToRad));
+             orbit.GetRelativePositionFromTrueAnomaly(trueAnomaly * DirectBindingMath.DegToRad);
 
         public Position GlobalPositionForTrueAnomaly(double trueAnomaly) =>
             new Position(ReferenceFrame,
@@ -88,13 +88,13 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
         public Vector GlobalRelativePosition(double ut) =>
             new Vector(ReferenceFrame, orbit.GetRelativePositionAtUTZup(ut).SwapYAndZ);
 
-        public VelocityAtPosition GlobalVelocity(double ut) => new VelocityAtPosition(new Velocity(orbit.ReferenceFrame.motionFrame, orbit.GetFrameVelAtUTZup(ut).SwapYAndZ), GlobalPosition(ut));
+        public VelocityAtPosition GlobalVelocity(double ut) => new VelocityAtPosition(new Velocity(context.Game.UniverseModel.GalacticOrigin.celestialFrame.motionFrame, orbit.GetFrameVelAtUTZup(ut).SwapYAndZ), GlobalPosition(ut));
 
-        public Vector3d OrbitalVelocity(double ut) => ReferenceFrame.ToLocalPosition(orbit.ReferenceFrame, orbit.GetOrbitalVelocityAtUTZup(ut).SwapYAndZ);
+        public Vector3d OrbitalVelocity(double ut) => orbit.GetOrbitalVelocityAtUTZup(ut).SwapYAndZ;
 
         public Vector3d Prograde(double ut) => OrbitalVelocity(ut).normalized;
 
-        public Vector3d NormalPlus(double ut) => ReferenceFrame.ToLocalPosition(orbit.ReferenceFrame, orbit.GetRelativeOrbitNormal().SwapYAndZ.normalized);
+        public Vector3d NormalPlus(double ut) => orbit.GetRelativeOrbitNormal().SwapYAndZ.normalized;
 
         public Vector3d RadialPlus(double ut) => Vector3d.Exclude(Prograde(ut), Up(ut)).normalized;
 
