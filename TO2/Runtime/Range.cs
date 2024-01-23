@@ -22,5 +22,29 @@ namespace KontrolSystem.TO2.Runtime {
 
             return result;
         }
+
+        public long[] Reverse() {
+            if (to < from) return new long[0];
+
+            long[] result = new long[to - from];
+
+            for (long i = 0; i < to - from; i++) {
+                result[i] = to - i - 1;
+            }
+
+            return result;
+        }
+
+        public U Reduce< U>(U initial, Func<U, long, U> reducer) {
+            U result = initial;
+            for (long i = from; i < to; i++) {
+                result = reducer(result, i);
+            }
+            return result;
+        }
+        
+        public string RangeToString() {
+            return $"{from}..{to}";
+        }
     }
 }

@@ -19,7 +19,30 @@ namespace KontrolSystem.TO2.AST {
                                 new FunctionType(false, new List<TO2Type> {BuiltinType.Int}, new GenericParameter("T")))
                         },
                         false, typeof(Range), typeof(Range).GetMethod("Map"))
-                }
+                },
+                {
+                    "reduce",
+                    new BoundMethodInvokeFactory("Reduce range by an operation", true, () => new GenericParameter("U"),
+                        () => new List<RealizedParameter> {
+                            new RealizedParameter("initial", new GenericParameter("U")),
+                            new RealizedParameter("reducer", new FunctionType(false, new List<TO2Type> {
+                                new GenericParameter("U"),
+                                BuiltinType.Int
+                            }, new GenericParameter("U")))
+                        }, false, typeof(Range),
+                        typeof(Range).GetMethod("Reduce"))
+                },
+                {
+                    "reverse", new BoundMethodInvokeFactory("Reverse order", true, 
+                        () => new ArrayType(BuiltinType.Int),
+                        () => new List<RealizedParameter>(),
+                        false, typeof(Range), typeof(Range).GetMethod("Reverse"))
+                }, {
+                    "to_string", new BoundMethodInvokeFactory("Get string representation of the range", true,
+                        () => BuiltinType.String,
+                        () => new List<RealizedParameter>(),
+                        false, typeof(Range), typeof(Range).GetMethod("RangeToString"))
+                },
             };
             DeclaredFields = new Dictionary<string, IFieldAccessFactory> {
                 {
