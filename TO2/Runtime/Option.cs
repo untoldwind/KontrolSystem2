@@ -34,5 +34,7 @@ namespace KontrolSystem.TO2.Runtime {
         public static Option<T> Some<T>(T value) => new Option<T>(value);
 
         public static Option<T> None<T>() => new Option<T>();
+
+        public static Option<T> OfNullable<T>(T value) => value != null ? new Option<T>(value) : new Option<T>();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using KontrolSystem.KSP.Runtime.KSPMath;
 using KontrolSystem.KSP.Runtime.KSPVessel;
 using KontrolSystem.TO2.Binding;
+using KontrolSystem.TO2.Runtime;
 using KSP.Sim;
 
 namespace KontrolSystem.KSP.Runtime.KSPOrbit {
@@ -10,6 +11,12 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             [KSField(Description = "Name of the celestial body.")]
             new string Name { get; }
 
+            [KSField(Description = "Get the celestial body this celestial body orbits if it exists (aka the parent body).")]
+            Option<IBody> ParentBody { get; }
+            
+            [KSField(Description = "Get all celestial bodies in orbit around this body (aka child bodies).")]
+            IBody[] OrbitingBodies { get; }
+            
             [KSField(Description = "Standard gravitation parameter of the body.")]
             double GravParameter { get; }
 

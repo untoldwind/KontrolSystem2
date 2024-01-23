@@ -4,6 +4,7 @@ using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
 using KSP.Sim;
 using KSP.Sim.impl;
+using UniLinq;
 
 namespace KontrolSystem.KSP.Runtime.KSPOrbit {
     public class BodyWrapper : KSPOrbitModule.IBody, KSPVesselModule.IKSPTargetable {
@@ -17,6 +18,13 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
 
         public string Name => body.Name;
 
+        public Option<KSPOrbitModule.IBody> ParentBody => Option.OfNullable(body.referenceBody).Map<KSPOrbitModule.IBody>(
+            (parent) => new BodyWrapper(context, parent)
+        );
+
+        public KSPOrbitModule.IBody[] OrbitingBodies =>
+            body.orbitingBodies.Select(child => new BodyWrapper(context, child)).ToArray<KSPOrbitModule.IBody>();
+        
         public double GravParameter => body.gravParameter;
 
         public double SoiRadius => body.sphereOfInfluence;

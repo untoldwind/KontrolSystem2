@@ -1,6 +1,10 @@
 # Changes
 
-## 0.5.2.2 ->
+## 0.5.2.4 ->
+
+* Add `body.parent_body` and `body.orbiting_bodies` fields
+
+## 0.5.2.2 -> 0.5.2.4
 
 * Fix/tweak update of maneuver node data (#111)
 * Add `.sort` method for array (#114). Example: `[10,6,5].sort() == [5,6,10]`

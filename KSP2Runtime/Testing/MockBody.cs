@@ -107,6 +107,10 @@ namespace KontrolSystem.KSP.Runtime.Testing {
 
         public string Name => name;
 
+        public Option<KSPOrbitModule.IBody> ParentBody => Option.OfNullable<KSPOrbitModule.IBody>(parent);
+
+        public KSPOrbitModule.IBody[] OrbitingBodies => Array.Empty<KSPOrbitModule.IBody>();
+        
         public double GravParameter => mu;
 
         public double SoiRadius => soiRadius;
