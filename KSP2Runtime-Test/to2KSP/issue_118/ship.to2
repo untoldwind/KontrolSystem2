@@ -1,0 +1,10 @@
+use { Vessel } from ksp::vessel
+use { Stage } from issue_118::stage
+
+pub struct Ship(vessel: Vessel) {
+    ship: Vessel = vessel
+    stage: Stage[] = (0..vessel.staging.total_count)
+        .map(fn(s) -> Stage(vessel, s))
+}
+
+impl Ship {}

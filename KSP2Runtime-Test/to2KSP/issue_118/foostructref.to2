@@ -1,0 +1,10 @@
+use { Vessel } from ksp::vessel
+use { Barstructref } from issue_118::barstructref
+
+pub struct Foostructref(vessel: Vessel) {
+    ship: Vessel = vessel
+    stage: Barstructref[] = (0..vessel.staging.total_count)
+        .map(fn(s) -> Barstructref(vessel, s))
+}
+
+impl Foostructref {}

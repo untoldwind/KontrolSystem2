@@ -5,6 +5,7 @@
 * Add `body.parent_body` and `body.orbiting_bodies` fields
 * Add `reduce` and `reverse` method to ranges (#114)
 * Fix `orbit.global_velocity` to use correct frame of reference (#116)
+* Fix internal type comparison/generation of structs (#118)
 
 ## 0.5.2.2 -> 0.5.2.4
 

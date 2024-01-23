@@ -1,0 +1,10 @@
+use { Vessel, Part } from ksp::vessel
+
+pub struct Stage(vessel : Vessel, stage: int) {
+    ship : Vessel = vessel
+    stage : int = stage
+    engines: Part[] = vessel.parts
+        .filter(fn(p) -> p.activation_stage == stage && p.engine_module.defined)
+}
+
+impl Stage {}

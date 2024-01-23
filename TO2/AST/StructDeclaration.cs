@@ -151,7 +151,11 @@ namespace KontrolSystem.TO2.AST {
 
         public override RealizedType UnderlyingType(ModuleContext context) => realizedType;
 
-        public override Type GeneratedType(ModuleContext context) => realizedType.GeneratedType(context);
+        public override Type GeneratedType(ModuleContext context) {
+            EnsureFields();
+            CreateStructType();
+            return realizedType.GeneratedType(context);   
+        }
 
         public override IMethodInvokeFactory FindMethod(ModuleContext context, string methodName) {
             EnsureFields();
