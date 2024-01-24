@@ -1,6 +1,6 @@
 # Changes
 
-## 0.5.2.4 ->
+## 0.5.2.4 -> 0.5.2.5
 
 * Add `body.parent_body` and `body.orbiting_bodies` fields
 * Add `reduce` and `reverse` method to ranges (#114)
