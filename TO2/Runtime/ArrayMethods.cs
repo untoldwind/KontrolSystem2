@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Text;
 using System.Linq;
 
@@ -68,6 +69,22 @@ namespace KontrolSystem.TO2.Runtime {
             } catch (InvalidOperationException) {
                 // Ignore
             }
+
+            return result;
+        }
+
+        public static T[] SortBy<T, U>(T[] array, Func<T, U> value) {
+            try {
+                return array.OrderBy(value).ToArray();
+            } catch (InvalidOperationException) {
+                return array;
+            }
+        }
+
+        public static T[] SortWith<T>(T[] array, Func<T, T, long> comparer) {
+            T[] result = new T[array.Length];
+            array.CopyTo(result, 0);
+            Array.Sort(result, (a, b) => (int)comparer(a, b));
 
             return result;
         }

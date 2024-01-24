@@ -83,9 +83,29 @@ namespace KontrolSystem.TO2.AST {
                         context => ("T", ElementType.UnderlyingType(context)).Yield())
                 }, {
                     "sort",
-                    new BoundMethodInvokeFactory("Sort the array (if possible) and returns", true, () => new ArrayType(ElementType),
+                    new BoundMethodInvokeFactory("Sort the array (if possible) and returns new sorted array", true, () => new ArrayType(ElementType),
                         () => new List<RealizedParameter>(), false, typeof(ArrayMethods),
                         typeof(ArrayMethods).GetMethod("Sort"),
+                        context => ("T", ElementType.UnderlyingType(context)).Yield())
+                }, {
+                    "sort_by",
+                    new BoundMethodInvokeFactory("Sort the array by value extracted from items. Sort value can be other number or string",
+                        true, () => new ArrayType(ElementType),
+                        () => new List<RealizedParameter>() {
+                            new RealizedParameter("value",
+                                new FunctionType(false, new List<TO2Type> {ElementType}, new GenericParameter("U")))
+                        }, false, typeof(ArrayMethods),
+                        typeof(ArrayMethods).GetMethod("SortBy"),
+                        context => ("T", ElementType.UnderlyingType(context)).Yield())
+                }, {
+                    "sort_with",
+                    new BoundMethodInvokeFactory("Sort the array with explicit comparator. Comparator should return -1 for less, 0 for equal and 1 for greater",
+                        true, () => new ArrayType(ElementType),
+                        () => new List<RealizedParameter>() {
+                            new RealizedParameter("comarator",
+                                new FunctionType(false, new List<TO2Type> {ElementType, ElementType}, BuiltinType.Int))
+                        }, false, typeof(ArrayMethods),
+                        typeof(ArrayMethods).GetMethod("SortWith"),
                         context => ("T", ElementType.UnderlyingType(context)).Yield())
                 }, {
                     "reduce",
