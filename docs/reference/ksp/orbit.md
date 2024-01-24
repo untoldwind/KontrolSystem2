@@ -26,6 +26,8 @@ grav_parameter | float | R/O | Standard gravitation parameter of the body.
 has_atmosphere | bool | R/O | `true` if the celestial body has an atmosphere to deal with. 
 name | string | R/O | Name of the celestial body. 
 orbit | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit) | R/O | The orbit of the celestial body itself (around the parent body) 
+orbiting_bodies | [ksp::orbit::Body](/reference/ksp/orbit.md#body)[] | R/O | Get all celestial bodies in orbit around this body (aka child bodies). 
+parent_body | Option&lt;[ksp::orbit::Body](/reference/ksp/orbit.md#body)> | R/O | Get the celestial body this celestial body orbits if it exists (aka the parent body). 
 position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | The current position of the body 
 radius | float | R/O | Radius of the body at sea level 
 right | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Right vector of the body in its celestial frame 

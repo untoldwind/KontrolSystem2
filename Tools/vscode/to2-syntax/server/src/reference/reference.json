@@ -1206,6 +1206,72 @@
               }
             ]
           }
+        },
+        "reduce": {
+          "isAsync": false,
+          "name": "reduce",
+          "description": "Reduce range by an operation",
+          "parameters": [
+            {
+              "name": "initial",
+              "type": {
+                "kind": "Generic",
+                "name": "U"
+              },
+              "hasDefault": false
+            },
+            {
+              "name": "reducer",
+              "type": {
+                "kind": "Function",
+                "parameters": [
+                  {
+                    "kind": "Generic",
+                    "name": "U"
+                  },
+                  {
+                    "kind": "Builtin",
+                    "name": "int"
+                  }
+                ],
+                "returnType": {
+                  "kind": "Generic",
+                  "name": "U"
+                },
+                "isAsync": false
+              },
+              "hasDefault": false
+            }
+          ],
+          "returnType": {
+            "kind": "Generic",
+            "name": "U"
+          }
+        },
+        "reverse": {
+          "isAsync": false,
+          "name": "reverse",
+          "description": "Reverse order",
+          "parameters": [],
+          "returnType": {
+            "kind": "Array",
+            "parameters": [
+              {
+                "kind": "Builtin",
+                "name": "int"
+              }
+            ]
+          }
+        },
+        "to_string": {
+          "isAsync": false,
+          "name": "to_string",
+          "description": "Get string representation of the range",
+          "parameters": [],
+          "returnType": {
+            "kind": "Builtin",
+            "name": "string"
+          }
         }
       },
       "assignableFromAny": false,
@@ -10897,6 +10963,36 @@
               "type": {
                 "kind": "Builtin",
                 "name": "string"
+              }
+            },
+            "parent_body": {
+              "name": "parent_body",
+              "description": "Get the celestial body this celestial body orbits if it exists (aka the parent body).\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::orbit",
+                    "name": "Body"
+                  }
+                ]
+              }
+            },
+            "orbiting_bodies": {
+              "name": "orbiting_bodies",
+              "description": "Get all celestial bodies in orbit around this body (aka child bodies).\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::orbit",
+                    "name": "Body"
+                  }
+                ]
               }
             },
             "grav_parameter": {
