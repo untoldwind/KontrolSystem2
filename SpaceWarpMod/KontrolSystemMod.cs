@@ -54,6 +54,17 @@ namespace KontrolSystem.SpaceWarpMod {
                         moduleManagerWindow = null;
                     }
                 });
+
+            // VAB Button
+            Appbar.RegisterOABAppButton("Kontrol System 2", "BTN-KontrolSystem-VAB", AssetManager.GetAsset<Texture2D>($"{SpaceWarpMetadata.ModID}/images/icon.png"),
+                toggle => {
+                    if (toggle) {
+                        moduleManagerWindow = uiWindows.OpenModuleManager(() => GameObject.Find("BTN-KontrolSystem")?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(false));
+                    } else {
+                        moduleManagerWindow?.Close();
+                        moduleManagerWindow = null;
+                    }
+                });
         }
 
         void Update() {
