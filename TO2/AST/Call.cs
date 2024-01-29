@@ -79,6 +79,9 @@ namespace KontrolSystem.TO2.AST {
             if (function == null || !function.IsAsync || !context.IsAsync) return;
 
             EmitCodeFunction(context, false);
+            
+            if (context.HasErrors) return;
+            
             preparedResult = context.DeclareHiddenLocal(function.ReturnType.GeneratedType(context.ModuleContext));
             preparedResult.EmitStore(context);
         }

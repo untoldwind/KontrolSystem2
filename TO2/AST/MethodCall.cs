@@ -204,6 +204,8 @@ namespace KontrolSystem.TO2.AST {
                 argument.Prepare(context);
             }
 
+            if (context.HasErrors) return;
+            
             if (methodInvoker.RequiresPtr)
                 target.EmitPtr(context);
             else

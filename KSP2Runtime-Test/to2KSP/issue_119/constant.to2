@@ -1,0 +1,9 @@
+pub type ThrustSituationConst = int
+
+pub const ThrustSituation: (Current: ThrustSituationConst, CurrentAsOn: ThrustSituationConst, Max_Vac: ThrustSituationConst, Max_Atm: ThrustSituationConst, Min: ThrustSituationConst) = (
+    Current: 0,
+    CurrentAsOn: 1,
+    Max_Vac: 2,
+    Max_Atm: 3,
+    Min: 4
+)

@@ -1,5 +1,11 @@
 # Changes
 
+## 0.5.2.5 -> 
+
+* Improve error handling on missing imports (#119)
+* Add button to VAB (#121)
+  * Note: Most binding are still untested for VAB
+
 ## 0.5.2.4 -> 0.5.2.5
 
 * Add `body.parent_body` and `body.orbiting_bodies` fields

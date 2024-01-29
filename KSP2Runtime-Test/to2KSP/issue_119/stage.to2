@@ -1,0 +1,7 @@
+use { Vessel, Part } from ksp::vessel
+use { ThrustSituation, ThrustSituationConst } from issue_119::constant
+
+pub struct Stage(vessel : Vessel, stage: int) { }
+impl Stage {
+    fn thrust(self, context: ThrustSituationConst = ThrustSituation.Current) -> float = { return 54.8493 }
+}

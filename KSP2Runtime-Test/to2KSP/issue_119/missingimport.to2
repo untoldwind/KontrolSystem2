@@ -1,0 +1,11 @@
+use { CONSOLE } from ksp::console
+use { Vessel } from ksp::vessel
+
+use { Stage } from issue_119::stage
+use { ThrustSituation } from issue_119::constant
+
+pub fn engineering_debug(vessel : Vessel) -> Unit = {
+    CONSOLE.print_line("stage thrust param      : " + engineeringScalar(Stage(vessel, 3).thrust(ThrustSituation.Max_Atm), 3) + "N")
+}
+
+pub fn engineeringScalar(value: float, significantDigit: int = 3) -> string = { return "whatever" }
