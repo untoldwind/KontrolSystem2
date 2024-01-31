@@ -1047,6 +1047,111 @@
             "kind": "Builtin",
             "name": "string"
           }
+        },
+        "index_of": {
+          "isAsync": false,
+          "name": "index_of",
+          "description": "Find index of a sub string, will return -1 if not found",
+          "parameters": [
+            {
+              "name": "other",
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              },
+              "hasDefault": false
+            },
+            {
+              "name": "startIndex",
+              "type": {
+                "kind": "Builtin",
+                "name": "int"
+              },
+              "hasDefault": false
+            }
+          ],
+          "returnType": {
+            "kind": "Builtin",
+            "name": "int"
+          }
+        },
+        "slice": {
+          "isAsync": false,
+          "name": "slice",
+          "description": "Get a sub string/slice for the string defined by start and end index",
+          "parameters": [
+            {
+              "name": "startIndex",
+              "type": {
+                "kind": "Builtin",
+                "name": "int"
+              },
+              "hasDefault": false
+            },
+            {
+              "name": "endIndex",
+              "type": {
+                "kind": "Builtin",
+                "name": "int"
+              },
+              "hasDefault": false
+            }
+          ],
+          "returnType": {
+            "kind": "Builtin",
+            "name": "string"
+          }
+        },
+        "replace": {
+          "isAsync": false,
+          "name": "replace",
+          "description": "Replace sub string with another sub string",
+          "parameters": [
+            {
+              "name": "oldString",
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              },
+              "hasDefault": false
+            },
+            {
+              "name": "newString",
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              },
+              "hasDefault": false
+            }
+          ],
+          "returnType": {
+            "kind": "Builtin",
+            "name": "string"
+          }
+        },
+        "split": {
+          "isAsync": false,
+          "name": "split",
+          "description": "Split string into substrings by separator",
+          "parameters": [
+            {
+              "name": "separator",
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              },
+              "hasDefault": false
+            }
+          ],
+          "returnType": {
+            "kind": "Array",
+            "parameters": [
+              {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            ]
+          }
         }
       },
       "suffixOperators": {

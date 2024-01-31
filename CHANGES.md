@@ -1,6 +1,6 @@
 # Changes
 
-## 0.5.2.5 -> 
+## 0.5.2.5 -> 0.5.2.6
 
 * Improve error handling on missing imports (#119)
 * Add button to VAB (#121)
