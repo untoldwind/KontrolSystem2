@@ -117,11 +117,28 @@ namespace KontrolSystem.TO2.AST {
                         new BoundMethodInvokeFactory("Get a sub string/slice for the string defined by start and end index", true,
                             () => String, 
                             () => new List<RealizedParameter> {
-                                new RealizedParameter("startIndex", Int, new IntDefaultValue(0)),
+                                new RealizedParameter("startIndex", Int),
                                 new RealizedParameter("endIndex", Int, new IntDefaultValue(-1))
                             },
                             false, typeof(StringMethods), typeof(StringMethods).GetMethod("Slice"))
-                    }, 
+                    }, {
+                        "replace",
+                        new BoundMethodInvokeFactory("Replace sub string with another sub string", true,
+                            () => String,
+                            () => new List<RealizedParameter> {
+                                new RealizedParameter("oldString", BuiltinType.String),
+                                new RealizedParameter("newString", BuiltinType.String),
+                            },
+                            false, typeof(string), typeof(string).GetMethod("Replace", new[] { typeof(string), typeof(string) }))
+                    }, {
+                        "split",
+                        new BoundMethodInvokeFactory("Split string into substrings by separator", true,
+                            () => new ArrayType(String), 
+                            () => new List<RealizedParameter> {
+                                new RealizedParameter("separator", String),
+                            },
+                            false, typeof(StringMethods), typeof(StringMethods).GetMethod("Split"))
+                    },
                 };
                 DeclaredFields = new Dictionary<string, IFieldAccessFactory> {
                     {

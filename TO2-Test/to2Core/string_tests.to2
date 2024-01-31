@@ -83,3 +83,14 @@ test sync fn test_string_slice() -> Unit = {
     assert_string("de", "abcdefgh".slice(3, 5))
     assert_string("", "abcdefgh".slice(3, 2))
 }
+
+test sync fn test_string_replace() -> Unit = {
+    assert_string("abcdefgh", "abcdefgh".replace("x", "z"))
+    assert_string("abcenfgh", "abcdefgh".replace("de", "en"))
+    assert_string("abcenfghabcenfgh", "abcdefghabcdefgh".replace("de", "en"))
+}
+
+test sync fn test_string_split() -> Unit = {
+    assert_string("[abcdefgh]", "abcdefgh".split(",").to_string())
+    assert_string("[a, b, c, de, fgh]", "a,b,c,de,fgh".split(",").to_string())
+}

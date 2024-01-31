@@ -9,7 +9,8 @@
 * Add helper methods to string (#123):
   * `index_of`: `"abcdefgh".index_of("g") == 6` or `"abcdefghabcdefgh".index_of("g", 7) == 14`
   * `slice`: `"abcdefgh".slice(3) == "defgh"` or `"abcdefgh".slice(3, 5) == "de"`
-
+  * `replace`: `"abcdefgh".replace("de", "en") == "abcenfgh"`
+  * `split`: `"a,b,c,de,fgh".split(",") == ["a", "b", "c", "de", "fgh"]`
 
 ## 0.5.2.4 -> 0.5.2.5
 

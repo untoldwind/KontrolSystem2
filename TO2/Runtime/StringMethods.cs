@@ -12,5 +12,9 @@ namespace KontrolSystem.TO2.Runtime {
                 return "";
             return source.Substring((int)start, (int)(end - start));
         }
+
+        public static string[] Split(string source, string separator) {
+            return source.Split(separator);
+        }
     }
 }
