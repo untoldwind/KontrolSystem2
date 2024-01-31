@@ -103,7 +103,16 @@ namespace KontrolSystem.TO2.AST {
                             () => String,
                             () => new List<RealizedParameter>(),
                             false, typeof(string), typeof(string).GetMethod("ToUpperInvariant"))
-                    },
+                    }, {
+                        "index_of",
+                        new BoundMethodInvokeFactory("Find index of a sub string, will return -1 if not found", true,
+                            () => Int, 
+                            () => new List<RealizedParameter> {
+                                new RealizedParameter("other", BuiltinType.String),
+                                new RealizedParameter("startIndex", Int, new IntDefaultValue(0))
+                            },
+                            false, typeof(StringMethods), typeof(StringMethods).GetMethod("IndexOf"))
+                    }
                 };
                 DeclaredFields = new Dictionary<string, IFieldAccessFactory> {
                     {

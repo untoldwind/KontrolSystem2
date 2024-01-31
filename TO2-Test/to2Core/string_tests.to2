@@ -67,3 +67,11 @@ test sync fn test_string_format() -> Unit = {
     assert_string("First: 1.123, Second: 12.35, Third: Hallo", format("First: {0:F3}, Second: {1:F2}, Third: {2}", (1.1234567, 12.345678, "Hallo")))
     assert_string("First:   1.123, Second:   12.35, Third: Hallo", format("First: {0,7:F3}, Second: {1,7:F2}, Third: {2}", (1.1234567, 12.345678, "Hallo")))
 }
+
+test sync fn test_string_index_of() -> Unit = {
+    assert_int(-1, "abcdefgh".index_of("xzy"))
+    assert_int(0, "abcdefgh".index_of("abc"))
+    assert_int(6, "abcdefgh".index_of("g"))
+    assert_int(6, "abcdefghabcdefgh".index_of("g"))
+    assert_int(14, "abcdefghabcdefgh".index_of("g", 7))
+}
