@@ -26,7 +26,7 @@ namespace KontrolSystem.TO2.Parser {
 
         public static readonly Parser<List<LineComment>> LineComments = Delimited0(LineComment, WhiteSpaces0);
 
-        public static readonly Parser<char> CommaDelimiter = Char(',').Between(WhiteSpaces0, WhiteSpaces0);
+        public static readonly Parser<char> CommaDelimiter = Char(',').Between(LineComments.Then(WhiteSpaces0), LineComments.Then(WhiteSpaces0));
 
         public static readonly Parser<char> EqDelimiter = Char('=').Between(WhiteSpaces0, WhiteSpaces0);
 

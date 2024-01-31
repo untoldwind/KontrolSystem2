@@ -5,6 +5,7 @@
 * Improve error handling on missing imports (#119)
 * Add button to VAB (#121)
   * Note: Most binding are still untested for VAB
+* Fix: Handle line comments in record creation (#113)
 
 ## 0.5.2.4 -> 0.5.2.5
 
