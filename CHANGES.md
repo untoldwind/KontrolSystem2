@@ -6,6 +6,10 @@
 * Add button to VAB (#121)
   * Note: Most binding are still untested for VAB
 * Fix: Handle line comments in record creation (#113)
+* Add helper methods to string (#123):
+  * `index_of`: `"abcdefgh".index_of("g") == 6` or `"abcdefghabcdefgh".index_of("g", 7) == 14`
+  * `slice`: `"abcdefgh".slice(3) == "defgh"` or `"abcdefgh".slice(3, 5) == "de"`
+
 
 ## 0.5.2.4 -> 0.5.2.5
 

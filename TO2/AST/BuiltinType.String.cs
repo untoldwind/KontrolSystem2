@@ -112,7 +112,16 @@ namespace KontrolSystem.TO2.AST {
                                 new RealizedParameter("startIndex", Int, new IntDefaultValue(0))
                             },
                             false, typeof(StringMethods), typeof(StringMethods).GetMethod("IndexOf"))
-                    }
+                    }, {
+                        "slice",
+                        new BoundMethodInvokeFactory("Get a sub string/slice for the string defined by start and end index", true,
+                            () => String, 
+                            () => new List<RealizedParameter> {
+                                new RealizedParameter("startIndex", Int, new IntDefaultValue(0)),
+                                new RealizedParameter("endIndex", Int, new IntDefaultValue(-1))
+                            },
+                            false, typeof(StringMethods), typeof(StringMethods).GetMethod("Slice"))
+                    }, 
                 };
                 DeclaredFields = new Dictionary<string, IFieldAccessFactory> {
                     {

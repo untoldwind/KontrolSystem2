@@ -75,3 +75,11 @@ test sync fn test_string_index_of() -> Unit = {
     assert_int(6, "abcdefghabcdefgh".index_of("g"))
     assert_int(14, "abcdefghabcdefgh".index_of("g", 7))
 }
+
+test sync fn test_string_slice() -> Unit = {
+    assert_string("", "abcdefgh".slice(20))
+    assert_string("defgh", "abcdefgh".slice(3))
+    assert_string("defgh", "abcdefgh".slice(3, 20))
+    assert_string("de", "abcdefgh".slice(3, 5))
+    assert_string("", "abcdefgh".slice(3, 2))
+}
