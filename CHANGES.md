@@ -3,6 +3,7 @@
 ## 0.5.2.6 ->
 
 * Fix type generation of structs in generic parameters (#76)
+* Improve error reporting of missing variables (#119)
 
 ## 0.5.2.5 -> 0.5.2.6
 

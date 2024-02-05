@@ -25,8 +25,20 @@ namespace KontrolSystem.TO2.AST {
             }
         }
 
-        public override TO2Type ResultType(IBlockContext context) =>
-            variableContainer?.FindVariable(context, name) ?? BuiltinType.Unit;
+        public override TO2Type ResultType(IBlockContext context) {
+            var type = variableContainer?.FindVariable(context, name);
+
+            if (type == null) {
+                context.AddError(new StructuralError(
+                    StructuralError.ErrorType.NoSuchVariable,
+                    $"No local variable '{name}'",
+                    Start,
+                    End
+                ));
+                return BuiltinType.Unit;
+            }
+            return type;
+        }
 
         public override void Prepare(IBlockContext context) {
             expression.Prepare(context);
