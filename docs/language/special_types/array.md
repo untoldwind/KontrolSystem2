@@ -44,9 +44,9 @@ will be `4`.
 
 ## Methods
 
-### revert
+### reverse
 
-The `.revert()` method just reverts the array.
+The `.reverse()` method just reverts the array.
 
 E.g.
 ```
