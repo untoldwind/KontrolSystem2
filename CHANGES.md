@@ -1,5 +1,9 @@
 # Changes
 
+## 0.5.2.6 ->
+
+* Fix type generation of structs in generic parameters (#76)
+
 ## 0.5.2.5 -> 0.5.2.6
 
 * Improve error handling on missing imports (#119)
