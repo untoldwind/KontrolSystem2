@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using KontrolSystem.TO2.Generator;
-using KontrolSystem.Parsing;
 
 namespace KontrolSystem.TO2.AST {
     public class BoundType : RealizedType {

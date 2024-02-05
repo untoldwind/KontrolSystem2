@@ -29,6 +29,7 @@ namespace KontrolSystem.TO2.AST {
         private readonly OperatorCollection allowedPrefixOperators;
         private readonly Dictionary<string, IFieldAccessFactory> allowedFields;
         private readonly ConstructorInfo constructor;
+        private readonly Func<ModuleContext, Type> typeCreator;
         public override Dictionary<string, IMethodInvokeFactory> DeclaredMethods { get; }
 
         public RecordStructType(string modulePrefix, string localName, string description, Type runtimeType,
@@ -37,7 +38,8 @@ namespace KontrolSystem.TO2.AST {
             OperatorCollection allowedSuffixOperators,
             Dictionary<string, IMethodInvokeFactory> allowedMethods,
             Dictionary<string, IFieldAccessFactory> allowedFields,
-            ConstructorInfo constructor = null) : base(allowedSuffixOperators) {
+            ConstructorInfo constructor = null,
+            Func<ModuleContext, Type> typeCreator = null) : base(allowedSuffixOperators) {
             this.modulePrefix = modulePrefix;
             this.localName = localName;
             Description = description;
@@ -46,6 +48,7 @@ namespace KontrolSystem.TO2.AST {
             DeclaredMethods = allowedMethods;
             this.allowedFields = allowedFields;
             this.constructor = constructor;
+            this.typeCreator = typeCreator;
             itemTypes = new SortedDictionary<string, TO2Type>();
             this.fields = new SortedDictionary<string, FieldInfo>();
             foreach (var f in fields) {
@@ -73,7 +76,7 @@ namespace KontrolSystem.TO2.AST {
 
         public override RealizedType UnderlyingType(ModuleContext context) => this;
 
-        public override Type GeneratedType(ModuleContext context) => runtimeType;
+        public override Type GeneratedType(ModuleContext context) => typeCreator != null ? typeCreator(context) : runtimeType;
 
         public override IOperatorCollection AllowedPrefixOperators(ModuleContext context) => allowedPrefixOperators;
 

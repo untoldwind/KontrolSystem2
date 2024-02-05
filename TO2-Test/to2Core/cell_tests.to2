@@ -61,3 +61,12 @@ test sync fn test_cell_convert() -> Unit = {
     assert_float(45.0, coordinates.value.x)
     assert_float(34.0, coordinates.value.y)
 }
+
+struct Foo(init_value: int) {
+    value: int = init_value
+}
+
+const opt : Cell<Option<Foo>> = Cell(None())
+
+test sync fn test_cell_option() -> Unit = {
+}

@@ -128,7 +128,8 @@ namespace KontrolSystem.TO2.AST {
         public override string Name { get; }
         public override string Description { get; }
         private readonly RecordStructType realizedType;
-        private bool initialized;
+        private bool fieldsCreated;
+        private bool creating;
 
         internal StructTypeAliasDelegate(ModuleContext declaredModule, string name, string description,
             List<StructField> fields) {
@@ -146,7 +147,7 @@ namespace KontrolSystem.TO2.AST {
                 new OperatorCollection(),
                 new Dictionary<string, IMethodInvokeFactory>(),
                 new Dictionary<string, IFieldAccessFactory>(),
-                constructorBuilder);
+                constructorBuilder, GeneratedType);
         }
 
         public override RealizedType UnderlyingType(ModuleContext context) => realizedType;
@@ -154,7 +155,7 @@ namespace KontrolSystem.TO2.AST {
         public override Type GeneratedType(ModuleContext context) {
             EnsureFields();
             CreateStructType();
-            return realizedType.GeneratedType(context);   
+            return realizedType.runtimeType;   
         }
 
         public override IMethodInvokeFactory FindMethod(ModuleContext context, string methodName) {
@@ -171,8 +172,9 @@ namespace KontrolSystem.TO2.AST {
             realizedType.DeclaredMethods.Add(name, methodInvokeFactory);
 
         internal void EnsureFields() {
-            if (initialized) return;
+            if (fieldsCreated || creating) return;
 
+            creating = true;
             foreach (var field in fields) {
                 RealizedType fieldTO2Type = field.type.UnderlyingType(declaredModule);
                 Type fieldType = fieldTO2Type.GeneratedType(declaredModule);
@@ -184,10 +186,13 @@ namespace KontrolSystem.TO2.AST {
                     fieldInfo));
             }
 
-            initialized = true;
+            creating = false;
+            fieldsCreated = true;
         }
 
         internal void CreateStructType() {
+            if (creating) return;
+
             realizedType.runtimeType = structContext.typeBuilder.CreateType();
         }
     }
