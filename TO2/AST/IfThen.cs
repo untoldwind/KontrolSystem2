@@ -97,13 +97,20 @@ namespace KontrolSystem.TO2.AST {
             if (context.HasErrors) return;
 
             TO2Type thenResultType = thenExpression.ResultType(thenContext);
-
-            if (dropResult) {
+            
+            if (dropResult || thenResultType == BuiltinType.Unit) {
                 LabelRef skipThen = context.IL.DefineLabel(thenCount.opCodes < 124);
 
                 thenContext.IL.Emit(skipThen.isShort ? OpCodes.Brfalse_S : OpCodes.Brfalse, skipThen);
                 thenExpression.EmitCode(thenContext, true);
                 thenContext.IL.MarkLabel(skipThen);
+                if (!dropResult) {
+                    Type noneType = new OptionType(BuiltinType.Unit).GeneratedType(thenContext.ModuleContext);
+                    using ITempLocalRef tempResult = thenContext.IL.TempLocal(noneType);
+                    tempResult.EmitLoadPtr(context);
+                    thenContext.IL.Emit(OpCodes.Initobj, noneType, 1, 0);
+                    tempResult.EmitLoad(thenContext);
+                }
             } else {
                 OptionType optionType = new OptionType(thenResultType);
                 Type generatedType = optionType.GeneratedType(thenContext.ModuleContext);
