@@ -20,6 +20,11 @@ namespace KontrolSystem.TO2.AST {
         }
 
         public IEnumerable<StructuralError> TryImportTypes(ModuleContext context) {
+
+            return Enumerable.Empty<StructuralError>();
+        }
+
+        public IEnumerable<StructuralError> TryImportConstants(ModuleContext context) {
             StructTypeAliasDelegate structDelegate = context.mappedTypes.Get(name) as StructTypeAliasDelegate;
 
             if (structDelegate == null) {
@@ -38,10 +43,8 @@ namespace KontrolSystem.TO2.AST {
             }
 
             return Enumerable.Empty<StructuralError>();
+            
         }
-
-        public IEnumerable<StructuralError> TryImportConstants(ModuleContext context) =>
-            Enumerable.Empty<StructuralError>();
 
         public IEnumerable<StructuralError> TryVerifyFunctions(ModuleContext context) {
             List<StructuralError> errors = new List<StructuralError>();
