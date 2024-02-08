@@ -33,9 +33,7 @@ namespace KontrolSystem.KSP.Runtime.KSPScience {
             [KSField] public bool CurrentSituationIsValid => experimentStanding.CurrentSituationIsValid;
 
             [KSField] public double CurrentRunningTime => experimentStanding.CurrentRunningTime;
-
-            [KSField] public bool ConditionMet => experimentStanding.ConditionMet;
-
+            
             [KSField] public ExperimentState CurrentExperimentState => experimentStanding.CurrentExperimentState;
 
             [KSField] public ExperimentState PreviousExperimentState => experimentStanding.PreviousExperimentState;

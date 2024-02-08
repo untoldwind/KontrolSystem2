@@ -5,6 +5,8 @@
 * Fix type generation of structs in generic parameters (#76)
 * Improve error reporting of missing variables (#119)
 * Fix bug in if-case (#119)
+* Add binding for science action group
+* Remove `condition_met` from experiment (for now?) as it seems to have a different meaning
 
 ## 0.5.2.5 -> 0.5.2.6
 
