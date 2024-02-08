@@ -3,8 +3,10 @@ using System.Linq;
 using KontrolSystem.KSP.Runtime.KSPControl;
 using KontrolSystem.KSP.Runtime.KSPMath;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
+using KontrolSystem.KSP.Runtime.KSPScience;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
+using KSP.Game.Science;
 using KSP.Modules;
 using KSP.Sim;
 using KSP.Sim.Definitions;
@@ -220,6 +222,10 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField(Description = "Get the current situation of the vessel.")]
             public VesselSituations Situation => vessel.Situation;
 
+            [KSField]
+            public KSPScienceModule.ResearchLocationAdapter ResearchLocation =>
+                new KSPScienceModule.ResearchLocationAdapter(vessel.VesselScienceRegionSituation.ResearchLocation);
+            
             [KSField] public double StaticPressureKpa => vessel.StaticPressure_kPa;
 
             [KSField] public double DynamicPressureKpa => vessel.DynamicPressure_kPa;
