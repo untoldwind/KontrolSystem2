@@ -125,6 +125,12 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 get => vessel.GetActionGroupState(KSPActionGroup.Custom10) == KSPActionGroupState.True;
                 set => vessel.SetActionGroup(KSPActionGroup.Custom10, value);
             }
+
+            [KSField]
+            public bool Science {
+                get => vessel.GetActionGroupState(KSPActionGroup.Science) == KSPActionGroupState.True;
+                set => vessel.SetActionGroup(KSPActionGroup.Science, value);
+            }
         }
     }
 }
