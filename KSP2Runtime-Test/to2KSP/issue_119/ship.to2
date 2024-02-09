@@ -1,0 +1,7 @@
+use { ThrustSituation, ThrustSituationConst } from issue_119::constant
+
+pub struct Ship(){}
+
+impl Ship {
+    fn thrust(self, context: ThrustSituationConst = ThrustSituation.Max_Vac) -> float = 0.0
+}

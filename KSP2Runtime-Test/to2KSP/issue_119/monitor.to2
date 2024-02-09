@@ -1,0 +1,11 @@
+use { yield } from ksp::game
+use { Ship } from issue_119::ship
+
+pub fn main_flight() -> Result<Unit, string> = {
+    monitor(Ship())
+}
+
+pub fn monitor(ship: Ship) -> bool = {
+    const toto = ship.thrust() // to gitreport
+    return true
+}

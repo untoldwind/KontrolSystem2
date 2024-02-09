@@ -17,6 +17,7 @@ namespace KontrolSystem.TO2.AST {
         private SyncBlockContext syncBlockContext;
         private StructTypeAliasDelegate structType;
         private AsyncClass? asyncClass;
+        private BoundMethodInvokeFactory invokeFactory;
 
         public MethodDeclaration(bool isAsync, string name, string description,
             List<FunctionParameter> parameters,
@@ -48,15 +49,21 @@ namespace KontrolSystem.TO2.AST {
         public IMethodInvokeFactory CreateInvokeFactory() {
             syncBlockContext ??= new SyncBlockContext(structType, isAsync, structType.Name.ToUpper() + "_" + name, declaredReturn, parameters);
 
-            return new BoundMethodInvokeFactory(
+            if (invokeFactory != null) return invokeFactory;
+
+            var realizedParameters = parameters.Select(p => new RealizedParameter(syncBlockContext, p)).ToList();
+
+            invokeFactory = new BoundMethodInvokeFactory(
                 description,
                 true,
                 () => declaredReturn.UnderlyingType(structType.structContext),
-                () => parameters.Select(p => new RealizedParameter(syncBlockContext, p)).ToList(),
+                () => realizedParameters,
                 isAsync,
                 structType.structContext.typeBuilder,
                 syncBlockContext.MethodBuilder
             );
+
+            return invokeFactory;
         }
 
         public IEnumerable<StructuralError> EmitCode() {
