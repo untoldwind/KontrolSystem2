@@ -221,11 +221,22 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField(Description = "Get the current situation of the vessel.")]
             public VesselSituations Situation => vessel.Situation;
+            
+            [KSField]
+            public Option<KSPScienceModule.ResearchLocationAdapter> ResearchLocation =>
+                vessel.VesselScienceRegionSituation.ResearchLocation != null ?
+                    new Option<KSPScienceModule.ResearchLocationAdapter>(new KSPScienceModule.ResearchLocationAdapter(vessel.VesselScienceRegionSituation.ResearchLocation)) :
+                    new Option<KSPScienceModule.ResearchLocationAdapter>();
 
             [KSField]
-            public KSPScienceModule.ResearchLocationAdapter ResearchLocation =>
-                new KSPScienceModule.ResearchLocationAdapter(vessel.VesselScienceRegionSituation.ResearchLocation);
-            
+            public Option<KSPScienceModule.ScienceStorageAdapter> ScienceStorage {
+                get {
+                    if (vessel.SimulationObject.TryFindComponent<ScienceStorageComponent>(out var component)) {
+                        return new Option<KSPScienceModule.ScienceStorageAdapter>(new KSPScienceModule.ScienceStorageAdapter(component));
+                    }
+                    return new Option<KSPScienceModule.ScienceStorageAdapter>();
+                }
+            }
             [KSField] public double StaticPressureKpa => vessel.StaticPressure_kPa;
 
             [KSField] public double DynamicPressureKpa => vessel.DynamicPressure_kPa;
