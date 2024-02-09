@@ -31,6 +31,7 @@ light | bool | R/W |
 radiator_panels | bool | R/W | 
 rcs | bool | R/W | 
 sas | bool | R/W | 
+science | bool | R/W | 
 solar_panels | bool | R/W | 
 
 ### Autopilot
@@ -1070,6 +1071,8 @@ orbital_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Orbita
 parts | [ksp::vessel::Part](/reference/ksp/vessel.md#part)[] | R/O | Get a list of all vessel parts. 
 pitch_yaw_roll | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Returns the pitch, yaw/heading and roll of the vessel relative to the horizon. 
 position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Coordinate position of the vessel in the celestial frame of the main body. 
+research_location | Option&lt;[ksp::science::ResearchLocation](/reference/ksp/science.md#researchlocation)> | R/O | Get the current research location of the vessel. 
+science_storage | Option&lt;[ksp::science::ScienceStorage](/reference/ksp/science.md#sciencestorage)> | R/O | Access the science storage/research inventory of the vessel. 
 situation | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | Get the current situation of the vessel. 
 solar_panels | [ksp::vessel::ModuleSolarPanel](/reference/ksp/vessel.md#modulesolarpanel)[] | R/O | Get a list of all solar panel parts of the vessel. 
 sound_speed | float | R/O | 

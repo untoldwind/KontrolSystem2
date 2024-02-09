@@ -2026,6 +2026,16 @@
         },
         {
           "kind": "Standard",
+          "module": "ksp::science",
+          "name": "ResearchReport"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::science",
+          "name": "ScienceStorage"
+        },
+        {
+          "kind": "Standard",
           "module": "ksp::telemetry",
           "name": "TimeSeries"
         },
@@ -2799,6 +2809,16 @@
           "kind": "Standard",
           "module": "ksp::science",
           "name": "ResearchLocation"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::science",
+          "name": "ResearchReport"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::science",
+          "name": "ScienceStorage"
         },
         {
           "kind": "Standard",
@@ -10659,6 +10679,16 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchReport"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceStorage"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::telemetry",
               "name": "TimeSeries"
             },
@@ -13051,6 +13081,16 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchReport"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceStorage"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::telemetry",
               "name": "TimeSeries"
             },
@@ -14232,6 +14272,16 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchReport"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceStorage"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::telemetry",
               "name": "TimeSeries"
             },
@@ -15165,6 +15215,16 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchReport"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceStorage"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::telemetry",
               "name": "TimeSeries"
             },
@@ -16038,6 +16098,16 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchReport"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceStorage"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::telemetry",
               "name": "TimeSeries"
             },
@@ -16489,14 +16559,6 @@
                 "name": "float"
               }
             },
-            "condition_met": {
-              "name": "condition_met",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "bool"
-              }
-            },
             "current_experiment_state": {
               "name": "current_experiment_state",
               "readOnly": true,
@@ -16539,6 +16601,7 @@
             },
             "experiment_location": {
               "name": "experiment_location",
+              "description": "Get the research location the experiment was last performed.\n",
               "readOnly": true,
               "type": {
                 "kind": "Option",
@@ -16680,6 +16743,126 @@
             }
           },
           "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "ResearchReport": {
+          "name": "ResearchReport",
+          "description": "Represents the stored report of a science experiment\n",
+          "fields": {
+            "research_location": {
+              "name": "research_location",
+              "description": "Get the research location the experiment was performed at.\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::science",
+                "name": "ResearchLocation"
+              }
+            },
+            "definition": {
+              "name": "definition",
+              "description": "Get the definition of the experiment.\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::science",
+                "name": "ExperimentDefinition"
+              }
+            },
+            "transmission_status": {
+              "name": "transmission_status",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "transmission_percentage": {
+              "name": "transmission_percentage",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "ec_required": {
+              "name": "ec_required",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "time_required": {
+              "name": "time_required",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "transmission_size": {
+              "name": "transmission_size",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            }
+          },
+          "methods": {
+            "start_transmit": {
+              "isAsync": false,
+              "name": "start_transmit",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "ScienceStorage": {
+          "name": "ScienceStorage",
+          "description": "Represents the science storage / research inventory of a vessel.\n",
+          "fields": {
+            "is_active": {
+              "name": "is_active",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "research_reports": {
+              "name": "research_reports",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::science",
+                    "name": "ResearchReport"
+                  }
+                ]
+              }
+            }
+          },
+          "methods": {
+            "start_transmit_all": {
+              "isAsync": false,
+              "name": "start_transmit_all",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            }
+          },
           "assignableFromAny": false,
           "assignableFrom": []
         }
@@ -17703,6 +17886,16 @@
               "kind": "Standard",
               "module": "ksp::science",
               "name": "ResearchLocation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchReport"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceStorage"
             },
             {
               "kind": "Standard",
@@ -22075,6 +22268,16 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchReport"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceStorage"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::telemetry",
               "name": "TimeSeries"
             },
@@ -22915,6 +23118,16 @@
               "kind": "Standard",
               "module": "ksp::science",
               "name": "ResearchLocation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchReport"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceStorage"
             },
             {
               "kind": "Standard",
@@ -23781,6 +23994,16 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchReport"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceStorage"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::telemetry",
               "name": "TimeSeries"
             },
@@ -24621,6 +24844,16 @@
               "kind": "Standard",
               "module": "ksp::science",
               "name": "ResearchLocation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchReport"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceStorage"
             },
             {
               "kind": "Standard",
@@ -25474,6 +25707,16 @@
               "kind": "Standard",
               "module": "ksp::science",
               "name": "ResearchLocation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchReport"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceStorage"
             },
             {
               "kind": "Standard",
@@ -26420,6 +26663,16 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchReport"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceStorage"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::telemetry",
               "name": "TimeSeries"
             },
@@ -27313,6 +27566,16 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchReport"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceStorage"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::telemetry",
               "name": "TimeSeries"
             },
@@ -28163,6 +28426,16 @@
               "kind": "Standard",
               "module": "ksp::science",
               "name": "ResearchLocation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchReport"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceStorage"
             },
             {
               "kind": "Standard",
@@ -29036,6 +29309,16 @@
               "kind": "Standard",
               "module": "ksp::science",
               "name": "ResearchLocation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchReport"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceStorage"
             },
             {
               "kind": "Standard",
@@ -29922,6 +30205,16 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchReport"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceStorage"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::telemetry",
               "name": "TimeSeries"
             },
@@ -30636,6 +30929,14 @@
             },
             "custom10": {
               "name": "custom10",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "science": {
+              "name": "science",
               "readOnly": false,
               "type": {
                 "kind": "Builtin",
@@ -33780,6 +34081,36 @@
                 "kind": "Standard",
                 "module": "ksp::vessel",
                 "name": "VesselSituation"
+              }
+            },
+            "research_location": {
+              "name": "research_location",
+              "description": "Get the current research location of the vessel.\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::science",
+                    "name": "ResearchLocation"
+                  }
+                ]
+              }
+            },
+            "science_storage": {
+              "name": "science_storage",
+              "description": "Access the science storage/research inventory of the vessel.\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::science",
+                    "name": "ScienceStorage"
+                  }
+                ]
               }
             },
             "static_pressure_kpa": {

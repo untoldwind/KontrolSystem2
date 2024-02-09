@@ -15,13 +15,12 @@ Represents an in-game science experiment.
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
-condition_met | bool | R/O | 
 crew_required | int | R/O | 
 current_experiment_state | [ksp::science::ExperimentState](/reference/ksp/science.md#experimentstate) | R/O | 
 current_running_time | float | R/O | 
 current_situation_is_valid | bool | R/O | 
 definition | [ksp::science::ExperimentDefinition](/reference/ksp/science.md#experimentdefinition) | R/O | 
-experiment_location | Option&lt;[ksp::science::ResearchLocation](/reference/ksp/science.md#researchlocation)> | R/O | 
+experiment_location | Option&lt;[ksp::science::ResearchLocation](/reference/ksp/science.md#researchlocation)> | R/O | Get the research location the experiment was last performed. 
 has_enough_resources | bool | R/O | 
 previous_experiment_state | [ksp::science::ExperimentState](/reference/ksp/science.md#experimentstate) | R/O | 
 region_required | bool | R/O | 
@@ -129,6 +128,33 @@ requires_region | bool | R/O |
 science_region | string | R/O | 
 science_situation | [ksp::science::ScienceSituation](/reference/ksp/science.md#sciencesituation) | R/O | 
 
+### ResearchReport
+
+Represents the stored report of a science experiment
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+definition | [ksp::science::ExperimentDefinition](/reference/ksp/science.md#experimentdefinition) | R/O | Get the definition of the experiment. 
+ec_required | float | R/O | 
+research_location | [ksp::science::ResearchLocation](/reference/ksp/science.md#researchlocation) | R/O | Get the research location the experiment was performed at. 
+time_required | float | R/O | 
+transmission_percentage | float | R/O | 
+transmission_size | float | R/O | 
+transmission_status | bool | R/O | 
+
+#### Methods
+
+##### start_transmit
+
+```rust
+researchreport.start_transmit ( ) -> bool
+```
+
+
+
 ### ScienceExperimentType
 
 Science experiment type
@@ -203,6 +229,28 @@ sciencesituationconstants.from_string ( value : string ) -> Option<ksp::science:
 ```
 
 Parse from string
+
+### ScienceStorage
+
+Represents the science storage / research inventory of a vessel.
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+is_active | bool | R/O | 
+research_reports | [ksp::science::ResearchReport](/reference/ksp/science.md#researchreport)[] | R/O | 
+
+#### Methods
+
+##### start_transmit_all
+
+```rust
+sciencestorage.start_transmit_all ( ) -> bool
+```
+
+
 
 ## Constants
 
