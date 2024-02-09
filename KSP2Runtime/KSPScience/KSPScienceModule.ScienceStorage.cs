@@ -19,8 +19,11 @@ namespace KontrolSystem.KSP.Runtime.KSPScience {
             [KSField]
             public ResearchReportAdapter[] ResearchReports =>
                 scienceStorageComponent.GetStoredResearchReports()
-                    .Select(report => new ResearchReportAdapter(report))
+                    .Select(report => new ResearchReportAdapter(scienceStorageComponent, report))
                     .ToArray();
+
+            [KSMethod]
+            public bool StartTransmitAll() => scienceStorageComponent.StartReportTransmissionAll();
         }
     }
 }

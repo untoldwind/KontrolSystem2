@@ -6,7 +6,6 @@ using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.KSP.Runtime.KSPScience;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
-using KSP.Game.Science;
 using KSP.Modules;
 using KSP.Sim;
 using KSP.Sim.Definitions;
@@ -222,13 +221,13 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField(Description = "Get the current situation of the vessel.")]
             public VesselSituations Situation => vessel.Situation;
             
-            [KSField]
+            [KSField(Description = "Get the current research location of the vessel.")]
             public Option<KSPScienceModule.ResearchLocationAdapter> ResearchLocation =>
                 vessel.VesselScienceRegionSituation.ResearchLocation != null ?
                     new Option<KSPScienceModule.ResearchLocationAdapter>(new KSPScienceModule.ResearchLocationAdapter(vessel.VesselScienceRegionSituation.ResearchLocation)) :
                     new Option<KSPScienceModule.ResearchLocationAdapter>();
 
-            [KSField]
+            [KSField(Description = "Access the science storage/research inventory of the vessel.")]
             public Option<KSPScienceModule.ScienceStorageAdapter> ScienceStorage {
                 get {
                     if (vessel.SimulationObject.TryFindComponent<ScienceStorageComponent>(out var component)) {
@@ -237,6 +236,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                     return new Option<KSPScienceModule.ScienceStorageAdapter>();
                 }
             }
+            
             [KSField] public double StaticPressureKpa => vessel.StaticPressure_kPa;
 
             [KSField] public double DynamicPressureKpa => vessel.DynamicPressure_kPa;

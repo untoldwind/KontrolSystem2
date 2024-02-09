@@ -6,7 +6,10 @@
 * Improve error reporting of missing variables (#119)
 * Fix bug in if-case (#119)
 * Add binding for science action group
+* Fix default values in user-struct methods (#119)
 * Remove `condition_met` from experiment (for now?) as it seems to have a different meaning
+* Add `vessel.research_location` that can be compared with `experiment.experiment_location` (#125)
+* Add `vessel.science_storage` to access science storage/resource inventory (#125)
 
 ## 0.5.2.5 -> 0.5.2.6
 

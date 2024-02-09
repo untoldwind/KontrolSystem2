@@ -45,7 +45,7 @@ namespace KontrolSystem.KSP.Runtime.KSPScience {
 
             [KSField] public bool RegionRequired => experimentStanding.RegionRequired;
 
-            [KSField]
+            [KSField(Description = "Get the research location the experiment was last performed.")]
             public Option<ResearchLocationAdapter> ExperimentLocation =>
                 experimentStanding.ExperimentLocation != null ?
                     new Option<ResearchLocationAdapter>(new ResearchLocationAdapter(experimentStanding.ExperimentLocation)) :
