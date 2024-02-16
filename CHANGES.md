@@ -4,6 +4,7 @@
 
 * Improve error handling in struct field initializers (#119)
 * Improve docutmation of function/method parameters (#126)
+* Fix size calculation in UI vertical layout (#126)
 
 ## 0.5.2.6 -> 0.5.2.7
 

@@ -15,7 +15,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI {
                 var minSize = new Vector2(padding.left + padding.right, padding.top + padding.bottom);
                 foreach (var entry in layoutEntries) {
                     var entryMinSize = entry.MinSize;
-                    minSize.x = Math.Max(minSize.x + padding.left + padding.right, entryMinSize.x);
+                    minSize.x = Math.Max(minSize.x, entryMinSize.x + padding.left + padding.right);
                     minSize.y += entryMinSize.y;
                 }
 
