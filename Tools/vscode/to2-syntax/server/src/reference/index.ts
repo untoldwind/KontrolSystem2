@@ -54,6 +54,7 @@ export interface FunctionParameterReference {
   name: string;
   type: TypeRef;
   hasDefault: boolean;
+  description: string;
 }
 
 export interface ConstantReference {

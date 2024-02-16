@@ -309,12 +309,14 @@ namespace KontrolSystem.GenRefs {
             Name = parameter.name;
             Type = new TypeRef(moduleContext, parameter.type);
             HasDefault = parameter.HasDefault;
+            Description = parameter.description;
         }
 
         public FunctionParameterReference(ModuleContext moduleContext, FunctionParameter parameter) {
             Name = parameter.name;
             Type = new TypeRef(moduleContext, parameter.type.UnderlyingType(moduleContext));
-            HasDefault = parameter.defaultValue != null;
+            HasDefault = parameter.HasDefault;
+            Description = parameter.description;
         }
 
         [JsonProperty("name")] public string Name { get; }
@@ -322,6 +324,8 @@ namespace KontrolSystem.GenRefs {
         [JsonProperty("type")] private TypeRef Type { get; }
 
         [JsonProperty("hasDefault")] public bool HasDefault { get; }
+        
+        [JsonProperty("description")] public string Description { get; }
     }
 
     public class TypeRef {
