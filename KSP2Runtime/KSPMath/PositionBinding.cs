@@ -35,32 +35,43 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                     "to_local",
                     new BoundMethodInvokeFactory("Get local vector in a coordinate system", true,
                         () => Vector3Binding.Vector3Type,
-                        () => new List<RealizedParameter> {new RealizedParameter("frame", TransformFrameBinding.TransformFrameType)}, false,
+                        () => new List<RealizedParameter> {
+                            new RealizedParameter("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")
+                        }, false,
                         typeof(PositionBinding), typeof(PositionBinding).GetMethod("ToLocal"))
                 }, {
                     "to_string",
                     new BoundMethodInvokeFactory("Convert vector to string in a given coordinate system.", true, () => BuiltinType.String,
-                        () => new List<RealizedParameter>() { new RealizedParameter("frame", TransformFrameBinding.TransformFrameType) }, false, typeof(PositionBinding),
+                        () => new List<RealizedParameter>() {
+                            new RealizedParameter("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")
+                        }, false, typeof(PositionBinding),
                         typeof(PositionBinding).GetMethod("ToString", new Type[] { typeof(Position), typeof(ITransformFrame) }))
                 }, {
                     "to_fixed",
                     new BoundMethodInvokeFactory("Convert the vector to string with fixed number of `decimals` in a given coordinate system.",
                         true,
                         () => BuiltinType.String,
-                        () => new List<RealizedParameter>() {new RealizedParameter("frame", TransformFrameBinding.TransformFrameType), new RealizedParameter("decimals", BuiltinType.Int)},
+                        () => new List<RealizedParameter>() {
+                            new RealizedParameter("frame", TransformFrameBinding.TransformFrameType, "Frame of reference"), 
+                            new RealizedParameter("decimals", BuiltinType.Int, "Number of decimals")
+                        },
                         false, typeof(PositionBinding), typeof(PositionBinding).GetMethod("ToFixed"))
                 },
                 {
                     "distance",
                     new BoundMethodInvokeFactory("Calculate the distance of `other` position.", true,
                         () => BuiltinType.Float,
-                        () => new List<RealizedParameter> { new RealizedParameter("other", PositionType) }, false,
+                        () => new List<RealizedParameter> {
+                            new RealizedParameter("other", PositionType, "Other position")
+                        }, false,
                         typeof(Position), typeof(Position).GetMethod("Distance"))
                 }, {
                     "distance_sqr",
                     new BoundMethodInvokeFactory("Calculate the squared distance of `other` position.", true,
                         () => BuiltinType.Float,
-                        () => new List<RealizedParameter> { new RealizedParameter("other", PositionType) }, false,
+                        () => new List<RealizedParameter> {
+                            new RealizedParameter("other", PositionType, "Other position")
+                        }, false,
                         typeof(Position), typeof(Position).GetMethod("DistanceSqr"))
                 }, {
                     "lerp_to",
@@ -69,7 +80,8 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                         true,
                         () => PositionType,
                         () => new List<RealizedParameter> {
-                            new RealizedParameter("other", PositionType), new RealizedParameter("t", BuiltinType.Float)
+                            new RealizedParameter("other", PositionType, "Other position"), 
+                            new RealizedParameter("t", BuiltinType.Float, "Relative position of mid-point (0.0 - 1.0)")
                         }, false, typeof(Position), typeof(Position).GetMethod("Lerp"))
                 },
             },

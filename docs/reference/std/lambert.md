@@ -26,3 +26,13 @@ to point `r2` in time `tof` (time of flight).
 This is based on the solver developed by Dario Izzo
 Details can be found here: https://arxiv.org/pdf/1403.2705.pdf
 Released under the GNU GENERAL PUBLIC LICENSE as part of the PyKEP library:
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+r1 | ksp::math::Vec3 |  | 
+r2 | ksp::math::Vec3 |  | 
+tof | float |  | 
+mu | float |  | 
+clockwise | bool |  | 

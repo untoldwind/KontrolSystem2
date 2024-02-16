@@ -1067,7 +1067,7 @@
                 "kind": "Builtin",
                 "name": "int"
               },
-              "hasDefault": false
+              "hasDefault": true
             }
           ],
           "returnType": {
@@ -1094,7 +1094,7 @@
                 "kind": "Builtin",
                 "name": "int"
               },
-              "hasDefault": false
+              "hasDefault": true
             }
           ],
           "returnType": {
@@ -1645,7 +1645,7 @@
           "description": "Convert the option to a result, where None is mapped to the `if_none` error",
           "parameters": [
             {
-              "name": "on_error",
+              "name": "if_none",
               "type": {
                 "kind": "Builtin",
                 "name": "Unit"
@@ -3474,7 +3474,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "sigma",
@@ -3482,7 +3482,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -4723,7 +4723,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -4757,7 +4757,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -4791,7 +4791,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -4833,7 +4833,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -4867,7 +4867,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -4901,7 +4901,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -4935,7 +4935,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -4969,7 +4969,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -4995,7 +4995,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -5021,7 +5021,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -5055,7 +5055,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -5081,7 +5081,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -5107,7 +5107,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -5133,7 +5133,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -5159,7 +5159,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -7130,7 +7130,7 @@
                       }
                     ]
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "arguments",
@@ -7143,7 +7143,7 @@
                       }
                     ]
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -12295,7 +12295,7 @@
                       }
                     ]
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -12319,7 +12319,7 @@
                       }
                     ]
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -12343,7 +12343,7 @@
                       }
                     ]
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -12512,7 +12512,7 @@
                       }
                     ]
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -12545,7 +12545,7 @@
                       }
                     ]
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -13693,7 +13693,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -18297,6 +18297,7 @@
           "fields": {
             "font_size": {
               "name": "font_size",
+              "description": "Font size of the button label\n",
               "readOnly": false,
               "type": {
                 "kind": "Builtin",
@@ -18305,6 +18306,7 @@
             },
             "label": {
               "name": "label",
+              "description": "Button label\n",
               "readOnly": false,
               "type": {
                 "kind": "Builtin",
@@ -18313,6 +18315,7 @@
             },
             "enabled": {
               "name": "enabled",
+              "description": "Enable/disable the button\n",
               "readOnly": false,
               "type": {
                 "kind": "Builtin",
@@ -18324,6 +18327,7 @@
             "on_click": {
               "isAsync": false,
               "name": "on_click",
+              "description": "Function to be called if button is clicked\n",
               "parameters": [
                 {
                   "name": "onClick",
@@ -18353,6 +18357,7 @@
           "fields": {
             "min_size": {
               "name": "min_size",
+              "description": "Minimum size of the canvas.\n",
               "readOnly": false,
               "type": {
                 "kind": "Standard",
@@ -18362,6 +18367,7 @@
             },
             "width": {
               "name": "width",
+              "description": "Current width of the canvas (determined by the surrounding container)\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -18370,6 +18376,7 @@
             },
             "height": {
               "name": "height",
+              "description": "Current height of the canvas (determined by the surrounding container)\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -18420,7 +18427,7 @@
                     "kind": "Builtin",
                     "name": "bool"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "thickness",
@@ -18428,7 +18435,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -18470,7 +18477,7 @@
                     "kind": "Builtin",
                     "name": "bool"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -18595,7 +18602,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "pivot",
@@ -18604,7 +18611,7 @@
                     "module": "ksp::math",
                     "name": "Vec2"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -18750,6 +18757,7 @@
             "add_horizontal": {
               "isAsync": false,
               "name": "add_horizontal",
+              "description": "Add sub container with horizontal layout to the container\n",
               "parameters": [
                 {
                   "name": "gap",
@@ -18757,7 +18765,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "align",
@@ -18766,7 +18774,7 @@
                     "module": "ksp::up",
                     "name": "Align"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "stretch",
@@ -18774,7 +18782,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -18786,6 +18794,7 @@
             "add_vertical": {
               "isAsync": false,
               "name": "add_vertical",
+              "description": "Add sub container with vertical layout to the container\n",
               "parameters": [
                 {
                   "name": "gap",
@@ -18793,7 +18802,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "align",
@@ -18802,7 +18811,7 @@
                     "module": "ksp::up",
                     "name": "Align"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "stretch",
@@ -18810,7 +18819,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -18822,6 +18831,7 @@
             "add_horizontal_panel": {
               "isAsync": false,
               "name": "add_horizontal_panel",
+              "description": "Add sub panel with horizontal layout to the container\n",
               "parameters": [
                 {
                   "name": "gap",
@@ -18829,7 +18839,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "align",
@@ -18838,7 +18848,7 @@
                     "module": "ksp::up",
                     "name": "Align"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "stretch",
@@ -18846,7 +18856,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -18858,6 +18868,7 @@
             "add_vertical_panel": {
               "isAsync": false,
               "name": "add_vertical_panel",
+              "description": "Add sub panel with vertical layout to the container\n",
               "parameters": [
                 {
                   "name": "gap",
@@ -18865,7 +18876,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "align",
@@ -18874,7 +18885,7 @@
                     "module": "ksp::up",
                     "name": "Align"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "stretch",
@@ -18882,7 +18893,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -18894,6 +18905,7 @@
             "add_label": {
               "isAsync": false,
               "name": "add_label",
+              "description": "Add label to the container\n",
               "parameters": [
                 {
                   "name": "label",
@@ -18910,7 +18922,7 @@
                     "module": "ksp::up",
                     "name": "Align"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "stretch",
@@ -18918,7 +18930,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -18930,6 +18942,7 @@
             "add_button": {
               "isAsync": false,
               "name": "add_button",
+              "description": "Add button to the container\n",
               "parameters": [
                 {
                   "name": "label",
@@ -18946,7 +18959,7 @@
                     "module": "ksp::up",
                     "name": "Align"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "stretch",
@@ -18954,7 +18967,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -18966,6 +18979,7 @@
             "add_toggle": {
               "isAsync": false,
               "name": "add_toggle",
+              "description": "Add toggle to the container\n",
               "parameters": [
                 {
                   "name": "label",
@@ -18982,7 +18996,7 @@
                     "module": "ksp::up",
                     "name": "Align"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "stretch",
@@ -18990,7 +19004,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -19002,6 +19016,7 @@
             "add_string_input": {
               "isAsync": false,
               "name": "add_string_input",
+              "description": "Add string input field to the container\n",
               "parameters": [
                 {
                   "name": "align",
@@ -19010,7 +19025,7 @@
                     "module": "ksp::up",
                     "name": "Align"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "stretch",
@@ -19018,7 +19033,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -19030,6 +19045,7 @@
             "add_int_input": {
               "isAsync": false,
               "name": "add_int_input",
+              "description": "Add integer input field to the container\n",
               "parameters": [
                 {
                   "name": "align",
@@ -19038,7 +19054,7 @@
                     "module": "ksp::up",
                     "name": "Align"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "stretch",
@@ -19046,7 +19062,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -19058,6 +19074,7 @@
             "add_float_input": {
               "isAsync": false,
               "name": "add_float_input",
+              "description": "Add float input field to the container\n",
               "parameters": [
                 {
                   "name": "align",
@@ -19066,7 +19083,7 @@
                     "module": "ksp::up",
                     "name": "Align"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "stretch",
@@ -19074,7 +19091,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -19086,6 +19103,7 @@
             "add_horizontal_slider": {
               "isAsync": false,
               "name": "add_horizontal_slider",
+              "description": "Add horizontal slider to the container\n",
               "parameters": [
                 {
                   "name": "min",
@@ -19110,7 +19128,7 @@
                     "module": "ksp::up",
                     "name": "Align"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "stretch",
@@ -19118,7 +19136,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -19130,6 +19148,7 @@
             "add_canvas": {
               "isAsync": false,
               "name": "add_canvas",
+              "description": "Add canvas to the container\n",
               "parameters": [
                 {
                   "name": "minWidth",
@@ -19154,7 +19173,7 @@
                     "module": "ksp::up",
                     "name": "Align"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "stretch",
@@ -19162,7 +19181,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -19517,7 +19536,7 @@
                     "kind": "Builtin",
                     "name": "string"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -19971,7 +19990,7 @@
                     "kind": "Builtin",
                     "name": "bool"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "thickness",
@@ -19979,7 +19998,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -20021,7 +20040,7 @@
                     "kind": "Builtin",
                     "name": "bool"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -20146,7 +20165,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "pivot",
@@ -20155,7 +20174,7 @@
                     "module": "ksp::math",
                     "name": "Vec2"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -20359,7 +20378,7 @@
                     "kind": "Builtin",
                     "name": "bool"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "thickness",
@@ -20367,7 +20386,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -20409,7 +20428,7 @@
                     "kind": "Builtin",
                     "name": "bool"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -20534,7 +20553,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "pivot",
@@ -20543,7 +20562,7 @@
                     "module": "ksp::math",
                     "name": "Vec2"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -20746,7 +20765,7 @@
                     "kind": "Builtin",
                     "name": "bool"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "thickness",
@@ -20754,7 +20773,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -20796,7 +20815,7 @@
                     "kind": "Builtin",
                     "name": "bool"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -20921,7 +20940,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "pivot",
@@ -20930,7 +20949,7 @@
                     "module": "ksp::math",
                     "name": "Vec2"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -21158,6 +21177,7 @@
             "add_horizontal": {
               "isAsync": false,
               "name": "add_horizontal",
+              "description": "Add sub container with horizontal layout to the container\n",
               "parameters": [
                 {
                   "name": "gap",
@@ -21165,7 +21185,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "align",
@@ -21174,7 +21194,7 @@
                     "module": "ksp::up",
                     "name": "Align"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "stretch",
@@ -21182,7 +21202,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -21194,6 +21214,7 @@
             "add_vertical": {
               "isAsync": false,
               "name": "add_vertical",
+              "description": "Add sub container with vertical layout to the container\n",
               "parameters": [
                 {
                   "name": "gap",
@@ -21201,7 +21222,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "align",
@@ -21210,7 +21231,7 @@
                     "module": "ksp::up",
                     "name": "Align"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "stretch",
@@ -21218,7 +21239,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -21230,6 +21251,7 @@
             "add_horizontal_panel": {
               "isAsync": false,
               "name": "add_horizontal_panel",
+              "description": "Add sub panel with horizontal layout to the container\n",
               "parameters": [
                 {
                   "name": "gap",
@@ -21237,7 +21259,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "align",
@@ -21246,7 +21268,7 @@
                     "module": "ksp::up",
                     "name": "Align"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "stretch",
@@ -21254,7 +21276,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -21266,6 +21288,7 @@
             "add_vertical_panel": {
               "isAsync": false,
               "name": "add_vertical_panel",
+              "description": "Add sub panel with vertical layout to the container\n",
               "parameters": [
                 {
                   "name": "gap",
@@ -21273,7 +21296,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "align",
@@ -21282,7 +21305,7 @@
                     "module": "ksp::up",
                     "name": "Align"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "stretch",
@@ -21290,7 +21313,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -21302,6 +21325,7 @@
             "add_label": {
               "isAsync": false,
               "name": "add_label",
+              "description": "Add label to the container\n",
               "parameters": [
                 {
                   "name": "label",
@@ -21318,7 +21342,7 @@
                     "module": "ksp::up",
                     "name": "Align"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "stretch",
@@ -21326,7 +21350,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -21338,6 +21362,7 @@
             "add_button": {
               "isAsync": false,
               "name": "add_button",
+              "description": "Add button to the container\n",
               "parameters": [
                 {
                   "name": "label",
@@ -21354,7 +21379,7 @@
                     "module": "ksp::up",
                     "name": "Align"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "stretch",
@@ -21362,7 +21387,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -21374,6 +21399,7 @@
             "add_toggle": {
               "isAsync": false,
               "name": "add_toggle",
+              "description": "Add toggle to the container\n",
               "parameters": [
                 {
                   "name": "label",
@@ -21390,7 +21416,7 @@
                     "module": "ksp::up",
                     "name": "Align"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "stretch",
@@ -21398,7 +21424,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -21410,6 +21436,7 @@
             "add_string_input": {
               "isAsync": false,
               "name": "add_string_input",
+              "description": "Add string input field to the container\n",
               "parameters": [
                 {
                   "name": "align",
@@ -21418,7 +21445,7 @@
                     "module": "ksp::up",
                     "name": "Align"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "stretch",
@@ -21426,7 +21453,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -21438,6 +21465,7 @@
             "add_int_input": {
               "isAsync": false,
               "name": "add_int_input",
+              "description": "Add integer input field to the container\n",
               "parameters": [
                 {
                   "name": "align",
@@ -21446,7 +21474,7 @@
                     "module": "ksp::up",
                     "name": "Align"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "stretch",
@@ -21454,7 +21482,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -21466,6 +21494,7 @@
             "add_float_input": {
               "isAsync": false,
               "name": "add_float_input",
+              "description": "Add float input field to the container\n",
               "parameters": [
                 {
                   "name": "align",
@@ -21474,7 +21503,7 @@
                     "module": "ksp::up",
                     "name": "Align"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "stretch",
@@ -21482,7 +21511,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -21494,6 +21523,7 @@
             "add_horizontal_slider": {
               "isAsync": false,
               "name": "add_horizontal_slider",
+              "description": "Add horizontal slider to the container\n",
               "parameters": [
                 {
                   "name": "min",
@@ -21518,7 +21548,7 @@
                     "module": "ksp::up",
                     "name": "Align"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "stretch",
@@ -21526,7 +21556,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {
@@ -21538,6 +21568,7 @@
             "add_canvas": {
               "isAsync": false,
               "name": "add_canvas",
+              "description": "Add canvas to the container\n",
               "parameters": [
                 {
                   "name": "minWidth",
@@ -21562,7 +21593,7 @@
                     "module": "ksp::up",
                     "name": "Align"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 },
                 {
                   "name": "stretch",
@@ -21570,7 +21601,7 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": false
+                  "hasDefault": true
                 }
               ],
               "returnType": {

@@ -29,7 +29,7 @@ namespace KontrolSystem.TO2.Parser {
 
         public static readonly Parser<FunctionParameter> FunctionParameter = Seq(
             Identifier, TypeSpec, Opt(EqDelimiter.Then(Expression))
-        ).Map((param, start, end) => new FunctionParameter(param.Item1, param.Item2,
+        ).Map((param, start, end) => new FunctionParameter(param.Item1, param.Item2, null,
             param.Item3.IsDefined ? param.Item3.Value : null, start, end));
 
         public static readonly Parser<List<FunctionParameter>> FunctionParameters = Char('(').Then(WhiteSpaces0)

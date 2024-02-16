@@ -355,7 +355,8 @@ namespace KontrolSystem.TO2.AST {
 
         public List<FunctionParameter> DeclaredParameters => new List<FunctionParameter> {
             new FunctionParameter("mapper",
-                new FunctionType(false, new List<TO2Type> {optionType.elementType}, BuiltinType.Unit))
+                new FunctionType(false, new List<TO2Type> {optionType.elementType}, BuiltinType.Unit ),
+                "Function to be applied on the optional value if defined")
         };
 
         public IMethodInvokeEmitter Create(IBlockContext context, List<TO2Type> arguments, Node node) {
@@ -370,7 +371,9 @@ namespace KontrolSystem.TO2.AST {
                 throw new ArgumentException($"No Map method in {generatedType}");
 
             return new BoundMethodInvokeEmitter(new OptionType(mapper.returnType),
-                new List<RealizedParameter> { new RealizedParameter("mapper", mapper) }, false, generatedType,
+                new List<RealizedParameter> {
+                    new RealizedParameter("mapper", mapper, "Function to be applied on the optional value if defined")
+                }, false, generatedType,
                 methodInfo);
         }
 
@@ -401,7 +404,8 @@ namespace KontrolSystem.TO2.AST {
 
         public List<FunctionParameter> DeclaredParameters => new List<FunctionParameter> {
             new FunctionParameter("mapper",
-                new FunctionType(false, new List<TO2Type> {optionType.elementType}, BuiltinType.Unit))
+                new FunctionType(false, new List<TO2Type> {optionType.elementType}, BuiltinType.Unit),
+                "Function to be applied on the optional value if defined")
         };
 
         public IMethodInvokeEmitter Create(IBlockContext context, List<TO2Type> arguments, Node node) {
@@ -423,7 +427,9 @@ namespace KontrolSystem.TO2.AST {
                 throw new ArgumentException($"No Then method in {generatedType}");
 
             return new BoundMethodInvokeEmitter(mapper.returnType.UnderlyingType(context.ModuleContext),
-                new List<RealizedParameter> { new RealizedParameter("mapper", mapper) }, false, generatedType,
+                new List<RealizedParameter> {
+                    new RealizedParameter("mapper", mapper, "Function to be applied on the optional value if defined")
+                }, false, generatedType,
                 methodInfo);
         }
 
@@ -449,7 +455,7 @@ namespace KontrolSystem.TO2.AST {
         public TO2Type DeclaredReturn => new ResultType(optionType.elementType, BuiltinType.Unit);
 
         public List<FunctionParameter> DeclaredParameters => new List<FunctionParameter>
-            {new FunctionParameter("on_error", BuiltinType.Unit)};
+            {new FunctionParameter("if_none", BuiltinType.Unit, "Get error message if option is undefined")};
 
         public IMethodInvokeEmitter Create(IBlockContext context, List<TO2Type> arguments, Node node) {
             if (arguments.Count != 1) return null;
@@ -462,7 +468,9 @@ namespace KontrolSystem.TO2.AST {
 
 
             return new BoundMethodInvokeEmitter(new ResultType(optionType.elementType, errorType),
-                new List<RealizedParameter> { new RealizedParameter("if_none", errorType) }, false, generatedType,
+                new List<RealizedParameter> {
+                    new RealizedParameter("if_none", errorType, "Get error message if option is undefined")
+                }, false, generatedType,
                 methodInfo);
         }
 

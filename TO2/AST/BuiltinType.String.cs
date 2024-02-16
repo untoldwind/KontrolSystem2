@@ -57,39 +57,51 @@ namespace KontrolSystem.TO2.AST {
                         "repeat",
                         new BoundMethodInvokeFactory("Repeat the string `count` number of time", true,
                             () => String,
-                            () => new List<RealizedParameter> {new RealizedParameter("count", BuiltinType.Int)},
+                            () => new List<RealizedParameter> {
+                                new RealizedParameter("count", BuiltinType.Int, "Number of times string should be repeated.")
+                            },
                             false, typeof(FormatUtils), typeof(FormatUtils).GetMethod("StringRepeat"))
                     }, {
                         "pad_left",
                         new BoundMethodInvokeFactory("Pad the string to `length` by filling spaces from the left side",
                             true,
                             () => String,
-                            () => new List<RealizedParameter> {new RealizedParameter("length", BuiltinType.Int)},
+                            () => new List<RealizedParameter> {
+                                new RealizedParameter("length", BuiltinType.Int, "Desired length of the string")
+                            },
                             false, typeof(FormatUtils), typeof(FormatUtils).GetMethod("StringPadLeft"))
                     }, {
                         "pad_right",
                         new BoundMethodInvokeFactory("Pad the string to `length` by filling spaces from the right side",
                             true,
                             () => String,
-                            () => new List<RealizedParameter> {new RealizedParameter("length", BuiltinType.Int)},
+                            () => new List<RealizedParameter> {
+                                new RealizedParameter("length", BuiltinType.Int, "Desired length of the string")
+                            },
                             false, typeof(FormatUtils), typeof(FormatUtils).GetMethod("StringPadRight"))
                     }, {
                         "contains",
                         new BoundMethodInvokeFactory("Check if the string contains a sub string `other`", true,
                             () => Bool,
-                            () => new List<RealizedParameter> {new RealizedParameter("other", BuiltinType.String)},
+                            () => new List<RealizedParameter> {
+                                new RealizedParameter("other", BuiltinType.String, "Search string")
+                            },
                             false, typeof(string), typeof(string).GetMethod("Contains", new[] {typeof(string)}))
                     }, {
                         "starts_with",
                         new BoundMethodInvokeFactory("Check if the string starts with `other`", true,
                             () => Bool,
-                            () => new List<RealizedParameter> {new RealizedParameter("other", BuiltinType.String)},
+                            () => new List<RealizedParameter> {
+                                new RealizedParameter("other", BuiltinType.String, "Search string")
+                            },
                             false, typeof(string), typeof(string).GetMethod("StartsWith", new[] {typeof(string)}))
                     }, {
                         "ends_with",
                         new BoundMethodInvokeFactory("Check if the string ends with `other`", true,
                             () => Bool,
-                            () => new List<RealizedParameter> {new RealizedParameter("other", BuiltinType.String)},
+                            () => new List<RealizedParameter> {
+                                new RealizedParameter("other", BuiltinType.String, "Search string")
+                            },
                             false, typeof(string), typeof(string).GetMethod("EndsWith", new[] {typeof(string)}))
                     }, {
                         "to_lower",
@@ -108,8 +120,8 @@ namespace KontrolSystem.TO2.AST {
                         new BoundMethodInvokeFactory("Find index of a sub string, will return -1 if not found", true,
                             () => Int, 
                             () => new List<RealizedParameter> {
-                                new RealizedParameter("other", BuiltinType.String),
-                                new RealizedParameter("startIndex", Int, new IntDefaultValue(0))
+                                new RealizedParameter("other", BuiltinType.String, "Search string"),
+                                new RealizedParameter("startIndex", Int, "Start index", new IntDefaultValue(0))
                             },
                             false, typeof(StringMethods), typeof(StringMethods).GetMethod("IndexOf"))
                     }, {
@@ -117,8 +129,8 @@ namespace KontrolSystem.TO2.AST {
                         new BoundMethodInvokeFactory("Get a sub string/slice for the string defined by start and end index", true,
                             () => String, 
                             () => new List<RealizedParameter> {
-                                new RealizedParameter("startIndex", Int),
-                                new RealizedParameter("endIndex", Int, new IntDefaultValue(-1))
+                                new RealizedParameter("startIndex", Int, "Start index of the slice (inclusive)"),
+                                new RealizedParameter("endIndex", Int, "End index of the slice (exclusive)", new IntDefaultValue(-1))
                             },
                             false, typeof(StringMethods), typeof(StringMethods).GetMethod("Slice"))
                     }, {
@@ -126,8 +138,8 @@ namespace KontrolSystem.TO2.AST {
                         new BoundMethodInvokeFactory("Replace sub string with another sub string", true,
                             () => String,
                             () => new List<RealizedParameter> {
-                                new RealizedParameter("oldString", BuiltinType.String),
-                                new RealizedParameter("newString", BuiltinType.String),
+                                new RealizedParameter("oldString", BuiltinType.String, "Search string"),
+                                new RealizedParameter("newString", BuiltinType.String, "Replacement"),
                             },
                             false, typeof(string), typeof(string).GetMethod("Replace", new[] { typeof(string), typeof(string) }))
                     }, {
@@ -135,7 +147,7 @@ namespace KontrolSystem.TO2.AST {
                         new BoundMethodInvokeFactory("Split string into substrings by separator", true,
                             () => new ArrayType(String), 
                             () => new List<RealizedParameter> {
-                                new RealizedParameter("separator", String),
+                                new RealizedParameter("separator", String, "Search string (separator)"),
                             },
                             false, typeof(StringMethods), typeof(StringMethods).GetMethod("Split"))
                     },

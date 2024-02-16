@@ -206,7 +206,7 @@ namespace KontrolSystem.TO2.AST {
         public TO2Type DeclaredReturn => new OptionType(boundEnumType);
 
         public List<FunctionParameter> DeclaredParameters => new List<FunctionParameter>() {
-            new FunctionParameter("value", BuiltinType.String)
+            new FunctionParameter("value", BuiltinType.String, "Enum value to lookup")
         };
 
         public IMethodInvokeEmitter Create(IBlockContext context, List<TO2Type> arguments, Node node) =>
@@ -226,7 +226,7 @@ namespace KontrolSystem.TO2.AST {
         public RealizedType ResultType => new OptionType(boundEnumType);
 
         public List<RealizedParameter> Parameters => new List<RealizedParameter>() {
-            new RealizedParameter("value", BuiltinType.String)
+            new RealizedParameter("value", BuiltinType.String, "Enum value to lookup")
         };
 
         public bool RequiresPtr => false;

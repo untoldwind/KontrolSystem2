@@ -151,7 +151,7 @@ namespace KontrolSystem.TO2.AST {
         public TO2Type DeclaredReturn => resultType();
 
         public List<FunctionParameter> DeclaredParameters =>
-            parameters().Select(p => new FunctionParameter(p.name, p.type)).ToList();
+            parameters().Select(p => new FunctionParameter(p.name, p.type, p.description, p.HasDefault ? new LiteralBool(true) : null)).ToList();
 
         public IMethodInvokeEmitter Create(IBlockContext context, List<TO2Type> arguments, Node node) {
             (MethodInfo genericMethod, RealizedType genericResult, List<RealizedParameter> genericParameters) =

@@ -24,7 +24,7 @@ namespace KontrolSystem.TO2.Binding {
             MethodInfo methodInfo = type.GetMethod(methodName, parameterTypes) ??
                                     throw new ArgumentException($"Method {methodName} not found in {type}");
             List<RealizedParameter> parameters = methodInfo.GetParameters().Select(p =>
-                new RealizedParameter(p.Name, BindingGenerator.MapNativeType(p.ParameterType),
+                new RealizedParameter(p.Name, BindingGenerator.MapNativeType(p.ParameterType), null,
                     BoundDefaultValue.DefaultValueFor(p))).ToList();
 
             if (methodInfo.ReturnType.IsGenericType &&

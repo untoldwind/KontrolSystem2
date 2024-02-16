@@ -59,19 +59,26 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                     "to_local",
                     new BoundMethodInvokeFactory("Get local vector in a coordinate system", true,
                         () => Vector3Binding.Vector3Type,
-                        () => new List<RealizedParameter> {new RealizedParameter("frame", TransformFrameBinding.TransformFrameType)}, false,
+                        () => new List<RealizedParameter> {
+                            new RealizedParameter("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")
+                        }, false,
                         typeof(VectorBinding), typeof(VectorBinding).GetMethod("ToLocal"))
                 }, {
                     "to_string",
                     new BoundMethodInvokeFactory("Convert vector to string in a given coordinate system.", true, () => BuiltinType.String,
-                        () => new List<RealizedParameter>() { new RealizedParameter("frame", TransformFrameBinding.TransformFrameType) }, false, typeof(VectorBinding),
+                        () => new List<RealizedParameter>() {
+                            new RealizedParameter("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")
+                        }, false, typeof(VectorBinding),
                         typeof(VectorBinding).GetMethod("ToString", new Type[] { typeof(Vector), typeof(ITransformFrame) }))
                 }, {
                     "to_fixed",
                     new BoundMethodInvokeFactory("Convert the vector to string with fixed number of `decimals` in a given coordinate system.",
                         true,
                         () => BuiltinType.String,
-                        () => new List<RealizedParameter>() {new RealizedParameter("frame", TransformFrameBinding.TransformFrameType), new RealizedParameter("decimals", BuiltinType.Int)},
+                        () => new List<RealizedParameter>() {
+                            new RealizedParameter("frame", TransformFrameBinding.TransformFrameType, "Frame of reference"),
+                            new RealizedParameter("decimals", BuiltinType.Int, "Number of decimals")
+                        },
                         false, typeof(VectorBinding), typeof(VectorBinding).GetMethod("ToFixed"))
                 }, {
                     "to_direction",
@@ -84,13 +91,17 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                     "cross",
                     new BoundMethodInvokeFactory("Calculate the cross/other product with `other` vector.", true,
                         () => VectorType,
-                        () => new List<RealizedParameter> {new RealizedParameter("other", VectorType)}, false,
+                        () => new List<RealizedParameter> {
+                            new RealizedParameter("other", VectorType, "Other vector")
+                        }, false,
                         typeof(Vector), typeof(Vector).GetMethod("cross"))
                 }, {
                     "dot",
                     new BoundMethodInvokeFactory("Calculate the dot/inner product with `other` vector.", true,
                         () => BuiltinType.Float,
-                        () => new List<RealizedParameter> {new RealizedParameter("other", VectorType)}, false,
+                        () => new List<RealizedParameter> {
+                            new RealizedParameter("other", VectorType, "Other vector")
+                        }, false,
                         typeof(Vector), typeof(Vector).GetMethod("dot"))
                 }, {
                     "lerp_to",
@@ -99,12 +110,15 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                         true,
                         () => VectorType,
                         () => new List<RealizedParameter> {
-                            new RealizedParameter("other", VectorType), new RealizedParameter("t", BuiltinType.Float)
+                            new RealizedParameter("other", VectorType, "Other vector"), 
+                            new RealizedParameter("t", BuiltinType.Float, "Relative position of mid-point (0.0 - 1.0)")
                         }, false, typeof(Vector), typeof(Vector).GetMethod("Lerp"))
                 }, {
                     "exclude_from",
                     new BoundMethodInvokeFactory("Exclude this from `other` vector.", true, () => VectorType,
-                        () => new List<RealizedParameter> {new RealizedParameter("other", VectorType)}, false,
+                        () => new List<RealizedParameter> {
+                            new RealizedParameter("other", VectorType, "Other vector")
+                        }, false,
                         typeof(VectorBinding), typeof(VectorBinding).GetMethod("ExcludeFrom"))
                 },
             },

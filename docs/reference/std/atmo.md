@@ -17,6 +17,16 @@ pub fn atmo_launch ( vessel : ksp::vessel::Vessel,
 
 Automatically launch a rocket from an atmosphere to a circular orbit.
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+vessel | ksp::vessel::Vessel |  | 
+target_apoapsis | float |  | 
+heading | float |  | 
+low_turn | float | x | 
+high_turn | float | x | 
+
 ### atmo_launch_ascent
 
 ```rust
@@ -28,3 +38,13 @@ pub fn atmo_launch_ascent ( vessel : ksp::vessel::Vessel,
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+vessel | ksp::vessel::Vessel |  | 
+target_apoapsis | float |  | 
+heading | float |  | 
+low_turn | float | x | 
+high_turn | float | x | 

@@ -17,17 +17,21 @@ namespace KontrolSystem.TO2.AST {
     public class FunctionParameter : Node {
         public readonly string name;
         public readonly TO2Type type;
+        public readonly string description;
         public readonly Expression defaultValue;
 
-        public FunctionParameter(string name, TO2Type type, Expression defaultValue = null,
+        public FunctionParameter(string name, TO2Type type, string description, Expression defaultValue = null,
             Position start = new Position(), Position end = new Position()) : base(start, end) {
             this.name = name;
             this.type = type;
+            this.description = description;
             this.defaultValue = defaultValue;
         }
 
         public override string ToString() => $"{name} : {type}";
 
+        public bool HasDefault => defaultValue != null;
+        
         public override REPLValueFuture Eval(REPLContext context) {
             throw new NotSupportedException("Function are not supported in REPL mode");
         }

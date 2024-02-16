@@ -41,6 +41,12 @@ console.clear_line ( row : int ) -> Unit
 Clear a line
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+row | int |  | 
+
 ##### move_cursor
 
 ```rust
@@ -51,6 +57,13 @@ console.move_cursor ( row : int,
 Move the cursor to a give `row` and `column`.
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+row | int |  | 
+column | int |  | 
+
 ##### print
 
 ```rust
@@ -59,6 +72,12 @@ console.print ( message : string ) -> Unit
 
 Print a message at the current cursor position (and move cursor forward)
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+message | string |  | 
 
 ##### print_at
 
@@ -71,6 +90,14 @@ console.print_at ( row : int,
 Moves the cursor to the specified position, prints the message and restores the previous cursor position
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+row | int |  | 
+column | int |  | 
+message | string |  | 
+
 ##### print_line
 
 ```rust
@@ -79,6 +106,12 @@ console.print_line ( message : string ) -> Unit
 
 Print a message at the current cursor position and move cursor to the beginning of the next line.
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+message | string |  | 
 
 ### RgbaColor
 
@@ -122,3 +155,12 @@ pub sync fn color ( red : float,
 
 Create a new color from `red`, `green`, `blue` and `alpha` (0.0 - 1.0).
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+red | float |  | 
+green | float |  | 
+blue | float |  | 
+alpha | float | x | 

@@ -16,7 +16,8 @@ namespace KontrolSystem.TO2.AST {
                         () => new ArrayType(new GenericParameter("T")),
                         () => new List<RealizedParameter> {
                             new RealizedParameter("mapper",
-                                new FunctionType(false, new List<TO2Type> {BuiltinType.Int}, new GenericParameter("T")))
+                                new FunctionType(false, new List<TO2Type> {BuiltinType.Int}, new GenericParameter("T")),
+                                "Function to be applied on each element of the range")
                         },
                         false, typeof(Range), typeof(Range).GetMethod("Map"))
                 },
@@ -24,11 +25,12 @@ namespace KontrolSystem.TO2.AST {
                     "reduce",
                     new BoundMethodInvokeFactory("Reduce range by an operation", true, () => new GenericParameter("U"),
                         () => new List<RealizedParameter> {
-                            new RealizedParameter("initial", new GenericParameter("U")),
+                            new RealizedParameter("initial", new GenericParameter("U"), "Initial value of the accumulator"),
                             new RealizedParameter("reducer", new FunctionType(false, new List<TO2Type> {
                                 new GenericParameter("U"),
                                 BuiltinType.Int
-                            }, new GenericParameter("U")))
+                            }, new GenericParameter("U")),
+                            "Combines accumulator with each element of the array and returns new accumulator value")
                         }, false, typeof(Range),
                         typeof(Range).GetMethod("Reduce"))
                 },

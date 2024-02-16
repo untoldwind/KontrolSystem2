@@ -187,7 +187,7 @@ namespace KontrolSystem.TO2.AST {
         }
 
         private List<FunctionParameter> FixedParameters(FunctionType lambdaType) =>
-            parameters.Zip(lambdaType.parameterTypes, (p, f) => new FunctionParameter(p.name, p.type ?? f))
+            parameters.Zip(lambdaType.parameterTypes, (p, f) => new FunctionParameter(p.name, p.type ?? f, null))
                 .ToList();
 
         public override REPLValueFuture Eval(REPLContext context) {

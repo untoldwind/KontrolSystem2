@@ -32,6 +32,12 @@ direction.to_global ( frame : ksp::math::TransformFrame ) -> ksp::math::GlobalDi
 
 Associate this direction with a coordinate system
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+frame | ksp::math::TransformFrame |  | Frame of reference
+
 ##### to_string
 
 ```rust
@@ -54,6 +60,12 @@ globalangularvelocity.relative_to ( frame : ksp::math::TransformFrame ) -> ksp::
 
 Get relative angular velocity to a frame of reference
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+frame | ksp::math::TransformFrame |  | Frame of reference
+
 ##### to_fixed
 
 ```rust
@@ -63,6 +75,13 @@ globalangularvelocity.to_fixed ( frame : ksp::math::TransformFrame,
 
 Convert angular velocity to string with fixed number of `decimals` in a given coordinate system.
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+frame | ksp::math::TransformFrame |  | Frame of reference
+decimals | int |  | Number of decimals
+
 ##### to_local
 
 ```rust
@@ -71,6 +90,12 @@ globalangularvelocity.to_local ( frame : ksp::math::TransformFrame ) -> ksp::mat
 
 Get local angular velocity in a frame of reference
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+frame | ksp::math::TransformFrame |  | Frame of reference
+
 ##### to_string
 
 ```rust
@@ -78,6 +103,12 @@ globalangularvelocity.to_string ( frame : ksp::math::TransformFrame ) -> string
 ```
 
 Convert angular velocity to string in a given coordinate system.
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+frame | ksp::math::TransformFrame |  | Frame of reference
 
 ### GlobalDirection
 
@@ -101,6 +132,12 @@ globaldirection.euler ( frame : ksp::math::TransformFrame ) -> ksp::math::Vec3
 
 Get euler angles in a specific coordinate system
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+frame | ksp::math::TransformFrame |  | Frame of reference
+
 ##### pitch
 
 ```rust
@@ -108,6 +145,12 @@ globaldirection.pitch ( frame : ksp::math::TransformFrame ) -> float
 ```
 
 Get pitch angle in a specific coordinate system
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+frame | ksp::math::TransformFrame |  | Frame of reference
 
 ##### roll
 
@@ -117,6 +160,12 @@ globaldirection.roll ( frame : ksp::math::TransformFrame ) -> float
 
 Get roll angle in a specific coordinate system
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+frame | ksp::math::TransformFrame |  | Frame of reference
+
 ##### to_local
 
 ```rust
@@ -124,6 +173,12 @@ globaldirection.to_local ( frame : ksp::math::TransformFrame ) -> ksp::math::Dir
 ```
 
 Get local direction in a coordinate system
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+frame | ksp::math::TransformFrame |  | Frame of reference
 
 ##### to_string
 
@@ -133,6 +188,12 @@ globaldirection.to_string ( frame : ksp::math::TransformFrame ) -> string
 
 Convert the direction to string
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+frame | ksp::math::TransformFrame |  | Frame of reference
+
 ##### yaw
 
 ```rust
@@ -140,6 +201,12 @@ globaldirection.yaw ( frame : ksp::math::TransformFrame ) -> float
 ```
 
 Get yaw angle in a specific coordinate system
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+frame | ksp::math::TransformFrame |  | Frame of reference
 
 ### GlobalPosition
 
@@ -155,6 +222,12 @@ globalposition.distance ( other : ksp::math::GlobalPosition ) -> float
 
 Calculate the distance of `other` position.
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+other | ksp::math::GlobalPosition |  | Other position
+
 ##### distance_sqr
 
 ```rust
@@ -162,6 +235,12 @@ globalposition.distance_sqr ( other : ksp::math::GlobalPosition ) -> float
 ```
 
 Calculate the squared distance of `other` position.
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+other | ksp::math::GlobalPosition |  | Other position
 
 ##### lerp_to
 
@@ -172,6 +251,13 @@ globalposition.lerp_to ( other : ksp::math::GlobalPosition,
 
 Linear interpolate position between this and `other` position, where `t = 0.0` is this and `t = 1.0` is `other`.
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+other | ksp::math::GlobalPosition |  | Other position
+t | float |  | Relative position of mid-point (0.0 - 1.0)
+
 ##### to_fixed
 
 ```rust
@@ -181,6 +267,13 @@ globalposition.to_fixed ( frame : ksp::math::TransformFrame,
 
 Convert the vector to string with fixed number of `decimals` in a given coordinate system.
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+frame | ksp::math::TransformFrame |  | Frame of reference
+decimals | int |  | Number of decimals
+
 ##### to_local
 
 ```rust
@@ -189,6 +282,12 @@ globalposition.to_local ( frame : ksp::math::TransformFrame ) -> ksp::math::Vec3
 
 Get local vector in a coordinate system
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+frame | ksp::math::TransformFrame |  | Frame of reference
+
 ##### to_string
 
 ```rust
@@ -196,6 +295,12 @@ globalposition.to_string ( frame : ksp::math::TransformFrame ) -> string
 ```
 
 Convert vector to string in a given coordinate system.
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+frame | ksp::math::TransformFrame |  | Frame of reference
 
 ### GlobalVector
 
@@ -219,6 +324,12 @@ globalvector.cross ( other : ksp::math::GlobalVector ) -> ksp::math::GlobalVecto
 
 Calculate the cross/other product with `other` vector.
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+other | ksp::math::GlobalVector |  | Other vector
+
 ##### dot
 
 ```rust
@@ -226,6 +337,12 @@ globalvector.dot ( other : ksp::math::GlobalVector ) -> float
 ```
 
 Calculate the dot/inner product with `other` vector.
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+other | ksp::math::GlobalVector |  | Other vector
 
 ##### exclude_from
 
@@ -235,6 +352,12 @@ globalvector.exclude_from ( other : ksp::math::GlobalVector ) -> ksp::math::Glob
 
 Exclude this from `other` vector.
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+other | ksp::math::GlobalVector |  | Other vector
+
 ##### lerp_to
 
 ```rust
@@ -243,6 +366,13 @@ globalvector.lerp_to ( other : ksp::math::GlobalVector,
 ```
 
 Linear interpolate position between this and `other` vector, where `t = 0.0` is this and `t = 1.0` is `other`.
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+other | ksp::math::GlobalVector |  | Other vector
+t | float |  | Relative position of mid-point (0.0 - 1.0)
 
 ##### to_direction
 
@@ -261,6 +391,13 @@ globalvector.to_fixed ( frame : ksp::math::TransformFrame,
 
 Convert the vector to string with fixed number of `decimals` in a given coordinate system.
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+frame | ksp::math::TransformFrame |  | Frame of reference
+decimals | int |  | Number of decimals
+
 ##### to_local
 
 ```rust
@@ -269,6 +406,12 @@ globalvector.to_local ( frame : ksp::math::TransformFrame ) -> ksp::math::Vec3
 
 Get local vector in a coordinate system
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+frame | ksp::math::TransformFrame |  | Frame of reference
+
 ##### to_string
 
 ```rust
@@ -276,6 +419,12 @@ globalvector.to_string ( frame : ksp::math::TransformFrame ) -> string
 ```
 
 Convert vector to string in a given coordinate system.
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+frame | ksp::math::TransformFrame |  | Frame of reference
 
 ### GlobalVelocity
 
@@ -299,6 +448,13 @@ globalvelocity.to_fixed ( frame : ksp::math::TransformFrame,
 
 Convert the vector to string with fixed number of `decimals` in a given coordinate system.
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+frame | ksp::math::TransformFrame |  | Frame of reference
+decimals | int |  | Number of decimals
+
 ##### to_local
 
 ```rust
@@ -306,6 +462,12 @@ globalvelocity.to_local ( frame : ksp::math::TransformFrame ) -> ksp::math::Vec3
 ```
 
 Get local velocity in a frame of reference
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+frame | ksp::math::TransformFrame |  | Frame of reference
 
 ##### to_relative
 
@@ -315,6 +477,12 @@ globalvelocity.to_relative ( frame : ksp::math::TransformFrame ) -> ksp::math::G
 
 Get relative velocity to frame of reference
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+frame | ksp::math::TransformFrame |  | Frame of reference
+
 ##### to_string
 
 ```rust
@@ -322,6 +490,12 @@ globalvelocity.to_string ( frame : ksp::math::TransformFrame ) -> string
 ```
 
 Convert vector to string in a given coordinate system.
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+frame | ksp::math::TransformFrame |  | Frame of reference
 
 ### Matrix2x2
 
@@ -363,6 +537,12 @@ transformframe.to_local_position ( position : ksp::math::GlobalPosition ) -> ksp
 
 Get local coordinates of a position
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+position | ksp::math::GlobalPosition |  | Position to transform
+
 ##### to_local_vector
 
 ```rust
@@ -371,6 +551,12 @@ transformframe.to_local_vector ( vector : ksp::math::GlobalVector ) -> ksp::math
 
 Get local coordinates of a vector
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+vector | ksp::math::GlobalVector |  | Vector to transform
+
 ##### to_local_velocity
 
 ```rust
@@ -378,6 +564,12 @@ transformframe.to_local_velocity ( velocity : ksp::math::GlobalVelocity ) -> ksp
 ```
 
 Get local coordinates of a velocity
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+velocity | ksp::math::GlobalVelocity |  | Velocity to transform
 
 ### Vec2
 
@@ -403,6 +595,12 @@ vec2.angle_to ( other : ksp::math::Vec2 ) -> float
 
 Calculate the angle in degree to `other` vector.
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+other | ksp::math::Vec2 |  | Other vector
+
 ##### to_fixed
 
 ```rust
@@ -410,6 +608,12 @@ vec2.to_fixed ( decimals : int ) -> string
 ```
 
 Convert the vector to string with fixed number of `decimals`.
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+decimals | int |  | Number of decimals
 
 ##### to_string
 
@@ -445,6 +649,12 @@ vec3.angle_to ( other : ksp::math::Vec3 ) -> float
 
 Calculate the angle in degree to `other` vector.
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+other | ksp::math::Vec3 |  | Other vector
+
 ##### cross
 
 ```rust
@@ -452,6 +662,12 @@ vec3.cross ( other : ksp::math::Vec3 ) -> ksp::math::Vec3
 ```
 
 Calculate the cross/other product with `other` vector.
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+other | ksp::math::Vec3 |  | Other vector
 
 ##### distance_to
 
@@ -461,6 +677,12 @@ vec3.distance_to ( other : ksp::math::Vec3 ) -> float
 
 Calculate the distance between this and `other` vector.
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+other | ksp::math::Vec3 |  | Other vector
+
 ##### dot
 
 ```rust
@@ -469,6 +691,12 @@ vec3.dot ( other : ksp::math::Vec3 ) -> float
 
 Calculate the dot/inner product with `other` vector.
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+other | ksp::math::Vec3 |  | Other vector
+
 ##### exclude_from
 
 ```rust
@@ -476,6 +704,12 @@ vec3.exclude_from ( other : ksp::math::Vec3 ) -> ksp::math::Vec3
 ```
 
 Exclude this from `other` vector.
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+other | ksp::math::Vec3 |  | Other vector
 
 ##### lerp_to
 
@@ -486,6 +720,13 @@ vec3.lerp_to ( other : ksp::math::Vec3,
 
 Linear interpolate position between this and `other` vector, where `t = 0.0` is this and `t = 1.0` is `other`.
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+other | ksp::math::Vec3 |  | Other vector
+t | float |  | Relative position of mid-point (0.0 - 1.0)
+
 ##### project_to
 
 ```rust
@@ -493,6 +734,12 @@ vec3.project_to ( other : ksp::math::Vec3 ) -> ksp::math::Vec3
 ```
 
 Project this on `other` vector.
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+other | ksp::math::Vec3 |  | Other vector
 
 ##### to_direction
 
@@ -510,6 +757,12 @@ vec3.to_fixed ( decimals : int ) -> string
 
 Convert the vector to string with fixed number of `decimals`.
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+decimals | int |  | Number of decimals
+
 ##### to_global
 
 ```rust
@@ -518,6 +771,12 @@ vec3.to_global ( frame : ksp::math::TransformFrame ) -> ksp::math::GlobalVector
 
 Associate this vector with a coordinate system
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+frame | ksp::math::TransformFrame |  | Frame of reference
+
 ##### to_position
 
 ```rust
@@ -525,6 +784,12 @@ vec3.to_position ( frame : ksp::math::TransformFrame ) -> ksp::math::GlobalPosit
 ```
 
 Consider this vector as position in a coordinate system
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+frame | ksp::math::TransformFrame |  | Frame of reference
 
 ##### to_string
 
@@ -546,6 +811,13 @@ pub sync fn angle_axis ( angle : float,
 
 Create a Direction from a given axis with rotation angle in degree
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+angle | float |  | 
+axis | ksp::math::Vec3 |  | 
+
 ### angle_delta
 
 ```rust
@@ -554,6 +826,13 @@ pub sync fn angle_delta ( a : float,
 ```
 
 Calculate the difference between to angles in degree (-180 .. 180)
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+a | float |  | 
+b | float |  | 
 
 ### euler
 
@@ -565,6 +844,14 @@ pub sync fn euler ( x : float,
 
 Create a Direction from euler angles in degree
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+x | float |  | 
+y | float |  | 
+z | float |  | 
+
 ### from_vector_to_vector
 
 ```rust
@@ -574,6 +861,13 @@ pub sync fn from_vector_to_vector ( v1 : ksp::math::Vec3,
 
 Create a Direction to rotate from one vector to another
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+v1 | ksp::math::Vec3 |  | 
+v2 | ksp::math::Vec3 |  | 
+
 ### global_angle_axis
 
 ```rust
@@ -582,6 +876,13 @@ pub sync fn global_angle_axis ( angle : float,
 ```
 
 Create a Direction from a given axis with rotation angle in degree
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+angle | float |  | 
+axis | ksp::math::GlobalVector |  | 
 
 ### global_euler
 
@@ -594,6 +895,15 @@ pub sync fn global_euler ( frame : ksp::math::TransformFrame,
 
 Create a Direction from euler angles in degree
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+frame | ksp::math::TransformFrame |  | 
+x | float |  | 
+y | float |  | 
+z | float |  | 
+
 ### global_from_vector_to_vector
 
 ```rust
@@ -602,6 +912,13 @@ pub sync fn global_from_vector_to_vector ( v1 : ksp::math::GlobalVector,
 ```
 
 Create a Direction to rotate from one vector to another
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+v1 | ksp::math::GlobalVector |  | 
+v2 | ksp::math::GlobalVector |  | 
 
 ### global_look_dir_up
 
@@ -612,6 +929,13 @@ pub sync fn global_look_dir_up ( lookDirection : ksp::math::GlobalVector,
 
 Create a Direction from a fore-vector and an up-vector
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+lookDirection | ksp::math::GlobalVector |  | 
+upDirection | ksp::math::GlobalVector |  | 
+
 ### look_dir_up
 
 ```rust
@@ -620,6 +944,13 @@ pub sync fn look_dir_up ( lookDirection : ksp::math::Vec3,
 ```
 
 Create a Direction from a fore-vector and an up-vector
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+lookDirection | ksp::math::Vec3 |  | 
+upDirection | ksp::math::Vec3 |  | 
 
 ### matrix2x2
 
@@ -631,6 +962,15 @@ pub sync fn matrix2x2 ( a : float,
 ```
 
 Create a new 2-dimensional matrix
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+a | float |  | 
+b | float |  | 
+c | float |  | 
+d | float |  | 
 
 ### matrix4x4
 
@@ -649,6 +989,13 @@ pub sync fn vec2 ( x : float,
 
 Create a new 2-dimensional vector
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+x | float |  | 
+y | float |  | 
+
 ### vec3
 
 ```rust
@@ -658,3 +1005,11 @@ pub sync fn vec3 ( x : float,
 ```
 
 Create a new 3-dimensional vector
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+x | float |  | 
+y | float |  | 
+z | float |  | 

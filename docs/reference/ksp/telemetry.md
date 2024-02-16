@@ -30,6 +30,13 @@ timeseries.add_data ( ut : float,
 Add a data `value` at time `ut`.
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+ut | float |  | 
+value | float |  | 
+
 ## Functions
 
 
@@ -47,6 +54,14 @@ If a time series of the `name` already exists it will be replace by the new one.
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+name | string |  | 
+startUt | float |  | 
+initialResolution | float |  | 
+
 ### get_time_series
 
 ```rust
@@ -55,6 +70,12 @@ pub sync fn get_time_series ( name : string ) -> Option<ksp::telemetry::TimeSeri
 
 Get a time series by name. Will be undefined if there it does not exists
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+name | string |  | 
 
 ### remove_all_time_series
 
@@ -74,6 +95,12 @@ pub sync fn remove_time_series ( name : string ) -> bool
 Remove a time series by name.
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+name | string |  | 
+
 ### save_time_series
 
 ```rust
@@ -82,3 +109,9 @@ pub sync fn save_time_series ( filename : string ) -> Unit
 
 Store the data of all time series to a file.
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+filename | string |  | 

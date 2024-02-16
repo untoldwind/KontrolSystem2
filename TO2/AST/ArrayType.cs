@@ -31,7 +31,7 @@ namespace KontrolSystem.TO2.AST {
                         () => new List<RealizedParameter> {
                             new RealizedParameter("mapper", new FunctionType(false, new List<TO2Type> {
                                 ElementType
-                            }, new GenericParameter("U")))
+                            }, new GenericParameter("U")), "Function to be applied on each element of the array")
                         },
                         false, typeof(ArrayMethods), typeof(ArrayMethods).GetMethod("Map"),
                         context => ("T", this.ElementType.UnderlyingType(context)).Yield())
@@ -41,7 +41,7 @@ namespace KontrolSystem.TO2.AST {
                         () => new List<RealizedParameter> {
                             new RealizedParameter("mapper",
                                 new FunctionType(false, new List<TO2Type> {ElementType, BuiltinType.Int},
-                                    new GenericParameter("U")))
+                                    new GenericParameter("U")), "Function to be applied on each element of the array including index of the element")
                         },
                         false, typeof(ArrayMethods), typeof(ArrayMethods).GetMethod("MapWithIndex"),
                         context => ("T", this.ElementType.UnderlyingType(context)).Yield())
@@ -50,7 +50,8 @@ namespace KontrolSystem.TO2.AST {
                         () => new ArrayType(new GenericParameter("T")),
                         () => new List<RealizedParameter> {
                             new RealizedParameter("predictate",
-                                new FunctionType(false, new List<TO2Type> {ElementType}, BuiltinType.Bool))
+                                new FunctionType(false, new List<TO2Type> {ElementType}, BuiltinType.Bool),
+                                "Predicate function/check to be applied on each element of the array")
                         },
                         false, typeof(ArrayMethods), typeof(ArrayMethods).GetMethod("Filter"),
                         context => ("T", this.ElementType.UnderlyingType(context)).Yield())
@@ -59,7 +60,8 @@ namespace KontrolSystem.TO2.AST {
                         () => new OptionType(new GenericParameter("T")),
                         () => new List<RealizedParameter> {
                             new RealizedParameter("predictate",
-                                new FunctionType(false, new List<TO2Type> {ElementType}, BuiltinType.Bool))
+                                new FunctionType(false, new List<TO2Type> {ElementType}, BuiltinType.Bool),
+                                "Predicate function/check to be applied on each element of the array until element is found."),
                         },
                         false, typeof(ArrayMethods), typeof(ArrayMethods).GetMethod("Find"),
                         context => ("T", ElementType.UnderlyingType(context)).Yield())
@@ -68,7 +70,8 @@ namespace KontrolSystem.TO2.AST {
                         () => BuiltinType.Bool,
                         () => new List<RealizedParameter> {
                             new RealizedParameter("predictate",
-                                new FunctionType(false, new List<TO2Type> {ElementType}, BuiltinType.Bool))
+                                new FunctionType(false, new List<TO2Type> {ElementType}, BuiltinType.Bool),
+                                "Predicate function/check to be applied on each element of the array until element is found.")
                         },
                         false, typeof(ArrayMethods), typeof(ArrayMethods).GetMethod("Exists"),
                         context => ("T", ElementType.UnderlyingType(context)).Yield())
@@ -76,8 +79,8 @@ namespace KontrolSystem.TO2.AST {
                     "slice",
                     new BoundMethodInvokeFactory("Get a slice of the array", true, () => new ArrayType(ElementType),
                         () => new List<RealizedParameter> {
-                            new RealizedParameter("start", BuiltinType.Int),
-                            new RealizedParameter("end", BuiltinType.Int, new IntDefaultValue(-1))
+                            new RealizedParameter("start", BuiltinType.Int, "Start index of the slice (inclusive)"),
+                            new RealizedParameter("end", BuiltinType.Int, "End index of the slice (exclusive)", new IntDefaultValue(-1))
                         }, false, typeof(ArrayMethods),
                         typeof(ArrayMethods).GetMethod("Slice"),
                         context => ("T", ElementType.UnderlyingType(context)).Yield())
@@ -93,7 +96,8 @@ namespace KontrolSystem.TO2.AST {
                         true, () => new ArrayType(ElementType),
                         () => new List<RealizedParameter>() {
                             new RealizedParameter("value",
-                                new FunctionType(false, new List<TO2Type> {ElementType}, new GenericParameter("U")))
+                                new FunctionType(false, new List<TO2Type> {ElementType}, new GenericParameter("U")),
+                                "Function to be applied on each element, array will be sorted by result of this function")
                         }, false, typeof(ArrayMethods),
                         typeof(ArrayMethods).GetMethod("SortBy"),
                         context => ("T", ElementType.UnderlyingType(context)).Yield())
@@ -103,7 +107,8 @@ namespace KontrolSystem.TO2.AST {
                         true, () => new ArrayType(ElementType),
                         () => new List<RealizedParameter>() {
                             new RealizedParameter("comarator",
-                                new FunctionType(false, new List<TO2Type> {ElementType, ElementType}, BuiltinType.Int))
+                                new FunctionType(false, new List<TO2Type> {ElementType, ElementType}, BuiltinType.Int),
+                                "Compare two elements of the array to each other, `-1` less then, `0` equal, `1` greater than")
                         }, false, typeof(ArrayMethods),
                         typeof(ArrayMethods).GetMethod("SortWith"),
                         context => ("T", ElementType.UnderlyingType(context)).Yield())
@@ -111,11 +116,12 @@ namespace KontrolSystem.TO2.AST {
                     "reduce",
                     new BoundMethodInvokeFactory("Reduce array by an operation", true, () => new GenericParameter("U"),
                         () => new List<RealizedParameter> {
-                            new RealizedParameter("initial", new GenericParameter("U")),
+                            new RealizedParameter("initial", new GenericParameter("U"), "Initial value of the accumulator"),
                             new RealizedParameter("reducer", new FunctionType(false, new List<TO2Type> {
                                 new GenericParameter("U"),
                                 ElementType
-                            }, new GenericParameter("U")))
+                            }, new GenericParameter("U")),
+                                "Combines accumulator with each element of the array and returns new accumulator value")
                         }, false, typeof(ArrayMethods),
                         typeof(ArrayMethods).GetMethod("Reduce"),
                         context => ("T", ElementType.UnderlyingType(context)).Yield())

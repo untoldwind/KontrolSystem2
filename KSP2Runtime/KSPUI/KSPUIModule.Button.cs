@@ -16,7 +16,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
                 this.button.GameObject.AddComponent<UGUILifecycleCallback>().AddOnDestroy(OnDestroy);
             }
 
-            [KSField]
+            [KSField(Description = "Font size of the button label")]
             public double FontSize {
                 get => button.FontSize;
                 set {
@@ -25,7 +25,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
                 }
             }
 
-            [KSField]
+            [KSField(Description = "Button label")]
             public string Label {
                 get => button.Label;
                 set {
@@ -34,13 +34,13 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
                 }
             }
 
-            [KSField]
+            [KSField(Description = "Enable/disable the button")]
             public bool Enabled {
                 get => button.Interactable;
                 set => button.Interactable = value;
             }
 
-            [KSMethod]
+            [KSMethod(Description = "Function to be called if button is clicked")]
             public void OnClick(Action onClick) {
                 var context = KSPContext.CurrentContext;
                 button.OnClick(() => {

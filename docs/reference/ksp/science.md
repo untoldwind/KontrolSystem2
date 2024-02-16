@@ -114,6 +114,12 @@ experimentstateconstants.from_string ( value : string ) -> Option<ksp::science::
 
 Parse from string
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+value | string |  | Enum value to lookup
+
 ### ResearchLocation
 
 Represents a research location of a science experiment.
@@ -191,6 +197,12 @@ scienceexperimenttypeconstants.from_string ( value : string ) -> Option<ksp::sci
 
 Parse from string
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+value | string |  | Enum value to lookup
+
 ### ScienceSituation
 
 Situation of a science experiment
@@ -229,6 +241,12 @@ sciencesituationconstants.from_string ( value : string ) -> Option<ksp::science:
 ```
 
 Parse from string
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+value | string |  | Enum value to lookup
 
 ### ScienceStorage
 

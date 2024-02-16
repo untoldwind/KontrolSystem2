@@ -16,19 +16,25 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                 {
                     "to_local_position",
                     new BoundMethodInvokeFactory("Get local coordinates of a position", true, () => Vector3Binding.Vector3Type,
-                        () => new List<RealizedParameter>() { new RealizedParameter("position", PositionBinding.PositionType) }, false, typeof(ITransformFrame),
+                        () => new List<RealizedParameter>() {
+                            new RealizedParameter("position", PositionBinding.PositionType, "Position to transform")
+                        }, false, typeof(ITransformFrame),
                         typeof(ICoordinateSystem).GetMethod("ToLocalPosition", new Type[] { typeof(Position) }))
                 },
                 {
                     "to_local_vector",
                     new BoundMethodInvokeFactory("Get local coordinates of a vector", true, () => Vector3Binding.Vector3Type,
-                        () => new List<RealizedParameter>() { new RealizedParameter("vector", VectorBinding.VectorType) }, false, typeof(ITransformFrame),
+                        () => new List<RealizedParameter>() {
+                            new RealizedParameter("vector", VectorBinding.VectorType, "Vector to transform")
+                        }, false, typeof(ITransformFrame),
                         typeof(ICoordinateSystem).GetMethod("ToLocalVector", new Type[] { typeof(Vector) }))
                 },
                 {
                     "to_local_velocity",
                     new BoundMethodInvokeFactory("Get local coordinates of a velocity", true, () => Vector3Binding.Vector3Type,
-                        () => new List<RealizedParameter>() { new RealizedParameter("velocity", VelocityBinding.VelocityType) }, false, typeof(TransformFrameBinding),
+                        () => new List<RealizedParameter>() {
+                            new RealizedParameter("velocity", VelocityBinding.VelocityType, "Velocity to transform")
+                        }, false, typeof(TransformFrameBinding),
                         typeof(TransformFrameBinding).GetMethod("ToLocalVelocity", new Type[] { typeof(ITransformFrame), typeof(VelocityAtPosition) }))
                 },
             },

@@ -24,6 +24,15 @@ debug.add_billboard ( positionProvider : sync fn() -> ksp::math::GlobalPosition,
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+positionProvider | sync fn() -> ksp::math::GlobalPosition |  | 
+textProvider | sync fn() -> string |  | 
+color | ksp::console::RgbaColor |  | 
+fontSize | int |  | 
+
 ##### add_ground_marker
 
 ```rust
@@ -33,6 +42,14 @@ debug.add_ground_marker ( geoCoordinates : ksp::orbit::GeoCoordinates,
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+geoCoordinates | ksp::orbit::GeoCoordinates |  | 
+color | ksp::console::RgbaColor |  | 
+rotation | float |  | 
 
 ##### add_line
 
@@ -49,6 +66,16 @@ The line may have a `label` at its mid-point.
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+startProvider | sync fn() -> ksp::math::GlobalPosition |  | 
+endProvider | sync fn() -> ksp::math::GlobalPosition |  | 
+color | ksp::console::RgbaColor |  | 
+label | string |  | 
+width | float |  | 
+
 ##### add_path
 
 ```rust
@@ -58,6 +85,14 @@ debug.add_path ( path : ksp::math::GlobalPosition[],
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+path | ksp::math::GlobalPosition[] |  | 
+color | ksp::console::RgbaColor |  | 
+width | float |  | 
 
 ##### add_vector
 
@@ -73,6 +108,16 @@ Draws a `vector` positioned at `start` with a specified `color` and `width` in t
 The vector may have a `label` at its mid-point.
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+startProvider | sync fn() -> ksp::math::GlobalPosition |  | 
+vectorProvider | sync fn() -> ksp::math::GlobalVector |  | 
+color | ksp::console::RgbaColor |  | 
+label | string |  | 
+width | float |  | 
 
 ##### clear_markers
 
@@ -166,6 +211,12 @@ debugvector.set_end_provider ( endProvider : sync fn() -> ksp::math::GlobalPosit
 Change the function providing the end position of the debug vector.
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+endProvider | sync fn() -> ksp::math::GlobalPosition |  | 
+
 ##### set_start_provider
 
 ```rust
@@ -175,6 +226,12 @@ debugvector.set_start_provider ( startProvider : sync fn() -> ksp::math::GlobalP
 Change the function providing the start position of the debug vector.
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+startProvider | sync fn() -> ksp::math::GlobalPosition |  | 
+
 ##### set_vector_provider
 
 ```rust
@@ -183,6 +240,12 @@ debugvector.set_vector_provider ( vectorProvider : sync fn() -> ksp::math::Globa
 
 Change the function providing the vector/direction of the debug vector.
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+vectorProvider | sync fn() -> ksp::math::GlobalVector |  | 
 
 ### GroundMarker
 

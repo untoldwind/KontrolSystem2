@@ -55,9 +55,11 @@ namespace KontrolSystem.TO2.Binding {
                         KSFunction ksFunction = method.GetCustomAttribute<KSFunction>();
                         if (ksFunction == null) continue;
 
-                        List<RealizedParameter> parameters = method.GetParameters().Select(p =>
-                            new RealizedParameter(p.Name, MapNativeType(p.ParameterType),
-                                BoundDefaultValue.DefaultValueFor(p))).ToList();
+                        List<RealizedParameter> parameters = method.GetParameters().Select(p => {
+                            KSParameter ksParameter = p.GetCustomAttribute<KSParameter>();
+                            return new RealizedParameter(p.Name, MapNativeType(p.ParameterType),
+                                ksParameter?.Description, BoundDefaultValue.DefaultValueFor(p));
+                        }).ToList();
                         if (method.ReturnType.IsGenericType &&
                             method.ReturnType.GetGenericTypeDefinition() == typeof(Future<>)) {
                             Type typeArg = method.ReturnType.GetGenericArguments()[0];
@@ -118,8 +120,11 @@ namespace KontrolSystem.TO2.Binding {
         }
 
         static IMethodInvokeFactory BindMethod(string description, Type type, MethodInfo method) {
-            List<RealizedParameter> parameters = method.GetParameters().Select(p =>
-                    new RealizedParameter(p.Name, MapNativeType(p.ParameterType), BoundDefaultValue.DefaultValueFor(p)))
+            List<RealizedParameter> parameters = method.GetParameters().Select(p => {
+                    KSParameter ksParameter = p.GetCustomAttribute<KSParameter>();
+                    return new RealizedParameter(p.Name, MapNativeType(p.ParameterType), ksParameter?.Description,
+                        BoundDefaultValue.DefaultValueFor(p));
+                })
                 .ToList();
             if (method.ReturnType.IsGenericType && method.ReturnType.GetGenericTypeDefinition() == typeof(Future<>)) {
                 Type typeArg = method.ReturnType.GetGenericArguments()[0];

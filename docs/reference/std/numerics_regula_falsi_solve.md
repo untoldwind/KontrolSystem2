@@ -16,3 +16,13 @@ pub sync fn regula_falsi_solve ( func : sync fn(float) -> float,
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+func | sync fn(float) -> float |  | 
+start_a | float |  | 
+start_b | float |  | 
+tolerance | float |  | 
+max_iterations | int |  | 

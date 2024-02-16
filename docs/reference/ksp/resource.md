@@ -41,6 +41,12 @@ flowdirectionconstants.from_string ( value : string ) -> Option<ksp::resource::F
 
 Parse from string
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+value | string |  | Enum value to lookup
+
 ### ResourceContainer
 
 
@@ -116,6 +122,14 @@ resourcetransfer.add_container ( flowDirection : ksp::resource::FlowDirection,
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+flowDirection | ksp::resource::FlowDirection |  | 
+resourceContainer | ksp::resource::ResourceContainer |  | 
+relativeAmount | float | x | 
+
 ##### add_resource
 
 ```rust
@@ -125,6 +139,14 @@ resourcetransfer.add_resource ( flowDirection : ksp::resource::FlowDirection,
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+flowDirection | ksp::resource::FlowDirection |  | 
+resource | ksp::resource::ResourceData |  | 
+maxUnits | float |  | 
 
 ##### clear
 

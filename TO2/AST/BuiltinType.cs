@@ -35,7 +35,9 @@ namespace KontrolSystem.TO2.AST {
             new List<(string name, IMethodInvokeFactory invoker)> {
                 ("append",
                     new BoundMethodInvokeFactory("Append an element to the array", true, () => BuiltinType.ArrayBuilder,
-                        () => new List<RealizedParameter> {new RealizedParameter("element", new GenericParameter("T"))},
+                        () => new List<RealizedParameter> {
+                            new RealizedParameter("element", new GenericParameter("T"), "Value ot append")
+                        },
                         false, typeof(ArrayBuilder<>), typeof(ArrayBuilder<>).GetMethod("Append"))),
                 ("result",
                     new BoundMethodInvokeFactory("Build the resulting array", true,
@@ -56,7 +58,9 @@ namespace KontrolSystem.TO2.AST {
             new List<(string name, IMethodInvokeFactory invoker)> {
                 ("set_value",
                     new BoundMethodInvokeFactory("Set the value of the cell", true, () => BuiltinType.Unit,
-                        () => new List<RealizedParameter> {new RealizedParameter("value", new GenericParameter("T"))},
+                        () => new List<RealizedParameter> {
+                            new RealizedParameter("value", new GenericParameter("T"), "New value of the cell")
+                        },
                         false, typeof(Cell<>), typeof(Cell<>).GetProperty("Value")?.SetMethod)),
                 ("update",
                     new BoundMethodInvokeFactory("Atomically update the value of the cell", true,
@@ -64,7 +68,8 @@ namespace KontrolSystem.TO2.AST {
                         () => new List<RealizedParameter> {
                             new RealizedParameter("updater",
                                 new FunctionType(false, new List<TO2Type> {new GenericParameter("T")},
-                                    new GenericParameter("T")))
+                                    new GenericParameter("T")),
+                                "Function to be applied on current value of the cell returning the new value of the cell")
                         }, false, typeof(Cell<>), typeof(Cell<>).GetMethod("Update"))),
             },
             new List<(string name, IFieldAccessFactory access)> {

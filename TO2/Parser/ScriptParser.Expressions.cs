@@ -106,7 +106,7 @@ namespace KontrolSystem.TO2.Parser {
 
         private static readonly Parser<FunctionParameter> LambdaParameter = Seq(
             Identifier, Opt(TypeSpec)
-        ).Map(param => new FunctionParameter(param.Item1, param.Item2.IsDefined ? param.Item2.Value : null));
+        ).Map(param => new FunctionParameter(param.Item1, param.Item2.IsDefined ? param.Item2.Value : null, null));
 
         private static readonly Parser<List<FunctionParameter>> LambdaParameters = Char('(').Then(WhiteSpaces0)
             .Then(DelimitedUntil(LambdaParameter, CommaDelimiter, WhiteSpaces0.Then(Char(')'))));

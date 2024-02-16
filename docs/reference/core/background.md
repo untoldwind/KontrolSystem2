@@ -51,3 +51,9 @@ pub sync fn run ( function : sync fn() -> T ) -> core::background::Task<T>
 
 Run a function as background task.
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+function | sync fn() -> T |  | 

@@ -38,6 +38,13 @@ bodyparameters.find_freefall_end_time ( orbit : ksp::orbit::Orbit,
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+orbit | ksp::orbit::Orbit |  | 
+ut | float |  | 
+
 ##### freefall_ended
 
 ```rust
@@ -47,6 +54,13 @@ bodyparameters.freefall_ended ( orbit : ksp::orbit::Orbit,
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+orbit | ksp::orbit::Orbit |  | 
+ut | float |  | 
+
 ##### grav_accel
 
 ```rust
@@ -55,6 +69,12 @@ bodyparameters.grav_accel ( pos : ksp::math::Vec3 ) -> ksp::math::Vec3
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+pos | ksp::math::Vec3 |  | 
+
 ##### reset
 
 ```rust
@@ -62,6 +82,12 @@ bodyparameters.reset ( body : ksp::orbit::Body ) -> Unit
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+body | ksp::orbit::Body |  | 
 
 ##### surface_position
 
@@ -72,6 +98,13 @@ bodyparameters.surface_position ( pos : ksp::math::Vec3,
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+pos | ksp::math::Vec3 |  | 
+UT | float |  | 
+
 ##### surface_velocity
 
 ```rust
@@ -81,6 +114,13 @@ bodyparameters.surface_velocity ( pos : ksp::math::Vec3,
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+pos | ksp::math::Vec3 |  | 
+vel | ksp::math::Vec3 |  | 
+
 ##### total_accel
 
 ```rust
@@ -89,6 +129,13 @@ bodyparameters.total_accel ( pos : ksp::math::Vec3,
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+pos | ksp::math::Vec3 |  | 
+vel | ksp::math::Vec3 |  | 
 
 ### ReentrySimulation
 
@@ -152,6 +199,13 @@ reentrysimulation.reset ( vessel : ksp::vessel::Vessel,
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+vessel | ksp::vessel::Vessel |  | 
+start_ut | float |  | 
+
 ##### run
 
 ```rust
@@ -188,6 +242,15 @@ pub sync fn BodyParameters ( body : ksp::orbit::Body,
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+body | ksp::orbit::Body |  | 
+decel_end_altitude_asl | float |  | 
+landing_altitude_asl | float |  | 
+speed_policy | sync fn(ksp::math::Vec3, ksp::math::Vec3) -> float |  | 
+
 ### init_simulation
 
 ```rust
@@ -202,6 +265,18 @@ pub sync fn init_simulation ( vessel : ksp::vessel::Vessel,
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+vessel | ksp::vessel::Vessel |  | 
+start_ut | float |  | 
+start_dt | float |  | 
+min_dt | float |  | 
+max_thrust_accel | float |  | 
+landing_altitude_asl | float |  | 
+speed_policy | sync fn(ksp::math::Vec3, ksp::math::Vec3) -> float |  | 
+
 ### ReentrySimulation
 
 ```rust
@@ -212,3 +287,12 @@ pub sync fn ReentrySimulation ( body : std::land::landing_simulation::BodyParame
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+body | std::land::landing_simulation::BodyParameters |  | 
+start_dt | float |  | 
+min_dt | float |  | 
+max_thrust_accel | float |  | 

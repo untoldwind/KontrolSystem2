@@ -94,6 +94,12 @@ autopilotmodeconstants.from_string ( value : string ) -> Option<ksp::vessel::Aut
 
 Parse from string
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+value | string |  | Enum value to lookup
+
 ### CommandControlState
 
 Current state of a command module
@@ -134,6 +140,12 @@ commandcontrolstateconstants.from_string ( value : string ) -> Option<ksp::vesse
 
 Parse from string
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+value | string |  | Enum value to lookup
+
 ### DeltaVSituation
 
 Vessel situation for delta-v calculation
@@ -169,6 +181,12 @@ deltavsituationconstants.from_string ( value : string ) -> Option<ksp::vessel::D
 ```
 
 Parse from string
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+value | string |  | Enum value to lookup
 
 ### DockingState
 
@@ -209,6 +227,12 @@ dockingstateconstants.from_string ( value : string ) -> Option<ksp::vessel::Dock
 
 Parse from string
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+value | string |  | Enum value to lookup
+
 ### EngineDeltaV
 
 
@@ -231,6 +255,12 @@ enginedeltav.get_ISP ( situation : ksp::vessel::DeltaVSituation ) -> float
 Estimated ISP of the engine in a given `situation`
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+situation | ksp::vessel::DeltaVSituation |  | 
+
 ##### get_thrust
 
 ```rust
@@ -240,6 +270,12 @@ enginedeltav.get_thrust ( situation : ksp::vessel::DeltaVSituation ) -> float
 Estimated thrust of the engine in a given `situation`
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+situation | ksp::vessel::DeltaVSituation |  | 
+
 ##### get_thrust_vector
 
 ```rust
@@ -248,6 +284,12 @@ enginedeltav.get_thrust_vector ( situation : ksp::vessel::DeltaVSituation ) -> k
 
 Estimated thrust vector of the engine in a given `situation`
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+situation | ksp::vessel::DeltaVSituation |  | 
 
 ### EngineMode
 
@@ -311,6 +353,12 @@ enginetypeconstants.from_string ( value : string ) -> Option<ksp::vessel::Engine
 
 Parse from string
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+value | string |  | Enum value to lookup
+
 ### FlightCtrlState
 
 Current state of the (pilots) flight controls.
@@ -363,6 +411,15 @@ maneuver.add ( ut : float,
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+ut | float |  | 
+radialOut | float |  | 
+normal | float |  | 
+prograde | float |  | 
+
 ##### add_burn_vector
 
 ```rust
@@ -371,6 +428,13 @@ maneuver.add_burn_vector ( ut : float,
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+ut | float |  | 
+burnVector | ksp::math::Vec3 |  | 
 
 ##### next_node
 
@@ -549,6 +613,12 @@ moduledeployable.set_extended ( extend : bool ) -> Unit
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+extend | bool |  | 
+
 ### ModuleDockingNode
 
 
@@ -643,6 +713,12 @@ moduleengine.change_mode ( name : string ) -> bool
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+name | string |  | 
 
 ### ModuleFairing
 
@@ -788,6 +864,12 @@ parachutedeploymodeconstants.from_string ( value : string ) -> Option<ksp::vesse
 
 Parse from string
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+value | string |  | Enum value to lookup
+
 ### ParachuteDeployState
 
 Parachute deploy state
@@ -826,6 +908,12 @@ parachutedeploystateconstants.from_string ( value : string ) -> Option<ksp::vess
 
 Parse from string
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+value | string |  | Enum value to lookup
+
 ### ParachuteSafeStates
 
 Parachute safe states
@@ -862,6 +950,12 @@ parachutesafestatesconstants.from_string ( value : string ) -> Option<ksp::vesse
 ```
 
 Parse from string
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+value | string |  | Enum value to lookup
 
 ### Part
 
@@ -937,6 +1031,12 @@ stagedeltav.get_deltav ( situation : ksp::vessel::DeltaVSituation ) -> float
 Estimated delta-v of the stage in a given `situation`
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+situation | ksp::vessel::DeltaVSituation |  | 
+
 ##### get_ISP
 
 ```rust
@@ -945,6 +1045,12 @@ stagedeltav.get_ISP ( situation : ksp::vessel::DeltaVSituation ) -> float
 
 Estimated ISP of the stage in a given `situation`
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+situation | ksp::vessel::DeltaVSituation |  | 
 
 ##### get_thrust
 
@@ -955,6 +1061,12 @@ stagedeltav.get_thrust ( situation : ksp::vessel::DeltaVSituation ) -> float
 Estimated thrust of the stage in a given `situation`
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+situation | ksp::vessel::DeltaVSituation |  | 
+
 ##### get_TWR
 
 ```rust
@@ -963,6 +1075,12 @@ stagedeltav.get_TWR ( situation : ksp::vessel::DeltaVSituation ) -> float
 
 Estimated TWR of the stage in a given `situation`
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+situation | ksp::vessel::DeltaVSituation |  | 
 
 ### Staging
 
@@ -994,6 +1112,12 @@ staging.parts_in_stage ( stage : int ) -> ksp::vessel::Part[]
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+stage | int |  | 
 
 ### Targetable
 
@@ -1100,6 +1224,14 @@ Calculate a coordinate system independent direction based on
 heading, pitch an roll relative to the horizon.
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+degreesFromNorth | float |  | 
+pitchAboveHorizon | float |  | 
+roll | float |  | 
+
 ##### heading_direction
 
 ```rust
@@ -1111,6 +1243,14 @@ vessel.heading_direction ( degreesFromNorth : float,
 Calculate a direction in the celestial frame of the main body based on
 heading, pitch an roll relative to the horizon.
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+degreesFromNorth | float |  | 
+pitchAboveHorizon | float |  | 
+roll | float |  | 
 
 ##### make_active
 
@@ -1129,6 +1269,12 @@ vessel.manage_rcs_translate ( translateProvider : sync fn(float) -> ksp::math::V
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+translateProvider | sync fn(float) -> ksp::math::Vec3 |  | 
+
 ##### manage_steering
 
 ```rust
@@ -1136,6 +1282,12 @@ vessel.manage_steering ( pitchYawRollProvider : sync fn(float) -> ksp::math::Vec
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+pitchYawRollProvider | sync fn(float) -> ksp::math::Vec3 |  | 
 
 ##### manage_throttle
 
@@ -1145,6 +1297,12 @@ vessel.manage_throttle ( throttleProvider : sync fn(float) -> float ) -> ksp::co
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+throttleProvider | sync fn(float) -> float |  | 
+
 ##### manage_wheel_steering
 
 ```rust
@@ -1152,6 +1310,12 @@ vessel.manage_wheel_steering ( wheelSteeringProvider : sync fn(float) -> float )
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+wheelSteeringProvider | sync fn(float) -> float |  | 
 
 ##### manage_wheel_throttle
 
@@ -1161,6 +1325,12 @@ vessel.manage_wheel_throttle ( wheelThrottleProvider : sync fn(float) -> float )
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+wheelThrottleProvider | sync fn(float) -> float |  | 
+
 ##### override_input_pitch
 
 ```rust
@@ -1168,6 +1338,12 @@ vessel.override_input_pitch ( value : float ) -> Unit
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+value | float |  | 
 
 ##### override_input_roll
 
@@ -1177,6 +1353,12 @@ vessel.override_input_roll ( value : float ) -> Unit
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+value | float |  | 
+
 ##### override_input_translate_x
 
 ```rust
@@ -1184,6 +1366,12 @@ vessel.override_input_translate_x ( value : float ) -> Unit
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+value | float |  | 
 
 ##### override_input_translate_y
 
@@ -1193,6 +1381,12 @@ vessel.override_input_translate_y ( value : float ) -> Unit
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+value | float |  | 
+
 ##### override_input_translate_z
 
 ```rust
@@ -1201,6 +1395,12 @@ vessel.override_input_translate_z ( value : float ) -> Unit
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+value | float |  | 
+
 ##### override_input_yaw
 
 ```rust
@@ -1208,6 +1408,12 @@ vessel.override_input_yaw ( value : float ) -> Unit
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+value | float |  | 
 
 ##### release_control
 
@@ -1225,6 +1431,12 @@ vessel.set_rcs_translate ( translate : ksp::math::Vec3 ) -> ksp::control::RCSTra
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+translate | ksp::math::Vec3 |  | 
+
 ##### set_steering
 
 ```rust
@@ -1232,6 +1444,12 @@ vessel.set_steering ( pitchYawRoll : ksp::math::Vec3 ) -> ksp::control::Steering
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+pitchYawRoll | ksp::math::Vec3 |  | 
 
 ##### set_throttle
 
@@ -1241,6 +1459,12 @@ vessel.set_throttle ( throttle : float ) -> ksp::control::ThrottleManager
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+throttle | float |  | 
+
 ##### set_wheel_steering
 
 ```rust
@@ -1249,6 +1473,12 @@ vessel.set_wheel_steering ( wheelSteering : float ) -> ksp::control::WheelSteeri
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+wheelSteering | float |  | 
+
 ##### set_wheel_throttle
 
 ```rust
@@ -1256,6 +1486,12 @@ vessel.set_wheel_throttle ( wheelThrottle : float ) -> ksp::control::WheelThrott
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+wheelThrottle | float |  | 
 
 ### VesselControlState
 
@@ -1294,6 +1530,12 @@ vesselcontrolstateconstants.from_string ( value : string ) -> Option<ksp::vessel
 
 Parse from string
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+value | string |  | Enum value to lookup
+
 ### VesselDeltaV
 
 
@@ -1314,6 +1556,12 @@ vesseldeltav.stage ( stage : int ) -> Option<ksp::vessel::StageDeltaV>
 
 Get delta-v information for a specific `stage` of the vessel, if existent.
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+stage | int |  | 
 
 ### VesselSituation
 
@@ -1355,6 +1603,12 @@ vesselsituationconstants.from_string ( value : string ) -> Option<ksp::vessel::V
 ```
 
 Parse from string
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+value | string |  | Enum value to lookup
 
 ## Constants
 

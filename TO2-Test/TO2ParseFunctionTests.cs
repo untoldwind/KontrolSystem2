@@ -22,13 +22,13 @@ namespace KontrolSystem.TO2.Test {
 
             Assert.True(result.WasSuccessful);
             Assert.Equal("", result.Remaining.ToString());
-            Helpers.ShouldDeepEqual(new FunctionParameter("ab", BuiltinType.Bool), result.Value, IgnorePosition);
+            Helpers.ShouldDeepEqual(new FunctionParameter("ab", BuiltinType.Bool, null), result.Value, IgnorePosition);
 
             result = TO2ParserFunctions.FunctionParameter.TryParse("_12ab : int");
 
             Assert.True(result.WasSuccessful);
             Assert.Equal("", result.Remaining.ToString());
-            Helpers.ShouldDeepEqual(new FunctionParameter("_12ab", BuiltinType.Int), result.Value, IgnorePosition);
+            Helpers.ShouldDeepEqual(new FunctionParameter("_12ab", BuiltinType.Int, null), result.Value, IgnorePosition);
         }
 
         [Fact]
@@ -51,7 +51,7 @@ namespace KontrolSystem.TO2.Test {
             Assert.Equal("", result.Remaining.ToString());
             Helpers.ShouldDeepEqual(
                 new FunctionDeclaration(FunctionModifier.Public, true, "_demo23", "",
-                    new List<FunctionParameter> { new FunctionParameter("ab", BuiltinType.String) }, BuiltinType.Int,
+                    new List<FunctionParameter> { new FunctionParameter("ab", BuiltinType.String, null) }, BuiltinType.Int,
                     new Block(new List<IBlockItem> { new LiteralInt(0) })), result.Value, IgnorePosition);
 
             result = TO2ParserFunctions.FunctionDeclaration.TryParse(
@@ -62,7 +62,7 @@ namespace KontrolSystem.TO2.Test {
             Helpers.ShouldDeepEqual(
                 new FunctionDeclaration(FunctionModifier.Public, true, "abc34", "",
                     new List<FunctionParameter> {
-                        new FunctionParameter("ab", BuiltinType.String), new FunctionParameter("_56", BuiltinType.Int)
+                        new FunctionParameter("ab", BuiltinType.String, null), new FunctionParameter("_56", BuiltinType.Int, null)
                     }, BuiltinType.Int, new Block(new List<IBlockItem> { new LiteralInt(0) })), result.Value,
                 IgnorePosition);
         }

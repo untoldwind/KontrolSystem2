@@ -103,7 +103,9 @@ namespace KontrolSystem.TO2.AST {
                         new BoundMethodInvokeFactory("Convert the float to string with fixed number of `decimals`.",
                             true,
                             () => String,
-                            () => new List<RealizedParameter>() {new RealizedParameter("decimals", BuiltinType.Int)},
+                            () => new List<RealizedParameter>() {
+                                new RealizedParameter("decimals", BuiltinType.Int, "Number of decimals")
+                            },
                             false, typeof(FormatUtils), typeof(FormatUtils).GetMethod("FloatToFixed"))
                     }
                 };

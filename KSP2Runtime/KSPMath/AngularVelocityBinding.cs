@@ -18,25 +18,34 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
                     "to_local",
                     new BoundMethodInvokeFactory("Get local angular velocity in a frame of reference", true,
                         () => Vector3Binding.Vector3Type,
-                        () => new List<RealizedParameter> {new RealizedParameter("frame", TransformFrameBinding.TransformFrameType)}, false,
+                        () => new List<RealizedParameter> {
+                            new RealizedParameter("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")
+                        }, false,
                         typeof(AngularVelocityBinding), typeof(AngularVelocityBinding).GetMethod("ToLocal"))
                 }, {
                     "to_string",
                     new BoundMethodInvokeFactory("Convert angular velocity to string in a given coordinate system.", true, () => BuiltinType.String,
-                        () => new List<RealizedParameter>() { new RealizedParameter("frame", TransformFrameBinding.TransformFrameType) }, false, typeof(VelocityBinding),
+                        () => new List<RealizedParameter>() {
+                            new RealizedParameter("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")
+                        }, false, typeof(VelocityBinding),
                         typeof(AngularVelocityBinding).GetMethod("ToString", new Type[] { typeof(AngularVelocity), typeof(ITransformFrame) }))
                 }, {
                     "to_fixed",
                     new BoundMethodInvokeFactory("Convert angular velocity to string with fixed number of `decimals` in a given coordinate system.",
                         true,
                         () => BuiltinType.String,
-                        () => new List<RealizedParameter>() {new RealizedParameter("frame", TransformFrameBinding.TransformFrameType), new RealizedParameter("decimals", BuiltinType.Int)},
+                        () => new List<RealizedParameter>() {
+                            new RealizedParameter("frame", TransformFrameBinding.TransformFrameType, "Frame of reference"), 
+                            new RealizedParameter("decimals", BuiltinType.Int, "Number of decimals")
+                        },
                         false, typeof(AngularVelocityBinding), typeof(AngularVelocityBinding).GetMethod("ToFixed"))
                 }, {
                     "relative_to",
                     new BoundMethodInvokeFactory("Get relative angular velocity to a frame of reference", true,
                         () => VectorBinding.VectorType,
-                        () => new List<RealizedParameter> {new RealizedParameter("frame", TransformFrameBinding.TransformFrameType)}, false,
+                        () => new List<RealizedParameter> {
+                            new RealizedParameter("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")
+                        }, false,
                         typeof(AngularVelocityBinding), typeof(AngularVelocityBinding).GetMethod("RelativeTo"))
                 },
             },

@@ -15,7 +15,8 @@ namespace KontrolSystem.TO2.Runtime {
                     new BoundMethodInvokeFactory("Get next random number between `min` and `max`", true,
                         () => BuiltinType.Int,
                         () => new List<RealizedParameter> {
-                            new RealizedParameter("min", BuiltinType.Int), new RealizedParameter("max", BuiltinType.Int)
+                            new RealizedParameter("min", BuiltinType.Int, "Minimum value (inclusive)"), 
+                            new RealizedParameter("max", BuiltinType.Int, "Maximum value (inclusive)")
                         }, false, typeof(RandomBinding), typeof(RandomBinding).GetMethod("NextInt"))
                 }, {
                     "next_float",
@@ -28,8 +29,8 @@ namespace KontrolSystem.TO2.Runtime {
                     new BoundMethodInvokeFactory("Get next gaussian distributed random number", true,
                         () => BuiltinType.Float,
                         () => new List<RealizedParameter> {
-                            new RealizedParameter("mu", BuiltinType.Float, new FloatDefaultValue(0.0)),
-                            new RealizedParameter("sigma", BuiltinType.Float, new FloatDefaultValue(1.0))
+                            new RealizedParameter("mu", BuiltinType.Float, "Mean value", new FloatDefaultValue(0.0)),
+                            new RealizedParameter("sigma", BuiltinType.Float, "Standard deviation", new FloatDefaultValue(1.0))
                         }, false, typeof(RandomBinding), typeof(RandomBinding).GetMethod("NextGaussian"))
                 },
             },

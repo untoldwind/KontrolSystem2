@@ -43,6 +43,12 @@ steeringcontrol.set_direction ( dir : ksp::math::Direction ) -> Unit
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+dir | ksp::math::Direction |  | 
+
 ##### set_global_direction
 
 ```rust
@@ -50,6 +56,12 @@ steeringcontrol.set_global_direction ( dir : ksp::math::GlobalDirection ) -> Uni
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+dir | ksp::math::GlobalDirection |  | 
 
 ##### set_heading
 
@@ -60,6 +72,14 @@ steeringcontrol.set_heading ( degrees_from_north : float,
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+degrees_from_north | float |  | 
+pitch_above_horizon | float |  | 
+roll | float |  | 
 
 ### SteeringController
 
@@ -144,6 +164,12 @@ steeringcontroller.update ( delta_t : float ) -> ksp::math::Vec3
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+delta_t | float |  | 
+
 ##### update_control
 
 ```rust
@@ -160,6 +186,12 @@ steeringcontroller.update_prediction_pi ( delta_t : float ) -> Unit
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+delta_t | float |  | 
+
 ##### update_state_vectors
 
 ```rust
@@ -167,6 +199,12 @@ steeringcontroller.update_state_vectors ( delta_t : float ) -> Unit
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+delta_t | float |  | 
 
 ##### update_torque
 
@@ -199,6 +237,12 @@ sleep(5) // Give the controller time to steer the vessel
 control.release() // release control of the vessel
 ```
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+vessel | ksp::vessel::Vessel |  | 
+
 ### SteeringControl
 
 ```rust
@@ -209,6 +253,13 @@ pub sync fn SteeringControl ( manager : ksp::control::SteeringManager,
 Helper to use `SteeringController` with a `SteeringManager` of a vessel.
 Use the `control_steering` function to set it up correctly.
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+manager | ksp::control::SteeringManager |  | 
+controller | std::control::steering::SteeringController |  | 
+
 ### SteeringController
 
 ```rust
@@ -217,3 +268,10 @@ pub sync fn SteeringController ( vessel : ksp::vessel::Vessel,
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+vessel | ksp::vessel::Vessel |  | 
+target_direction | ksp::math::GlobalDirection |  | 

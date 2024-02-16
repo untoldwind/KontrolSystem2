@@ -14,7 +14,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
                 this.canvas = canvas;
             }
 
-            [KSField]
+            [KSField(Description = "Minimum size of the canvas.")]
             public Vector2d MinSize {
                 get => new Vector2d(canvas.MinSize.x, canvas.MinSize.y);
                 set {
@@ -23,9 +23,11 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
                 }
             }
 
-            [KSField] public double Width => canvas.Width;
+            [KSField(Description = "Current width of the canvas (determined by the surrounding container)")] 
+            public double Width => canvas.Width;
 
-            [KSField] public double Height => canvas.Height;
+            [KSField(Description = "Current height of the canvas (determined by the surrounding container)")]
+            public double Height => canvas.Height;
 
             protected override void AddElement(GLUIDrawer.IGLUIDrawable element) => canvas.Add(element);
 

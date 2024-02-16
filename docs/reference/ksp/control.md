@@ -38,6 +38,13 @@ movingaverage.update ( sampleTime : float,
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+sampleTime | float |  | 
+value | float |  | 
+
 ##### update_delta
 
 ```rust
@@ -46,6 +53,13 @@ movingaverage.update_delta ( deltaT : float,
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+deltaT | float |  | 
+input | float |  | 
 
 ### PIDLoop
 
@@ -92,6 +106,13 @@ pidloop.update ( sampleTime : float,
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+sampleTime | float |  | 
+input | float |  | 
+
 ##### update_delta
 
 ```rust
@@ -100,6 +121,13 @@ pidloop.update_delta ( deltaT : float,
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+deltaT | float |  | 
+input | float |  | 
 
 ### RCSTranslateManager
 
@@ -137,6 +165,12 @@ rcstranslatemanager.set_translate_provider ( newTranslateProvider : sync fn(floa
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+newTranslateProvider | sync fn(float) -> ksp::math::Vec3 |  | 
+
 ### SteeringManager
 
 
@@ -172,6 +206,12 @@ steeringmanager.set_pitch_yaw_roll_provider ( newPitchYawRollProvider : sync fn(
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+newPitchYawRollProvider | sync fn(float) -> ksp::math::Vec3 |  | 
 
 ### ThrottleManager
 
@@ -209,6 +249,12 @@ throttlemanager.set_throttle_provider ( newThrottleProvider : sync fn(float) -> 
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+newThrottleProvider | sync fn(float) -> float |  | 
+
 ### TorquePI
 
 
@@ -245,6 +291,16 @@ torquepi.update ( sampleTime : float,
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+sampleTime | float |  | 
+input | float |  | 
+setpoint | float |  | 
+momentOfInertia | float |  | 
+maxOutput | float |  | 
+
 ##### update_delta
 
 ```rust
@@ -256,6 +312,16 @@ torquepi.update_delta ( deltaT : float,
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+deltaT | float |  | 
+input | float |  | 
+setpoint | float |  | 
+momentOfInertia | float |  | 
+maxOutput | float |  | 
 
 ### WheelSteeringManager
 
@@ -293,6 +359,12 @@ wheelsteeringmanager.set_wheel_steer_provider ( newWheelSteerProvider : sync fn(
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+newWheelSteerProvider | sync fn(float) -> float |  | 
+
 ### WheelThrottleManager
 
 
@@ -329,6 +401,12 @@ wheelthrottlemanager.set_wheel_throttle_provider ( newWheelThrottleProvider : sy
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+newWheelThrottleProvider | sync fn(float) -> float |  | 
+
 ## Functions
 
 
@@ -340,6 +418,12 @@ pub sync fn moving_average ( sampleLimit : int ) -> ksp::control::MovingAverage
 
 Create a new MovingAverage with given sample limit.
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+sampleLimit | int |  | 
 
 ### pid_loop
 
@@ -355,6 +439,17 @@ pub sync fn pid_loop ( kp : float,
 Create a new PIDLoop with given parameters.
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+kp | float |  | 
+ki | float |  | 
+kd | float |  | 
+minOutput | float |  | 
+maxOutput | float |  | 
+extraUnwind | bool | x | 
+
 ### torque_pi
 
 ```rust
@@ -363,3 +458,9 @@ pub sync fn torque_pi ( ts : float ) -> ksp::control::TorquePI
 
 Create a new TorquePI with given parameters.
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+ts | float |  | 
