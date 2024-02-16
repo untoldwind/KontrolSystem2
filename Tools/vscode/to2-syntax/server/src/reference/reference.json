@@ -19200,7 +19200,7 @@
                     "name": "float"
                   },
                   "hasDefault": true,
-                  "description": "Relative amount of available space to acquire (if allin = Stretch)"
+                  "description": "Relative amount of available space to acquire (beyond minimal space)"
                 }
               ],
               "returnType": {
@@ -19240,7 +19240,7 @@
                     "name": "float"
                   },
                   "hasDefault": true,
-                  "description": "Relative amount of available space to acquire (if allin = Stretch)"
+                  "description": "Relative amount of available space to acquire (beyond minimal space)"
                 }
               ],
               "returnType": {
@@ -19320,7 +19320,7 @@
                     "name": "float"
                   },
                   "hasDefault": true,
-                  "description": "Relative amount of available space to acquire (if allin = Stretch)"
+                  "description": "Relative amount of available space to acquire (beyond minimal space)"
                 }
               ],
               "returnType": {
@@ -19351,7 +19351,7 @@
                     "name": "Align"
                   },
                   "hasDefault": true,
-                  "description": null
+                  "description": "Alignment of the label in its parent container"
                 },
                 {
                   "name": "stretch",
@@ -19360,7 +19360,7 @@
                     "name": "float"
                   },
                   "hasDefault": true,
-                  "description": null
+                  "description": "Relative amount of available space to acquire (beyond minimal space)"
                 }
               ],
               "returnType": {
@@ -19391,7 +19391,7 @@
                     "name": "Align"
                   },
                   "hasDefault": true,
-                  "description": null
+                  "description": "Alignment of the button in its parent container"
                 },
                 {
                   "name": "stretch",
@@ -19400,7 +19400,7 @@
                     "name": "float"
                   },
                   "hasDefault": true,
-                  "description": null
+                  "description": "Relative amount of available space to acquire (beyond minimal space)"
                 }
               ],
               "returnType": {
@@ -19431,7 +19431,7 @@
                     "name": "Align"
                   },
                   "hasDefault": true,
-                  "description": null
+                  "description": "Alignment of the toggle in its parent container"
                 },
                 {
                   "name": "stretch",
@@ -19440,7 +19440,7 @@
                     "name": "float"
                   },
                   "hasDefault": true,
-                  "description": null
+                  "description": "Relative amount of available space to acquire (beyond minimal space)"
                 }
               ],
               "returnType": {
@@ -19462,7 +19462,7 @@
                     "name": "Align"
                   },
                   "hasDefault": true,
-                  "description": null
+                  "description": "Alignment of the input field in its parent container"
                 },
                 {
                   "name": "stretch",
@@ -19471,7 +19471,7 @@
                     "name": "float"
                   },
                   "hasDefault": true,
-                  "description": null
+                  "description": "Relative amount of available space to acquire (beyond minimal space)"
                 }
               ],
               "returnType": {
@@ -19493,7 +19493,7 @@
                     "name": "Align"
                   },
                   "hasDefault": true,
-                  "description": null
+                  "description": "Alignment of the input field in its parent container"
                 },
                 {
                   "name": "stretch",
@@ -19502,7 +19502,7 @@
                     "name": "float"
                   },
                   "hasDefault": true,
-                  "description": null
+                  "description": "Relative amount of available space to acquire (beyond minimal space)"
                 }
               ],
               "returnType": {
@@ -19524,7 +19524,7 @@
                     "name": "Align"
                   },
                   "hasDefault": true,
-                  "description": null
+                  "description": "Alignment of the input field in its parent container"
                 },
                 {
                   "name": "stretch",
@@ -19533,7 +19533,7 @@
                     "name": "float"
                   },
                   "hasDefault": true,
-                  "description": null
+                  "description": "Relative amount of available space to acquire (beyond minimal space)"
                 }
               ],
               "returnType": {
@@ -19554,7 +19554,7 @@
                     "name": "float"
                   },
                   "hasDefault": false,
-                  "description": null
+                  "description": "Minimum value of the slider"
                 },
                 {
                   "name": "max",
@@ -19563,7 +19563,7 @@
                     "name": "float"
                   },
                   "hasDefault": false,
-                  "description": null
+                  "description": "Maximum value of the slider"
                 },
                 {
                   "name": "align",
@@ -19573,7 +19573,7 @@
                     "name": "Align"
                   },
                   "hasDefault": true,
-                  "description": null
+                  "description": "Alignment of the slider in its parent container"
                 },
                 {
                   "name": "stretch",
@@ -19582,7 +19582,7 @@
                     "name": "float"
                   },
                   "hasDefault": true,
-                  "description": null
+                  "description": "Relative amount of available space to acquire (beyond minimal space)"
                 }
               ],
               "returnType": {
@@ -19603,7 +19603,7 @@
                     "name": "float"
                   },
                   "hasDefault": false,
-                  "description": null
+                  "description": "Minimum width of the canvas"
                 },
                 {
                   "name": "minHeight",
@@ -19612,7 +19612,7 @@
                     "name": "float"
                   },
                   "hasDefault": false,
-                  "description": null
+                  "description": "Minimum height of the canvas"
                 },
                 {
                   "name": "align",
@@ -19622,7 +19622,7 @@
                     "name": "Align"
                   },
                   "hasDefault": true,
-                  "description": null
+                  "description": "Alignment of the canvas in its parent container"
                 },
                 {
                   "name": "stretch",
@@ -19631,13 +19631,42 @@
                     "name": "float"
                   },
                   "hasDefault": true,
-                  "description": null
+                  "description": "Relative amount of available space to acquire (beyond minimal space)"
                 }
               ],
               "returnType": {
                 "kind": "Standard",
                 "module": "ksp::ui",
                 "name": "Canvas"
+              }
+            },
+            "add_spacer": {
+              "isAsync": false,
+              "name": "add_spacer",
+              "description": "Add empty space between elements\n",
+              "parameters": [
+                {
+                  "name": "size",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false,
+                  "description": "Minimum amount of space between elements"
+                },
+                {
+                  "name": "stretch",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": true,
+                  "description": "Relative amount of available space to acquire (beyond minimal space)"
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
               }
             }
           },
@@ -21750,7 +21779,7 @@
                     "name": "float"
                   },
                   "hasDefault": true,
-                  "description": "Relative amount of available space to acquire (if allin = Stretch)"
+                  "description": "Relative amount of available space to acquire (beyond minimal space)"
                 }
               ],
               "returnType": {
@@ -21790,7 +21819,7 @@
                     "name": "float"
                   },
                   "hasDefault": true,
-                  "description": "Relative amount of available space to acquire (if allin = Stretch)"
+                  "description": "Relative amount of available space to acquire (beyond minimal space)"
                 }
               ],
               "returnType": {
@@ -21870,7 +21899,7 @@
                     "name": "float"
                   },
                   "hasDefault": true,
-                  "description": "Relative amount of available space to acquire (if allin = Stretch)"
+                  "description": "Relative amount of available space to acquire (beyond minimal space)"
                 }
               ],
               "returnType": {
@@ -21901,7 +21930,7 @@
                     "name": "Align"
                   },
                   "hasDefault": true,
-                  "description": null
+                  "description": "Alignment of the label in its parent container"
                 },
                 {
                   "name": "stretch",
@@ -21910,7 +21939,7 @@
                     "name": "float"
                   },
                   "hasDefault": true,
-                  "description": null
+                  "description": "Relative amount of available space to acquire (beyond minimal space)"
                 }
               ],
               "returnType": {
@@ -21941,7 +21970,7 @@
                     "name": "Align"
                   },
                   "hasDefault": true,
-                  "description": null
+                  "description": "Alignment of the button in its parent container"
                 },
                 {
                   "name": "stretch",
@@ -21950,7 +21979,7 @@
                     "name": "float"
                   },
                   "hasDefault": true,
-                  "description": null
+                  "description": "Relative amount of available space to acquire (beyond minimal space)"
                 }
               ],
               "returnType": {
@@ -21981,7 +22010,7 @@
                     "name": "Align"
                   },
                   "hasDefault": true,
-                  "description": null
+                  "description": "Alignment of the toggle in its parent container"
                 },
                 {
                   "name": "stretch",
@@ -21990,7 +22019,7 @@
                     "name": "float"
                   },
                   "hasDefault": true,
-                  "description": null
+                  "description": "Relative amount of available space to acquire (beyond minimal space)"
                 }
               ],
               "returnType": {
@@ -22012,7 +22041,7 @@
                     "name": "Align"
                   },
                   "hasDefault": true,
-                  "description": null
+                  "description": "Alignment of the input field in its parent container"
                 },
                 {
                   "name": "stretch",
@@ -22021,7 +22050,7 @@
                     "name": "float"
                   },
                   "hasDefault": true,
-                  "description": null
+                  "description": "Relative amount of available space to acquire (beyond minimal space)"
                 }
               ],
               "returnType": {
@@ -22043,7 +22072,7 @@
                     "name": "Align"
                   },
                   "hasDefault": true,
-                  "description": null
+                  "description": "Alignment of the input field in its parent container"
                 },
                 {
                   "name": "stretch",
@@ -22052,7 +22081,7 @@
                     "name": "float"
                   },
                   "hasDefault": true,
-                  "description": null
+                  "description": "Relative amount of available space to acquire (beyond minimal space)"
                 }
               ],
               "returnType": {
@@ -22074,7 +22103,7 @@
                     "name": "Align"
                   },
                   "hasDefault": true,
-                  "description": null
+                  "description": "Alignment of the input field in its parent container"
                 },
                 {
                   "name": "stretch",
@@ -22083,7 +22112,7 @@
                     "name": "float"
                   },
                   "hasDefault": true,
-                  "description": null
+                  "description": "Relative amount of available space to acquire (beyond minimal space)"
                 }
               ],
               "returnType": {
@@ -22104,7 +22133,7 @@
                     "name": "float"
                   },
                   "hasDefault": false,
-                  "description": null
+                  "description": "Minimum value of the slider"
                 },
                 {
                   "name": "max",
@@ -22113,7 +22142,7 @@
                     "name": "float"
                   },
                   "hasDefault": false,
-                  "description": null
+                  "description": "Maximum value of the slider"
                 },
                 {
                   "name": "align",
@@ -22123,7 +22152,7 @@
                     "name": "Align"
                   },
                   "hasDefault": true,
-                  "description": null
+                  "description": "Alignment of the slider in its parent container"
                 },
                 {
                   "name": "stretch",
@@ -22132,7 +22161,7 @@
                     "name": "float"
                   },
                   "hasDefault": true,
-                  "description": null
+                  "description": "Relative amount of available space to acquire (beyond minimal space)"
                 }
               ],
               "returnType": {
@@ -22153,7 +22182,7 @@
                     "name": "float"
                   },
                   "hasDefault": false,
-                  "description": null
+                  "description": "Minimum width of the canvas"
                 },
                 {
                   "name": "minHeight",
@@ -22162,7 +22191,7 @@
                     "name": "float"
                   },
                   "hasDefault": false,
-                  "description": null
+                  "description": "Minimum height of the canvas"
                 },
                 {
                   "name": "align",
@@ -22172,7 +22201,7 @@
                     "name": "Align"
                   },
                   "hasDefault": true,
-                  "description": null
+                  "description": "Alignment of the canvas in its parent container"
                 },
                 {
                   "name": "stretch",
@@ -22181,13 +22210,42 @@
                     "name": "float"
                   },
                   "hasDefault": true,
-                  "description": null
+                  "description": "Relative amount of available space to acquire (beyond minimal space)"
                 }
               ],
               "returnType": {
                 "kind": "Standard",
                 "module": "ksp::ui",
                 "name": "Canvas"
+              }
+            },
+            "add_spacer": {
+              "isAsync": false,
+              "name": "add_spacer",
+              "description": "Add empty space between elements\n",
+              "parameters": [
+                {
+                  "name": "size",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false,
+                  "description": "Minimum amount of space between elements"
+                },
+                {
+                  "name": "stretch",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": true,
+                  "description": "Relative amount of available space to acquire (beyond minimal space)"
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
               }
             }
           },

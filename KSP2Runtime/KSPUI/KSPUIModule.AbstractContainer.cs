@@ -1,7 +1,6 @@
-﻿using System;
-using KontrolSystem.KSP.Runtime.KSPUI.UGUI;
+﻿using KontrolSystem.KSP.Runtime.KSPUI.UGUI;
 using KontrolSystem.TO2.Binding;
-using KontrolSystem.TO2.Runtime;
+using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime.KSPUI {
     public partial class KSPUIModule {
@@ -17,7 +16,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             public Container AddHorizontal(
                 [KSParameter("Gap between each element of the container")] double gap = 10, 
                 [KSParameter("Alignment of the sub container in its parent container")] UGUILayout.Align align = UGUILayout.Align.Stretch, 
-                [KSParameter("Relative amount of available space to acquire (if allin = Stretch)")] double stretch = 0) {
+                [KSParameter("Relative amount of available space to acquire (beyond minimal space)")] double stretch = 0) {
                 var element = layout.Add(UGUILayoutContainer.Horizontal((float)gap), align, (float)stretch);
                 Root.Layout();
                 return new Container(Root, element.layout);
@@ -27,7 +26,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             public Container AddVertical(
                 [KSParameter("Gap between each element of the container")] double gap = 10, 
                 [KSParameter("Alignment of the sub container in its parent container")] UGUILayout.Align align = UGUILayout.Align.Stretch, 
-                [KSParameter("Relative amount of available space to acquire (if allin = Stretch)")] double stretch = 0) {
+                [KSParameter("Relative amount of available space to acquire (beyond minimal space)")] double stretch = 0) {
                 var element = layout.Add(UGUILayoutContainer.Vertical((float)gap), align, (float)stretch);
                 Root.Layout();
                 return new Container(Root, element.layout);
@@ -46,66 +45,101 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             public Container AddVerticalPanel(
                 [KSParameter("Gap between each element of the panel")] double gap = 10, 
                 [KSParameter("Alignment of the panel in its parent container")] UGUILayout.Align align = UGUILayout.Align.Stretch, 
-                [KSParameter("Relative amount of available space to acquire (if allin = Stretch)")] double stretch = 0) {
+                [KSParameter("Relative amount of available space to acquire (beyond minimal space)")] double stretch = 0) {
                 var element = layout.Add(UGUILayoutContainer.VerticalPanel((float)gap), align, (float)stretch);
                 Root.Layout();
                 return new Container(Root, element.layout);
             }
 
             [KSMethod(Description = "Add label to the container")]
-            public Label AddLabel(string label, UGUILayout.Align align = UGUILayout.Align.Stretch, double stretch = 0) {
+            public Label AddLabel(string label, 
+                [KSParameter("Alignment of the label in its parent container")] UGUILayout.Align align = UGUILayout.Align.Stretch, 
+                [KSParameter("Relative amount of available space to acquire (beyond minimal space)")] double stretch = 0) {
                 var element = layout.Add(UGUILabel.Create(label), align, (float)stretch);
                 Root.Layout();
                 return new Label(this, element);
             }
 
             [KSMethod(Description = "Add button to the container")]
-            public Button AddButton(string label, UGUILayout.Align align = UGUILayout.Align.Stretch, double stretch = 0) {
+            public Button AddButton(string label, 
+                [KSParameter("Alignment of the button in its parent container")] UGUILayout.Align align = UGUILayout.Align.Stretch, 
+                [KSParameter("Relative amount of available space to acquire (beyond minimal space)")] double stretch = 0) {
                 var element = layout.Add(UGUIButton.Create(label), align, (float)stretch);
                 Root.Layout();
                 return new Button(Root, element);
             }
 
             [KSMethod(Description = "Add toggle to the container")]
-            public Toggle AddToggle(string label, UGUILayout.Align align = UGUILayout.Align.Stretch, double stretch = 0) {
+            public Toggle AddToggle(string label, 
+                [KSParameter("Alignment of the toggle in its parent container")] UGUILayout.Align align = UGUILayout.Align.Stretch, 
+                [KSParameter("Relative amount of available space to acquire (beyond minimal space)")] double stretch = 0) {
                 var element = layout.Add(UGUIToggle.Create(label), align, (float)stretch);
                 Root.Layout();
                 return new Toggle(Root, element);
             }
 
             [KSMethod(Description = "Add string input field to the container")]
-            public StringInputField AddStringInput(UGUILayout.Align align = UGUILayout.Align.Stretch, double stretch = 0) {
+            public StringInputField AddStringInput(
+                [KSParameter("Alignment of the input field in its parent container")] UGUILayout.Align align = UGUILayout.Align.Stretch, 
+                [KSParameter("Relative amount of available space to acquire (beyond minimal space)")] double stretch = 0) {
                 var element = layout.Add(UGUIInputField.Create("", 50.0f), align, (float)stretch);
                 Root.Layout();
                 return new StringInputField(this, element);
             }
 
             [KSMethod(Description = "Add integer input field to the container")]
-            public IntInputField AddIntInput(UGUILayout.Align align = UGUILayout.Align.Stretch, double stretch = 0) {
+            public IntInputField AddIntInput(
+                [KSParameter("Alignment of the input field in its parent container")] UGUILayout.Align align = UGUILayout.Align.Stretch, 
+                [KSParameter("Relative amount of available space to acquire (beyond minimal space)")] double stretch = 0) {
                 var element = layout.Add(UGUIInputField.Create("0", 50.0f), align, (float)stretch);
                 Root.Layout();
                 return new IntInputField(this, element);
             }
 
             [KSMethod(Description = "Add float input field to the container")]
-            public FloatInputField AddFloatInput(UGUILayout.Align align = UGUILayout.Align.Stretch, double stretch = 0) {
+            public FloatInputField AddFloatInput(
+                [KSParameter("Alignment of the input field in its parent container")] UGUILayout.Align align = UGUILayout.Align.Stretch, 
+                [KSParameter("Relative amount of available space to acquire (beyond minimal space)")] double stretch = 0) {
                 var element = layout.Add(UGUIInputField.Create("0.0", 50.0f), align, (float)stretch);
                 Root.Layout();
                 return new FloatInputField(this, element);
             }
 
             [KSMethod(Description = "Add horizontal slider to the container")]
-            public Slider AddHorizontalSlider(double min, double max, UGUILayout.Align align = UGUILayout.Align.Stretch, double stretch = 0) {
+            public Slider AddHorizontalSlider(
+                [KSParameter("Minimum value of the slider")] double min, 
+                [KSParameter("Maximum value of the slider")] double max, 
+                [KSParameter("Alignment of the slider in its parent container")] UGUILayout.Align align = UGUILayout.Align.Stretch, 
+                [KSParameter("Relative amount of available space to acquire (beyond minimal space)")] double stretch = 0) {
                 var element = layout.Add(UGUISlider.CreateHorizontal(), align, (float)stretch);
                 Root.Layout();
                 return new Slider(this, element, min, max);
             }
 
             [KSMethod(Description = "Add canvas to the container")]
-            public Canvas AddCanvas(double minWidth, double minHeight, UGUILayout.Align align = UGUILayout.Align.Stretch, double stretch = 0) {
+            public Canvas AddCanvas(
+                [KSParameter("Minimum width of the canvas")] double minWidth, 
+                [KSParameter("Minimum height of the canvas")] double minHeight, 
+                [KSParameter("Alignment of the canvas in its parent container")] UGUILayout.Align align = UGUILayout.Align.Stretch, 
+                [KSParameter("Relative amount of available space to acquire (beyond minimal space)")] double stretch = 0) {
                 var element = layout.Add(UGUICanvas.Create((float)minWidth, (float)minHeight), align, (float)stretch);
                 Root.Layout();
                 return new Canvas(this, element);
+            }
+
+            [KSMethod(Description = "Add empty space between elements")]
+            public void AddSpacer(
+                [KSParameter("Minimum amount of space between elements")] double size,
+                [KSParameter("Relative amount of available space to acquire (beyond minimal space)")] double stretch = 0) {
+                var minSize = new Vector2((float)size, (float)size);
+
+                if (layout is UGUIHorizontalLayout) {
+                    minSize.y = 0;
+                } else if (layout is UGUIVerticalLayout) {
+                    minSize.x = 0;
+                }
+                
+                layout.Add(UGUIElement.Spacer(minSize), UGUILayout.Align.Start, (float)stretch);
             }
         }
     }

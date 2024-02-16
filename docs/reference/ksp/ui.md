@@ -283,8 +283,8 @@ Parameters
 Name | Type | Optional | Description
 --- | --- | --- | ---
 label | string |  | 
-align | ksp::up::Align | x | 
-stretch | float | x | 
+align | ksp::up::Align | x | Alignment of the button in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_canvas
 
@@ -302,10 +302,10 @@ Parameters
 
 Name | Type | Optional | Description
 --- | --- | --- | ---
-minWidth | float |  | 
-minHeight | float |  | 
-align | ksp::up::Align | x | 
-stretch | float | x | 
+minWidth | float |  | Minimum width of the canvas
+minHeight | float |  | Minimum height of the canvas
+align | ksp::up::Align | x | Alignment of the canvas in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_float_input
 
@@ -321,8 +321,8 @@ Parameters
 
 Name | Type | Optional | Description
 --- | --- | --- | ---
-align | ksp::up::Align | x | 
-stretch | float | x | 
+align | ksp::up::Align | x | Alignment of the input field in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_horizontal
 
@@ -341,7 +341,7 @@ Name | Type | Optional | Description
 --- | --- | --- | ---
 gap | float | x | Gap between each element of the container
 align | ksp::up::Align | x | Alignment of the sub container in its parent container
-stretch | float | x | Relative amount of available space to acquire (if allin = Stretch)
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_horizontal_panel
 
@@ -378,10 +378,10 @@ Parameters
 
 Name | Type | Optional | Description
 --- | --- | --- | ---
-min | float |  | 
-max | float |  | 
-align | ksp::up::Align | x | 
-stretch | float | x | 
+min | float |  | Minimum value of the slider
+max | float |  | Maximum value of the slider
+align | ksp::up::Align | x | Alignment of the slider in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_int_input
 
@@ -397,8 +397,8 @@ Parameters
 
 Name | Type | Optional | Description
 --- | --- | --- | ---
-align | ksp::up::Align | x | 
-stretch | float | x | 
+align | ksp::up::Align | x | Alignment of the input field in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_label
 
@@ -416,8 +416,25 @@ Parameters
 Name | Type | Optional | Description
 --- | --- | --- | ---
 label | string |  | 
-align | ksp::up::Align | x | 
-stretch | float | x | 
+align | ksp::up::Align | x | Alignment of the label in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
+
+##### add_spacer
+
+```rust
+container.add_spacer ( size : float,
+                       stretch : float ) -> Unit
+```
+
+Add empty space between elements
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+size | float |  | Minimum amount of space between elements
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_string_input
 
@@ -433,8 +450,8 @@ Parameters
 
 Name | Type | Optional | Description
 --- | --- | --- | ---
-align | ksp::up::Align | x | 
-stretch | float | x | 
+align | ksp::up::Align | x | Alignment of the input field in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_toggle
 
@@ -452,8 +469,8 @@ Parameters
 Name | Type | Optional | Description
 --- | --- | --- | ---
 label | string |  | 
-align | ksp::up::Align | x | 
-stretch | float | x | 
+align | ksp::up::Align | x | Alignment of the toggle in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_vertical
 
@@ -472,7 +489,7 @@ Name | Type | Optional | Description
 --- | --- | --- | ---
 gap | float | x | Gap between each element of the container
 align | ksp::up::Align | x | Alignment of the sub container in its parent container
-stretch | float | x | Relative amount of available space to acquire (if allin = Stretch)
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_vertical_panel
 
@@ -491,7 +508,7 @@ Name | Type | Optional | Description
 --- | --- | --- | ---
 gap | float | x | Gap between each element of the panel
 align | ksp::up::Align | x | Alignment of the panel in its parent container
-stretch | float | x | Relative amount of available space to acquire (if allin = Stretch)
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ### FloatInputField
 
@@ -1408,8 +1425,8 @@ Parameters
 Name | Type | Optional | Description
 --- | --- | --- | ---
 label | string |  | 
-align | ksp::up::Align | x | 
-stretch | float | x | 
+align | ksp::up::Align | x | Alignment of the button in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_canvas
 
@@ -1427,10 +1444,10 @@ Parameters
 
 Name | Type | Optional | Description
 --- | --- | --- | ---
-minWidth | float |  | 
-minHeight | float |  | 
-align | ksp::up::Align | x | 
-stretch | float | x | 
+minWidth | float |  | Minimum width of the canvas
+minHeight | float |  | Minimum height of the canvas
+align | ksp::up::Align | x | Alignment of the canvas in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_float_input
 
@@ -1446,8 +1463,8 @@ Parameters
 
 Name | Type | Optional | Description
 --- | --- | --- | ---
-align | ksp::up::Align | x | 
-stretch | float | x | 
+align | ksp::up::Align | x | Alignment of the input field in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_horizontal
 
@@ -1466,7 +1483,7 @@ Name | Type | Optional | Description
 --- | --- | --- | ---
 gap | float | x | Gap between each element of the container
 align | ksp::up::Align | x | Alignment of the sub container in its parent container
-stretch | float | x | Relative amount of available space to acquire (if allin = Stretch)
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_horizontal_panel
 
@@ -1503,10 +1520,10 @@ Parameters
 
 Name | Type | Optional | Description
 --- | --- | --- | ---
-min | float |  | 
-max | float |  | 
-align | ksp::up::Align | x | 
-stretch | float | x | 
+min | float |  | Minimum value of the slider
+max | float |  | Maximum value of the slider
+align | ksp::up::Align | x | Alignment of the slider in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_int_input
 
@@ -1522,8 +1539,8 @@ Parameters
 
 Name | Type | Optional | Description
 --- | --- | --- | ---
-align | ksp::up::Align | x | 
-stretch | float | x | 
+align | ksp::up::Align | x | Alignment of the input field in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_label
 
@@ -1541,8 +1558,25 @@ Parameters
 Name | Type | Optional | Description
 --- | --- | --- | ---
 label | string |  | 
-align | ksp::up::Align | x | 
-stretch | float | x | 
+align | ksp::up::Align | x | Alignment of the label in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
+
+##### add_spacer
+
+```rust
+window.add_spacer ( size : float,
+                    stretch : float ) -> Unit
+```
+
+Add empty space between elements
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+size | float |  | Minimum amount of space between elements
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_string_input
 
@@ -1558,8 +1592,8 @@ Parameters
 
 Name | Type | Optional | Description
 --- | --- | --- | ---
-align | ksp::up::Align | x | 
-stretch | float | x | 
+align | ksp::up::Align | x | Alignment of the input field in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_toggle
 
@@ -1577,8 +1611,8 @@ Parameters
 Name | Type | Optional | Description
 --- | --- | --- | ---
 label | string |  | 
-align | ksp::up::Align | x | 
-stretch | float | x | 
+align | ksp::up::Align | x | Alignment of the toggle in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_vertical
 
@@ -1597,7 +1631,7 @@ Name | Type | Optional | Description
 --- | --- | --- | ---
 gap | float | x | Gap between each element of the container
 align | ksp::up::Align | x | Alignment of the sub container in its parent container
-stretch | float | x | Relative amount of available space to acquire (if allin = Stretch)
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_vertical_panel
 
@@ -1616,7 +1650,7 @@ Name | Type | Optional | Description
 --- | --- | --- | ---
 gap | float | x | Gap between each element of the panel
 align | ksp::up::Align | x | Alignment of the panel in its parent container
-stretch | float | x | Relative amount of available space to acquire (if allin = Stretch)
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### close
 

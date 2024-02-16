@@ -29,5 +29,10 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI {
             var scrollView = UIFactory.Instance.CreateScrollView(content.GameObject);
             return new UGUIElement(scrollView, minSize);
         }
+
+        public static UGUIElement Spacer(Vector2 minSize) {
+            var gameObject = new GameObject("Spacer", typeof(RectTransform));
+            return new UGUIElement(gameObject, minSize);
+        }
     }
 }
