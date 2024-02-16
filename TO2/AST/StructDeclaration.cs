@@ -94,11 +94,17 @@ namespace KontrolSystem.TO2.AST {
                     ));
                 }
             }
+            
+            // Note: Somewhat crude way to ensure that all field initializes do not have structural errors
+            foreach (StructField field in fields.Where(e => e.IsRight).Select(e => e.Right)) {
+                field.initializer.GetILCount(context, false);
+            }
 
             if (context.HasErrors) return;
 
             typeDelegate.EnsureFields();
             typeDelegate.CreateStructType();
+
             Type type = typeDelegate.GeneratedType(context.ModuleContext);
             IBlockVariable variable =
                 context.DeclaredVariable("instance", false, typeDelegate.UnderlyingType(context.ModuleContext));

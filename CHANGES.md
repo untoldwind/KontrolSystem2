@@ -1,6 +1,10 @@
 # Changes
 
-## 0.5.2.6 ->
+## 0.5.2.7 ->
+
+* Improve error handling in struct field initializers (#119)
+
+## 0.5.2.6 -> 0.5.2.7
 
 * Fix type generation of structs in generic parameters (#76)
 * Improve error reporting of missing variables (#119)
