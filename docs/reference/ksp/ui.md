@@ -27,17 +27,17 @@ String representation of the number
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
-Center | [ksp::up::Align](/reference/ksp/up.md#align) | R/O | Align the element to the center of the container.
-End | [ksp::up::Align](/reference/ksp/up.md#align) | R/O | Align the element to end of container (right/bottom).
-Start | [ksp::up::Align](/reference/ksp/up.md#align) | R/O | Align the element to start of container (left/top).
-Stretch | [ksp::up::Align](/reference/ksp/up.md#align) | R/O | Strech the element to full size of container
+Center | [ksp::ui::Align](/reference/ksp/ui.md#align) | R/O | Align the element to the center of the container.
+End | [ksp::ui::Align](/reference/ksp/ui.md#align) | R/O | Align the element to end of container (right/bottom).
+Start | [ksp::ui::Align](/reference/ksp/ui.md#align) | R/O | Align the element to start of container (left/top).
+Stretch | [ksp::ui::Align](/reference/ksp/ui.md#align) | R/O | Strech the element to full size of container
 
 #### Methods
 
 ##### from_string
 
 ```rust
-alignconstants.from_string ( value : string ) -> Option<ksp::up::Align>
+alignconstants.from_string ( value : string ) -> Option<ksp::ui::Align>
 ```
 
 Parse from string
@@ -271,7 +271,7 @@ canvas.clear ( ) -> Unit
 
 ```rust
 container.add_button ( label : string,
-                       align : ksp::up::Align,
+                       align : ksp::ui::Align,
                        stretch : float ) -> ksp::ui::Button
 ```
 
@@ -283,7 +283,7 @@ Parameters
 Name | Type | Optional | Description
 --- | --- | --- | ---
 label | string |  | 
-align | ksp::up::Align | x | Alignment of the button in its parent container
+align | ksp::ui::Align | x | Alignment of the button in its parent container
 stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_canvas
@@ -291,7 +291,7 @@ stretch | float | x | Relative amount of available space to acquire (beyond mini
 ```rust
 container.add_canvas ( minWidth : float,
                        minHeight : float,
-                       align : ksp::up::Align,
+                       align : ksp::ui::Align,
                        stretch : float ) -> ksp::ui::Canvas
 ```
 
@@ -304,13 +304,13 @@ Name | Type | Optional | Description
 --- | --- | --- | ---
 minWidth | float |  | Minimum width of the canvas
 minHeight | float |  | Minimum height of the canvas
-align | ksp::up::Align | x | Alignment of the canvas in its parent container
+align | ksp::ui::Align | x | Alignment of the canvas in its parent container
 stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_float_input
 
 ```rust
-container.add_float_input ( align : ksp::up::Align,
+container.add_float_input ( align : ksp::ui::Align,
                             stretch : float ) -> ksp::ui::FloatInputField
 ```
 
@@ -321,14 +321,14 @@ Parameters
 
 Name | Type | Optional | Description
 --- | --- | --- | ---
-align | ksp::up::Align | x | Alignment of the input field in its parent container
+align | ksp::ui::Align | x | Alignment of the input field in its parent container
 stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_horizontal
 
 ```rust
 container.add_horizontal ( gap : float,
-                           align : ksp::up::Align,
+                           align : ksp::ui::Align,
                            stretch : float ) -> ksp::ui::Container
 ```
 
@@ -340,14 +340,14 @@ Parameters
 Name | Type | Optional | Description
 --- | --- | --- | ---
 gap | float | x | Gap between each element of the container
-align | ksp::up::Align | x | Alignment of the sub container in its parent container
+align | ksp::ui::Align | x | Alignment of the sub container in its parent container
 stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_horizontal_panel
 
 ```rust
 container.add_horizontal_panel ( gap : float,
-                                 align : ksp::up::Align,
+                                 align : ksp::ui::Align,
                                  stretch : float ) -> ksp::ui::Container
 ```
 
@@ -359,7 +359,7 @@ Parameters
 Name | Type | Optional | Description
 --- | --- | --- | ---
 gap | float | x | Gap between each element of the panel
-align | ksp::up::Align | x | Alignment of the panel in its parent container
+align | ksp::ui::Align | x | Alignment of the panel in its parent container
 stretch | float | x | 
 
 ##### add_horizontal_slider
@@ -367,7 +367,7 @@ stretch | float | x |
 ```rust
 container.add_horizontal_slider ( min : float,
                                   max : float,
-                                  align : ksp::up::Align,
+                                  align : ksp::ui::Align,
                                   stretch : float ) -> ksp::ui::Slider
 ```
 
@@ -380,13 +380,13 @@ Name | Type | Optional | Description
 --- | --- | --- | ---
 min | float |  | Minimum value of the slider
 max | float |  | Maximum value of the slider
-align | ksp::up::Align | x | Alignment of the slider in its parent container
+align | ksp::ui::Align | x | Alignment of the slider in its parent container
 stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_int_input
 
 ```rust
-container.add_int_input ( align : ksp::up::Align,
+container.add_int_input ( align : ksp::ui::Align,
                           stretch : float ) -> ksp::ui::IntInputField
 ```
 
@@ -397,14 +397,14 @@ Parameters
 
 Name | Type | Optional | Description
 --- | --- | --- | ---
-align | ksp::up::Align | x | Alignment of the input field in its parent container
+align | ksp::ui::Align | x | Alignment of the input field in its parent container
 stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_label
 
 ```rust
 container.add_label ( label : string,
-                      align : ksp::up::Align,
+                      align : ksp::ui::Align,
                       stretch : float ) -> ksp::ui::Label
 ```
 
@@ -416,7 +416,7 @@ Parameters
 Name | Type | Optional | Description
 --- | --- | --- | ---
 label | string |  | 
-align | ksp::up::Align | x | Alignment of the label in its parent container
+align | ksp::ui::Align | x | Alignment of the label in its parent container
 stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_spacer
@@ -439,7 +439,7 @@ stretch | float | x | Relative amount of available space to acquire (beyond mini
 ##### add_string_input
 
 ```rust
-container.add_string_input ( align : ksp::up::Align,
+container.add_string_input ( align : ksp::ui::Align,
                              stretch : float ) -> ksp::ui::StringInputField
 ```
 
@@ -450,14 +450,14 @@ Parameters
 
 Name | Type | Optional | Description
 --- | --- | --- | ---
-align | ksp::up::Align | x | Alignment of the input field in its parent container
+align | ksp::ui::Align | x | Alignment of the input field in its parent container
 stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_toggle
 
 ```rust
 container.add_toggle ( label : string,
-                       align : ksp::up::Align,
+                       align : ksp::ui::Align,
                        stretch : float ) -> ksp::ui::Toggle
 ```
 
@@ -469,14 +469,14 @@ Parameters
 Name | Type | Optional | Description
 --- | --- | --- | ---
 label | string |  | 
-align | ksp::up::Align | x | Alignment of the toggle in its parent container
+align | ksp::ui::Align | x | Alignment of the toggle in its parent container
 stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_vertical
 
 ```rust
 container.add_vertical ( gap : float,
-                         align : ksp::up::Align,
+                         align : ksp::ui::Align,
                          stretch : float ) -> ksp::ui::Container
 ```
 
@@ -488,14 +488,14 @@ Parameters
 Name | Type | Optional | Description
 --- | --- | --- | ---
 gap | float | x | Gap between each element of the container
-align | ksp::up::Align | x | Alignment of the sub container in its parent container
+align | ksp::ui::Align | x | Alignment of the sub container in its parent container
 stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_vertical_panel
 
 ```rust
 container.add_vertical_panel ( gap : float,
-                               align : ksp::up::Align,
+                               align : ksp::ui::Align,
                                stretch : float ) -> ksp::ui::Container
 ```
 
@@ -507,7 +507,7 @@ Parameters
 Name | Type | Optional | Description
 --- | --- | --- | ---
 gap | float | x | Gap between each element of the panel
-align | ksp::up::Align | x | Alignment of the panel in its parent container
+align | ksp::ui::Align | x | Alignment of the panel in its parent container
 stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ### FloatInputField
@@ -1413,7 +1413,7 @@ is_closed | bool | R/O |
 
 ```rust
 window.add_button ( label : string,
-                    align : ksp::up::Align,
+                    align : ksp::ui::Align,
                     stretch : float ) -> ksp::ui::Button
 ```
 
@@ -1425,7 +1425,7 @@ Parameters
 Name | Type | Optional | Description
 --- | --- | --- | ---
 label | string |  | 
-align | ksp::up::Align | x | Alignment of the button in its parent container
+align | ksp::ui::Align | x | Alignment of the button in its parent container
 stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_canvas
@@ -1433,7 +1433,7 @@ stretch | float | x | Relative amount of available space to acquire (beyond mini
 ```rust
 window.add_canvas ( minWidth : float,
                     minHeight : float,
-                    align : ksp::up::Align,
+                    align : ksp::ui::Align,
                     stretch : float ) -> ksp::ui::Canvas
 ```
 
@@ -1446,13 +1446,13 @@ Name | Type | Optional | Description
 --- | --- | --- | ---
 minWidth | float |  | Minimum width of the canvas
 minHeight | float |  | Minimum height of the canvas
-align | ksp::up::Align | x | Alignment of the canvas in its parent container
+align | ksp::ui::Align | x | Alignment of the canvas in its parent container
 stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_float_input
 
 ```rust
-window.add_float_input ( align : ksp::up::Align,
+window.add_float_input ( align : ksp::ui::Align,
                          stretch : float ) -> ksp::ui::FloatInputField
 ```
 
@@ -1463,14 +1463,14 @@ Parameters
 
 Name | Type | Optional | Description
 --- | --- | --- | ---
-align | ksp::up::Align | x | Alignment of the input field in its parent container
+align | ksp::ui::Align | x | Alignment of the input field in its parent container
 stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_horizontal
 
 ```rust
 window.add_horizontal ( gap : float,
-                        align : ksp::up::Align,
+                        align : ksp::ui::Align,
                         stretch : float ) -> ksp::ui::Container
 ```
 
@@ -1482,14 +1482,14 @@ Parameters
 Name | Type | Optional | Description
 --- | --- | --- | ---
 gap | float | x | Gap between each element of the container
-align | ksp::up::Align | x | Alignment of the sub container in its parent container
+align | ksp::ui::Align | x | Alignment of the sub container in its parent container
 stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_horizontal_panel
 
 ```rust
 window.add_horizontal_panel ( gap : float,
-                              align : ksp::up::Align,
+                              align : ksp::ui::Align,
                               stretch : float ) -> ksp::ui::Container
 ```
 
@@ -1501,7 +1501,7 @@ Parameters
 Name | Type | Optional | Description
 --- | --- | --- | ---
 gap | float | x | Gap between each element of the panel
-align | ksp::up::Align | x | Alignment of the panel in its parent container
+align | ksp::ui::Align | x | Alignment of the panel in its parent container
 stretch | float | x | 
 
 ##### add_horizontal_slider
@@ -1509,7 +1509,7 @@ stretch | float | x |
 ```rust
 window.add_horizontal_slider ( min : float,
                                max : float,
-                               align : ksp::up::Align,
+                               align : ksp::ui::Align,
                                stretch : float ) -> ksp::ui::Slider
 ```
 
@@ -1522,13 +1522,13 @@ Name | Type | Optional | Description
 --- | --- | --- | ---
 min | float |  | Minimum value of the slider
 max | float |  | Maximum value of the slider
-align | ksp::up::Align | x | Alignment of the slider in its parent container
+align | ksp::ui::Align | x | Alignment of the slider in its parent container
 stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_int_input
 
 ```rust
-window.add_int_input ( align : ksp::up::Align,
+window.add_int_input ( align : ksp::ui::Align,
                        stretch : float ) -> ksp::ui::IntInputField
 ```
 
@@ -1539,14 +1539,14 @@ Parameters
 
 Name | Type | Optional | Description
 --- | --- | --- | ---
-align | ksp::up::Align | x | Alignment of the input field in its parent container
+align | ksp::ui::Align | x | Alignment of the input field in its parent container
 stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_label
 
 ```rust
 window.add_label ( label : string,
-                   align : ksp::up::Align,
+                   align : ksp::ui::Align,
                    stretch : float ) -> ksp::ui::Label
 ```
 
@@ -1558,7 +1558,7 @@ Parameters
 Name | Type | Optional | Description
 --- | --- | --- | ---
 label | string |  | 
-align | ksp::up::Align | x | Alignment of the label in its parent container
+align | ksp::ui::Align | x | Alignment of the label in its parent container
 stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_spacer
@@ -1581,7 +1581,7 @@ stretch | float | x | Relative amount of available space to acquire (beyond mini
 ##### add_string_input
 
 ```rust
-window.add_string_input ( align : ksp::up::Align,
+window.add_string_input ( align : ksp::ui::Align,
                           stretch : float ) -> ksp::ui::StringInputField
 ```
 
@@ -1592,14 +1592,14 @@ Parameters
 
 Name | Type | Optional | Description
 --- | --- | --- | ---
-align | ksp::up::Align | x | Alignment of the input field in its parent container
+align | ksp::ui::Align | x | Alignment of the input field in its parent container
 stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_toggle
 
 ```rust
 window.add_toggle ( label : string,
-                    align : ksp::up::Align,
+                    align : ksp::ui::Align,
                     stretch : float ) -> ksp::ui::Toggle
 ```
 
@@ -1611,14 +1611,14 @@ Parameters
 Name | Type | Optional | Description
 --- | --- | --- | ---
 label | string |  | 
-align | ksp::up::Align | x | Alignment of the toggle in its parent container
+align | ksp::ui::Align | x | Alignment of the toggle in its parent container
 stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_vertical
 
 ```rust
 window.add_vertical ( gap : float,
-                      align : ksp::up::Align,
+                      align : ksp::ui::Align,
                       stretch : float ) -> ksp::ui::Container
 ```
 
@@ -1630,14 +1630,14 @@ Parameters
 Name | Type | Optional | Description
 --- | --- | --- | ---
 gap | float | x | Gap between each element of the container
-align | ksp::up::Align | x | Alignment of the sub container in its parent container
+align | ksp::ui::Align | x | Alignment of the sub container in its parent container
 stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_vertical_panel
 
 ```rust
 window.add_vertical_panel ( gap : float,
-                            align : ksp::up::Align,
+                            align : ksp::ui::Align,
                             stretch : float ) -> ksp::ui::Container
 ```
 
@@ -1649,7 +1649,7 @@ Parameters
 Name | Type | Optional | Description
 --- | --- | --- | ---
 gap | float | x | Gap between each element of the panel
-align | ksp::up::Align | x | Alignment of the panel in its parent container
+align | ksp::ui::Align | x | Alignment of the panel in its parent container
 stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### close
@@ -1664,7 +1664,7 @@ window.close ( ) -> Unit
 
 Name | Type | Description
 --- | --- | ---
-Align | ksp::up::AlignConstants | Alignment of the element in off direction (horizontal for vertical container and vice versa)
+Align | ksp::ui::AlignConstants | Alignment of the element in off direction (horizontal for vertical container and vice versa)
 
 
 ## Functions

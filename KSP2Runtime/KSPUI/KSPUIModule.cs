@@ -33,7 +33,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI {
             new GradientWrapper(start, end);
 
         public static (IEnumerable<RealizedType>, IEnumerable<IKontrolConstant>) DirectBindings() {
-            return BindingGenerator.RegisterEnumTypeMappings("ksp::up",
+            return BindingGenerator.RegisterEnumTypeMappings("ksp::ui",
                 new[] {
                     ("Align", "Alignment of the element in off direction (horizontal for vertical container and vice versa)", typeof(UGUILayout.Align), new (Enum value, string description)[] {
                         (UGUILayout.Align.Start, "Align the element to start of container (left/top)."),

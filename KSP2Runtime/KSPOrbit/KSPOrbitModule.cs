@@ -21,7 +21,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
         }
 
         public static (IEnumerable<RealizedType>, IEnumerable<IKontrolConstant>) DirectBindings() {
-            return BindingGenerator.RegisterEnumTypeMappings("ksp::vessel",
+            return BindingGenerator.RegisterEnumTypeMappings("ksp::orbit",
                 new[] {
                     ("PatchTransitionType", "Transition type at the beginning or end of an orbit patch", typeof(PatchTransitionType), new (Enum value, string description)[] {
                         (PatchTransitionType.Initial, "Initial transition (orbit starts here)"),

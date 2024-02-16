@@ -1944,12 +1944,12 @@
         },
         {
           "kind": "Standard",
-          "module": "ksp::vessel",
+          "module": "ksp::orbit",
           "name": "PatchTransitionType"
         },
         {
           "kind": "Standard",
-          "module": "ksp::vessel",
+          "module": "ksp::orbit",
           "name": "PatchTransitionTypeConstants"
         },
         {
@@ -2064,12 +2064,12 @@
         },
         {
           "kind": "Standard",
-          "module": "ksp::up",
+          "module": "ksp::ui",
           "name": "Align"
         },
         {
           "kind": "Standard",
-          "module": "ksp::up",
+          "module": "ksp::ui",
           "name": "AlignConstants"
         },
         {
@@ -2730,12 +2730,12 @@
         },
         {
           "kind": "Standard",
-          "module": "ksp::vessel",
+          "module": "ksp::orbit",
           "name": "PatchTransitionType"
         },
         {
           "kind": "Standard",
-          "module": "ksp::vessel",
+          "module": "ksp::orbit",
           "name": "PatchTransitionTypeConstants"
         },
         {
@@ -2850,12 +2850,12 @@
         },
         {
           "kind": "Standard",
-          "module": "ksp::up",
+          "module": "ksp::ui",
           "name": "Align"
         },
         {
           "kind": "Standard",
-          "module": "ksp::up",
+          "module": "ksp::ui",
           "name": "AlignConstants"
         },
         {
@@ -10484,7 +10484,7 @@
                 "op": "==",
                 "otherType": {
                   "kind": "Standard",
-                  "module": "ksp::vessel",
+                  "module": "ksp::orbit",
                   "name": "PatchTransitionType"
                 },
                 "resultType": {
@@ -10498,7 +10498,7 @@
                 "op": "!=",
                 "otherType": {
                   "kind": "Standard",
-                  "module": "ksp::vessel",
+                  "module": "ksp::orbit",
                   "name": "PatchTransitionType"
                 },
                 "resultType": {
@@ -10521,7 +10521,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::vessel",
+                "module": "ksp::orbit",
                 "name": "PatchTransitionType"
               }
             },
@@ -10531,7 +10531,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::vessel",
+                "module": "ksp::orbit",
                 "name": "PatchTransitionType"
               }
             },
@@ -10541,7 +10541,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::vessel",
+                "module": "ksp::orbit",
                 "name": "PatchTransitionType"
               }
             },
@@ -10551,7 +10551,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::vessel",
+                "module": "ksp::orbit",
                 "name": "PatchTransitionType"
               }
             },
@@ -10561,7 +10561,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::vessel",
+                "module": "ksp::orbit",
                 "name": "PatchTransitionType"
               }
             },
@@ -10571,7 +10571,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::vessel",
+                "module": "ksp::orbit",
                 "name": "PatchTransitionType"
               }
             },
@@ -10581,7 +10581,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::vessel",
+                "module": "ksp::orbit",
                 "name": "PatchTransitionType"
               }
             },
@@ -10591,7 +10591,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::vessel",
+                "module": "ksp::orbit",
                 "name": "PatchTransitionType"
               }
             },
@@ -10601,7 +10601,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::vessel",
+                "module": "ksp::orbit",
                 "name": "PatchTransitionType"
               }
             }
@@ -10627,7 +10627,7 @@
                 "parameters": [
                   {
                     "kind": "Standard",
-                    "module": "ksp::vessel",
+                    "module": "ksp::orbit",
                     "name": "PatchTransitionType"
                   }
                 ]
@@ -10868,7 +10868,7 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::vessel",
+              "module": "ksp::orbit",
               "name": "PatchTransitionType"
             },
             {
@@ -10983,12 +10983,12 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::up",
+              "module": "ksp::ui",
               "name": "Align"
             },
             {
               "kind": "Standard",
-              "module": "ksp::up",
+              "module": "ksp::ui",
               "name": "AlignConstants"
             },
             {
@@ -11996,7 +11996,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::vessel",
+                "module": "ksp::orbit",
                 "name": "PatchTransitionType"
               }
             },
@@ -12006,7 +12006,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::vessel",
+                "module": "ksp::orbit",
                 "name": "PatchTransitionType"
               }
             },
@@ -12940,7 +12940,7 @@
           "description": "Transition type at the beginning or end of an orbit patch",
           "type": {
             "kind": "Standard",
-            "module": "ksp::vessel",
+            "module": "ksp::orbit",
             "name": "PatchTransitionTypeConstants"
           }
         }
@@ -13329,12 +13329,12 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::vessel",
+              "module": "ksp::orbit",
               "name": "PatchTransitionType"
             },
             {
               "kind": "Standard",
-              "module": "ksp::vessel",
+              "module": "ksp::orbit",
               "name": "PatchTransitionTypeConstants"
             },
             {
@@ -13444,12 +13444,12 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::up",
+              "module": "ksp::ui",
               "name": "Align"
             },
             {
               "kind": "Standard",
-              "module": "ksp::up",
+              "module": "ksp::ui",
               "name": "AlignConstants"
             },
             {
@@ -14527,12 +14527,12 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::vessel",
+              "module": "ksp::orbit",
               "name": "PatchTransitionType"
             },
             {
               "kind": "Standard",
-              "module": "ksp::vessel",
+              "module": "ksp::orbit",
               "name": "PatchTransitionTypeConstants"
             },
             {
@@ -14642,12 +14642,12 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::up",
+              "module": "ksp::ui",
               "name": "Align"
             },
             {
               "kind": "Standard",
-              "module": "ksp::up",
+              "module": "ksp::ui",
               "name": "AlignConstants"
             },
             {
@@ -15471,12 +15471,12 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::vessel",
+              "module": "ksp::orbit",
               "name": "PatchTransitionType"
             },
             {
               "kind": "Standard",
-              "module": "ksp::vessel",
+              "module": "ksp::orbit",
               "name": "PatchTransitionTypeConstants"
             },
             {
@@ -15586,12 +15586,12 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::up",
+              "module": "ksp::ui",
               "name": "Align"
             },
             {
               "kind": "Standard",
-              "module": "ksp::up",
+              "module": "ksp::ui",
               "name": "AlignConstants"
             },
             {
@@ -16355,12 +16355,12 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::vessel",
+              "module": "ksp::orbit",
               "name": "PatchTransitionType"
             },
             {
               "kind": "Standard",
-              "module": "ksp::vessel",
+              "module": "ksp::orbit",
               "name": "PatchTransitionTypeConstants"
             },
             {
@@ -16470,12 +16470,12 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::up",
+              "module": "ksp::ui",
               "name": "Align"
             },
             {
               "kind": "Standard",
-              "module": "ksp::up",
+              "module": "ksp::ui",
               "name": "AlignConstants"
             },
             {
@@ -17837,7 +17837,7 @@
                 "op": "==",
                 "otherType": {
                   "kind": "Standard",
-                  "module": "ksp::up",
+                  "module": "ksp::ui",
                   "name": "Align"
                 },
                 "resultType": {
@@ -17851,7 +17851,7 @@
                 "op": "!=",
                 "otherType": {
                   "kind": "Standard",
-                  "module": "ksp::up",
+                  "module": "ksp::ui",
                   "name": "Align"
                 },
                 "resultType": {
@@ -17874,7 +17874,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::up",
+                "module": "ksp::ui",
                 "name": "Align"
               }
             },
@@ -17884,7 +17884,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::up",
+                "module": "ksp::ui",
                 "name": "Align"
               }
             },
@@ -17894,7 +17894,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::up",
+                "module": "ksp::ui",
                 "name": "Align"
               }
             },
@@ -17904,7 +17904,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::up",
+                "module": "ksp::ui",
                 "name": "Align"
               }
             }
@@ -17930,7 +17930,7 @@
                 "parameters": [
                   {
                     "kind": "Standard",
-                    "module": "ksp::up",
+                    "module": "ksp::ui",
                     "name": "Align"
                   }
                 ]
@@ -18171,12 +18171,12 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::vessel",
+              "module": "ksp::orbit",
               "name": "PatchTransitionType"
             },
             {
               "kind": "Standard",
-              "module": "ksp::vessel",
+              "module": "ksp::orbit",
               "name": "PatchTransitionTypeConstants"
             },
             {
@@ -18291,7 +18291,7 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::up",
+              "module": "ksp::ui",
               "name": "Align"
             },
             {
@@ -19187,7 +19187,7 @@
                   "name": "align",
                   "type": {
                     "kind": "Standard",
-                    "module": "ksp::up",
+                    "module": "ksp::ui",
                     "name": "Align"
                   },
                   "hasDefault": true,
@@ -19227,7 +19227,7 @@
                   "name": "align",
                   "type": {
                     "kind": "Standard",
-                    "module": "ksp::up",
+                    "module": "ksp::ui",
                     "name": "Align"
                   },
                   "hasDefault": true,
@@ -19267,7 +19267,7 @@
                   "name": "align",
                   "type": {
                     "kind": "Standard",
-                    "module": "ksp::up",
+                    "module": "ksp::ui",
                     "name": "Align"
                   },
                   "hasDefault": true,
@@ -19307,7 +19307,7 @@
                   "name": "align",
                   "type": {
                     "kind": "Standard",
-                    "module": "ksp::up",
+                    "module": "ksp::ui",
                     "name": "Align"
                   },
                   "hasDefault": true,
@@ -19347,7 +19347,7 @@
                   "name": "align",
                   "type": {
                     "kind": "Standard",
-                    "module": "ksp::up",
+                    "module": "ksp::ui",
                     "name": "Align"
                   },
                   "hasDefault": true,
@@ -19387,7 +19387,7 @@
                   "name": "align",
                   "type": {
                     "kind": "Standard",
-                    "module": "ksp::up",
+                    "module": "ksp::ui",
                     "name": "Align"
                   },
                   "hasDefault": true,
@@ -19427,7 +19427,7 @@
                   "name": "align",
                   "type": {
                     "kind": "Standard",
-                    "module": "ksp::up",
+                    "module": "ksp::ui",
                     "name": "Align"
                   },
                   "hasDefault": true,
@@ -19458,7 +19458,7 @@
                   "name": "align",
                   "type": {
                     "kind": "Standard",
-                    "module": "ksp::up",
+                    "module": "ksp::ui",
                     "name": "Align"
                   },
                   "hasDefault": true,
@@ -19489,7 +19489,7 @@
                   "name": "align",
                   "type": {
                     "kind": "Standard",
-                    "module": "ksp::up",
+                    "module": "ksp::ui",
                     "name": "Align"
                   },
                   "hasDefault": true,
@@ -19520,7 +19520,7 @@
                   "name": "align",
                   "type": {
                     "kind": "Standard",
-                    "module": "ksp::up",
+                    "module": "ksp::ui",
                     "name": "Align"
                   },
                   "hasDefault": true,
@@ -19569,7 +19569,7 @@
                   "name": "align",
                   "type": {
                     "kind": "Standard",
-                    "module": "ksp::up",
+                    "module": "ksp::ui",
                     "name": "Align"
                   },
                   "hasDefault": true,
@@ -19618,7 +19618,7 @@
                   "name": "align",
                   "type": {
                     "kind": "Standard",
-                    "module": "ksp::up",
+                    "module": "ksp::ui",
                     "name": "Align"
                   },
                   "hasDefault": true,
@@ -21766,7 +21766,7 @@
                   "name": "align",
                   "type": {
                     "kind": "Standard",
-                    "module": "ksp::up",
+                    "module": "ksp::ui",
                     "name": "Align"
                   },
                   "hasDefault": true,
@@ -21806,7 +21806,7 @@
                   "name": "align",
                   "type": {
                     "kind": "Standard",
-                    "module": "ksp::up",
+                    "module": "ksp::ui",
                     "name": "Align"
                   },
                   "hasDefault": true,
@@ -21846,7 +21846,7 @@
                   "name": "align",
                   "type": {
                     "kind": "Standard",
-                    "module": "ksp::up",
+                    "module": "ksp::ui",
                     "name": "Align"
                   },
                   "hasDefault": true,
@@ -21886,7 +21886,7 @@
                   "name": "align",
                   "type": {
                     "kind": "Standard",
-                    "module": "ksp::up",
+                    "module": "ksp::ui",
                     "name": "Align"
                   },
                   "hasDefault": true,
@@ -21926,7 +21926,7 @@
                   "name": "align",
                   "type": {
                     "kind": "Standard",
-                    "module": "ksp::up",
+                    "module": "ksp::ui",
                     "name": "Align"
                   },
                   "hasDefault": true,
@@ -21966,7 +21966,7 @@
                   "name": "align",
                   "type": {
                     "kind": "Standard",
-                    "module": "ksp::up",
+                    "module": "ksp::ui",
                     "name": "Align"
                   },
                   "hasDefault": true,
@@ -22006,7 +22006,7 @@
                   "name": "align",
                   "type": {
                     "kind": "Standard",
-                    "module": "ksp::up",
+                    "module": "ksp::ui",
                     "name": "Align"
                   },
                   "hasDefault": true,
@@ -22037,7 +22037,7 @@
                   "name": "align",
                   "type": {
                     "kind": "Standard",
-                    "module": "ksp::up",
+                    "module": "ksp::ui",
                     "name": "Align"
                   },
                   "hasDefault": true,
@@ -22068,7 +22068,7 @@
                   "name": "align",
                   "type": {
                     "kind": "Standard",
-                    "module": "ksp::up",
+                    "module": "ksp::ui",
                     "name": "Align"
                   },
                   "hasDefault": true,
@@ -22099,7 +22099,7 @@
                   "name": "align",
                   "type": {
                     "kind": "Standard",
-                    "module": "ksp::up",
+                    "module": "ksp::ui",
                     "name": "Align"
                   },
                   "hasDefault": true,
@@ -22148,7 +22148,7 @@
                   "name": "align",
                   "type": {
                     "kind": "Standard",
-                    "module": "ksp::up",
+                    "module": "ksp::ui",
                     "name": "Align"
                   },
                   "hasDefault": true,
@@ -22197,7 +22197,7 @@
                   "name": "align",
                   "type": {
                     "kind": "Standard",
-                    "module": "ksp::up",
+                    "module": "ksp::ui",
                     "name": "Align"
                   },
                   "hasDefault": true,
@@ -22260,7 +22260,7 @@
           "description": "Alignment of the element in off direction (horizontal for vertical container and vice versa)",
           "type": {
             "kind": "Standard",
-            "module": "ksp::up",
+            "module": "ksp::ui",
             "name": "AlignConstants"
           }
         }
@@ -22843,12 +22843,12 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::vessel",
+              "module": "ksp::orbit",
               "name": "PatchTransitionType"
             },
             {
               "kind": "Standard",
-              "module": "ksp::vessel",
+              "module": "ksp::orbit",
               "name": "PatchTransitionTypeConstants"
             },
             {
@@ -22963,12 +22963,12 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::up",
+              "module": "ksp::ui",
               "name": "Align"
             },
             {
               "kind": "Standard",
-              "module": "ksp::up",
+              "module": "ksp::ui",
               "name": "AlignConstants"
             },
             {
@@ -23697,12 +23697,12 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::vessel",
+              "module": "ksp::orbit",
               "name": "PatchTransitionType"
             },
             {
               "kind": "Standard",
-              "module": "ksp::vessel",
+              "module": "ksp::orbit",
               "name": "PatchTransitionTypeConstants"
             },
             {
@@ -23817,12 +23817,12 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::up",
+              "module": "ksp::ui",
               "name": "Align"
             },
             {
               "kind": "Standard",
-              "module": "ksp::up",
+              "module": "ksp::ui",
               "name": "AlignConstants"
             },
             {
@@ -24571,12 +24571,12 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::vessel",
+              "module": "ksp::orbit",
               "name": "PatchTransitionType"
             },
             {
               "kind": "Standard",
-              "module": "ksp::vessel",
+              "module": "ksp::orbit",
               "name": "PatchTransitionTypeConstants"
             },
             {
@@ -24691,12 +24691,12 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::up",
+              "module": "ksp::ui",
               "name": "Align"
             },
             {
               "kind": "Standard",
-              "module": "ksp::up",
+              "module": "ksp::ui",
               "name": "AlignConstants"
             },
             {
@@ -25425,12 +25425,12 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::vessel",
+              "module": "ksp::orbit",
               "name": "PatchTransitionType"
             },
             {
               "kind": "Standard",
-              "module": "ksp::vessel",
+              "module": "ksp::orbit",
               "name": "PatchTransitionTypeConstants"
             },
             {
@@ -25545,12 +25545,12 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::up",
+              "module": "ksp::ui",
               "name": "Align"
             },
             {
               "kind": "Standard",
-              "module": "ksp::up",
+              "module": "ksp::ui",
               "name": "AlignConstants"
             },
             {
@@ -26289,12 +26289,12 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::vessel",
+              "module": "ksp::orbit",
               "name": "PatchTransitionType"
             },
             {
               "kind": "Standard",
-              "module": "ksp::vessel",
+              "module": "ksp::orbit",
               "name": "PatchTransitionTypeConstants"
             },
             {
@@ -26409,12 +26409,12 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::up",
+              "module": "ksp::ui",
               "name": "Align"
             },
             {
               "kind": "Standard",
-              "module": "ksp::up",
+              "module": "ksp::ui",
               "name": "AlignConstants"
             },
             {
@@ -27243,12 +27243,12 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::vessel",
+              "module": "ksp::orbit",
               "name": "PatchTransitionType"
             },
             {
               "kind": "Standard",
-              "module": "ksp::vessel",
+              "module": "ksp::orbit",
               "name": "PatchTransitionTypeConstants"
             },
             {
@@ -27363,12 +27363,12 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::up",
+              "module": "ksp::ui",
               "name": "Align"
             },
             {
               "kind": "Standard",
-              "module": "ksp::up",
+              "module": "ksp::ui",
               "name": "AlignConstants"
             },
             {
@@ -28147,12 +28147,12 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::vessel",
+              "module": "ksp::orbit",
               "name": "PatchTransitionType"
             },
             {
               "kind": "Standard",
-              "module": "ksp::vessel",
+              "module": "ksp::orbit",
               "name": "PatchTransitionTypeConstants"
             },
             {
@@ -28267,12 +28267,12 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::up",
+              "module": "ksp::ui",
               "name": "Align"
             },
             {
               "kind": "Standard",
-              "module": "ksp::up",
+              "module": "ksp::ui",
               "name": "AlignConstants"
             },
             {
@@ -29011,12 +29011,12 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::vessel",
+              "module": "ksp::orbit",
               "name": "PatchTransitionType"
             },
             {
               "kind": "Standard",
-              "module": "ksp::vessel",
+              "module": "ksp::orbit",
               "name": "PatchTransitionTypeConstants"
             },
             {
@@ -29131,12 +29131,12 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::up",
+              "module": "ksp::ui",
               "name": "Align"
             },
             {
               "kind": "Standard",
-              "module": "ksp::up",
+              "module": "ksp::ui",
               "name": "AlignConstants"
             },
             {
@@ -29895,12 +29895,12 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::vessel",
+              "module": "ksp::orbit",
               "name": "PatchTransitionType"
             },
             {
               "kind": "Standard",
-              "module": "ksp::vessel",
+              "module": "ksp::orbit",
               "name": "PatchTransitionTypeConstants"
             },
             {
@@ -30015,12 +30015,12 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::up",
+              "module": "ksp::ui",
               "name": "Align"
             },
             {
               "kind": "Standard",
-              "module": "ksp::up",
+              "module": "ksp::ui",
               "name": "AlignConstants"
             },
             {
@@ -30789,12 +30789,12 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::vessel",
+              "module": "ksp::orbit",
               "name": "PatchTransitionType"
             },
             {
               "kind": "Standard",
-              "module": "ksp::vessel",
+              "module": "ksp::orbit",
               "name": "PatchTransitionTypeConstants"
             },
             {
@@ -30909,12 +30909,12 @@
             },
             {
               "kind": "Standard",
-              "module": "ksp::up",
+              "module": "ksp::ui",
               "name": "Align"
             },
             {
               "kind": "Standard",
-              "module": "ksp::up",
+              "module": "ksp::ui",
               "name": "AlignConstants"
             },
             {

@@ -237,7 +237,7 @@ apoapsis | Option&lt;float> | R/O | Apoapsis of the orbit above sealevel of the 
 apoapsis_radius | Option&lt;float> | R/O | Radius of apoapsis of the orbit (i.e. from the center of the `reference_body'). Is not defined for a hyperbolic orbit 
 argument_of_periapsis | float | R/O | Argument of periapsis of the orbit. 
 eccentricity | float | R/O | Eccentricity of the orbit. 
-end_transition | [ksp::vessel::PatchTransitionType](/reference/ksp/vessel.md#patchtransitiontype) | R/O | Get transition type at the end of the orbit patch 
+end_transition | [ksp::orbit::PatchTransitionType](/reference/ksp/orbit.md#patchtransitiontype) | R/O | Get transition type at the end of the orbit patch 
 end_ut | float | R/O | Universal time of the start of the orbit, in case it is an orbit-patch 
 epoch | float | R/O | Orbit epoch. 
 inclination | float | R/O | Inclination of the orbit in degree. 
@@ -255,7 +255,7 @@ reference_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformfr
 relative_ascending_node | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get the relative position of the ascending node. 
 relative_eccentricity_vector | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get the relative eccentricity vector. 
 semi_major_axis | float | R/O | Semi major axis of the orbit. 
-start_transition | [ksp::vessel::PatchTransitionType](/reference/ksp/vessel.md#patchtransitiontype) | R/O | Get transition type at the beginning of the orbit patch 
+start_transition | [ksp::orbit::PatchTransitionType](/reference/ksp/orbit.md#patchtransitiontype) | R/O | Get transition type at the beginning of the orbit patch 
 start_ut | float | R/O | Universal time of the start of the orbit, in case it is an orbit-patch 
 
 #### Methods
@@ -800,22 +800,22 @@ String representation of the number
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
-Collision | [ksp::vessel::PatchTransitionType](/reference/ksp/vessel.md#patchtransitiontype) | R/O | Orbits collides with a (celestial) object
-CompletelyOutOfFuel | [ksp::vessel::PatchTransitionType](/reference/ksp/vessel.md#patchtransitiontype) | R/O | Planed maneuver will run out of fuel
-Encounter | [ksp::vessel::PatchTransitionType](/reference/ksp/vessel.md#patchtransitiontype) | R/O | Orbit enters a sphere of influence (SOI)
-EndThrust | [ksp::vessel::PatchTransitionType](/reference/ksp/vessel.md#patchtransitiontype) | R/O | End of thrust of a planed maneuver
-Escape | [ksp::vessel::PatchTransitionType](/reference/ksp/vessel.md#patchtransitiontype) | R/O | Orbit leaves a sphere of influence (SOI)
-Final | [ksp::vessel::PatchTransitionType](/reference/ksp/vessel.md#patchtransitiontype) | R/O | Final transition (orbit ends here)
-Initial | [ksp::vessel::PatchTransitionType](/reference/ksp/vessel.md#patchtransitiontype) | R/O | Initial transition (orbit starts here)
-Maneuver | [ksp::vessel::PatchTransitionType](/reference/ksp/vessel.md#patchtransitiontype) | R/O | Orbit changes due to a planed maneuver
-PartialOutOfFuel | [ksp::vessel::PatchTransitionType](/reference/ksp/vessel.md#patchtransitiontype) | R/O | Planed maneuver will partially run out of fuel
+Collision | [ksp::orbit::PatchTransitionType](/reference/ksp/orbit.md#patchtransitiontype) | R/O | Orbits collides with a (celestial) object
+CompletelyOutOfFuel | [ksp::orbit::PatchTransitionType](/reference/ksp/orbit.md#patchtransitiontype) | R/O | Planed maneuver will run out of fuel
+Encounter | [ksp::orbit::PatchTransitionType](/reference/ksp/orbit.md#patchtransitiontype) | R/O | Orbit enters a sphere of influence (SOI)
+EndThrust | [ksp::orbit::PatchTransitionType](/reference/ksp/orbit.md#patchtransitiontype) | R/O | End of thrust of a planed maneuver
+Escape | [ksp::orbit::PatchTransitionType](/reference/ksp/orbit.md#patchtransitiontype) | R/O | Orbit leaves a sphere of influence (SOI)
+Final | [ksp::orbit::PatchTransitionType](/reference/ksp/orbit.md#patchtransitiontype) | R/O | Final transition (orbit ends here)
+Initial | [ksp::orbit::PatchTransitionType](/reference/ksp/orbit.md#patchtransitiontype) | R/O | Initial transition (orbit starts here)
+Maneuver | [ksp::orbit::PatchTransitionType](/reference/ksp/orbit.md#patchtransitiontype) | R/O | Orbit changes due to a planed maneuver
+PartialOutOfFuel | [ksp::orbit::PatchTransitionType](/reference/ksp/orbit.md#patchtransitiontype) | R/O | Planed maneuver will partially run out of fuel
 
 #### Methods
 
 ##### from_string
 
 ```rust
-patchtransitiontypeconstants.from_string ( value : string ) -> Option<ksp::vessel::PatchTransitionType>
+patchtransitiontypeconstants.from_string ( value : string ) -> Option<ksp::orbit::PatchTransitionType>
 ```
 
 Parse from string
@@ -830,7 +830,7 @@ value | string |  | Enum value to lookup
 
 Name | Type | Description
 --- | --- | ---
-PatchTransitionType | ksp::vessel::PatchTransitionTypeConstants | Transition type at the beginning or end of an orbit patch
+PatchTransitionType | ksp::orbit::PatchTransitionTypeConstants | Transition type at the beginning or end of an orbit patch
 
 
 ## Functions

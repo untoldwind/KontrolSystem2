@@ -1,6 +1,6 @@
 # Changes
 
-## 0.5.2.7 ->
+## 0.5.2.7 -> 0.5.2.8
 
 * Improve error handling in struct field initializers (#119)
 * Improve docutmation of function/method parameters (#126)
