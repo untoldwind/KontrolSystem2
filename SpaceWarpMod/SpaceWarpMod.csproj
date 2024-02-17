@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <ProjectGuid>{AA662164-EC1F-4268-8DF0-9C222D6CAF52}</ProjectGuid>
         <OutputType>Library</OutputType>
         <RootNamespace>KontrolSystem.SpaceWarpMod</RootNamespace>
         <AssemblyName>KontrolSystemSpaceWarpMod</AssemblyName>
@@ -56,18 +55,9 @@
       <Content Include="swinfo.json" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\KSP2Runtime\KSP2Runtime.csproj">
-        <Project>{a2aacc87-5749-4e7e-9cf1-311ae2406092}</Project>
-        <Name>KSP2Runtime</Name>
-      </ProjectReference>
-      <ProjectReference Include="..\Parsing\KontrolSystemParsing.csproj">
-        <Project>{582c6412-9b9d-48f0-b5ac-70c6a68e610a}</Project>
-        <Name>KontrolSystemParsing</Name>
-      </ProjectReference>
-      <ProjectReference Include="..\TO2\KontrolSystemTO2.csproj">
-        <Project>{228541da-6909-4899-9966-1ca2bf16b830}</Project>
-        <Name>KontrolSystemTO2</Name>
-      </ProjectReference>
+      <ProjectReference Include="..\KSP2Runtime\KSP2Runtime.csproj"/>
+      <ProjectReference Include="..\Parsing\KontrolSystemParsing.csproj"/>
+      <ProjectReference Include="..\TO2\KontrolSystemTO2.csproj"/>
     </ItemGroup>
     <ItemGroup>
         <AssetFiles Include="Assets\**\*.bundle" />

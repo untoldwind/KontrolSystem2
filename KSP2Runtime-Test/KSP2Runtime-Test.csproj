@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">    
     <PropertyGroup>
-        <ProjectGuid>{B8E2A508-B32B-409B-BAC3-E5955F4F293A}</ProjectGuid>
         <OutputType>Library</OutputType>
         <RootNamespace>KontrolSystem.KSP.Runtime.Test</RootNamespace>
         <AssemblyName>KontrolSystemKSP2Runtime-Test</AssemblyName>
@@ -21,21 +20,9 @@
         </PackageReference>
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\Parsing\KontrolSystemParsing.csproj">
-            <Project>{582C6412-9B9D-48F0-B5AC-70C6A68E610A}</Project>
-            <Name>KontrolSystemParsing</Name>
-            <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-        </ProjectReference>
-        <ProjectReference Include="..\TO2\KontrolSystemTO2.csproj">
-            <Project>{228541DA-6909-4899-9966-1CA2BF16B830}</Project>
-            <Name>KontrolSystemTO2</Name>
-            <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-        </ProjectReference>
-        <ProjectReference Include="..\KSP2Runtime\KSP2Runtime.csproj">
-            <Project>{A2AACC87-5749-4E7E-9CF1-311AE2406092}</Project>
-            <Name>KontrolSystemParsing</Name>
-            <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-        </ProjectReference>
+        <ProjectReference Include="..\Parsing\KontrolSystemParsing.csproj"/>
+        <ProjectReference Include="..\TO2\KontrolSystemTO2.csproj"/>
+        <ProjectReference Include="..\KSP2Runtime\KSP2Runtime.csproj"/>
     </ItemGroup>
     <ItemGroup>
         <Content Include="to2KSP\**\*.*">

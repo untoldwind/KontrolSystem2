@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <ProjectGuid>{B0A3BC14-8710-43AC-90DB-C058958FC592}</ProjectGuid>
         <OutputType>Exe</OutputType>
         <RootNamespace>KontrolSystem.GenRefs</RootNamespace>
         <AssemblyName>KontrolSystemGenRefs</AssemblyName>
@@ -23,14 +22,8 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\..\TO2\KontrolSystemTO2.csproj">
-            <Project>{228541DA-6909-4899-9966-1CA2BF16B830}</Project>
-            <Name>KontrolSystemTO2</Name>
-        </ProjectReference>
-        <ProjectReference Include="..\..\KSP2Runtime\KSP2Runtime.csproj">
-            <Project>{A2AACC87-5749-4E7E-9CF1-311AE2406092}</Project>
-            <Name>KontrolSystemKSP2Runtime</Name>
-        </ProjectReference>
+        <ProjectReference Include="..\..\TO2\KontrolSystemTO2.csproj"/>
+        <ProjectReference Include="..\..\KSP2Runtime\KSP2Runtime.csproj"/>
     </ItemGroup>
     <Target Name="Test">
     </Target>
