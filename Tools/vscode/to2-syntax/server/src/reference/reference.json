@@ -38334,18 +38334,18 @@
               {
                 "kind": "Record",
                 "names": [
-                  "delta_v",
-                  "UT"
+                  "UT",
+                  "delta_v"
                 ],
                 "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
                   {
                     "kind": "Standard",
                     "module": "ksp::math",
                     "name": "Vec3"
-                  },
-                  {
-                    "kind": "Builtin",
-                    "name": "float"
                   }
                 ]
               },
@@ -38378,18 +38378,18 @@
               {
                 "kind": "Record",
                 "names": [
-                  "delta_v",
-                  "UT"
+                  "UT",
+                  "delta_v"
                 ],
                 "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
                   {
                     "kind": "Standard",
                     "module": "ksp::math",
                     "name": "Vec3"
-                  },
-                  {
-                    "kind": "Builtin",
-                    "name": "float"
                   }
                 ]
               },
@@ -38628,23 +38628,23 @@
               {
                 "kind": "Record",
                 "names": [
-                  "delta_v",
                   "TT",
-                  "UT"
+                  "UT",
+                  "delta_v"
                 ],
                 "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
                   {
                     "kind": "Standard",
                     "module": "ksp::math",
                     "name": "Vec3"
-                  },
-                  {
-                    "kind": "Builtin",
-                    "name": "float"
-                  },
-                  {
-                    "kind": "Builtin",
-                    "name": "float"
                   }
                 ]
               },
@@ -38705,23 +38705,23 @@
               {
                 "kind": "Record",
                 "names": [
-                  "delta_v",
                   "TT",
-                  "UT"
+                  "UT",
+                  "delta_v"
                 ],
                 "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
                   {
                     "kind": "Standard",
                     "module": "ksp::math",
                     "name": "Vec3"
-                  },
-                  {
-                    "kind": "Builtin",
-                    "name": "float"
-                  },
-                  {
-                    "kind": "Builtin",
-                    "name": "float"
                   }
                 ]
               },
@@ -38782,23 +38782,23 @@
               {
                 "kind": "Record",
                 "names": [
-                  "delta_v",
                   "TT",
-                  "UT"
+                  "UT",
+                  "delta_v"
                 ],
                 "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
                   {
                     "kind": "Standard",
                     "module": "ksp::math",
                     "name": "Vec3"
-                  },
-                  {
-                    "kind": "Builtin",
-                    "name": "float"
-                  },
-                  {
-                    "kind": "Builtin",
-                    "name": "float"
                   }
                 ]
               },
@@ -39030,18 +39030,18 @@
           "returnType": {
             "kind": "Record",
             "names": [
-              "delta_v",
-              "UT"
+              "UT",
+              "delta_v"
             ],
             "parameters": [
+              {
+                "kind": "Builtin",
+                "name": "float"
+              },
               {
                 "kind": "Standard",
                 "module": "ksp::math",
                 "name": "Vec3"
-              },
-              {
-                "kind": "Builtin",
-                "name": "float"
               }
             ]
           }
@@ -39115,18 +39115,18 @@
           "returnType": {
             "kind": "Record",
             "names": [
-              "delta_v",
-              "UT"
+              "UT",
+              "delta_v"
             ],
             "parameters": [
+              {
+                "kind": "Builtin",
+                "name": "float"
+              },
               {
                 "kind": "Standard",
                 "module": "ksp::math",
                 "name": "Vec3"
-              },
-              {
-                "kind": "Builtin",
-                "name": "float"
               }
             ]
           }
@@ -39160,18 +39160,18 @@
           "returnType": {
             "kind": "Record",
             "names": [
-              "delta_v",
-              "UT"
+              "UT",
+              "delta_v"
             ],
             "parameters": [
+              {
+                "kind": "Builtin",
+                "name": "float"
+              },
               {
                 "kind": "Standard",
                 "module": "ksp::math",
                 "name": "Vec3"
-              },
-              {
-                "kind": "Builtin",
-                "name": "float"
               }
             ]
           }
@@ -39205,18 +39205,18 @@
           "returnType": {
             "kind": "Record",
             "names": [
-              "delta_v",
-              "UT"
+              "UT",
+              "delta_v"
             ],
             "parameters": [
+              {
+                "kind": "Builtin",
+                "name": "float"
+              },
               {
                 "kind": "Standard",
                 "module": "ksp::math",
                 "name": "Vec3"
-              },
-              {
-                "kind": "Builtin",
-                "name": "float"
               }
             ]
           }
@@ -39253,18 +39253,18 @@
               {
                 "kind": "Record",
                 "names": [
-                  "delta_v",
-                  "UT"
+                  "UT",
+                  "delta_v"
                 ],
                 "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
                   {
                     "kind": "Standard",
                     "module": "ksp::math",
                     "name": "Vec3"
-                  },
-                  {
-                    "kind": "Builtin",
-                    "name": "float"
                   }
                 ]
               },

@@ -71,8 +71,8 @@ String representation of the number
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
-Antinormal | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | Align the vessel to the anti-normal vector of its orbit.
 AntiTarget | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | Align the vessel to the vector pointing away from its target (if a target is set).
+Antinormal | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | Align the vessel to the anti-normal vector of its orbit.
 Autopilot | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | Align the vessel to the `vessel.autopilot.target_orientation` vector. (probably no difference to AutopilotMode.Navigation)
 Maneuver | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | Align the vessel to the burn vector of the next maneuver node (if a maneuver node exists).
 Navigation | [ksp::vessel::AutopilotMode](/reference/ksp/vessel.md#autopilotmode) | R/O | Align the vessel to the `vessel.autopilot.target_orientation` vector.
@@ -461,9 +461,9 @@ Remove all maneuver nodes
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
+ETA | float | R/W | 
 burn_duration | float | R/O | 
 burn_vector | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/W | 
-ETA | float | R/W | 
 expected_orbit | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit) | R/O | 
 global_burn_vector | [ksp::math::GlobalVelocity](/reference/ksp/math.md#globalvelocity) | R/W | 
 normal | float | R/W | 
@@ -1022,21 +1022,6 @@ start_mass | float | R/O | Start mass of the stage.
 
 #### Methods
 
-##### get_deltav
-
-```rust
-stagedeltav.get_deltav ( situation : ksp::vessel::DeltaVSituation ) -> float
-```
-
-Estimated delta-v of the stage in a given `situation`
-
-
-Parameters
-
-Name | Type | Optional | Description
---- | --- | --- | ---
-situation | ksp::vessel::DeltaVSituation |  | 
-
 ##### get_ISP
 
 ```rust
@@ -1052,13 +1037,13 @@ Name | Type | Optional | Description
 --- | --- | --- | ---
 situation | ksp::vessel::DeltaVSituation |  | 
 
-##### get_thrust
+##### get_TWR
 
 ```rust
-stagedeltav.get_thrust ( situation : ksp::vessel::DeltaVSituation ) -> float
+stagedeltav.get_TWR ( situation : ksp::vessel::DeltaVSituation ) -> float
 ```
 
-Estimated thrust of the stage in a given `situation`
+Estimated TWR of the stage in a given `situation`
 
 
 Parameters
@@ -1067,13 +1052,28 @@ Name | Type | Optional | Description
 --- | --- | --- | ---
 situation | ksp::vessel::DeltaVSituation |  | 
 
-##### get_TWR
+##### get_deltav
 
 ```rust
-stagedeltav.get_TWR ( situation : ksp::vessel::DeltaVSituation ) -> float
+stagedeltav.get_deltav ( situation : ksp::vessel::DeltaVSituation ) -> float
 ```
 
-Estimated TWR of the stage in a given `situation`
+Estimated delta-v of the stage in a given `situation`
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+situation | ksp::vessel::DeltaVSituation |  | 
+
+##### get_thrust
+
+```rust
+stagedeltav.get_thrust ( situation : ksp::vessel::DeltaVSituation ) -> float
+```
+
+Estimated thrust of the stage in a given `situation`
 
 
 Parameters
@@ -1142,6 +1142,7 @@ Represents an in-game vessel, which might be a rocket, plane, rover ... or actua
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
+CoM | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Position of the center of mass of the vessel. 
 actions | [ksp::vessel::ActionGroups](/reference/ksp/vessel.md#actiongroups) | R/O | Collection of methods to trigger action groups. 
 air_intakes | [ksp::vessel::ModuleAirIntake](/reference/ksp/vessel.md#moduleairintake)[] | R/O | Get a list of all air intake parts of the vessel. 
 altitude_scenery | float | R/O | 
@@ -1154,7 +1155,6 @@ autopilot | [ksp::vessel::Autopilot](/reference/ksp/vessel.md#autopilot) | R/O |
 available_thrust | float | R/O | Returns the maximum thrust of all engines in the current situation of the vessel. 
 body_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/O | The body/rotating reference frame of the vessel. 
 celestial_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/O | The celestial/non-rotating reference frame of the vessel. 
-CoM | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Position of the center of mass of the vessel. 
 command_modules | [ksp::vessel::ModuleCommand](/reference/ksp/vessel.md#modulecommand)[] | R/O | Get a list of all command module parts of the vessel. 
 control_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/O | Reference frame for the current control position. 
 control_status | [ksp::vessel::VesselControlState](/reference/ksp/vessel.md#vesselcontrolstate) | R/O | Current control status of the vessel. 

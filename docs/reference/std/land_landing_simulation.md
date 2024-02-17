@@ -251,6 +251,26 @@ decel_end_altitude_asl | float |  |
 landing_altitude_asl | float |  | 
 speed_policy | sync fn(ksp::math::Vec3, ksp::math::Vec3) -> float |  | 
 
+### ReentrySimulation
+
+```rust
+pub sync fn ReentrySimulation ( body : std::land::landing_simulation::BodyParameters,
+                                start_dt : float,
+                                min_dt : float,
+                                max_thrust_accel : float ) -> std::land::landing_simulation::ReentrySimulation
+```
+
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+body | std::land::landing_simulation::BodyParameters |  | 
+start_dt | float |  | 
+min_dt | float |  | 
+max_thrust_accel | float |  | 
+
 ### init_simulation
 
 ```rust
@@ -276,23 +296,3 @@ min_dt | float |  |
 max_thrust_accel | float |  | 
 landing_altitude_asl | float |  | 
 speed_policy | sync fn(ksp::math::Vec3, ksp::math::Vec3) -> float |  | 
-
-### ReentrySimulation
-
-```rust
-pub sync fn ReentrySimulation ( body : std::land::landing_simulation::BodyParameters,
-                                start_dt : float,
-                                min_dt : float,
-                                max_thrust_accel : float ) -> std::land::landing_simulation::ReentrySimulation
-```
-
-
-
-Parameters
-
-Name | Type | Optional | Description
---- | --- | --- | ---
-body | std::land::landing_simulation::BodyParameters |  | 
-start_dt | float |  | 
-min_dt | float |  | 
-max_thrust_accel | float |  | 

@@ -1,9 +1,9 @@
 #!/bin/sh
 
-(cd Tools/GenDocs; msbuild -t:build -restore -Property:Configuration=Release)
+dotnet build  -restore -Property:Configuration=Release
 
-mono ./bin/Release/KontrolSystemGenDocs.exe
+./bin/Release/KontrolSystemGenDocs
 
-(cd Tools/GenRefs; msbuild -t:build -restore -Property:Configuration=Release)
+dotnet build  -restore -Property:Configuration=Release
 
-mono ./bin/Release/KontrolSystemGenRefs.exe
+./bin/Release/KontrolSystemGenRefs

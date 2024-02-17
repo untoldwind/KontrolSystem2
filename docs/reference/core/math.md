@@ -181,20 +181,6 @@ Name | Type | Optional | Description
 --- | --- | --- | ---
 d | float |  | 
 
-### atan_deg
-
-```rust
-pub sync fn atan_deg ( x : float ) -> float
-```
-
-Returns the angle in degree whose tangent is the specified number.
-
-Parameters
-
-Name | Type | Optional | Description
---- | --- | --- | ---
-x | float |  | 
-
 ### atan2
 
 ```rust
@@ -225,6 +211,20 @@ Parameters
 Name | Type | Optional | Description
 --- | --- | --- | ---
 y | float |  | 
+x | float |  | 
+
+### atan_deg
+
+```rust
+pub sync fn atan_deg ( x : float ) -> float
+```
+
+Returns the angle in degree whose tangent is the specified number.
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
 x | float |  | 
 
 ### atanh
@@ -301,20 +301,6 @@ Name | Type | Optional | Description
 --- | --- | --- | ---
 angle | float |  | 
 
-### clamp_radians_pi
-
-```rust
-pub sync fn clamp_radians_pi ( angle : float ) -> float
-```
-
-Clamp an angle between -π and π
-
-Parameters
-
-Name | Type | Optional | Description
---- | --- | --- | ---
-angle | float |  | 
-
 ### clamp_radians2_pi
 
 ```rust
@@ -322,6 +308,20 @@ pub sync fn clamp_radians2_pi ( angle : float ) -> float
 ```
 
 Clamp an angle between 0 and 2π
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+angle | float |  | 
+
+### clamp_radians_pi
+
+```rust
+pub sync fn clamp_radians_pi ( angle : float ) -> float
+```
+
+Clamp an angle between -π and π
 
 Parameters
 

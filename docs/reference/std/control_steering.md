@@ -217,32 +217,6 @@ steeringcontroller.update_torque ( ) -> Unit
 ## Functions
 
 
-### control_steering
-
-```rust
-pub fn control_steering ( vessel : ksp::vessel::Vessel ) -> std::control::steering::SteeringControl
-```
-
-Control the steering of a vessel.
-Example usage:
-```rust
-use { control_steering } from std::control::steering
-...
-const control = control_steering(vessel)
-// vessel is now controlled and will keep its current rotation
-
-control.set_heading(30, 10, 5) // change the desired rotation
-sleep(5) // Give the controller time to steer the vessel
-...
-control.release() // release control of the vessel
-```
-
-Parameters
-
-Name | Type | Optional | Description
---- | --- | --- | ---
-vessel | ksp::vessel::Vessel |  | 
-
 ### SteeringControl
 
 ```rust
@@ -275,3 +249,29 @@ Name | Type | Optional | Description
 --- | --- | --- | ---
 vessel | ksp::vessel::Vessel |  | 
 target_direction | ksp::math::GlobalDirection |  | 
+
+### control_steering
+
+```rust
+pub fn control_steering ( vessel : ksp::vessel::Vessel ) -> std::control::steering::SteeringControl
+```
+
+Control the steering of a vessel.
+Example usage:
+```rust
+use { control_steering } from std::control::steering
+...
+const control = control_steering(vessel)
+// vessel is now controlled and will keep its current rotation
+
+control.set_heading(30, 10, 5) // change the desired rotation
+sleep(5) // Give the controller time to steer the vessel
+...
+control.release() // release control of the vessel
+```
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+vessel | ksp::vessel::Vessel |  | 

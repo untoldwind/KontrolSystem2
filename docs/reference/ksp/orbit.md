@@ -14,6 +14,7 @@ Represents an in-game celestial body.
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
+SOI_radius | float | R/O | Radius of the sphere of influence of the body 
 angular_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Angular velocity vector of the body 
 atmosphere_depth | float | R/O | Depth/height of the atmosphere if present. 
 body_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/O | The body/rotating reference frame of the body. 
@@ -32,7 +33,6 @@ position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | The current po
 radius | float | R/O | Radius of the body at sea level 
 right | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Right vector of the body in its celestial frame 
 rotation_period | float | R/O | Rotation period of the planet. 
-SOI_radius | float | R/O | Radius of the sphere of influence of the body 
 up | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Up vector of the body in its celestial frame 
 
 #### Methods
@@ -233,6 +233,7 @@ Represents an in-game orbit.
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
+LAN | float | R/O | Longitude of ascending node of the orbit in degree 
 apoapsis | Option&lt;float> | R/O | Apoapsis of the orbit above sealevel of the `reference_body`. Is not defined for a hyperbolic orbit 
 apoapsis_radius | Option&lt;float> | R/O | Radius of apoapsis of the orbit (i.e. from the center of the `reference_body'). Is not defined for a hyperbolic orbit 
 argument_of_periapsis | float | R/O | Argument of periapsis of the orbit. 
@@ -241,7 +242,6 @@ end_transition | [ksp::orbit::PatchTransitionType](/reference/ksp/orbit.md#patch
 end_ut | float | R/O | Universal time of the start of the orbit, in case it is an orbit-patch 
 epoch | float | R/O | Orbit epoch. 
 inclination | float | R/O | Inclination of the orbit in degree. 
-LAN | float | R/O | Longitude of ascending node of the orbit in degree 
 mean_anomaly_at_epoch | float | R/O | Mean anomaly of the orbit at `epoch` 
 mean_motion | float | R/O | Mean motion of the orbit. 
 next_patch | Option&lt;[ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit)> | R/O | Get the next orbit patch of the trajectory (if available) 
