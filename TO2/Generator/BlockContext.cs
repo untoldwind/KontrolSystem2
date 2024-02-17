@@ -3,42 +3,42 @@ using System.Collections.Generic;
 using System.Reflection.Emit;
 using KontrolSystem.TO2.AST;
 
-namespace KontrolSystem.TO2.Generator {
-    public interface IBlockContext {
-        ModuleContext ModuleContext { get; }
+namespace KontrolSystem.TO2.Generator;
 
-        MethodBuilder MethodBuilder { get; }
+public interface IBlockContext {
+    ModuleContext ModuleContext { get; }
 
-        IILEmitter IL { get; }
+    MethodBuilder MethodBuilder { get; }
 
-        TO2Type ExpectedReturn { get; }
+    IILEmitter IL { get; }
 
-        bool IsAsync { get; }
+    TO2Type ExpectedReturn { get; }
 
-        void AddError(StructuralError error);
+    bool IsAsync { get; }
 
-        bool HasErrors { get; }
+    bool HasErrors { get; }
 
-        List<StructuralError> AllErrors { get; }
+    List<StructuralError> AllErrors { get; }
 
-        IBlockContext CreateChildContext();
+    (LabelRef start, LabelRef end)? InnerLoop { get; }
 
-        IBlockContext CreateLoopContext(LabelRef start, LabelRef end);
+    Dictionary<string, RealizedType> InferredGenerics { get; }
 
-        IBlockContext CloneCountingContext();
+    void AddError(StructuralError error);
 
-        (LabelRef start, LabelRef end)? InnerLoop { get; }
+    IBlockContext CreateChildContext();
 
-        IBlockVariable FindVariable(string name);
+    IBlockContext CreateLoopContext(LabelRef start, LabelRef end);
 
-        ITempBlockVariable MakeTempVariable(RealizedType to2Type);
+    IBlockContext CloneCountingContext();
 
-        ILocalRef DeclareHiddenLocal(Type rawType);
+    IBlockVariable FindVariable(string name);
 
-        IBlockVariable DeclaredVariable(string name, bool isConst, RealizedType to2Type);
+    ITempBlockVariable MakeTempVariable(RealizedType to2Type);
 
-        void RegisterAsyncResume(TO2Type returnType);
+    ILocalRef DeclareHiddenLocal(Type rawType);
 
-        Dictionary<string, RealizedType> InferredGenerics { get; }
-    }
+    IBlockVariable DeclaredVariable(string name, bool isConst, RealizedType to2Type);
+
+    void RegisterAsyncResume(TO2Type returnType);
 }

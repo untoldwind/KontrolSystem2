@@ -4,53 +4,56 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI {
-    public class UGUIToggle : UGUIElement {
-        private Toggle toggle;
-        private TextMeshProUGUI label;
+namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI;
 
-        private UGUIToggle(GameObject gameObject, UnityAction<bool> onChange) : base(gameObject, Vector2.zero) {
-            toggle = gameObject.GetComponent<Toggle>();
-            label = gameObject.GetComponentInChildren<TextMeshProUGUI>();
-            if (onChange != null) toggle.onValueChanged.AddListener(onChange);
-        }
+public class UGUIToggle : UGUIElement {
+    private readonly TextMeshProUGUI label;
+    private readonly Toggle toggle;
 
-        public override Vector2 MinSize => new Vector2(Math.Max(minSize.x, 50 + label.preferredWidth), Math.Max(minSize.y, 10 + label.preferredHeight));
+    private UGUIToggle(GameObject gameObject, UnityAction<bool> onChange) : base(gameObject, Vector2.zero) {
+        toggle = gameObject.GetComponent<Toggle>();
+        label = gameObject.GetComponentInChildren<TextMeshProUGUI>();
+        if (onChange != null) toggle.onValueChanged.AddListener(onChange);
+    }
 
-        public Color CheckmarkColor {
-            get => toggle.graphic.color;
-            set => toggle.graphic.color = value;
-        }
+    public override Vector2 MinSize => new(Math.Max(minSize.x, 50 + label.preferredWidth),
+        Math.Max(minSize.y, 10 + label.preferredHeight));
 
-        public string Label {
-            get => label.text;
-            set => label.text = value;
-        }
+    public Color CheckmarkColor {
+        get => toggle.graphic.color;
+        set => toggle.graphic.color = value;
+    }
 
-        public bool Interactable {
-            get => toggle.interactable;
-            set => toggle.interactable = value;
-        }
+    public string Label {
+        get => label.text;
+        set => label.text = value;
+    }
 
-        public bool IsOn {
-            get => toggle.isOn;
-            set => toggle.isOn = value;
-        }
+    public bool Interactable {
+        get => toggle.interactable;
+        set => toggle.interactable = value;
+    }
 
-        public float FontSize {
-            get => label.fontSize;
-            set => label.fontSize = value;
-        }
+    public bool IsOn {
+        get => toggle.isOn;
+        set => toggle.isOn = value;
+    }
 
-        public void OnChange(UnityAction<bool> onChange) {
-            toggle.onValueChanged.RemoveAllListeners();
-            toggle.onValueChanged.AddListener(onChange);
-        }
+    public float FontSize {
+        get => label.fontSize;
+        set => label.fontSize = value;
+    }
 
-        public static UGUIToggle Create(string label, UnityAction<bool> onChange = null) =>
-            new UGUIToggle(UIFactory.Instance.CreateToggle(label), onChange);
+    public void OnChange(UnityAction<bool> onChange) {
+        toggle.onValueChanged.RemoveAllListeners();
+        toggle.onValueChanged.AddListener(onChange);
+    }
 
-        public static UGUIToggle CreateSelectButton(string label, UnityAction<bool> onChange = null) =>
-            new UGUIToggle(UIFactory.Instance.CreateSelectButton(label), onChange);
+    public static UGUIToggle Create(string label, UnityAction<bool> onChange = null) {
+        return new UGUIToggle(UIFactory.Instance.CreateToggle(label), onChange);
+    }
+
+    public static UGUIToggle CreateSelectButton(string label, UnityAction<bool> onChange = null) {
+        return new UGUIToggle(UIFactory.Instance.CreateSelectButton(label), onChange);
     }
 }

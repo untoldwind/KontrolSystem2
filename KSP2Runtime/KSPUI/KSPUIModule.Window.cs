@@ -1,30 +1,29 @@
 ﻿using KontrolSystem.KSP.Runtime.KSPUI.UGUI;
 using KontrolSystem.TO2.Binding;
-using UnityEngine;
 
-namespace KontrolSystem.KSP.Runtime.KSPUI {
-    public partial class KSPUIModule {
-        [KSClass("Window")]
-        public class Window : AbstractContainer {
-            private UGUIResizableWindow window;
+namespace KontrolSystem.KSP.Runtime.KSPUI;
 
-            internal Window(UGUIResizableWindow window) : base(window.RootVerticalLayout()) {
-                this.window = window;
-                KSPContext.CurrentContext.AddWindow(this);
-            }
+public partial class KSPUIModule {
+    [KSClass("Window")]
+    public class Window : AbstractContainer {
+        private readonly UGUIResizableWindow window;
 
-            internal void Layout() {
-                window.MinSize = layout.Layout();
-            }
+        internal Window(UGUIResizableWindow window) : base(window.RootVerticalLayout()) {
+            this.window = window;
+            KSPContext.CurrentContext.AddWindow(this);
+        }
 
-            [KSField] public bool IsClosed => window.Closed;
+        [KSField] public bool IsClosed => window.Closed;
 
-            [KSMethod]
-            public void Close() {
-                window.Close();
-            }
+        internal override Window Root => this;
 
-            internal override Window Root => this;
+        internal void Layout() {
+            window.MinSize = layout.Layout();
+        }
+
+        [KSMethod]
+        public void Close() {
+            window.Close();
         }
     }
 }

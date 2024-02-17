@@ -1,46 +1,55 @@
 ﻿using System;
 
-namespace KontrolSystem.Parsing {
-    public interface IOption<out T> {
-        bool IsEmpty { get; }
+namespace KontrolSystem.Parsing;
 
-        bool IsDefined { get; }
+public interface IOption<out T> {
+    bool IsEmpty { get; }
 
-        T Value { get; }
+    bool IsDefined { get; }
 
-        IOption<U> Map<U>(Func<T, U> convert);
+    T Value { get; }
+
+    IOption<U> Map<U>(Func<T, U> convert);
+}
+
+public static class Option {
+    public static IOption<T> Some<T>(T value) {
+        return new SomeOption<T>(value);
     }
 
-    public static class Option {
-        public static IOption<T> Some<T>(T value) => new SomeOption<T>(value);
+    public static IOption<T> None<T>() {
+        return new NoneOption<T>();
+    }
 
-        public static IOption<T> None<T>() => new NoneOption<T>();
+    public static T GetOrElse<T>(this IOption<T> option, T defaultValue) {
+        return option.IsEmpty ? defaultValue : option.Value;
+    }
 
-        public static T GetOrElse<T>(this IOption<T> option, T defaultValue) =>
-            option.IsEmpty ? defaultValue : option.Value;
-
-        private readonly struct SomeOption<T> : IOption<T> {
-            private readonly T value;
-
-            internal SomeOption(T value) => this.value = value;
-
-            public bool IsEmpty => false;
-
-            public bool IsDefined => true;
-
-            public T Value => value;
-
-            public IOption<U> Map<U>(Func<T, U> convert) => new SomeOption<U>(convert(value));
+    private readonly struct SomeOption<T> : IOption<T> {
+        internal SomeOption(T value) {
+            this.Value = value;
         }
 
-        private struct NoneOption<T> : IOption<T> {
-            public bool IsEmpty => true;
+        public bool IsEmpty => false;
 
-            public bool IsDefined => false;
+        public bool IsDefined => true;
 
-            public T Value => throw new InvalidOperationException("None has no value");
+        public T Value { get; }
 
-            public IOption<U> Map<U>(Func<T, U> convert) => new NoneOption<U>();
+        public IOption<U> Map<U>(Func<T, U> convert) {
+            return new SomeOption<U>(convert(Value));
+        }
+    }
+
+    private struct NoneOption<T> : IOption<T> {
+        public bool IsEmpty => true;
+
+        public bool IsDefined => false;
+
+        public T Value => throw new InvalidOperationException("None has no value");
+
+        public IOption<U> Map<U>(Func<T, U> convert) {
+            return new NoneOption<U>();
         }
     }
 }

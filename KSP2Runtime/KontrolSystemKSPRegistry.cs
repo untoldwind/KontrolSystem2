@@ -1,45 +1,57 @@
-﻿using KontrolSystem.TO2;
+﻿using KontrolSystem.KSP.Runtime.KSPAddons;
+using KontrolSystem.KSP.Runtime.KSPConsole;
+using KontrolSystem.KSP.Runtime.KSPControl;
+using KontrolSystem.KSP.Runtime.KSPDebug;
+using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.KSP.Runtime.KSPMath;
+using KontrolSystem.KSP.Runtime.KSPOrbit;
+using KontrolSystem.KSP.Runtime.KSPResource;
+using KontrolSystem.KSP.Runtime.KSPScience;
+using KontrolSystem.KSP.Runtime.KSPTelemetry;
+using KontrolSystem.KSP.Runtime.KSPUI;
+using KontrolSystem.KSP.Runtime.KSPVessel;
+using KontrolSystem.KSP.Runtime.Testing;
+using KontrolSystem.TO2;
 using KontrolSystem.TO2.Binding;
 
-namespace KontrolSystem.KSP.Runtime {
-    public static class KontrolSystemKSPRegistry {
-        public static KontrolRegistry CreateKSP() {
-            KontrolRegistry registry = KontrolRegistry.CreateCore();
+namespace KontrolSystem.KSP.Runtime;
 
-            registry.RegisterModule(KSPMathModule.Instance.module);
+public static class KontrolSystemKSPRegistry {
+    public static KontrolRegistry CreateKSP() {
+        var registry = KontrolRegistry.CreateCore();
 
-            var (orbitTypes, orbitConstants) = KSPOrbit.KSPOrbitModule.DirectBindings();
-            var (vesselTypes, vesselConstants) = KSPVessel.KSPVesselModule.DirectBindings();
-            var (resourceTypes, resourceConstants) = KSPResource.KSPResourceModule.DirectBindings();
-            var (scienceTypes, scienceConstants) = KSPScience.KSPScienceModule.DirectBindings();
-            var (uiTypes, ruiConstants) = KSPUI.KSPUIModule.DirectBindings();
-            registry.RegisterModule(
-                BindingGenerator.BindModule(typeof(KSPConsole.KSPConsoleModule)));
-            registry.RegisterModule(
-                BindingGenerator.BindModule(typeof(KSPOrbit.KSPOrbitModule), orbitTypes, orbitConstants));
-            registry.RegisterModule(
-                BindingGenerator.BindModule(typeof(KSPControl.KSPControlModule)));
-            registry.RegisterModule(
-                BindingGenerator.BindModule(typeof(KSPResource.KSPResourceModule), resourceTypes, resourceConstants));
-            registry.RegisterModule(
-                BindingGenerator.BindModule(typeof(KSPScience.KSPScienceModule), scienceTypes, scienceConstants));
-            registry.RegisterModule(
-                BindingGenerator.BindModule(typeof(KSPVessel.KSPVesselModule), vesselTypes, vesselConstants));
-            registry.RegisterModule(
-                BindingGenerator.BindModule(typeof(KSPGame.KSPGameModule)));
-            registry.RegisterModule(
-                BindingGenerator.BindModule(typeof(KSPGame.KSPGameWarpModule)));
-            registry.RegisterModule(
-                BindingGenerator.BindModule(typeof(KSPDebug.KSPDebugModule)));
-            registry.RegisterModule(
-                BindingGenerator.BindModule(typeof(KSPTelemetry.KSPTelemetryModule)));
-            registry.RegisterModule(
-                BindingGenerator.BindModule(typeof(KSPAddons.KSPAddonsModule)));
-            registry.RegisterModule(BindingGenerator.BindModule(typeof(KSPUI.KSPUIModule), uiTypes, ruiConstants));
-            registry.RegisterModule(BindingGenerator.BindModule(typeof(Testing.KSPTesting)));
+        registry.RegisterModule(KSPMathModule.Instance.module);
 
-            return registry;
-        }
+        var (orbitTypes, orbitConstants) = KSPOrbitModule.DirectBindings();
+        var (vesselTypes, vesselConstants) = KSPVesselModule.DirectBindings();
+        var (resourceTypes, resourceConstants) = KSPResourceModule.DirectBindings();
+        var (scienceTypes, scienceConstants) = KSPScienceModule.DirectBindings();
+        var (uiTypes, ruiConstants) = KSPUIModule.DirectBindings();
+        registry.RegisterModule(
+            BindingGenerator.BindModule(typeof(KSPConsoleModule)));
+        registry.RegisterModule(
+            BindingGenerator.BindModule(typeof(KSPOrbitModule), orbitTypes, orbitConstants));
+        registry.RegisterModule(
+            BindingGenerator.BindModule(typeof(KSPControlModule)));
+        registry.RegisterModule(
+            BindingGenerator.BindModule(typeof(KSPResourceModule), resourceTypes, resourceConstants));
+        registry.RegisterModule(
+            BindingGenerator.BindModule(typeof(KSPScienceModule), scienceTypes, scienceConstants));
+        registry.RegisterModule(
+            BindingGenerator.BindModule(typeof(KSPVesselModule), vesselTypes, vesselConstants));
+        registry.RegisterModule(
+            BindingGenerator.BindModule(typeof(KSPGameModule)));
+        registry.RegisterModule(
+            BindingGenerator.BindModule(typeof(KSPGameWarpModule)));
+        registry.RegisterModule(
+            BindingGenerator.BindModule(typeof(KSPDebugModule)));
+        registry.RegisterModule(
+            BindingGenerator.BindModule(typeof(KSPTelemetryModule)));
+        registry.RegisterModule(
+            BindingGenerator.BindModule(typeof(KSPAddonsModule)));
+        registry.RegisterModule(BindingGenerator.BindModule(typeof(KSPUIModule), uiTypes, ruiConstants));
+        registry.RegisterModule(BindingGenerator.BindModule(typeof(KSPTesting)));
+
+        return registry;
     }
 }

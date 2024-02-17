@@ -1,36 +1,41 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI {
-    public class UGUICanvas : UGUIElement {
-        protected UGUICanvasDrawer drawer;
+namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI;
 
-        protected UGUICanvas(GameObject gameObject, float minWidth, float minHeight) : base(gameObject, Vector2.zero) {
-            drawer = gameObject.GetComponent<UGUICanvasDrawer>();
+public class UGUICanvas : UGUIElement {
+    protected UGUICanvasDrawer drawer;
 
-            minSize = new Vector2(minWidth, minHeight);
+    protected UGUICanvas(GameObject gameObject, float minWidth, float minHeight) : base(gameObject, Vector2.zero) {
+        drawer = gameObject.GetComponent<UGUICanvasDrawer>();
+
+        minSize = new Vector2(minWidth, minHeight);
+    }
+
+    public int Width {
+        get {
+            var width = drawer.Width;
+            return width < 0 ? (int)MinSize.x : width;
         }
+    }
 
-        public void Add(GLUIDrawer.IGLUIDrawable element) => drawer.Add(element);
-
-        public void Clear() => drawer.Clear();
-
-        public int Width {
-            get {
-                var width = drawer.Width;
-                return width < 0 ? (int)MinSize.x : width;
-            }
+    public int Height {
+        get {
+            var height = drawer.Height;
+            return height < 0 ? (int)MinSize.y : height;
         }
+    }
 
-        public int Height {
-            get {
-                var height = drawer.Height;
-                return height < 0 ? (int)MinSize.y : height;
-            }
-        }
+    public void Add(GLUIDrawer.IGLUIDrawable element) {
+        drawer.Add(element);
+    }
 
-        public static UGUICanvas Create(float minWidth, float minHeight) {
-            return new UGUICanvas(new GameObject("Canvas", typeof(RawImage), typeof(UGUICanvasDrawer)), minWidth, minHeight);
-        }
+    public void Clear() {
+        drawer.Clear();
+    }
+
+    public static UGUICanvas Create(float minWidth, float minHeight) {
+        return new UGUICanvas(new GameObject("Canvas", typeof(RawImage), typeof(UGUICanvasDrawer)), minWidth,
+            minHeight);
     }
 }

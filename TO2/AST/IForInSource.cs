@@ -1,13 +1,13 @@
 ﻿using KontrolSystem.TO2.Generator;
 
-namespace KontrolSystem.TO2.AST {
-    public interface IForInSource {
-        RealizedType ElementType { get; }
+namespace KontrolSystem.TO2.AST;
 
-        void EmitInitialize(IBlockContext context);
+public interface IForInSource {
+    RealizedType ElementType { get; }
 
-        void EmitCheckDone(IBlockContext context, LabelRef loop);
+    void EmitInitialize(IBlockContext context);
 
-        void EmitNext(IBlockContext context);
-    }
+    void EmitCheckDone(IBlockContext context, LabelRef loop);
+
+    void EmitNext(IBlockContext context);
 }

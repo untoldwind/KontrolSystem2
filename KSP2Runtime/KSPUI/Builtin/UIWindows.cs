@@ -1,77 +1,66 @@
-﻿using KontrolSystem.KSP.Runtime.KSPGame;
-using KontrolSystem.KSP.Runtime.KSPUI.UGUI;
+﻿using KontrolSystem.KSP.Runtime.KSPUI.UGUI;
 using KSP.Game;
 using KSP.Messages;
 using UnityEngine.Events;
 
-namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
-    public class UIWindows : KerbalMonoBehaviour {
-        public static UIWindows Instance { get; private set; }
+namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin;
 
-        public void Awake() {
-            Instance = this;
-            Game.Messages.Subscribe<GameStateChangedMessage>(OnStateChange);
-        }
+public class UIWindows : KerbalMonoBehaviour {
+    public static UIWindows Instance { get; private set; }
 
-        public void Destroy() {
-            Instance = null;
-            Game.Messages.Unsubscribe<GameStateChangedMessage>(OnStateChange);
-        }
+    public void Awake() {
+        Instance = this;
+        Game.Messages.Subscribe<GameStateChangedMessage>(OnStateChange);
+    }
 
-        public void Initialize(UIAssetsProvider uiAssetsProvider) {
-            UIFactory.Init(uiAssetsProvider);
-        }
+    public void Destroy() {
+        Instance = null;
+        Game.Messages.Unsubscribe<GameStateChangedMessage>(OnStateChange);
+    }
 
-        public ModuleManagerWindow OpenModuleManager(UnityAction onClose) {
-            var managerWindow = gameObject.GetComponent<ModuleManagerWindow>();
-            if (managerWindow != null) {
-                return managerWindow;
-            }
+    public void Initialize(UIAssetsProvider uiAssetsProvider) {
+        UIFactory.Init(uiAssetsProvider);
+    }
 
-            managerWindow = gameObject.AddComponent<ModuleManagerWindow>();
-            managerWindow.onClose.AddListener(onClose);
-            return managerWindow;
-        }
+    public ModuleManagerWindow OpenModuleManager(UnityAction onClose) {
+        var managerWindow = gameObject.GetComponent<ModuleManagerWindow>();
+        if (managerWindow != null) return managerWindow;
 
-        public void OpenConsoleWindow() {
-            if (gameObject.GetComponent<ConsoleWindow>() == null) {
-                gameObject.AddComponent<ConsoleWindow>();
-            }
-        }
+        managerWindow = gameObject.AddComponent<ModuleManagerWindow>();
+        managerWindow.onClose.AddListener(onClose);
+        return managerWindow;
+    }
 
-        public void OpenTelemetryWindow() {
-            gameObject.AddComponent<TelemetryWindow>();
-        }
+    public void OpenConsoleWindow() {
+        if (gameObject.GetComponent<ConsoleWindow>() == null) gameObject.AddComponent<ConsoleWindow>();
+    }
 
-        public void OpenEditorWindow(string sourceFile) {
-            var editorWindow = gameObject.AddComponent<EditorWindow>();
+    public void OpenTelemetryWindow() {
+        gameObject.AddComponent<TelemetryWindow>();
+    }
 
-            editorWindow.Load(sourceFile);
-        }
+    public void OpenEditorWindow(string sourceFile) {
+        var editorWindow = gameObject.AddComponent<EditorWindow>();
 
-        public void OpenEditorWindowNew() {
-            var editorWindow = gameObject.AddComponent<EditorWindow>();
+        editorWindow.Load(sourceFile);
+    }
 
-            editorWindow.NewFile();
-        }
+    public void OpenEditorWindowNew() {
+        var editorWindow = gameObject.AddComponent<EditorWindow>();
 
-        public void CloseAll() {
-            foreach (var editorWindow in gameObject.GetComponents<EditorWindow>()) {
-                Destroy(editorWindow);
-            }
+        editorWindow.NewFile();
+    }
 
-            foreach (var telemetryWindow in gameObject.GetComponents<TelemetryWindow>()) {
-                Destroy(telemetryWindow);
-            }
+    public void CloseAll() {
+        foreach (var editorWindow in gameObject.GetComponents<EditorWindow>()) Destroy(editorWindow);
 
-            Destroy(gameObject.GetComponent<ConsoleWindow>());
-            Destroy(gameObject.GetComponent<ModuleManagerWindow>());
-        }
+        foreach (var telemetryWindow in gameObject.GetComponents<TelemetryWindow>()) Destroy(telemetryWindow);
 
-        private void OnStateChange(MessageCenterMessage message) {
-            if (message is GameStateChangedMessage g && g.CurrentState == GameState.MainMenu) {
-                CloseAll();
-            }
-        }
+        Destroy(gameObject.GetComponent<ConsoleWindow>());
+        Destroy(gameObject.GetComponent<ModuleManagerWindow>());
+    }
+
+    private void OnStateChange(MessageCenterMessage message) {
+        if (message is GameStateChangedMessage g && g.CurrentState == GameState.MainMenu) CloseAll();
     }
 }

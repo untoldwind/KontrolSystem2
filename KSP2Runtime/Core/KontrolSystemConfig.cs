@@ -1,16 +1,15 @@
 ﻿using KontrolSystem.TO2.Runtime;
-using UnityEngine;
 
-namespace KontrolSystem.KSP.Runtime {
-    public interface KontrolSystemConfig {
-        public string Version { get; }
+namespace KontrolSystem.KSP.Runtime;
 
-        public string StdLibPath { get; }
+public interface KontrolSystemConfig {
+    public string Version { get; }
 
-        public string LocalLibPath { get; }
+    public string StdLibPath { get; }
 
-        public ITO2Logger Logger { get; }
+    public string LocalLibPath { get; }
 
-        public OptionalAddons OptionalAddons { get; }
-    }
+    public ITO2Logger Logger { get; }
+
+    public OptionalAddons OptionalAddons { get; }
 }

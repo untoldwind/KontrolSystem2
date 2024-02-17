@@ -2,71 +2,83 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace KontrolSystem.Parsing {
-    public interface IResult<out T> {
-        T Value { get; }
+namespace KontrolSystem.Parsing;
 
-        IInput Remaining { get; }
+public interface IResult<out T> {
+    T Value { get; }
 
-        bool WasSuccessful { get; }
+    IInput Remaining { get; }
 
-        List<string> Expected { get; }
+    bool WasSuccessful { get; }
 
-        Position Position { get; }
+    List<string> Expected { get; }
 
-        IResult<U> Map<U>(Func<T, U> f);
+    Position Position { get; }
 
-        IResult<U> Select<U>(Func<IResult<T>, IResult<U>> next);
+    IResult<U> Map<U>(Func<T, U> f);
+
+    IResult<U> Select<U>(Func<IResult<T>, IResult<U>> next);
+}
+
+public static class Result {
+    public static IResult<T> Success<T>(IInput remaining, T value) {
+        return new SuccessResult<T>(remaining, value);
     }
 
-    public static class Result {
-        public static IResult<T> Success<T>(IInput remaining, T value) => new SuccessResult<T>(remaining, value);
+    public static IResult<T> Failure<T>(IInput input, string expected) {
+        return new FailureResult<T>(input, new List<string> { expected });
+    }
 
-        public static IResult<T> Failure<T>(IInput input, string expected) =>
-            new FailureResult<T>(input, new List<string> { expected });
+    public static IResult<T> Failure<T>(IInput input, IEnumerable<string> expected) {
+        return new FailureResult<T>(input, expected.ToList());
+    }
 
-        public static IResult<T> Failure<T>(IInput input, IEnumerable<string> expected) =>
-            new FailureResult<T>(input, expected.ToList());
+    private readonly struct SuccessResult<T> : IResult<T> {
+        public T Value { get; }
 
-        private readonly struct SuccessResult<T> : IResult<T> {
-            public T Value { get; }
+        public IInput Remaining { get; }
 
-            public IInput Remaining { get; }
-
-            internal SuccessResult(IInput remaining, T value) {
-                Remaining = remaining;
-                Value = value;
-            }
-
-            public bool WasSuccessful => true;
-
-            public List<string> Expected => new List<string>();
-
-            public Position Position => Remaining.Position;
-
-            public IResult<U> Map<U>(Func<T, U> f) => new SuccessResult<U>(Remaining, f(Value));
-
-            public IResult<U> Select<U>(Func<IResult<T>, IResult<U>> next) => next(this);
+        internal SuccessResult(IInput remaining, T value) {
+            Remaining = remaining;
+            Value = value;
         }
 
-        private readonly struct FailureResult<T> : IResult<T> {
-            public IInput Remaining { get; }
-            public List<string> Expected { get; }
+        public bool WasSuccessful => true;
 
-            internal FailureResult(IInput input, List<string> expected) {
-                Remaining = input;
-                Expected = expected;
-            }
+        public List<string> Expected => new();
 
-            public T Value => throw new InvalidOperationException("Failure has no value");
+        public Position Position => Remaining.Position;
 
-            public bool WasSuccessful => false;
+        public IResult<U> Map<U>(Func<T, U> f) {
+            return new SuccessResult<U>(Remaining, f(Value));
+        }
 
-            public Position Position => Remaining.Position;
+        public IResult<U> Select<U>(Func<IResult<T>, IResult<U>> next) {
+            return next(this);
+        }
+    }
 
-            public IResult<U> Map<U>(Func<T, U> f) => new FailureResult<U>(Remaining, Expected);
+    private readonly struct FailureResult<T> : IResult<T> {
+        public IInput Remaining { get; }
+        public List<string> Expected { get; }
 
-            public IResult<U> Select<U>(Func<IResult<T>, IResult<U>> next) => new FailureResult<U>(Remaining, Expected);
+        internal FailureResult(IInput input, List<string> expected) {
+            Remaining = input;
+            Expected = expected;
+        }
+
+        public T Value => throw new InvalidOperationException("Failure has no value");
+
+        public bool WasSuccessful => false;
+
+        public Position Position => Remaining.Position;
+
+        public IResult<U> Map<U>(Func<T, U> f) {
+            return new FailureResult<U>(Remaining, Expected);
+        }
+
+        public IResult<U> Select<U>(Func<IResult<T>, IResult<U>> next) {
+            return new FailureResult<U>(Remaining, Expected);
         }
     }
 }

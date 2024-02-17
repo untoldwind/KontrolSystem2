@@ -324,7 +324,7 @@ namespace KontrolSystem.GenRefs {
         [JsonProperty("type")] private TypeRef Type { get; }
 
         [JsonProperty("hasDefault")] public bool HasDefault { get; }
-        
+
         [JsonProperty("description")] public string Description { get; }
     }
 

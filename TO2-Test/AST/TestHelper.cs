@@ -1,19 +1,18 @@
-﻿using System;
-using KontrolSystem.Parsing;
+﻿using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Parser;
 using Xunit;
 
-namespace KontrolSystem.TO2.Test.AST {
-    public class TestHelper {
-        public static TestBlockContext CompileExpression(string expression) {
-            var result = TO2ParserExpressions.Expression.Parse(expression);
-            var context = new TestBlockContext();
+namespace KontrolSystem.TO2.Test.AST;
 
-            result.EmitCode(context, true);
+public class TestHelper {
+    public static TestBlockContext CompileExpression(string expression) {
+        var result = TO2ParserExpressions.Expression.Parse(expression);
+        var context = new TestBlockContext();
 
-            Assert.False(context.HasErrors, String.Join("\n", context.AllErrors));
+        result.EmitCode(context, true);
 
-            return context;
-        }
+        Assert.False(context.HasErrors, string.Join("\n", context.AllErrors));
+
+        return context;
     }
 }

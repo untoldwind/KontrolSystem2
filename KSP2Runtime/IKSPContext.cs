@@ -1,78 +1,78 @@
 ﻿using System;
-using KontrolSystem.TO2.Runtime;
 using KontrolSystem.KSP.Runtime.KSPConsole;
 using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.KSP.Runtime.KSPResource;
 using KontrolSystem.KSP.Runtime.KSPTelemetry;
 using KontrolSystem.KSP.Runtime.KSPUI;
+using KontrolSystem.TO2.Runtime;
 using KSP.Game;
 using KSP.Sim.impl;
 using KSP.Sim.State;
 
-namespace KontrolSystem.KSP.Runtime {
-    public interface IMarker {
-        bool Visible { get; set; }
-        void OnUpdate();
+namespace KontrolSystem.KSP.Runtime;
 
-        void OnRender();
-    }
+public interface IMarker {
+    bool Visible { get; set; }
+    void OnUpdate();
 
-    public interface IKSPAutopilot {
-        void UpdateAutopilot(ref FlightCtrlState st, float deltaTime);
-    }
+    void OnRender();
+}
 
-    public interface IKSPContext : IContext {
-        GameInstance Game { get; }
+public interface IKSPAutopilot {
+    void UpdateAutopilot(ref FlightCtrlState st, float deltaTime);
+}
 
-        KSPGameMode GameMode { get; }
+public interface IKSPContext : IContext {
+    GameInstance Game { get; }
 
-        VesselComponent ActiveVessel { get; }
+    KSPGameMode GameMode { get; }
 
-        KSPConsoleBuffer ConsoleBuffer { get; }
+    VesselComponent ActiveVessel { get; }
 
-        TimeSeriesCollection TimeSeriesCollection { get; }
+    KSPConsoleBuffer ConsoleBuffer { get; }
 
-        double UniversalTime { get; }
+    TimeSeriesCollection TimeSeriesCollection { get; }
 
-        KSPOrbitModule.IBody FindBody(string name);
+    double UniversalTime { get; }
 
-        object NextYield { get; set; }
+    object NextYield { get; set; }
 
-        Action OnNextYieldOnce { get; set; }
+    Action OnNextYieldOnce { get; set; }
 
-        void AddMarker(IMarker marker);
+    OptionalAddons OptionalAddons { get; }
 
-        void RemoveMarker(IMarker marker);
+    KSPOrbitModule.IBody FindBody(string name);
 
-        void ClearMarkers();
+    void AddMarker(IMarker marker);
 
-        void AddResourceTransfer(KSPResourceModule.ResourceTransfer resourceTransfer);
+    void RemoveMarker(IMarker marker);
 
-        void AddWindow(KSPUIModule.Window window);
+    void ClearMarkers();
 
-        bool TryFindAutopilot<T>(VesselComponent vessel, out T autopilot) where T : IKSPAutopilot;
+    void AddResourceTransfer(KSPResourceModule.ResourceTransfer resourceTransfer);
 
-        void HookAutopilot(VesselComponent vessel, IKSPAutopilot autopilot);
+    void AddWindow(KSPUIModule.Window window);
 
-        void UnhookAutopilot(VesselComponent vessel, IKSPAutopilot autopilot);
+    bool TryFindAutopilot<T>(VesselComponent vessel, out T autopilot) where T : IKSPAutopilot;
 
-        void UnhookAllAutopilots(VesselComponent vessel);
+    void HookAutopilot(VesselComponent vessel, IKSPAutopilot autopilot);
 
-        OptionalAddons OptionalAddons { get; }
-    }
+    void UnhookAutopilot(VesselComponent vessel, IKSPAutopilot autopilot);
 
-    public class OptionalAddons {
-        public (object instance, Version version) FlightPlan { get; set; }
-    }
+    void UnhookAllAutopilots(VesselComponent vessel);
+}
 
-    public class KSPContext {
-        public static IKSPContext CurrentContext {
-            get {
-                IKSPContext context = ContextHolder.CurrentContext.Value as IKSPContext;
-                if (context == null) throw new ArgumentException($"No current IKSPContext");
-                return context;
-            }
+public class OptionalAddons {
+    public (object instance, Version version) FlightPlan { get; set; }
+}
+
+public class KSPContext {
+    public static IKSPContext CurrentContext {
+        get {
+            var context = ContextHolder.CurrentContext.Value as IKSPContext;
+            if (context == null) throw new ArgumentException("No current IKSPContext");
+            return context;
         }
     }
 }

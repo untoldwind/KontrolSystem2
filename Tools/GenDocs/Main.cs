@@ -82,7 +82,7 @@ namespace KontrolSystem.GenDocs {
                             output.WriteLine("```");
                             output.WriteLine();
                             output.WriteLine(method.Description);
-                            
+
 
                             if (method.DeclaredParameters.Count > 0) {
                                 output.WriteLine();
@@ -90,12 +90,12 @@ namespace KontrolSystem.GenDocs {
                                 output.WriteLine();
                                 output.WriteLine("Name | Type | Optional | Description");
                                 output.WriteLine("--- | --- | --- | ---");
-                        
-                                foreach(FunctionParameter parameter in method.DeclaredParameters) {
+
+                                foreach (FunctionParameter parameter in method.DeclaredParameters) {
                                     string optional = parameter.HasDefault ? "x" : "";
                                     output.WriteLine($"{parameter.name} | {parameter.type} | {optional} | {parameter.description}");
                                 }
-                            }                            
+                            }
                         }
                     }
                 }
@@ -140,8 +140,8 @@ namespace KontrolSystem.GenDocs {
                         output.WriteLine();
                         output.WriteLine("Name | Type | Optional | Description");
                         output.WriteLine("--- | --- | --- | ---");
-                        
-                        foreach(RealizedParameter parameter in function.Parameters) {
+
+                        foreach (RealizedParameter parameter in function.Parameters) {
                             string optional = parameter.HasDefault ? "x" : "";
                             output.WriteLine($"{parameter.name} | {parameter.type} | {optional} | {parameter.description}");
                         }

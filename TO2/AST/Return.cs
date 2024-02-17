@@ -3,94 +3,96 @@ using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
 using KontrolSystem.TO2.Runtime;
 
-namespace KontrolSystem.TO2.AST {
-    public class ReturnEmpty : Expression {
-        public ReturnEmpty(Position start = new Position(), Position end = new Position()) : base(start, end) {
-        }
+namespace KontrolSystem.TO2.AST;
 
-        public override IVariableContainer VariableContainer {
-            set { }
-        }
-
-        public override TO2Type ResultType(IBlockContext context) => BuiltinType.Unit;
-
-        public override void Prepare(IBlockContext context) {
-        }
-
-        public override void EmitCode(IBlockContext context, bool dropResult) {
-            if (context.ExpectedReturn != BuiltinType.Unit) {
-                context.AddError(new StructuralError(
-                    StructuralError.ErrorType.IncompatibleTypes,
-                    $"Expected a return value of type {context.ExpectedReturn}",
-                    Start,
-                    End
-                ));
-                return;
-            }
-
-            context.IL.Emit(OpCodes.Ldnull);
-            if (context.IsAsync) {
-                context.IL.EmitNew(OpCodes.Newobj,
-                    context.MethodBuilder.ReturnType.GetConstructor(new[] { typeof(object) }));
-            }
-
-            ILChunks.GenerateFunctionLeave(context);
-            context.IL.EmitReturn(context.MethodBuilder.ReturnType);
-        }
-
-        public override REPLValueFuture Eval(REPLContext context) {
-            return REPLValueFuture.Success(new REPLReturn(REPLUnit.INSTANCE));
-        }
+public class ReturnEmpty : Expression {
+    public ReturnEmpty(Position start = new(), Position end = new()) : base(start, end) {
     }
 
-    public class ReturnValue : Expression {
-        internal readonly Expression returnValue;
+    public override IVariableContainer VariableContainer {
+        set { }
+    }
 
-        public ReturnValue(Expression returnValue, Position start = new Position(), Position end = new Position()) :
-            base(start, end) {
-            this.returnValue = returnValue;
-            this.returnValue.TypeHint = context => context.ExpectedReturn.UnderlyingType(context.ModuleContext);
+    public override TO2Type ResultType(IBlockContext context) {
+        return BuiltinType.Unit;
+    }
+
+    public override void Prepare(IBlockContext context) {
+    }
+
+    public override void EmitCode(IBlockContext context, bool dropResult) {
+        if (context.ExpectedReturn != BuiltinType.Unit) {
+            context.AddError(new StructuralError(
+                StructuralError.ErrorType.IncompatibleTypes,
+                $"Expected a return value of type {context.ExpectedReturn}",
+                Start,
+                End
+            ));
+            return;
         }
 
-        public override IVariableContainer VariableContainer {
-            set => returnValue.VariableContainer = value;
+        context.IL.Emit(OpCodes.Ldnull);
+        if (context.IsAsync)
+            context.IL.EmitNew(OpCodes.Newobj,
+                context.MethodBuilder.ReturnType.GetConstructor(new[] { typeof(object) }));
+
+        ILChunks.GenerateFunctionLeave(context);
+        context.IL.EmitReturn(context.MethodBuilder.ReturnType);
+    }
+
+    public override REPLValueFuture Eval(REPLContext context) {
+        return REPLValueFuture.Success(new REPLReturn(REPLUnit.INSTANCE));
+    }
+}
+
+public class ReturnValue : Expression {
+    internal readonly Expression returnValue;
+
+    public ReturnValue(Expression returnValue, Position start = new(), Position end = new()) :
+        base(start, end) {
+        this.returnValue = returnValue;
+        this.returnValue.TypeHint = context => context.ExpectedReturn.UnderlyingType(context.ModuleContext);
+    }
+
+    public override IVariableContainer VariableContainer {
+        set => returnValue.VariableContainer = value;
+    }
+
+    public override TO2Type ResultType(IBlockContext context) {
+        return BuiltinType.Unit;
+    }
+
+    public override void Prepare(IBlockContext context) {
+    }
+
+    public override void EmitCode(IBlockContext context, bool dropResult) {
+        var returnType = returnValue.ResultType(context);
+
+        if (!context.ExpectedReturn.IsAssignableFrom(context.ModuleContext, returnType)) {
+            context.AddError(new StructuralError(
+                StructuralError.ErrorType.IncompatibleTypes,
+                $"Expected a return value of type {context.ExpectedReturn}, but got {returnType}",
+                Start,
+                End
+            ));
+            return;
         }
 
-        public override TO2Type ResultType(IBlockContext context) => BuiltinType.Unit;
+        returnValue.EmitCode(context, false);
 
-        public override void Prepare(IBlockContext context) {
-        }
+        if (context.HasErrors) return;
 
-        public override void EmitCode(IBlockContext context, bool dropResult) {
-            TO2Type returnType = returnValue.ResultType(context);
+        context.ExpectedReturn.AssignFrom(context.ModuleContext, returnType).EmitConvert(context);
+        if (context.IsAsync)
+            context.IL.EmitNew(OpCodes.Newobj,
+                context.MethodBuilder.ReturnType.GetConstructor(new[]
+                    { returnType.GeneratedType(context.ModuleContext) }));
 
-            if (!context.ExpectedReturn.IsAssignableFrom(context.ModuleContext, returnType)) {
-                context.AddError(new StructuralError(
-                    StructuralError.ErrorType.IncompatibleTypes,
-                    $"Expected a return value of type {context.ExpectedReturn}, but got {returnType}",
-                    Start,
-                    End
-                ));
-                return;
-            }
+        ILChunks.GenerateFunctionLeave(context);
+        context.IL.EmitReturn(context.MethodBuilder.ReturnType);
+    }
 
-            returnValue.EmitCode(context, false);
-
-            if (context.HasErrors) return;
-
-            context.ExpectedReturn.AssignFrom(context.ModuleContext, returnType).EmitConvert(context);
-            if (context.IsAsync) {
-                context.IL.EmitNew(OpCodes.Newobj,
-                    context.MethodBuilder.ReturnType.GetConstructor(new[]
-                        {returnType.GeneratedType(context.ModuleContext)}));
-            }
-
-            ILChunks.GenerateFunctionLeave(context);
-            context.IL.EmitReturn(context.MethodBuilder.ReturnType);
-        }
-
-        public override REPLValueFuture Eval(REPLContext context) {
-            return returnValue.Eval(context).Then(BuiltinType.Unit, value => new REPLReturn(value));
-        }
+    public override REPLValueFuture Eval(REPLContext context) {
+        return returnValue.Eval(context).Then(BuiltinType.Unit, value => new REPLReturn(value));
     }
 }

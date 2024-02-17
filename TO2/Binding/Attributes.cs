@@ -1,64 +1,80 @@
-﻿namespace KontrolSystem.TO2.Binding {
-    [System.AttributeUsage(System.AttributeTargets.Class)]
-    public class KSModule : System.Attribute {
-        public KSModule(string name) => Name = name;
+﻿using System;
 
-        public string Name { get; }
+namespace KontrolSystem.TO2.Binding;
 
-        public string Description { get; set; }
+[AttributeUsage(AttributeTargets.Class)]
+public class KSModule : Attribute {
+    public KSModule(string name) {
+        Name = name;
     }
 
-    [System.AttributeUsage(System.AttributeTargets.Class | System.AttributeTargets.Interface)]
-    public class KSClass : System.Attribute {
-        public KSClass(string name = null) => Name = name;
+    public string Name { get; }
 
-        public string Name { get; }
+    public string Description { get; set; }
+}
 
-        public string Description { get; set; }
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface)]
+public class KSClass : Attribute {
+    public KSClass(string name = null) {
+        Name = name;
     }
 
-    [System.AttributeUsage(System.AttributeTargets.Field)]
-    public class KSConstant : System.Attribute {
-        public KSConstant(string name = null) => Name = name;
+    public string Name { get; }
 
-        public string Name { get; }
+    public string Description { get; set; }
+}
 
-        public string Description { get; set; }
+[AttributeUsage(AttributeTargets.Field)]
+public class KSConstant : Attribute {
+    public KSConstant(string name = null) {
+        Name = name;
     }
 
-    [System.AttributeUsage(System.AttributeTargets.Method)]
-    public class KSFunction : System.Attribute {
-        public KSFunction(string name = null) => Name = name;
+    public string Name { get; }
 
-        public string Name { get; }
+    public string Description { get; set; }
+}
 
-        public string Description { get; set; }
+[AttributeUsage(AttributeTargets.Method)]
+public class KSFunction : Attribute {
+    public KSFunction(string name = null) {
+        Name = name;
     }
 
-    [System.AttributeUsage(System.AttributeTargets.Method)]
-    public class KSMethod : System.Attribute {
-        public KSMethod(string name = null) => Name = name;
+    public string Name { get; }
 
-        public string Name { get; }
+    public string Description { get; set; }
+}
 
-        public string Description { get; set; }
+[AttributeUsage(AttributeTargets.Method)]
+public class KSMethod : Attribute {
+    public KSMethod(string name = null) {
+        Name = name;
     }
 
-    [System.AttributeUsage(System.AttributeTargets.Field | System.AttributeTargets.Property)]
-    public class KSField : System.Attribute {
-        public KSField(string name = null) => Name = name;
+    public string Name { get; }
 
-        public string Name { get; }
+    public string Description { get; set; }
+}
 
-        public string Description { get; set; }
-
-        public bool IsAsyncStore { get; set; }
+[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+public class KSField : Attribute {
+    public KSField(string name = null) {
+        Name = name;
     }
 
-    [System.AttributeUsage(System.AttributeTargets.Parameter)]
-    public class KSParameter : System.Attribute {
-        public KSParameter(string description) => Description = description;
+    public string Name { get; }
 
-        public string Description { get; }
+    public string Description { get; set; }
+
+    public bool IsAsyncStore { get; set; }
+}
+
+[AttributeUsage(AttributeTargets.Parameter)]
+public class KSParameter : Attribute {
+    public KSParameter(string description) {
+        Description = description;
     }
+
+    public string Description { get; }
 }

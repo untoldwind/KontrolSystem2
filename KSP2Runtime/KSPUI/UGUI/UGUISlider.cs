@@ -2,30 +2,31 @@
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI {
-    public class UGUISlider : UGUIElement {
-        private Slider slider;
+namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI;
 
-        private UGUISlider(GameObject gameObject) : base(gameObject, new Vector2(120, 30)) {
-            slider = gameObject.GetComponent<Slider>();
-        }
+public class UGUISlider : UGUIElement {
+    private readonly Slider slider;
 
-        public float Value {
-            get => slider.value;
-            set => slider.value = value;
-        }
+    private UGUISlider(GameObject gameObject) : base(gameObject, new Vector2(120, 30)) {
+        slider = gameObject.GetComponent<Slider>();
+    }
 
-        public bool Interactable {
-            get => slider.interactable;
-            set => slider.interactable = value;
-        }
+    public float Value {
+        get => slider.value;
+        set => slider.value = value;
+    }
 
-        public void OnChange(UnityAction<float> onChange) {
-            slider.onValueChanged.RemoveAllListeners();
-            slider.onValueChanged.AddListener(onChange);
-        }
+    public bool Interactable {
+        get => slider.interactable;
+        set => slider.interactable = value;
+    }
 
-        public static UGUISlider CreateHorizontal() =>
-            new UGUISlider(UIFactory.Instance.CreateHSlider());
+    public void OnChange(UnityAction<float> onChange) {
+        slider.onValueChanged.RemoveAllListeners();
+        slider.onValueChanged.AddListener(onChange);
+    }
+
+    public static UGUISlider CreateHorizontal() {
+        return new UGUISlider(UIFactory.Instance.CreateHSlider());
     }
 }

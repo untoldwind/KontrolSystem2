@@ -1,19 +1,19 @@
-﻿namespace KontrolSystem.TO2.AST {
-    public enum IndexSpecType {
-        Single
+﻿namespace KontrolSystem.TO2.AST;
+
+public enum IndexSpecType {
+    Single
+}
+
+public class IndexSpec {
+    public readonly IndexSpecType indexType;
+    public readonly Expression start;
+
+    public IndexSpec(Expression index) {
+        indexType = IndexSpecType.Single;
+        start = index;
     }
 
-    public class IndexSpec {
-        public readonly IndexSpecType indexType;
-        public readonly Expression start;
-
-        public IndexSpec(Expression index) {
-            indexType = IndexSpecType.Single;
-            start = index;
-        }
-
-        public IVariableContainer VariableContainer {
-            set => start.VariableContainer = value;
-        }
+    public IVariableContainer VariableContainer {
+        set => start.VariableContainer = value;
     }
 }

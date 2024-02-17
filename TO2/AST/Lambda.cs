@@ -1,198 +1,197 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Linq;
-using KontrolSystem.TO2.Generator;
 using KontrolSystem.Parsing;
+using KontrolSystem.TO2.Generator;
 using KontrolSystem.TO2.Runtime;
 
-namespace KontrolSystem.TO2.AST {
-    internal readonly struct LambdaClass {
-        internal readonly List<(string sourceName, ClonedFieldVariable target)> clonedVariables;
-        internal readonly ConstructorInfo constructor;
-        internal readonly MethodInfo lambdaImpl;
+namespace KontrolSystem.TO2.AST;
 
-        internal LambdaClass(List<(string sourceName, ClonedFieldVariable target)> clonedVariables,
-            ConstructorInfo constructor, MethodInfo lambdaImpl) {
-            this.clonedVariables = clonedVariables;
-            this.constructor = constructor;
-            this.lambdaImpl = lambdaImpl;
+internal readonly struct LambdaClass {
+    internal readonly List<(string sourceName, ClonedFieldVariable target)> clonedVariables;
+    internal readonly ConstructorInfo constructor;
+    internal readonly MethodInfo lambdaImpl;
+
+    internal LambdaClass(List<(string sourceName, ClonedFieldVariable target)> clonedVariables,
+        ConstructorInfo constructor, MethodInfo lambdaImpl) {
+        this.clonedVariables = clonedVariables;
+        this.constructor = constructor;
+        this.lambdaImpl = lambdaImpl;
+    }
+}
+
+public class Lambda : Expression, IVariableContainer {
+    private readonly Expression expression;
+    private readonly List<FunctionParameter> parameters;
+    private LambdaClass? lambdaClass;
+
+    private FunctionType resolvedType;
+
+    private TypeHint typeHint;
+
+    public Lambda(List<FunctionParameter> parameters, Expression expression, Position start = new(),
+        Position end = new()) : base(start, end) {
+        this.parameters = parameters;
+        this.expression = expression;
+        this.expression.VariableContainer = this;
+    }
+
+    public override IVariableContainer VariableContainer {
+        set {
+            ParentContainer = value;
+            expression.VariableContainer = this;
         }
     }
 
-    public class Lambda : Expression, IVariableContainer {
-        private readonly List<FunctionParameter> parameters;
-        private readonly Expression expression;
+    public override TypeHint TypeHint {
+        set => typeHint = value;
+    }
 
-        private IVariableContainer parentContainer;
+    public IVariableContainer ParentContainer { get; private set; }
 
-        private TypeHint typeHint;
-        private LambdaClass? lambdaClass;
+    public TO2Type FindVariableLocal(IBlockContext context, string name) {
+        var idx = parameters.FindIndex(p => p.name == name);
 
-        private FunctionType resolvedType;
+        if (idx < 0 || idx >= parameters.Count) return null;
 
-        public Lambda(List<FunctionParameter> parameters, Expression expression, Position start = new Position(),
-            Position end = new Position()) : base(start, end) {
-            this.parameters = parameters;
-            this.expression = expression;
-            this.expression.VariableContainer = this;
+        var parameterType = parameters[idx].type;
+        if (parameterType != null) return parameterType;
+        if (resolvedType == null || idx >= resolvedType.parameterTypes.Count) return null;
+
+        return resolvedType.parameterTypes[idx];
+    }
+
+    public override void Prepare(IBlockContext context) {
+    }
+
+    public override TO2Type ResultType(IBlockContext context) {
+        if (resolvedType != null) return resolvedType;
+        // Make an assumption ...
+        if (parameters.All(p => p.type != null))
+            resolvedType = new FunctionType(false, parameters.Select(p => p.type).ToList(), BuiltinType.Unit);
+        else resolvedType = typeHint?.Invoke(context) as FunctionType;
+        if (resolvedType != null) {
+            // ... so that it is possible to determine the return type
+            var returnType = expression.ResultType(context);
+            // ... so that the assumption can be replaced with the (hopefully) real thing
+            resolvedType = new FunctionType(false, resolvedType.parameterTypes, returnType);
         }
 
-        public IVariableContainer ParentContainer => parentContainer;
+        return resolvedType ?? BuiltinType.Unit;
+    }
 
-        public TO2Type FindVariableLocal(IBlockContext context, string name) {
-            int idx = parameters.FindIndex(p => p.name == name);
+    public override void EmitCode(IBlockContext context, bool dropResult) {
+        var lambdaType = ResultType(context) as FunctionType;
 
-            if (idx < 0 || idx >= parameters.Count) return null;
-
-            TO2Type parameterType = parameters[idx].type;
-            if (parameterType != null) return parameterType;
-            if (resolvedType == null || idx >= resolvedType.parameterTypes.Count) return null;
-
-            return resolvedType.parameterTypes[idx];
+        if (lambdaType == null) {
+            context.AddError(new StructuralError(
+                StructuralError.ErrorType.InvalidType,
+                "Unable to infer type of lambda. Please add some type hint",
+                Start,
+                End
+            ));
+            return;
         }
 
-        public override IVariableContainer VariableContainer {
-            set {
-                parentContainer = value;
-                expression.VariableContainer = this;
-            }
-        }
+        if (lambdaType.parameterTypes.Count != parameters.Count)
+            context.AddError(new StructuralError(
+                StructuralError.ErrorType.InvalidType,
+                $"Expected lambda to have {lambdaType.parameterTypes.Count} parameters, found {parameters.Count}",
+                Start,
+                End
+            ));
 
-        public override TypeHint TypeHint {
-            set => this.typeHint = value;
-        }
-
-        public override void Prepare(IBlockContext context) {
-        }
-
-        public override TO2Type ResultType(IBlockContext context) {
-            if (resolvedType != null) return resolvedType;
-            // Make an assumption ...
-            if (parameters.All(p => p.type != null))
-                resolvedType = new FunctionType(false, parameters.Select(p => p.type).ToList(), BuiltinType.Unit);
-            else resolvedType = typeHint?.Invoke(context) as FunctionType;
-            if (resolvedType != null) {
-                // ... so that it is possible to determine the return type
-                TO2Type returnType = expression.ResultType(context);
-                // ... so that the assumption can be replaced with the (hopefully) real thing
-                resolvedType = new FunctionType(false, resolvedType.parameterTypes, returnType);
-            }
-
-            return resolvedType ?? BuiltinType.Unit;
-        }
-
-        public override void EmitCode(IBlockContext context, bool dropResult) {
-            FunctionType lambdaType = ResultType(context) as FunctionType;
-
-            if (lambdaType == null) {
+        for (var i = 0; i < parameters.Count; i++) {
+            if (parameters[i].type == null) continue;
+            if (!lambdaType.parameterTypes[i].UnderlyingType(context.ModuleContext)
+                    .IsAssignableFrom(context.ModuleContext, parameters[i].type.UnderlyingType(context.ModuleContext)))
                 context.AddError(new StructuralError(
                     StructuralError.ErrorType.InvalidType,
-                    "Unable to infer type of lambda. Please add some type hint",
+                    $"Expected parameter {parameters[i].name} of lambda to have type {lambdaType.parameterTypes[i]}, found {parameters[i].type}",
                     Start,
                     End
                 ));
-                return;
-            }
-
-            if (lambdaType.parameterTypes.Count != parameters.Count)
-                context.AddError(new StructuralError(
-                    StructuralError.ErrorType.InvalidType,
-                    $"Expected lambda to have {lambdaType.parameterTypes.Count} parameters, found {parameters.Count}",
-                    Start,
-                    End
-                ));
-
-            for (int i = 0; i < parameters.Count; i++) {
-                if (parameters[i].type == null) continue;
-                if (!lambdaType.parameterTypes[i].UnderlyingType(context.ModuleContext).IsAssignableFrom(context.ModuleContext, parameters[i].type.UnderlyingType(context.ModuleContext)))
-                    context.AddError(new StructuralError(
-                        StructuralError.ErrorType.InvalidType,
-                        $"Expected parameter {parameters[i].name} of lambda to have type {lambdaType.parameterTypes[i]}, found {parameters[i].type}",
-                        Start,
-                        End
-                    ));
-            }
-
-            if (context.HasErrors) return;
-
-            if (dropResult) return;
-
-            lambdaClass ??= CreateLambdaClass(context, lambdaType);
-
-            foreach ((string sourceName, _) in lambdaClass.Value.clonedVariables) {
-                IBlockVariable source = context.FindVariable(sourceName);
-                source.EmitLoad(context);
-            }
-
-            context.IL.EmitNew(OpCodes.Newobj, lambdaClass.Value.constructor, lambdaClass.Value.clonedVariables.Count);
-            context.IL.EmitPtr(OpCodes.Ldftn, lambdaClass.Value.lambdaImpl);
-            context.IL.EmitNew(OpCodes.Newobj,
-                lambdaType.GeneratedType(context.ModuleContext)
-                    .GetConstructor(new[] { typeof(object), typeof(IntPtr) }));
         }
 
-        private LambdaClass CreateLambdaClass(IBlockContext parent, FunctionType lambdaType) {
-            ModuleContext lambdaModuleContext =
-                parent.ModuleContext.DefineSubContext($"Lambda{Start.position}", typeof(object));
+        if (context.HasErrors) return;
 
-            SyncBlockContext lambdaContext = new SyncBlockContext(lambdaModuleContext, false, "LambdaImpl",
-                lambdaType.returnType, FixedParameters(lambdaType));
-            SortedDictionary<string, (string sourceName, ClonedFieldVariable target)> clonedVariables =
-                new SortedDictionary<string, (string sourceName, ClonedFieldVariable target)>();
+        if (dropResult) return;
 
-            lambdaContext.ExternVariables = name => {
-                if (clonedVariables.ContainsKey(name)) return clonedVariables[name].target;
-                IBlockVariable externalVariable = parent.FindVariable(name);
-                if (externalVariable == null) return null;
-                if (!externalVariable.IsConst) {
-                    lambdaContext.AddError(new StructuralError(StructuralError.ErrorType.NoSuchVariable,
-                        $"Outer variable {name} is not const. Only read-only variables can be referenced in a lambda expression",
-                        Start, End));
-                    return null;
-                }
+        lambdaClass ??= CreateLambdaClass(context, lambdaType);
 
-                FieldBuilder field = lambdaModuleContext.typeBuilder.DefineField(name,
-                    externalVariable.Type.GeneratedType(parent.ModuleContext),
-                    FieldAttributes.InitOnly | FieldAttributes.Private);
-                ClonedFieldVariable clonedVariable = new ClonedFieldVariable(externalVariable.Type, field);
-                clonedVariables.Add(name, (externalVariable.Name, clonedVariable));
-                return clonedVariable;
-            };
+        foreach (var (sourceName, _) in lambdaClass.Value.clonedVariables) {
+            var source = context.FindVariable(sourceName);
+            source.EmitLoad(context);
+        }
 
-            expression.EmitCode(lambdaContext, false);
-            lambdaContext.IL.EmitReturn(lambdaContext.MethodBuilder.ReturnType);
+        context.IL.EmitNew(OpCodes.Newobj, lambdaClass.Value.constructor, lambdaClass.Value.clonedVariables.Count);
+        context.IL.EmitPtr(OpCodes.Ldftn, lambdaClass.Value.lambdaImpl);
+        context.IL.EmitNew(OpCodes.Newobj,
+            lambdaType.GeneratedType(context.ModuleContext)
+                .GetConstructor(new[] { typeof(object), typeof(IntPtr) }));
+    }
 
-            foreach (StructuralError error in lambdaContext.AllErrors) parent.AddError(error);
+    private LambdaClass CreateLambdaClass(IBlockContext parent, FunctionType lambdaType) {
+        var lambdaModuleContext =
+            parent.ModuleContext.DefineSubContext($"Lambda{Start.position}", typeof(object));
 
-            List<FieldInfo> lambdaFields = clonedVariables.Values.Select(c => c.target.valueField).ToList();
-            ConstructorBuilder constructorBuilder = lambdaModuleContext.typeBuilder.DefineConstructor(
-                MethodAttributes.Public, CallingConventions.Standard,
-                lambdaFields.Select(f => f.FieldType).ToArray());
-            IILEmitter constructorEmitter = new GeneratorILEmitter(constructorBuilder.GetILGenerator());
+        var lambdaContext = new SyncBlockContext(lambdaModuleContext, false, "LambdaImpl",
+            lambdaType.returnType, FixedParameters(lambdaType));
+        var clonedVariables =
+            new SortedDictionary<string, (string sourceName, ClonedFieldVariable target)>();
 
-            int argIndex = 1;
-            foreach (FieldInfo field in lambdaFields) {
-                constructorEmitter.Emit(OpCodes.Ldarg_0);
-                MethodParameter.EmitLoadArg(constructorEmitter, argIndex++);
-                constructorEmitter.Emit(OpCodes.Stfld, field);
+        lambdaContext.ExternVariables = name => {
+            if (clonedVariables.ContainsKey(name)) return clonedVariables[name].target;
+            var externalVariable = parent.FindVariable(name);
+            if (externalVariable == null) return null;
+            if (!externalVariable.IsConst) {
+                lambdaContext.AddError(new StructuralError(StructuralError.ErrorType.NoSuchVariable,
+                    $"Outer variable {name} is not const. Only read-only variables can be referenced in a lambda expression",
+                    Start, End));
+                return null;
             }
 
-            constructorEmitter.EmitReturn(typeof(void));
+            var field = lambdaModuleContext.typeBuilder.DefineField(name,
+                externalVariable.Type.GeneratedType(parent.ModuleContext),
+                FieldAttributes.InitOnly | FieldAttributes.Private);
+            var clonedVariable = new ClonedFieldVariable(externalVariable.Type, field);
+            clonedVariables.Add(name, (externalVariable.Name, clonedVariable));
+            return clonedVariable;
+        };
 
-            lambdaType.GeneratedType(parent.ModuleContext);
+        expression.EmitCode(lambdaContext, false);
+        lambdaContext.IL.EmitReturn(lambdaContext.MethodBuilder.ReturnType);
 
-            return new LambdaClass(clonedVariables.Values.ToList(), constructorBuilder, lambdaContext.MethodBuilder);
+        foreach (var error in lambdaContext.AllErrors) parent.AddError(error);
+
+        var lambdaFields = clonedVariables.Values.Select(c => c.target.valueField).ToList();
+        var constructorBuilder = lambdaModuleContext.typeBuilder.DefineConstructor(
+            MethodAttributes.Public, CallingConventions.Standard,
+            lambdaFields.Select(f => f.FieldType).ToArray());
+        IILEmitter constructorEmitter = new GeneratorILEmitter(constructorBuilder.GetILGenerator());
+
+        var argIndex = 1;
+        foreach (var field in lambdaFields) {
+            constructorEmitter.Emit(OpCodes.Ldarg_0);
+            MethodParameter.EmitLoadArg(constructorEmitter, argIndex++);
+            constructorEmitter.Emit(OpCodes.Stfld, field);
         }
 
-        private List<FunctionParameter> FixedParameters(FunctionType lambdaType) =>
-            parameters.Zip(lambdaType.parameterTypes, (p, f) => new FunctionParameter(p.name, p.type ?? f, null))
-                .ToList();
+        constructorEmitter.EmitReturn(typeof(void));
 
-        public override REPLValueFuture Eval(REPLContext context) {
-            throw new NotSupportedException("Lambda are not supported in REPL mode");
-        }
+        lambdaType.GeneratedType(parent.ModuleContext);
 
+        return new LambdaClass(clonedVariables.Values.ToList(), constructorBuilder, lambdaContext.MethodBuilder);
+    }
+
+    private List<FunctionParameter> FixedParameters(FunctionType lambdaType) {
+        return parameters.Zip(lambdaType.parameterTypes, (p, f) => new FunctionParameter(p.name, p.type ?? f, null))
+            .ToList();
+    }
+
+    public override REPLValueFuture Eval(REPLContext context) {
+        throw new NotSupportedException("Lambda are not supported in REPL mode");
     }
 }

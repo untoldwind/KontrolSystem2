@@ -1,18 +1,18 @@
 ﻿using KSP.Sim;
 
-namespace KontrolSystem.KSP.Runtime.KSPMath {
-    public struct VelocityAtPosition {
-        public Position position;
-        public Velocity velocity;
+namespace KontrolSystem.KSP.Runtime.KSPMath;
 
-        public VelocityAtPosition(Velocity velocity, Position position) {
-            this.position = position;
-            this.velocity = velocity;
-        }
+public struct VelocityAtPosition {
+    public Position position;
+    public Velocity velocity;
 
-        public Vector Vector {
-            get => velocity.relativeVelocity;
-            set => velocity.relativeVelocity = value;
-        }
+    public VelocityAtPosition(Velocity velocity, Position position) {
+        this.position = position;
+        this.velocity = velocity;
+    }
+
+    public Vector Vector {
+        get => velocity.relativeVelocity;
+        set => velocity.relativeVelocity = value;
     }
 }

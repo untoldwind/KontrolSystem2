@@ -3,34 +3,35 @@ using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
 using KSP.Sim.impl;
 using KSP.Sim.State;
-using UnityEngine;
 
-namespace KontrolSystem.KSP.Runtime.KSPControl {
-    public partial class KSPControlModule {
-        [KSClass("ThrottleManager")]
-        public class ThrottleManager : BaseAutopilot {
-            private Func<double, double> throttleProvider;
+namespace KontrolSystem.KSP.Runtime.KSPControl;
 
-            public ThrottleManager(IKSPContext context, VesselComponent vessel, Func<double, double> throttleProvider) : base(context, vessel) {
-                this.throttleProvider = throttleProvider;
-            }
+public partial class KSPControlModule {
+    [KSClass("ThrottleManager")]
+    public class ThrottleManager : BaseAutopilot {
+        private Func<double, double> throttleProvider;
 
-            [KSField]
-            public double Throttle {
-                get => throttleProvider(0);
-                set => throttleProvider = _ => value;
-            }
+        public ThrottleManager(IKSPContext context, VesselComponent vessel, Func<double, double> throttleProvider) :
+            base(context, vessel) {
+            this.throttleProvider = throttleProvider;
+        }
 
-            [KSMethod]
-            public void SetThrottleProvider(Func<double, double> newThrottleProvider) => throttleProvider = newThrottleProvider;
+        [KSField]
+        public double Throttle {
+            get => throttleProvider(0);
+            set => throttleProvider = _ => value;
+        }
 
-            public override void UpdateAutopilot(ref FlightCtrlState c, float deltaT) {
-                if (suspended) {
-                    c.mainThrottle = 0;
-                } else {
-                    c.mainThrottle = (float)DirectBindingMath.Clamp(throttleProvider(deltaT), 0, 1);
-                }
-            }
+        [KSMethod]
+        public void SetThrottleProvider(Func<double, double> newThrottleProvider) {
+            throttleProvider = newThrottleProvider;
+        }
+
+        public override void UpdateAutopilot(ref FlightCtrlState c, float deltaT) {
+            if (suspended)
+                c.mainThrottle = 0;
+            else
+                c.mainThrottle = (float)DirectBindingMath.Clamp(throttleProvider(deltaT), 0, 1);
         }
     }
 }

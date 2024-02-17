@@ -1,249 +1,260 @@
 ﻿using System;
-using System.Reflection;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Runtime;
 
-namespace KontrolSystem.TO2.Binding {
-    public static class BindingGenerator {
-        private static readonly Dictionary<Type, RealizedType> TypeMappings = new Dictionary<Type, RealizedType> {
-            {typeof(bool), BuiltinType.Bool},
-            {typeof(long), BuiltinType.Int},
-            {typeof(double), BuiltinType.Float},
-            {typeof(string), BuiltinType.String},
-            {typeof(void), BuiltinType.Unit},
-            {typeof(Cell<>), BuiltinType.Cell},
-        };
+namespace KontrolSystem.TO2.Binding;
 
-        private static readonly Dictionary<Type, CompiledKontrolModule> BoundModules =
-            new Dictionary<Type, CompiledKontrolModule>();
+public static class BindingGenerator {
+    private static readonly Dictionary<Type, RealizedType> TypeMappings = new() {
+        { typeof(bool), BuiltinType.Bool },
+        { typeof(long), BuiltinType.Int },
+        { typeof(double), BuiltinType.Float },
+        { typeof(string), BuiltinType.String },
+        { typeof(void), BuiltinType.Unit },
+        { typeof(Cell<>), BuiltinType.Cell }
+    };
 
-        public static CompiledKontrolModule BindModule(Type moduleType, IEnumerable<RealizedType> additionalTypes = null, IEnumerable<IKontrolConstant> additionConstants = null) {
-            lock (BoundModules) {
-                if (BoundModules.ContainsKey(moduleType)) return BoundModules[moduleType];
+    private static readonly Dictionary<Type, CompiledKontrolModule> BoundModules = new();
 
-                KSModule ksModule = moduleType.GetCustomAttribute<KSModule>();
+    public static CompiledKontrolModule BindModule(Type moduleType, IEnumerable<RealizedType> additionalTypes = null,
+        IEnumerable<IKontrolConstant> additionConstants = null) {
+        lock (BoundModules) {
+            if (BoundModules.ContainsKey(moduleType)) return BoundModules[moduleType];
 
-                if (ksModule == null) throw new ArgumentException($"Type {moduleType} must have a kSClass attribute");
+            var ksModule = moduleType.GetCustomAttribute<KSModule>();
 
-                Type runtimeType = moduleType;
-                List<CompiledKontrolFunction> functions = new List<CompiledKontrolFunction>();
-                List<RealizedType> types = new List<RealizedType>(additionalTypes ?? Enumerable.Empty<RealizedType>());
-                List<IKontrolConstant> constants = new List<IKontrolConstant>(additionConstants ?? Enumerable.Empty<CompiledKontrolConstant>());
+            if (ksModule == null) throw new ArgumentException($"Type {moduleType} must have a kSClass attribute");
 
-                while (runtimeType != null && runtimeType != typeof(object)) {
-                    foreach (Type nested in runtimeType.GetNestedTypes(BindingFlags.Public)) {
-                        if (nested.GetCustomAttribute<KSClass>() != null) types.Add(BindType(ksModule.Name, nested));
-                    }
+            var runtimeType = moduleType;
+            var functions = new List<CompiledKontrolFunction>();
+            var types = new List<RealizedType>(additionalTypes ?? Enumerable.Empty<RealizedType>());
+            var constants =
+                new List<IKontrolConstant>(additionConstants ?? Enumerable.Empty<CompiledKontrolConstant>());
 
-                    foreach (RealizedType type in types) if (type is BoundType boundType) LinkType(boundType);
+            while (runtimeType != null && runtimeType != typeof(object)) {
+                foreach (var nested in runtimeType.GetNestedTypes(BindingFlags.Public))
+                    if (nested.GetCustomAttribute<KSClass>() != null)
+                        types.Add(BindType(ksModule.Name, nested));
 
-                    foreach (FieldInfo field in runtimeType.GetFields(BindingFlags.Public | BindingFlags.Static)) {
-                        KSConstant ksConstant = field.GetCustomAttribute<KSConstant>();
-                        if (ksConstant == null) continue;
+                foreach (var type in types)
+                    if (type is BoundType boundType)
+                        LinkType(boundType);
 
-                        TO2Type to2Type = MapNativeType(field.FieldType);
+                foreach (var field in runtimeType.GetFields(BindingFlags.Public | BindingFlags.Static)) {
+                    var ksConstant = field.GetCustomAttribute<KSConstant>();
+                    if (ksConstant == null) continue;
 
-                        constants.Add(new CompiledKontrolConstant(
-                            ksConstant.Name ?? ToSnakeCase(field.Name).ToUpperInvariant(),
-                            NormalizeDescription(ksConstant.Description), to2Type, field));
-                    }
+                    TO2Type to2Type = MapNativeType(field.FieldType);
 
-                    foreach (MethodInfo method in runtimeType.GetMethods(BindingFlags.Public | BindingFlags.Static)) {
-                        KSFunction ksFunction = method.GetCustomAttribute<KSFunction>();
-                        if (ksFunction == null) continue;
-
-                        List<RealizedParameter> parameters = method.GetParameters().Select(p => {
-                            KSParameter ksParameter = p.GetCustomAttribute<KSParameter>();
-                            return new RealizedParameter(p.Name, MapNativeType(p.ParameterType),
-                                ksParameter?.Description, BoundDefaultValue.DefaultValueFor(p));
-                        }).ToList();
-                        if (method.ReturnType.IsGenericType &&
-                            method.ReturnType.GetGenericTypeDefinition() == typeof(Future<>)) {
-                            Type typeArg = method.ReturnType.GetGenericArguments()[0];
-                            RealizedType resultType =
-                                typeArg == typeof(object) ? BuiltinType.Unit : MapNativeType(typeArg);
-                            functions.Add(new CompiledKontrolFunction(ksFunction.Name ?? ToSnakeCase(method.Name),
-                                NormalizeDescription(ksFunction.Description), true, parameters, resultType, method));
-                        } else {
-                            RealizedType resultType = MapNativeType(method.ReturnType);
-                            functions.Add(new CompiledKontrolFunction(ksFunction.Name ?? ToSnakeCase(method.Name),
-                                NormalizeDescription(ksFunction.Description), false, parameters, resultType, method));
-                        }
-                    }
-
-                    runtimeType = runtimeType.BaseType;
+                    constants.Add(new CompiledKontrolConstant(
+                        ksConstant.Name ?? ToSnakeCase(field.Name).ToUpperInvariant(),
+                        NormalizeDescription(ksConstant.Description), to2Type, field));
                 }
 
-                CompiledKontrolModule module = new CompiledKontrolModule(ksModule.Name,
-                    NormalizeDescription(ksModule.Description), true, null, types.Select(t => (t.LocalName, t)),
-                    constants, functions, new List<CompiledKontrolFunction>());
-                BoundModules.Add(moduleType, module);
-                return module;
-            }
-        }
+                foreach (var method in runtimeType.GetMethods(BindingFlags.Public | BindingFlags.Static)) {
+                    var ksFunction = method.GetCustomAttribute<KSFunction>();
+                    if (ksFunction == null) continue;
 
-        private static BoundType BindType(string modulePrefix, Type type) {
-            KSClass ksClass = type.GetCustomAttribute<KSClass>();
-
-            if (ksClass == null) throw new ArgumentException($"Type {type} must have a kSClass attribute");
-
-            BoundType boundType = new BoundType(modulePrefix, ksClass.Name ?? type.Name,
-                NormalizeDescription(ksClass.Description), type,
-                BuiltinType.NoOperators, BuiltinType.NoOperators,
-                Enumerable.Empty<(string name, IMethodInvokeFactory invoker)>(),
-                Enumerable.Empty<(string name, IFieldAccessFactory access)>()
-            );
-            RegisterTypeMapping(type, boundType);
-            return boundType;
-        }
-
-        private static void LinkType(BoundType boundType) {
-            foreach (MethodInfo method in boundType.runtimeType.GetMethods(BindingFlags.Public | BindingFlags.Instance)
-            ) {
-                KSMethod ksMethod = method.GetCustomAttribute<KSMethod>();
-                if (ksMethod == null) continue;
-                boundType.allowedMethods.Add(ksMethod.Name ?? ToSnakeCase(method.Name),
-                    BindMethod(NormalizeDescription(ksMethod.Description), boundType.runtimeType, method));
-            }
-
-            foreach (PropertyInfo property in boundType.runtimeType.GetProperties(BindingFlags.Public |
-                BindingFlags.Instance)) {
-                KSField ksField = property.GetCustomAttribute<KSField>();
-                if (ksField == null) continue;
-
-                boundType.allowedFields.Add(ksField.Name ?? ToSnakeCase(property.Name),
-                    BindProperty(NormalizeDescription(ksField.Description), boundType.runtimeType, property, ksField.IsAsyncStore));
-            }
-        }
-
-        static IMethodInvokeFactory BindMethod(string description, Type type, MethodInfo method) {
-            List<RealizedParameter> parameters = method.GetParameters().Select(p => {
-                    KSParameter ksParameter = p.GetCustomAttribute<KSParameter>();
-                    return new RealizedParameter(p.Name, MapNativeType(p.ParameterType), ksParameter?.Description,
-                        BoundDefaultValue.DefaultValueFor(p));
-                })
-                .ToList();
-            if (method.ReturnType.IsGenericType && method.ReturnType.GetGenericTypeDefinition() == typeof(Future<>)) {
-                Type typeArg = method.ReturnType.GetGenericArguments()[0];
-                RealizedType resultType = typeArg == typeof(object) ? BuiltinType.Unit : MapNativeType(typeArg);
-                return new BoundMethodInvokeFactory(description, true, () => resultType, () => parameters, true,
-                    type,
-                    method);
-            } else {
-                RealizedType resultType = MapNativeType(method.ReturnType);
-                return new BoundMethodInvokeFactory(description, true, () => resultType, () => parameters, false,
-                    type,
-                    method);
-            }
-        }
-
-        static IFieldAccessFactory BindProperty(string description, Type type, PropertyInfo property, bool isAsyncStore) {
-            RealizedType result = MapNativeType(property.PropertyType);
-
-            return new BoundPropertyLikeFieldAccessFactory(description, () => result, type, property, isAsyncStore);
-        }
-
-        public static void RegisterTypeMapping(Type type, RealizedType to2Type) {
-            lock (TypeMappings) {
-                if (TypeMappings.ContainsKey(type))
-                    TypeMappings[type] = to2Type;
-                else
-                    TypeMappings.Add(type, to2Type);
-            }
-        }
-
-        public static (IEnumerable<RealizedType>, IEnumerable<IKontrolConstant>) RegisterEnumTypeMappings(
-            string modulePrefix, IEnumerable<(string localName, string description, Type enumType, (Enum value, string description)[] valueDescriptions)> enums) {
-            List<RealizedType> types = new List<RealizedType>();
-            List<IKontrolConstant> constants = new List<IKontrolConstant>();
-
-            foreach (var (localName, description, enumType, valueDescriptions) in enums) {
-                var boundEnumType = new BoundEnumType(modulePrefix, localName, description, enumType);
-
-                RegisterTypeMapping(enumType, boundEnumType);
-                types.Add(boundEnumType);
-                var boundEnumConstants = new BoundEnumConstType(boundEnumType, valueDescriptions);
-                types.Add(boundEnumConstants);
-                constants.Add(new EnumKontrolConstant(localName, boundEnumConstants, description));
-            }
-
-            return (types, constants);
-        }
-
-        internal static RealizedType MapNativeType(Type type) {
-            lock (TypeMappings) {
-                if (type.IsGenericParameter) return new GenericParameter(type.Name);
-                if (type.IsGenericType) {
-                    Type baseType = type.GetGenericTypeDefinition();
-                    Type[] typeArgs = type.GetGenericArguments();
-
-                    if (baseType == typeof(Option<>)) {
-                        TO2Type innerType = typeArgs[0] == typeof(object)
-                            ? BuiltinType.Unit
-                            : MapNativeType(typeArgs[0]);
-
-                        return new OptionType(innerType);
+                    var parameters = method.GetParameters().Select(p => {
+                        var ksParameter = p.GetCustomAttribute<KSParameter>();
+                        return new RealizedParameter(p.Name, MapNativeType(p.ParameterType),
+                            ksParameter?.Description, BoundDefaultValue.DefaultValueFor(p));
+                    }).ToList();
+                    if (method.ReturnType.IsGenericType &&
+                        method.ReturnType.GetGenericTypeDefinition() == typeof(Future<>)) {
+                        var typeArg = method.ReturnType.GetGenericArguments()[0];
+                        var resultType =
+                            typeArg == typeof(object) ? BuiltinType.Unit : MapNativeType(typeArg);
+                        functions.Add(new CompiledKontrolFunction(ksFunction.Name ?? ToSnakeCase(method.Name),
+                            NormalizeDescription(ksFunction.Description), true, parameters, resultType, method));
+                    } else {
+                        var resultType = MapNativeType(method.ReturnType);
+                        functions.Add(new CompiledKontrolFunction(ksFunction.Name ?? ToSnakeCase(method.Name),
+                            NormalizeDescription(ksFunction.Description), false, parameters, resultType, method));
                     }
-
-                    if (baseType == typeof(Result<,>)) {
-                        TO2Type successType = typeArgs[0] == typeof(object)
-                            ? BuiltinType.Unit
-                            : MapNativeType(typeArgs[0]);
-                        TO2Type errorType = typeArgs[1] == typeof(object)
-                            ? BuiltinType.Unit
-                            : MapNativeType(typeArgs[1]);
-
-                        return new ResultType(successType, errorType);
-                    }
-
-                    if (baseType.FullName!.StartsWith("System.Func")) {
-                        List<TO2Type> parameterTypes = typeArgs.Take(typeArgs.Length - 1)
-                            .Select(t => MapNativeType(t) as TO2Type).ToList();
-                        TO2Type returnType = MapNativeType(typeArgs[typeArgs.Length - 1]);
-                        return new FunctionType(false, parameterTypes, returnType);
-                    }
-
-                    if (baseType.FullName.StartsWith("System.Action")) {
-                        List<TO2Type> parameterTypes = typeArgs.Select(t => MapNativeType(t) as TO2Type).ToList();
-                        return new FunctionType(false, parameterTypes, BuiltinType.Unit);
-                    }
-
-                    RealizedType to2BaseType = TypeMappings.Get(baseType);
-                    if (to2BaseType != null) {
-                        List<TO2Type> typeArguments = typeArgs.Select(MapNativeType).Cast<TO2Type>().ToList();
-                        return new DirectTypeReference(to2BaseType, typeArguments);
-                    }
-                } else if (type.IsArray) {
-                    TO2Type elementType = MapNativeType(type.GetElementType());
-
-                    return new ArrayType(elementType);
-                } else if (type == typeof(Action)) {
-                    return new FunctionType(false, new List<TO2Type>(), BuiltinType.Unit);
                 }
 
-                var t = TypeMappings.Get(type);
-                if (t != null) return t;
-                throw new ArgumentException($"No mapping for {type}");
-            }
-        }
-
-        public static string ToSnakeCase(string name) => name.All(ch => char.IsUpper(ch)) ? name : String
-            .Concat(name.Select((x, i) => i > 0 && char.IsUpper(x) ? "_" + x.ToString() : x.ToString())).ToLower();
-
-        private static string NormalizeDescription(string description) {
-            if (description == null) return null;
-
-            StringBuilder sb = new StringBuilder();
-
-            foreach (string line in description.Split('\n')) {
-                sb.Append(line.Trim());
-                sb.Append("\n");
+                runtimeType = runtimeType.BaseType;
             }
 
-            return sb.ToString();
+            var module = new CompiledKontrolModule(ksModule.Name,
+                NormalizeDescription(ksModule.Description), true, null, types.Select(t => (t.LocalName, t)),
+                constants, functions, new List<CompiledKontrolFunction>());
+            BoundModules.Add(moduleType, module);
+            return module;
         }
+    }
+
+    private static BoundType BindType(string modulePrefix, Type type) {
+        var ksClass = type.GetCustomAttribute<KSClass>();
+
+        if (ksClass == null) throw new ArgumentException($"Type {type} must have a kSClass attribute");
+
+        var boundType = new BoundType(modulePrefix, ksClass.Name ?? type.Name,
+            NormalizeDescription(ksClass.Description), type,
+            BuiltinType.NoOperators, BuiltinType.NoOperators,
+            Enumerable.Empty<(string name, IMethodInvokeFactory invoker)>(),
+            Enumerable.Empty<(string name, IFieldAccessFactory access)>()
+        );
+        RegisterTypeMapping(type, boundType);
+        return boundType;
+    }
+
+    private static void LinkType(BoundType boundType) {
+        foreach (var method in boundType.runtimeType.GetMethods(BindingFlags.Public | BindingFlags.Instance)
+                ) {
+            var ksMethod = method.GetCustomAttribute<KSMethod>();
+            if (ksMethod == null) continue;
+            boundType.allowedMethods.Add(ksMethod.Name ?? ToSnakeCase(method.Name),
+                BindMethod(NormalizeDescription(ksMethod.Description), boundType.runtimeType, method));
+        }
+
+        foreach (var property in boundType.runtimeType.GetProperties(BindingFlags.Public |
+                                                                     BindingFlags.Instance)) {
+            var ksField = property.GetCustomAttribute<KSField>();
+            if (ksField == null) continue;
+
+            boundType.allowedFields.Add(ksField.Name ?? ToSnakeCase(property.Name),
+                BindProperty(NormalizeDescription(ksField.Description), boundType.runtimeType, property,
+                    ksField.IsAsyncStore));
+        }
+    }
+
+    private static IMethodInvokeFactory BindMethod(string description, Type type, MethodInfo method) {
+        var parameters = method.GetParameters().Select(p => {
+            var ksParameter = p.GetCustomAttribute<KSParameter>();
+            return new RealizedParameter(p.Name, MapNativeType(p.ParameterType), ksParameter?.Description,
+                BoundDefaultValue.DefaultValueFor(p));
+        })
+            .ToList();
+        if (method.ReturnType.IsGenericType && method.ReturnType.GetGenericTypeDefinition() == typeof(Future<>)) {
+            var typeArg = method.ReturnType.GetGenericArguments()[0];
+            var resultType = typeArg == typeof(object) ? BuiltinType.Unit : MapNativeType(typeArg);
+            return new BoundMethodInvokeFactory(description, true, () => resultType, () => parameters, true,
+                type,
+                method);
+        } else {
+            var resultType = MapNativeType(method.ReturnType);
+            return new BoundMethodInvokeFactory(description, true, () => resultType, () => parameters, false,
+                type,
+                method);
+        }
+    }
+
+    private static IFieldAccessFactory BindProperty(string description, Type type, PropertyInfo property,
+        bool isAsyncStore) {
+        var result = MapNativeType(property.PropertyType);
+
+        return new BoundPropertyLikeFieldAccessFactory(description, () => result, type, property, isAsyncStore);
+    }
+
+    public static void RegisterTypeMapping(Type type, RealizedType to2Type) {
+        lock (TypeMappings) {
+            if (TypeMappings.ContainsKey(type))
+                TypeMappings[type] = to2Type;
+            else
+                TypeMappings.Add(type, to2Type);
+        }
+    }
+
+    public static (IEnumerable<RealizedType>, IEnumerable<IKontrolConstant>) RegisterEnumTypeMappings(
+        string modulePrefix,
+        IEnumerable<(string localName, string description, Type enumType, (Enum value, string description)[]
+            valueDescriptions)> enums) {
+        var types = new List<RealizedType>();
+        var constants = new List<IKontrolConstant>();
+
+        foreach (var (localName, description, enumType, valueDescriptions) in enums) {
+            var boundEnumType = new BoundEnumType(modulePrefix, localName, description, enumType);
+
+            RegisterTypeMapping(enumType, boundEnumType);
+            types.Add(boundEnumType);
+            var boundEnumConstants = new BoundEnumConstType(boundEnumType, valueDescriptions);
+            types.Add(boundEnumConstants);
+            constants.Add(new EnumKontrolConstant(localName, boundEnumConstants, description));
+        }
+
+        return (types, constants);
+    }
+
+    internal static RealizedType MapNativeType(Type type) {
+        lock (TypeMappings) {
+            if (type.IsGenericParameter) return new GenericParameter(type.Name);
+            if (type.IsGenericType) {
+                var baseType = type.GetGenericTypeDefinition();
+                var typeArgs = type.GetGenericArguments();
+
+                if (baseType == typeof(Option<>)) {
+                    TO2Type innerType = typeArgs[0] == typeof(object)
+                        ? BuiltinType.Unit
+                        : MapNativeType(typeArgs[0]);
+
+                    return new OptionType(innerType);
+                }
+
+                if (baseType == typeof(Result<,>)) {
+                    TO2Type successType = typeArgs[0] == typeof(object)
+                        ? BuiltinType.Unit
+                        : MapNativeType(typeArgs[0]);
+                    TO2Type errorType = typeArgs[1] == typeof(object)
+                        ? BuiltinType.Unit
+                        : MapNativeType(typeArgs[1]);
+
+                    return new ResultType(successType, errorType);
+                }
+
+                if (baseType.FullName!.StartsWith("System.Func")) {
+                    var parameterTypes = typeArgs.Take(typeArgs.Length - 1)
+                        .Select(t => MapNativeType(t) as TO2Type).ToList();
+                    TO2Type returnType = MapNativeType(typeArgs[typeArgs.Length - 1]);
+                    return new FunctionType(false, parameterTypes, returnType);
+                }
+
+                if (baseType.FullName.StartsWith("System.Action")) {
+                    var parameterTypes = typeArgs.Select(t => MapNativeType(t) as TO2Type).ToList();
+                    return new FunctionType(false, parameterTypes, BuiltinType.Unit);
+                }
+
+                var to2BaseType = TypeMappings.Get(baseType);
+                if (to2BaseType != null) {
+                    var typeArguments = typeArgs.Select(MapNativeType).Cast<TO2Type>().ToList();
+                    return new DirectTypeReference(to2BaseType, typeArguments);
+                }
+            } else if (type.IsArray) {
+                TO2Type elementType = MapNativeType(type.GetElementType());
+
+                return new ArrayType(elementType);
+            } else if (type == typeof(Action)) {
+                return new FunctionType(false, new List<TO2Type>(), BuiltinType.Unit);
+            }
+
+            var t = TypeMappings.Get(type);
+            if (t != null) return t;
+            throw new ArgumentException($"No mapping for {type}");
+        }
+    }
+
+    public static string ToSnakeCase(string name) {
+        return name.All(ch => char.IsUpper(ch))
+            ? name
+            : string
+                .Concat(name.Select((x, i) => i > 0 && char.IsUpper(x) ? "_" + x : x.ToString())).ToLower();
+    }
+
+    private static string NormalizeDescription(string description) {
+        if (description == null) return null;
+
+        var sb = new StringBuilder();
+
+        foreach (var line in description.Split('\n')) {
+            sb.Append(line.Trim());
+            sb.Append("\n");
+        }
+
+        return sb.ToString();
     }
 }

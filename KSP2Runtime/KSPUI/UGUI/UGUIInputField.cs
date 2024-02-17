@@ -3,46 +3,48 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI {
-    public class UGUIInputField : UGUIElement {
-        private InputFieldExtended inputField;
+namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI;
 
-        private UGUIInputField(GameObject gameObject, Vector2 minSize, UnityAction<string> onChange) : base(gameObject, minSize) {
-            inputField = gameObject.GetComponent<InputFieldExtended>();
-            if (onChange != null) inputField.onValueChanged.AddListener(onChange);
-        }
+public class UGUIInputField : UGUIElement {
+    private readonly InputFieldExtended inputField;
 
-        public float FontSize {
-            get => inputField.pointSize;
-            set => inputField.pointSize = value;
-        }
+    private UGUIInputField(GameObject gameObject, Vector2 minSize, UnityAction<string> onChange) : base(gameObject,
+        minSize) {
+        inputField = gameObject.GetComponent<InputFieldExtended>();
+        if (onChange != null) inputField.onValueChanged.AddListener(onChange);
+    }
 
-        public string Value {
-            get => inputField.text;
-            set => inputField.text = value;
-        }
+    public float FontSize {
+        get => inputField.pointSize;
+        set => inputField.pointSize = value;
+    }
 
-        public bool Interactable {
-            get => inputField.interactable;
-            set => inputField.interactable = value;
-        }
+    public string Value {
+        get => inputField.text;
+        set => inputField.text = value;
+    }
 
-        public TMP_InputField.CharacterValidation CharacterValidation {
-            get => inputField.characterValidation;
-            set => inputField.characterValidation = value;
-        }
+    public bool Interactable {
+        get => inputField.interactable;
+        set => inputField.interactable = value;
+    }
 
-        public void OnChange(UnityAction<string> onChange) {
-            inputField.onValueChanged.RemoveAllListeners();
-            inputField.onValueChanged.AddListener(onChange);
-        }
+    public TMP_InputField.CharacterValidation CharacterValidation {
+        get => inputField.characterValidation;
+        set => inputField.characterValidation = value;
+    }
 
-        public static UGUIInputField Create(string value, float minWidth, UnityAction<string> onChange = null) {
-            var element = new UGUIInputField(UIFactory.Instance.CreateInputField(), new Vector2(minWidth, UIFactory.Instance.uiFontSize + 10), onChange);
+    public void OnChange(UnityAction<string> onChange) {
+        inputField.onValueChanged.RemoveAllListeners();
+        inputField.onValueChanged.AddListener(onChange);
+    }
 
-            element.Value = value;
+    public static UGUIInputField Create(string value, float minWidth, UnityAction<string> onChange = null) {
+        var element = new UGUIInputField(UIFactory.Instance.CreateInputField(),
+            new Vector2(minWidth, UIFactory.Instance.uiFontSize + 10), onChange);
 
-            return element;
-        }
+        element.Value = value;
+
+        return element;
     }
 }

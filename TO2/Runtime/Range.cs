@@ -1,50 +1,46 @@
 ﻿using System;
 
-namespace KontrolSystem.TO2.Runtime {
-    public struct Range {
-        public readonly long from;
-        public readonly long to;
+namespace KontrolSystem.TO2.Runtime;
 
-        public Range(long from, long to) {
-            this.from = from;
-            this.to = to;
-        }
+public struct Range {
+    public readonly long from;
+    public readonly long to;
 
-        public long Length => to < from ? 0 : to - from;
+    public Range(long from, long to) {
+        this.from = from;
+        this.to = to;
+    }
 
-        public T[] Map<T>(Func<long, T> mapper) {
-            if (to < from) return new T[0];
+    public long Length => to < from ? 0 : to - from;
 
-            T[] result = new T[to - from];
+    public T[] Map<T>(Func<long, T> mapper) {
+        if (to < from) return new T[0];
 
-            for (long i = from; i < to; i++)
-                result[i - from] = mapper(i);
+        var result = new T[to - from];
 
-            return result;
-        }
+        for (var i = from; i < to; i++)
+            result[i - from] = mapper(i);
 
-        public long[] Reverse() {
-            if (to < from) return new long[0];
+        return result;
+    }
 
-            long[] result = new long[to - from];
+    public long[] Reverse() {
+        if (to < from) return new long[0];
 
-            for (long i = 0; i < to - from; i++) {
-                result[i] = to - i - 1;
-            }
+        var result = new long[to - from];
 
-            return result;
-        }
+        for (long i = 0; i < to - from; i++) result[i] = to - i - 1;
 
-        public U Reduce< U>(U initial, Func<U, long, U> reducer) {
-            U result = initial;
-            for (long i = from; i < to; i++) {
-                result = reducer(result, i);
-            }
-            return result;
-        }
-        
-        public string RangeToString() {
-            return $"{from}..{to}";
-        }
+        return result;
+    }
+
+    public U Reduce<U>(U initial, Func<U, long, U> reducer) {
+        var result = initial;
+        for (var i = from; i < to; i++) result = reducer(result, i);
+        return result;
+    }
+
+    public string RangeToString() {
+        return $"{from}..{to}";
     }
 }

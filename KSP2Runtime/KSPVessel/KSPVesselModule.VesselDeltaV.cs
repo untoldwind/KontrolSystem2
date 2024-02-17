@@ -3,30 +3,30 @@ using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
 using KSP.Sim.DeltaV;
 
-namespace KontrolSystem.KSP.Runtime.KSPVessel {
-    public partial class KSPVesselModule {
-        [KSClass("VesselDeltaV")]
-        public class VesselDeltaVAdapter {
-            private readonly VesselAdapter vesselAdapter;
-            private readonly VesselDeltaVComponent deltaV;
+namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
-            public VesselDeltaVAdapter(VesselAdapter vesselAdapter) {
-                this.vesselAdapter = vesselAdapter;
-                deltaV = vesselAdapter.vessel.VesselDeltaV;
-            }
+public partial class KSPVesselModule {
+    [KSClass("VesselDeltaV")]
+    public class VesselDeltaVAdapter {
+        private readonly VesselDeltaVComponent deltaV;
+        private readonly VesselAdapter vesselAdapter;
 
-            [KSField]
-            public DeltaVStageInfoAdapter[] Stages => deltaV.StageInfo
-                .Select(stage => new DeltaVStageInfoAdapter(vesselAdapter, stage)).ToArray();
+        public VesselDeltaVAdapter(VesselAdapter vesselAdapter) {
+            this.vesselAdapter = vesselAdapter;
+            deltaV = vesselAdapter.vessel.VesselDeltaV;
+        }
 
-            [KSMethod(Description = "Get delta-v information for a specific `stage` of the vessel, if existent.")]
-            public Option<DeltaVStageInfoAdapter> Stage(long stage) {
-                DeltaVStageInfo stageInfo = deltaV.GetStage((int)stage);
+        [KSField]
+        public DeltaVStageInfoAdapter[] Stages => deltaV.StageInfo
+            .Select(stage => new DeltaVStageInfoAdapter(vesselAdapter, stage)).ToArray();
 
-                return stageInfo != null
-                    ? new Option<DeltaVStageInfoAdapter>(new DeltaVStageInfoAdapter(vesselAdapter, stageInfo))
-                    : new Option<DeltaVStageInfoAdapter>();
-            }
+        [KSMethod(Description = "Get delta-v information for a specific `stage` of the vessel, if existent.")]
+        public Option<DeltaVStageInfoAdapter> Stage(long stage) {
+            var stageInfo = deltaV.GetStage((int)stage);
+
+            return stageInfo != null
+                ? new Option<DeltaVStageInfoAdapter>(new DeltaVStageInfoAdapter(vesselAdapter, stageInfo))
+                : new Option<DeltaVStageInfoAdapter>();
         }
     }
 }

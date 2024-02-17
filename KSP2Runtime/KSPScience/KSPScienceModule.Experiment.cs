@@ -1,88 +1,89 @@
 ﻿using System.Linq;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
-using KSP.Game.Science;
 using KSP.Modules;
 using KSP.Sim.impl;
 
-namespace KontrolSystem.KSP.Runtime.KSPScience {
-    public partial class KSPScienceModule {
-        [KSClass("Experiment",
-            Description = "Represents an in-game science experiment.")]
-        public class ExperimentAdapter {
-            private readonly SimulationObjectModel simulationObject;
-            private readonly ExperimentStanding experimentStanding;
-            private readonly ExperimentConfiguration experimentConfiguration;
+namespace KontrolSystem.KSP.Runtime.KSPScience;
 
-            public ExperimentAdapter(SimulationObjectModel simulationObject, ExperimentStanding experimentStanding, ExperimentConfiguration experimentConfiguration) {
-                this.simulationObject = simulationObject;
-                this.experimentStanding = experimentStanding;
-                this.experimentConfiguration = experimentConfiguration;
-            }
+public partial class KSPScienceModule {
+    [KSClass("Experiment",
+        Description = "Represents an in-game science experiment.")]
+    public class ExperimentAdapter {
+        private readonly ExperimentConfiguration experimentConfiguration;
+        private readonly ExperimentStanding experimentStanding;
+        private readonly SimulationObjectModel simulationObject;
 
-            [KSField]
-            public ExperimentDefinitionAdapter Definition =>
-                new ExperimentDefinitionAdapter(experimentStanding.ExperimentDefinition);
+        public ExperimentAdapter(SimulationObjectModel simulationObject, ExperimentStanding experimentStanding,
+            ExperimentConfiguration experimentConfiguration) {
+            this.simulationObject = simulationObject;
+            this.experimentStanding = experimentStanding;
+            this.experimentConfiguration = experimentConfiguration;
+        }
 
-            [KSField] public long CrewRequired => experimentConfiguration.CrewRequired;
+        [KSField]
+        public ExperimentDefinitionAdapter Definition =>
+            new(experimentStanding.ExperimentDefinition);
 
-            [KSField] public double TimeToComplete => experimentConfiguration.TimeToComplete;
+        [KSField] public long CrewRequired => experimentConfiguration.CrewRequired;
 
-            [KSField] public bool HasEnoughResources => experimentStanding.HasEnoughResources;
+        [KSField] public double TimeToComplete => experimentConfiguration.TimeToComplete;
 
-            [KSField] public bool CurrentSituationIsValid => experimentStanding.CurrentSituationIsValid;
+        [KSField] public bool HasEnoughResources => experimentStanding.HasEnoughResources;
 
-            [KSField] public double CurrentRunningTime => experimentStanding.CurrentRunningTime;
-            
-            [KSField] public ExperimentState CurrentExperimentState => experimentStanding.CurrentExperimentState;
+        [KSField] public bool CurrentSituationIsValid => experimentStanding.CurrentSituationIsValid;
 
-            [KSField] public ExperimentState PreviousExperimentState => experimentStanding.PreviousExperimentState;
+        [KSField] public double CurrentRunningTime => experimentStanding.CurrentRunningTime;
 
-            [KSField]
-            public ResearchLocationAdapter[] ValidLocations =>
-                experimentStanding.ExperimentDefinition.ValidLocations
-                    .Select(location => new ResearchLocationAdapter(location)).ToArray();
+        [KSField] public ExperimentState CurrentExperimentState => experimentStanding.CurrentExperimentState;
 
-            [KSField] public bool RegionRequired => experimentStanding.RegionRequired;
+        [KSField] public ExperimentState PreviousExperimentState => experimentStanding.PreviousExperimentState;
 
-            [KSField(Description = "Get the research location the experiment was last performed.")]
-            public Option<ResearchLocationAdapter> ExperimentLocation =>
-                experimentStanding.ExperimentLocation != null ?
-                    new Option<ResearchLocationAdapter>(new ResearchLocationAdapter(experimentStanding.ExperimentLocation)) :
-                    new Option<ResearchLocationAdapter>();
+        [KSField]
+        public ResearchLocationAdapter[] ValidLocations =>
+            experimentStanding.ExperimentDefinition.ValidLocations
+                .Select(location => new ResearchLocationAdapter(location)).ToArray();
 
-            [KSMethod]
-            public bool PauseExperiment() {
-                if (!KSPContext.CurrentContext.Game.SpaceSimulation.TryGetViewObject(simulationObject,
-                        out var viewObject)) return false;
+        [KSField] public bool RegionRequired => experimentStanding.RegionRequired;
 
-                if (!viewObject.TryGetComponent<Module_ScienceExperiment>(out var moduleScienceExperiment)) return false;
+        [KSField(Description = "Get the research location the experiment was last performed.")]
+        public Option<ResearchLocationAdapter> ExperimentLocation =>
+            experimentStanding.ExperimentLocation != null
+                ? new Option<ResearchLocationAdapter>(
+                    new ResearchLocationAdapter(experimentStanding.ExperimentLocation))
+                : new Option<ResearchLocationAdapter>();
 
-                moduleScienceExperiment.OnPauseExperiment(experimentStanding.ExperimentID);
-                return true;
-            }
+        [KSMethod]
+        public bool PauseExperiment() {
+            if (!KSPContext.CurrentContext.Game.SpaceSimulation.TryGetViewObject(simulationObject,
+                    out var viewObject)) return false;
 
-            [KSMethod]
-            public bool CancelExperiment() {
-                if (!KSPContext.CurrentContext.Game.SpaceSimulation.TryGetViewObject(simulationObject,
-                        out var viewObject)) return false;
+            if (!viewObject.TryGetComponent<Module_ScienceExperiment>(out var moduleScienceExperiment)) return false;
 
-                if (!viewObject.TryGetComponent<Module_ScienceExperiment>(out var moduleScienceExperiment)) return false;
+            moduleScienceExperiment.OnPauseExperiment(experimentStanding.ExperimentID);
+            return true;
+        }
 
-                moduleScienceExperiment.OnCancelExperiment(experimentStanding.ExperimentID);
-                return true;
-            }
+        [KSMethod]
+        public bool CancelExperiment() {
+            if (!KSPContext.CurrentContext.Game.SpaceSimulation.TryGetViewObject(simulationObject,
+                    out var viewObject)) return false;
 
-            [KSMethod]
-            public bool RunExperiment() {
-                if (!KSPContext.CurrentContext.Game.SpaceSimulation.TryGetViewObject(simulationObject,
-                        out var viewObject)) return false;
+            if (!viewObject.TryGetComponent<Module_ScienceExperiment>(out var moduleScienceExperiment)) return false;
 
-                if (!viewObject.TryGetComponent<Module_ScienceExperiment>(out var moduleScienceExperiment)) return false;
+            moduleScienceExperiment.OnCancelExperiment(experimentStanding.ExperimentID);
+            return true;
+        }
 
-                moduleScienceExperiment.OnAttemptToRunExperiment(experimentStanding.ExperimentID);
-                return true;
-            }
+        [KSMethod]
+        public bool RunExperiment() {
+            if (!KSPContext.CurrentContext.Game.SpaceSimulation.TryGetViewObject(simulationObject,
+                    out var viewObject)) return false;
+
+            if (!viewObject.TryGetComponent<Module_ScienceExperiment>(out var moduleScienceExperiment)) return false;
+
+            moduleScienceExperiment.OnAttemptToRunExperiment(experimentStanding.ExperimentID);
+            return true;
         }
     }
 }

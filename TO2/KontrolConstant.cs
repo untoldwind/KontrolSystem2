@@ -1,92 +1,93 @@
-﻿using System;
-using KontrolSystem.TO2.AST;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Reflection.Emit;
+using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Generator;
 using KontrolSystem.TO2.Runtime;
 
-namespace KontrolSystem.TO2 {
-    public interface IKontrolConstant {
-        string Name { get; }
+namespace KontrolSystem.TO2;
 
-        string Description { get; }
+public interface IKontrolConstant {
+    string Name { get; }
 
-        TO2Type Type { get; }
+    string Description { get; }
 
-        void EmitLoad(IBlockContext context);
+    TO2Type Type { get; }
 
-        IREPLValue REPLValue();
+    void EmitLoad(IBlockContext context);
+
+    IREPLValue REPLValue();
+}
+
+public class CompiledKontrolConstant : IKontrolConstant {
+    private readonly FieldInfo runtimeField;
+
+    public CompiledKontrolConstant(string name, string description, TO2Type type, FieldInfo runtimeField) {
+        Name = name;
+        Description = description;
+        Type = type;
+        this.runtimeField = runtimeField;
     }
 
-    public class CompiledKontrolConstant : IKontrolConstant {
-        public string Name { get; }
-        public string Description { get; }
-        public TO2Type Type { get; }
+    public string Name { get; }
+    public string Description { get; }
+    public TO2Type Type { get; }
 
-        private readonly FieldInfo runtimeField;
-
-        public CompiledKontrolConstant(string name, string description, TO2Type type, FieldInfo runtimeField) {
-            Name = name;
-            Description = description;
-            Type = type;
-            this.runtimeField = runtimeField;
-        }
-
-        public void EmitLoad(IBlockContext context) {
-            context.IL.Emit(OpCodes.Ldsfld, runtimeField);
-        }
-
-        public IREPLValue REPLValue() {
-            return Type.REPLCast(runtimeField.GetValue(null));
-        }
+    public void EmitLoad(IBlockContext context) {
+        context.IL.Emit(OpCodes.Ldsfld, runtimeField);
     }
 
-    public class EnumKontrolConstant : IKontrolConstant {
-        public string Name { get; }
+    public IREPLValue REPLValue() {
+        return Type.REPLCast(runtimeField.GetValue(null));
+    }
+}
 
-        private BoundEnumConstType enumType;
+public class EnumKontrolConstant : IKontrolConstant {
+    private readonly BoundEnumConstType enumType;
 
-        public EnumKontrolConstant(string name, BoundEnumConstType type, string description) {
-            Name = name;
-            enumType = type;
-            Description = description;
-        }
-
-        public TO2Type Type => enumType;
-
-        public string Description { get; }
-
-        public void EmitLoad(IBlockContext context) {
-        }
-
-        public IREPLValue REPLValue() => REPLUnit.INSTANCE;
+    public EnumKontrolConstant(string name, BoundEnumConstType type, string description) {
+        Name = name;
+        enumType = type;
+        Description = description;
     }
 
-    public class DeclaredKontrolConstant : IKontrolConstant {
-        private readonly DeclaredKontrolModule module;
-        public readonly ConstDeclaration to2Constant;
-        public readonly FieldInfo runtimeField;
+    public string Name { get; }
 
-        public DeclaredKontrolConstant(DeclaredKontrolModule module, ConstDeclaration to2Constant, FieldInfo runtimeField) {
-            this.module = module;
-            this.to2Constant = to2Constant;
-            this.runtimeField = runtimeField;
-        }
+    public TO2Type Type => enumType;
 
-        public string Name => to2Constant.name;
+    public string Description { get; }
 
-        public string Description => to2Constant.description;
+    public void EmitLoad(IBlockContext context) {
+    }
 
-        public TO2Type Type => to2Constant.type.UnderlyingType(module.moduleContext);
+    public IREPLValue REPLValue() {
+        return REPLUnit.INSTANCE;
+    }
+}
 
-        public bool IsPublic => to2Constant.isPublic;
+public class DeclaredKontrolConstant : IKontrolConstant {
+    private readonly DeclaredKontrolModule module;
+    public readonly FieldInfo runtimeField;
+    public readonly ConstDeclaration to2Constant;
 
-        public void EmitLoad(IBlockContext context) {
-            context.IL.Emit(OpCodes.Ldsfld, runtimeField);
-        }
+    public DeclaredKontrolConstant(DeclaredKontrolModule module, ConstDeclaration to2Constant, FieldInfo runtimeField) {
+        this.module = module;
+        this.to2Constant = to2Constant;
+        this.runtimeField = runtimeField;
+    }
 
-        public IREPLValue REPLValue() {
-            return Type.REPLCast(runtimeField.GetValue(null));
-        }
+    public bool IsPublic => to2Constant.isPublic;
+
+    public string Name => to2Constant.name;
+
+    public string Description => to2Constant.description;
+
+    public TO2Type Type => to2Constant.type.UnderlyingType(module.moduleContext);
+
+    public void EmitLoad(IBlockContext context) {
+        context.IL.Emit(OpCodes.Ldsfld, runtimeField);
+    }
+
+    public IREPLValue REPLValue() {
+        return Type.REPLCast(runtimeField.GetValue(null));
     }
 }

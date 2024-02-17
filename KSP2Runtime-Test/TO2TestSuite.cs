@@ -4,59 +4,59 @@ using KontrolSystem.TO2;
 using KontrolSystem.TO2.Tooling;
 using Xunit;
 using Xunit.Abstractions;
+using Xunit.Sdk;
 
-namespace KontrolSystem.KSP.Runtime.Test {
-    public class TO2TestSuite {
-        private readonly ITestOutputHelper output;
+namespace KontrolSystem.KSP.Runtime.Test;
 
-        public TO2TestSuite(ITestOutputHelper output) => this.output = output;
+public class TO2TestSuite {
+    private readonly ITestOutputHelper output;
 
-        [Fact]
-        public void RunSuite() {
-            ConsoleTestReporter reporter = new ConsoleTestReporter(output.WriteLine);
+    public TO2TestSuite(ITestOutputHelper output) {
+        this.output = output;
+    }
 
-            try {
-                var registry = KontrolSystemKSPRegistry.CreateKSP();
+    [Fact]
+    public void RunSuite() {
+        var reporter = new ConsoleTestReporter(output.WriteLine);
 
-                var context = registry.AddDirectory(Path.Combine(".", "to2KSP"));
+        try {
+            var registry = KontrolSystemKSPRegistry.CreateKSP();
 
-                context.Save("demo.dll");
+            var context = registry.AddDirectory(Path.Combine(".", "to2KSP"));
 
-                TestRunner.RunTests(registry, reporter, () => new KSPTestRunnerContext());
-            } catch (CompilationErrorException e) {
-                foreach (var error in e.errors) {
-                    output.WriteLine(error.ToString());
+            context.Save("demo.dll");
+
+            TestRunner.RunTests(registry, reporter, () => new KSPTestRunnerContext());
+        } catch (CompilationErrorException e) {
+            foreach (var error in e.errors) output.WriteLine(error.ToString());
+
+            throw new XunitException(e.Message);
+        }
+
+        if (!reporter.WasSuccessful) {
+            if (reporter.Failures.Count > 0) {
+                output.WriteLine("");
+                output.WriteLine("Failures:");
+                output.WriteLine("");
+
+                foreach (var failure in reporter.Failures) {
+                    output.WriteLine($"    {failure.testName}:");
+                    output.WriteLine($"         {failure.failure}");
                 }
-
-                throw new Xunit.Sdk.XunitException(e.Message);
             }
 
-            if (!reporter.WasSuccessful) {
-                if (reporter.Failures.Count > 0) {
-                    output.WriteLine("");
-                    output.WriteLine("Failures:");
-                    output.WriteLine("");
+            if (reporter.Errors.Count > 0) {
+                output.WriteLine("");
+                output.WriteLine("Errors:");
+                output.WriteLine("");
 
-                    foreach (TestResult failure in reporter.Failures) {
-                        output.WriteLine($"    {failure.testName}:");
-                        output.WriteLine($"         {failure.failure}");
-                    }
+                foreach (var error in reporter.Errors) {
+                    output.WriteLine($"    {error.testName}:");
+                    output.WriteLine(error.exception.ToString());
                 }
-
-                if (reporter.Errors.Count > 0) {
-                    output.WriteLine("");
-                    output.WriteLine("Errors:");
-                    output.WriteLine("");
-
-                    foreach (TestResult error in reporter.Errors) {
-                        output.WriteLine($"    {error.testName}:");
-                        output.WriteLine(error.exception.ToString());
-                    }
-                }
-
-                throw new Xunit.Sdk.XunitException("KSSTestSuite was not successful");
             }
+
+            throw new XunitException("KSSTestSuite was not successful");
         }
     }
 }
-

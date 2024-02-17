@@ -4,39 +4,37 @@ using KSP.Sim.impl;
 using KSP.Sim.State;
 using UnityEngine;
 
-namespace KontrolSystem.KSP.Runtime.KSPControl {
-    public partial class KSPControlModule {
-        public abstract class BaseAutopilot : IKSPAutopilot {
-            protected readonly IKSPContext context;
-            protected readonly VesselComponent vessel;
-            protected bool suspended;
+namespace KontrolSystem.KSP.Runtime.KSPControl;
 
-            protected BaseAutopilot(IKSPContext context, VesselComponent vessel) {
-                this.context = context;
-                this.vessel = vessel;
+public partial class KSPControlModule {
+    public abstract class BaseAutopilot : IKSPAutopilot {
+        protected readonly IKSPContext context;
+        protected readonly VesselComponent vessel;
+        protected bool suspended;
 
-                suspended = false;
+        protected BaseAutopilot(IKSPContext context, VesselComponent vessel) {
+            this.context = context;
+            this.vessel = vessel;
 
-                this.context.HookAutopilot(this.vessel, this);
-            }
+            suspended = false;
 
-            [KSMethod]
-            public Future<object> Release() {
-                suspended = true;
-                context.NextYield = new WaitForFixedUpdate();
-                context.OnNextYieldOnce = () => {
-                    context.UnhookAutopilot(vessel, this);
-                };
-                return new Future.Success<object>(null);
-            }
+            this.context.HookAutopilot(this.vessel, this);
+        }
 
-            [KSMethod]
-            public void Resume() {
-                suspended = false;
-                context.HookAutopilot(vessel, this);
-            }
+        public abstract void UpdateAutopilot(ref FlightCtrlState st, float deltaTime);
 
-            public abstract void UpdateAutopilot(ref FlightCtrlState st, float deltaTime);
+        [KSMethod]
+        public Future<object> Release() {
+            suspended = true;
+            context.NextYield = new WaitForFixedUpdate();
+            context.OnNextYieldOnce = () => { context.UnhookAutopilot(vessel, this); };
+            return new Future.Success<object>(null);
+        }
+
+        [KSMethod]
+        public void Resume() {
+            suspended = false;
+            context.HookAutopilot(vessel, this);
         }
     }
 }

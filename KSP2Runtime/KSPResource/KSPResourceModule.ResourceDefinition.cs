@@ -1,44 +1,38 @@
 ﻿using KontrolSystem.TO2.Binding;
 using KSP.Sim.ResourceSystem;
 
-namespace KontrolSystem.KSP.Runtime.KSPResource {
-    public partial class KSPResourceModule {
-        [KSClass("ResourceDefinition",
-            Description = "Represents an in-game resource.")]
-        public class ResourceDefinitionAdapter {
-            private readonly ResourceDefinitionData resourceDefinition;
+namespace KontrolSystem.KSP.Runtime.KSPResource;
 
-            public ResourceDefinitionAdapter(ResourceDefinitionData resourceDefinition) {
-                this.resourceDefinition = resourceDefinition;
-            }
+public partial class KSPResourceModule {
+    [KSClass("ResourceDefinition",
+        Description = "Represents an in-game resource.")]
+    public class ResourceDefinitionAdapter {
+        private readonly ResourceDefinitionData resourceDefinition;
 
-            [KSField]
-            public long Id => resourceDefinition.resourceDatabaseID.Value;
+        public ResourceDefinitionAdapter(ResourceDefinitionData resourceDefinition) {
+            this.resourceDefinition = resourceDefinition;
+        }
 
-            [KSField]
-            public string Name => resourceDefinition.name;
+        [KSField] public long Id => resourceDefinition.resourceDatabaseID.Value;
 
-            [KSField]
-            public string DisplayName => resourceDefinition.DisplayName;
+        [KSField] public string Name => resourceDefinition.name;
 
-            [KSField]
-            public string DisplayAbbreviation => resourceDefinition.DisplayAbbreviation;
+        [KSField] public string DisplayName => resourceDefinition.DisplayName;
 
-            [KSField]
-            public double MassPerUnit => resourceDefinition.resourceProperties.massPerUnit;
+        [KSField] public string DisplayAbbreviation => resourceDefinition.DisplayAbbreviation;
 
-            [KSField]
-            public double VolumePerUnit => resourceDefinition.resourceProperties.volumePerUnit;
+        [KSField] public double MassPerUnit => resourceDefinition.resourceProperties.massPerUnit;
 
-            [KSField]
-            public double MassPerVolume => resourceDefinition.resourceProperties.massPerVolume;
+        [KSField] public double VolumePerUnit => resourceDefinition.resourceProperties.volumePerUnit;
 
-            internal static ResourceDefinitionAdapter CreateFromResourceID(ResourceDefinitionID resourceDefinitionID) {
-                var context = KSPContext.CurrentContext;
-                var resourceDefinitionData = context.Game.ResourceDefinitionDatabase.GetDefinitionData(resourceDefinitionID);
+        [KSField] public double MassPerVolume => resourceDefinition.resourceProperties.massPerVolume;
 
-                return new ResourceDefinitionAdapter(resourceDefinitionData);
-            }
+        internal static ResourceDefinitionAdapter CreateFromResourceID(ResourceDefinitionID resourceDefinitionID) {
+            var context = KSPContext.CurrentContext;
+            var resourceDefinitionData =
+                context.Game.ResourceDefinitionDatabase.GetDefinitionData(resourceDefinitionID);
+
+            return new ResourceDefinitionAdapter(resourceDefinitionData);
         }
     }
 }

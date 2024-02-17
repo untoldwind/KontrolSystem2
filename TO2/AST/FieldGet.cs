@@ -1,104 +1,104 @@
-﻿using System;
-using KontrolSystem.Parsing;
+﻿using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
 using KontrolSystem.TO2.Runtime;
 
-namespace KontrolSystem.TO2.AST {
-    public class FieldGet : Expression, IAssignContext {
-        private readonly Expression target;
-        private readonly string fieldName;
+namespace KontrolSystem.TO2.AST;
 
-        public FieldGet(Expression target, string fieldName, Position start = new Position(),
-            Position end = new Position()) : base(start, end) {
-            this.target = target;
-            this.fieldName = fieldName;
+public class FieldGet : Expression, IAssignContext {
+    private readonly string fieldName;
+    private readonly Expression target;
+
+    public FieldGet(Expression target, string fieldName, Position start = new(),
+        Position end = new()) : base(start, end) {
+        this.target = target;
+        this.fieldName = fieldName;
+    }
+
+    public override IVariableContainer VariableContainer {
+        set => target.VariableContainer = value;
+    }
+
+    public bool IsConst(IBlockContext context) {
+        return (target as IAssignContext)?.IsConst(context) ?? true;
+    }
+
+    public override TO2Type ResultType(IBlockContext context) {
+        var targetType = target.ResultType(context);
+        var fieldAccess =
+            targetType.FindField(context.ModuleContext, fieldName)?.Create(context.ModuleContext);
+        if (fieldAccess == null) {
+            context.AddError(new StructuralError(
+                StructuralError.ErrorType.NoSuchField,
+                $"Type '{targetType.Name}' does not have a field '{fieldName}'",
+                Start,
+                End
+            ));
+            return BuiltinType.Unit;
         }
 
-        public override IVariableContainer VariableContainer {
-            set => target.VariableContainer = value;
+        return fieldAccess.FieldType;
+    }
+
+    public override void Prepare(IBlockContext context) {
+        target.Prepare(context);
+    }
+
+    public override void EmitCode(IBlockContext context, bool dropResult) {
+        var targetType = target.ResultType(context);
+        var fieldAccess =
+            targetType.FindField(context.ModuleContext, fieldName)?.Create(context.ModuleContext);
+
+        if (fieldAccess == null) {
+            context.AddError(new StructuralError(
+                StructuralError.ErrorType.NoSuchField,
+                $"Type '{targetType.Name}' does not have a field '{fieldName}'",
+                Start,
+                End
+            ));
+            return;
         }
 
-        public override TO2Type ResultType(IBlockContext context) {
-            TO2Type targetType = target.ResultType(context);
-            IFieldAccessEmitter fieldAccess =
-                targetType.FindField(context.ModuleContext, fieldName)?.Create(context.ModuleContext);
-            if (fieldAccess == null) {
-                context.AddError(new StructuralError(
-                    StructuralError.ErrorType.NoSuchField,
-                    $"Type '{targetType.Name}' does not have a field '{fieldName}'",
-                    Start,
-                    End
-                ));
-                return BuiltinType.Unit;
-            }
-
-            return fieldAccess.FieldType;
-        }
-
-        public bool IsConst(IBlockContext context) => (target as IAssignContext)?.IsConst(context) ?? true;
-
-        public override void Prepare(IBlockContext context) {
-            target.Prepare(context);
-        }
-
-        public override void EmitCode(IBlockContext context, bool dropResult) {
-            TO2Type targetType = target.ResultType(context);
-            IFieldAccessEmitter fieldAccess =
-                targetType.FindField(context.ModuleContext, fieldName)?.Create(context.ModuleContext);
-
-            if (fieldAccess == null) {
-                context.AddError(new StructuralError(
-                    StructuralError.ErrorType.NoSuchField,
-                    $"Type '{targetType.Name}' does not have a field '{fieldName}'",
-                    Start,
-                    End
-                ));
-                return;
-            }
-
-            if (!dropResult) {
-                if (fieldAccess.RequiresPtr) target.EmitPtr(context);
-                else target.EmitCode(context, false);
-
-                if (context.HasErrors) return;
-
-                fieldAccess.EmitLoad(context);
-            }
-        }
-
-        public override void EmitPtr(IBlockContext context) {
-            TO2Type targetType = target.ResultType(context);
-            IFieldAccessEmitter fieldAccess =
-                targetType.FindField(context.ModuleContext, fieldName)?.Create(context.ModuleContext);
-
-            if (fieldAccess == null) {
-                context.AddError(new StructuralError(
-                    StructuralError.ErrorType.NoSuchField,
-                    $"Type '{targetType.Name}' does not have a field '{fieldName}'",
-                    Start,
-                    End
-                ));
-                return;
-            }
-
+        if (!dropResult) {
             if (fieldAccess.RequiresPtr) target.EmitPtr(context);
             else target.EmitCode(context, false);
 
             if (context.HasErrors) return;
 
-            fieldAccess.EmitPtr(context);
+            fieldAccess.EmitLoad(context);
+        }
+    }
+
+    public override void EmitPtr(IBlockContext context) {
+        var targetType = target.ResultType(context);
+        var fieldAccess =
+            targetType.FindField(context.ModuleContext, fieldName)?.Create(context.ModuleContext);
+
+        if (fieldAccess == null) {
+            context.AddError(new StructuralError(
+                StructuralError.ErrorType.NoSuchField,
+                $"Type '{targetType.Name}' does not have a field '{fieldName}'",
+                Start,
+                End
+            ));
+            return;
         }
 
-        public override REPLValueFuture Eval(REPLContext context) {
-            var targetFuture = target.Eval(context);
-            IFieldAccessEmitter fieldAccess =
-                targetFuture.Type.FindField(context.replModuleContext, fieldName)?.Create(context.replModuleContext);
+        if (fieldAccess.RequiresPtr) target.EmitPtr(context);
+        else target.EmitCode(context, false);
 
-            if (fieldAccess == null) {
-                throw new REPLException(this, $"Type '{targetFuture.Type.Name}' does not have a field '{fieldName}'");
-            }
+        if (context.HasErrors) return;
 
-            return targetFuture.Then(fieldAccess.FieldType, target => fieldAccess.EvalGet(this, target));
-        }
+        fieldAccess.EmitPtr(context);
+    }
+
+    public override REPLValueFuture Eval(REPLContext context) {
+        var targetFuture = target.Eval(context);
+        var fieldAccess =
+            targetFuture.Type.FindField(context.replModuleContext, fieldName)?.Create(context.replModuleContext);
+
+        if (fieldAccess == null)
+            throw new REPLException(this, $"Type '{targetFuture.Type.Name}' does not have a field '{fieldName}'");
+
+        return targetFuture.Then(fieldAccess.FieldType, target => fieldAccess.EvalGet(this, target));
     }
 }

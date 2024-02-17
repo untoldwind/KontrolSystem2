@@ -6940,15 +6940,6 @@
           "name": "GroundMarker",
           "description": "Represents a ground marker on a given celestial body.\n",
           "fields": {
-            "visible": {
-              "name": "visible",
-              "description": "Controls if the ground marker is currently visible (initially `true`)\n",
-              "readOnly": false,
-              "type": {
-                "kind": "Builtin",
-                "name": "bool"
-              }
-            },
             "rotation": {
               "name": "rotation",
               "readOnly": false,
@@ -6974,6 +6965,15 @@
                 "kind": "Standard",
                 "module": "ksp::console",
                 "name": "RgbaColor"
+              }
+            },
+            "visible": {
+              "name": "visible",
+              "description": "Controls if the ground marker is currently visible (initially `true`)\n",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
               }
             }
           },
@@ -7092,15 +7092,6 @@
                 "name": "bool"
               }
             },
-            "visible": {
-              "name": "visible",
-              "description": "Controls if the debug-vector is currently visible (initially `true`)\n",
-              "readOnly": false,
-              "type": {
-                "kind": "Builtin",
-                "name": "bool"
-              }
-            },
             "start": {
               "name": "start",
               "description": "The current starting position of the debugging vector.\n",
@@ -7119,6 +7110,15 @@
                 "kind": "Standard",
                 "module": "ksp::math",
                 "name": "GlobalPosition"
+              }
+            },
+            "visible": {
+              "name": "visible",
+              "description": "Controls if the debug-vector is currently visible (initially `true`)\n",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
               }
             }
           },
@@ -34325,15 +34325,6 @@
                 "name": "string"
               }
             },
-            "name": {
-              "name": "name",
-              "description": "The name of the vessel.\n",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "string"
-              }
-            },
             "is_active": {
               "name": "is_active",
               "description": "Check if the vessel is currently active.\n",
@@ -34429,16 +34420,6 @@
                 "kind": "Standard",
                 "module": "ksp::orbit",
                 "name": "Body"
-              }
-            },
-            "orbit": {
-              "name": "orbit",
-              "description": "Current orbit or orbit patch of the vessel.\n",
-              "readOnly": true,
-              "type": {
-                "kind": "Standard",
-                "module": "ksp::orbit",
-                "name": "Orbit"
               }
             },
             "trajectory": {
@@ -35007,6 +34988,25 @@
                 "kind": "Standard",
                 "module": "ksp::math",
                 "name": "Vec3"
+              }
+            },
+            "name": {
+              "name": "name",
+              "description": "The name of the vessel.\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            },
+            "orbit": {
+              "name": "orbit",
+              "description": "Current orbit or orbit patch of the vessel.\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::orbit",
+                "name": "Orbit"
               }
             }
           },

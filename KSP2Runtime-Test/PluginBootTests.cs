@@ -1,30 +1,28 @@
-﻿using Xunit;
+﻿using KontrolSystem.TO2;
+using Xunit;
 using Xunit.Abstractions;
-using System.IO;
-using KontrolSystem.TO2;
+using Xunit.Sdk;
 
-namespace KontrolSystem.KSP.Runtime.Test {
-    public class PluginBootTests {
-        private readonly ITestOutputHelper output;
+namespace KontrolSystem.KSP.Runtime.Test;
 
-        public PluginBootTests(ITestOutputHelper output) => this.output = output;
+public class PluginBootTests {
+    private readonly ITestOutputHelper output;
 
-        [Fact]
-        public void RunSuite() {
-            try {
-                var registry = KontrolSystemKSPRegistry.CreateKSP();
+    public PluginBootTests(ITestOutputHelper output) {
+        this.output = output;
+    }
 
-                //                registry.AddDirectory(Path.Combine("..", "..", "GameData", "KontrolSystem", "to2"));
-                //                registry.AddDirectory(Path.Combine(Path.Combine(".", "to2Sample")));
+    [Fact]
+    public void RunSuite() {
+        try {
+            var registry = KontrolSystemKSPRegistry.CreateKSP();
 
+            //                registry.AddDirectory(Path.Combine("..", "..", "GameData", "KontrolSystem", "to2"));
+            //                registry.AddDirectory(Path.Combine(Path.Combine(".", "to2Sample")));
+        } catch (CompilationErrorException e) {
+            foreach (var error in e.errors) output.WriteLine(error.ToString());
 
-            } catch (CompilationErrorException e) {
-                foreach (var error in e.errors) {
-                    output.WriteLine(error.ToString());
-                }
-
-                throw new Xunit.Sdk.XunitException(e.Message);
-            }
+            throw new XunitException(e.Message);
         }
     }
 }

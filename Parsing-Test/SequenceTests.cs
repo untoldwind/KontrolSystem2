@@ -1,161 +1,161 @@
 ﻿using Xunit;
 
-namespace KontrolSystem.Parsing.Test {
-    using static Parsers;
+namespace KontrolSystem.Parsing.Test;
 
-    public class SequenceTests {
-        [Fact]
-        public void TestPreceded() {
-            var parser = Preceded(Char('a'), Char('B'));
-            var result = parser.TryParse("");
+using static Parsers;
 
-            Assert.False(result.WasSuccessful);
+public class SequenceTests {
+    [Fact]
+    public void TestPreceded() {
+        var parser = Preceded(Char('a'), Char('B'));
+        var result = parser.TryParse("");
 
-            result = parser.TryParse("ABc");
+        Assert.False(result.WasSuccessful);
 
-            Assert.False(result.WasSuccessful);
+        result = parser.TryParse("ABc");
 
-            result = parser.TryParse("a");
+        Assert.False(result.WasSuccessful);
 
-            Assert.False(result.WasSuccessful);
+        result = parser.TryParse("a");
 
-            result = parser.TryParse("aBc");
+        Assert.False(result.WasSuccessful);
 
-            Assert.True(result.WasSuccessful);
-            Assert.Equal("c", result.Remaining.ToString());
-            Assert.Equal('B', result.Value);
-        }
+        result = parser.TryParse("aBc");
 
-        [Fact]
-        public void TestTerminated() {
-            var parser = Terminated(Char('a'), Char('B'));
-            var result = parser.TryParse("");
+        Assert.True(result.WasSuccessful);
+        Assert.Equal("c", result.Remaining.ToString());
+        Assert.Equal('B', result.Value);
+    }
 
-            Assert.False(result.WasSuccessful);
+    [Fact]
+    public void TestTerminated() {
+        var parser = Terminated(Char('a'), Char('B'));
+        var result = parser.TryParse("");
 
-            result = parser.TryParse("ABc");
+        Assert.False(result.WasSuccessful);
 
-            Assert.False(result.WasSuccessful);
+        result = parser.TryParse("ABc");
 
-            result = parser.TryParse("a");
+        Assert.False(result.WasSuccessful);
 
-            Assert.False(result.WasSuccessful);
+        result = parser.TryParse("a");
 
-            result = parser.TryParse("aBc");
+        Assert.False(result.WasSuccessful);
 
-            Assert.True(result.WasSuccessful);
-            Assert.Equal("c", result.Remaining.ToString());
-            Assert.Equal('a', result.Value);
-        }
+        result = parser.TryParse("aBc");
 
-        [Fact]
-        public void TestPair() {
-            var parser = Seq(Char('a'), Char('B'));
-            var result = parser.TryParse("");
+        Assert.True(result.WasSuccessful);
+        Assert.Equal("c", result.Remaining.ToString());
+        Assert.Equal('a', result.Value);
+    }
 
-            Assert.False(result.WasSuccessful);
+    [Fact]
+    public void TestPair() {
+        var parser = Seq(Char('a'), Char('B'));
+        var result = parser.TryParse("");
 
-            result = parser.TryParse("ABc");
+        Assert.False(result.WasSuccessful);
 
-            Assert.False(result.WasSuccessful);
+        result = parser.TryParse("ABc");
 
-            result = parser.TryParse("a");
+        Assert.False(result.WasSuccessful);
 
-            Assert.False(result.WasSuccessful);
+        result = parser.TryParse("a");
 
-            result = parser.TryParse("aBc");
+        Assert.False(result.WasSuccessful);
 
-            Assert.True(result.WasSuccessful);
-            Assert.Equal("c", result.Remaining.ToString());
-            Assert.Equal(('a', 'B'), result.Value);
-        }
+        result = parser.TryParse("aBc");
 
-        [Fact]
-        public void TestTriple() {
-            var parser = Seq(Char('a'), Char('B'), Char('c'));
-            var result = parser.TryParse("");
+        Assert.True(result.WasSuccessful);
+        Assert.Equal("c", result.Remaining.ToString());
+        Assert.Equal(('a', 'B'), result.Value);
+    }
 
-            Assert.False(result.WasSuccessful);
+    [Fact]
+    public void TestTriple() {
+        var parser = Seq(Char('a'), Char('B'), Char('c'));
+        var result = parser.TryParse("");
 
-            result = parser.TryParse("ABc");
+        Assert.False(result.WasSuccessful);
 
-            Assert.False(result.WasSuccessful);
+        result = parser.TryParse("ABc");
 
-            result = parser.TryParse("a");
+        Assert.False(result.WasSuccessful);
 
-            Assert.False(result.WasSuccessful);
+        result = parser.TryParse("a");
 
-            result = parser.TryParse("aBc");
+        Assert.False(result.WasSuccessful);
 
-            Assert.True(result.WasSuccessful);
-            Assert.Equal("", result.Remaining.ToString());
-            Assert.Equal(('a', 'B', 'c'), result.Value);
-        }
+        result = parser.TryParse("aBc");
 
-        [Fact]
-        public void TestQuad() {
-            var parser = Seq(Char('a'), Char('B'), Char('c'), Char('d'));
-            var result = parser.TryParse("");
+        Assert.True(result.WasSuccessful);
+        Assert.Equal("", result.Remaining.ToString());
+        Assert.Equal(('a', 'B', 'c'), result.Value);
+    }
 
-            Assert.False(result.WasSuccessful);
+    [Fact]
+    public void TestQuad() {
+        var parser = Seq(Char('a'), Char('B'), Char('c'), Char('d'));
+        var result = parser.TryParse("");
 
-            result = parser.TryParse("ABcD");
+        Assert.False(result.WasSuccessful);
 
-            Assert.False(result.WasSuccessful);
+        result = parser.TryParse("ABcD");
 
-            result = parser.TryParse("a");
+        Assert.False(result.WasSuccessful);
 
-            Assert.False(result.WasSuccessful);
+        result = parser.TryParse("a");
 
-            result = parser.TryParse("aBcd");
+        Assert.False(result.WasSuccessful);
 
-            Assert.True(result.WasSuccessful);
-            Assert.Equal("", result.Remaining.ToString());
-            Assert.Equal(('a', 'B', 'c', 'd'), result.Value);
-        }
+        result = parser.TryParse("aBcd");
 
-        [Fact]
-        public void TestQuint() {
-            var parser = Seq(Char('a'), Char('B'), Char('c'), Char('d'), Char('E'));
-            var result = parser.TryParse("");
+        Assert.True(result.WasSuccessful);
+        Assert.Equal("", result.Remaining.ToString());
+        Assert.Equal(('a', 'B', 'c', 'd'), result.Value);
+    }
 
-            Assert.False(result.WasSuccessful);
+    [Fact]
+    public void TestQuint() {
+        var parser = Seq(Char('a'), Char('B'), Char('c'), Char('d'), Char('E'));
+        var result = parser.TryParse("");
 
-            result = parser.TryParse("ABcDe");
+        Assert.False(result.WasSuccessful);
 
-            Assert.False(result.WasSuccessful);
+        result = parser.TryParse("ABcDe");
 
-            result = parser.TryParse("a");
+        Assert.False(result.WasSuccessful);
 
-            Assert.False(result.WasSuccessful);
+        result = parser.TryParse("a");
 
-            result = parser.TryParse("aBcdE");
+        Assert.False(result.WasSuccessful);
 
-            Assert.True(result.WasSuccessful);
-            Assert.Equal("", result.Remaining.ToString());
-            Assert.Equal(('a', 'B', 'c', 'd', 'E'), result.Value);
-        }
+        result = parser.TryParse("aBcdE");
 
-        [Fact]
-        public void TestHexa() {
-            var parser = Seq(Char('a'), Char('B'), Char('c'), Char('d'), Char('E'), Char('f'));
-            var result = parser.TryParse("");
+        Assert.True(result.WasSuccessful);
+        Assert.Equal("", result.Remaining.ToString());
+        Assert.Equal(('a', 'B', 'c', 'd', 'E'), result.Value);
+    }
 
-            Assert.False(result.WasSuccessful);
+    [Fact]
+    public void TestHexa() {
+        var parser = Seq(Char('a'), Char('B'), Char('c'), Char('d'), Char('E'), Char('f'));
+        var result = parser.TryParse("");
 
-            result = parser.TryParse("ABcDef");
+        Assert.False(result.WasSuccessful);
 
-            Assert.False(result.WasSuccessful);
+        result = parser.TryParse("ABcDef");
 
-            result = parser.TryParse("a");
+        Assert.False(result.WasSuccessful);
 
-            Assert.False(result.WasSuccessful);
+        result = parser.TryParse("a");
 
-            result = parser.TryParse("aBcdEf");
+        Assert.False(result.WasSuccessful);
 
-            Assert.True(result.WasSuccessful);
-            Assert.Equal("", result.Remaining.ToString());
-            Assert.Equal(('a', 'B', 'c', 'd', 'E', 'f'), result.Value);
-        }
+        result = parser.TryParse("aBcdEf");
+
+        Assert.True(result.WasSuccessful);
+        Assert.Equal("", result.Remaining.ToString());
+        Assert.Equal(('a', 'B', 'c', 'd', 'E', 'f'), result.Value);
     }
 }

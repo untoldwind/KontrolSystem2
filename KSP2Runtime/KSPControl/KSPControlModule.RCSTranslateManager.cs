@@ -3,34 +3,35 @@ using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
 using KSP.Sim.impl;
 using KSP.Sim.State;
-using UnityEngine;
 
-namespace KontrolSystem.KSP.Runtime.KSPControl {
-    public partial class KSPControlModule {
-        [KSClass("RCSTranslateManager")]
-        public class RCSTranslateManager : BaseAutopilot {
-            private Func<double, Vector3d> translateProvider;
+namespace KontrolSystem.KSP.Runtime.KSPControl;
 
-            public RCSTranslateManager(IKSPContext context, VesselComponent vessel, Func<double, Vector3d> translateProvider) : base(context, vessel) {
-                this.translateProvider = translateProvider;
-            }
+public partial class KSPControlModule {
+    [KSClass("RCSTranslateManager")]
+    public class RCSTranslateManager : BaseAutopilot {
+        private Func<double, Vector3d> translateProvider;
 
-            [KSField]
-            public Vector3d Translate {
-                get => translateProvider(0);
-                set => translateProvider = _ => value;
-            }
+        public RCSTranslateManager(IKSPContext context, VesselComponent vessel,
+            Func<double, Vector3d> translateProvider) : base(context, vessel) {
+            this.translateProvider = translateProvider;
+        }
 
-            [KSMethod]
-            public void SetTranslateProvider(Func<double, Vector3d> newTranslateProvider) =>
-                translateProvider = newTranslateProvider;
+        [KSField]
+        public Vector3d Translate {
+            get => translateProvider(0);
+            set => translateProvider = _ => value;
+        }
 
-            public override void UpdateAutopilot(ref FlightCtrlState c, float deltaT) {
-                Vector3d translate = suspended ? Vector3d.zero : translateProvider(deltaT);
-                c.X = (float)DirectBindingMath.Clamp(translate.x, -1, 1);
-                c.Y = (float)DirectBindingMath.Clamp(translate.y, -1, 1);
-                c.Z = (float)DirectBindingMath.Clamp(translate.z, -1, 1);
-            }
+        [KSMethod]
+        public void SetTranslateProvider(Func<double, Vector3d> newTranslateProvider) {
+            translateProvider = newTranslateProvider;
+        }
+
+        public override void UpdateAutopilot(ref FlightCtrlState c, float deltaT) {
+            var translate = suspended ? Vector3d.zero : translateProvider(deltaT);
+            c.X = (float)DirectBindingMath.Clamp(translate.x, -1, 1);
+            c.Y = (float)DirectBindingMath.Clamp(translate.y, -1, 1);
+            c.Z = (float)DirectBindingMath.Clamp(translate.z, -1, 1);
         }
     }
 }

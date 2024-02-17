@@ -1,143 +1,151 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using KontrolSystem.TO2.Generator;
 using KontrolSystem.TO2.Runtime;
 
-namespace KontrolSystem.TO2.AST {
-    public abstract class RecordType : RealizedType {
-        private readonly IOperatorCollection recordTypeOperators;
+namespace KontrolSystem.TO2.AST;
 
-        public abstract SortedDictionary<string, TO2Type> ItemTypes { get; }
+public abstract class RecordType : RealizedType {
+    private readonly IOperatorCollection recordTypeOperators;
 
-        protected RecordType(IOperatorCollection allowedSuffixOperators) =>
-            recordTypeOperators = new RecordTypeOperators(this, allowedSuffixOperators);
-
-        public override bool IsAssignableFrom(ModuleContext context, TO2Type otherType) {
-            RecordType recordType = otherType.UnderlyingType(context) as RecordType;
-            if (recordType == null) return false;
-            foreach (var kv in ItemTypes) {
-                TO2Type otherItem = recordType.ItemTypes.Get(kv.Key);
-
-                if (otherItem == null || !kv.Value.IsAssignableFrom(context, otherItem)) return false;
-            }
-
-            return true;
-        }
-
-        public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) => recordTypeOperators;
-
-        internal abstract IOperatorEmitter CombineFrom(RecordType otherType);
+    protected RecordType(IOperatorCollection allowedSuffixOperators) {
+        recordTypeOperators = new RecordTypeOperators(this, allowedSuffixOperators);
     }
 
-    internal class RecordTypeOperators : IOperatorCollection {
-        private readonly RecordType recordType;
-        private readonly IOperatorCollection allowedOperators;
+    public abstract SortedDictionary<string, TO2Type> ItemTypes { get; }
 
-        internal RecordTypeOperators(RecordType recordType, IOperatorCollection allowedOperators) {
-            this.recordType = recordType;
-            this.allowedOperators = allowedOperators;
+    public override bool IsAssignableFrom(ModuleContext context, TO2Type otherType) {
+        var recordType = otherType.UnderlyingType(context) as RecordType;
+        if (recordType == null) return false;
+        foreach (var kv in ItemTypes) {
+            var otherItem = recordType.ItemTypes.Get(kv.Key);
+
+            if (otherItem == null || !kv.Value.IsAssignableFrom(context, otherItem)) return false;
         }
 
-        public IOperatorEmitter GetMatching(ModuleContext context, Operator op, TO2Type otherType) {
-            IOperatorEmitter existing = allowedOperators.GetMatching(context, op, otherType);
-            if (existing != null) return existing;
-
-            if (op != Operator.BitAnd && op != Operator.BitAndAssign) return null;
-
-            RecordType otherRecordType = otherType.UnderlyingType(context) as RecordType;
-
-            if (otherRecordType == null) return null;
-
-            bool hasMatch = false;
-            foreach (var otherKV in otherRecordType.ItemTypes) {
-                TO2Type item = recordType.ItemTypes.Get(otherKV.Key);
-
-                if (item == null) continue;
-                if (!item.IsAssignableFrom(context, otherKV.Value)) return null;
-                hasMatch = true;
-            }
-
-            return hasMatch ? recordType.CombineFrom(otherRecordType) : null;
-        }
-
-        public IEnumerator<(Operator op, List<IOperatorEmitter> emitters)> GetEnumerator() => allowedOperators.GetEnumerator();
-
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        return true;
     }
 
-    internal abstract class RecordTypeAssignEmitter<T> : IAssignEmitter, IOperatorEmitter where T : RecordType {
-        protected readonly T targetType;
-        protected readonly RecordType sourceType;
-
-        protected RecordTypeAssignEmitter(T targetType, RecordType sourceType) {
-            this.targetType = targetType;
-            this.sourceType = sourceType;
-        }
-
-        public TO2Type ResultType => targetType;
-
-        public TO2Type OtherType => sourceType;
-
-        public bool Accepts(ModuleContext context, TO2Type otherType) =>
-            sourceType.IsAssignableFrom(context, otherType);
-
-        // ---------------- IOperatorEmitter ----------------
-        public void EmitCode(IBlockContext context, Node target) {
-            using ITempBlockVariable tempRight = context.MakeTempVariable(sourceType);
-            tempRight.EmitStore(context);
-
-            Type generatedType = targetType.GeneratedType(context.ModuleContext);
-            using ITempLocalRef someResult = context.IL.TempLocal(generatedType);
-            someResult.EmitStore(context);
-
-            someResult.EmitLoadPtr(context);
-            EmitAssignToPtr(context, tempRight);
-            someResult.EmitLoad(context);
-        }
-
-        public void EmitAssign(IBlockContext context, IBlockVariable variable, Node target) {
-            using ITempBlockVariable tempRight = context.MakeTempVariable(sourceType);
-            tempRight.EmitStore(context);
-            context.IL.Emit(OpCodes.Pop); // Left side is just the variable we are about to override
-
-            variable.EmitLoadPtr(context);
-            EmitAssignToPtr(context, tempRight);
-        }
-
-        public IOperatorEmitter FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) =>
-            this;
-
-        public IREPLValue Eval(Node node, IREPLValue left, IREPLValue right) {
-            throw new REPLException(node, "Not supported in REPL mode");
-        }
-
-        // ---------------- IAssignEmitter -----------------
-        public void EmitAssign(IBlockContext context, IBlockVariable variable, Expression expression, bool dropResult) {
-            using ITempBlockVariable valueTemp = context.MakeTempVariable(sourceType);
-            expression.EmitStore(context, valueTemp, true);
-
-            variable.EmitLoadPtr(context);
-            EmitAssignToPtr(context, valueTemp);
-            if (!dropResult) variable.EmitLoad(context);
-        }
-
-        public void EmitConvert(IBlockContext context) {
-            using ITempBlockVariable valueTemp = context.MakeTempVariable(sourceType);
-            valueTemp.EmitStore(context);
-
-            Type generatedType = targetType.GeneratedType(context.ModuleContext);
-            using ITempLocalRef someResult = context.IL.TempLocal(generatedType);
-            someResult.EmitLoadPtr(context);
-            EmitAssignToPtr(context, valueTemp);
-            someResult.EmitLoad(context);
-        }
-
-        public IREPLValue EvalConvert(Node node, IREPLValue value) {
-            throw new REPLException(node, "Not supported in REPL mode");
-        }
-
-        protected abstract void EmitAssignToPtr(IBlockContext context, IBlockVariable tempSource);
+    public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) {
+        return recordTypeOperators;
     }
+
+    internal abstract IOperatorEmitter CombineFrom(RecordType otherType);
+}
+
+internal class RecordTypeOperators : IOperatorCollection {
+    private readonly IOperatorCollection allowedOperators;
+    private readonly RecordType recordType;
+
+    internal RecordTypeOperators(RecordType recordType, IOperatorCollection allowedOperators) {
+        this.recordType = recordType;
+        this.allowedOperators = allowedOperators;
+    }
+
+    public IOperatorEmitter GetMatching(ModuleContext context, Operator op, TO2Type otherType) {
+        var existing = allowedOperators.GetMatching(context, op, otherType);
+        if (existing != null) return existing;
+
+        if (op != Operator.BitAnd && op != Operator.BitAndAssign) return null;
+
+        var otherRecordType = otherType.UnderlyingType(context) as RecordType;
+
+        if (otherRecordType == null) return null;
+
+        var hasMatch = false;
+        foreach (var otherKV in otherRecordType.ItemTypes) {
+            var item = recordType.ItemTypes.Get(otherKV.Key);
+
+            if (item == null) continue;
+            if (!item.IsAssignableFrom(context, otherKV.Value)) return null;
+            hasMatch = true;
+        }
+
+        return hasMatch ? recordType.CombineFrom(otherRecordType) : null;
+    }
+
+    public IEnumerator<(Operator op, List<IOperatorEmitter> emitters)> GetEnumerator() {
+        return allowedOperators.GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator() {
+        return GetEnumerator();
+    }
+}
+
+internal abstract class RecordTypeAssignEmitter<T> : IAssignEmitter, IOperatorEmitter where T : RecordType {
+    protected readonly RecordType sourceType;
+    protected readonly T targetType;
+
+    protected RecordTypeAssignEmitter(T targetType, RecordType sourceType) {
+        this.targetType = targetType;
+        this.sourceType = sourceType;
+    }
+
+    // ---------------- IAssignEmitter -----------------
+    public void EmitAssign(IBlockContext context, IBlockVariable variable, Expression expression, bool dropResult) {
+        using var valueTemp = context.MakeTempVariable(sourceType);
+        expression.EmitStore(context, valueTemp, true);
+
+        variable.EmitLoadPtr(context);
+        EmitAssignToPtr(context, valueTemp);
+        if (!dropResult) variable.EmitLoad(context);
+    }
+
+    public void EmitConvert(IBlockContext context) {
+        using var valueTemp = context.MakeTempVariable(sourceType);
+        valueTemp.EmitStore(context);
+
+        var generatedType = targetType.GeneratedType(context.ModuleContext);
+        using var someResult = context.IL.TempLocal(generatedType);
+        someResult.EmitLoadPtr(context);
+        EmitAssignToPtr(context, valueTemp);
+        someResult.EmitLoad(context);
+    }
+
+    public IREPLValue EvalConvert(Node node, IREPLValue value) {
+        throw new REPLException(node, "Not supported in REPL mode");
+    }
+
+    public TO2Type ResultType => targetType;
+
+    public TO2Type OtherType => sourceType;
+
+    public bool Accepts(ModuleContext context, TO2Type otherType) {
+        return sourceType.IsAssignableFrom(context, otherType);
+    }
+
+    // ---------------- IOperatorEmitter ----------------
+    public void EmitCode(IBlockContext context, Node target) {
+        using var tempRight = context.MakeTempVariable(sourceType);
+        tempRight.EmitStore(context);
+
+        var generatedType = targetType.GeneratedType(context.ModuleContext);
+        using var someResult = context.IL.TempLocal(generatedType);
+        someResult.EmitStore(context);
+
+        someResult.EmitLoadPtr(context);
+        EmitAssignToPtr(context, tempRight);
+        someResult.EmitLoad(context);
+    }
+
+    public void EmitAssign(IBlockContext context, IBlockVariable variable, Node target) {
+        using var tempRight = context.MakeTempVariable(sourceType);
+        tempRight.EmitStore(context);
+        context.IL.Emit(OpCodes.Pop); // Left side is just the variable we are about to override
+
+        variable.EmitLoadPtr(context);
+        EmitAssignToPtr(context, tempRight);
+    }
+
+    public IOperatorEmitter FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) {
+        return this;
+    }
+
+    public IREPLValue Eval(Node node, IREPLValue left, IREPLValue right) {
+        throw new REPLException(node, "Not supported in REPL mode");
+    }
+
+    protected abstract void EmitAssignToPtr(IBlockContext context, IBlockVariable tempSource);
 }

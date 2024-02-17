@@ -10,11 +10,11 @@
         <ProjectReference Include="..\Parsing\KontrolSystemParsing.csproj"/>
     </ItemGroup>
     <ItemGroup>
-        <Folder Include="AST\" />
-        <Folder Include="Parser\" />
-        <Folder Include="Generator\" />
+        <Folder Include="AST\"/>
+        <Folder Include="Parser\"/>
+        <Folder Include="Generator\"/>
     </ItemGroup>
     <Target Name="CopyFiles" AfterTargets="Build">
-        <Copy SourceFiles="../bin/$(Configuration)/KontrolSystemTO2.dll" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2" />
+        <Copy SourceFiles="../bin/$(Configuration)/KontrolSystemTO2.dll" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2"/>
     </Target>
 </Project>

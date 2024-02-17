@@ -5,228 +5,230 @@ using System.Reflection;
 using System.Reflection.Emit;
 using KontrolSystem.TO2.AST;
 
-namespace KontrolSystem.TO2.Generator {
-    public readonly struct AsyncResume {
-        internal readonly LabelRef resumeLabel;
-        internal readonly LabelRef pollLabel;
-        private readonly FieldInfo futureField;
-        private readonly ILocalRef futureResultVar;
+namespace KontrolSystem.TO2.Generator;
 
-        internal AsyncResume(LabelRef resumeLabel, LabelRef pollLabel, FieldInfo futureField,
-            ILocalRef futureResultVar) {
-            this.resumeLabel = resumeLabel;
-            this.pollLabel = pollLabel;
-            this.futureField = futureField;
-            this.futureResultVar = futureResultVar;
-        }
+public readonly struct AsyncResume {
+    internal readonly LabelRef resumeLabel;
+    internal readonly LabelRef pollLabel;
+    private readonly FieldInfo futureField;
+    private readonly ILocalRef futureResultVar;
 
-        internal void EmitPoll(AsyncBlockContext context) {
-            context.IL.MarkLabel(pollLabel);
-            context.IL.Emit(OpCodes.Ldarg_0);
-            context.IL.Emit(OpCodes.Ldfld, futureField);
-            context.IL.EmitCall(OpCodes.Callvirt, futureField.FieldType.GetMethod("PollValue"), 1);
-            futureResultVar.EmitStore(context);
-            futureResultVar.EmitLoad(context);
-            context.IL.Emit(OpCodes.Ldfld, futureResultVar.LocalType.GetField("ready"));
-            context.IL.Emit(OpCodes.Brfalse, context.notReady);
-            context.IL.Emit(OpCodes.Br, context.resume);
-        }
+    internal AsyncResume(LabelRef resumeLabel, LabelRef pollLabel, FieldInfo futureField,
+        ILocalRef futureResultVar) {
+        this.resumeLabel = resumeLabel;
+        this.pollLabel = pollLabel;
+        this.futureField = futureField;
+        this.futureResultVar = futureResultVar;
     }
 
-    public readonly struct StateRef {
-        private readonly ILocalRef localRef;
-        private readonly FieldInfo storageField;
+    internal void EmitPoll(AsyncBlockContext context) {
+        context.IL.MarkLabel(pollLabel);
+        context.IL.Emit(OpCodes.Ldarg_0);
+        context.IL.Emit(OpCodes.Ldfld, futureField);
+        context.IL.EmitCall(OpCodes.Callvirt, futureField.FieldType.GetMethod("PollValue"), 1);
+        futureResultVar.EmitStore(context);
+        futureResultVar.EmitLoad(context);
+        context.IL.Emit(OpCodes.Ldfld, futureResultVar.LocalType.GetField("ready"));
+        context.IL.Emit(OpCodes.Brfalse, context.notReady);
+        context.IL.Emit(OpCodes.Br, context.resume);
+    }
+}
 
-        internal StateRef(ILocalRef localRef, FieldInfo storageField) {
-            this.localRef = localRef;
-            this.storageField = storageField;
-        }
+public readonly struct StateRef {
+    private readonly ILocalRef localRef;
+    private readonly FieldInfo storageField;
 
-        internal void EmitStore(AsyncBlockContext context) {
-            context.IL.Emit(OpCodes.Ldarg_0);
-            localRef.EmitLoad(context);
-            context.IL.Emit(OpCodes.Stfld, storageField);
-        }
-
-        internal void EmitRestore(AsyncBlockContext context) {
-            context.IL.Emit(OpCodes.Ldarg_0);
-            context.IL.Emit(OpCodes.Ldfld, storageField);
-            localRef.EmitStore(context);
-        }
+    internal StateRef(ILocalRef localRef, FieldInfo storageField) {
+        this.localRef = localRef;
+        this.storageField = storageField;
     }
 
-    public class AsyncBlockContext : IBlockContext {
-        private readonly Context root;
-        private readonly ModuleContext moduleContext;
-        private readonly MethodBuilder methodBuilder;
-        private readonly TO2Type expectedReturn;
-        private readonly IILEmitter il;
-        private readonly List<StructuralError> errors;
-        private readonly (LabelRef start, LabelRef end)? innerLoop;
-        private readonly Dictionary<string, IBlockVariable> variables;
-        internal readonly FieldInfo stateField;
-        internal readonly LabelRef storeState;
-        internal readonly LabelRef notReady;
-        internal readonly LabelRef resume;
-        internal readonly List<AsyncResume> asyncResumes;
-        internal readonly List<StateRef> stateRefs;
-
-        private AsyncBlockContext(AsyncBlockContext parent, (LabelRef start, LabelRef end)? innerLoop) {
-            root = parent.root;
-            moduleContext = parent.ModuleContext;
-            methodBuilder = parent.methodBuilder;
-            expectedReturn = parent.expectedReturn;
-            il = parent.il;
-            variables = parent.variables.ToDictionary(entry => entry.Key, entry => entry.Value);
-            errors = parent.errors;
-            this.innerLoop = innerLoop;
-            asyncResumes = parent.asyncResumes;
-            stateRefs = parent.stateRefs;
-            stateField = parent.stateField;
-            storeState = parent.storeState;
-            notReady = parent.notReady;
-            resume = parent.resume;
-            InferredGenerics = new Dictionary<string, RealizedType>();
-        }
-
-        private AsyncBlockContext(AsyncBlockContext parent, IILEmitter il, (LabelRef start, LabelRef end)? innerLoop) {
-            root = parent.root;
-            moduleContext = parent.ModuleContext;
-            methodBuilder = parent.methodBuilder;
-            expectedReturn = parent.expectedReturn;
-            this.il = il;
-            variables = parent.variables.ToDictionary(entry => entry.Key, entry => entry.Value);
-            errors = parent.errors;
-            this.innerLoop = innerLoop;
-            stateField = parent.stateField;
-            asyncResumes = null;
-            stateRefs = null;
-            storeState = parent.storeState;
-            notReady = parent.notReady;
-            resume = parent.resume;
-            InferredGenerics = new Dictionary<string, RealizedType>();
-        }
-
-        public AsyncBlockContext(ModuleContext moduleContext, FunctionModifier modifier, string methodName,
-            TO2Type expectedReturn, Type generatedReturn, IEnumerable<IBlockVariable> parameters) {
-            this.moduleContext = moduleContext;
-            root = this.moduleContext.root;
-            methodBuilder = this.moduleContext.typeBuilder.DefineMethod(methodName,
-                modifier == FunctionModifier.Private
-                    ? MethodAttributes.Private | MethodAttributes.HideBySig | MethodAttributes.Virtual
-                    : MethodAttributes.Public | MethodAttributes.HideBySig | MethodAttributes.Virtual,
-                generatedReturn,
-                new Type[0]);
-            this.expectedReturn = expectedReturn;
-            il = new GeneratorILEmitter(methodBuilder.GetILGenerator());
-            variables = parameters.ToDictionary(p => p.Name);
-            errors = new List<StructuralError>();
-            innerLoop = null;
-            stateField =
-                this.moduleContext.typeBuilder.DefineField("<async>_state", typeof(int), FieldAttributes.Private);
-            asyncResumes = new List<AsyncResume>();
-            stateRefs = new List<StateRef>();
-            storeState = il.DefineLabel(false);
-            notReady = il.DefineLabel(false);
-            resume = il.DefineLabel(false);
-            InferredGenerics = new Dictionary<string, RealizedType>();
-        }
-
-        public ModuleContext ModuleContext => moduleContext;
-
-        public MethodBuilder MethodBuilder => methodBuilder;
-
-        public IILEmitter IL => il;
-
-        public TO2Type ExpectedReturn => expectedReturn;
-
-        public bool IsAsync => true;
-
-        public void AddError(StructuralError error) => errors.Add(error);
-
-        public bool HasErrors => errors.Count > 0;
-
-        public List<StructuralError> AllErrors => errors;
-
-        public (LabelRef start, LabelRef end)? InnerLoop => innerLoop;
-
-        public IBlockContext CreateChildContext() => new AsyncBlockContext(this, innerLoop);
-
-        public IBlockContext CreateLoopContext(LabelRef start, LabelRef end) =>
-            new AsyncBlockContext(this, (start, end));
-
-        public IBlockContext CloneCountingContext() =>
-            new AsyncBlockContext(this, new CountingILEmitter(IL.LastLocalIndex), innerLoop);
-
-        public ITempBlockVariable MakeTempVariable(RealizedType to2Type) {
-            Type type = to2Type.GeneratedType(moduleContext);
-            using ITempLocalRef localRef = il.TempLocal(type);
-            TempVariable variable = new TempVariable(to2Type, localRef);
-
-            to2Type.EmitInitialize(this, variable);
-            return variable;
-        }
-
-        public IBlockVariable FindVariable(string name) => variables.Get(name);
-
-        public ILocalRef DeclareHiddenLocal(Type rawType) {
-            ILocalRef localRef = il.DeclareLocal(rawType);
-
-            if (stateRefs != null) {
-                FieldBuilder storeField = moduleContext.typeBuilder.DefineField($"<async>_store_{stateRefs.Count}",
-                    rawType, FieldAttributes.Private);
-                stateRefs.Add(new StateRef(localRef, storeField));
-            }
-
-            return localRef;
-        }
-
-        public IBlockVariable DeclaredVariable(string name, bool isConst, RealizedType to2Type) {
-            Type type = to2Type.GeneratedType(moduleContext);
-            ILocalRef localRef = il.DeclareLocal(type);
-            DeclaredVariable variable = new DeclaredVariable(name, isConst, to2Type, localRef);
-
-            variables.Add(name, variable);
-            to2Type.EmitInitialize(this, variable);
-
-            if (stateRefs != null) {
-                FieldBuilder storeField = moduleContext.typeBuilder.DefineField($"<async>_store_{stateRefs.Count}",
-                    type, FieldAttributes.Private);
-                stateRefs.Add(new StateRef(localRef, storeField));
-            }
-
-            return variable;
-        }
-
-        public void RegisterAsyncResume(TO2Type returnType) {
-            int state = (asyncResumes?.Count ?? 0) + 1;
-
-            (Type futureType, Type futureResultType) = moduleContext.FutureTypeOf(returnType);
-            FieldInfo futureField = asyncResumes != null
-                ? moduleContext.typeBuilder.DefineField($"<async>_future_{state}", futureType, FieldAttributes.Private)
-                : null;
-            ILocalRef futureResultVar = IL.DeclareLocal(futureResultType);
-            using (ITempLocalRef futureTemp = IL.TempLocal(futureType)) {
-                futureTemp.EmitStore(this);
-                il.Emit(OpCodes.Ldarg_0);
-                futureTemp.EmitLoad(this);
-            }
-
-            il.Emit(OpCodes.Stfld, futureField);
-
-            il.Emit(OpCodes.Ldarg_0);
-            il.Emit(OpCodes.Ldc_I4, state);
-            il.Emit(OpCodes.Stfld, stateField);
-            il.Emit(OpCodes.Br, storeState);
-
-            LabelRef resumeLabel = il.DefineLabel(false);
-            il.MarkLabel(resumeLabel);
-            futureResultVar.EmitLoad(this);
-            il.Emit(OpCodes.Ldfld, futureResultVar.LocalType.GetField("value"));
-
-            asyncResumes?.Add(new AsyncResume(resumeLabel, il.DefineLabel(false), futureField, futureResultVar));
-        }
-
-        public Dictionary<string, RealizedType> InferredGenerics { get; }
+    internal void EmitStore(AsyncBlockContext context) {
+        context.IL.Emit(OpCodes.Ldarg_0);
+        localRef.EmitLoad(context);
+        context.IL.Emit(OpCodes.Stfld, storageField);
     }
+
+    internal void EmitRestore(AsyncBlockContext context) {
+        context.IL.Emit(OpCodes.Ldarg_0);
+        context.IL.Emit(OpCodes.Ldfld, storageField);
+        localRef.EmitStore(context);
+    }
+}
+
+public class AsyncBlockContext : IBlockContext {
+    internal readonly List<AsyncResume> asyncResumes;
+    internal readonly LabelRef notReady;
+    internal readonly LabelRef resume;
+    private readonly Context root;
+    internal readonly FieldInfo stateField;
+    internal readonly List<StateRef> stateRefs;
+    internal readonly LabelRef storeState;
+    private readonly Dictionary<string, IBlockVariable> variables;
+
+    private AsyncBlockContext(AsyncBlockContext parent, (LabelRef start, LabelRef end)? innerLoop) {
+        root = parent.root;
+        ModuleContext = parent.ModuleContext;
+        MethodBuilder = parent.MethodBuilder;
+        ExpectedReturn = parent.ExpectedReturn;
+        IL = parent.IL;
+        variables = parent.variables.ToDictionary(entry => entry.Key, entry => entry.Value);
+        AllErrors = parent.AllErrors;
+        InnerLoop = innerLoop;
+        asyncResumes = parent.asyncResumes;
+        stateRefs = parent.stateRefs;
+        stateField = parent.stateField;
+        storeState = parent.storeState;
+        notReady = parent.notReady;
+        resume = parent.resume;
+        InferredGenerics = new Dictionary<string, RealizedType>();
+    }
+
+    private AsyncBlockContext(AsyncBlockContext parent, IILEmitter il, (LabelRef start, LabelRef end)? innerLoop) {
+        root = parent.root;
+        ModuleContext = parent.ModuleContext;
+        MethodBuilder = parent.MethodBuilder;
+        ExpectedReturn = parent.ExpectedReturn;
+        IL = il;
+        variables = parent.variables.ToDictionary(entry => entry.Key, entry => entry.Value);
+        AllErrors = parent.AllErrors;
+        InnerLoop = innerLoop;
+        stateField = parent.stateField;
+        asyncResumes = null;
+        stateRefs = null;
+        storeState = parent.storeState;
+        notReady = parent.notReady;
+        resume = parent.resume;
+        InferredGenerics = new Dictionary<string, RealizedType>();
+    }
+
+    public AsyncBlockContext(ModuleContext moduleContext, FunctionModifier modifier, string methodName,
+        TO2Type expectedReturn, Type generatedReturn, IEnumerable<IBlockVariable> parameters) {
+        ModuleContext = moduleContext;
+        root = ModuleContext.root;
+        MethodBuilder = ModuleContext.typeBuilder.DefineMethod(methodName,
+            modifier == FunctionModifier.Private
+                ? MethodAttributes.Private | MethodAttributes.HideBySig | MethodAttributes.Virtual
+                : MethodAttributes.Public | MethodAttributes.HideBySig | MethodAttributes.Virtual,
+            generatedReturn,
+            new Type[0]);
+        ExpectedReturn = expectedReturn;
+        IL = new GeneratorILEmitter(MethodBuilder.GetILGenerator());
+        variables = parameters.ToDictionary(p => p.Name);
+        AllErrors = new List<StructuralError>();
+        InnerLoop = null;
+        stateField =
+            ModuleContext.typeBuilder.DefineField("<async>_state", typeof(int), FieldAttributes.Private);
+        asyncResumes = new List<AsyncResume>();
+        stateRefs = new List<StateRef>();
+        storeState = IL.DefineLabel(false);
+        notReady = IL.DefineLabel(false);
+        resume = IL.DefineLabel(false);
+        InferredGenerics = new Dictionary<string, RealizedType>();
+    }
+
+    public ModuleContext ModuleContext { get; }
+
+    public MethodBuilder MethodBuilder { get; }
+
+    public IILEmitter IL { get; }
+
+    public TO2Type ExpectedReturn { get; }
+
+    public bool IsAsync => true;
+
+    public void AddError(StructuralError error) {
+        AllErrors.Add(error);
+    }
+
+    public bool HasErrors => AllErrors.Count > 0;
+
+    public List<StructuralError> AllErrors { get; }
+
+    public (LabelRef start, LabelRef end)? InnerLoop { get; }
+
+    public IBlockContext CreateChildContext() {
+        return new AsyncBlockContext(this, InnerLoop);
+    }
+
+    public IBlockContext CreateLoopContext(LabelRef start, LabelRef end) {
+        return new AsyncBlockContext(this, (start, end));
+    }
+
+    public IBlockContext CloneCountingContext() {
+        return new AsyncBlockContext(this, new CountingILEmitter(IL.LastLocalIndex), InnerLoop);
+    }
+
+    public ITempBlockVariable MakeTempVariable(RealizedType to2Type) {
+        var type = to2Type.GeneratedType(ModuleContext);
+        using var localRef = IL.TempLocal(type);
+        var variable = new TempVariable(to2Type, localRef);
+
+        to2Type.EmitInitialize(this, variable);
+        return variable;
+    }
+
+    public IBlockVariable FindVariable(string name) {
+        return variables.Get(name);
+    }
+
+    public ILocalRef DeclareHiddenLocal(Type rawType) {
+        var localRef = IL.DeclareLocal(rawType);
+
+        if (stateRefs != null) {
+            var storeField = ModuleContext.typeBuilder.DefineField($"<async>_store_{stateRefs.Count}",
+                rawType, FieldAttributes.Private);
+            stateRefs.Add(new StateRef(localRef, storeField));
+        }
+
+        return localRef;
+    }
+
+    public IBlockVariable DeclaredVariable(string name, bool isConst, RealizedType to2Type) {
+        var type = to2Type.GeneratedType(ModuleContext);
+        var localRef = IL.DeclareLocal(type);
+        var variable = new DeclaredVariable(name, isConst, to2Type, localRef);
+
+        variables.Add(name, variable);
+        to2Type.EmitInitialize(this, variable);
+
+        if (stateRefs != null) {
+            var storeField = ModuleContext.typeBuilder.DefineField($"<async>_store_{stateRefs.Count}",
+                type, FieldAttributes.Private);
+            stateRefs.Add(new StateRef(localRef, storeField));
+        }
+
+        return variable;
+    }
+
+    public void RegisterAsyncResume(TO2Type returnType) {
+        var state = (asyncResumes?.Count ?? 0) + 1;
+
+        (var futureType, var futureResultType) = ModuleContext.FutureTypeOf(returnType);
+        FieldInfo futureField = asyncResumes != null
+            ? ModuleContext.typeBuilder.DefineField($"<async>_future_{state}", futureType, FieldAttributes.Private)
+            : null;
+        var futureResultVar = IL.DeclareLocal(futureResultType);
+        using (var futureTemp = IL.TempLocal(futureType)) {
+            futureTemp.EmitStore(this);
+            IL.Emit(OpCodes.Ldarg_0);
+            futureTemp.EmitLoad(this);
+        }
+
+        IL.Emit(OpCodes.Stfld, futureField);
+
+        IL.Emit(OpCodes.Ldarg_0);
+        IL.Emit(OpCodes.Ldc_I4, state);
+        IL.Emit(OpCodes.Stfld, stateField);
+        IL.Emit(OpCodes.Br, storeState);
+
+        var resumeLabel = IL.DefineLabel(false);
+        IL.MarkLabel(resumeLabel);
+        futureResultVar.EmitLoad(this);
+        IL.Emit(OpCodes.Ldfld, futureResultVar.LocalType.GetField("value"));
+
+        asyncResumes?.Add(new AsyncResume(resumeLabel, IL.DefineLabel(false), futureField, futureResultVar));
+    }
+
+    public Dictionary<string, RealizedType> InferredGenerics { get; }
 }

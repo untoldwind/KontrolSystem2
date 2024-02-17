@@ -1,173 +1,187 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace KontrolSystem.Parsing {
-    public static partial class Parsers {
-        /// <summary>
-        /// Parse n to m items.
-        /// </summary>
-        public static Parser<List<T>> ManyN_M<T>(int? minCount, int? maxCount, Parser<T> itemParser,
-            string description = "items") => input => {
-                IInput remaining = input;
-                List<T> result = new List<T>();
-                IResult<T> itemResult = itemParser(input);
+namespace KontrolSystem.Parsing;
 
-                while (itemResult.WasSuccessful) {
-                    if (remaining.Position == itemResult.Remaining.Position) break;
+public static partial class Parsers {
+    /// <summary>
+    ///     Parse n to m items.
+    /// </summary>
+    public static Parser<List<T>> ManyN_M<T>(int? minCount, int? maxCount, Parser<T> itemParser,
+        string description = "items") {
+        return input => {
+            var remaining = input;
+            var result = new List<T>();
+            var itemResult = itemParser(input);
 
-                    result.Add(itemResult.Value);
-                    remaining = itemResult.Remaining;
+            while (itemResult.WasSuccessful) {
+                if (remaining.Position == itemResult.Remaining.Position) break;
 
-                    itemResult = itemParser(remaining);
-                }
+                result.Add(itemResult.Value);
+                remaining = itemResult.Remaining;
 
-                if (minCount.HasValue && result.Count < minCount)
-                    return Result.Failure<List<T>>(input, $"Expected at least {minCount} {description}");
-                if (maxCount.HasValue && result.Count > maxCount)
-                    return Result.Failure<List<T>>(input, $"Expected at most {minCount} {description}");
+                itemResult = itemParser(remaining);
+            }
 
-                return Result.Success(remaining, result);
-            };
+            if (minCount.HasValue && result.Count < minCount)
+                return Result.Failure<List<T>>(input, $"Expected at least {minCount} {description}");
+            if (maxCount.HasValue && result.Count > maxCount)
+                return Result.Failure<List<T>>(input, $"Expected at most {minCount} {description}");
 
-        /// <summary>
-        /// Parser zero or more items.
-        /// </summary>
-        public static Parser<List<T>> Many0<T>(Parser<T> itemParser, string description = "items") =>
-            ManyN_M(null, null, itemParser, description);
+            return Result.Success(remaining, result);
+        };
+    }
 
-        /// <summary>
-        /// Parser one or more items.
-        /// </summary>
-        public static Parser<List<T>> Many1<T>(Parser<T> itemParser, string description = "items") =>
-            ManyN_M(1, null, itemParser, description);
+    /// <summary>
+    ///     Parser zero or more items.
+    /// </summary>
+    public static Parser<List<T>> Many0<T>(Parser<T> itemParser, string description = "items") {
+        return ManyN_M(null, null, itemParser, description);
+    }
 
-        /// <summary>
-        /// Parser n to m items separated by a delimiter.
-        /// </summary>
-        public static Parser<List<T>> DelimitedN_M<T, D>(int? minCount, int? maxCount, Parser<T> itemParser,
-            Parser<D> delimiter, string description = "items") => input => {
-                IInput remaining = input;
-                List<T> result = new List<T>();
-                IResult<T> itemResult = itemParser(input);
+    /// <summary>
+    ///     Parser one or more items.
+    /// </summary>
+    public static Parser<List<T>> Many1<T>(Parser<T> itemParser, string description = "items") {
+        return ManyN_M(1, null, itemParser, description);
+    }
 
-                while (itemResult.WasSuccessful) {
-                    if (remaining.Position == itemResult.Remaining.Position) break;
+    /// <summary>
+    ///     Parser n to m items separated by a delimiter.
+    /// </summary>
+    public static Parser<List<T>> DelimitedN_M<T, D>(int? minCount, int? maxCount, Parser<T> itemParser,
+        Parser<D> delimiter, string description = "items") {
+        return input => {
+            var remaining = input;
+            var result = new List<T>();
+            var itemResult = itemParser(input);
 
-                    result.Add(itemResult.Value);
-                    remaining = itemResult.Remaining;
+            while (itemResult.WasSuccessful) {
+                if (remaining.Position == itemResult.Remaining.Position) break;
 
-                    IResult<D> delimiterResult = delimiter(remaining);
-                    if (!delimiterResult.WasSuccessful) break;
+                result.Add(itemResult.Value);
+                remaining = itemResult.Remaining;
 
-                    itemResult = itemParser(delimiterResult.Remaining);
-                }
+                var delimiterResult = delimiter(remaining);
+                if (!delimiterResult.WasSuccessful) break;
 
-                if (minCount.HasValue && result.Count < minCount)
-                    return Result.Failure<List<T>>(input, $"Expected at least {minCount} {description}");
-                if (maxCount.HasValue && result.Count > maxCount)
-                    return Result.Failure<List<T>>(input, $"Expected at most {minCount} {description}");
+                itemResult = itemParser(delimiterResult.Remaining);
+            }
 
-                return Result.Success(remaining, result);
-            };
+            if (minCount.HasValue && result.Count < minCount)
+                return Result.Failure<List<T>>(input, $"Expected at least {minCount} {description}");
+            if (maxCount.HasValue && result.Count > maxCount)
+                return Result.Failure<List<T>>(input, $"Expected at most {minCount} {description}");
 
-        /// <summary>
-        /// Parser zero or more items separated by a delimiter.
-        /// </summary>
-        public static Parser<List<T>> Delimited0<T, D>(Parser<T> itemParser, Parser<D> delimiter,
-            string description = "items") => DelimitedN_M(null, null, itemParser, delimiter, description);
+            return Result.Success(remaining, result);
+        };
+    }
 
-        /// <summary>
-        /// Parser one or more items separated by a delimiter.
-        /// </summary>
-        public static Parser<List<T>> Delimited1<T, D>(Parser<T> itemParser, Parser<D> delimiter,
-            string description = "items") => DelimitedN_M(1, null, itemParser, delimiter, description);
+    /// <summary>
+    ///     Parser zero or more items separated by a delimiter.
+    /// </summary>
+    public static Parser<List<T>> Delimited0<T, D>(Parser<T> itemParser, Parser<D> delimiter,
+        string description = "items") {
+        return DelimitedN_M(null, null, itemParser, delimiter, description);
+    }
 
-        /// <summary>
-        /// Parse any number of items until an end condition is met.
-        /// </summary>
-        public static Parser<List<T>> DelimitedUntil<T, D, E>(Parser<T> itemParser, Parser<D> delimiter, Parser<E> end,
-            string description = "item") => input => {
-                IInput remaining = input;
-                List<T> result = new List<T>();
-                IResult<E> endResult = end(remaining);
+    /// <summary>
+    ///     Parser one or more items separated by a delimiter.
+    /// </summary>
+    public static Parser<List<T>> Delimited1<T, D>(Parser<T> itemParser, Parser<D> delimiter,
+        string description = "items") {
+        return DelimitedN_M(1, null, itemParser, delimiter, description);
+    }
 
+    /// <summary>
+    ///     Parse any number of items until an end condition is met.
+    /// </summary>
+    public static Parser<List<T>> DelimitedUntil<T, D, E>(Parser<T> itemParser, Parser<D> delimiter, Parser<E> end,
+        string description = "item") {
+        return input => {
+            var remaining = input;
+            var result = new List<T>();
+            var endResult = end(remaining);
+
+            if (endResult.WasSuccessful) return Result.Success(endResult.Remaining, result);
+
+            while (remaining.Available > 0) {
+                var itemResult = itemParser(remaining);
+                if (!itemResult.WasSuccessful)
+                    return Result.Failure<List<T>>(itemResult.Remaining, itemResult.Expected);
+                if (remaining.Position == itemResult.Remaining.Position)
+                    return Result.Failure<List<T>>(remaining, description);
+
+                result.Add(itemResult.Value);
+                remaining = itemResult.Remaining;
+
+                endResult = end(remaining);
                 if (endResult.WasSuccessful) return Result.Success(endResult.Remaining, result);
 
-                while (remaining.Available > 0) {
-                    IResult<T> itemResult = itemParser(remaining);
-                    if (!itemResult.WasSuccessful)
-                        return Result.Failure<List<T>>(itemResult.Remaining, itemResult.Expected);
-                    if (remaining.Position == itemResult.Remaining.Position)
-                        return Result.Failure<List<T>>(remaining, description);
+                var delimiterResult = delimiter(remaining);
+                if (!delimiterResult.WasSuccessful) return Result.Failure<List<T>>(remaining, delimiterResult.Expected);
 
-                    result.Add(itemResult.Value);
-                    remaining = itemResult.Remaining;
+                remaining = delimiterResult.Remaining;
 
-                    endResult = end(remaining);
-                    if (endResult.WasSuccessful) return Result.Success(endResult.Remaining, result);
+                endResult = end(remaining);
+                if (endResult.WasSuccessful) return Result.Success(endResult.Remaining, result);
+            }
 
-                    IResult<D> delimiterResult = delimiter(remaining);
-                    if (!delimiterResult.WasSuccessful) return Result.Failure<List<T>>(remaining, delimiterResult.Expected);
+            return Result.Failure<List<T>>(remaining, endResult.Expected);
+        };
+    }
 
-                    remaining = delimiterResult.Remaining;
+    /// <summary>
+    ///     Chain a left-associative operator.
+    /// </summary>
+    public static Parser<T> Chain<T, OP>(Parser<T> operantParser, Parser<OP> opParser,
+        Func<T, OP, T, Position, Position, T> apply) {
+        var restParser = Seq(opParser, operantParser);
 
-                    endResult = end(remaining);
-                    if (endResult.WasSuccessful) return Result.Success(endResult.Remaining, result);
-                }
+        return input => {
+            var firstResult = operantParser(input);
 
-                return Result.Failure<List<T>>(remaining, endResult.Expected);
-            };
+            if (!firstResult.WasSuccessful) return firstResult;
 
-        /// <summary>
-        /// Chain a left-associative operator.
-        /// </summary>
-        public static Parser<T> Chain<T, OP>(Parser<T> operantParser, Parser<OP> opParser,
-            Func<T, OP, T, Position, Position, T> apply) {
-            Parser<(OP, T)> restParser = Seq(opParser, operantParser);
+            var remaining = firstResult.Remaining;
+            var result = firstResult.Value;
 
-            return input => {
-                IResult<T> firstResult = operantParser(input);
+            var restResult = restParser(remaining);
 
-                if (!firstResult.WasSuccessful) return firstResult;
+            while (restResult.WasSuccessful) {
+                if (remaining.Position == restResult.Remaining.Position)
+                    break;
 
-                IInput remaining = firstResult.Remaining;
-                T result = firstResult.Value;
+                var (op, operant) = restResult.Value;
+                result = apply(result, op, operant, remaining.Position, restResult.Position);
+                remaining = restResult.Remaining;
 
-                IResult<(OP, T)> restResult = restParser(remaining);
+                restResult = restParser(remaining);
+            }
 
-                while (restResult.WasSuccessful) {
-                    if (remaining.Position == restResult.Remaining.Position)
-                        break;
+            return Result.Success(remaining, result);
+        };
+    }
 
-                    var (op, operant) = restResult.Value;
-                    result = apply(result, op, operant, remaining.Position, restResult.Position);
-                    remaining = restResult.Remaining;
+    /// <summary>
+    ///     Fold an initial parser with zero or more successors.
+    /// </summary>
+    public static Parser<T> Fold0<T, S>(this Parser<T> initial, Parser<S> suffix,
+        Func<T, S, Position, Position, T> combine) {
+        return input => {
+            var result = initial(input);
+            if (!result.WasSuccessful) return result;
 
-                    restResult = restParser(remaining);
-                }
+            var suffixResult = suffix(result.Remaining);
+            while (suffixResult.WasSuccessful) {
+                if (suffixResult.Position == result.Position) break;
 
-                return Result.Success(remaining, result);
-            };
-        }
+                result = Result.Success(suffixResult.Remaining,
+                    combine(result.Value, suffixResult.Value, result.Position, suffixResult.Position));
+                suffixResult = suffix(result.Remaining);
+            }
 
-        /// <summary>
-        /// Fold an initial parser with zero or more successors.
-        /// </summary>
-        public static Parser<T> Fold0<T, S>(this Parser<T> initial, Parser<S> suffix,
-            Func<T, S, Position, Position, T> combine) => input => {
-                IResult<T> result = initial(input);
-                if (!result.WasSuccessful) return result;
-
-                IResult<S> suffixResult = suffix(result.Remaining);
-                while (suffixResult.WasSuccessful) {
-                    if (suffixResult.Position == result.Position) break;
-
-                    result = Result.Success(suffixResult.Remaining,
-                        combine(result.Value, suffixResult.Value, result.Position, suffixResult.Position));
-                    suffixResult = suffix(result.Remaining);
-                }
-
-                return result;
-            };
+            return result;
+        };
     }
 }

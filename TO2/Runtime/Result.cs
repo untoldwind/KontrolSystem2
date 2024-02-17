@@ -1,37 +1,41 @@
-﻿namespace KontrolSystem.TO2.Runtime {
-    public interface IAnyResult {
-        bool Success { get; }
+﻿namespace KontrolSystem.TO2.Runtime;
 
-        object ValueObject { get; }
+public interface IAnyResult {
+    bool Success { get; }
 
-        string ErrorString { get; }
+    object ValueObject { get; }
 
-        object ErrorObject { get; }
+    string ErrorString { get; }
+
+    object ErrorObject { get; }
+}
+
+public struct Result<T, E> : IAnyResult {
+    public readonly bool success;
+    public readonly T value;
+    public readonly E error;
+
+    public Result(bool success, T value, E error) {
+        this.success = success;
+        this.value = value;
+        this.error = error;
     }
 
-    public struct Result<T, E> : IAnyResult {
-        public readonly bool success;
-        public readonly T value;
-        public readonly E error;
+    public bool Success => success;
 
-        public Result(bool success, T value, E error) {
-            this.success = success;
-            this.value = value;
-            this.error = error;
-        }
+    public object ValueObject => value;
 
-        public bool Success => success;
+    public string ErrorString => error?.ToString();
 
-        public object ValueObject => value;
+    public object ErrorObject => error;
+}
 
-        public string ErrorString => error?.ToString();
-
-        public object ErrorObject => error;
+public static class Result {
+    public static Result<T, E> Ok<T, E>(T value) {
+        return new Result<T, E>(true, value, default);
     }
 
-    public static class Result {
-        public static Result<T, E> Ok<T, E>(T value) => new Result<T, E>(true, value, default);
-
-        public static Result<T, E> Err<T, E>(E error) => new Result<T, E>(false, default, error);
+    public static Result<T, E> Err<T, E>(E error) {
+        return new Result<T, E>(false, default, error);
     }
 }

@@ -2,28 +2,29 @@
 using KSP.Sim.impl;
 using UniLinq;
 
-namespace KontrolSystem.KSP.Runtime.KSPScience {
-    public partial class KSPScienceModule {
-        [KSClass("ScienceStorage",
-            Description = "Represents the science storage / research inventory of a vessel.")]
-        public class ScienceStorageAdapter {
-            private readonly ScienceStorageComponent scienceStorageComponent;
-            
-            public ScienceStorageAdapter(ScienceStorageComponent scienceStorageComponent) {
-                this.scienceStorageComponent = scienceStorageComponent;
-            }
+namespace KontrolSystem.KSP.Runtime.KSPScience;
 
-            [KSField]
-            public bool IsActive => scienceStorageComponent.IsActive;
+public partial class KSPScienceModule {
+    [KSClass("ScienceStorage",
+        Description = "Represents the science storage / research inventory of a vessel.")]
+    public class ScienceStorageAdapter {
+        private readonly ScienceStorageComponent scienceStorageComponent;
 
-            [KSField]
-            public ResearchReportAdapter[] ResearchReports =>
-                scienceStorageComponent.GetStoredResearchReports()
-                    .Select(report => new ResearchReportAdapter(scienceStorageComponent, report))
-                    .ToArray();
+        public ScienceStorageAdapter(ScienceStorageComponent scienceStorageComponent) {
+            this.scienceStorageComponent = scienceStorageComponent;
+        }
 
-            [KSMethod]
-            public bool StartTransmitAll() => scienceStorageComponent.StartReportTransmissionAll();
+        [KSField] public bool IsActive => scienceStorageComponent.IsActive;
+
+        [KSField]
+        public ResearchReportAdapter[] ResearchReports =>
+            scienceStorageComponent.GetStoredResearchReports()
+                .Select(report => new ResearchReportAdapter(scienceStorageComponent, report))
+                .ToArray();
+
+        [KSMethod]
+        public bool StartTransmitAll() {
+            return scienceStorageComponent.StartReportTransmissionAll();
         }
     }
 }

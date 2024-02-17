@@ -1,45 +1,39 @@
 ﻿using KontrolSystem.TO2.Binding;
-using KSP.Game;
 using KSP.Modules;
 using KSP.Sim.impl;
 
-namespace KontrolSystem.KSP.Runtime.KSPVessel {
-    public partial class KSPVesselModule {
-        [KSClass("ModuleFairing")]
-        public class ModuleFairingAdapter {
-            private readonly PartComponent part;
-            private readonly Data_Fairing dataFairing;
+namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
-            public ModuleFairingAdapter(PartComponent part, Data_Fairing dataFairing) {
-                this.part = part;
-                this.dataFairing = dataFairing;
-            }
+public partial class KSPVesselModule {
+    [KSClass("ModuleFairing")]
+    public class ModuleFairingAdapter {
+        private readonly Data_Fairing dataFairing;
+        private readonly PartComponent part;
 
-            [KSField] public string PartName => part?.PartName ?? "Unknown";
+        public ModuleFairingAdapter(PartComponent part, Data_Fairing dataFairing) {
+            this.part = part;
+            this.dataFairing = dataFairing;
+        }
 
-            [KSField]
-            public double EjectionForce {
-                get {
-                    return dataFairing.EjectionForce.GetValue();
-                }
-                set {
-                    dataFairing.EjectionForce.SetValue((float)value);
-                }
-            }
+        [KSField] public string PartName => part?.PartName ?? "Unknown";
 
-            [KSField] public bool IsJettisoned => dataFairing.IsDeployed.GetValue();
+        [KSField]
+        public double EjectionForce {
+            get => dataFairing.EjectionForce.GetValue();
+            set => dataFairing.EjectionForce.SetValue((float)value);
+        }
 
-            [KSMethod]
-            public bool Jettison() {
+        [KSField] public bool IsJettisoned => dataFairing.IsDeployed.GetValue();
 
-                if (!KSPContext.CurrentContext.Game.SpaceSimulation.TryGetViewObject(part.SimulationObject,
-                        out var viewObject)) return false;
+        [KSMethod]
+        public bool Jettison() {
+            if (!KSPContext.CurrentContext.Game.SpaceSimulation.TryGetViewObject(part.SimulationObject,
+                    out var viewObject)) return false;
 
-                if (!viewObject.TryGetComponent<Module_Fairing>(out var moduleFairing)) return false;
+            if (!viewObject.TryGetComponent<Module_Fairing>(out var moduleFairing)) return false;
 
-                moduleFairing.PerformJettison();
-                return dataFairing.IsDeployed.GetValue();
-            }
+            moduleFairing.PerformJettison();
+            return dataFairing.IsDeployed.GetValue();
         }
     }
 }

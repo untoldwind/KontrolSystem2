@@ -13,75 +13,76 @@ using KSP.Game;
 using KSP.Sim.impl;
 using UnityEngine;
 
-namespace KontrolSystem.KSP.Runtime.Testing {
-    public class KSPTestRunnerContext : TestRunnerContext, IKSPContext {
-        private Dictionary<string, KSPOrbitModule.IBody> Bodies => new KSPOrbitModule.IBody[] {
-            MockBody.Kerbol,
-            MockBody.Eve,
-            MockBody.Gilly,
-            MockBody.Kerbin,
-            MockBody.Mun,
-            MockBody.Minmus,
-            MockBody.Duna,
-            MockBody.Ike,
-            MockBody.Jool,
-            MockBody.Tylo,
-            MockBody.Vall,
-            MockBody.Pol
-        }.ToDictionary(body => body.Name);
+namespace KontrolSystem.KSP.Runtime.Testing;
 
-        private KSPConsoleBuffer consoleBuffer = new KSPConsoleBuffer(50, 80);
-        private TimeSeriesCollection timeSeriesCollection = new TimeSeriesCollection();
+public class KSPTestRunnerContext : TestRunnerContext, IKSPContext {
+    private Dictionary<string, KSPOrbitModule.IBody> Bodies => new KSPOrbitModule.IBody[] {
+        MockBody.Kerbol,
+        MockBody.Eve,
+        MockBody.Gilly,
+        MockBody.Kerbin,
+        MockBody.Mun,
+        MockBody.Minmus,
+        MockBody.Duna,
+        MockBody.Ike,
+        MockBody.Jool,
+        MockBody.Tylo,
+        MockBody.Vall,
+        MockBody.Pol
+    }.ToDictionary(body => body.Name);
 
-        public GameInstance Game => throw new NotSupportedException("Game is no available in test-mode");
+    public GameInstance Game => throw new NotSupportedException("Game is no available in test-mode");
 
-        public KSPGameMode GameMode => KSPGameMode.Unknown;
+    public KSPGameMode GameMode => KSPGameMode.Unknown;
 
-        public KSPConsoleBuffer ConsoleBuffer => consoleBuffer;
+    public KSPConsoleBuffer ConsoleBuffer { get; } = new(50, 80);
 
-        public TimeSeriesCollection TimeSeriesCollection => timeSeriesCollection;
+    public TimeSeriesCollection TimeSeriesCollection { get; } = new();
 
-        public Font ConsoleFont(int fontSize) => null;
+    public double UniversalTime => 0;
 
-        public double UniversalTime => 0;
+    public VesselComponent ActiveVessel => null;
 
-        public VesselComponent ActiveVessel => null;
+    public KSPOrbitModule.IBody FindBody(string name) {
+        return Bodies.Get(name);
+    }
 
-        public KSPOrbitModule.IBody FindBody(string name) => Bodies.Get(name);
+    public object NextYield { get; set; }
 
-        public object NextYield { get; set; }
+    public Action OnNextYieldOnce { get; set; }
 
-        public Action OnNextYieldOnce { get; set; }
+    public void AddMarker(IMarker marker) {
+    }
 
-        public void AddMarker(IMarker marker) {
-        }
+    public void RemoveMarker(IMarker marker) {
+    }
 
-        public void RemoveMarker(IMarker marker) {
-        }
+    public void ClearMarkers() {
+    }
 
-        public void ClearMarkers() {
-        }
+    public void AddResourceTransfer(KSPResourceModule.ResourceTransfer resourceTransfer) {
+    }
 
-        public void AddResourceTransfer(KSPResourceModule.ResourceTransfer resourceTransfer) {
-        }
+    public void AddWindow(KSPUIModule.Window window) {
+    }
 
-        public void AddWindow(KSPUIModule.Window window) {
-        }
+    public bool TryFindAutopilot<T>(VesselComponent vessel, out T autopilot) where T : IKSPAutopilot {
+        autopilot = default;
+        return false;
+    }
 
-        public bool TryFindAutopilot<T>(VesselComponent vessel, out T autopilot) where T : IKSPAutopilot {
-            autopilot = default;
-            return false;
-        }
+    public void HookAutopilot(VesselComponent vessel, IKSPAutopilot autopilot) {
+    }
 
-        public void HookAutopilot(VesselComponent vessel, IKSPAutopilot autopilot) {
-        }
+    public void UnhookAutopilot(VesselComponent vessel, IKSPAutopilot autopilot) {
+    }
 
-        public void UnhookAutopilot(VesselComponent vessel, IKSPAutopilot autopilot) {
-        }
+    public void UnhookAllAutopilots(VesselComponent vessel) {
+    }
 
-        public void UnhookAllAutopilots(VesselComponent vessel) {
-        }
+    public OptionalAddons OptionalAddons => new();
 
-        public OptionalAddons OptionalAddons => new OptionalAddons();
+    public Font ConsoleFont(int fontSize) {
+        return null;
     }
 }

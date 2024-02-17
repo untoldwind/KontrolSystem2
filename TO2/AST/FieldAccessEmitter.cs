@@ -1,386 +1,391 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Linq;
 using KontrolSystem.TO2.Generator;
 using KontrolSystem.TO2.Runtime;
 
-namespace KontrolSystem.TO2.AST {
-    public interface IFieldAccessEmitter {
-        RealizedType FieldType { get; }
+namespace KontrolSystem.TO2.AST;
 
-        bool RequiresPtr { get; }
+public interface IFieldAccessEmitter {
+    RealizedType FieldType { get; }
 
-        bool CanStore { get; }
+    bool RequiresPtr { get; }
 
-        bool IsAsyncStore { get; }
+    bool CanStore { get; }
 
-        void EmitLoad(IBlockContext context);
+    bool IsAsyncStore { get; }
 
-        void EmitPtr(IBlockContext context);
+    void EmitLoad(IBlockContext context);
 
-        void EmitStore(IBlockContext context);
+    void EmitPtr(IBlockContext context);
 
-        IREPLValue EvalGet(Node node, IREPLValue target);
+    void EmitStore(IBlockContext context);
 
-        IREPLValue EvalAssign(Node node, IREPLValue target, IREPLValue value);
+    IREPLValue EvalGet(Node node, IREPLValue target);
+
+    IREPLValue EvalAssign(Node node, IREPLValue target, IREPLValue value);
+}
+
+public interface IFieldAccessFactory {
+    TO2Type DeclaredType { get; }
+
+    string Description { get; }
+
+    bool CanStore { get; }
+
+    IFieldAccessEmitter Create(ModuleContext context);
+
+    IFieldAccessFactory FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments);
+}
+
+public delegate IREPLValue REPLFieldAccess(Node node, IREPLValue target);
+
+public class InlineFieldAccessFactory : IFieldAccessFactory {
+    private readonly Func<RealizedType> fieldType;
+    private readonly OpCode[] opCodes;
+    private readonly REPLFieldAccess replFieldAccess;
+
+    public InlineFieldAccessFactory(string description, Func<RealizedType> fieldType, REPLFieldAccess replFieldAccess,
+        params OpCode[] opCodes) {
+        Description = description;
+        this.fieldType = fieldType;
+        this.replFieldAccess = replFieldAccess;
+        this.opCodes = opCodes;
     }
 
-    public interface IFieldAccessFactory {
-        TO2Type DeclaredType { get; }
+    public string Description { get; }
 
-        string Description { get; }
+    public TO2Type DeclaredType => fieldType();
 
-        bool CanStore { get; }
+    public bool CanStore => false;
 
-        IFieldAccessEmitter Create(ModuleContext context);
-
-        IFieldAccessFactory FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments);
+    public IFieldAccessEmitter Create(ModuleContext context) {
+        return new InlineFieldAccessEmitter(fieldType(), replFieldAccess, opCodes);
     }
 
-    public delegate IREPLValue REPLFieldAccess(Node node, IREPLValue target);
+    public IFieldAccessFactory
+        FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) {
+        return this;
+    }
+}
 
-    public class InlineFieldAccessFactory : IFieldAccessFactory {
-        private readonly Func<RealizedType> fieldType;
-        private readonly REPLFieldAccess replFieldAccess;
-        private readonly OpCode[] opCodes;
-        public string Description { get; }
+public class InlineFieldAccessEmitter : IFieldAccessEmitter {
+    private readonly OpCode[] loadOpCodes;
+    private readonly REPLFieldAccess replFieldAccess;
 
-        public InlineFieldAccessFactory(string description, Func<RealizedType> fieldType, REPLFieldAccess replFieldAccess, params OpCode[] opCodes) {
-            Description = description;
-            this.fieldType = fieldType;
-            this.replFieldAccess = replFieldAccess;
-            this.opCodes = opCodes;
-        }
-
-        public TO2Type DeclaredType => fieldType();
-
-        public bool CanStore => false;
-
-        public IFieldAccessEmitter Create(ModuleContext context) => new InlineFieldAccessEmitter(fieldType(), replFieldAccess, opCodes);
-
-        public IFieldAccessFactory
-            FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) => this;
+    public InlineFieldAccessEmitter(RealizedType fieldType, REPLFieldAccess replFieldAccess, OpCode[] loadOpCodes) {
+        FieldType = fieldType;
+        this.replFieldAccess = replFieldAccess;
+        this.loadOpCodes = loadOpCodes;
     }
 
-    public class InlineFieldAccessEmitter : IFieldAccessEmitter {
-        private readonly REPLFieldAccess replFieldAccess;
-        private readonly OpCode[] loadOpCodes;
-        public RealizedType FieldType { get; }
+    public RealizedType FieldType { get; }
 
-        public InlineFieldAccessEmitter(RealizedType fieldType, REPLFieldAccess replFieldAccess, OpCode[] loadOpCodes) {
-            FieldType = fieldType;
-            this.replFieldAccess = replFieldAccess;
-            this.loadOpCodes = loadOpCodes;
-        }
+    public bool RequiresPtr => false;
 
-        public bool RequiresPtr => false;
+    public bool CanStore => false;
 
-        public bool CanStore => false;
+    public bool IsAsyncStore => false;
 
-        public bool IsAsyncStore => false;
-
-        public void EmitLoad(IBlockContext context) {
-            foreach (OpCode opCode in loadOpCodes) {
-                context.IL.Emit(opCode);
-            }
-        }
-
-        public void EmitPtr(IBlockContext context) {
-            EmitLoad(context);
-            using ITempBlockVariable tempLocal =
-                context.MakeTempVariable(FieldType.UnderlyingType(context.ModuleContext));
-            tempLocal.EmitStore(context);
-            tempLocal.EmitLoadPtr(context);
-        }
-
-        public void EmitStore(IBlockContext context) {
-        }
-
-        public IREPLValue EvalGet(Node node, IREPLValue target) => replFieldAccess(node, target);
-
-        public IREPLValue EvalAssign(Node node, IREPLValue target, IREPLValue value) => throw new REPLException(node, "Field assign not supported");
+    public void EmitLoad(IBlockContext context) {
+        foreach (var opCode in loadOpCodes) context.IL.Emit(opCode);
     }
 
-    public class BoundFieldAccessFactory : IFieldAccessFactory {
-        private readonly Func<RealizedType> fieldType;
-        private readonly List<FieldInfo> fieldInfos;
-        private readonly Type fieldTarget;
-        private readonly string description;
-
-        public BoundFieldAccessFactory(string description, Func<RealizedType> fieldType, Type fieldTarget,
-            FieldInfo fieldInfo) {
-            this.description = description;
-            this.fieldType = fieldType;
-            this.fieldTarget = fieldTarget;
-            fieldInfos = new List<FieldInfo> { fieldInfo };
-        }
-
-        private BoundFieldAccessFactory(string description, Func<RealizedType> fieldType, Type fieldTarget,
-            List<FieldInfo> fieldInfos) {
-            this.description = description;
-            this.fieldType = fieldType;
-            this.fieldTarget = fieldTarget;
-            this.fieldInfos = fieldInfos;
-        }
-
-        public TO2Type DeclaredType => fieldType();
-
-        public string Description => description;
-
-        public bool CanStore => !fieldInfos.Last().IsInitOnly;
-
-        public IFieldAccessEmitter Create(ModuleContext context) =>
-            new BoundFieldAccessEmitter(fieldType(), fieldTarget, fieldInfos);
-
-        public IFieldAccessFactory FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) {
-            if (fieldTarget.IsGenericTypeDefinition) {
-                Type[] arguments = fieldTarget.GetGenericArguments().Select(t => {
-                    if (!typeArguments.ContainsKey(t.Name))
-                        throw new ArgumentException($"Generic parameter {t.Name} not found");
-                    return typeArguments[t.Name].GeneratedType(context);
-                }).ToArray();
-                Type genericTarget = fieldTarget.MakeGenericType(arguments);
-                List<FieldInfo> genericFields = new List<FieldInfo>();
-                Type current = genericTarget;
-
-                foreach (FieldInfo field in fieldInfos) {
-                    FieldInfo genericField = current.GetField(field.Name);
-                    genericFields.Add(genericField);
-                    current = genericField.FieldType;
-                }
-
-                return new BoundFieldAccessFactory(description, () => fieldType().FillGenerics(context, typeArguments),
-                    genericTarget, genericFields);
-            }
-
-            return this;
-        }
+    public void EmitPtr(IBlockContext context) {
+        EmitLoad(context);
+        using var tempLocal =
+            context.MakeTempVariable(FieldType.UnderlyingType(context.ModuleContext));
+        tempLocal.EmitStore(context);
+        tempLocal.EmitLoadPtr(context);
     }
 
-    public class BoundFieldAccessEmitter : IFieldAccessEmitter {
-        private readonly List<FieldInfo> fieldInfos;
-        private readonly Type fieldTarget;
-        public RealizedType FieldType { get; }
+    public void EmitStore(IBlockContext context) {
+    }
 
-        public BoundFieldAccessEmitter(RealizedType fieldType, Type fieldTarget, List<FieldInfo> fieldInfos) {
-            FieldType = fieldType;
-            this.fieldTarget = fieldTarget;
-            this.fieldInfos = fieldInfos;
-        }
+    public IREPLValue EvalGet(Node node, IREPLValue target) {
+        return replFieldAccess(node, target);
+    }
 
-        public bool RequiresPtr => fieldTarget.IsValueType;
+    public IREPLValue EvalAssign(Node node, IREPLValue target, IREPLValue value) {
+        throw new REPLException(node, "Field assign not supported");
+    }
+}
 
-        public bool CanStore => !fieldInfos.Last().IsInitOnly;
+public class BoundFieldAccessFactory : IFieldAccessFactory {
+    private readonly List<FieldInfo> fieldInfos;
+    private readonly Type fieldTarget;
+    private readonly Func<RealizedType> fieldType;
 
-        public bool IsAsyncStore => false;
+    public BoundFieldAccessFactory(string description, Func<RealizedType> fieldType, Type fieldTarget,
+        FieldInfo fieldInfo) {
+        this.Description = description;
+        this.fieldType = fieldType;
+        this.fieldTarget = fieldTarget;
+        fieldInfos = new List<FieldInfo> { fieldInfo };
+    }
 
-        public void EmitLoad(IBlockContext context) {
-            foreach (FieldInfo fieldInfo in fieldInfos)
-                context.IL.Emit(OpCodes.Ldfld, fieldInfo);
-        }
+    private BoundFieldAccessFactory(string description, Func<RealizedType> fieldType, Type fieldTarget,
+        List<FieldInfo> fieldInfos) {
+        this.Description = description;
+        this.fieldType = fieldType;
+        this.fieldTarget = fieldTarget;
+        this.fieldInfos = fieldInfos;
+    }
 
-        public void EmitPtr(IBlockContext context) {
-            foreach (FieldInfo fieldInfo in fieldInfos)
-                context.IL.Emit(OpCodes.Ldflda, fieldInfo);
-        }
+    public TO2Type DeclaredType => fieldType();
 
-        public void EmitStore(IBlockContext context) {
-            var fieldCount = fieldInfos.Count;
+    public string Description { get; }
 
-            foreach (var fieldInfo in fieldInfos.Take(fieldCount - 1)) {
-                context.IL.Emit(OpCodes.Ldflda, fieldInfo);
+    public bool CanStore => !fieldInfos.Last().IsInitOnly;
+
+    public IFieldAccessEmitter Create(ModuleContext context) {
+        return new BoundFieldAccessEmitter(fieldType(), fieldTarget, fieldInfos);
+    }
+
+    public IFieldAccessFactory FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) {
+        if (fieldTarget.IsGenericTypeDefinition) {
+            var arguments = fieldTarget.GetGenericArguments().Select(t => {
+                if (!typeArguments.ContainsKey(t.Name))
+                    throw new ArgumentException($"Generic parameter {t.Name} not found");
+                return typeArguments[t.Name].GeneratedType(context);
+            }).ToArray();
+            var genericTarget = fieldTarget.MakeGenericType(arguments);
+            var genericFields = new List<FieldInfo>();
+            var current = genericTarget;
+
+            foreach (var field in fieldInfos) {
+                var genericField = current.GetField(field.Name);
+                genericFields.Add(genericField);
+                current = genericField.FieldType;
             }
 
-            context.IL.Emit(OpCodes.Stfld, fieldInfos[fieldCount - 1]);
+            return new BoundFieldAccessFactory(Description, () => fieldType().FillGenerics(context, typeArguments),
+                genericTarget, genericFields);
         }
 
-        public IREPLValue EvalGet(Node node, IREPLValue target) {
-            object current = target.Value;
+        return this;
+    }
+}
 
-            foreach (var fieldInfo in fieldInfos) {
-                current = fieldInfo.GetValue(current);
-            }
+public class BoundFieldAccessEmitter : IFieldAccessEmitter {
+    private readonly List<FieldInfo> fieldInfos;
+    private readonly Type fieldTarget;
 
-            return FieldType.REPLCast(current);
-        }
-
-        public IREPLValue EvalAssign(Node node, IREPLValue target, IREPLValue value) {
-            var fieldCount = fieldInfos.Count;
-            object current = target.Value;
-
-            foreach (var fieldInfo in fieldInfos.Take(fieldCount - 1)) {
-                current = fieldInfo.GetValue(current);
-            }
-
-            fieldInfos[fieldCount - 1].SetValue(current, value.Value);
-
-            return FieldType.REPLCast(value.Value);
-        }
+    public BoundFieldAccessEmitter(RealizedType fieldType, Type fieldTarget, List<FieldInfo> fieldInfos) {
+        FieldType = fieldType;
+        this.fieldTarget = fieldTarget;
+        this.fieldInfos = fieldInfos;
     }
 
-    public class BoundPropertyLikeFieldAccessFactory : IFieldAccessFactory {
-        private readonly Func<RealizedType> fieldType;
-        private readonly MethodInfo getter;
-        private readonly MethodInfo setter;
-        private readonly bool isAsyncStore;
-        private readonly OpCode[] opCodes;
-        private readonly Type methodTarget;
-        private readonly string description;
+    public RealizedType FieldType { get; }
 
-        public BoundPropertyLikeFieldAccessFactory(string description, Func<RealizedType> fieldType, Type methodTarget,
-            MethodInfo getter, MethodInfo setter, params OpCode[] opCodes) {
-            this.description = description;
-            this.fieldType = fieldType;
-            this.methodTarget = methodTarget;
-            this.getter = getter ??
-                          throw new ArgumentException($"Getter is null for {description} in type {fieldType}");
-            this.setter = setter;
-            isAsyncStore = false;
-            this.opCodes = opCodes;
-        }
+    public bool RequiresPtr => fieldTarget.IsValueType;
 
-        public BoundPropertyLikeFieldAccessFactory(string description, Func<RealizedType> fieldType, Type methodTarget,
-            MethodInfo getter, MethodInfo setter, bool isAsyncStore, params OpCode[] opCodes) {
-            this.description = description;
-            this.fieldType = fieldType;
-            this.methodTarget = methodTarget;
-            this.getter = getter ??
-                          throw new ArgumentException($"Getter is null for {description} in type {fieldType}");
-            this.setter = setter;
-            this.isAsyncStore = isAsyncStore;
-            this.opCodes = opCodes;
-        }
+    public bool CanStore => !fieldInfos.Last().IsInitOnly;
 
-        public BoundPropertyLikeFieldAccessFactory(string description, Func<RealizedType> fieldType, Type methodTarget,
-            PropertyInfo propertyInfo, params OpCode[] opCodes) {
-            if (propertyInfo == null)
-                throw new ArgumentException($"PropertyInfo is null for {description} in type {fieldType}");
-            this.description = description;
-            this.fieldType = fieldType;
-            this.methodTarget = methodTarget;
-            getter = propertyInfo.GetMethod;
-            setter = propertyInfo.SetMethod;
-            isAsyncStore = false;
-            this.opCodes = opCodes;
-        }
+    public bool IsAsyncStore => false;
 
-        public BoundPropertyLikeFieldAccessFactory(string description, Func<RealizedType> fieldType, Type methodTarget,
-            PropertyInfo propertyInfo, bool isAsyncStore, params OpCode[] opCodes) {
-            if (propertyInfo == null)
-                throw new ArgumentException($"PropertyInfo is null for {description} in type {fieldType}");
-            this.description = description;
-            this.fieldType = fieldType;
-            this.methodTarget = methodTarget;
-            getter = propertyInfo.GetMethod;
-            setter = propertyInfo.SetMethod;
-            this.isAsyncStore = isAsyncStore;
-            this.opCodes = opCodes;
-        }
-        public TO2Type DeclaredType => fieldType();
+    public void EmitLoad(IBlockContext context) {
+        foreach (var fieldInfo in fieldInfos)
+            context.IL.Emit(OpCodes.Ldfld, fieldInfo);
+    }
 
-        public string Description => description;
+    public void EmitPtr(IBlockContext context) {
+        foreach (var fieldInfo in fieldInfos)
+            context.IL.Emit(OpCodes.Ldflda, fieldInfo);
+    }
 
-        public bool CanStore => setter != null;
+    public void EmitStore(IBlockContext context) {
+        var fieldCount = fieldInfos.Count;
 
-        public IFieldAccessEmitter Create(ModuleContext context) =>
-            new BoundPropertyLikeFieldAccessEmitter(fieldType(), methodTarget, getter, setter, isAsyncStore, opCodes);
+        foreach (var fieldInfo in fieldInfos.Take(fieldCount - 1)) context.IL.Emit(OpCodes.Ldflda, fieldInfo);
 
-        public IFieldAccessFactory FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) {
-            if (methodTarget.IsGenericTypeDefinition) {
-                Type[] arguments = methodTarget.GetGenericArguments().Select(t => {
-                    if (!typeArguments.ContainsKey(t.Name))
-                        throw new ArgumentException($"Generic parameter {t.Name} not found");
-                    return typeArguments[t.Name].GeneratedType(context);
-                }).ToArray();
-                Type genericTarget = methodTarget.MakeGenericType(arguments);
-                MethodInfo genericGetterMethod = genericTarget.GetMethod(getter.Name, new Type[0]);
+        context.IL.Emit(OpCodes.Stfld, fieldInfos[fieldCount - 1]);
+    }
 
-                if (genericGetterMethod == null)
+    public IREPLValue EvalGet(Node node, IREPLValue target) {
+        var current = target.Value;
+
+        foreach (var fieldInfo in fieldInfos) current = fieldInfo.GetValue(current);
+
+        return FieldType.REPLCast(current);
+    }
+
+    public IREPLValue EvalAssign(Node node, IREPLValue target, IREPLValue value) {
+        var fieldCount = fieldInfos.Count;
+        var current = target.Value;
+
+        foreach (var fieldInfo in fieldInfos.Take(fieldCount - 1)) current = fieldInfo.GetValue(current);
+
+        fieldInfos[fieldCount - 1].SetValue(current, value.Value);
+
+        return FieldType.REPLCast(value.Value);
+    }
+}
+
+public class BoundPropertyLikeFieldAccessFactory : IFieldAccessFactory {
+    private readonly Func<RealizedType> fieldType;
+    private readonly MethodInfo getter;
+    private readonly bool isAsyncStore;
+    private readonly Type methodTarget;
+    private readonly OpCode[] opCodes;
+    private readonly MethodInfo setter;
+
+    public BoundPropertyLikeFieldAccessFactory(string description, Func<RealizedType> fieldType, Type methodTarget,
+        MethodInfo getter, MethodInfo setter, params OpCode[] opCodes) {
+        this.Description = description;
+        this.fieldType = fieldType;
+        this.methodTarget = methodTarget;
+        this.getter = getter ??
+                      throw new ArgumentException($"Getter is null for {description} in type {fieldType}");
+        this.setter = setter;
+        isAsyncStore = false;
+        this.opCodes = opCodes;
+    }
+
+    public BoundPropertyLikeFieldAccessFactory(string description, Func<RealizedType> fieldType, Type methodTarget,
+        MethodInfo getter, MethodInfo setter, bool isAsyncStore, params OpCode[] opCodes) {
+        this.Description = description;
+        this.fieldType = fieldType;
+        this.methodTarget = methodTarget;
+        this.getter = getter ??
+                      throw new ArgumentException($"Getter is null for {description} in type {fieldType}");
+        this.setter = setter;
+        this.isAsyncStore = isAsyncStore;
+        this.opCodes = opCodes;
+    }
+
+    public BoundPropertyLikeFieldAccessFactory(string description, Func<RealizedType> fieldType, Type methodTarget,
+        PropertyInfo propertyInfo, params OpCode[] opCodes) {
+        if (propertyInfo == null)
+            throw new ArgumentException($"PropertyInfo is null for {description} in type {fieldType}");
+        this.Description = description;
+        this.fieldType = fieldType;
+        this.methodTarget = methodTarget;
+        getter = propertyInfo.GetMethod;
+        setter = propertyInfo.SetMethod;
+        isAsyncStore = false;
+        this.opCodes = opCodes;
+    }
+
+    public BoundPropertyLikeFieldAccessFactory(string description, Func<RealizedType> fieldType, Type methodTarget,
+        PropertyInfo propertyInfo, bool isAsyncStore, params OpCode[] opCodes) {
+        if (propertyInfo == null)
+            throw new ArgumentException($"PropertyInfo is null for {description} in type {fieldType}");
+        this.Description = description;
+        this.fieldType = fieldType;
+        this.methodTarget = methodTarget;
+        getter = propertyInfo.GetMethod;
+        setter = propertyInfo.SetMethod;
+        this.isAsyncStore = isAsyncStore;
+        this.opCodes = opCodes;
+    }
+
+    public TO2Type DeclaredType => fieldType();
+
+    public string Description { get; }
+
+    public bool CanStore => setter != null;
+
+    public IFieldAccessEmitter Create(ModuleContext context) {
+        return new BoundPropertyLikeFieldAccessEmitter(fieldType(), methodTarget, getter, setter, isAsyncStore,
+            opCodes);
+    }
+
+    public IFieldAccessFactory FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) {
+        if (methodTarget.IsGenericTypeDefinition) {
+            var arguments = methodTarget.GetGenericArguments().Select(t => {
+                if (!typeArguments.ContainsKey(t.Name))
+                    throw new ArgumentException($"Generic parameter {t.Name} not found");
+                return typeArguments[t.Name].GeneratedType(context);
+            }).ToArray();
+            var genericTarget = methodTarget.MakeGenericType(arguments);
+            var genericGetterMethod = genericTarget.GetMethod(getter.Name, new Type[0]);
+
+            if (genericGetterMethod == null)
+                throw new ArgumentException(
+                    $"Unable to relocate method {getter.Name} on {methodTarget} for type arguments {typeArguments}");
+
+            MethodInfo genericSetterMethod = null;
+
+            if (setter != null) {
+                genericSetterMethod = genericTarget.GetMethod(setter.Name, new[] { genericGetterMethod.ReturnType });
+
+                if (genericSetterMethod == null)
                     throw new ArgumentException(
-                        $"Unable to relocate method {getter.Name} on {methodTarget} for type arguments {typeArguments}");
-
-                MethodInfo genericSetterMethod = null;
-
-                if (setter != null) {
-                    genericSetterMethod = genericTarget.GetMethod(setter.Name, new[] { genericGetterMethod.ReturnType });
-
-                    if (genericSetterMethod == null)
-                        throw new ArgumentException(
-                            $"Unable to relocate method {setter.Name} on {methodTarget} for type arguments {typeArguments}");
-                }
-
-                return new BoundPropertyLikeFieldAccessFactory(description,
-                    () => fieldType().FillGenerics(context, typeArguments), genericTarget, genericGetterMethod,
-                    genericSetterMethod, isAsyncStore, opCodes);
+                        $"Unable to relocate method {setter.Name} on {methodTarget} for type arguments {typeArguments}");
             }
 
-            return this;
+            return new BoundPropertyLikeFieldAccessFactory(Description,
+                () => fieldType().FillGenerics(context, typeArguments), genericTarget, genericGetterMethod,
+                genericSetterMethod, isAsyncStore, opCodes);
         }
+
+        return this;
+    }
+}
+
+public class BoundPropertyLikeFieldAccessEmitter : IFieldAccessEmitter {
+    private readonly MethodInfo getter;
+    private readonly Type methodTarget;
+    private readonly OpCode[] opCodes;
+    private readonly MethodInfo setter;
+
+    public BoundPropertyLikeFieldAccessEmitter(RealizedType fieldType, Type methodTarget, MethodInfo getter,
+        MethodInfo setter, bool isAsyncStore, OpCode[] opCodes) {
+        FieldType = fieldType;
+        this.methodTarget = methodTarget;
+        this.getter = getter;
+        this.setter = setter;
+        this.opCodes = opCodes;
+        IsAsyncStore = isAsyncStore;
     }
 
-    public class BoundPropertyLikeFieldAccessEmitter : IFieldAccessEmitter {
-        private readonly MethodInfo getter;
-        private readonly MethodInfo setter;
-        private readonly OpCode[] opCodes;
-        private readonly Type methodTarget;
-        public RealizedType FieldType { get; }
+    public RealizedType FieldType { get; }
 
-        public BoundPropertyLikeFieldAccessEmitter(RealizedType fieldType, Type methodTarget, MethodInfo getter,
-            MethodInfo setter, bool isAsyncStore, OpCode[] opCodes) {
-            FieldType = fieldType;
-            this.methodTarget = methodTarget;
-            this.getter = getter;
-            this.setter = setter;
-            this.opCodes = opCodes;
-            IsAsyncStore = isAsyncStore;
-        }
+    public bool CanStore => setter != null;
 
-        public bool CanStore => setter != null;
+    public bool IsAsyncStore { get; }
 
-        public bool IsAsyncStore { get; }
+    public bool RequiresPtr =>
+        methodTarget.IsValueType && (getter.CallingConvention & CallingConventions.HasThis) != 0;
 
-        public bool RequiresPtr =>
-            methodTarget.IsValueType && (getter.CallingConvention & CallingConventions.HasThis) != 0;
+    public void EmitLoad(IBlockContext context) {
+        context.IL.EmitCall(getter.IsVirtual ? OpCodes.Callvirt : OpCodes.Call, getter, 1);
+        foreach (var opCode in opCodes) context.IL.Emit(opCode);
+    }
 
-        public void EmitLoad(IBlockContext context) {
-            context.IL.EmitCall(getter.IsVirtual ? OpCodes.Callvirt : OpCodes.Call, getter, 1);
-            foreach (OpCode opCode in opCodes) {
-                context.IL.Emit(opCode);
-            }
-        }
+    public void EmitPtr(IBlockContext context) {
+        EmitLoad(context);
+        using var tempLocal =
+            context.MakeTempVariable(FieldType.UnderlyingType(context.ModuleContext));
+        tempLocal.EmitStore(context);
+        tempLocal.EmitLoadPtr(context);
+    }
 
-        public void EmitPtr(IBlockContext context) {
-            EmitLoad(context);
-            using ITempBlockVariable tempLocal =
-                context.MakeTempVariable(FieldType.UnderlyingType(context.ModuleContext));
-            tempLocal.EmitStore(context);
-            tempLocal.EmitLoadPtr(context);
-        }
+    public void EmitStore(IBlockContext context) {
+        context.IL.EmitCall(getter.IsVirtual ? OpCodes.Callvirt : OpCodes.Call, setter, 2);
+    }
 
-        public void EmitStore(IBlockContext context) {
-            context.IL.EmitCall(getter.IsVirtual ? OpCodes.Callvirt : OpCodes.Call, setter, 2);
-        }
+    public IREPLValue EvalGet(Node node, IREPLValue target) {
+        var result = getter.IsStatic
+            ? getter.Invoke(null, new[] { target.Value })
+            : getter.Invoke(target.Value, Array.Empty<object>());
 
-        public IREPLValue EvalGet(Node node, IREPLValue target) {
-            var result = getter.IsStatic
-                ? getter.Invoke(null, new object[] { target.Value })
-                : getter.Invoke(target.Value, Array.Empty<object>());
+        return FieldType.REPLCast(result);
+    }
 
-            return FieldType.REPLCast(result);
-        }
+    public IREPLValue EvalAssign(Node node, IREPLValue target, IREPLValue value) {
+        if (setter == null)
+            throw new REPLException(node, "Field assign not supported");
 
-        public IREPLValue EvalAssign(Node node, IREPLValue target, IREPLValue value) {
-            if (setter == null)
-                throw new REPLException(node, "Field assign not supported");
+        if (setter.IsStatic)
+            setter.Invoke(null, new[] { target.Value, value.Value });
+        else
+            setter.Invoke(target.Value, new[] { value.Value });
 
-            if (setter.IsStatic)
-                setter.Invoke(null, new object[] { target.Value, value.Value });
-            else
-                setter.Invoke(target.Value, new object[] { value.Value });
-
-            return FieldType.REPLCast(value.Value);
-        }
+        return FieldType.REPLCast(value.Value);
     }
 }

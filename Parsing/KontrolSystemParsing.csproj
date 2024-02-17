@@ -7,6 +7,6 @@
         <BaseOutputPath>../bin</BaseOutputPath>
     </PropertyGroup>
     <Target Name="CopyFiles" AfterTargets="Build">
-        <Copy SourceFiles="../bin/$(Configuration)/KontrolSystemParsing.dll" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2" />
+        <Copy SourceFiles="../bin/$(Configuration)/KontrolSystemParsing.dll" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2"/>
     </Target>
 </Project>

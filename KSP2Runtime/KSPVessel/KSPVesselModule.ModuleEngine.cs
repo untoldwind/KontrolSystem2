@@ -1,77 +1,77 @@
 ﻿using System;
 using System.Linq;
 using KontrolSystem.TO2.Binding;
-using KSP.Game;
 using KSP.Modules;
 using KSP.Sim.impl;
 
-namespace KontrolSystem.KSP.Runtime.KSPVessel {
-    public partial class KSPVesselModule {
-        [KSClass("ModuleEngine")]
-        public class ModuleEngineAdapter {
-            private readonly PartComponent part;
-            private readonly Data_Engine dataEngine;
+namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
-            public ModuleEngineAdapter(PartComponent part, Data_Engine dataEngine) {
-                this.part = part;
-                this.dataEngine = dataEngine;
-            }
+public partial class KSPVesselModule {
+    [KSClass("ModuleEngine")]
+    public class ModuleEngineAdapter {
+        private readonly Data_Engine dataEngine;
+        private readonly PartComponent part;
 
-            [KSField] public string PartName => part?.PartName ?? "Unknown";
+        public ModuleEngineAdapter(PartComponent part, Data_Engine dataEngine) {
+            this.part = part;
+            this.dataEngine = dataEngine;
+        }
 
-            [KSField] public bool IsShutdown => dataEngine.EngineShutdown;
+        [KSField] public string PartName => part?.PartName ?? "Unknown";
 
-            [KSField] public bool HasIgnited => dataEngine.EngineIgnited;
+        [KSField] public bool IsShutdown => dataEngine.EngineShutdown;
 
-            [KSField] public bool IsFlameout => dataEngine.Flameout;
+        [KSField] public bool HasIgnited => dataEngine.EngineIgnited;
 
-            [KSField] public bool IsStaged => dataEngine.staged;
+        [KSField] public bool IsFlameout => dataEngine.Flameout;
 
-            [KSField] public bool IsOperational => dataEngine.IsOperational;
+        [KSField] public bool IsStaged => dataEngine.staged;
 
-            [KSField] public bool IsPropellantStarved => dataEngine.IsPropellantStarved;
+        [KSField] public bool IsOperational => dataEngine.IsOperational;
 
-            [KSField] public double CurrentThrottle => dataEngine.currentThrottle;
+        [KSField] public bool IsPropellantStarved => dataEngine.IsPropellantStarved;
 
-            [KSField] public double CurrentThrust => dataEngine.FinalThrustValue;
+        [KSField] public double CurrentThrottle => dataEngine.currentThrottle;
 
-            [KSField] public double RealIsp => dataEngine.RealISPValue;
+        [KSField] public double CurrentThrust => dataEngine.FinalThrustValue;
 
-            [KSField] public double ThrottleMin => dataEngine.ThrottleMin;
+        [KSField] public double RealIsp => dataEngine.RealISPValue;
 
-            [KSField] public double MinFuelFlow => dataEngine.MinFuelFlow;
+        [KSField] public double ThrottleMin => dataEngine.ThrottleMin;
 
-            [KSField] public double MaxFuelFlow => dataEngine.MaxFuelFlow;
+        [KSField] public double MinFuelFlow => dataEngine.MinFuelFlow;
 
-            [KSField] public double MaxThrustOutputVac => dataEngine.MaxThrustOutputVac(true);
+        [KSField] public double MaxFuelFlow => dataEngine.MaxFuelFlow;
 
-            [KSField] public double MaxThrustOutputAtm => dataEngine.MaxThrustOutputAtm();
+        [KSField] public double MaxThrustOutputVac => dataEngine.MaxThrustOutputVac();
 
-            [KSField]
-            public EngineModeAdapter[] EngineModes => dataEngine.engineModes
-                .Select(engineMode => new EngineModeAdapter(engineMode)).ToArray();
+        [KSField] public double MaxThrustOutputAtm => dataEngine.MaxThrustOutputAtm();
 
-            [KSField]
-            public EngineModeAdapter CurrentEngineMode =>
-                new EngineModeAdapter(dataEngine.engineModes[dataEngine.currentEngineModeIndex]);
+        [KSField]
+        public EngineModeAdapter[] EngineModes => dataEngine.engineModes
+            .Select(engineMode => new EngineModeAdapter(engineMode)).ToArray();
 
-            [KSMethod]
-            public bool ChangeMode(string name) {
-                if (part == null) return false;
+        [KSField]
+        public EngineModeAdapter CurrentEngineMode =>
+            new(dataEngine.engineModes[dataEngine.currentEngineModeIndex]);
 
-                var idx = Array.FindIndex(dataEngine.engineModes, engineMode => engineMode.engineID.Equals(name, StringComparison.InvariantCultureIgnoreCase));
+        [KSMethod]
+        public bool ChangeMode(string name) {
+            if (part == null) return false;
 
-                if (idx < 0 || idx == dataEngine.currentEngineModeIndex) return false;
+            var idx = Array.FindIndex(dataEngine.engineModes,
+                engineMode => engineMode.engineID.Equals(name, StringComparison.InvariantCultureIgnoreCase));
 
-                if (!KSPContext.CurrentContext.Game.SpaceSimulation.TryGetViewObject(part.SimulationObject,
-                        out var viewObject)) return false;
+            if (idx < 0 || idx == dataEngine.currentEngineModeIndex) return false;
 
-                if (!viewObject.TryGetComponent<Module_Engine>(out var moduleEngine)) return false;
+            if (!KSPContext.CurrentContext.Game.SpaceSimulation.TryGetViewObject(part.SimulationObject,
+                    out var viewObject)) return false;
 
-                moduleEngine.ChangeEngineMode(idx);
+            if (!viewObject.TryGetComponent<Module_Engine>(out var moduleEngine)) return false;
 
-                return true;
-            }
+            moduleEngine.ChangeEngineMode(idx);
+
+            return true;
         }
     }
 }

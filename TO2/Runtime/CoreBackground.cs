@@ -3,53 +3,57 @@ using System.Threading;
 using System.Threading.Tasks;
 using KontrolSystem.TO2.Binding;
 
-namespace KontrolSystem.TO2.Runtime {
-    [KSModule("core::background",
-        Description = "Provides means to run functions as asynchronous background task."
-    )]
-    public class CoreBackground {
-        [KSClass("Task", Description = "Represents a background task")]
-        public class BackgroundTask<T> {
-            private readonly Task<T> task;
-            private readonly CancellationTokenSource tokenSource;
+namespace KontrolSystem.TO2.Runtime;
 
-            internal BackgroundTask(Task<T> task, CancellationTokenSource tokenSource) {
-                this.task = task;
-                this.tokenSource = tokenSource;
-            }
+[KSModule("core::background",
+    Description = "Provides means to run functions as asynchronous background task."
+)]
+public class CoreBackground {
+    [KSFunction(Description = "Check if current thread is a background thread")]
+    public static bool IsBackground() {
+        return ContextHolder.CurrentContext.Value?.IsBackground ?? false;
+    }
 
-            [KSField(Description = "Check if the task is completed")]
-            public bool IsCompleted => task.IsCompleted;
+    [KSFunction(Description = "Run a function as background task.")]
+    public static BackgroundTask<T> Run<T>(Func<T> function) {
+        var tokenSource = new CancellationTokenSource();
+        var backgroundContext = ContextHolder.CurrentContext.Value.CloneBackground(tokenSource);
+        var task = Task.Run(() => {
+            ContextHolder.CurrentContext.Value = backgroundContext;
+            var result = function();
+            ContextHolder.CurrentContext.Value = null;
 
-            [KSField(Description = "Check if the task is completed and has a value")]
-            public bool IsSuccess => task.IsCompleted && !task.IsCanceled && !task.IsFaulted;
+            return result;
+        }, tokenSource.Token);
 
-            [KSField(Description = "Check if the task has been canceled")]
-            public bool IsCanceled => task.IsCanceled;
+        return new BackgroundTask<T>(task, tokenSource);
+    }
 
-            [KSField(Description = "Get the result of the task once completed")]
-            public T Result => task.Result;
+    [KSClass("Task", Description = "Represents a background task")]
+    public class BackgroundTask<T> {
+        private readonly Task<T> task;
+        private readonly CancellationTokenSource tokenSource;
 
-            [KSMethod(Description = "Cancel/abort the task")]
-            public void Cancel() => tokenSource.Cancel();
+        internal BackgroundTask(Task<T> task, CancellationTokenSource tokenSource) {
+            this.task = task;
+            this.tokenSource = tokenSource;
         }
 
-        [KSFunction(Description = "Check if current thread is a background thread")]
-        public static bool IsBackground() => ContextHolder.CurrentContext.Value?.IsBackground ?? false;
+        [KSField(Description = "Check if the task is completed")]
+        public bool IsCompleted => task.IsCompleted;
 
-        [KSFunction(Description = "Run a function as background task.")]
-        public static BackgroundTask<T> Run<T>(Func<T> function) {
-            CancellationTokenSource tokenSource = new CancellationTokenSource();
-            IContext backgroundContext = ContextHolder.CurrentContext.Value.CloneBackground(tokenSource);
-            Task<T> task = Task.Run(() => {
-                ContextHolder.CurrentContext.Value = backgroundContext;
-                T result = function();
-                ContextHolder.CurrentContext.Value = null;
+        [KSField(Description = "Check if the task is completed and has a value")]
+        public bool IsSuccess => task.IsCompleted && !task.IsCanceled && !task.IsFaulted;
 
-                return result;
-            }, tokenSource.Token);
+        [KSField(Description = "Check if the task has been canceled")]
+        public bool IsCanceled => task.IsCanceled;
 
-            return new BackgroundTask<T>(task, tokenSource);
+        [KSField(Description = "Get the result of the task once completed")]
+        public T Result => task.Result;
+
+        [KSMethod(Description = "Cancel/abort the task")]
+        public void Cancel() {
+            tokenSource.Cancel();
         }
     }
 }

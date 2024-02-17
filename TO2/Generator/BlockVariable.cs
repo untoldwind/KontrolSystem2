@@ -3,142 +3,162 @@ using System.Reflection;
 using System.Reflection.Emit;
 using KontrolSystem.TO2.AST;
 
-namespace KontrolSystem.TO2.Generator {
-    public delegate IBlockVariable VariableResolver(string name);
+namespace KontrolSystem.TO2.Generator;
 
-    public interface IBlockVariable {
-        string Name { get; }
-        RealizedType Type { get; }
+public delegate IBlockVariable VariableResolver(string name);
 
-        bool IsConst { get; }
+public interface IBlockVariable {
+    string Name { get; }
+    RealizedType Type { get; }
 
-        void EmitLoad(IBlockContext context);
+    bool IsConst { get; }
 
-        void EmitLoadPtr(IBlockContext context);
+    void EmitLoad(IBlockContext context);
 
-        void EmitStore(IBlockContext context);
+    void EmitLoadPtr(IBlockContext context);
+
+    void EmitStore(IBlockContext context);
+}
+
+public interface ITempBlockVariable : IBlockVariable, IDisposable {
+}
+
+internal class MethodParameter : IBlockVariable {
+    private readonly int index;
+
+    public MethodParameter(string name, RealizedType type, int index, bool isConst = true) {
+        Name = name;
+        Type = type;
+        this.index = index;
+        IsConst = isConst;
     }
 
-    public interface ITempBlockVariable : IBlockVariable, IDisposable {
+    public string Name { get; }
+    public RealizedType Type { get; }
+    public bool IsConst { get; }
+
+    public void EmitLoad(IBlockContext context) {
+        EmitLoadArg(context.IL, index);
     }
 
-    internal class MethodParameter : IBlockVariable {
-        private readonly int index;
-        public string Name { get; }
-        public RealizedType Type { get; }
-        public bool IsConst { get; }
-
-        public MethodParameter(string name, RealizedType type, int index, bool isConst = true) {
-            Name = name;
-            Type = type;
-            this.index = index;
-            IsConst = isConst;
-        }
-
-        public void EmitLoad(IBlockContext context) => EmitLoadArg(context.IL, index);
-
-        public void EmitLoadPtr(IBlockContext context) {
-            if (index < 256) context.IL.Emit(OpCodes.Ldarga_S, (byte)index);
-            else context.IL.Emit(OpCodes.Ldarga, (short)index);
-        }
-
-        public void EmitStore(IBlockContext context) {
-            if (index < 256) {
-                context.IL.Emit(OpCodes.Starg_S, (byte)index);
-            } else {
-                context.IL.Emit(OpCodes.Starg, (short)index);
-            }
-        }
-
-        public static void EmitLoadArg(IILEmitter il, int index) {
-            switch (index) {
-            case 0:
-                il.Emit(OpCodes.Ldarg_0);
-                return;
-            case 1:
-                il.Emit(OpCodes.Ldarg_1);
-                return;
-            case 2:
-                il.Emit(OpCodes.Ldarg_2);
-                return;
-            case 3:
-                il.Emit(OpCodes.Ldarg_3);
-                return;
-            case { } n when n < 256:
-                il.Emit(OpCodes.Ldarg_S, (byte)index);
-                return;
-            default:
-                il.Emit(OpCodes.Ldarg, (short)index);
-                return;
-            }
-        }
+    public void EmitLoadPtr(IBlockContext context) {
+        if (index < 256) context.IL.Emit(OpCodes.Ldarga_S, (byte)index);
+        else context.IL.Emit(OpCodes.Ldarga, (short)index);
     }
 
-    internal class DeclaredVariable : IBlockVariable {
-        private readonly ILocalRef localRef;
-        public string Name { get; }
-        public RealizedType Type { get; }
-        public bool IsConst { get; }
-
-        public DeclaredVariable(string name, bool isConst, RealizedType type, ILocalRef localRef) {
-            Name = name;
-            IsConst = isConst;
-            Type = type;
-            this.localRef = localRef;
-        }
-
-        public void EmitLoad(IBlockContext context) => localRef.EmitLoad(context);
-
-        public void EmitLoadPtr(IBlockContext context) => localRef.EmitLoadPtr(context);
-
-        public void EmitStore(IBlockContext context) => localRef.EmitStore(context);
+    public void EmitStore(IBlockContext context) {
+        if (index < 256)
+            context.IL.Emit(OpCodes.Starg_S, (byte)index);
+        else
+            context.IL.Emit(OpCodes.Starg, (short)index);
     }
 
-    public class TempVariable : ITempBlockVariable {
-        private readonly ITempLocalRef localRef;
-        public RealizedType Type { get; }
-
-        public TempVariable(RealizedType type, ITempLocalRef localRef) {
-            Type = type;
-            this.localRef = localRef;
+    public static void EmitLoadArg(IILEmitter il, int index) {
+        switch (index) {
+        case 0:
+            il.Emit(OpCodes.Ldarg_0);
+            return;
+        case 1:
+            il.Emit(OpCodes.Ldarg_1);
+            return;
+        case 2:
+            il.Emit(OpCodes.Ldarg_2);
+            return;
+        case 3:
+            il.Emit(OpCodes.Ldarg_3);
+            return;
+        case { } n when n < 256:
+            il.Emit(OpCodes.Ldarg_S, (byte)index);
+            return;
+        default:
+            il.Emit(OpCodes.Ldarg, (short)index);
+            return;
         }
+    }
+}
 
-        public string Name => "***temp***";
+internal class DeclaredVariable : IBlockVariable {
+    private readonly ILocalRef localRef;
 
-        public bool IsConst => false;
-
-        public void EmitLoad(IBlockContext context) => localRef.EmitLoad(context);
-
-        public void EmitLoadPtr(IBlockContext context) => localRef.EmitLoadPtr(context);
-
-        public void EmitStore(IBlockContext context) => localRef.EmitStore(context);
-        public void Dispose() => localRef.Dispose();
+    public DeclaredVariable(string name, bool isConst, RealizedType type, ILocalRef localRef) {
+        Name = name;
+        IsConst = isConst;
+        Type = type;
+        this.localRef = localRef;
     }
 
-    public class ClonedFieldVariable : IBlockVariable {
-        public readonly FieldInfo valueField;
-        public RealizedType Type { get; }
+    public string Name { get; }
+    public RealizedType Type { get; }
+    public bool IsConst { get; }
 
-        public ClonedFieldVariable(RealizedType type, FieldInfo valueField) {
-            Type = type;
-            this.valueField = valueField;
-        }
+    public void EmitLoad(IBlockContext context) {
+        localRef.EmitLoad(context);
+    }
 
-        public string Name => valueField.Name;
+    public void EmitLoadPtr(IBlockContext context) {
+        localRef.EmitLoadPtr(context);
+    }
 
-        public bool IsConst => true;
+    public void EmitStore(IBlockContext context) {
+        localRef.EmitStore(context);
+    }
+}
 
-        public void EmitLoad(IBlockContext context) {
-            context.IL.Emit(OpCodes.Ldarg_0);
-            context.IL.Emit(OpCodes.Ldfld, valueField);
-        }
+public class TempVariable : ITempBlockVariable {
+    private readonly ITempLocalRef localRef;
 
-        public void EmitLoadPtr(IBlockContext context) {
-            context.IL.Emit(OpCodes.Ldarg_0);
-            context.IL.Emit(OpCodes.Ldflda, valueField);
-        }
+    public TempVariable(RealizedType type, ITempLocalRef localRef) {
+        Type = type;
+        this.localRef = localRef;
+    }
 
-        public void EmitStore(IBlockContext context) {
-        }
+    public RealizedType Type { get; }
+
+    public string Name => "***temp***";
+
+    public bool IsConst => false;
+
+    public void EmitLoad(IBlockContext context) {
+        localRef.EmitLoad(context);
+    }
+
+    public void EmitLoadPtr(IBlockContext context) {
+        localRef.EmitLoadPtr(context);
+    }
+
+    public void EmitStore(IBlockContext context) {
+        localRef.EmitStore(context);
+    }
+
+    public void Dispose() {
+        localRef.Dispose();
+    }
+}
+
+public class ClonedFieldVariable : IBlockVariable {
+    public readonly FieldInfo valueField;
+
+    public ClonedFieldVariable(RealizedType type, FieldInfo valueField) {
+        Type = type;
+        this.valueField = valueField;
+    }
+
+    public RealizedType Type { get; }
+
+    public string Name => valueField.Name;
+
+    public bool IsConst => true;
+
+    public void EmitLoad(IBlockContext context) {
+        context.IL.Emit(OpCodes.Ldarg_0);
+        context.IL.Emit(OpCodes.Ldfld, valueField);
+    }
+
+    public void EmitLoadPtr(IBlockContext context) {
+        context.IL.Emit(OpCodes.Ldarg_0);
+        context.IL.Emit(OpCodes.Ldflda, valueField);
+    }
+
+    public void EmitStore(IBlockContext context) {
     }
 }

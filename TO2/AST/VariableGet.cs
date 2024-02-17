@@ -6,132 +6,134 @@ using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
 using KontrolSystem.TO2.Runtime;
 
-namespace KontrolSystem.TO2.AST {
-    public class VariableGet : Expression, IAssignContext {
-        private readonly string moduleName;
-        private readonly string name;
-        private IVariableContainer variableContainer;
+namespace KontrolSystem.TO2.AST;
 
-        public VariableGet(List<string> namePath, Position start = new Position(), Position end = new Position()) :
-            base(start, end) {
-            if (namePath.Count > 1) {
-                moduleName = String.Join("::", namePath.Take(namePath.Count - 1));
-                name = namePath.Last();
-            } else {
-                moduleName = null;
-                name = namePath.Last();
-            }
+public class VariableGet : Expression, IAssignContext {
+    private readonly string moduleName;
+    private readonly string name;
+    private IVariableContainer variableContainer;
+
+    public VariableGet(List<string> namePath, Position start = new(), Position end = new()) :
+        base(start, end) {
+        if (namePath.Count > 1) {
+            moduleName = string.Join("::", namePath.Take(namePath.Count - 1));
+            name = namePath.Last();
+        } else {
+            moduleName = null;
+            name = namePath.Last();
+        }
+    }
+
+    public override IVariableContainer VariableContainer {
+        set => variableContainer = value;
+    }
+
+    public bool IsConst(IBlockContext context) {
+        return context.FindVariable(name)?.IsConst ?? true;
+    }
+
+    public override TO2Type ResultType(IBlockContext context) {
+        var resultType = variableContainer.FindVariable(context, name);
+        if (resultType != null) return resultType;
+        resultType = ReferencedConstant(context.ModuleContext)?.Type;
+        if (resultType != null) return resultType;
+        resultType = ReferencedFunction(context.ModuleContext)?.DelegateType();
+        if (resultType != null) return resultType;
+
+        context.AddError(new StructuralError(
+            StructuralError.ErrorType.NoSuchVariable,
+            $"No local variable, constant or function '{name}'",
+            Start,
+            End
+        ));
+        return BuiltinType.Unit;
+    }
+
+    public override void Prepare(IBlockContext context) {
+    }
+
+    public override void EmitCode(IBlockContext context, bool dropResult) {
+        var blockVariable = context.FindVariable(name);
+
+        if (blockVariable != null) {
+            if (!dropResult) blockVariable.EmitLoad(context);
+            return;
         }
 
-        public override IVariableContainer VariableContainer {
-            set => variableContainer = value;
+        var constant = ReferencedConstant(context.ModuleContext);
+
+        if (constant != null) {
+            if (dropResult) return;
+
+            constant.EmitLoad(context);
+            return;
         }
 
-        public override TO2Type ResultType(IBlockContext context) {
-            TO2Type resultType = variableContainer.FindVariable(context, name);
-            if (resultType != null) return resultType;
-            resultType = ReferencedConstant(context.ModuleContext)?.Type;
-            if (resultType != null) return resultType;
-            resultType = ReferencedFunction(context.ModuleContext)?.DelegateType();
-            if (resultType != null) return resultType;
+        var function = ReferencedFunction(context.ModuleContext);
 
-            context.AddError(new StructuralError(
-                StructuralError.ErrorType.NoSuchVariable,
-                $"No local variable, constant or function '{name}'",
-                Start,
-                End
-            ));
-            return BuiltinType.Unit;
+        if (function != null) {
+            if (dropResult) return;
+
+            context.IL.Emit(OpCodes.Ldnull);
+            context.IL.EmitPtr(OpCodes.Ldftn, function.RuntimeMethod);
+            context.IL.EmitNew(OpCodes.Newobj,
+                function.DelegateType().GeneratedType(context.ModuleContext)
+                    .GetConstructor(new[] { typeof(object), typeof(IntPtr) }));
+            return;
         }
 
-        public bool IsConst(IBlockContext context) => context.FindVariable(name)?.IsConst ?? true;
+        context.AddError(new StructuralError(
+            StructuralError.ErrorType.NoSuchVariable,
+            $"No local variable, constant or function '{name}'",
+            Start,
+            End
+        ));
+    }
 
-        public override void Prepare(IBlockContext context) {
+    public override void EmitPtr(IBlockContext context) {
+        var blockVariable = context.FindVariable(name);
+
+        if (blockVariable != null) {
+            blockVariable.EmitLoadPtr(context);
+            return;
         }
 
-        public override void EmitCode(IBlockContext context, bool dropResult) {
-            IBlockVariable blockVariable = context.FindVariable(name);
+        EmitCode(context, false);
 
-            if (blockVariable != null) {
-                if (!dropResult) blockVariable.EmitLoad(context);
-                return;
-            }
+        if (context.HasErrors) return;
 
-            IKontrolConstant constant = ReferencedConstant(context.ModuleContext);
-
-            if (constant != null) {
-                if (dropResult) return;
-
-                constant.EmitLoad(context);
-                return;
-            }
-
-            IKontrolFunction function = ReferencedFunction(context.ModuleContext);
-
-            if (function != null) {
-                if (dropResult) return;
-
-                context.IL.Emit(OpCodes.Ldnull);
-                context.IL.EmitPtr(OpCodes.Ldftn, function.RuntimeMethod);
-                context.IL.EmitNew(OpCodes.Newobj,
-                    function.DelegateType().GeneratedType(context.ModuleContext)
-                        .GetConstructor(new[] { typeof(object), typeof(IntPtr) }));
-                return;
-            }
-
-            context.AddError(new StructuralError(
-                StructuralError.ErrorType.NoSuchVariable,
-                $"No local variable, constant or function '{name}'",
-                Start,
-                End
-            ));
+        using var tempLocal =
+            context.IL.TempLocal(ResultType(context).GeneratedType(context.ModuleContext));
+        if (tempLocal.LocalIndex < 256) {
+            context.IL.Emit(OpCodes.Stloc_S, tempLocal);
+            context.IL.Emit(OpCodes.Ldloca_S, tempLocal);
+        } else {
+            context.IL.Emit(OpCodes.Stloc, tempLocal);
+            context.IL.Emit(OpCodes.Ldloca, tempLocal);
         }
+    }
 
-        public override void EmitPtr(IBlockContext context) {
-            IBlockVariable blockVariable = context.FindVariable(name);
-
-            if (blockVariable != null) {
-                blockVariable.EmitLoadPtr(context);
-                return;
-            }
-
-            EmitCode(context, false);
-
-            if (context.HasErrors) return;
-
-            using ITempLocalRef tempLocal =
-                context.IL.TempLocal(ResultType(context).GeneratedType(context.ModuleContext));
-            if (tempLocal.LocalIndex < 256) {
-                context.IL.Emit(OpCodes.Stloc_S, tempLocal);
-                context.IL.Emit(OpCodes.Ldloca_S, tempLocal);
-            } else {
-                context.IL.Emit(OpCodes.Stloc, tempLocal);
-                context.IL.Emit(OpCodes.Ldloca, tempLocal);
-            }
-        }
-
-        private IKontrolConstant ReferencedConstant(ModuleContext context) => moduleName != null
+    private IKontrolConstant ReferencedConstant(ModuleContext context) {
+        return moduleName != null
             ? context.FindModule(moduleName)?.FindConstant(name)
             : context.mappedConstants.Get(name);
+    }
 
-        private IKontrolFunction ReferencedFunction(ModuleContext context) => moduleName != null
+    private IKontrolFunction ReferencedFunction(ModuleContext context) {
+        return moduleName != null
             ? context.FindModule(moduleName)?.FindFunction(name)
             : context.mappedFunctions.Get(name);
+    }
 
-        public override REPLValueFuture Eval(REPLContext context) {
-            var variable = context.FindVariable(name);
+    public override REPLValueFuture Eval(REPLContext context) {
+        var variable = context.FindVariable(name);
 
-            if (variable != null) {
-                return REPLValueFuture.Success(variable.value);
-            }
+        if (variable != null) return REPLValueFuture.Success(variable.value);
 
-            IKontrolConstant constant = ReferencedConstant(context.replModuleContext);
+        var constant = ReferencedConstant(context.replModuleContext);
 
-            if (constant != null) {
-                return REPLValueFuture.Success(constant.REPLValue());
-            }
+        if (constant != null) return REPLValueFuture.Success(constant.REPLValue());
 
-            throw new REPLException(this, $"No local variable, constant or function '{name}'");
-        }
+        throw new REPLException(this, $"No local variable, constant or function '{name}'");
     }
 }

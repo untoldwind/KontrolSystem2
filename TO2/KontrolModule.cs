@@ -3,133 +3,149 @@ using System.Linq;
 using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Generator;
 
-namespace KontrolSystem.TO2 {
-    public interface IKontrolModule {
-        string Name { get; }
+namespace KontrolSystem.TO2;
 
-        string Description { get; }
+public interface IKontrolModule {
+    string Name { get; }
 
-        bool IsCompiled { get; }
+    string Description { get; }
 
-        bool IsBuiltin { get; }
+    bool IsCompiled { get; }
 
-        string SourceFile { get; }
+    bool IsBuiltin { get; }
 
-        IEnumerable<string> AllTypeNames { get; }
+    string SourceFile { get; }
 
-        TO2Type FindType(string name);
+    IEnumerable<string> AllTypeNames { get; }
 
-        IEnumerable<string> AllConstantNames { get; }
+    IEnumerable<string> AllConstantNames { get; }
 
-        IKontrolConstant FindConstant(string name);
+    IEnumerable<string> AllFunctionNames { get; }
 
-        IEnumerable<string> AllFunctionNames { get; }
+    IEnumerable<IKontrolFunction> TestFunctions { get; }
 
-        IKontrolFunction FindFunction(string name);
+    TO2Type FindType(string name);
 
-        IEnumerable<IKontrolFunction> TestFunctions { get; }
+    IKontrolConstant FindConstant(string name);
+
+    IKontrolFunction FindFunction(string name);
+}
+
+public class CompiledKontrolModule : IKontrolModule {
+    private readonly Dictionary<string, IKontrolConstant> constants;
+    private readonly Dictionary<string, CompiledKontrolFunction> publicFunctions;
+    private readonly List<CompiledKontrolFunction> testFunctions;
+    private readonly Dictionary<string, RealizedType> types;
+
+    public CompiledKontrolModule(string name,
+        string description,
+        bool builtin,
+        string sourceFile,
+        IEnumerable<(string alias, RealizedType type)> types,
+        IEnumerable<IKontrolConstant> constants,
+        IEnumerable<CompiledKontrolFunction> functions,
+        List<CompiledKontrolFunction> testFunctions) {
+        Name = name;
+        Description = description;
+        IsBuiltin = builtin;
+        SourceFile = sourceFile;
+        var compiledKontrolConstants = constants.ToList();
+        this.constants = compiledKontrolConstants.ToDictionary(constant => constant.Name);
+        var compiledKontrolFunctions = functions.ToList();
+        publicFunctions = compiledKontrolFunctions.ToDictionary(function => function.Name);
+        this.testFunctions = testFunctions;
+        this.types = types.ToDictionary(t => t.alias, t => t.type);
+
+        //            foreach (CompiledKontrolConstant constant in compiledKontrolConstants) constant.Module = this;
+        foreach (var function in compiledKontrolFunctions) function.Module = this;
+        foreach (var function in testFunctions) function.Module = this;
     }
 
-    public class CompiledKontrolModule : IKontrolModule {
-        public string Name { get; }
-        public string Description { get; }
-        public bool IsBuiltin { get; }
-        public string SourceFile { get; }
-        private readonly Dictionary<string, CompiledKontrolFunction> publicFunctions;
-        private readonly List<CompiledKontrolFunction> testFunctions;
-        private readonly Dictionary<string, RealizedType> types;
-        private readonly Dictionary<string, IKontrolConstant> constants;
+    public string Name { get; }
+    public string Description { get; }
+    public bool IsBuiltin { get; }
+    public string SourceFile { get; }
 
-        public CompiledKontrolModule(string name,
-            string description,
-            bool builtin,
-            string sourceFile,
-            IEnumerable<(string alias, RealizedType type)> types,
-            IEnumerable<IKontrolConstant> constants,
-            IEnumerable<CompiledKontrolFunction> functions,
-            List<CompiledKontrolFunction> testFunctions) {
-            Name = name;
-            Description = description;
-            IsBuiltin = builtin;
-            SourceFile = sourceFile;
-            var compiledKontrolConstants = constants.ToList();
-            this.constants = compiledKontrolConstants.ToDictionary(constant => constant.Name);
-            var compiledKontrolFunctions = functions.ToList();
-            publicFunctions = compiledKontrolFunctions.ToDictionary(function => function.Name);
-            this.testFunctions = testFunctions;
-            this.types = types.ToDictionary(t => t.alias, t => t.type);
+    public bool IsCompiled => true;
 
-            //            foreach (CompiledKontrolConstant constant in compiledKontrolConstants) constant.Module = this;
-            foreach (CompiledKontrolFunction function in compiledKontrolFunctions) function.Module = this;
-            foreach (CompiledKontrolFunction function in testFunctions) function.Module = this;
-        }
+    public IEnumerable<string> AllTypeNames => types.Keys;
 
-        public bool IsCompiled => true;
-
-        public IEnumerable<string> AllTypeNames => types.Keys;
-
-        public TO2Type FindType(string name) => types.Get(name);
-
-        public IEnumerable<string> AllConstantNames => constants.Keys;
-
-        public IKontrolConstant FindConstant(string name) => constants.Get(name);
-
-        public IEnumerable<string> AllFunctionNames => publicFunctions.Keys;
-
-        public IKontrolFunction FindFunction(string name) => publicFunctions.Get(name);
-
-        public IEnumerable<IKontrolFunction> TestFunctions => testFunctions;
-
-        public void RegisterType(BoundType to2Type) => types.Add(to2Type.localName, to2Type);
+    public TO2Type FindType(string name) {
+        return types.Get(name);
     }
 
-    public class DeclaredKontrolModule : IKontrolModule {
-        private readonly Dictionary<string, TO2Type> publicTypes;
-        public readonly Dictionary<string, IKontrolFunction> publicFunctions;
-        public readonly List<DeclaredKontrolFunction> declaredFunctions;
-        public readonly List<DeclaredKontrolStructConstructor> declaredStructConstructors;
-        public readonly Dictionary<string, DeclaredKontrolConstant> declaredConstants;
-        public readonly ModuleContext moduleContext;
-        public readonly TO2Module to2Module;
-        public string Name { get; }
-        public string Description { get; }
-        public bool IsBuiltin { get; }
-        public string SourceFile { get; }
+    public IEnumerable<string> AllConstantNames => constants.Keys;
 
-        public DeclaredKontrolModule(string name, string description,
-            bool builtin,
-            string sourceFile,
-            ModuleContext moduleContext, TO2Module to2Module,
-            IEnumerable<(string alias, TO2Type type)> types) {
-            Name = name;
-            Description = description;
-            IsBuiltin = builtin;
-            SourceFile = sourceFile;
-            this.moduleContext = moduleContext;
-            this.to2Module = to2Module;
-            publicTypes = types.ToDictionary(t => t.alias, t => t.type);
-            publicFunctions = new Dictionary<string, IKontrolFunction>();
-            declaredFunctions = new List<DeclaredKontrolFunction>();
-            declaredStructConstructors = new List<DeclaredKontrolStructConstructor>();
-            declaredConstants = new Dictionary<string, DeclaredKontrolConstant>();
-        }
-
-        public bool IsCompiled => true;
-
-        public IEnumerable<string> AllTypeNames => Enumerable.Empty<string>();
-
-        public TO2Type FindType(string name) => publicTypes.Get(name);
-
-        public IEnumerable<string> AllConstantNames =>
-            declaredConstants.Where(kv => kv.Value.IsPublic).Select(kv => kv.Key);
-
-        public IKontrolConstant FindConstant(string name) => declaredConstants.Get(name);
-
-        public IEnumerable<string> AllFunctionNames => publicFunctions.Keys;
-
-        public IKontrolFunction FindFunction(string name) => publicFunctions.Get(name);
-
-        public IEnumerable<IKontrolFunction> TestFunctions =>
-            declaredFunctions.Where(f => f.to2Function.modifier == FunctionModifier.Test);
+    public IKontrolConstant FindConstant(string name) {
+        return constants.Get(name);
     }
+
+    public IEnumerable<string> AllFunctionNames => publicFunctions.Keys;
+
+    public IKontrolFunction FindFunction(string name) {
+        return publicFunctions.Get(name);
+    }
+
+    public IEnumerable<IKontrolFunction> TestFunctions => testFunctions;
+
+    public void RegisterType(BoundType to2Type) {
+        types.Add(to2Type.localName, to2Type);
+    }
+}
+
+public class DeclaredKontrolModule : IKontrolModule {
+    public readonly Dictionary<string, DeclaredKontrolConstant> declaredConstants;
+    public readonly List<DeclaredKontrolFunction> declaredFunctions;
+    public readonly List<DeclaredKontrolStructConstructor> declaredStructConstructors;
+    public readonly ModuleContext moduleContext;
+    public readonly Dictionary<string, IKontrolFunction> publicFunctions;
+    private readonly Dictionary<string, TO2Type> publicTypes;
+    public readonly TO2Module to2Module;
+
+    public DeclaredKontrolModule(string name, string description,
+        bool builtin,
+        string sourceFile,
+        ModuleContext moduleContext, TO2Module to2Module,
+        IEnumerable<(string alias, TO2Type type)> types) {
+        Name = name;
+        Description = description;
+        IsBuiltin = builtin;
+        SourceFile = sourceFile;
+        this.moduleContext = moduleContext;
+        this.to2Module = to2Module;
+        publicTypes = types.ToDictionary(t => t.alias, t => t.type);
+        publicFunctions = new Dictionary<string, IKontrolFunction>();
+        declaredFunctions = new List<DeclaredKontrolFunction>();
+        declaredStructConstructors = new List<DeclaredKontrolStructConstructor>();
+        declaredConstants = new Dictionary<string, DeclaredKontrolConstant>();
+    }
+
+    public string Name { get; }
+    public string Description { get; }
+    public bool IsBuiltin { get; }
+    public string SourceFile { get; }
+
+    public bool IsCompiled => true;
+
+    public IEnumerable<string> AllTypeNames => Enumerable.Empty<string>();
+
+    public TO2Type FindType(string name) {
+        return publicTypes.Get(name);
+    }
+
+    public IEnumerable<string> AllConstantNames =>
+        declaredConstants.Where(kv => kv.Value.IsPublic).Select(kv => kv.Key);
+
+    public IKontrolConstant FindConstant(string name) {
+        return declaredConstants.Get(name);
+    }
+
+    public IEnumerable<string> AllFunctionNames => publicFunctions.Keys;
+
+    public IKontrolFunction FindFunction(string name) {
+        return publicFunctions.Get(name);
+    }
+
+    public IEnumerable<IKontrolFunction> TestFunctions =>
+        declaredFunctions.Where(f => f.to2Function.modifier == FunctionModifier.Test);
 }
