@@ -9,10 +9,10 @@ using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
     internal readonly struct AsyncClass {
-        internal readonly TypeInfo type;
+        internal readonly TypeBuilder type;
         internal readonly ConstructorInfo constructor;
 
-        internal AsyncClass(TypeInfo type, ConstructorInfo constructor) {
+        internal AsyncClass(TypeBuilder type, ConstructorInfo constructor) {
             this.type = type;
             this.constructor = constructor;
         }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <ProjectGuid>{582C6412-9B9D-48F0-B5AC-70C6A68E610A}</ProjectGuid>
         <OutputType>Library</OutputType>
         <RootNamespace>KontrolSystem.Parsing</RootNamespace>
         <AssemblyName>KontrolSystemParsing</AssemblyName>

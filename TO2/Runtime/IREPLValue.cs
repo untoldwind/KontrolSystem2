@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing.Drawing2D;
 using System.Linq;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.AST;

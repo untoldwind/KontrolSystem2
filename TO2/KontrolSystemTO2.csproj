@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <ProjectGuid>{228541DA-6909-4899-9966-1CA2BF16B830}</ProjectGuid>
         <OutputType>Library</OutputType>
         <RootNamespace>KontrolSystem.TO2</RootNamespace>
         <AssemblyName>KontrolSystemTO2</AssemblyName>
         <BaseOutputPath>../bin</BaseOutputPath>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="..\Parsing\KontrolSystemParsing.csproj">
-            <Project>{582C6412-9B9D-48F0-B5AC-70C6A68E610A}</Project>
-            <Name>KontrolSystemParsing</Name>
-        </ProjectReference>
+        <ProjectReference Include="..\Parsing\KontrolSystemParsing.csproj"/>
     </ItemGroup>
     <ItemGroup>
         <Folder Include="AST\" />
