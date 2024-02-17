@@ -17,6 +17,4 @@
     <Target Name="CopyFiles" AfterTargets="Build">
         <Copy SourceFiles="../bin/$(Configuration)/KontrolSystemTO2.dll" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2" />
     </Target>
-    <Target Name="Test">
-    </Target>
 </Project>

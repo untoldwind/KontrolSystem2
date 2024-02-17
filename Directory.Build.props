@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
     <PropertyGroup>
-        <TargetFramework>net48</TargetFramework>
+        <TargetFramework>netstandard2.1</TargetFramework>
         <LangVersion>8</LangVersion>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <NoWarn>NETSDK1188</NoWarn>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(KSP2_BASE_DIR)' == ''">
@@ -11,14 +12,5 @@
     </PropertyGroup>
     
     <ItemGroup>
-        <Reference Include="mscorlib">
-            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\mscorlib.dll</HintPath>
-        </Reference>
-        <Reference Include="System">
-            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\System.dll</HintPath>
-        </Reference>
-        <Reference Include="System.Core">
-            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\System.Core.dll</HintPath>
-        </Reference>
     </ItemGroup>
 </Project>

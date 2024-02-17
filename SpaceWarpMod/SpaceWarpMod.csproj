@@ -73,6 +73,4 @@
         <Copy SourceFiles="@(AssetFiles)" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2/assets/bundles" />
         <Copy SourceFiles="@(GFXFiles)" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2/assets/images" />
     </Target>
-    <Target Name="Test">
-    </Target>
 </Project>

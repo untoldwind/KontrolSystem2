@@ -22,6 +22,4 @@
         <ProjectReference Include="..\..\TO2\KontrolSystemTO2.csproj"/>
         <ProjectReference Include="..\..\KSP2Runtime\KSP2Runtime.csproj"/>
     </ItemGroup>
-    <Target Name="Test">
-    </Target>
 </Project>

@@ -160,7 +160,7 @@ namespace KontrolSystem.TO2.Test {
 
                 while (!futureResult.IsReady) {
                     pollCount++;
-                    if (pollCount > 100) throw new FailException("No result after 100 tries");
+                    if (pollCount > 100) throw FailException.ForFailure("No result after 100 tries");
                     futureResult = future.PollValue();
                 }
             }
@@ -171,7 +171,7 @@ namespace KontrolSystem.TO2.Test {
 
             while (!mainFutureResult.IsReady) {
                 pollCount++;
-                if (pollCount > 100) throw new FailException("No result after 100 tries");
+                if (pollCount > 100) throw FailException.ForFailure("No result after 100 tries");
                 mainFutureResult = mainFuture.PollValue();
             }
 
