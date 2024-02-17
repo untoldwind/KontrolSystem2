@@ -9,7 +9,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI;
 
 public partial class KSPUIModule {
     public abstract class AbstractInputField {
-        protected IDisposable bindSubscription;
+        protected IDisposable? bindSubscription;
         protected UGUIInputField inputField;
         protected AbstractContainer parent;
 

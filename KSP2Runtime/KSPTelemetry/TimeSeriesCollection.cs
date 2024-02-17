@@ -9,7 +9,7 @@ namespace KontrolSystem.KSP.Runtime.KSPTelemetry;
 
 public class TimeSeriesCollection {
     private static readonly int MAX_NUM_TIMESERIES = 20;
-    private static LinkedList<KSPTelemetryModule.TimeSeries> timeSeriesList;
+    private LinkedList<KSPTelemetryModule.TimeSeries> timeSeriesList;
     private readonly object collectionLock = new();
     public UnityEvent changed = new();
 
@@ -41,7 +41,7 @@ public class TimeSeriesCollection {
         changed.Invoke();
     }
 
-    public KSPTelemetryModule.TimeSeries GetTimeSeries(string name) {
+    public KSPTelemetryModule.TimeSeries? GetTimeSeries(string name) {
         lock (collectionLock) {
             return timeSeriesList.FirstOrDefault(t => t.Name == name);
         }

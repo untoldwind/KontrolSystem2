@@ -9,19 +9,22 @@ using KontrolSystem.TO2.Runtime;
 namespace KontrolSystem.TO2.Generator;
 
 public class ModuleContext {
-    public readonly ConstructorBuilder constructorBuilder;
-    public readonly IILEmitter constructorEmitter;
-    public readonly List<(string alias, TO2Type type)> exportedTypes;
+    public readonly ConstructorBuilder? constructorBuilder;
+    public readonly IILEmitter? constructorEmitter;
+    public readonly List<(string alias, TO2Type type)>? exportedTypes;
     public readonly Dictionary<string, IKontrolConstant> mappedConstants;
     public readonly Dictionary<string, IKontrolFunction> mappedFunctions;
     public readonly Dictionary<string, TO2Type> mappedTypes;
     public readonly Dictionary<string, string> moduleAliases;
-    public readonly string moduleName;
+    public readonly string? moduleName;
     public readonly Context root;
     private readonly Dictionary<string, TypeBuilder> subTypes;
     public readonly TypeBuilder typeBuilder;
 
     protected ModuleContext() {
+        // This is only needed for testing
+        root = null!;
+        typeBuilder = null!;
         moduleAliases = new Dictionary<string, string>();
         mappedTypes = new Dictionary<string, TO2Type> {
             { "ArrayBuilder", BuiltinType.ArrayBuilder },
@@ -59,7 +62,7 @@ public class ModuleContext {
         typeBuilder = nestedType
             ? parent.typeBuilder.DefineNestedType(subTypeName, TypeAttributes.NestedPublic, parentType, interfaces)
             : root.moduleBuilder.DefineType(
-                moduleName.ToUpperInvariant().Replace(':', '_') + "_" + subTypeName, TypeAttributes.Public);
+                moduleName?.ToUpperInvariant().Replace(':', '_') + "_" + subTypeName, TypeAttributes.Public);
         moduleAliases = parent.moduleAliases;
         mappedTypes = parent.mappedTypes;
         mappedConstants = parent.mappedConstants;
@@ -77,7 +80,7 @@ public class ModuleContext {
         return type;
     }
 
-    public IKontrolModule FindModule(string moduleName) {
+    public IKontrolModule? FindModule(string moduleName) {
         return moduleAliases.ContainsKey(moduleName)
             ? root.registry.modules.Get(moduleAliases[moduleName])
             : root.registry.modules.Get(moduleName);

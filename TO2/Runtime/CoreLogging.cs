@@ -7,7 +7,7 @@ namespace KontrolSystem.TO2.Runtime;
         "Provides basic logging. In KSP all log messages will appear in the debug console as well as the `KSP.log` file."
 )]
 public class CoreLogging {
-    private static ITO2Logger Logger => ContextHolder.CurrentContext.Value?.Logger;
+    private static ITO2Logger? Logger => ContextHolder.CurrentContext.Value?.Logger;
 
     [KSFunction(
         Description = "Write a debug-level `message`."

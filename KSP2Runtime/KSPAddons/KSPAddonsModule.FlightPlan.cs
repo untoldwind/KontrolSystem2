@@ -8,23 +8,23 @@ public partial class KSPAddonsModule {
     [KSClass("FlightPlan")]
     public class FlightPlanAdapter {
         public const string ModGuid = "com.github.schlosrat.flight_plan";
-        private readonly MethodInfo circularize;
-        private readonly MethodInfo courseCorrection;
-        private readonly MethodInfo ellipticize;
-        private readonly MethodInfo hohmannTransfer;
+        private readonly MethodInfo? circularize;
+        private readonly MethodInfo? courseCorrection;
+        private readonly MethodInfo? ellipticize;
+        private readonly MethodInfo? hohmannTransfer;
 
         private readonly object instance;
-        private readonly MethodInfo interceptTgt;
-        private readonly MethodInfo matchPlanes;
-        private readonly MethodInfo matchVelocity;
-        private readonly MethodInfo moonReturn;
-        private readonly MethodInfo planetaryXfer;
-        private readonly MethodInfo setInclination;
-        private readonly MethodInfo setNewAp;
-        private readonly MethodInfo setNewLAN;
-        private readonly MethodInfo setNewPe;
-        private readonly MethodInfo setNewSMA;
-        private readonly MethodInfo setNodeLongitude;
+        private readonly MethodInfo? interceptTgt;
+        private readonly MethodInfo? matchPlanes;
+        private readonly MethodInfo? matchVelocity;
+        private readonly MethodInfo? moonReturn;
+        private readonly MethodInfo? planetaryXfer;
+        private readonly MethodInfo? setInclination;
+        private readonly MethodInfo? setNewAp;
+        private readonly MethodInfo? setNewLAN;
+        private readonly MethodInfo? setNewPe;
+        private readonly MethodInfo? setNewSMA;
+        private readonly MethodInfo? setNodeLongitude;
         private readonly Version version;
 
         internal FlightPlanAdapter(object instance, Version version) {
@@ -135,7 +135,7 @@ public partial class KSPAddonsModule {
         [KSMethod]
         public bool CourseCorrection(double burnUt, double burnOffsetFactor = -0.5) {
             if (courseCorrection != null)
-                return (bool)interceptTgt.Invoke(instance, new object[] { burnUt, burnOffsetFactor });
+                return (bool)courseCorrection.Invoke(instance, new object[] { burnUt, burnOffsetFactor });
             return false;
         }
 

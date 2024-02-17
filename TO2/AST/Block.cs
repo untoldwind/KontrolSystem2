@@ -16,7 +16,7 @@ public interface IBlockItem {
 
     IVariableContainer VariableContainer { set; }
 
-    TypeHint TypeHint { set; }
+    TypeHint? TypeHint { set; }
 
     TO2Type ResultType(IBlockContext context);
 
@@ -30,14 +30,14 @@ public interface IBlockItem {
 public interface IVariableRef {
     string Name { get; }
 
-    TO2Type VariableType(IBlockContext context);
+    TO2Type? VariableType(IBlockContext context);
 }
 
 public class Block : Expression, IVariableContainer {
     private readonly List<IBlockItem> items;
     private readonly Dictionary<string, IVariableRef> variables;
-    private IVariableContainer parentContainer;
-    private ILocalRef preparedResult;
+    private IVariableContainer? parentContainer;
+    private ILocalRef? preparedResult;
 
     public Block(List<IBlockItem> items, Position start = new(), Position end = new()) :
         base(start, end) {
@@ -47,8 +47,8 @@ public class Block : Expression, IVariableContainer {
             item.VariableContainer = this;
             switch (item) {
             case VariableDeclaration variable:
-                if (!variables.ContainsKey(variable.declaration.target))
-                    variables.Add(variable.declaration.target, variable);
+                if (!variables.ContainsKey(variable.declaration.target!))
+                    variables.Add(variable.declaration.target!, variable);
                 break;
             case TupleDeconstructDeclaration tuple:
                 foreach (var r in tuple.Refs)
@@ -60,20 +60,20 @@ public class Block : Expression, IVariableContainer {
         }
     }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set => parentContainer = value;
     }
 
-    public override TypeHint TypeHint {
+    public override TypeHint? TypeHint {
         set {
             var last = items.LastOrDefault();
             if (last != null) last.TypeHint = value;
         }
     }
 
-    public IVariableContainer ParentContainer => parentContainer;
+    public IVariableContainer? ParentContainer => parentContainer;
 
-    public TO2Type FindVariableLocal(IBlockContext context, string name) {
+    public TO2Type? FindVariableLocal(IBlockContext context, string name) {
         return variables.Get(name)?.VariableType(context);
     }
 
@@ -147,28 +147,28 @@ public class Block : Expression, IVariableContainer {
     internal class REPLBlockEval : REPLValueFuture {
         private readonly REPLContext context;
         private readonly IEnumerator<IBlockItem> items;
-        private REPLValueFuture lastFuture;
-        private IREPLValue lastResult = REPLUnit.INSTANCE;
+        private REPLValueFuture? lastFuture;
+        private IREPLValue? lastResult = REPLUnit.INSTANCE;
 
         public REPLBlockEval(TO2Type to2Type, REPLContext context, List<IBlockItem> items) : base(to2Type) {
             this.context = context;
             this.items = items.Where(item => !item.IsComment).GetEnumerator();
         }
 
-        public override FutureResult<IREPLValue> PollValue() {
+        public override FutureResult<IREPLValue?> PollValue() {
             if (lastFuture == null) {
-                if (!items.MoveNext()) return new FutureResult<IREPLValue>(lastResult);
-                lastFuture = items.Current.Eval(context);
+                if (!items.MoveNext()) return new FutureResult<IREPLValue?>(lastResult);
+                lastFuture = items.Current!.Eval(context);
             }
 
             var result = lastFuture.PollValue();
-            if (!result.IsReady) return new FutureResult<IREPLValue>();
-            if (result.value.IsBreak || result.value.IsContinue || result.value.IsReturn)
-                return new FutureResult<IREPLValue>(result.value);
+            if (!result.IsReady) return new FutureResult<IREPLValue?>();
+            if (result.value!.IsBreak || result.value.IsContinue || result.value.IsReturn)
+                return new FutureResult<IREPLValue?>(result.value);
             lastFuture = null;
             lastResult = result.value;
 
-            return new FutureResult<IREPLValue>();
+            return new FutureResult<IREPLValue?>();
         }
     }
 }

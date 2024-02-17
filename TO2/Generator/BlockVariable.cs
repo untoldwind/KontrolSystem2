@@ -5,7 +5,7 @@ using KontrolSystem.TO2.AST;
 
 namespace KontrolSystem.TO2.Generator;
 
-public delegate IBlockVariable VariableResolver(string name);
+public delegate IBlockVariable? VariableResolver(string name);
 
 public interface IBlockVariable {
     string Name { get; }

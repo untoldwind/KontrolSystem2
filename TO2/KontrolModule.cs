@@ -8,13 +8,13 @@ namespace KontrolSystem.TO2;
 public interface IKontrolModule {
     string Name { get; }
 
-    string Description { get; }
+    string? Description { get; }
 
     bool IsCompiled { get; }
 
     bool IsBuiltin { get; }
 
-    string SourceFile { get; }
+    string? SourceFile { get; }
 
     IEnumerable<string> AllTypeNames { get; }
 
@@ -24,11 +24,11 @@ public interface IKontrolModule {
 
     IEnumerable<IKontrolFunction> TestFunctions { get; }
 
-    TO2Type FindType(string name);
+    TO2Type? FindType(string name);
 
-    IKontrolConstant FindConstant(string name);
+    IKontrolConstant? FindConstant(string name);
 
-    IKontrolFunction FindFunction(string name);
+    IKontrolFunction? FindFunction(string name);
 }
 
 public class CompiledKontrolModule : IKontrolModule {
@@ -38,9 +38,9 @@ public class CompiledKontrolModule : IKontrolModule {
     private readonly Dictionary<string, RealizedType> types;
 
     public CompiledKontrolModule(string name,
-        string description,
+        string? description,
         bool builtin,
-        string sourceFile,
+        string? sourceFile,
         IEnumerable<(string alias, RealizedType type)> types,
         IEnumerable<IKontrolConstant> constants,
         IEnumerable<CompiledKontrolFunction> functions,
@@ -62,27 +62,27 @@ public class CompiledKontrolModule : IKontrolModule {
     }
 
     public string Name { get; }
-    public string Description { get; }
+    public string? Description { get; }
     public bool IsBuiltin { get; }
-    public string SourceFile { get; }
+    public string? SourceFile { get; }
 
     public bool IsCompiled => true;
 
     public IEnumerable<string> AllTypeNames => types.Keys;
 
-    public TO2Type FindType(string name) {
+    public TO2Type? FindType(string name) {
         return types.Get(name);
     }
 
     public IEnumerable<string> AllConstantNames => constants.Keys;
 
-    public IKontrolConstant FindConstant(string name) {
+    public IKontrolConstant? FindConstant(string name) {
         return constants.Get(name);
     }
 
     public IEnumerable<string> AllFunctionNames => publicFunctions.Keys;
 
-    public IKontrolFunction FindFunction(string name) {
+    public IKontrolFunction? FindFunction(string name) {
         return publicFunctions.Get(name);
     }
 
@@ -129,20 +129,20 @@ public class DeclaredKontrolModule : IKontrolModule {
 
     public IEnumerable<string> AllTypeNames => Enumerable.Empty<string>();
 
-    public TO2Type FindType(string name) {
+    public TO2Type? FindType(string name) {
         return publicTypes.Get(name);
     }
 
     public IEnumerable<string> AllConstantNames =>
         declaredConstants.Where(kv => kv.Value.IsPublic).Select(kv => kv.Key);
 
-    public IKontrolConstant FindConstant(string name) {
+    public IKontrolConstant? FindConstant(string name) {
         return declaredConstants.Get(name);
     }
 
     public IEnumerable<string> AllFunctionNames => publicFunctions.Keys;
 
-    public IKontrolFunction FindFunction(string name) {
+    public IKontrolFunction? FindFunction(string name) {
         return publicFunctions.Get(name);
     }
 

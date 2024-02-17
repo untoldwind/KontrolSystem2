@@ -15,8 +15,8 @@ public static class DirectionBinding {
         new OperatorCollection {
             {
                 Operator.Neg,
-                new StaticMethodOperatorEmitter(() => BuiltinType.Unit, () => DirectionType,
-                    typeof(Direction).GetMethod("op_UnaryNegation", new[] { typeof(Vector2d) }))
+                new StaticMethodOperatorEmitter(() => BuiltinType.Unit, () => DirectionType!,
+                    typeof(Direction).GetMethod("op_UnaryNegation", new[] { typeof(Direction) }))
             }, {
                 Operator.Mul,
                 new StaticMethodOperatorEmitter(() => Vector3Binding.Vector3Type, () => Vector3Binding.Vector3Type,
@@ -26,27 +26,27 @@ public static class DirectionBinding {
         new OperatorCollection {
             {
                 Operator.Add,
-                new StaticMethodOperatorEmitter(() => DirectionType, () => DirectionType,
+                new StaticMethodOperatorEmitter(() => DirectionType!, () => DirectionType!,
                     typeof(Direction).GetMethod("op_Addition", new[] { typeof(Direction), typeof(Direction) }))
             }, {
                 Operator.AddAssign,
-                new StaticMethodOperatorEmitter(() => DirectionType, () => DirectionType,
+                new StaticMethodOperatorEmitter(() => DirectionType!, () => DirectionType!,
                     typeof(Direction).GetMethod("op_Addition", new[] { typeof(Direction), typeof(Direction) }))
             }, {
                 Operator.Sub,
-                new StaticMethodOperatorEmitter(() => DirectionType, () => DirectionType,
+                new StaticMethodOperatorEmitter(() => DirectionType!, () => DirectionType!,
                     typeof(Direction).GetMethod("op_Subtraction", new[] { typeof(Direction), typeof(Direction) }))
             }, {
                 Operator.SubAssign,
-                new StaticMethodOperatorEmitter(() => DirectionType, () => DirectionType,
+                new StaticMethodOperatorEmitter(() => DirectionType!, () => DirectionType!,
                     typeof(Direction).GetMethod("op_Subtraction", new[] { typeof(Direction), typeof(Direction) }))
             }, {
                 Operator.Mul,
-                new StaticMethodOperatorEmitter(() => DirectionType, () => DirectionType,
+                new StaticMethodOperatorEmitter(() => DirectionType!, () => DirectionType!,
                     typeof(Direction).GetMethod("op_Multiply", new[] { typeof(Direction), typeof(Direction) }))
             }, {
                 Operator.MulAssign,
-                new StaticMethodOperatorEmitter(() => DirectionType, () => DirectionType,
+                new StaticMethodOperatorEmitter(() => DirectionType!, () => DirectionType!,
                     typeof(Direction).GetMethod("op_Multiply", new[] { typeof(Direction), typeof(Direction) }))
             }, {
                 Operator.Mul,
@@ -54,11 +54,11 @@ public static class DirectionBinding {
                     typeof(Direction).GetMethod("op_Multiply", new[] { typeof(Direction), typeof(Vector3d) }))
             }, {
                 Operator.Eq,
-                new StaticMethodOperatorEmitter(() => DirectionType, () => BuiltinType.Bool,
+                new StaticMethodOperatorEmitter(() => DirectionType!, () => BuiltinType.Bool,
                     typeof(Direction).GetMethod("op_Equality", new[] { typeof(Direction), typeof(Direction) }))
             }, {
                 Operator.NotEq,
-                new StaticMethodOperatorEmitter(() => DirectionType, () => BuiltinType.Bool,
+                new StaticMethodOperatorEmitter(() => DirectionType!, () => BuiltinType.Bool,
                     typeof(Direction).GetMethod("op_Equality", new[] { typeof(Direction), typeof(Direction) }),
                     null, OpCodes.Ldc_I4_0, OpCodes.Ceq)
             }
@@ -115,7 +115,7 @@ public static class DirectionBinding {
                     typeof(Direction), typeof(Direction).GetProperty("Roll"))
             }, {
                 "inverse",
-                new BoundPropertyLikeFieldAccessFactory("Inverse direction", () => DirectionType,
+                new BoundPropertyLikeFieldAccessFactory("Inverse direction", () => DirectionType!,
                     typeof(DirectionBinding),
                     typeof(DirectionBinding).GetMethod("Inverse"), null)
             }

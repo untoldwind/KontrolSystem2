@@ -7,7 +7,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI;
 public partial class KSPUIModule {
     [KSClass]
     public class Rect2D : GLUIDrawer.IGLUIDrawable {
-        private Vector2[] drawPoints;
+        private Vector2[]? drawPoints;
         private Vector2d point1;
         private Vector2d point2;
 
@@ -39,7 +39,7 @@ public partial class KSPUIModule {
         [KSField] public KSPConsoleModule.RgbaColor FillColor { get; set; }
 
         public void OnDraw(GLUIDrawer.GLUIDraw draw) {
-            draw.ConvexPolygon(drawPoints, FillColor.Color);
+            draw.ConvexPolygon(drawPoints!, FillColor.Color);
         }
 
         private void UpdateDrawPoints() {

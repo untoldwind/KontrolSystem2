@@ -20,8 +20,8 @@ public static class BindingGenerator {
 
     private static readonly Dictionary<Type, CompiledKontrolModule> BoundModules = new();
 
-    public static CompiledKontrolModule BindModule(Type moduleType, IEnumerable<RealizedType> additionalTypes = null,
-        IEnumerable<IKontrolConstant> additionConstants = null) {
+    public static CompiledKontrolModule BindModule(Type moduleType, IEnumerable<RealizedType>? additionalTypes = null,
+        IEnumerable<IKontrolConstant>? additionConstants = null) {
         lock (BoundModules) {
             if (BoundModules.ContainsKey(moduleType)) return BoundModules[moduleType];
 
@@ -124,7 +124,7 @@ public static class BindingGenerator {
         }
     }
 
-    private static IMethodInvokeFactory BindMethod(string description, Type type, MethodInfo method) {
+    private static IMethodInvokeFactory BindMethod(string? description, Type type, MethodInfo method) {
         var parameters = method.GetParameters().Select(p => {
             var ksParameter = p.GetCustomAttribute<KSParameter>();
             return new RealizedParameter(p.Name, MapNativeType(p.ParameterType), ksParameter?.Description,
@@ -145,7 +145,7 @@ public static class BindingGenerator {
         }
     }
 
-    private static IFieldAccessFactory BindProperty(string description, Type type, PropertyInfo property,
+    private static IFieldAccessFactory BindProperty(string? description, Type type, PropertyInfo property,
         bool isAsyncStore) {
         var result = MapNativeType(property.PropertyType);
 
@@ -245,7 +245,7 @@ public static class BindingGenerator {
                 .Concat(name.Select((x, i) => i > 0 && char.IsUpper(x) ? "_" + x : x.ToString())).ToLower();
     }
 
-    private static string NormalizeDescription(string description) {
+    private static string? NormalizeDescription(string? description) {
         if (description == null) return null;
 
         var sb = new StringBuilder();

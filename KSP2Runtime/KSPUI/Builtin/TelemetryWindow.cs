@@ -24,17 +24,17 @@ public class TelemetryWindow : UGUIResizableWindow {
     };
 
     internal int colorCounter;
-    private GLUIDrawer drawer;
-    private RawImage graphImage;
-    private UGUILayoutContainer savePopup;
+    private GLUIDrawer? drawer;
+    private RawImage? graphImage;
+    private UGUILayoutContainer? savePopup;
     private readonly Dictionary<string, Color> selectedTimeSeriesNames = new();
-    private UIList<KSPTelemetryModule.TimeSeries, UITimeSeriesElement> timeSeries;
-    private TimeSeriesCollection timeSeriesCollection;
+    private UIList<KSPTelemetryModule.TimeSeries, UITimeSeriesElement>? timeSeries;
+    private TimeSeriesCollection? timeSeriesCollection;
 
     public void Update() {
-        using (var draw = drawer.Draw()) {
+        using (var draw = drawer!.Draw()) {
             var selectedTimeSeries =
-                timeSeriesCollection.AllTimeSeries.Where(t => selectedTimeSeriesNames.ContainsKey(t.Name)).ToArray();
+                timeSeriesCollection!.AllTimeSeries.Where(t => selectedTimeSeriesNames.ContainsKey(t.Name)).ToArray();
             if (selectedTimeSeries.Length == 0) {
                 draw.DrawText(new Vector2(draw.Width / 2, draw.Height / 2), "No data", 50, new Vector2(0.5f, 0.5f), 0,
                     Color.yellow);
@@ -111,7 +111,7 @@ public class TelemetryWindow : UGUIResizableWindow {
 
         var timeSeriesContainer = root.Add(UGUILayoutContainer.Vertical());
 
-        timeSeries = new UIList<KSPTelemetryModule.TimeSeries, UITimeSeriesElement>(UIFactory.Instance.uiFontSize + 10,
+        timeSeries = new UIList<KSPTelemetryModule.TimeSeries, UITimeSeriesElement>(UIFactory.Instance!.uiFontSize + 10,
             element =>
                 new UITimeSeriesElement(element, selectedTimeSeriesNames, NextColor));
 
@@ -119,7 +119,7 @@ public class TelemetryWindow : UGUIResizableWindow {
             1);
         timeSeriesContainer.Add(UGUIButton.Create("Save", ToggleSavePopup), UGUILayout.Align.Start);
 
-        timeSeriesCollection = Mainframe.Instance.TimeSeriesCollection;
+        timeSeriesCollection = Mainframe.Instance!.TimeSeriesCollection;
         timeSeriesCollection.changed.AddListener(OnTimeSeriesChanged);
 
         MinSize = root.MinSize;
@@ -132,8 +132,8 @@ public class TelemetryWindow : UGUIResizableWindow {
     public override void OnDisable() {
         base.OnDisable();
 
-        timeSeriesCollection.changed.RemoveListener(OnTimeSeriesChanged);
-        drawer.Dispose();
+        timeSeriesCollection?.changed.RemoveListener(OnTimeSeriesChanged);
+        drawer?.Dispose();
     }
 
     internal void ToggleSavePopup() {
@@ -142,16 +142,16 @@ public class TelemetryWindow : UGUIResizableWindow {
             savePopup = null;
         } else {
             savePopup = UGUILayoutContainer.HorizontalPanel(10, new UGUILayout.Padding(15, 15, 15, 15));
-            UIFactory.Layout(savePopup.GameObject, windowTransform, UIFactory.LAYOUT_STRETCH, UIFactory.LAYOUT_END,
+            UIFactory.Layout(savePopup.GameObject, windowTransform!, UIFactory.LAYOUT_STRETCH, UIFactory.LAYOUT_END,
                 10, -50, -40, 60);
 
             var fileNameInput = UGUIInputField.Create(
-                Path.Combine(Mainframe.Instance.LocalLibPath,
+                Path.Combine(Mainframe.Instance!.LocalLibPath,
                     $"TimeSeries-{(long)Game.SpaceSimulation.UniverseModel.UniverseTime}.json"), 120);
             savePopup.Add(fileNameInput, UGUILayout.Align.Stretch, 1);
 
             savePopup.Add(UGUIButton.Create("Save", () => {
-                timeSeriesCollection.SaveJson(fileNameInput.Value);
+                timeSeriesCollection?.SaveJson(fileNameInput.Value);
                 savePopup.Destroy();
                 savePopup = null;
             }));
@@ -161,7 +161,7 @@ public class TelemetryWindow : UGUIResizableWindow {
     }
 
     internal void OnTimeSeriesChanged() {
-        timeSeries.Elements = timeSeriesCollection.AllTimeSeries;
+        timeSeries!.Elements = timeSeriesCollection!.AllTimeSeries;
     }
 
     internal Color NextColor() {
@@ -173,10 +173,10 @@ public class TelemetryWindow : UGUIResizableWindow {
     protected override void OnResize(Vector2 delta) {
         base.OnResize(delta);
 
-        var graphTransform = graphImage.GetComponent<RectTransform>();
+        var graphTransform = graphImage!.GetComponent<RectTransform>();
         var size = Vector2.Scale(graphTransform.rect.size, graphTransform.lossyScale);
 
-        drawer.Resize((int)size.x, (int)size.y);
+        drawer?.Resize((int)size.x, (int)size.y);
     }
 
     internal class UITimeSeriesElement : UIListElement<KSPTelemetryModule.TimeSeries> {
@@ -194,18 +194,18 @@ public class TelemetryWindow : UGUIResizableWindow {
                 if (selected) {
                     var color = nextColor();
                     this.selectedTimeSeriesNames.Add(timeSeries.Name, color);
-                    toggle.CheckmarkColor = color;
+                    toggle!.CheckmarkColor = color;
                 } else {
                     this.selectedTimeSeriesNames.Remove(timeSeries.Name);
                 }
             }), UGUILayout.Align.Stretch, 1);
             toggle.IsOn = this.selectedTimeSeriesNames.ContainsKey(timeSeries.Name);
 
-            var closeButton = UIFactory.Instance.CreateDeleteButton();
+            var closeButton = UIFactory.Instance!.CreateDeleteButton();
             root.Add(closeButton, UGUILayout.Align.Center,
                 new Vector2(UIFactory.Instance.uiFontSize + 4, UIFactory.Instance.uiFontSize + 4));
             closeButton.GetComponent<Button>().onClick.AddListener(() =>
-                Mainframe.Instance.TimeSeriesCollection.RemoveTimeSeries(timeSeries.Name));
+                Mainframe.Instance!.TimeSeriesCollection.RemoveTimeSeries(timeSeries.Name));
 
             root.Layout();
         }

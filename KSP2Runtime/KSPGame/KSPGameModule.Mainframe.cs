@@ -11,7 +11,7 @@ public partial class KSPGameModule {
         [KSField]
         public ProcessAdapter[] AvailableProcesses {
             get {
-                var gameMode = Mainframe.Instance.GameMode;
+                var gameMode = Mainframe.Instance!.GameMode;
                 return Mainframe.Instance.AvailableProcesses.Select(process =>
                     new ProcessAdapter(process, process.EntrypointArgumentDescriptors(gameMode))).ToArray();
             }
@@ -19,7 +19,7 @@ public partial class KSPGameModule {
 
         [KSMethod]
         public Option<ProcessAdapter> FindProcess(string name) {
-            var process = Mainframe.Instance.AvailableProcesses.FirstOrDefault(process => process.Name == name);
+            var process = Mainframe.Instance!.AvailableProcesses.FirstOrDefault(process => process.Name == name);
 
             if (process != null) {
                 var gameMode = Mainframe.Instance.GameMode;

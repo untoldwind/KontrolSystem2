@@ -3,14 +3,14 @@ using KontrolSystem.TO2.AST;
 
 namespace KontrolSystem.TO2.Runtime;
 
-public abstract class REPLValueFuture : Future<IREPLValue> {
+public abstract class REPLValueFuture : Future<IREPLValue?> {
     protected REPLValueFuture(TO2Type to2Type) {
         this.Type = to2Type;
     }
 
     public TO2Type Type { get; }
 
-    public static REPLValueFuture Success(IREPLValue value) {
+    public static REPLValueFuture Success(IREPLValue? value) {
         return new SuccessImpl(value);
     }
 
@@ -46,14 +46,14 @@ public abstract class REPLValueFuture : Future<IREPLValue> {
     }
 
     internal class SuccessImpl : REPLValueFuture {
-        private readonly IREPLValue value;
+        private readonly IREPLValue? value;
 
-        public SuccessImpl(IREPLValue value) : base(value.Type) {
+        public SuccessImpl(IREPLValue? value) : base(value?.Type ?? BuiltinType.Unit) {
             this.value = value;
         }
 
-        public override FutureResult<IREPLValue> PollValue() {
-            return new FutureResult<IREPLValue>(value);
+        public override FutureResult<IREPLValue?> PollValue() {
+            return new FutureResult<IREPLValue?>(value);
         }
     }
 
@@ -64,21 +64,21 @@ public abstract class REPLValueFuture : Future<IREPLValue> {
             this.future = future;
         }
 
-        public override FutureResult<IREPLValue> PollValue() {
+        public override FutureResult<IREPLValue?> PollValue() {
             var result = future.Poll();
 
             if (result.IsReady)
-                return new FutureResult<IREPLValue>(Type.REPLCast(result.ValueObject));
-            return new FutureResult<IREPLValue>();
+                return new FutureResult<IREPLValue?>(Type.REPLCast(result.ValueObject));
+            return new FutureResult<IREPLValue?>();
         }
     }
 
     internal class ChainNImpl : REPLValueFuture {
         private readonly REPLValueFuture[] futures;
         private readonly Func<IREPLValue[], REPLValueFuture> map;
-        private readonly IREPLValue[] results;
-        private REPLValueFuture mapFuture;
-        private IREPLValue mapResult;
+        private readonly IREPLValue?[] results;
+        private REPLValueFuture? mapFuture;
+        private IREPLValue? mapResult;
 
         public ChainNImpl(TO2Type resultType, REPLValueFuture[] futures, Func<IREPLValue[], REPLValueFuture> map) :
             base(resultType) {
@@ -87,17 +87,17 @@ public abstract class REPLValueFuture : Future<IREPLValue> {
             this.map = map;
         }
 
-        public override FutureResult<IREPLValue> PollValue() {
+        public override FutureResult<IREPLValue?> PollValue() {
             for (var i = 0; i < futures.Length; i++)
                 if (results[i] == null) {
                     var result = futures[i].PollValue();
                     if (result.IsReady)
                         results[i] = result.value;
                     else
-                        return new FutureResult<IREPLValue>();
+                        return new FutureResult<IREPLValue?>();
                 }
 
-            if (mapFuture == null) mapFuture = map.Invoke(results);
+            if (mapFuture == null) mapFuture = map.Invoke(results!);
 
             if (mapResult == null) {
                 var result = mapFuture.PollValue();
@@ -105,10 +105,10 @@ public abstract class REPLValueFuture : Future<IREPLValue> {
                 if (result.IsReady)
                     mapResult = result.value;
                 else
-                    return new FutureResult<IREPLValue>();
+                    return new FutureResult<IREPLValue?>();
             }
 
-            return new FutureResult<IREPLValue>(mapResult);
+            return new FutureResult<IREPLValue?>(mapResult);
         }
     }
 }
@@ -116,7 +116,7 @@ public abstract class REPLValueFuture : Future<IREPLValue> {
 public interface IREPLValue {
     TO2Type Type { get; }
 
-    object Value { get; }
+    object? Value { get; }
 
     bool IsBreak { get; }
 
@@ -124,13 +124,13 @@ public interface IREPLValue {
 
     bool IsReturn { get; }
 
-    IREPLForInSource ForInSource();
+    IREPLForInSource? ForInSource();
 }
 
 public interface IREPLForInSource {
     TO2Type ElementType { get; }
 
-    IREPLValue Next();
+    IREPLValue? Next();
 }
 
 public class REPLUnit : IREPLValue {
@@ -141,7 +141,7 @@ public class REPLUnit : IREPLValue {
 
     public TO2Type Type => BuiltinType.Unit;
 
-    public object Value => null;
+    public object? Value => null;
 
     public bool IsBreak => false;
 
@@ -149,7 +149,7 @@ public class REPLUnit : IREPLValue {
 
     public bool IsReturn => false;
 
-    public IREPLForInSource ForInSource() {
+    public IREPLForInSource? ForInSource() {
         return null;
     }
 }
@@ -162,7 +162,7 @@ public class REPLBreak : IREPLValue {
 
     public TO2Type Type => BuiltinType.Unit;
 
-    public object Value => null;
+    public object? Value => null;
 
     public bool IsBreak => true;
 
@@ -170,7 +170,7 @@ public class REPLBreak : IREPLValue {
 
     public bool IsReturn => false;
 
-    public IREPLForInSource ForInSource() {
+    public IREPLForInSource? ForInSource() {
         return null;
     }
 }
@@ -183,7 +183,7 @@ public class REPLContinue : IREPLValue {
 
     public TO2Type Type => BuiltinType.Unit;
 
-    public object Value => null;
+    public object? Value => null;
 
     public bool IsBreak => false;
 
@@ -191,7 +191,7 @@ public class REPLContinue : IREPLValue {
 
     public bool IsReturn => false;
 
-    public IREPLForInSource ForInSource() {
+    public IREPLForInSource? ForInSource() {
         return null;
     }
 }
@@ -205,7 +205,7 @@ public class REPLReturn : IREPLValue {
 
     public TO2Type Type => returnValue.Type;
 
-    public object Value => returnValue.Value;
+    public object? Value => returnValue.Value;
 
     public bool IsBreak => false;
 
@@ -213,7 +213,7 @@ public class REPLReturn : IREPLValue {
 
     public bool IsReturn => true;
 
-    public IREPLForInSource ForInSource() {
+    public IREPLForInSource? ForInSource() {
         return null;
     }
 }
@@ -235,40 +235,40 @@ public struct REPLBool : IREPLValue {
 
     public bool IsReturn => false;
 
-    public IREPLForInSource ForInSource() {
+    public IREPLForInSource? ForInSource() {
         return null;
     }
 
-    public static IREPLValue Not(Node node, IREPLValue other, IREPLValue _) {
+    public static IREPLValue Not(Node node, IREPLValue other, IREPLValue? _) {
         if (other is REPLBool b) return new REPLBool(!b.boolValue);
 
         throw new REPLException(node, $"Can not preform boolean not on non-boolean: {other.Type.Name}");
     }
 
-    public static IREPLValue Eq(Node node, IREPLValue left, IREPLValue right) {
+    public static IREPLValue Eq(Node node, IREPLValue left, IREPLValue? right) {
         if (left is REPLBool lb && right is REPLBool rb) return new REPLBool(lb.boolValue == rb.boolValue);
 
-        throw new REPLException(node, $"Can not preform boolean eq on non-boolean: {left.Type.Name} {right.Type.Name}");
+        throw new REPLException(node, $"Can not preform boolean eq on non-boolean: {left.Type.Name} {right?.Type.Name}");
     }
 
-    public static IREPLValue Neq(Node node, IREPLValue left, IREPLValue right) {
+    public static IREPLValue Neq(Node node, IREPLValue left, IREPLValue? right) {
         if (left is REPLBool lb && right is REPLBool rb) return new REPLBool(lb.boolValue != rb.boolValue);
 
         throw new REPLException(node,
-            $"Can not preform boolean neq on non-boolean: {left.Type.Name} {right.Type.Name}");
+            $"Can not preform boolean neq on non-boolean: {left.Type.Name} {right?.Type.Name}");
     }
 
-    public static IREPLValue And(Node node, IREPLValue left, IREPLValue right) {
+    public static IREPLValue And(Node node, IREPLValue left, IREPLValue? right) {
         if (left is REPLBool lb && right is REPLBool rb) return new REPLBool(lb.boolValue && rb.boolValue);
 
         throw new REPLException(node,
-            $"Can not preform boolean and on non-boolean: {left.Type.Name} {right.Type.Name}");
+            $"Can not preform boolean and on non-boolean: {left.Type.Name} {right?.Type.Name}");
     }
 
-    public static IREPLValue Or(Node node, IREPLValue left, IREPLValue right) {
+    public static IREPLValue Or(Node node, IREPLValue left, IREPLValue? right) {
         if (left is REPLBool lb && right is REPLBool rb) return new REPLBool(lb.boolValue || rb.boolValue);
 
-        throw new REPLException(node, $"Can not preform boolean or on non-boolean: {left.Type.Name} {right.Type.Name}");
+        throw new REPLException(node, $"Can not preform boolean or on non-boolean: {left.Type.Name} {right?.Type.Name}");
     }
 
     public static IREPLValue ToInt(Node node, IREPLValue target) {
@@ -301,98 +301,98 @@ public struct REPLInt : IREPLValue {
 
     public bool IsReturn => false;
 
-    public IREPLForInSource ForInSource() {
+    public IREPLForInSource? ForInSource() {
         return null;
     }
 
-    public static IREPLValue Neg(Node node, IREPLValue other, IREPLValue _) {
+    public static IREPLValue Neg(Node node, IREPLValue other, IREPLValue? _) {
         if (other is REPLInt i) return new REPLInt(-i.intValue);
 
         throw new REPLException(node, $"Can not preform int neg on non-int: {other.Type.Name}");
     }
 
-    public static IREPLValue Add(Node node, IREPLValue left, IREPLValue right) {
+    public static IREPLValue Add(Node node, IREPLValue left, IREPLValue? right) {
         if (left is REPLInt li && right is REPLInt ri) return new REPLInt(li.intValue + ri.intValue);
 
-        throw new REPLException(node, $"Can not preform int add on non-int: {left.Type.Name} {right.Type.Name}");
+        throw new REPLException(node, $"Can not preform int add on non-int: {left.Type.Name} {right?.Type.Name}");
     }
 
-    public static IREPLValue Sub(Node node, IREPLValue left, IREPLValue right) {
+    public static IREPLValue Sub(Node node, IREPLValue left, IREPLValue? right) {
         if (left is REPLInt li && right is REPLInt ri) return new REPLInt(li.intValue - ri.intValue);
 
-        throw new REPLException(node, $"Can not preform int sub on non-int: {left.Type.Name} {right.Type.Name}");
+        throw new REPLException(node, $"Can not preform int sub on non-int: {left.Type.Name} {right?.Type.Name}");
     }
 
-    public static IREPLValue Mul(Node node, IREPLValue left, IREPLValue right) {
+    public static IREPLValue Mul(Node node, IREPLValue left, IREPLValue? right) {
         if (left is REPLInt li && right is REPLInt ri) return new REPLInt(li.intValue * ri.intValue);
 
-        throw new REPLException(node, $"Can not preform int mul on non-int: {left.Type.Name} {right.Type.Name}");
+        throw new REPLException(node, $"Can not preform int mul on non-int: {left.Type.Name} {right?.Type.Name}");
     }
 
-    public static IREPLValue Div(Node node, IREPLValue left, IREPLValue right) {
+    public static IREPLValue Div(Node node, IREPLValue left, IREPLValue? right) {
         if (left is REPLInt li && right is REPLInt ri) return new REPLInt(li.intValue / ri.intValue);
 
-        throw new REPLException(node, $"Can not preform int div on non-int: {left.Type.Name} {right.Type.Name}");
+        throw new REPLException(node, $"Can not preform int div on non-int: {left.Type.Name} {right?.Type.Name}");
     }
 
-    public static IREPLValue Rem(Node node, IREPLValue left, IREPLValue right) {
+    public static IREPLValue Rem(Node node, IREPLValue left, IREPLValue? right) {
         if (left is REPLInt li && right is REPLInt ri) return new REPLInt(li.intValue % ri.intValue);
 
-        throw new REPLException(node, $"Can not preform int rem on non-int: {left.Type.Name} {right.Type.Name}");
+        throw new REPLException(node, $"Can not preform int rem on non-int: {left.Type.Name} {right?.Type.Name}");
     }
 
-    public static IREPLValue BitOr(Node node, IREPLValue left, IREPLValue right) {
+    public static IREPLValue BitOr(Node node, IREPLValue left, IREPLValue? right) {
         if (left is REPLInt li && right is REPLInt ri) return new REPLInt(li.intValue | ri.intValue);
 
-        throw new REPLException(node, $"Can not preform int bit or on non-int: {left.Type.Name} {right.Type.Name}");
+        throw new REPLException(node, $"Can not preform int bit or on non-int: {left.Type.Name} {right?.Type.Name}");
     }
 
-    public static IREPLValue BitAnd(Node node, IREPLValue left, IREPLValue right) {
+    public static IREPLValue BitAnd(Node node, IREPLValue left, IREPLValue? right) {
         if (left is REPLInt li && right is REPLInt ri) return new REPLInt(li.intValue & ri.intValue);
 
-        throw new REPLException(node, $"Can not preform int bit and on non-int: {left.Type.Name} {right.Type.Name}");
+        throw new REPLException(node, $"Can not preform int bit and on non-int: {left.Type.Name} {right?.Type.Name}");
     }
 
-    public static IREPLValue BitXor(Node node, IREPLValue left, IREPLValue right) {
+    public static IREPLValue BitXor(Node node, IREPLValue left, IREPLValue? right) {
         if (left is REPLInt li && right is REPLInt ri) return new REPLInt(li.intValue ^ ri.intValue);
 
-        throw new REPLException(node, $"Can not preform int bit xor on non-int: {left.Type.Name} {right.Type.Name}");
+        throw new REPLException(node, $"Can not preform int bit xor on non-int: {left.Type.Name} {right?.Type.Name}");
     }
 
-    public static IREPLValue Eq(Node node, IREPLValue left, IREPLValue right) {
+    public static IREPLValue Eq(Node node, IREPLValue left, IREPLValue? right) {
         if (left is REPLInt li && right is REPLInt ri) return new REPLBool(li.intValue == ri.intValue);
 
-        throw new REPLException(node, $"Can not preform int eq on non-int: {left.Type.Name} {right.Type.Name}");
+        throw new REPLException(node, $"Can not preform int eq on non-int: {left.Type.Name} {right?.Type.Name}");
     }
 
-    public static IREPLValue Neq(Node node, IREPLValue left, IREPLValue right) {
+    public static IREPLValue Neq(Node node, IREPLValue left, IREPLValue? right) {
         if (left is REPLInt li && right is REPLInt ri) return new REPLBool(li.intValue != ri.intValue);
 
-        throw new REPLException(node, $"Can not preform int neq on non-int: {left.Type.Name} {right.Type.Name}");
+        throw new REPLException(node, $"Can not preform int neq on non-int: {left.Type.Name} {right?.Type.Name}");
     }
 
-    public static IREPLValue Gt(Node node, IREPLValue left, IREPLValue right) {
+    public static IREPLValue Gt(Node node, IREPLValue left, IREPLValue? right) {
         if (left is REPLInt li && right is REPLInt ri) return new REPLBool(li.intValue > ri.intValue);
 
-        throw new REPLException(node, $"Can not preform int gt on non-int: {left.Type.Name} {right.Type.Name}");
+        throw new REPLException(node, $"Can not preform int gt on non-int: {left.Type.Name} {right?.Type.Name}");
     }
 
-    public static IREPLValue Geq(Node node, IREPLValue left, IREPLValue right) {
+    public static IREPLValue Geq(Node node, IREPLValue left, IREPLValue? right) {
         if (left is REPLInt li && right is REPLInt ri) return new REPLBool(li.intValue >= ri.intValue);
 
-        throw new REPLException(node, $"Can not preform int geq on non-int: {left.Type.Name} {right.Type.Name}");
+        throw new REPLException(node, $"Can not preform int geq on non-int: {left.Type.Name} {right?.Type.Name}");
     }
 
-    public static IREPLValue Lt(Node node, IREPLValue left, IREPLValue right) {
+    public static IREPLValue Lt(Node node, IREPLValue left, IREPLValue? right) {
         if (left is REPLInt li && right is REPLInt ri) return new REPLBool(li.intValue < ri.intValue);
 
-        throw new REPLException(node, $"Can not preform int lt on non-int: {left.Type.Name} {right.Type.Name}");
+        throw new REPLException(node, $"Can not preform int lt on non-int: {left.Type.Name} {right?.Type.Name}");
     }
 
-    public static IREPLValue Leq(Node node, IREPLValue left, IREPLValue right) {
+    public static IREPLValue Leq(Node node, IREPLValue left, IREPLValue? right) {
         if (left is REPLInt li && right is REPLInt ri) return new REPLBool(li.intValue <= ri.intValue);
 
-        throw new REPLException(node, $"Can not preform int leq on non-int: {left.Type.Name} {right.Type.Name}");
+        throw new REPLException(node, $"Can not preform int leq on non-int: {left.Type.Name} {right?.Type.Name}");
     }
 
     public static IREPLValue ToBool(Node node, IREPLValue target) {
@@ -425,80 +425,80 @@ public struct REPLFloat : IREPLValue {
 
     public bool IsReturn => false;
 
-    public IREPLForInSource ForInSource() {
+    public IREPLForInSource? ForInSource() {
         return null;
     }
 
-    public static IREPLValue Neg(Node node, IREPLValue other, IREPLValue _) {
+    public static IREPLValue Neg(Node node, IREPLValue other, IREPLValue? _) {
         if (other is REPLFloat f) return new REPLFloat(-f.floatValue);
 
         throw new REPLException(node, $"Can not preform float neg on non-float: {other.Type.Name}");
     }
 
-    public static IREPLValue Add(Node node, IREPLValue left, IREPLValue right) {
+    public static IREPLValue Add(Node node, IREPLValue left, IREPLValue? right) {
         if (left is REPLFloat lf && right is REPLFloat rf) return new REPLFloat(lf.floatValue + rf.floatValue);
 
-        throw new REPLException(node, $"Can not preform int add on non-int: {left.Type.Name} {right.Type.Name}");
+        throw new REPLException(node, $"Can not preform int add on non-int: {left.Type.Name} {right?.Type.Name}");
     }
 
-    public static IREPLValue Sub(Node node, IREPLValue left, IREPLValue right) {
+    public static IREPLValue Sub(Node node, IREPLValue left, IREPLValue? right) {
         if (left is REPLFloat lf && right is REPLFloat rf) return new REPLFloat(lf.floatValue - rf.floatValue);
 
-        throw new REPLException(node, $"Can not preform int sub on non-int: {left.Type.Name} {right.Type.Name}");
+        throw new REPLException(node, $"Can not preform int sub on non-int: {left.Type.Name} {right?.Type.Name}");
     }
 
-    public static IREPLValue Mul(Node node, IREPLValue left, IREPLValue right) {
+    public static IREPLValue Mul(Node node, IREPLValue left, IREPLValue? right) {
         if (left is REPLFloat lf && right is REPLFloat rf) return new REPLFloat(lf.floatValue * rf.floatValue);
 
-        throw new REPLException(node, $"Can not preform int mul on non-int: {left.Type.Name} {right.Type.Name}");
+        throw new REPLException(node, $"Can not preform int mul on non-int: {left.Type.Name} {right?.Type.Name}");
     }
 
-    public static IREPLValue Div(Node node, IREPLValue left, IREPLValue right) {
+    public static IREPLValue Div(Node node, IREPLValue left, IREPLValue? right) {
         if (left is REPLFloat lf && right is REPLFloat rf) return new REPLFloat(lf.floatValue / rf.floatValue);
 
-        throw new REPLException(node, $"Can not preform int div on non-int: {left.Type.Name} {right.Type.Name}");
+        throw new REPLException(node, $"Can not preform int div on non-int: {left.Type.Name} {right?.Type.Name}");
     }
 
-    public static IREPLValue Rem(Node node, IREPLValue left, IREPLValue right) {
+    public static IREPLValue Rem(Node node, IREPLValue left, IREPLValue? right) {
         if (left is REPLFloat lf && right is REPLFloat rf) return new REPLFloat(lf.floatValue % rf.floatValue);
 
-        throw new REPLException(node, $"Can not preform int rem on non-int: {left.Type.Name} {right.Type.Name}");
+        throw new REPLException(node, $"Can not preform int rem on non-int: {left.Type.Name} {right?.Type.Name}");
     }
 
-    public static IREPLValue Eq(Node node, IREPLValue left, IREPLValue right) {
+    public static IREPLValue Eq(Node node, IREPLValue left, IREPLValue? right) {
         if (left is REPLFloat lf && right is REPLFloat rf) return new REPLBool(lf.floatValue == rf.floatValue);
 
-        throw new REPLException(node, $"Can not preform int eq on non-int: {left.Type.Name} {right.Type.Name}");
+        throw new REPLException(node, $"Can not preform int eq on non-int: {left.Type.Name} {right?.Type.Name}");
     }
 
-    public static IREPLValue Neq(Node node, IREPLValue left, IREPLValue right) {
+    public static IREPLValue Neq(Node node, IREPLValue left, IREPLValue? right) {
         if (left is REPLFloat lf && right is REPLFloat rf) return new REPLBool(lf.floatValue != rf.floatValue);
 
-        throw new REPLException(node, $"Can not preform int neq on non-int: {left.Type.Name} {right.Type.Name}");
+        throw new REPLException(node, $"Can not preform int neq on non-int: {left.Type.Name} {right?.Type.Name}");
     }
 
-    public static IREPLValue Gt(Node node, IREPLValue left, IREPLValue right) {
+    public static IREPLValue Gt(Node node, IREPLValue left, IREPLValue? right) {
         if (left is REPLFloat lf && right is REPLFloat rf) return new REPLBool(lf.floatValue > rf.floatValue);
 
-        throw new REPLException(node, $"Can not preform int gt on non-int: {left.Type.Name} {right.Type.Name}");
+        throw new REPLException(node, $"Can not preform int gt on non-int: {left.Type.Name} {right?.Type.Name}");
     }
 
-    public static IREPLValue Geq(Node node, IREPLValue left, IREPLValue right) {
+    public static IREPLValue Geq(Node node, IREPLValue left, IREPLValue? right) {
         if (left is REPLFloat lf && right is REPLFloat rf) return new REPLBool(lf.floatValue >= rf.floatValue);
 
-        throw new REPLException(node, $"Can not preform int geq on non-int: {left.Type.Name} {right.Type.Name}");
+        throw new REPLException(node, $"Can not preform int geq on non-int: {left.Type.Name} {right?.Type.Name}");
     }
 
-    public static IREPLValue Lt(Node node, IREPLValue left, IREPLValue right) {
+    public static IREPLValue Lt(Node node, IREPLValue left, IREPLValue? right) {
         if (left is REPLFloat lf && right is REPLFloat rf) return new REPLBool(lf.floatValue < rf.floatValue);
 
-        throw new REPLException(node, $"Can not preform int lt on non-int: {left.Type.Name} {right.Type.Name}");
+        throw new REPLException(node, $"Can not preform int lt on non-int: {left.Type.Name} {right?.Type.Name}");
     }
 
-    public static IREPLValue Leq(Node node, IREPLValue left, IREPLValue right) {
+    public static IREPLValue Leq(Node node, IREPLValue left, IREPLValue? right) {
         if (left is REPLFloat lf && right is REPLFloat rf) return new REPLBool(lf.floatValue <= rf.floatValue);
 
-        throw new REPLException(node, $"Can not preform int leq on non-int: {left.Type.Name} {right.Type.Name}");
+        throw new REPLException(node, $"Can not preform int leq on non-int: {left.Type.Name} {right?.Type.Name}");
     }
 
     public static IREPLValue ToInt(Node node, IREPLValue target) {
@@ -525,7 +525,7 @@ public struct REPLString : IREPLValue {
 
     public bool IsReturn => false;
 
-    public IREPLForInSource ForInSource() {
+    public IREPLForInSource? ForInSource() {
         return null;
     }
 }
@@ -567,7 +567,7 @@ public class REPLArrayForInSource : IREPLForInSource {
 
     public TO2Type ElementType => arrayType.ElementType;
 
-    public IREPLValue Next() {
+    public IREPLValue? Next() {
         if (nextIdx >= arrayValue.Length) return null;
 
         var current = arrayValue.GetValue(nextIdx);
@@ -609,7 +609,7 @@ public class REPLRangeForInSource : IREPLForInSource {
 
     public TO2Type ElementType => BuiltinType.Int;
 
-    public IREPLValue Next() {
+    public IREPLValue? Next() {
         if (next >= to) return null;
 
         var current = next;
@@ -620,16 +620,16 @@ public class REPLRangeForInSource : IREPLForInSource {
 
 public struct REPLAny : IREPLValue {
     public readonly TO2Type type;
-    public readonly object anyValue;
+    public readonly object? anyValue;
 
-    public REPLAny(TO2Type type, object anyValue) {
+    public REPLAny(TO2Type type, object? anyValue) {
         this.type = type;
         this.anyValue = anyValue;
     }
 
     public TO2Type Type => type;
 
-    public object Value => anyValue;
+    public object? Value => anyValue;
 
     public bool IsBreak => false;
 
@@ -637,19 +637,19 @@ public struct REPLAny : IREPLValue {
 
     public bool IsReturn => false;
 
-    public IREPLForInSource ForInSource() {
+    public IREPLForInSource? ForInSource() {
         return null;
     }
 
-    public static IREPLValue ObjEq(Node node, IREPLValue left, IREPLValue right) {
+    public static IREPLValue ObjEq(Node node, IREPLValue left, IREPLValue? right) {
         if (left is REPLAny li && right is REPLAny ri) return new REPLBool(li.anyValue == ri.anyValue);
 
-        throw new REPLException(node, $"Can not preform int eq on: {left.Type.Name} {right.Type.Name}");
+        throw new REPLException(node, $"Can not preform int eq on: {left.Type.Name} {right?.Type.Name}");
     }
 
-    public static IREPLValue ObjNeq(Node node, IREPLValue left, IREPLValue right) {
+    public static IREPLValue ObjNeq(Node node, IREPLValue left, IREPLValue? right) {
         if (left is REPLAny li && right is REPLAny ri) return new REPLBool(li.anyValue != ri.anyValue);
 
-        throw new REPLException(node, $"Can not preform int neq on: {left.Type.Name} {right.Type.Name}");
+        throw new REPLException(node, $"Can not preform int neq on: {left.Type.Name} {right?.Type.Name}");
     }
 }

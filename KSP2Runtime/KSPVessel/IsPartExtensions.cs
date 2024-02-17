@@ -1,11 +1,12 @@
-﻿using KSP.Modules;
+﻿using System.Diagnostics.CodeAnalysis;
+using KSP.Modules;
 using KSP.Sim.DeltaV;
 using KSP.Sim.impl;
 
 namespace KontrolSystem.KSP2.Runtime.KSPVessel;
 
 public static class IsPartExtensions {
-    public static bool IsPartDeployable(this IDeltaVPart PartRef, out Data_Deployable deployable) {
+    public static bool IsPartDeployable(this IDeltaVPart? PartRef, [MaybeNullWhen(false)] out Data_Deployable deployable) {
         if (PartRef == null) {
             deployable = null;
             return false;
@@ -18,7 +19,7 @@ public static class IsPartExtensions {
                 out deployable); // ...so we do a call for PartComponentModule_SolarPanel specifically
     }
 
-    public static bool IsParachute(this IDeltaVPart PartRef, out Data_Parachute parachute) {
+    public static bool IsParachute(this IDeltaVPart? PartRef, [MaybeNullWhen(false)] out Data_Parachute parachute) {
         if (PartRef == null) {
             parachute = null;
             return false;

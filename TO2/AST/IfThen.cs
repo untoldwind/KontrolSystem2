@@ -18,7 +18,7 @@ public class IfThen : Expression, IVariableContainer {
         this.thenExpression = thenExpression;
     }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set {
             ParentContainer = value;
             condition.VariableContainer = value;
@@ -27,16 +27,16 @@ public class IfThen : Expression, IVariableContainer {
     }
 
 
-    public override TypeHint TypeHint {
+    public override TypeHint? TypeHint {
         set {
-            thenExpression.TypeHint = context =>
-                (value(context) as OptionType)?.elementType.UnderlyingType(context.ModuleContext);
+            thenExpression.TypeHint = value != null ? context =>
+                (value(context) as OptionType)?.elementType.UnderlyingType(context.ModuleContext) : null;
         }
     }
 
-    public IVariableContainer ParentContainer { get; private set; }
+    public IVariableContainer? ParentContainer { get; private set; }
 
-    public TO2Type FindVariableLocal(IBlockContext context, string name) {
+    public TO2Type? FindVariableLocal(IBlockContext context, string name) {
         return condition.GetScopeVariables(context)?.Get(name);
     }
 
@@ -154,9 +154,9 @@ public class IfThen : Expression, IVariableContainer {
         private readonly Expression condition;
         private readonly REPLContext context;
         private readonly Expression thenExpression;
-        private REPLValueFuture conditionFuture;
-        private IREPLValue conditionResult;
-        private REPLValueFuture thenFuture;
+        private REPLValueFuture? conditionFuture;
+        private IREPLValue? conditionResult;
+        private REPLValueFuture? thenFuture;
 
         public REPLIfThenFuture(TO2Type to2Type, REPLContext context, Expression condition, Expression thenExpression) :
             base(new OptionType(to2Type)) {
@@ -165,18 +165,18 @@ public class IfThen : Expression, IVariableContainer {
             this.thenExpression = thenExpression;
         }
 
-        public override FutureResult<IREPLValue> PollValue() {
+        public override FutureResult<IREPLValue?> PollValue() {
             conditionFuture ??= condition.Eval(context);
             if (conditionResult == null) {
                 var result = conditionFuture.PollValue();
 
-                if (!result.IsReady) return new FutureResult<IREPLValue>();
+                if (!result.IsReady) return new FutureResult<IREPLValue?>();
 
                 conditionResult = result.value;
             }
 
             if (conditionResult is REPLBool b) {
-                if (!b.boolValue) return new FutureResult<IREPLValue>(new REPLAny(Type, Option.None<object>()));
+                if (!b.boolValue) return new FutureResult<IREPLValue?>(new REPLAny(Type, Option.None<object>()));
             } else {
                 throw new REPLException(condition, "Condition of if is not a boolean");
             }
@@ -184,9 +184,9 @@ public class IfThen : Expression, IVariableContainer {
             thenFuture ??= thenExpression.Eval(context);
 
             var thenResult = thenFuture.PollValue();
-            if (!thenResult.IsReady) return new FutureResult<IREPLValue>();
+            if (!thenResult.IsReady) return new FutureResult<IREPLValue?>();
 
-            return new FutureResult<IREPLValue>(new REPLAny(Type, Option.Some(thenResult.value)));
+            return new FutureResult<IREPLValue?>(new REPLAny(Type, Option.Some(thenResult.value)));
         }
     }
 }
@@ -203,7 +203,7 @@ public class IfThenElse : Expression, IVariableContainer {
         this.elseExpression = elseExpression;
     }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set {
             ParentContainer = value;
             condition.VariableContainer = value;
@@ -212,7 +212,7 @@ public class IfThenElse : Expression, IVariableContainer {
         }
     }
 
-    public override TypeHint TypeHint {
+    public override TypeHint? TypeHint {
         set {
             condition.TypeHint = _ => BuiltinType.Bool;
             thenExpression.TypeHint = value;
@@ -220,9 +220,9 @@ public class IfThenElse : Expression, IVariableContainer {
         }
     }
 
-    public IVariableContainer ParentContainer { get; private set; }
+    public IVariableContainer? ParentContainer { get; private set; }
 
-    public TO2Type FindVariableLocal(IBlockContext context, string name) {
+    public TO2Type? FindVariableLocal(IBlockContext context, string name) {
         return condition.GetScopeVariables(context)?.Get(name);
     }
 
@@ -362,10 +362,10 @@ public class IfThenElse : Expression, IVariableContainer {
         private readonly REPLContext context;
         private readonly Expression elseExpression;
         private readonly Expression thenExpression;
-        private REPLValueFuture conditionFuture;
-        private IREPLValue conditionResult;
-        private REPLValueFuture elseFuture;
-        private REPLValueFuture thenFuture;
+        private REPLValueFuture? conditionFuture;
+        private IREPLValue? conditionResult;
+        private REPLValueFuture? elseFuture;
+        private REPLValueFuture? thenFuture;
 
         public REPLIfThenElseFuture(TO2Type to2Type, REPLContext context, Expression condition,
             Expression thenExpression, Expression elseExpression) : base(new OptionType(to2Type)) {
@@ -375,12 +375,12 @@ public class IfThenElse : Expression, IVariableContainer {
             this.elseExpression = elseExpression;
         }
 
-        public override FutureResult<IREPLValue> PollValue() {
+        public override FutureResult<IREPLValue?> PollValue() {
             conditionFuture ??= condition.Eval(context);
             if (conditionResult == null) {
                 var result = conditionFuture.PollValue();
 
-                if (!result.IsReady) return new FutureResult<IREPLValue>();
+                if (!result.IsReady) return new FutureResult<IREPLValue?>();
 
                 conditionResult = result.value;
             }
@@ -390,17 +390,17 @@ public class IfThenElse : Expression, IVariableContainer {
                     thenFuture ??= thenExpression.Eval(context);
 
                     var thenResult = thenFuture.PollValue();
-                    if (!thenResult.IsReady) return new FutureResult<IREPLValue>();
+                    if (!thenResult.IsReady) return new FutureResult<IREPLValue?>();
 
-                    return new FutureResult<IREPLValue>(new REPLAny(Type, Option.Some(thenResult.value)));
+                    return new FutureResult<IREPLValue?>(new REPLAny(Type, Option.Some(thenResult.value)));
                 }
 
                 elseFuture ??= elseExpression.Eval(context);
 
                 var elseResult = elseFuture.PollValue();
-                if (!elseResult.IsReady) return new FutureResult<IREPLValue>();
+                if (!elseResult.IsReady) return new FutureResult<IREPLValue?>();
 
-                return new FutureResult<IREPLValue>(new REPLAny(Type, Option.Some(elseResult.value)));
+                return new FutureResult<IREPLValue?>(new REPLAny(Type, Option.Some(elseResult.value)));
             }
 
             throw new REPLException(condition, "Condition of if is not a boolean");

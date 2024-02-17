@@ -22,8 +22,8 @@ public static class TO2ParserModule {
 
     private static readonly Parser<string> AsKeyword = Spacing1.Then(Tag("as")).Then(Spacing1);
 
-    private static readonly Parser<List<string>> UseNames = Alt(
-        Char('*').Map(_ => (List<string>)null),
+    private static readonly Parser<List<string>?> UseNames = Alt(
+        Char('*').Map(_ => (List<string>?)null),
         Delimited1(Identifier, CommaDelimiter)
             .Between(Char('{').Then(WhiteSpaces0), WhiteSpaces0.Then(Char('}')))
     );

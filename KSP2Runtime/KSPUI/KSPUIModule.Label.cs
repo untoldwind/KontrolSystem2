@@ -9,7 +9,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI;
 public partial class KSPUIModule {
     [KSClass]
     public class Label {
-        private IDisposable bindSubscription;
+        private IDisposable? bindSubscription;
         private readonly UGUILabel label;
         private readonly AbstractContainer parent;
 

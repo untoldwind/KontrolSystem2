@@ -11,10 +11,10 @@ namespace KontrolSystem.TO2.AST;
 public class Call : Expression {
     private readonly List<Expression> arguments;
     private readonly string functionName;
-    private readonly string moduleName;
-    private ILocalRef preparedResult;
-    private TypeHint typeHint;
-    private IVariableContainer variableContainer;
+    private readonly string? moduleName;
+    private ILocalRef? preparedResult;
+    private TypeHint? typeHint;
+    private IVariableContainer? variableContainer;
 
     public Call(List<string> namePath, List<Expression> arguments, Position start, Position end) :
         base(start, end) {
@@ -30,14 +30,14 @@ public class Call : Expression {
         for (var i = 0; i < this.arguments.Count; i++) this.arguments[i].TypeHint = ArgumentTypeHint(i);
     }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set {
             variableContainer = value;
             foreach (var argument in arguments) argument.VariableContainer = value;
         }
     }
 
-    public override TypeHint TypeHint {
+    public override TypeHint? TypeHint {
         set => typeHint = value;
     }
 
@@ -47,7 +47,7 @@ public class Call : Expression {
         var constant = ReferencedConstant(context.ModuleContext);
         if (constant != null) return (constant.Type as FunctionType)?.returnType ?? BuiltinType.Unit;
 
-        TO2Type variable = ReferencedVariable(context)?.UnderlyingType(context.ModuleContext);
+        TO2Type? variable = ReferencedVariable(context)?.UnderlyingType(context.ModuleContext);
         if (variable != null) return (variable as FunctionType)?.returnType ?? BuiltinType.Unit;
 
         var function = ReferencedFunction(context.ModuleContext);
@@ -62,7 +62,7 @@ public class Call : Expression {
         }
 
         var (_, genericResult, _) = Helpers.MakeGeneric(context,
-            function.ReturnType, function.Parameters, function.RuntimeMethod,
+            function.ReturnType, function.Parameters, function.RuntimeMethod!,
             typeHint?.Invoke(context), arguments.Select(e => e.ResultType(context)),
             Enumerable.Empty<(string name, RealizedType type)>(),
             this);
@@ -114,7 +114,7 @@ public class Call : Expression {
             return;
         }
 
-        TO2Type variable = ReferencedVariable(context)?.UnderlyingType(context.ModuleContext);
+        TO2Type? variable = ReferencedVariable(context)?.UnderlyingType(context.ModuleContext);
 
         if (variable != null) {
             if (!(variable is FunctionType)) {
@@ -246,7 +246,7 @@ public class Call : Expression {
 
         (var genericMethod, var genericResult, var genericParameters) =
             Helpers.MakeGeneric(context,
-                function.ReturnType, function.Parameters, function.RuntimeMethod,
+                function.ReturnType, function.Parameters, function.RuntimeMethod!,
                 typeHint?.Invoke(context), arguments.Select(e => e.ResultType(context)),
                 Enumerable.Empty<(string name, RealizedType type)>(),
                 this);
@@ -278,7 +278,7 @@ public class Call : Expression {
 
         if (!context.HasErrors)
             for (; i < function.Parameters.Count; i++)
-                function.Parameters[i].defaultValue.EmitCode(context);
+                function.Parameters[i].defaultValue!.EmitCode(context);
 
         if (context.HasErrors) return;
 
@@ -288,17 +288,17 @@ public class Call : Expression {
         if (!dropResult && genericMethod.ReturnType == typeof(void)) context.IL.Emit(OpCodes.Ldnull);
     }
 
-    private IKontrolConstant ReferencedConstant(ModuleContext context) {
+    private IKontrolConstant? ReferencedConstant(ModuleContext context) {
         return moduleName != null
             ? context.FindModule(moduleName)?.FindConstant(functionName)
             : context.mappedConstants.Get(functionName);
     }
 
-    private TO2Type ReferencedVariable(IBlockContext context) {
+    private TO2Type? ReferencedVariable(IBlockContext context) {
         return moduleName != null ? null : variableContainer.FindVariable(context, functionName);
     }
 
-    private IKontrolFunction ReferencedFunction(ModuleContext context) {
+    private IKontrolFunction? ReferencedFunction(ModuleContext context) {
         return moduleName != null
             ? context.FindModule(moduleName)?.FindFunction(functionName)
             : BuiltinFunctions.ByName.Get(functionName) ?? context.mappedFunctions.Get(functionName);
@@ -372,7 +372,7 @@ public class Call : Expression {
 
         (var genericMethod, var genericResult, var genericParameters) =
             Helpers.MakeGeneric(context.replBlockContext,
-                function.ReturnType, function.Parameters, function.RuntimeMethod,
+                function.ReturnType, function.Parameters, function.RuntimeMethod!,
                 typeHint?.Invoke(context.replBlockContext),
                 arguments.Select(e => e.ResultType(context.replBlockContext)),
                 Enumerable.Empty<(string name, RealizedType type)>(),
@@ -390,7 +390,7 @@ public class Call : Expression {
                 var result = genericMethod.Invoke(null, arguments.Select(a => a.Value).ToArray());
 
                 return function.IsAsync
-                    ? REPLValueFuture.Wrap(genericResult, result as IAnyFuture)
+                    ? REPLValueFuture.Wrap(genericResult, (result as IAnyFuture)!)
                     : REPLValueFuture.Success(genericResult.REPLCast(result));
             });
     }

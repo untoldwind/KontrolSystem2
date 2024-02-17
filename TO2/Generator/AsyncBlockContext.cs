@@ -25,7 +25,7 @@ public readonly struct AsyncResume {
         context.IL.MarkLabel(pollLabel);
         context.IL.Emit(OpCodes.Ldarg_0);
         context.IL.Emit(OpCodes.Ldfld, futureField);
-        context.IL.EmitCall(OpCodes.Callvirt, futureField.FieldType.GetMethod("PollValue"), 1);
+        context.IL.EmitCall(OpCodes.Callvirt, futureField.FieldType.GetMethod("PollValue")!, 1);
         futureResultVar.EmitStore(context);
         futureResultVar.EmitLoad(context);
         context.IL.Emit(OpCodes.Ldfld, futureResultVar.LocalType.GetField("ready"));
@@ -57,12 +57,12 @@ public readonly struct StateRef {
 }
 
 public class AsyncBlockContext : IBlockContext {
-    internal readonly List<AsyncResume> asyncResumes;
+    internal readonly List<AsyncResume>? asyncResumes;
     internal readonly LabelRef notReady;
     internal readonly LabelRef resume;
     private readonly Context root;
     internal readonly FieldInfo stateField;
-    internal readonly List<StateRef> stateRefs;
+    internal readonly List<StateRef>? stateRefs;
     internal readonly LabelRef storeState;
     private readonly Dictionary<string, IBlockVariable> variables;
 
@@ -168,8 +168,8 @@ public class AsyncBlockContext : IBlockContext {
         return variable;
     }
 
-    public IBlockVariable FindVariable(string name) {
-        return variables.Get(name);
+    public IBlockVariable? FindVariable(string? name) {
+        return variables!.Get(name);
     }
 
     public ILocalRef DeclareHiddenLocal(Type rawType) {
@@ -205,9 +205,7 @@ public class AsyncBlockContext : IBlockContext {
         var state = (asyncResumes?.Count ?? 0) + 1;
 
         (var futureType, var futureResultType) = ModuleContext.FutureTypeOf(returnType);
-        FieldInfo futureField = asyncResumes != null
-            ? ModuleContext.typeBuilder.DefineField($"<async>_future_{state}", futureType, FieldAttributes.Private)
-            : null;
+        FieldInfo futureField = ModuleContext.typeBuilder.DefineField($"<async>_future_{state}", futureType, FieldAttributes.Private);
         var futureResultVar = IL.DeclareLocal(futureResultType);
         using (var futureTemp = IL.TempLocal(futureType)) {
             futureTemp.EmitStore(this);

@@ -24,12 +24,12 @@ public class GenericParameter : RealizedType {
     }
 
     public override RealizedType FillGenerics(ModuleContext context,
-        Dictionary<string, RealizedType> typeArguments) {
-        return typeArguments.Get(name) ?? this;
+        Dictionary<string, RealizedType>? typeArguments) {
+        return typeArguments?.Get(name) ?? this;
     }
 
     public override IEnumerable<(string name, RealizedType type)> InferGenericArgument(ModuleContext context,
-        RealizedType concreteType) {
+        RealizedType? concreteType) {
         return concreteType != null
             ? (name, concreteType).Yield()
             : Enumerable.Empty<(string name, RealizedType concreteType)>();

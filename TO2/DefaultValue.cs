@@ -12,7 +12,7 @@ public interface IDefaultValue {
 }
 
 public static class DefaultValue {
-    public static IDefaultValue ForParameter(IBlockContext context, FunctionParameter parameter) {
+    public static IDefaultValue? ForParameter(IBlockContext context, FunctionParameter parameter) {
         if (parameter.defaultValue == null) return null;
         switch (parameter.defaultValue) {
         case LiteralBool b when parameter.type == BuiltinType.Bool: return new BoolDefaultValue(b.value);
@@ -22,11 +22,11 @@ public static class DefaultValue {
         case LiteralString s when parameter.type == BuiltinType.String: return new StringDefaultValue(s.value);
         default:
             IBlockContext defaultContext = new SyncBlockContext(context.ModuleContext, FunctionModifier.Public,
-                false, $"default_{context.MethodBuilder.Name}_{parameter.name}", parameter.type,
+                false, $"default_{context.MethodBuilder!.Name}_{parameter.name}", parameter.type!,
                 new List<FunctionParameter>());
             var resultType = parameter.defaultValue.ResultType(defaultContext);
 
-            if (!parameter.type.IsAssignableFrom(context.ModuleContext, resultType)) {
+            if (!parameter.type!.IsAssignableFrom(context.ModuleContext, resultType)) {
                 context.AddError(new StructuralError(
                     StructuralError.ErrorType.IncompatibleTypes,
                     $"Default value of parameter {parameter.name} has to be of type {parameter.type}, found {resultType}",
@@ -42,7 +42,7 @@ public static class DefaultValue {
 
             foreach (var error in defaultContext.AllErrors) context.AddError(error);
 
-            return new DefaultValueFactoryFunction(defaultContext.MethodBuilder);
+            return new DefaultValueFactoryFunction(defaultContext.MethodBuilder!);
         }
     }
 }

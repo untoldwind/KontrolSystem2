@@ -61,9 +61,9 @@ public class MockBody : KSPOrbitModule.IBody {
     public readonly bool hasAtmosphere;
     public readonly double mu;
     public readonly string name;
-    public readonly MockOrbit orbit;
+    public readonly MockOrbit? orbit;
 
-    public readonly MockBody parent;
+    public readonly MockBody? parent;
     public readonly double radius;
     public readonly double rotationPeriod;
     public readonly double soiRadius;
@@ -123,7 +123,7 @@ public class MockBody : KSPOrbitModule.IBody {
 
     public double AtmosphereDepth => atmosphereDepth;
 
-    public KSPOrbitModule.IOrbit Orbit => orbit;
+    public KSPOrbitModule.IOrbit Orbit => orbit!;
 
     public Option<KSPOrbitModule.IBody> AsBody => new(this);
 

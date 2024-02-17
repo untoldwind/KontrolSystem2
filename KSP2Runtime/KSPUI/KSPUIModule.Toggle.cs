@@ -8,7 +8,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI;
 public partial class KSPUIModule {
     [KSClass]
     public class Toggle {
-        private IDisposable bindSubscription;
+        private IDisposable? bindSubscription;
         private readonly AbstractContainer parent;
         private readonly UGUIToggle toggle;
 

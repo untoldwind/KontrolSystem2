@@ -8,7 +8,7 @@ namespace KontrolSystem.TO2.AST;
 
 public class RecordTupleType : RecordType {
     private readonly SortedDictionary<string, TO2Type> itemTypes;
-    private Type generatedType;
+    private Type? generatedType;
 
     public RecordTupleType(IEnumerable<(string name, TO2Type type)> itemTypes) : base(BuiltinType.NoOperators) {
         this.itemTypes = new SortedDictionary<string, TO2Type>();

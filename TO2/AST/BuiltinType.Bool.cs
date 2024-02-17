@@ -73,8 +73,8 @@ public abstract partial class BuiltinType {
             return allowedSuffixOperators;
         }
 
-        public override IREPLValue REPLCast(object value) {
-            return new REPLBool((bool)value);
+        public override IREPLValue REPLCast(object? value) {
+            return new REPLBool((bool)value!);
         }
     }
 }

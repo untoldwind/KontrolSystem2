@@ -14,7 +14,7 @@ public class IndexGet : Expression, IAssignContext {
         this.indexSpec = indexSpec;
     }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set {
             target.VariableContainer = value;
             indexSpec.VariableContainer = value;

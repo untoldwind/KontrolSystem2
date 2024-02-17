@@ -60,25 +60,25 @@ public abstract class TO2Type {
     ///     Find a method of this type by name.
     ///     Will return null if there is no such method.
     /// </summary>
-    public abstract IMethodInvokeFactory FindMethod(ModuleContext context, string methodName);
+    public abstract IMethodInvokeFactory? FindMethod(ModuleContext context, string methodName);
 
     /// <summary>
     ///     Find a field of this type by name.
     ///     Will return null if there is no such field.
     /// </summary>
-    public abstract IFieldAccessFactory FindField(ModuleContext context, string fieldName);
+    public abstract IFieldAccessFactory? FindField(ModuleContext context, string fieldName);
 
     /// <summary>
     ///     Check if index access is allowed for this type.
     /// </summary>
-    public virtual IIndexAccessEmitter AllowedIndexAccess(ModuleContext context, IndexSpec indexSpec) {
+    public virtual IIndexAccessEmitter? AllowedIndexAccess(ModuleContext context, IndexSpec indexSpec) {
         return null;
     }
 
     /// <summary>
     ///     Get a list of all pattern this type can be unapplied to.
     /// </summary>
-    public virtual IUnapplyEmitter
+    public virtual IUnapplyEmitter?
         AllowedUnapplyPatterns(ModuleContext context, string unapplyName, int itemCount) {
         return null;
     }
@@ -86,7 +86,7 @@ public abstract class TO2Type {
     /// <summary>
     ///     Check if this type can be used as source in a for .. in expression.
     /// </summary>
-    public virtual IForInSource ForInSource(ModuleContext context, TO2Type typeHint) {
+    public virtual IForInSource? ForInSource(ModuleContext context, TO2Type? typeHint) {
         return null;
     }
 
@@ -105,11 +105,11 @@ public abstract class TO2Type {
     }
 
     public virtual IEnumerable<(string name, RealizedType type)> InferGenericArgument(ModuleContext context,
-        RealizedType concreteType) {
+        RealizedType? concreteType) {
         return Enumerable.Empty<(string name, RealizedType type)>();
     }
 
-    public virtual IREPLValue REPLCast(object value) {
+    public virtual IREPLValue REPLCast(object? value) {
         return new REPLAny(this, value);
     }
 
@@ -128,16 +128,16 @@ public abstract class RealizedType : TO2Type {
 
     public virtual TO2Type[] GenericParameters => Array.Empty<TO2Type>();
 
-    public override IMethodInvokeFactory FindMethod(ModuleContext context, string methodName) {
+    public override IMethodInvokeFactory? FindMethod(ModuleContext context, string methodName) {
         return DeclaredMethods.Get(methodName);
     }
 
-    public override IFieldAccessFactory FindField(ModuleContext context, string fieldName) {
+    public override IFieldAccessFactory? FindField(ModuleContext context, string fieldName) {
         return DeclaredFields.Get(fieldName);
     }
 
     public virtual RealizedType
-        FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) {
+        FillGenerics(ModuleContext context, Dictionary<string, RealizedType>? typeArguments) {
         return this;
     }
 

@@ -23,7 +23,7 @@ public class LineComment : IBlockItem, IModuleItem {
         set { }
     }
 
-    public TypeHint TypeHint {
+    public TypeHint? TypeHint {
         set { }
     }
 

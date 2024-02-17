@@ -8,25 +8,25 @@ using KontrolSystem.TO2.Runtime;
 namespace KontrolSystem.TO2.AST;
 
 public class RecordCreate : Expression {
-    private readonly TO2Type declaredResult;
+    private readonly TO2Type? declaredResult;
     private readonly Dictionary<string, Expression> items;
-    private RecordType resultType;
+    private RecordType? resultType;
 
-    private TypeHint typeHint;
+    private TypeHint? typeHint;
 
-    public RecordCreate(TO2Type declaredResult, IEnumerable<(string, Expression)> items, Position start,
+    public RecordCreate(TO2Type? declaredResult, IEnumerable<(string, Expression)> items, Position start,
         Position end) : base(start, end) {
         this.declaredResult = declaredResult;
         this.items = items.ToDictionary(kv => kv.Item1, kv => kv.Item2);
     }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set {
             foreach (var kv in items) kv.Value.VariableContainer = value;
         }
     }
 
-    public override TypeHint TypeHint {
+    public override TypeHint? TypeHint {
         set {
             typeHint = value;
             foreach (var kv in items) {

@@ -31,7 +31,7 @@ public interface IFieldAccessEmitter {
 public interface IFieldAccessFactory {
     TO2Type DeclaredType { get; }
 
-    string Description { get; }
+    string? Description { get; }
 
     bool CanStore { get; }
 
@@ -231,10 +231,10 @@ public class BoundPropertyLikeFieldAccessFactory : IFieldAccessFactory {
     private readonly bool isAsyncStore;
     private readonly Type methodTarget;
     private readonly OpCode[] opCodes;
-    private readonly MethodInfo setter;
+    private readonly MethodInfo? setter;
 
-    public BoundPropertyLikeFieldAccessFactory(string description, Func<RealizedType> fieldType, Type methodTarget,
-        MethodInfo getter, MethodInfo setter, params OpCode[] opCodes) {
+    public BoundPropertyLikeFieldAccessFactory(string? description, Func<RealizedType> fieldType, Type methodTarget,
+        MethodInfo? getter, MethodInfo? setter, params OpCode[] opCodes) {
         this.Description = description;
         this.fieldType = fieldType;
         this.methodTarget = methodTarget;
@@ -245,8 +245,8 @@ public class BoundPropertyLikeFieldAccessFactory : IFieldAccessFactory {
         this.opCodes = opCodes;
     }
 
-    public BoundPropertyLikeFieldAccessFactory(string description, Func<RealizedType> fieldType, Type methodTarget,
-        MethodInfo getter, MethodInfo setter, bool isAsyncStore, params OpCode[] opCodes) {
+    public BoundPropertyLikeFieldAccessFactory(string? description, Func<RealizedType> fieldType, Type methodTarget,
+        MethodInfo? getter, MethodInfo? setter, bool isAsyncStore, params OpCode[] opCodes) {
         this.Description = description;
         this.fieldType = fieldType;
         this.methodTarget = methodTarget;
@@ -258,7 +258,7 @@ public class BoundPropertyLikeFieldAccessFactory : IFieldAccessFactory {
     }
 
     public BoundPropertyLikeFieldAccessFactory(string description, Func<RealizedType> fieldType, Type methodTarget,
-        PropertyInfo propertyInfo, params OpCode[] opCodes) {
+        PropertyInfo? propertyInfo, params OpCode[] opCodes) {
         if (propertyInfo == null)
             throw new ArgumentException($"PropertyInfo is null for {description} in type {fieldType}");
         this.Description = description;
@@ -270,7 +270,7 @@ public class BoundPropertyLikeFieldAccessFactory : IFieldAccessFactory {
         this.opCodes = opCodes;
     }
 
-    public BoundPropertyLikeFieldAccessFactory(string description, Func<RealizedType> fieldType, Type methodTarget,
+    public BoundPropertyLikeFieldAccessFactory(string? description, Func<RealizedType> fieldType, Type methodTarget,
         PropertyInfo propertyInfo, bool isAsyncStore, params OpCode[] opCodes) {
         if (propertyInfo == null)
             throw new ArgumentException($"PropertyInfo is null for {description} in type {fieldType}");
@@ -285,7 +285,7 @@ public class BoundPropertyLikeFieldAccessFactory : IFieldAccessFactory {
 
     public TO2Type DeclaredType => fieldType();
 
-    public string Description { get; }
+    public string? Description { get; }
 
     public bool CanStore => setter != null;
 
@@ -308,7 +308,7 @@ public class BoundPropertyLikeFieldAccessFactory : IFieldAccessFactory {
                 throw new ArgumentException(
                     $"Unable to relocate method {getter.Name} on {methodTarget} for type arguments {typeArguments}");
 
-            MethodInfo genericSetterMethod = null;
+            MethodInfo? genericSetterMethod = null;
 
             if (setter != null) {
                 genericSetterMethod = genericTarget.GetMethod(setter.Name, new[] { genericGetterMethod.ReturnType });
@@ -331,10 +331,10 @@ public class BoundPropertyLikeFieldAccessEmitter : IFieldAccessEmitter {
     private readonly MethodInfo getter;
     private readonly Type methodTarget;
     private readonly OpCode[] opCodes;
-    private readonly MethodInfo setter;
+    private readonly MethodInfo? setter;
 
     public BoundPropertyLikeFieldAccessEmitter(RealizedType fieldType, Type methodTarget, MethodInfo getter,
-        MethodInfo setter, bool isAsyncStore, OpCode[] opCodes) {
+        MethodInfo? setter, bool isAsyncStore, OpCode[] opCodes) {
         FieldType = fieldType;
         this.methodTarget = methodTarget;
         this.getter = getter;
@@ -366,7 +366,7 @@ public class BoundPropertyLikeFieldAccessEmitter : IFieldAccessEmitter {
     }
 
     public void EmitStore(IBlockContext context) {
-        context.IL.EmitCall(getter.IsVirtual ? OpCodes.Callvirt : OpCodes.Call, setter, 2);
+        context.IL.EmitCall(getter.IsVirtual ? OpCodes.Callvirt : OpCodes.Call, setter!, 2);
     }
 
     public IREPLValue EvalGet(Node node, IREPLValue target) {

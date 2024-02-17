@@ -7,11 +7,11 @@ using KontrolSystem.TO2.Runtime;
 namespace KontrolSystem.TO2.AST;
 
 public class UseDeclaration : Node, IModuleItem {
-    private readonly string alias;
+    private readonly string? alias;
     private readonly string fromModule;
-    private readonly List<string> names;
+    private readonly List<string>? names;
 
-    public UseDeclaration(List<string> names, List<string> moduleNamePath, Position start = new(),
+    public UseDeclaration(List<string>? names, List<string> moduleNamePath, Position start = new(),
         Position end = new()) : base(start, end) {
         fromModule = string.Join("::", moduleNamePath);
         this.names = names;

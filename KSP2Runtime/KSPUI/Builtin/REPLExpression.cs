@@ -15,13 +15,13 @@ public static class REPLExpression {
     /// </summary>
     /// <param name="expression">The expression to evaluate.</param>
     /// <returns>An object containing the result or an Exception.</returns>
-    public static object Run(string expression) {
+    public static object? Run(string expression) {
         var result = TO2ParserREPL.REPLItems.Parse(expression);
 
-        var kspContext = new KSPCoreContext(Mainframe.Instance.Logger, Mainframe.Instance.Game,
+        var kspContext = new KSPCoreContext(Mainframe.Instance!.Logger, Mainframe.Instance.Game,
             Mainframe.Instance.ConsoleBuffer, Mainframe.Instance.TimeSeriesCollection,
             Mainframe.Instance.OptionalAddons);
-        var registry = Mainframe.Instance.LastRegistry;
+        var registry = Mainframe.Instance.LastRegistry!;
         var context = new REPLContext(registry, kspContext);
 
         var pollCount = 0;
@@ -50,7 +50,7 @@ public static class REPLExpression {
                 mainFutureResult = mainFuture.PollValue();
             }
 
-            return mainFutureResult.value.Value;
+            return mainFutureResult.value?.Value;
         } finally {
             ContextHolder.CurrentContext.Value = null;
         }

@@ -6,7 +6,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI;
 public class UGUILayoutContainer : UGUIElement {
     public readonly UGUILayout layout;
 
-    private UGUILayoutContainer(GameObject gameObject, UGUILayout layout) {
+    private UGUILayoutContainer(GameObject gameObject, UGUILayout layout) : base(gameObject, Vector2.zero) {
         GameObject = gameObject;
         this.layout = layout;
     }
@@ -51,7 +51,7 @@ public class UGUILayoutContainer : UGUIElement {
     }
 
     public static UGUILayoutContainer VerticalPanel(float gap = 10, UGUILayout.Padding padding = default) {
-        var panel = UIFactory.Instance.CreatePanel();
+        var panel = UIFactory.Instance!.CreatePanel();
         var layout = new UGUIVerticalLayout(panel.GetComponent<RectTransform>(), gap,
             padding.Max(new UGUILayout.Padding(5, 5, 5, 5)));
 
@@ -59,7 +59,7 @@ public class UGUILayoutContainer : UGUIElement {
     }
 
     public static UGUILayoutContainer HorizontalPanel(float gap = 10, UGUILayout.Padding padding = default) {
-        var panel = UIFactory.Instance.CreatePanel();
+        var panel = UIFactory.Instance!.CreatePanel();
         var layout = new UGUIHorizontalLayout(panel.GetComponent<RectTransform>(), gap,
             padding.Max(new UGUILayout.Padding(5, 5, 5, 5)));
 

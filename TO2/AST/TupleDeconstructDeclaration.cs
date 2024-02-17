@@ -32,7 +32,7 @@ public class TupleDeconstructDeclaration : Node, IBlockItem {
         set => expression.VariableContainer = value;
     }
 
-    public TypeHint TypeHint {
+    public TypeHint? TypeHint {
         set { }
     }
 
@@ -90,7 +90,7 @@ public class TupleDeconstructDeclaration : Node, IBlockItem {
 
             var variableType = declaration.IsInferred ? tupleType.itemTypes[i] : declaration.type;
 
-            if (context.FindVariable(declaration.target) != null) {
+            if (context.FindVariable(declaration.target!) != null) {
                 context.AddError(new StructuralError(
                     StructuralError.ErrorType.DuplicateVariableName,
                     $"Variable '{declaration.target}' already declared in this scope",
@@ -100,7 +100,7 @@ public class TupleDeconstructDeclaration : Node, IBlockItem {
                 return;
             }
 
-            if (!variableType.IsAssignableFrom(context.ModuleContext, tupleType.itemTypes[i])) {
+            if (!variableType!.IsAssignableFrom(context.ModuleContext, tupleType.itemTypes[i])) {
                 context.AddError(new StructuralError(
                     StructuralError.ErrorType.IncompatibleTypes,
                     $"Expected element {i} of {tupleType} to be of type {variableType}",
@@ -110,11 +110,11 @@ public class TupleDeconstructDeclaration : Node, IBlockItem {
                 return;
             }
 
-            var variable = context.DeclaredVariable(declaration.target, isConst,
+            var variable = context.DeclaredVariable(declaration.target!, isConst,
                 variableType.UnderlyingType(context.ModuleContext));
 
             context.IL.Emit(OpCodes.Dup);
-            tupleType.FindField(context.ModuleContext, $"_{i + 1}").Create(context.ModuleContext).EmitLoad(context);
+            tupleType.FindField(context.ModuleContext, $"_{i + 1}")!.Create(context.ModuleContext).EmitLoad(context);
 
             variable.EmitStore(context);
         }
@@ -130,7 +130,7 @@ public class TupleDeconstructDeclaration : Node, IBlockItem {
         foreach (var declaration in declarations) {
             if (declaration.IsPlaceholder) continue;
 
-            if (!recordType.ItemTypes.ContainsKey(declaration.source)) {
+            if (!recordType.ItemTypes.ContainsKey(declaration.source!)) {
                 context.AddError(new StructuralError(
                     StructuralError.ErrorType.IncompatibleTypes,
                     $"{recordType} does not have a field '{declaration.source}'",
@@ -143,9 +143,9 @@ public class TupleDeconstructDeclaration : Node, IBlockItem {
             if (declaration.IsPlaceholder) continue;
 
             var variableType =
-                declaration.IsInferred ? recordType.ItemTypes[declaration.source] : declaration.type;
+                declaration.IsInferred ? recordType.ItemTypes[declaration.source!] : declaration.type;
 
-            if (context.FindVariable(declaration.target) != null) {
+            if (context.FindVariable(declaration.target!) != null) {
                 context.AddError(new StructuralError(
                     StructuralError.ErrorType.DuplicateVariableName,
                     $"Variable '{declaration.target}' already declared in this scope",
@@ -155,7 +155,7 @@ public class TupleDeconstructDeclaration : Node, IBlockItem {
                 return;
             }
 
-            if (!variableType.IsAssignableFrom(context.ModuleContext, recordType.ItemTypes[declaration.source])) {
+            if (!variableType!.IsAssignableFrom(context.ModuleContext, recordType.ItemTypes[declaration.source!])) {
                 context.AddError(new StructuralError(
                     StructuralError.ErrorType.IncompatibleTypes,
                     $"Expected element {declaration.source} of {recordType} to be of type {variableType}",
@@ -165,11 +165,11 @@ public class TupleDeconstructDeclaration : Node, IBlockItem {
                 return;
             }
 
-            var variable = context.DeclaredVariable(declaration.target, isConst,
+            var variable = context.DeclaredVariable(declaration.target!, isConst,
                 variableType.UnderlyingType(context.ModuleContext));
 
             context.IL.Emit(OpCodes.Dup);
-            recordType.FindField(context.ModuleContext, declaration.source).Create(context.ModuleContext)
+            recordType.FindField(context.ModuleContext, declaration.source!)!.Create(context.ModuleContext)
                 .EmitLoad(context);
 
             variable.EmitStore(context);
@@ -191,9 +191,9 @@ public class TupleVariableRef : IVariableRef {
         this.expression = expression;
     }
 
-    public string Name => declaration.target;
+    public string Name => declaration.target!;
 
-    public TO2Type VariableType(IBlockContext context) {
+    public TO2Type? VariableType(IBlockContext context) {
         if (!declaration.IsInferred) return declaration.type;
 
         if (lookingUp) return null;
@@ -206,7 +206,7 @@ public class TupleVariableRef : IVariableRef {
 
             return tupleType.itemTypes[itemIdx];
         case RecordType recordType:
-            return recordType.ItemTypes.Get(declaration.source) ?? BuiltinType.Unit;
+            return recordType.ItemTypes!.Get(declaration.source) ?? BuiltinType.Unit;
         default:
             return BuiltinType.Unit;
         }

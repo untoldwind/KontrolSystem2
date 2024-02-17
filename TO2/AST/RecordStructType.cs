@@ -23,22 +23,22 @@ public readonly struct RecordStructField {
 public class RecordStructType : RecordType {
     private readonly Dictionary<string, IFieldAccessFactory> allowedFields;
     private readonly OperatorCollection allowedPrefixOperators;
-    private readonly ConstructorInfo constructor;
+    private readonly ConstructorInfo? constructor;
     internal readonly SortedDictionary<string, FieldInfo> fields;
     private readonly SortedDictionary<string, TO2Type> itemTypes;
     private readonly string localName;
-    private readonly string modulePrefix;
-    private readonly Func<ModuleContext, Type> typeCreator;
+    private readonly string? modulePrefix;
+    private readonly Func<ModuleContext, Type>? typeCreator;
     public Type runtimeType;
 
-    public RecordStructType(string modulePrefix, string localName, string description, Type runtimeType,
+    public RecordStructType(string? modulePrefix, string localName, string description, Type runtimeType,
         IEnumerable<RecordStructField> fields,
         OperatorCollection allowedPrefixOperators,
         OperatorCollection allowedSuffixOperators,
         Dictionary<string, IMethodInvokeFactory> allowedMethods,
         Dictionary<string, IFieldAccessFactory> allowedFields,
-        ConstructorInfo constructor = null,
-        Func<ModuleContext, Type> typeCreator = null) : base(allowedSuffixOperators) {
+        ConstructorInfo? constructor = null,
+        Func<ModuleContext, Type>? typeCreator = null) : base(allowedSuffixOperators) {
         this.modulePrefix = modulePrefix;
         this.localName = localName;
         Description = description;
@@ -92,7 +92,7 @@ public class RecordStructType : RecordType {
         return allowedPrefixOperators;
     }
 
-    public override IIndexAccessEmitter AllowedIndexAccess(ModuleContext context, IndexSpec indexSpec) {
+    public override IIndexAccessEmitter? AllowedIndexAccess(ModuleContext context, IndexSpec indexSpec) {
         return null;
         // TODO: Actually this should be allowed
     }
@@ -109,7 +109,7 @@ public class RecordStructType : RecordType {
     public override void EmitInitialize(IBlockContext context, IBlockVariable variable) {
         if (runtimeType.IsValueType) return;
 
-        context.IL.EmitNew(OpCodes.Newobj, constructor, 0, 1);
+        context.IL.EmitNew(OpCodes.Newobj, constructor!, 0, 1);
         variable.EmitStore(context);
     }
 

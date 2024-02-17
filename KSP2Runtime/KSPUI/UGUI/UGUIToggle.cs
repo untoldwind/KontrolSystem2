@@ -10,7 +10,7 @@ public class UGUIToggle : UGUIElement {
     private readonly TextMeshProUGUI label;
     private readonly Toggle toggle;
 
-    private UGUIToggle(GameObject gameObject, UnityAction<bool> onChange) : base(gameObject, Vector2.zero) {
+    private UGUIToggle(GameObject gameObject, UnityAction<bool>? onChange) : base(gameObject, Vector2.zero) {
         toggle = gameObject.GetComponent<Toggle>();
         label = gameObject.GetComponentInChildren<TextMeshProUGUI>();
         if (onChange != null) toggle.onValueChanged.AddListener(onChange);
@@ -49,11 +49,11 @@ public class UGUIToggle : UGUIElement {
         toggle.onValueChanged.AddListener(onChange);
     }
 
-    public static UGUIToggle Create(string label, UnityAction<bool> onChange = null) {
-        return new UGUIToggle(UIFactory.Instance.CreateToggle(label), onChange);
+    public static UGUIToggle Create(string label, UnityAction<bool>? onChange = null) {
+        return new UGUIToggle(UIFactory.Instance!.CreateToggle(label), onChange);
     }
 
-    public static UGUIToggle CreateSelectButton(string label, UnityAction<bool> onChange = null) {
-        return new UGUIToggle(UIFactory.Instance.CreateSelectButton(label), onChange);
+    public static UGUIToggle CreateSelectButton(string label, UnityAction<bool>? onChange = null) {
+        return new UGUIToggle(UIFactory.Instance!.CreateSelectButton(label), onChange);
     }
 }

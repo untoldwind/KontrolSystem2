@@ -43,7 +43,7 @@ internal class RecordTypeOperators : IOperatorCollection {
         this.allowedOperators = allowedOperators;
     }
 
-    public IOperatorEmitter GetMatching(ModuleContext context, Operator op, TO2Type otherType) {
+    public IOperatorEmitter? GetMatching(ModuleContext context, Operator op, TO2Type otherType) {
         var existing = allowedOperators.GetMatching(context, op, otherType);
         if (existing != null) return existing;
 
@@ -143,7 +143,7 @@ internal abstract class RecordTypeAssignEmitter<T> : IAssignEmitter, IOperatorEm
         return this;
     }
 
-    public IREPLValue Eval(Node node, IREPLValue left, IREPLValue right) {
+    public IREPLValue Eval(Node node, IREPLValue left, IREPLValue? right) {
         throw new REPLException(node, "Not supported in REPL mode");
     }
 

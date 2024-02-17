@@ -12,7 +12,7 @@ public partial class KSPUIModule {
         private static readonly float EPSILON = 1e-5f;
 
         private Vector2d[] points;
-        private Vector2d[] triangles;
+        private Vector2d[]? triangles;
 
         public Polygon2D(KSPConsoleModule.RgbaColor fillColor, Vector2d[] points) {
             FillColor = fillColor;
@@ -32,7 +32,7 @@ public partial class KSPUIModule {
         }
 
         public void OnDraw(GLUIDrawer.GLUIDraw draw) {
-            if (triangles.Length < 3) return;
+            if (triangles!.Length < 3) return;
 
             GL.Begin(GL.TRIANGLES);
             GL.Color(FillColor.Color);

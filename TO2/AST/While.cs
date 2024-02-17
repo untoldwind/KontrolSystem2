@@ -17,7 +17,7 @@ public class While : Expression, IVariableContainer {
         this.loopExpression = loopExpression;
     }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set {
             ParentContainer = value;
             condition.VariableContainer = value;
@@ -25,9 +25,9 @@ public class While : Expression, IVariableContainer {
         }
     }
 
-    public IVariableContainer ParentContainer { get; private set; }
+    public IVariableContainer? ParentContainer { get; private set; }
 
-    public TO2Type FindVariableLocal(IBlockContext context, string name) {
+    public TO2Type? FindVariableLocal(IBlockContext context, string name) {
         return condition.GetScopeVariables(context)?.Get(name);
     }
 
@@ -133,9 +133,9 @@ public class While : Expression, IVariableContainer {
         private readonly Expression condition;
         private readonly REPLContext context;
         private readonly Expression loopExpression;
-        private REPLValueFuture conditionFuture;
-        private IREPLValue conditionResult;
-        private REPLValueFuture loopExpressionFuture;
+        private REPLValueFuture? conditionFuture;
+        private IREPLValue? conditionResult;
+        private REPLValueFuture? loopExpressionFuture;
 
         public REPLWhileFuture(REPLContext context, Expression condition, Expression loopExpression) : base(BuiltinType
             .Unit) {
@@ -144,19 +144,19 @@ public class While : Expression, IVariableContainer {
             this.loopExpression = loopExpression;
         }
 
-        public override FutureResult<IREPLValue> PollValue() {
+        public override FutureResult<IREPLValue?> PollValue() {
             conditionFuture ??= condition.Eval(context);
 
             if (conditionResult == null) {
                 var result = conditionFuture.PollValue();
 
-                if (!result.IsReady) return new FutureResult<IREPLValue>();
+                if (!result.IsReady) return new FutureResult<IREPLValue?>();
 
                 conditionResult = result.value;
             }
 
             if (conditionResult is REPLBool b) {
-                if (!b.boolValue) return new FutureResult<IREPLValue>(REPLUnit.INSTANCE);
+                if (!b.boolValue) return new FutureResult<IREPLValue?>(REPLUnit.INSTANCE);
             } else {
                 throw new REPLException(condition, "Condition of while is not a boolean");
             }
@@ -164,15 +164,15 @@ public class While : Expression, IVariableContainer {
             loopExpressionFuture ??= loopExpression.Eval(context);
             var loopExpressionResult = loopExpressionFuture.PollValue();
 
-            if (!loopExpressionResult.IsReady) return new FutureResult<IREPLValue>();
+            if (!loopExpressionResult.IsReady) return new FutureResult<IREPLValue?>();
 
-            if (loopExpressionResult.value.IsBreak) return new FutureResult<IREPLValue>(REPLUnit.INSTANCE);
-            if (loopExpressionResult.value.IsReturn) return new FutureResult<IREPLValue>(loopExpressionResult.value);
+            if (loopExpressionResult.value!.IsBreak) return new FutureResult<IREPLValue?>(REPLUnit.INSTANCE);
+            if (loopExpressionResult.value.IsReturn) return new FutureResult<IREPLValue?>(loopExpressionResult.value);
             loopExpressionFuture = null;
             conditionFuture = null;
             conditionResult = null;
 
-            return new FutureResult<IREPLValue>();
+            return new FutureResult<IREPLValue?>();
         }
     }
 }

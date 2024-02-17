@@ -9,10 +9,10 @@ using Math = System.Math;
 namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin;
 
 public class EditorWindow : UGUIResizableWindow {
-    private GameObject deleteConfirm;
-    private InputFieldExtended editorInputField;
-    private UGUIInputField fileNameInputField;
-    private UGUIButton sourceAndRebootButton;
+    private GameObject? deleteConfirm;
+    private InputFieldExtended? editorInputField;
+    private UGUIInputField? fileNameInputField;
+    private UGUIButton? sourceAndRebootButton;
 
     public void OnEnable() {
         Initialize("KontrolSystem: Editor", new Rect(Screen.width - 700, Screen.height - 200, 600, 500));
@@ -30,7 +30,7 @@ public class EditorWindow : UGUIResizableWindow {
         UIFactory.Layout(childText, textArea.transform, UIFactory.LAYOUT_STRETCH, UIFactory.LAYOUT_STRETCH, 0, 0, 0,
             0);
 
-        var vSlider = UIFactory.Instance.CreateVScrollbar();
+        var vSlider = UIFactory.Instance!.CreateVScrollbar();
         UIFactory.Layout(vSlider, editPanel.transform, UIFactory.LAYOUT_END, UIFactory.LAYOUT_STRETCH,
             -5, -5, 20, -10);
 
@@ -63,7 +63,7 @@ public class EditorWindow : UGUIResizableWindow {
         editorInputField.onFocusSelectAll = false;
         editorInputField.lineLimit = 0;
         editorInputField.pointSize = Math.Max(10, UIFactory.Instance.uiFontSize - 6);
-        editorInputField.onValueChanged.AddListener(_ => { sourceAndRebootButton.Interactable = true; });
+        editorInputField.onValueChanged.AddListener(_ => { sourceAndRebootButton!.Interactable = true; });
 
         editPanel.SetActive(true);
         var inputActions = editPanel.AddComponent<InputFieldFocusLockInputActions>();
@@ -88,7 +88,7 @@ public class EditorWindow : UGUIResizableWindow {
                 deleteConfirm = null;
             } else {
                 deleteConfirm = UIFactory.Instance.CreatePanel();
-                UIFactory.Layout(deleteConfirm, windowTransform, UIFactory.LAYOUT_START, UIFactory.LAYOUT_END,
+                UIFactory.Layout(deleteConfirm, windowTransform!, UIFactory.LAYOUT_START, UIFactory.LAYOUT_END,
                     30, -40, 180, 50);
 
                 var confirmDelete = UIFactory.Instance.CreateButton("Confirm delete");
@@ -108,37 +108,37 @@ public class EditorWindow : UGUIResizableWindow {
     }
 
     public void NewFile() {
-        var filepath = Path.Combine(Mainframe.Instance.LocalLibPath, "unnamed.to2");
+        var filepath = Path.Combine(Mainframe.Instance!.LocalLibPath, "unnamed.to2");
 
         var i = 2;
         while (File.Exists(filepath)) filepath = Path.Combine(Mainframe.Instance.LocalLibPath, $"unnamed ({i++}).to2");
-        editorInputField.text =
+        editorInputField!.text =
             "use { Vessel } from ksp::vessel\r\nuse { CONSOLE } from ksp::console\r\n\r\npub fn main_flight(vessel: Vessel) -> Result<Unit, string> = {\r\n    CONSOLE.clear()\r\n    CONSOLE.print_line(\"Hello world\")\r\n}";
-        fileNameInputField.Value = filepath;
-        sourceAndRebootButton.Interactable = true;
+        fileNameInputField!.Value = filepath;
+        sourceAndRebootButton!.Interactable = true;
     }
 
     public void Load(string sourceFile) {
-        fileNameInputField.Value = sourceFile;
-        editorInputField.text = File.ReadAllText(sourceFile);
-        sourceAndRebootButton.Interactable = false;
+        fileNameInputField!.Value = sourceFile;
+        editorInputField!.text = File.ReadAllText(sourceFile);
+        sourceAndRebootButton!.Interactable = false;
     }
 
     public void OnSave() {
-        var filepath = fileNameInputField.Value;
-        var source = editorInputField.text;
+        var filepath = fileNameInputField!.Value;
+        var source = editorInputField!.text;
 
         File.WriteAllText(filepath, source);
 
-        Mainframe.Instance.Reboot();
-        sourceAndRebootButton.Interactable = false;
+        Mainframe.Instance!.Reboot();
+        sourceAndRebootButton!.Interactable = false;
     }
 
     public void OnDelete() {
-        var filepath = fileNameInputField.Value;
+        var filepath = fileNameInputField!.Value;
 
         File.Delete(filepath);
-        Mainframe.Instance.Reboot();
+        Mainframe.Instance!.Reboot();
 
         Close();
     }

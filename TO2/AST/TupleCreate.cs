@@ -9,21 +9,21 @@ namespace KontrolSystem.TO2.AST;
 
 public class TupleCreate : Expression {
     private readonly List<Expression> items;
-    private TupleType resultType;
+    private TupleType? resultType;
 
-    private TypeHint typeHint;
+    private TypeHint? typeHint;
 
     public TupleCreate(List<Expression> items, Position start, Position end) : base(start, end) {
         this.items = items;
     }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set {
             foreach (var item in items) item.VariableContainer = value;
         }
     }
 
-    public override TypeHint TypeHint {
+    public override TypeHint? TypeHint {
         set {
             typeHint = value;
             for (var j = 0; j < items.Count; j++) {

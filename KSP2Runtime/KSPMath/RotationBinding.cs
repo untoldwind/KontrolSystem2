@@ -15,39 +15,39 @@ public static class RotationBinding {
         new OperatorCollection {
             {
                 Operator.Neg,
-                new StaticMethodOperatorEmitter(() => BuiltinType.Unit, () => RotationType,
-                    typeof(Direction).GetMethod("op_UnaryNegation", new[] { typeof(Vector2d) }))
+                new StaticMethodOperatorEmitter(() => BuiltinType.Unit, () => RotationType!,
+                    typeof(RotationWrapper).GetMethod("op_UnaryNegation", new[] { typeof(RotationWrapper) }))
             }
         },
         new OperatorCollection {
             {
                 Operator.Add,
-                new StaticMethodOperatorEmitter(() => RotationType, () => RotationType,
+                new StaticMethodOperatorEmitter(() => RotationType!, () => RotationType!,
                     typeof(RotationWrapper).GetMethod("op_Addition",
                         new[] { typeof(RotationWrapper), typeof(RotationWrapper) }))
             }, {
                 Operator.AddAssign,
-                new StaticMethodOperatorEmitter(() => RotationType, () => RotationType,
+                new StaticMethodOperatorEmitter(() => RotationType!, () => RotationType!,
                     typeof(RotationWrapper).GetMethod("op_Addition",
                         new[] { typeof(RotationWrapper), typeof(RotationWrapper) }))
             }, {
                 Operator.Sub,
-                new StaticMethodOperatorEmitter(() => RotationType, () => RotationType,
+                new StaticMethodOperatorEmitter(() => RotationType!, () => RotationType!,
                     typeof(RotationWrapper).GetMethod("op_Subtraction",
                         new[] { typeof(RotationWrapper), typeof(RotationWrapper) }))
             }, {
                 Operator.SubAssign,
-                new StaticMethodOperatorEmitter(() => RotationType, () => RotationType,
+                new StaticMethodOperatorEmitter(() => RotationType!, () => RotationType!,
                     typeof(RotationWrapper).GetMethod("op_Subtraction",
                         new[] { typeof(RotationWrapper), typeof(RotationWrapper) }))
             }, {
                 Operator.Mul,
-                new StaticMethodOperatorEmitter(() => RotationType, () => RotationType,
+                new StaticMethodOperatorEmitter(() => RotationType!, () => RotationType!,
                     typeof(RotationWrapper).GetMethod("op_Multiply",
                         new[] { typeof(RotationWrapper), typeof(RotationWrapper) }))
             }, {
                 Operator.MulAssign,
-                new StaticMethodOperatorEmitter(() => RotationType, () => RotationType,
+                new StaticMethodOperatorEmitter(() => RotationType!, () => RotationType!,
                     typeof(RotationWrapper).GetMethod("op_Multiply",
                         new[] { typeof(RotationWrapper), typeof(RotationWrapper) }))
             }, {
@@ -56,12 +56,12 @@ public static class RotationBinding {
                     typeof(RotationWrapper).GetMethod("op_Multiply", new[] { typeof(RotationWrapper), typeof(Vector) }))
             }, {
                 Operator.Eq,
-                new StaticMethodOperatorEmitter(() => RotationType, () => BuiltinType.Bool,
+                new StaticMethodOperatorEmitter(() => RotationType!, () => BuiltinType.Bool,
                     typeof(RotationWrapper).GetMethod("op_Equality",
                         new[] { typeof(RotationWrapper), typeof(RotationWrapper) }))
             }, {
                 Operator.NotEq,
-                new StaticMethodOperatorEmitter(() => RotationType, () => BuiltinType.Bool,
+                new StaticMethodOperatorEmitter(() => RotationType!, () => BuiltinType.Bool,
                     typeof(RotationWrapper).GetMethod("op_Equality",
                         new[] { typeof(RotationWrapper), typeof(RotationWrapper) }),
                     null, OpCodes.Ldc_I4_0, OpCodes.Ceq)

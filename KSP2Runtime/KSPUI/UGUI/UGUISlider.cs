@@ -27,6 +27,6 @@ public class UGUISlider : UGUIElement {
     }
 
     public static UGUISlider CreateHorizontal() {
-        return new UGUISlider(UIFactory.Instance.CreateHSlider());
+        return new UGUISlider(UIFactory.Instance!.CreateHSlider());
     }
 }

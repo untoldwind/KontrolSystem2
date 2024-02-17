@@ -9,7 +9,7 @@ namespace KontrolSystem.TO2.AST;
 
 public class TupleType : RealizedType {
     public readonly List<TO2Type> itemTypes;
-    private Type generatedType;
+    private Type? generatedType;
 
     public TupleType(List<TO2Type> itemTypes) {
         this.itemTypes = itemTypes;
@@ -44,11 +44,10 @@ public class TupleType : RealizedType {
     internal static Type DeriveTupleType(List<Type> itemTypes) {
         if (itemTypes.Count > 7) {
             var rest = DeriveTupleType(itemTypes.Skip(7).ToList());
-            return Type.GetType("System.ValueTuple`8")
-                ?.MakeGenericType(itemTypes.Take(7).Concat(rest.Yield()).ToArray());
+            return Type.GetType("System.ValueTuple`8")!.MakeGenericType(itemTypes.Take(7).Concat(rest.Yield()).ToArray());
         }
 
-        return Type.GetType($"System.ValueTuple`{itemTypes.Count}")?.MakeGenericType(itemTypes.ToArray());
+        return Type.GetType($"System.ValueTuple`{itemTypes.Count}")!.MakeGenericType(itemTypes.ToArray());
     }
 }
 

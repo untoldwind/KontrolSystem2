@@ -5,8 +5,8 @@ using UnityEngine;
 namespace KontrolSystem.KSP.Runtime.KSPUI;
 
 public class GLUIDrawer {
-    private static Material colored;
-    private static TMP_FontAsset textFont;
+    private static Material? colored;
+    private static TMP_FontAsset? textFont;
 
     private readonly RenderTexture renderTexture;
 
@@ -67,12 +67,12 @@ public class GLUIDrawer {
         }
 
         public void Draw(IGLUIDrawable drawable) {
-            colored.SetPass(0);
+            colored!.SetPass(0);
             drawable.OnDraw(this);
         }
 
         public void Polyline(Vector2[] points, Color color, bool closed = false) {
-            colored.SetPass(0);
+            colored!.SetPass(0);
             GL.Begin(GL.LINE_STRIP);
             GL.Color(color);
             for (var i = 0; i < points.Length; i++) GL.Vertex3(points[i].x, points[i].y, 0);
@@ -82,7 +82,7 @@ public class GLUIDrawer {
         }
 
         public void LineTube(Vector3[] errors, Color color) {
-            colored.SetPass(0);
+            colored!.SetPass(0);
             GL.Begin(GL.TRIANGLE_STRIP);
             GL.Color(color);
             for (var i = 0; i < errors.Length; i++) {
@@ -96,7 +96,7 @@ public class GLUIDrawer {
         public void ConvexPolygon(Vector2[] points, Color color) {
             if (points.Length < 3) return;
 
-            colored.SetPass(0);
+            colored!.SetPass(0);
             GL.Begin(GL.TRIANGLE_STRIP);
             GL.Color(color);
             var start = 0;
@@ -116,7 +116,7 @@ public class GLUIDrawer {
 
         public void DrawText(Vector2 pos, string text, float size, Vector2 pivot, float degrees, Color color) {
             var textSize = TextSize(text, size);
-            var lineHeight = textFont.faceInfo.lineHeight;
+            var lineHeight = textFont!.faceInfo.lineHeight;
             var scale = size / lineHeight;
             textFont.material.SetFloat(ShaderUtilities.ID_ScaleX, 1.0f / scale);
             textFont.material.SetFloat(ShaderUtilities.ID_ScaleY, 1.0f / scale);
@@ -167,7 +167,7 @@ public class GLUIDrawer {
         }
 
         private Vector2 TextSize(string text, float size) {
-            var lineHeight = textFont.faceInfo.lineHeight;
+            var lineHeight = textFont!.faceInfo.lineHeight;
             var scale = size / lineHeight;
             var x = 0.0f;
 

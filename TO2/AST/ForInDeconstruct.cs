@@ -19,7 +19,7 @@ public class ForInDeconstruct : Expression, IVariableContainer {
         this.loopExpression = loopExpression;
     }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set {
             ParentContainer = value;
             sourceExpression.VariableContainer = this;
@@ -27,23 +27,22 @@ public class ForInDeconstruct : Expression, IVariableContainer {
         }
     }
 
-    public IVariableContainer ParentContainer { get; private set; }
+    public IVariableContainer? ParentContainer { get; private set; }
 
-    public TO2Type FindVariableLocal(IBlockContext context, string name) {
+    public TO2Type? FindVariableLocal(IBlockContext context, string name) {
         for (var i = 0; i < declarations.Count; i++) {
             var declaration = declarations[i];
 
             if (declaration.IsPlaceholder || name != declaration.target) continue;
             if (declaration.type != null) return declaration.type;
 
-            var elementType = sourceExpression.ResultType(context)
-                ?.ForInSource(context.ModuleContext, null).ElementType;
+            var elementType = sourceExpression.ResultType(context).ForInSource(context.ModuleContext, null)?.ElementType;
             if (elementType == null) return null;
             switch (elementType) {
             case TupleType tupleType:
                 return i < tupleType.itemTypes.Count ? tupleType.itemTypes[i] : null;
             case RecordType recordType:
-                return recordType.ItemTypes.Get(declaration.source);
+                return recordType.ItemTypes!.Get(declaration.source);
             }
         }
 
@@ -71,7 +70,7 @@ public class ForInDeconstruct : Expression, IVariableContainer {
                 )
             );
         foreach (var declaration in declarations)
-            if (context.FindVariable(declaration.target) != null)
+            if (context.FindVariable(declaration.target!) != null)
                 context.AddError(new StructuralError(
                     StructuralError.ErrorType.DuplicateVariableName,
                     $"Variable '{declaration.target}' already declared in this scope",
@@ -117,7 +116,7 @@ public class ForInDeconstruct : Expression, IVariableContainer {
 
             var variableType = declaration.IsInferred ? tupleType.itemTypes[i] : declaration.type;
 
-            if (context.FindVariable(declaration.target) != null) {
+            if (context.FindVariable(declaration.target!) != null) {
                 context.AddError(new StructuralError(
                     StructuralError.ErrorType.DuplicateVariableName,
                     $"Variable '{declaration.target}' already declared in this scope",
@@ -127,7 +126,7 @@ public class ForInDeconstruct : Expression, IVariableContainer {
                 return;
             }
 
-            if (!variableType.IsAssignableFrom(context.ModuleContext, tupleType.itemTypes[i])) {
+            if (!variableType!.IsAssignableFrom(context.ModuleContext, tupleType.itemTypes[i])) {
                 context.AddError(new StructuralError(
                     StructuralError.ErrorType.IncompatibleTypes,
                     $"Expected element {i} of {tupleType} to be of type {variableType}",
@@ -157,7 +156,7 @@ public class ForInDeconstruct : Expression, IVariableContainer {
         source.EmitNext(loopContext);
         foreach (var kv in variables) {
             loopContext.IL.Emit(OpCodes.Dup);
-            tupleType.FindField(loopContext.ModuleContext, $"_{kv.index + 1}").Create(loopContext.ModuleContext)
+            tupleType.FindField(loopContext.ModuleContext, $"_{kv.index + 1}")!.Create(loopContext.ModuleContext)
                 .EmitLoad(loopContext);
 
             kv.variable.EmitStore(loopContext);
@@ -186,7 +185,7 @@ public class ForInDeconstruct : Expression, IVariableContainer {
         source.EmitNext(countingContext);
         foreach (var kv in variables) {
             countingContext.IL.Emit(OpCodes.Dup);
-            tupleType.FindField(context.ModuleContext, $"_{kv.index + 1}").Create(countingContext.ModuleContext)
+            tupleType.FindField(context.ModuleContext, $"_{kv.index + 1}")!.Create(countingContext.ModuleContext)
                 .EmitLoad(countingContext);
 
             kv.variable.EmitStore(countingContext);
@@ -213,12 +212,12 @@ public class ForInDeconstruct : Expression, IVariableContainer {
             if (declaration.IsPlaceholder) continue;
             if (declaration.IsInferred)
                 variables.Add((i,
-                    loopContext.DeclaredVariable(declaration.target, true,
+                    loopContext.DeclaredVariable(declaration.target!, true,
                         tupleType.itemTypes[i].UnderlyingType(loopContext.ModuleContext))));
             else
                 variables.Add((i,
-                    loopContext.DeclaredVariable(declaration.target, true,
-                        declaration.type.UnderlyingType(loopContext.ModuleContext))));
+                    loopContext.DeclaredVariable(declaration.target!, true,
+                        declaration.type!.UnderlyingType(loopContext.ModuleContext))));
         }
 
         return variables;
@@ -228,7 +227,7 @@ public class ForInDeconstruct : Expression, IVariableContainer {
         foreach (var declaration in declarations) {
             if (declaration.IsPlaceholder) continue;
 
-            if (!recordType.ItemTypes.ContainsKey(declaration.source)) {
+            if (!recordType.ItemTypes.ContainsKey(declaration.source!)) {
                 context.AddError(new StructuralError(
                     StructuralError.ErrorType.IncompatibleTypes,
                     $"{recordType} does not have a field '{declaration.source}'",
@@ -239,9 +238,9 @@ public class ForInDeconstruct : Expression, IVariableContainer {
             }
 
             var variableType =
-                declaration.IsInferred ? recordType.ItemTypes[declaration.source] : declaration.type;
+                declaration.IsInferred ? recordType.ItemTypes[declaration.source!] : declaration.type;
 
-            if (context.FindVariable(declaration.target) != null) {
+            if (context.FindVariable(declaration.target!) != null) {
                 context.AddError(new StructuralError(
                     StructuralError.ErrorType.DuplicateVariableName,
                     $"Variable '{declaration.target}' already declared in this scope",
@@ -251,7 +250,7 @@ public class ForInDeconstruct : Expression, IVariableContainer {
                 return;
             }
 
-            if (!variableType.IsAssignableFrom(context.ModuleContext, recordType.ItemTypes[declaration.source])) {
+            if (!variableType!.IsAssignableFrom(context.ModuleContext, recordType.ItemTypes[declaration.source!])) {
                 context.AddError(new StructuralError(
                     StructuralError.ErrorType.IncompatibleTypes,
                     $"Expected element {declaration.source} of {recordType} to be of type {variableType}",
@@ -281,7 +280,7 @@ public class ForInDeconstruct : Expression, IVariableContainer {
         source.EmitNext(loopContext);
         foreach (var kv in variables) {
             loopContext.IL.Emit(OpCodes.Dup);
-            recordType.FindField(loopContext.ModuleContext, kv.name).Create(loopContext.ModuleContext)
+            recordType.FindField(loopContext.ModuleContext, kv.name)!.Create(loopContext.ModuleContext)
                 .EmitLoad(loopContext);
 
             kv.variable.EmitStore(loopContext);
@@ -310,7 +309,7 @@ public class ForInDeconstruct : Expression, IVariableContainer {
         source.EmitNext(countingContext);
         foreach (var kv in variables) {
             countingContext.IL.Emit(OpCodes.Dup);
-            recordType.FindField(countingContext.ModuleContext, kv.name).Create(countingContext.ModuleContext)
+            recordType.FindField(countingContext.ModuleContext, kv.name)!.Create(countingContext.ModuleContext)
                 .EmitLoad(countingContext);
 
             kv.variable.EmitStore(countingContext);
@@ -335,13 +334,13 @@ public class ForInDeconstruct : Expression, IVariableContainer {
         foreach (var declaration in declarations) {
             if (declaration.IsPlaceholder) continue;
             if (declaration.IsInferred)
-                variables.Add((declaration.target,
-                    loopContext.DeclaredVariable(declaration.target, true,
-                        recordType.ItemTypes[declaration.source].UnderlyingType(loopContext.ModuleContext))));
+                variables.Add((declaration.target!,
+                    loopContext.DeclaredVariable(declaration.target!, true,
+                        recordType.ItemTypes[declaration.source!].UnderlyingType(loopContext.ModuleContext))));
             else
-                variables.Add((declaration.target,
-                    loopContext.DeclaredVariable(declaration.target, true,
-                        declaration.type.UnderlyingType(loopContext.ModuleContext))));
+                variables.Add((declaration.target!,
+                    loopContext.DeclaredVariable(declaration.target!, true,
+                        declaration.type!.UnderlyingType(loopContext.ModuleContext))));
         }
 
         return variables;

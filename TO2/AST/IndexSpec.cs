@@ -13,7 +13,7 @@ public class IndexSpec {
         start = index;
     }
 
-    public IVariableContainer VariableContainer {
+    public IVariableContainer? VariableContainer {
         set => start.VariableContainer = value;
     }
 }

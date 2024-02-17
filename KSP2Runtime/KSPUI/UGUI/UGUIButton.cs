@@ -10,7 +10,7 @@ public class UGUIButton : UGUIElement {
     private readonly Button button;
     private readonly TextMeshProUGUI label;
 
-    private UGUIButton(GameObject gameObject, UnityAction onClick) : base(gameObject, Vector2.zero) {
+    private UGUIButton(GameObject gameObject, UnityAction? onClick) : base(gameObject, Vector2.zero) {
         button = gameObject.GetComponent<Button>();
         label = gameObject.GetComponentInChildren<TextMeshProUGUI>();
 
@@ -45,7 +45,7 @@ public class UGUIButton : UGUIElement {
         button.onClick.AddListener(onClick);
     }
 
-    public static UGUIButton Create(string label, UnityAction onClick = null) {
-        return new UGUIButton(UIFactory.Instance.CreateButton(label), onClick);
+    public static UGUIButton Create(string label, UnityAction? onClick = null) {
+        return new UGUIButton(UIFactory.Instance!.CreateButton(label), onClick);
     }
 }

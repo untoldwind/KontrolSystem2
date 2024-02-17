@@ -56,7 +56,7 @@ public class CellTests {
     }
 
     private class Obverser : IObserver<string> {
-        internal string lastCall;
+        internal string? lastCall;
 
         public void OnNext(string value) {
             lastCall = value;

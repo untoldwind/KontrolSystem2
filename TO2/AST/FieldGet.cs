@@ -14,7 +14,7 @@ public class FieldGet : Expression, IAssignContext {
         this.fieldName = fieldName;
     }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set => target.VariableContainer = value;
     }
 

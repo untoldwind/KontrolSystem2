@@ -15,12 +15,12 @@ public enum FunctionModifier {
 }
 
 public class FunctionParameter : Node {
-    public readonly Expression defaultValue;
-    public readonly string description;
+    public readonly Expression? defaultValue;
+    public readonly string? description;
     public readonly string name;
-    public readonly TO2Type type;
+    public readonly TO2Type? type;
 
-    public FunctionParameter(string name, TO2Type type, string description, Expression defaultValue = null,
+    public FunctionParameter(string name, TO2Type? type, string? description, Expression? defaultValue = null,
         Position start = new(), Position end = new()) : base(start, end) {
         this.name = name;
         this.type = type;
@@ -81,10 +81,10 @@ public class FunctionDeclaration : Node, IModuleItem, IVariableContainer {
     public IEnumerable<StructuralError> TryVerifyFunctions(ModuleContext context) {
         var errors =
             parameters.Select(p => p.type).Concat(new[] { declaredReturn })
-                .Where(type => !type.IsValid(context)).Select(
+                .Where(type => !type!.IsValid(context)).Select(
                     type => new StructuralError(
                         StructuralError.ErrorType.InvalidType,
-                        $"Invalid type name '{type.Name}'",
+                        $"Invalid type name '{type!.Name}'",
                         Start,
                         End
                     )).ToList();
@@ -96,9 +96,9 @@ public class FunctionDeclaration : Node, IModuleItem, IVariableContainer {
         return Enumerable.Empty<StructuralError>();
     }
 
-    public IVariableContainer ParentContainer => null;
+    public IVariableContainer? ParentContainer => null;
 
-    public TO2Type FindVariableLocal(IBlockContext context, string variableName) {
+    public TO2Type? FindVariableLocal(IBlockContext context, string variableName) {
         return parameters.Find(p => p.name == variableName)?.type;
     }
 
@@ -129,7 +129,7 @@ public class FunctionDeclaration : Node, IModuleItem, IVariableContainer {
         else if (declaredReturn == BuiltinType.Unit) context.IL.Emit(OpCodes.Ldnull);
 
         ILChunks.GenerateFunctionLeave(context);
-        context.IL.EmitReturn(context.MethodBuilder.ReturnType);
+        context.IL.EmitReturn(context.MethodBuilder!.ReturnType);
     }
 
     private void EmitCodeAsync(IBlockContext context) {

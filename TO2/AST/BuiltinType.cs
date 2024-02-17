@@ -24,13 +24,13 @@ public abstract partial class BuiltinType : RealizedType {
         new OperatorCollection {
             {
                 Operator.AddAssign,
-                new StaticMethodOperatorEmitter(() => new GenericParameter("T"), () => ArrayBuilder,
+                new StaticMethodOperatorEmitter(() => new GenericParameter("T"), () => ArrayBuilder!,
                     typeof(ArrayBuilderOps).GetMethod("AddTo"))
             }
         },
         new List<(string name, IMethodInvokeFactory invoker)> {
             ("append",
-                new BoundMethodInvokeFactory("Append an element to the array", true, () => ArrayBuilder,
+                new BoundMethodInvokeFactory("Append an element to the array", true, () => ArrayBuilder!,
                     () => new List<RealizedParameter> {
                         new("element", new GenericParameter("T"), "Value ot append")
                     },
@@ -60,7 +60,7 @@ public abstract partial class BuiltinType : RealizedType {
                     false, typeof(Cell<>), typeof(Cell<>).GetProperty("Value")?.SetMethod)),
             ("update",
                 new BoundMethodInvokeFactory("Atomically update the value of the cell", true,
-                    () => Cell,
+                    () => Cell!,
                     () => new List<RealizedParameter> {
                         new("updater",
                             new FunctionType(false, new List<TO2Type> { new GenericParameter("T") },
@@ -79,7 +79,7 @@ public abstract partial class BuiltinType : RealizedType {
         return this;
     }
 
-    public static TO2Type GetBuiltinType(List<string> namePath, List<TO2Type> typeArguments) {
+    public static TO2Type? GetBuiltinType(List<string> namePath, List<TO2Type> typeArguments) {
         if (namePath.Count != 1) return null;
 
         switch (namePath[0]) {

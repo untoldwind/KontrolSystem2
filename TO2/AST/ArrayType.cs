@@ -180,7 +180,7 @@ public class ArrayType : RealizedType {
         return allowedSuffixOperators;
     }
 
-    public override IIndexAccessEmitter AllowedIndexAccess(ModuleContext context, IndexSpec indexSpec) {
+    public override IIndexAccessEmitter? AllowedIndexAccess(ModuleContext context, IndexSpec indexSpec) {
         switch (indexSpec.indexType) {
         case IndexSpecType.Single:
             var underlyingElement = ElementType.UnderlyingType(context);
@@ -191,17 +191,17 @@ public class ArrayType : RealizedType {
         }
     }
 
-    public override IForInSource ForInSource(ModuleContext context, TO2Type typeHint) {
+    public override IForInSource ForInSource(ModuleContext context, TO2Type? typeHint) {
         return new ArrayForInSource(GeneratedType(context), ElementType.UnderlyingType(context));
     }
 
     public override RealizedType
-        FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) {
+        FillGenerics(ModuleContext context, Dictionary<string, RealizedType>? typeArguments) {
         return new ArrayType(ElementType.UnderlyingType(context).FillGenerics(context, typeArguments));
     }
 
     public override IEnumerable<(string name, RealizedType type)> InferGenericArgument(ModuleContext context,
-        RealizedType concreteType) {
+        RealizedType? concreteType) {
         var concreteArray = concreteType as ArrayType;
         if (concreteArray == null) return Enumerable.Empty<(string name, RealizedType type)>();
         return ElementType.InferGenericArgument(context, concreteArray.ElementType.UnderlyingType(context));
@@ -213,20 +213,20 @@ public class ArrayType : RealizedType {
         throw new REPLException(node, $"Get array length from a non-array: {target.Type.Name}");
     }
 
-    public override IREPLValue REPLCast(object value) {
+    public override IREPLValue REPLCast(object? value) {
         if (value is Array a)
             return new REPLArray(this, a);
 
         throw new REPLException(new Position("Intern"), new Position("Intern"),
-            $"{value.GetType()} can not be cast to REPLArray");
+            $"{value?.GetType()} can not be cast to REPLArray");
     }
 }
 
 public class ArrayForInSource : IForInSource {
     private readonly Type arrayType;
-    private ILocalRef arrayRef;
+    private ILocalRef? arrayRef;
 
-    private ILocalRef currentIndex;
+    private ILocalRef? currentIndex;
 
     public ArrayForInSource(Type arrayType, RealizedType elementType) {
         this.arrayType = arrayType;
@@ -244,20 +244,20 @@ public class ArrayForInSource : IForInSource {
     }
 
     public void EmitCheckDone(IBlockContext context, LabelRef loop) {
-        currentIndex.EmitLoad(context);
+        currentIndex!.EmitLoad(context);
         context.IL.Emit(OpCodes.Ldc_I4_1);
         context.IL.Emit(OpCodes.Add);
         context.IL.Emit(OpCodes.Dup);
-        currentIndex.EmitStore(context);
-        arrayRef.EmitLoad(context);
+        currentIndex!.EmitStore(context);
+        arrayRef!.EmitLoad(context);
         context.IL.Emit(OpCodes.Ldlen);
         context.IL.Emit(OpCodes.Conv_I4);
         context.IL.Emit(loop.isShort ? OpCodes.Blt_S : OpCodes.Blt, loop);
     }
 
     public void EmitNext(IBlockContext context) {
-        arrayRef.EmitLoad(context);
-        currentIndex.EmitLoad(context);
+        arrayRef!.EmitLoad(context);
+        currentIndex!.EmitLoad(context);
         if (ElementType == BuiltinType.Bool) context.IL.Emit(OpCodes.Ldelem_I4);
         else if (ElementType == BuiltinType.Int) context.IL.Emit(OpCodes.Ldelem_I8);
         else if (ElementType == BuiltinType.Float) context.IL.Emit(OpCodes.Ldelem_R8);

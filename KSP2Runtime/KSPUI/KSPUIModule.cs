@@ -19,14 +19,14 @@ public partial class KSPUIModule {
 
     [KSFunction]
     public static Window OpenWindow(string title, double x, double y, double width, double height) {
-        var uiWindow = UIWindows.Instance.gameObject.AddComponent<UGUIResizableWindow>();
+        var uiWindow = UIWindows.Instance!.gameObject.AddComponent<UGUIResizableWindow>();
         uiWindow.Initialize(title, new Rect((float)x, (float)y, (float)width, (float)height));
         return new Window(uiWindow);
     }
 
     [KSFunction]
     public static Window OpenCenteredWindow(string title, double width, double height) {
-        var uiWindow = UIWindows.Instance.gameObject.AddComponent<UGUIResizableWindow>();
+        var uiWindow = UIWindows.Instance!.gameObject.AddComponent<UGUIResizableWindow>();
         uiWindow.Initialize(title,
             new Rect(0.5f * (Screen.width - (float)width), 0.5f * (Screen.height + (float)height), (float)width,
                 (float)height));

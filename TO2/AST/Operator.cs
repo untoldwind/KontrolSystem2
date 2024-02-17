@@ -42,7 +42,7 @@ public enum Operator {
     Unwrap // ?
 }
 
-public delegate IREPLValue REPLOperator(Node node, IREPLValue left, IREPLValue right);
+public delegate IREPLValue REPLOperator(Node node, IREPLValue left, IREPLValue? right);
 
 public interface IOperatorEmitter {
     TO2Type ResultType { get; }
@@ -56,7 +56,7 @@ public interface IOperatorEmitter {
 
     IOperatorEmitter FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments);
 
-    IREPLValue Eval(Node node, IREPLValue left, IREPLValue right);
+    IREPLValue Eval(Node node, IREPLValue left, IREPLValue? right);
 }
 
 public class DirectOperatorEmitter : IOperatorEmitter {
@@ -95,7 +95,7 @@ public class DirectOperatorEmitter : IOperatorEmitter {
         return this;
     }
 
-    public IREPLValue Eval(Node node, IREPLValue left, IREPLValue right) {
+    public IREPLValue Eval(Node node, IREPLValue left, IREPLValue? right) {
         return replOperator(node, left, right);
     }
 }
@@ -105,14 +105,14 @@ public class StaticMethodOperatorEmitter : IOperatorEmitter {
     private readonly Func<TO2Type> otherTypeFactory;
     private readonly OpCode[] postOpCodes;
     private readonly Func<TO2Type> resultTypeFactory;
-    private readonly Func<ModuleContext, IEnumerable<RealizedType>> targetTypeArguments;
+    private readonly Func<ModuleContext, IEnumerable<RealizedType>>? targetTypeArguments;
 
     public StaticMethodOperatorEmitter(Func<TO2Type> otherTypeFactory, Func<TO2Type> resultTypeFactory,
-        MethodInfo methodInfo, Func<ModuleContext, IEnumerable<RealizedType>> targetTypeArguments = null,
+        MethodInfo? methodInfo, Func<ModuleContext, IEnumerable<RealizedType>>? targetTypeArguments = null,
         params OpCode[] postOpCodes) {
         this.otherTypeFactory = otherTypeFactory;
         this.resultTypeFactory = resultTypeFactory;
-        this.methodInfo = methodInfo;
+        this.methodInfo = methodInfo ?? throw new ArgumentException("MethodInfo is null"); ;
         this.targetTypeArguments = targetTypeArguments;
         this.postOpCodes = postOpCodes;
     }
@@ -160,8 +160,8 @@ public class StaticMethodOperatorEmitter : IOperatorEmitter {
         return this;
     }
 
-    public IREPLValue Eval(Node node, IREPLValue left, IREPLValue right) {
-        var result = methodInfo.Invoke(null, new[] { left.Value, right.Value });
+    public IREPLValue Eval(Node node, IREPLValue left, IREPLValue? right) {
+        var result = methodInfo.Invoke(null, new[] { left.Value, right?.Value });
 
         return ResultType.REPLCast(result);
     }

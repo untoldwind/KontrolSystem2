@@ -26,7 +26,7 @@ public class Unapply : Expression {
         this.expression = expression;
     }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set => expression.VariableContainer = value;
     }
 
@@ -34,7 +34,7 @@ public class Unapply : Expression {
         return BuiltinType.Bool;
     }
 
-    public override Dictionary<string, TO2Type> GetScopeVariables(IBlockContext context) {
+    public override Dictionary<string, TO2Type>? GetScopeVariables(IBlockContext context) {
         var valueType = expression.ResultType(context);
         var unapplyPattern =
             valueType.AllowedUnapplyPatterns(context.ModuleContext, pattern, extractNames.Count);
@@ -66,7 +66,7 @@ public class Unapply : Expression {
             if (context.HasErrors) return;
 
             var extractVariables =
-                extractNames.Select(extractName => context.FindVariable(extractName)).ToList();
+                extractNames.Select(extractName => context.FindVariable(extractName)!).ToList();
 
             unapplyPattern.EmitExtract(context, extractVariables);
         }

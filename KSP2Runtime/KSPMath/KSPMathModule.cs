@@ -10,7 +10,7 @@ namespace KontrolSystem.KSP.Runtime.KSPMath;
 public class KSPMathModule {
     private const string ModuleName = "ksp::math";
 
-    private static KSPMathModule _instance;
+    private static KSPMathModule? _instance;
 
     public IKontrolModule module;
 

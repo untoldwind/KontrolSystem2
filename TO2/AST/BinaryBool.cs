@@ -19,7 +19,7 @@ public class BinaryBool : Expression {
         this.right.TypeHint = _ => BuiltinType.Bool;
     }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set {
             left.VariableContainer = value;
             right.VariableContainer = value;

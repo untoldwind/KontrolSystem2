@@ -22,23 +22,23 @@ public partial class KSPGameModule {
     [KSFunction(
         Description = "Yield execution to allow Unity to do some other stuff inbetween."
     )]
-    public static Future<object> Yield() {
+    public static Future<object?> Yield() {
         KSPContext.CurrentContext.NextYield = new WaitForFixedUpdate();
-        return new Future.Success<object>(null);
+        return new Future.Success<object?>(null);
     }
 
     [KSFunction(
         Description = "Stop execution of given number of seconds (factions of a seconds are supported as well)."
     )]
-    public static Future<object> Sleep(double seconds) {
+    public static Future<object?> Sleep(double seconds) {
         KSPContext.CurrentContext.NextYield = new WaitForSeconds((float)seconds);
-        return new Future.Success<object>(null);
+        return new Future.Success<object?>(null);
     }
 
     [KSFunction(
         Description = "Stop execution until a given condition is met."
     )]
-    public static Future<object> WaitUntil(Func<bool> predicate) {
+    public static Future<object?> WaitUntil(Func<bool> predicate) {
         var context = KSPContext.CurrentContext;
         KSPContext.CurrentContext.NextYield = new WaitUntil(() => {
             try {
@@ -49,13 +49,13 @@ public partial class KSPGameModule {
                 ContextHolder.CurrentContext.Value = null;
             }
         });
-        return new Future.Success<object>(null);
+        return new Future.Success<object?>(null);
     }
 
     [KSFunction(
         Description = "Stop execution as long as a given condition is met."
     )]
-    public static Future<object> WaitWhile(Func<bool> predicate) {
+    public static Future<object?> WaitWhile(Func<bool> predicate) {
         var context = KSPContext.CurrentContext;
         KSPContext.CurrentContext.NextYield = new WaitWhile(() => {
             try {
@@ -66,6 +66,6 @@ public partial class KSPGameModule {
                 ContextHolder.CurrentContext.Value = null;
             }
         });
-        return new Future.Success<object>(null);
+        return new Future.Success<object?>(null);
     }
 }

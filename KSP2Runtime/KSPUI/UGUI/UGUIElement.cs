@@ -5,9 +5,6 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI;
 public class UGUIElement {
     protected Vector2 minSize;
 
-    protected UGUIElement() {
-    }
-
     protected UGUIElement(GameObject gameObject, Vector2 minSize) {
         GameObject = gameObject;
         this.minSize = minSize;
@@ -31,7 +28,7 @@ public class UGUIElement {
     }
 
     public static UGUIElement VScrollView(UGUIElement content, Vector2 minSize) {
-        var scrollView = UIFactory.Instance.CreateScrollView(content.GameObject);
+        var scrollView = UIFactory.Instance!.CreateScrollView(content.GameObject);
         return new UGUIElement(scrollView, minSize);
     }
 

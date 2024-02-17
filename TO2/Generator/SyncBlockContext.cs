@@ -9,7 +9,7 @@ namespace KontrolSystem.TO2.Generator;
 
 public class SyncBlockContext : IBlockContext {
     private readonly Dictionary<string, IBlockVariable> variables;
-    private VariableResolver externalVariables;
+    private VariableResolver? externalVariables;
 
     private SyncBlockContext(SyncBlockContext parent, IILEmitter il, (LabelRef start, LabelRef end)? innerLoop) {
         ModuleContext = parent.ModuleContext;
@@ -27,7 +27,7 @@ public class SyncBlockContext : IBlockContext {
         this.ModuleContext = moduleContext;
         MethodBuilder = null;
         ExpectedReturn = BuiltinType.Unit;
-        IL = moduleContext.constructorEmitter;
+        IL = moduleContext.constructorEmitter!;
         variables = new Dictionary<string, IBlockVariable>();
         AllErrors = new List<StructuralError>();
         InnerLoop = null;
@@ -55,11 +55,11 @@ public class SyncBlockContext : IBlockContext {
             isAsync
                 ? this.ModuleContext.FutureTypeOf(returnType).future
                 : returnType.GeneratedType(this.ModuleContext),
-            parameters.Select(parameter => parameter.type.GeneratedType(this.ModuleContext)).ToArray());
+            parameters.Select(parameter => parameter.type!.GeneratedType(this.ModuleContext)).ToArray());
         ExpectedReturn = returnType;
         IL = new GeneratorILEmitter(MethodBuilder.GetILGenerator());
         variables = parameters.Select<FunctionParameter, IBlockVariable>((p, idx) =>
-            new MethodParameter(p.name, p.type.UnderlyingType(this.ModuleContext), idx)).ToDictionary(p => p.Name);
+            new MethodParameter(p.name, p.type!.UnderlyingType(this.ModuleContext), idx)).ToDictionary(p => p.Name);
         AllErrors = new List<StructuralError>();
         InnerLoop = null;
     }
@@ -73,11 +73,11 @@ public class SyncBlockContext : IBlockContext {
             isAsync
                 ? this.ModuleContext.FutureTypeOf(returnType).future
                 : returnType.GeneratedType(this.ModuleContext),
-            parameters.Select(parameter => parameter.type.GeneratedType(this.ModuleContext)).ToArray());
+            parameters.Select(parameter => parameter.type!.GeneratedType(this.ModuleContext)).ToArray());
         ExpectedReturn = returnType;
         IL = new GeneratorILEmitter(MethodBuilder.GetILGenerator());
         variables = parameters.Select<FunctionParameter, IBlockVariable>((p, idx) =>
-                new MethodParameter(p.name, p.type.UnderlyingType(this.ModuleContext), idx + 1))
+                new MethodParameter(p.name, p.type!.UnderlyingType(this.ModuleContext), idx + 1))
             .ToDictionary(p => p.Name);
         AllErrors = new List<StructuralError>();
         InnerLoop = null;
@@ -98,7 +98,7 @@ public class SyncBlockContext : IBlockContext {
 
     public ModuleContext ModuleContext { get; }
 
-    public MethodBuilder MethodBuilder { get; }
+    public MethodBuilder? MethodBuilder { get; }
 
     public IILEmitter IL { get; }
 
@@ -138,7 +138,7 @@ public class SyncBlockContext : IBlockContext {
         return variable;
     }
 
-    public IBlockVariable FindVariable(string name) {
+    public IBlockVariable? FindVariable(string name) {
         return variables.Get(name) ?? externalVariables?.Invoke(name);
     }
 
@@ -156,7 +156,7 @@ public class SyncBlockContext : IBlockContext {
         return variable;
     }
 
-    public Dictionary<string, RealizedType> InferredGenerics { get; }
+    public Dictionary<string, RealizedType>? InferredGenerics { get; }
 
     public void RegisterAsyncResume(TO2Type returnType) {
     }

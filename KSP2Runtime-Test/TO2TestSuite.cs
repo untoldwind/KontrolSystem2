@@ -52,7 +52,7 @@ public class TO2TestSuite {
 
                 foreach (var error in reporter.Errors) {
                     output.WriteLine($"    {error.testName}:");
-                    output.WriteLine(error.exception.ToString());
+                    output.WriteLine(error.exception?.ToString());
                 }
             }
 

@@ -9,7 +9,7 @@ public class Break : Expression {
     public Break(Position start = new(), Position end = new()) : base(start, end) {
     }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set { }
     }
 
@@ -44,7 +44,7 @@ public class Continue : Expression {
     public Continue(Position start = new(), Position end = new()) : base(start, end) {
     }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set { }
     }
 

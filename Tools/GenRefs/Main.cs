@@ -79,7 +79,7 @@ namespace KontrolSystem.GenRefs {
             Functions = new Dictionary<string, FunctionReference>();
 
             foreach (string typeName in module.AllTypeNames) {
-                RealizedType type = module.FindType(typeName).UnderlyingType(moduleContext);
+                RealizedType type = module.FindType(typeName)!.UnderlyingType(moduleContext);
                 if (type is FunctionType functionType) {
                     TypeAliases.Add(typeName, new TypeRef(moduleContext, functionType));
                 } else {
@@ -89,13 +89,13 @@ namespace KontrolSystem.GenRefs {
             }
 
             foreach (string constantName in module.AllConstantNames) {
-                IKontrolConstant constant = module.FindConstant(constantName);
+                IKontrolConstant constant = module.FindConstant(constantName)!;
                 var constantReference = new ConstantReference(moduleContext, constant);
                 Constants.Add(constantReference.Name, constantReference);
             }
 
             foreach (var functionName in module.AllFunctionNames) {
-                IKontrolFunction function = module.FindFunction(functionName);
+                IKontrolFunction function = module.FindFunction(functionName)!;
                 var functionReference = new FunctionReference(moduleContext, function);
                 Functions.Add(functionReference.Name, functionReference);
             }
@@ -103,7 +103,7 @@ namespace KontrolSystem.GenRefs {
 
         [JsonProperty("name")] public string Name { get; }
 
-        [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)] public string Description { get; }
+        [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)] public string? Description { get; }
 
         [JsonProperty("types")] public Dictionary<string, TypeReference> Types { get; }
 
@@ -172,17 +172,17 @@ namespace KontrolSystem.GenRefs {
         [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)] public string Description { get; }
 
         [JsonProperty("genericParameters", NullValueHandling = NullValueHandling.Ignore)]
-        public string[] GenericParameters { get; }
+        public string[]? GenericParameters { get; }
 
         [JsonProperty("fields")] public Dictionary<string, FieldReference> Fields { get; }
 
         [JsonProperty("methods")] public Dictionary<string, FunctionReference> Methods { get; }
 
         [JsonProperty("prefixOperators", NullValueHandling = NullValueHandling.Ignore)]
-        public Dictionary<string, List<OperatorReference>> PrefixOperators { get; }
+        public Dictionary<string, List<OperatorReference>>? PrefixOperators { get; }
 
         [JsonProperty("suffixOperators", NullValueHandling = NullValueHandling.Ignore)]
-        public Dictionary<string, List<OperatorReference>> SuffixOperators { get; }
+        public Dictionary<string, List<OperatorReference>>? SuffixOperators { get; }
 
         [JsonProperty("assignableFromAny")]
         public bool AssignableFromAny { get; }
@@ -204,7 +204,7 @@ namespace KontrolSystem.GenRefs {
 
         [JsonProperty("name")] public string Name { get; }
 
-        [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)] public string Description { get; }
+        [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)] public string? Description { get; }
 
         [JsonProperty("readOnly")] public bool ReadOnly { get; }
 
@@ -245,6 +245,7 @@ namespace KontrolSystem.GenRefs {
                 Operator.BoolAnd => "&&",
                 Operator.BoolOr => "||",
                 Operator.Unwrap => "?",
+                _ => throw new ArgumentOutOfRangeException(nameof(op), op, null)
             };
             OtherType = operatorEmitter.OtherType != null
                 ? new TypeRef(moduleContext, operatorEmitter.OtherType.UnderlyingType(moduleContext))
@@ -255,7 +256,7 @@ namespace KontrolSystem.GenRefs {
         [JsonProperty("op")] public string Op { get; }
 
         [JsonProperty("otherType", NullValueHandling = NullValueHandling.Ignore)]
-        public TypeRef OtherType { get; }
+        public TypeRef? OtherType { get; }
 
         [JsonProperty("resultType")] public TypeRef ResultType { get; }
     }
@@ -269,7 +270,7 @@ namespace KontrolSystem.GenRefs {
 
         [JsonProperty("name")] public string Name { get; }
 
-        [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)] public string Description { get; }
+        [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)] public string? Description { get; }
 
         [JsonProperty("type")] public TypeRef Type { get; }
     }
@@ -297,7 +298,7 @@ namespace KontrolSystem.GenRefs {
 
         [JsonProperty("name")] public string Name { get; }
 
-        [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)] public string Description { get; }
+        [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)] public string? Description { get; }
 
         [JsonProperty("parameters")] public FunctionParameterReference[] Parameters { get; }
 
@@ -314,7 +315,7 @@ namespace KontrolSystem.GenRefs {
 
         public FunctionParameterReference(ModuleContext moduleContext, FunctionParameter parameter) {
             Name = parameter.name;
-            Type = new TypeRef(moduleContext, parameter.type.UnderlyingType(moduleContext));
+            Type = new TypeRef(moduleContext, parameter.type!.UnderlyingType(moduleContext));
             HasDefault = parameter.HasDefault;
             Description = parameter.description;
         }
@@ -325,7 +326,7 @@ namespace KontrolSystem.GenRefs {
 
         [JsonProperty("hasDefault")] public bool HasDefault { get; }
 
-        [JsonProperty("description")] public string Description { get; }
+        [JsonProperty("description")] public string? Description { get; }
     }
 
     public class TypeRef {
@@ -395,19 +396,19 @@ namespace KontrolSystem.GenRefs {
         public TypeKind Kind { get; }
 
         [JsonProperty("module", NullValueHandling = NullValueHandling.Ignore)]
-        public string Module { get; }
+        public string? Module { get; }
 
         [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
-        public string Name { get; }
+        public string? Name { get; }
 
         [JsonProperty("names", NullValueHandling = NullValueHandling.Ignore)]
-        public List<string> Names { get; }
+        public List<string>? Names { get; }
 
         [JsonProperty("parameters", NullValueHandling = NullValueHandling.Ignore)]
-        public List<TypeRef> Parameters { get; }
+        public List<TypeRef>? Parameters { get; }
 
         [JsonProperty("returnType", NullValueHandling = NullValueHandling.Ignore)]
-        public TypeRef ReturnType { get; }
+        public TypeRef? ReturnType { get; }
 
         [JsonProperty("isAsync", NullValueHandling = NullValueHandling.Ignore)]
         public bool? IsAsync { get; }

@@ -10,7 +10,7 @@ public class RecordCreateTests {
                     const tuple = (a: 1234, b: 12.34) 
                   }");
 
-        Assert.Equal("(a : int, b : float)", block.FindVariable("tuple").Type.ToString());
+        Assert.Equal("(a : int, b : float)", block.FindVariable("tuple")!.Type.ToString());
 
         block.AssertCommands(
             "<declare local> 1 = System.ValueTuple`2[System.Int64,System.Double]",

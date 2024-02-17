@@ -19,7 +19,7 @@ public class FieldAssign : Expression {
         this.expression = expression;
     }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set {
             target.VariableContainer = value;
             expression.VariableContainer = value;
@@ -146,7 +146,7 @@ public class FieldAssign : Expression {
                 if (fieldAccess.IsAsyncStore) {
                     context.IL.Emit(OpCodes.Ldnull);
                     context.IL.EmitNew(OpCodes.Newobj,
-                        typeof(Future.Success<object>).GetConstructor(new[] { typeof(object) }));
+                        typeof(Future.Success<object>).GetConstructor(new[] { typeof(object) })!);
                     context.RegisterAsyncResume(BuiltinType.Unit);
                     context.IL.Emit(OpCodes.Pop);
                 }
@@ -157,7 +157,7 @@ public class FieldAssign : Expression {
                 if (fieldAccess.IsAsyncStore) {
                     context.IL.Emit(OpCodes.Ldnull);
                     context.IL.EmitNew(OpCodes.Newobj,
-                        typeof(Future.Success<object>).GetConstructor(new[] { typeof(object) }));
+                        typeof(Future.Success<object>).GetConstructor(new[] { typeof(object) })!);
                     context.RegisterAsyncResume(BuiltinType.Unit);
                     context.IL.Emit(OpCodes.Pop);
                 }
@@ -202,7 +202,7 @@ public class FieldAssign : Expression {
                 if (fieldAccess.IsAsyncStore) {
                     context.IL.Emit(OpCodes.Ldnull);
                     context.IL.EmitNew(OpCodes.Newobj,
-                        typeof(Future.Success<object>).GetConstructor(new[] { typeof(object) }));
+                        typeof(Future.Success<object>).GetConstructor(new[] { typeof(object) })!);
                     context.RegisterAsyncResume(BuiltinType.Unit);
                     context.IL.Emit(OpCodes.Pop);
                 }
@@ -214,7 +214,7 @@ public class FieldAssign : Expression {
                 if (fieldAccess.IsAsyncStore) {
                     context.IL.Emit(OpCodes.Ldnull);
                     context.IL.EmitNew(OpCodes.Newobj,
-                        typeof(Future.Success<object>).GetConstructor(new[] { typeof(object) }));
+                        typeof(Future.Success<object>).GetConstructor(new[] { typeof(object) })!);
                     context.RegisterAsyncResume(BuiltinType.Unit);
                     context.IL.Emit(OpCodes.Pop);
                 }

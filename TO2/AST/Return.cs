@@ -9,7 +9,7 @@ public class ReturnEmpty : Expression {
     public ReturnEmpty(Position start = new(), Position end = new()) : base(start, end) {
     }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set { }
     }
 
@@ -34,10 +34,10 @@ public class ReturnEmpty : Expression {
         context.IL.Emit(OpCodes.Ldnull);
         if (context.IsAsync)
             context.IL.EmitNew(OpCodes.Newobj,
-                context.MethodBuilder.ReturnType.GetConstructor(new[] { typeof(object) }));
+                context.MethodBuilder!.ReturnType.GetConstructor(new[] { typeof(object) })!);
 
         ILChunks.GenerateFunctionLeave(context);
-        context.IL.EmitReturn(context.MethodBuilder.ReturnType);
+        context.IL.EmitReturn(context.MethodBuilder!.ReturnType);
     }
 
     public override REPLValueFuture Eval(REPLContext context) {
@@ -54,7 +54,7 @@ public class ReturnValue : Expression {
         this.returnValue.TypeHint = context => context.ExpectedReturn.UnderlyingType(context.ModuleContext);
     }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set => returnValue.VariableContainer = value;
     }
 
@@ -85,11 +85,11 @@ public class ReturnValue : Expression {
         context.ExpectedReturn.AssignFrom(context.ModuleContext, returnType).EmitConvert(context);
         if (context.IsAsync)
             context.IL.EmitNew(OpCodes.Newobj,
-                context.MethodBuilder.ReturnType.GetConstructor(new[]
-                    { returnType.GeneratedType(context.ModuleContext) }));
+                context.MethodBuilder!.ReturnType.GetConstructor(new[]
+                    { returnType.GeneratedType(context.ModuleContext) })!);
 
         ILChunks.GenerateFunctionLeave(context);
-        context.IL.EmitReturn(context.MethodBuilder.ReturnType);
+        context.IL.EmitReturn(context.MethodBuilder!.ReturnType);
     }
 
     public override REPLValueFuture Eval(REPLContext context) {

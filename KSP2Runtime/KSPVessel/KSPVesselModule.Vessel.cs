@@ -4,6 +4,7 @@ using KontrolSystem.KSP.Runtime.KSPControl;
 using KontrolSystem.KSP.Runtime.KSPMath;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.KSP.Runtime.KSPScience;
+using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
 using KSP.Modules;
@@ -11,6 +12,7 @@ using KSP.Sim;
 using KSP.Sim.Definitions;
 using KSP.Sim.DeltaV;
 using KSP.Sim.impl;
+using Position = KSP.Sim.Position;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
@@ -257,47 +259,47 @@ public partial class KSPVesselModule {
             .Select(part => new PartAdapter(this, part)).ToArray();
 
         [KSField(Description = "Get a list of all air intake parts of the vessel.")]
-        public ModuleAirIntakeAdapter[] AirIntakes => vessel.SimulationObject.PartOwner.Parts.Select(part => {
-            if (part.IsPartAirIntake(out var data)) return new ModuleAirIntakeAdapter(part, data);
+        public ModuleAirIntakeAdapter[] AirIntakes => vessel.SimulationObject.PartOwner.Parts.SelectMany(part => {
+            if (part.IsPartAirIntake(out var data)) return new ModuleAirIntakeAdapter(part, data).Yield();
 
-            return null;
-        }).Where(intake => intake != null).ToArray();
+            return Enumerable.Empty<ModuleAirIntakeAdapter>();
+        }).ToArray();
 
         [KSField(Description = "Get a list of all engine parts of the vessel.")]
-        public ModuleEngineAdapter[] Engines => vessel.SimulationObject.PartOwner.Parts.Select(part => {
-            if (part.IsPartEngine(out var data)) return new ModuleEngineAdapter(part, data);
+        public ModuleEngineAdapter[] Engines => vessel.SimulationObject.PartOwner.Parts.SelectMany(part => {
+            if (part.IsPartEngine(out var data)) return new ModuleEngineAdapter(part, data).Yield();
 
-            return null;
-        }).Where(engine => engine != null).ToArray();
+            return Enumerable.Empty<ModuleEngineAdapter>();
+        }).ToArray();
 
         [KSField(Description = "Get a list of all control service parts of the vessel.")]
-        public ModuleControlSurfaceAdapter[] ControlSurfaces => vessel.SimulationObject.PartOwner.Parts.Select(part => {
+        public ModuleControlSurfaceAdapter[] ControlSurfaces => vessel.SimulationObject.PartOwner.Parts.SelectMany(part => {
             if (part.TryGetModuleData<PartComponentModule_ControlSurface, Data_ControlSurface>(
-                    out var dataControlSurface)) return new ModuleControlSurfaceAdapter(part, dataControlSurface);
+                    out var dataControlSurface)) return new ModuleControlSurfaceAdapter(part, dataControlSurface).Yield();
 
-            return null;
-        }).Where(engine => engine != null).ToArray();
+            return Enumerable.Empty<ModuleControlSurfaceAdapter>();
+        }).ToArray();
 
         [KSField(Description = "Get a list of all command module parts of the vessel.")]
-        public ModuleCommandAdapter[] CommandModules => vessel.SimulationObject.PartOwner.Parts.Select(part => {
+        public ModuleCommandAdapter[] CommandModules => vessel.SimulationObject.PartOwner.Parts.SelectMany(part => {
             if (part.TryGetModuleData<PartComponentModule_Command, Data_Command>(out var dataCommand))
-                return new ModuleCommandAdapter(this, part, dataCommand);
+                return new ModuleCommandAdapter(this, part, dataCommand).Yield();
 
-            return null;
+            return Enumerable.Empty<ModuleCommandAdapter>();
         }).Where(engine => engine != null).ToArray();
 
         [KSField(Description = "Get a list of all docking node parts of the vessel.")]
-        public ModuleDockingNodeAdapter[] DockingNodes => vessel.SimulationObject.PartOwner.Parts.Select(part => {
-            if (part.IsPartDockingPort(out var data)) return new ModuleDockingNodeAdapter(this, part, data);
+        public ModuleDockingNodeAdapter[] DockingNodes => vessel.SimulationObject.PartOwner.Parts.SelectMany(part => {
+            if (part.IsPartDockingPort(out var data)) return new ModuleDockingNodeAdapter(this, part, data).Yield();
 
-            return null;
+            return Enumerable.Empty<ModuleDockingNodeAdapter>();
         }).Where(node => node != null).ToArray();
 
         [KSField(Description = "Get a list of all solar panel parts of the vessel.")]
-        public ModuleSolarPanelAdapter[] SolarPanels => vessel.SimulationObject.PartOwner.Parts.Select(part => {
-            if (part.IsPartSolarPanel(out var data)) return new ModuleSolarPanelAdapter(part, data);
+        public ModuleSolarPanelAdapter[] SolarPanels => vessel.SimulationObject.PartOwner.Parts.SelectMany(part => {
+            if (part.IsPartSolarPanel(out var data)) return new ModuleSolarPanelAdapter(part, data).Yield();
 
-            return null;
+            return Enumerable.Empty<ModuleSolarPanelAdapter>();
         }).Where(panel => panel != null).ToArray();
 
         [KSField(Description = "Get the currently selected target of the vessel, if there is one.")]
@@ -376,7 +378,7 @@ public partial class KSPVesselModule {
 
         public IGGuid UnderlyingId => vessel.SimulationObject.GlobalId;
 
-        public static Option<VesselAdapter> NullSafe(IKSPContext context, VesselComponent vessel) {
+        public static Option<VesselAdapter> NullSafe(IKSPContext context, VesselComponent? vessel) {
             return vessel != null
                 ? new Option<VesselAdapter>(new VesselAdapter(context, vessel))
                 : new Option<VesselAdapter>();
@@ -400,7 +402,7 @@ public partial class KSPVesselModule {
 
         [KSMethod]
         public KSPControlModule.SteeringManager SetSteering(Vector3d pitchYawRoll) {
-            if (context.TryFindAutopilot(vessel, out KSPControlModule.SteeringManager steeringManager)) {
+            if (context.TryFindAutopilot<KSPControlModule.SteeringManager>(vessel, out var steeringManager)) {
                 steeringManager.PitchYawRoll = pitchYawRoll;
                 return steeringManager;
             }
@@ -410,7 +412,7 @@ public partial class KSPVesselModule {
 
         [KSMethod]
         public KSPControlModule.SteeringManager ManageSteering(Func<double, Vector3d> pitchYawRollProvider) {
-            if (context.TryFindAutopilot(vessel, out KSPControlModule.SteeringManager steeringManager)) {
+            if (context.TryFindAutopilot<KSPControlModule.SteeringManager>(vessel, out var steeringManager)) {
                 steeringManager.SetPitchYawRollProvider(pitchYawRollProvider);
                 return steeringManager;
             }
@@ -420,7 +422,7 @@ public partial class KSPVesselModule {
 
         [KSMethod]
         public KSPControlModule.ThrottleManager SetThrottle(double throttle) {
-            if (context.TryFindAutopilot(vessel, out KSPControlModule.ThrottleManager throttleManager)) {
+            if (context.TryFindAutopilot<KSPControlModule.ThrottleManager>(vessel, out var throttleManager)) {
                 throttleManager.Throttle = throttle;
                 return throttleManager;
             }
@@ -430,7 +432,7 @@ public partial class KSPVesselModule {
 
         [KSMethod]
         public KSPControlModule.ThrottleManager ManageThrottle(Func<double, double> throttleProvider) {
-            if (context.TryFindAutopilot(vessel, out KSPControlModule.ThrottleManager throttleManager)) {
+            if (context.TryFindAutopilot<KSPControlModule.ThrottleManager>(vessel, out var throttleManager)) {
                 throttleManager.SetThrottleProvider(throttleProvider);
                 return throttleManager;
             }
@@ -440,7 +442,7 @@ public partial class KSPVesselModule {
 
         [KSMethod]
         public KSPControlModule.RCSTranslateManager SetRcsTranslate(Vector3d translate) {
-            if (context.TryFindAutopilot(vessel, out KSPControlModule.RCSTranslateManager rcsTranslateManager)) {
+            if (context.TryFindAutopilot<KSPControlModule.RCSTranslateManager>(vessel, out var rcsTranslateManager)) {
                 rcsTranslateManager.Translate = translate;
                 return rcsTranslateManager;
             }
@@ -450,7 +452,7 @@ public partial class KSPVesselModule {
 
         [KSMethod]
         public KSPControlModule.RCSTranslateManager ManageRcsTranslate(Func<double, Vector3d> translateProvider) {
-            if (context.TryFindAutopilot(vessel, out KSPControlModule.RCSTranslateManager rcsTranslateManager)) {
+            if (context.TryFindAutopilot<KSPControlModule.RCSTranslateManager>(vessel, out var rcsTranslateManager)) {
                 rcsTranslateManager.SetTranslateProvider(translateProvider);
                 return rcsTranslateManager;
             }
@@ -460,7 +462,7 @@ public partial class KSPVesselModule {
 
         [KSMethod]
         public KSPControlModule.WheelSteeringManager SetWheelSteering(double wheelSteering) {
-            if (context.TryFindAutopilot(vessel, out KSPControlModule.WheelSteeringManager wheelSteeringManager)) {
+            if (context.TryFindAutopilot<KSPControlModule.WheelSteeringManager>(vessel, out var wheelSteeringManager)) {
                 wheelSteeringManager.WheelSteer = wheelSteering;
                 return wheelSteeringManager;
             }
@@ -471,7 +473,7 @@ public partial class KSPVesselModule {
         [KSMethod]
         public KSPControlModule.WheelSteeringManager
             ManageWheelSteering(Func<double, double> wheelSteeringProvider) {
-            if (context.TryFindAutopilot(vessel, out KSPControlModule.WheelSteeringManager wheelSteeringManager)) {
+            if (context.TryFindAutopilot<KSPControlModule.WheelSteeringManager>(vessel, out var wheelSteeringManager)) {
                 wheelSteeringManager.SetWheelSteerProvider(wheelSteeringProvider);
                 return wheelSteeringManager;
             }
@@ -481,7 +483,7 @@ public partial class KSPVesselModule {
 
         [KSMethod]
         public KSPControlModule.WheelThrottleManager SetWheelThrottle(double wheelThrottle) {
-            if (context.TryFindAutopilot(vessel, out KSPControlModule.WheelThrottleManager wheelThrottleManager)) {
+            if (context.TryFindAutopilot<KSPControlModule.WheelThrottleManager>(vessel, out var wheelThrottleManager)) {
                 wheelThrottleManager.WheelThrottle = wheelThrottle;
                 return wheelThrottleManager;
             }
@@ -492,7 +494,7 @@ public partial class KSPVesselModule {
         [KSMethod]
         public KSPControlModule.WheelThrottleManager
             ManageWheelThrottle(Func<double, double> wheelThrottleProvider) {
-            if (context.TryFindAutopilot(vessel, out KSPControlModule.WheelThrottleManager wheelThrottleManager)) {
+            if (context.TryFindAutopilot<KSPControlModule.WheelThrottleManager>(vessel, out var wheelThrottleManager)) {
                 wheelThrottleManager.SetWheelThrottleProvider(wheelThrottleProvider);
                 return wheelThrottleManager;
             }

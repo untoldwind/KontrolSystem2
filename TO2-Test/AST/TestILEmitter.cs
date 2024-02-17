@@ -8,14 +8,13 @@ using KontrolSystem.TO2.Generator;
 
 namespace KontrolSystem.TO2.Test.AST;
 
-public interface IILCommand {
-}
+public interface IILCommand;
 
 public struct ILCommand : IILCommand {
     public OpCode opCode;
     public string args;
 
-    public override string ToString() {
+    public override string? ToString() {
         return string.IsNullOrEmpty(args) ? opCode.ToString() : $"{opCode} {args}";
     }
 }
@@ -29,11 +28,9 @@ public struct DeclareLocal : IILCommand {
     }
 }
 
-public struct ScopeBegin : IILCommand {
-}
+public struct ScopeBegin : IILCommand;
 
-public struct ScopeEnd : IILCommand {
-}
+public struct ScopeEnd : IILCommand;
 
 public class TestILEmitter : IILEmitter {
     public List<IILCommand> commands = new();

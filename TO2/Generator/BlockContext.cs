@@ -8,7 +8,7 @@ namespace KontrolSystem.TO2.Generator;
 public interface IBlockContext {
     ModuleContext ModuleContext { get; }
 
-    MethodBuilder MethodBuilder { get; }
+    MethodBuilder? MethodBuilder { get; }
 
     IILEmitter IL { get; }
 
@@ -22,7 +22,7 @@ public interface IBlockContext {
 
     (LabelRef start, LabelRef end)? InnerLoop { get; }
 
-    Dictionary<string, RealizedType> InferredGenerics { get; }
+    Dictionary<string, RealizedType>? InferredGenerics { get; }
 
     void AddError(StructuralError error);
 
@@ -32,7 +32,7 @@ public interface IBlockContext {
 
     IBlockContext CloneCountingContext();
 
-    IBlockVariable FindVariable(string name);
+    IBlockVariable? FindVariable(string name);
 
     ITempBlockVariable MakeTempVariable(RealizedType to2Type);
 

@@ -7,9 +7,9 @@ namespace KontrolSystem.TO2.Test;
 
 public static class Helpers {
     public static void ShouldDeepEqual(
-        object expected,
-        object actual,
-        string[] ignore,
+        object? expected,
+        object? actual,
+        string[]? ignore,
         string fieldPath = "Field ",
         BindingFlags bindingFlags = BindingFlags.NonPublic |
                                     BindingFlags.Public |
@@ -36,8 +36,8 @@ public static class Helpers {
 
             if (fieldType.IsClass || fieldType.IsInterface) {
                 if (fieldType.IsGenericType && fieldType.GetGenericTypeDefinition() == typeof(List<>)) {
-                    var expectedList = (expectedValue as IEnumerable<object>).ToList();
-                    var actualList = (actualValue as IEnumerable<object>).ToList();
+                    var expectedList = ((expectedValue as IEnumerable<object>)!).ToList();
+                    var actualList = ((actualValue as IEnumerable<object>)!).ToList();
 
                     Assert.True(expectedList.Count == actualList.Count, fieldPath + field.Name + ".Count");
                     for (var i = 0; i < expectedList.Count; i++)

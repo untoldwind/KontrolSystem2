@@ -13,42 +13,42 @@ public class VectorBinding {
         new OperatorCollection {
             {
                 Operator.Neg,
-                new StaticMethodOperatorEmitter(() => BuiltinType.Unit, () => VectorType,
+                new StaticMethodOperatorEmitter(() => BuiltinType.Unit, () => VectorType!,
                     typeof(Vector).GetMethod("negate", new[] { typeof(Vector) }))
             }, {
                 Operator.Mul,
-                new StaticMethodOperatorEmitter(() => BuiltinType.Float, () => VectorType,
+                new StaticMethodOperatorEmitter(() => BuiltinType.Float, () => VectorType!,
                     typeof(VectorBinding).GetMethod("Multiply", new[] { typeof(double), typeof(Vector) }))
             }
         },
         new OperatorCollection {
             {
                 Operator.Add,
-                new StaticMethodOperatorEmitter(() => VectorType, () => VectorType,
+                new StaticMethodOperatorEmitter(() => VectorType!, () => VectorType!,
                     typeof(Vector).GetMethod("op_Addition", new[] { typeof(Vector), typeof(Vector) }))
             }, {
                 Operator.AddAssign,
-                new StaticMethodOperatorEmitter(() => VectorType, () => VectorType,
+                new StaticMethodOperatorEmitter(() => VectorType!, () => VectorType!,
                     typeof(Vector).GetMethod("op_Addition", new[] { typeof(Vector), typeof(Vector) }))
             }, {
                 Operator.Sub,
-                new StaticMethodOperatorEmitter(() => VectorType, () => VectorType,
+                new StaticMethodOperatorEmitter(() => VectorType!, () => VectorType!,
                     typeof(Vector).GetMethod("op_Subtraction", new[] { typeof(Vector), typeof(Vector) }))
             }, {
                 Operator.SubAssign,
-                new StaticMethodOperatorEmitter(() => VectorType, () => VectorType,
+                new StaticMethodOperatorEmitter(() => VectorType!, () => VectorType!,
                     typeof(Vector).GetMethod("op_Subtraction", new[] { typeof(Vector), typeof(Vector) }))
             }, {
                 Operator.Mul,
-                new StaticMethodOperatorEmitter(() => VectorType, () => BuiltinType.Float,
+                new StaticMethodOperatorEmitter(() => VectorType!, () => BuiltinType.Float,
                     typeof(Vector).GetMethod("dot"))
             }, {
                 Operator.Mul,
-                new StaticMethodOperatorEmitter(() => BuiltinType.Float, () => VectorType,
+                new StaticMethodOperatorEmitter(() => BuiltinType.Float, () => VectorType!,
                     typeof(Vector).GetMethod("op_Multiply", new[] { typeof(Vector), typeof(double) }))
             }, {
                 Operator.MulAssign,
-                new StaticMethodOperatorEmitter(() => BuiltinType.Float, () => VectorType,
+                new StaticMethodOperatorEmitter(() => BuiltinType.Float, () => VectorType!,
                     typeof(Vector).GetMethod("op_Multiply", new[] { typeof(Vector), typeof(double) }))
             }
         },
@@ -90,9 +90,9 @@ public class VectorBinding {
             }, {
                 "cross",
                 new BoundMethodInvokeFactory("Calculate the cross/other product with `other` vector.", true,
-                    () => VectorType,
+                    () => VectorType!,
                     () => new List<RealizedParameter> {
-                        new("other", VectorType, "Other vector")
+                        new("other", VectorType!, "Other vector")
                     }, false,
                     typeof(Vector), typeof(Vector).GetMethod("cross"))
             }, {
@@ -100,7 +100,7 @@ public class VectorBinding {
                 new BoundMethodInvokeFactory("Calculate the dot/inner product with `other` vector.", true,
                     () => BuiltinType.Float,
                     () => new List<RealizedParameter> {
-                        new("other", VectorType, "Other vector")
+                        new("other", VectorType!, "Other vector")
                     }, false,
                     typeof(Vector), typeof(Vector).GetMethod("dot"))
             }, {
@@ -108,16 +108,16 @@ public class VectorBinding {
                 new BoundMethodInvokeFactory(
                     "Linear interpolate position between this and `other` vector, where `t = 0.0` is this and `t = 1.0` is `other`.",
                     true,
-                    () => VectorType,
+                    () => VectorType!,
                     () => new List<RealizedParameter> {
-                        new("other", VectorType, "Other vector"),
+                        new("other", VectorType!, "Other vector"),
                         new("t", BuiltinType.Float, "Relative position of mid-point (0.0 - 1.0)")
                     }, false, typeof(Vector), typeof(Vector).GetMethod("Lerp"))
             }, {
                 "exclude_from",
-                new BoundMethodInvokeFactory("Exclude this from `other` vector.", true, () => VectorType,
+                new BoundMethodInvokeFactory("Exclude this from `other` vector.", true, () => VectorType!,
                     () => new List<RealizedParameter> {
-                        new("other", VectorType, "Other vector")
+                        new("other", VectorType!, "Other vector")
                     }, false,
                     typeof(VectorBinding), typeof(VectorBinding).GetMethod("ExcludeFrom"))
             }
@@ -134,7 +134,7 @@ public class VectorBinding {
             }, {
                 "normalized",
                 new BoundPropertyLikeFieldAccessFactory("Normalized vector (i.e. scaled to length 1)",
-                    () => VectorType, typeof(Vector), typeof(Vector).GetMethod("normalize"), null)
+                    () => VectorType!, typeof(Vector), typeof(Vector).GetMethod("normalize"), null)
             }
         });
 

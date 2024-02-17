@@ -5,7 +5,7 @@ namespace KontrolSystem.TO2.Runtime;
 public interface IAnyOption {
     bool Defined { get; }
 
-    object ValueObject { get; }
+    object? ValueObject { get; }
 }
 
 public struct Option<T> : IAnyOption {
@@ -19,7 +19,7 @@ public struct Option<T> : IAnyOption {
 
     public bool Defined => defined;
 
-    public object ValueObject => value;
+    public object? ValueObject => value;
 
     public Option<U> Map<U>(Func<T, U> mapper) {
         return defined ? new Option<U>(mapper(value)) : new Option<U>();
@@ -47,7 +47,7 @@ public static class Option {
         return new Option<T>();
     }
 
-    public static Option<T> OfNullable<T>(T value) {
+    public static Option<T> OfNullable<T>(T? value) {
         return value != null ? new Option<T>(value) : new Option<T>();
     }
 }

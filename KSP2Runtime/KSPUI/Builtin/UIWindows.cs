@@ -6,7 +6,7 @@ using UnityEngine.Events;
 namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin;
 
 public class UIWindows : KerbalMonoBehaviour {
-    public static UIWindows Instance { get; private set; }
+    public static UIWindows? Instance { get; private set; }
 
     public void Awake() {
         Instance = this;

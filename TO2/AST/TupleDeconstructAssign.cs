@@ -17,7 +17,7 @@ public class TupleDeconstructAssign : Expression {
         this.expression.TypeHint = context => ResultType(context).UnderlyingType(context.ModuleContext);
     }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set => expression.VariableContainer = value;
     }
 
@@ -90,7 +90,7 @@ public class TupleDeconstructAssign : Expression {
         if (context.HasErrors) return;
 
         foreach (var kv in variables) {
-            var itemAccess = tupleType.FindField(context.ModuleContext, $"_{kv.index + 1}")
+            var itemAccess = tupleType.FindField(context.ModuleContext, $"_{kv.index + 1}")!
                 .Create(context.ModuleContext);
             context.IL.Emit(OpCodes.Dup);
             itemAccess.EmitLoad(context);
@@ -145,7 +145,7 @@ public class TupleDeconstructAssign : Expression {
 
         foreach (var kv in variables) {
             var itemAccess =
-                recordType.FindField(context.ModuleContext, kv.field).Create(context.ModuleContext);
+                recordType.FindField(context.ModuleContext, kv.field)!.Create(context.ModuleContext);
             context.IL.Emit(OpCodes.Dup);
             itemAccess.EmitLoad(context);
 

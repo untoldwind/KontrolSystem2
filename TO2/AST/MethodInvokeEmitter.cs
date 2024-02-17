@@ -33,17 +33,17 @@ public interface IMethodInvokeFactory {
 
     bool IsConst { get; }
 
-    TypeHint ReturnHint { get; }
+    TypeHint? ReturnHint { get; }
 
-    string Description { get; }
+    string? Description { get; }
 
     TO2Type DeclaredReturn { get; }
 
     List<FunctionParameter> DeclaredParameters { get; }
 
-    TypeHint ArgumentHint(int argumentIdx);
+    TypeHint? ArgumentHint(int argumentIdx);
 
-    IMethodInvokeEmitter Create(IBlockContext context, List<TO2Type> arguments, Node node);
+    IMethodInvokeEmitter? Create(IBlockContext context, List<TO2Type> arguments, Node node);
 
     IMethodInvokeFactory FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments);
 }
@@ -71,7 +71,7 @@ public class InlineMethodInvokeFactory : IMethodInvokeFactory {
 
     public TypeHint ReturnHint => _ => resultType();
 
-    public TypeHint ArgumentHint(int argumentIdx) {
+    public TypeHint? ArgumentHint(int argumentIdx) {
         return null;
     }
 
@@ -126,11 +126,11 @@ public class BoundMethodInvokeFactory : IMethodInvokeFactory {
     private readonly Type methodTarget;
     private readonly Func<List<RealizedParameter>> parameters;
     private readonly Func<RealizedType> resultType;
-    private readonly Func<ModuleContext, IEnumerable<(string name, RealizedType type)>> targetTypeArguments;
+    private readonly Func<ModuleContext, IEnumerable<(string name, RealizedType type)>>? targetTypeArguments;
 
-    public BoundMethodInvokeFactory(string description, bool isConst, Func<RealizedType> resultType,
-        Func<List<RealizedParameter>> parameters, bool isAsync, Type methodTarget, MethodInfo methodInfo,
-        Func<ModuleContext, IEnumerable<(string name, RealizedType type)>> targetTypeArguments = null,
+    public BoundMethodInvokeFactory(string? description, bool isConst, Func<RealizedType> resultType,
+        Func<List<RealizedParameter>> parameters, bool isAsync, Type methodTarget, MethodInfo? methodInfo,
+        Func<ModuleContext, IEnumerable<(string name, RealizedType type)>>? targetTypeArguments = null,
         bool constrained = false) {
         Description = description;
         IsConst = isConst;
@@ -146,7 +146,7 @@ public class BoundMethodInvokeFactory : IMethodInvokeFactory {
     }
 
     public bool IsConst { get; }
-    public string Description { get; }
+    public string? Description { get; }
 
     public bool IsAsync { get; }
 
@@ -166,7 +166,7 @@ public class BoundMethodInvokeFactory : IMethodInvokeFactory {
         parameters().Select(p =>
             new FunctionParameter(p.name, p.type, p.description, p.HasDefault ? new LiteralBool(true) : null)).ToList();
 
-    public IMethodInvokeEmitter Create(IBlockContext context, List<TO2Type> arguments, Node node) {
+    public IMethodInvokeEmitter? Create(IBlockContext context, List<TO2Type> arguments, Node node) {
         var (genericMethod, genericResult, genericParameters) =
             Helpers.MakeGeneric(context,
                 resultType(), parameters(), methodInfo,
@@ -248,7 +248,7 @@ public class BoundMethodInvokeEmitter : IMethodInvokeEmitter {
                 targetWithArguments.Skip(1).Select(a => a.Value).ToArray());
 
         return IsAsync
-            ? REPLValueFuture.Wrap(ResultType, result as IAnyFuture)
+            ? REPLValueFuture.Wrap(ResultType, (result as IAnyFuture)!)
             : REPLValueFuture.Success(ResultType.REPLCast(result));
     }
 }

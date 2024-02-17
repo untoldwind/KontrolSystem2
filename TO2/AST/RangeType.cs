@@ -70,22 +70,22 @@ public class RangeType : RealizedType {
         return typeof(Range);
     }
 
-    public override IIndexAccessEmitter AllowedIndexAccess(ModuleContext context, IndexSpec indexSpec) {
+    public override IIndexAccessEmitter? AllowedIndexAccess(ModuleContext context, IndexSpec indexSpec) {
         return null;
     }
 
-    public override IForInSource ForInSource(ModuleContext context, TO2Type typeHint) {
+    public override IForInSource ForInSource(ModuleContext context, TO2Type? typeHint) {
         return new RangeForInSource();
     }
 
-    public override IREPLValue REPLCast(object value) {
-        return new REPLRange((Range)value);
+    public override IREPLValue REPLCast(object? value) {
+        return new REPLRange((Range)value!);
     }
 }
 
 public class RangeForInSource : IForInSource {
-    private ILocalRef currentIndex;
-    private ILocalRef rangeRef;
+    private ILocalRef? currentIndex;
+    private ILocalRef? rangeRef;
 
     public RealizedType ElementType => BuiltinType.Int;
 
@@ -102,18 +102,18 @@ public class RangeForInSource : IForInSource {
     }
 
     public void EmitCheckDone(IBlockContext context, LabelRef loop) {
-        currentIndex.EmitLoad(context);
+        currentIndex!.EmitLoad(context);
         context.IL.Emit(OpCodes.Ldc_I4_1);
         context.IL.Emit(OpCodes.Conv_I8);
         context.IL.Emit(OpCodes.Add);
         context.IL.Emit(OpCodes.Dup);
-        currentIndex.EmitStore(context);
-        rangeRef.EmitLoad(context);
+        currentIndex!.EmitStore(context);
+        rangeRef!.EmitLoad(context);
         context.IL.Emit(OpCodes.Ldfld, typeof(Range).GetField("to"));
         context.IL.Emit(loop.isShort ? OpCodes.Blt_S : OpCodes.Blt, loop);
     }
 
     public void EmitNext(IBlockContext context) {
-        currentIndex.EmitLoad(context);
+        currentIndex!.EmitLoad(context);
     }
 }

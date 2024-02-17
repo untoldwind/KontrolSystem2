@@ -144,14 +144,14 @@ public abstract partial class BuiltinType {
             return allowedSuffixOperators;
         }
 
-        public override IREPLValue REPLCast(object value) {
+        public override IREPLValue REPLCast(object? value) {
             if (value is long l)
                 return new REPLInt(l);
             if (value is int i)
                 return new REPLInt(i);
 
             throw new REPLException(new Position("Intern"), new Position("Intern"),
-                $"{value.GetType()} can not be cast to REPLInt");
+                $"{value?.GetType()} can not be cast to REPLInt");
         }
     }
 

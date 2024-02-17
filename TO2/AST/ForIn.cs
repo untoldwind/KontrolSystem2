@@ -9,9 +9,9 @@ public class ForIn : Expression, IVariableContainer {
     private readonly Expression loopExpression;
     private readonly Expression sourceExpression;
     private readonly string variableName;
-    private readonly TO2Type variableType;
+    private readonly TO2Type? variableType;
 
-    public ForIn(string variableName, TO2Type variableType, Expression sourceExpression, Expression loopExpression,
+    public ForIn(string variableName, TO2Type? variableType, Expression sourceExpression, Expression loopExpression,
         Position start = new(), Position end = new()) : base(start, end) {
         this.variableName = variableName;
         this.variableType = variableType;
@@ -22,7 +22,7 @@ public class ForIn : Expression, IVariableContainer {
         this.loopExpression = loopExpression;
     }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set {
             ParentContainer = value;
             sourceExpression.VariableContainer = this;
@@ -30,9 +30,9 @@ public class ForIn : Expression, IVariableContainer {
         }
     }
 
-    public IVariableContainer ParentContainer { get; private set; }
+    public IVariableContainer? ParentContainer { get; private set; }
 
-    public TO2Type FindVariableLocal(IBlockContext context, string name) {
+    public TO2Type? FindVariableLocal(IBlockContext context, string name) {
         if (name != variableName) return null;
         return variableType ?? sourceExpression.ResultType(context)?.ForInSource(context.ModuleContext, null)?
             .ElementType;
@@ -79,7 +79,7 @@ public class ForIn : Expression, IVariableContainer {
         if (context.HasErrors) return;
 
         using var loopCounter = context.IL.TempLocal(typeof(int));
-        var loopSize = EstimateLoop(context, source);
+        var loopSize = EstimateLoop(context, source!);
         var start = context.IL.DefineLabel(loopSize.opCodes < 110);
         var end = context.IL.DefineLabel(loopSize.opCodes < 110);
         var loop = context.IL.DefineLabel(loopSize.opCodes < 100);
@@ -146,7 +146,7 @@ public class ForIn : Expression, IVariableContainer {
         if (context.FindVariable(variableName) != null)
             throw new REPLException(this, $"Variable '{variableName}' already declared in this scope");
 
-        return new REPLForInFuture(context.CreateChildContext(), variableName, variableType, sourceExpression,
+        return new REPLForInFuture(context.CreateChildContext(), variableName, variableType!, sourceExpression,
             loopExpression);
     }
 
@@ -155,12 +155,12 @@ public class ForIn : Expression, IVariableContainer {
         private readonly Expression loopExpression;
         private readonly Expression sourceExpression;
         private readonly string variableName;
-        private readonly TO2Type variableType;
-        private IREPLValue current;
-        private REPLValueFuture loopExpressionFuture;
-        private IREPLForInSource source;
-        private REPLValueFuture sourceFuture;
-        private REPLContext.REPLVariable variable;
+        private readonly TO2Type? variableType;
+        private IREPLValue? current;
+        private REPLValueFuture? loopExpressionFuture;
+        private IREPLForInSource? source;
+        private REPLValueFuture? sourceFuture;
+        private REPLContext.REPLVariable? variable;
 
         public REPLForInFuture(REPLContext context, string variableName, TO2Type variableType,
             Expression sourceExpression, Expression loopExpression) : base(BuiltinType.Unit) {
@@ -171,14 +171,14 @@ public class ForIn : Expression, IVariableContainer {
             this.loopExpression = loopExpression;
         }
 
-        public override FutureResult<IREPLValue> PollValue() {
+        public override FutureResult<IREPLValue?> PollValue() {
             sourceFuture ??= sourceExpression.Eval(context);
             if (source == null) {
                 var sourceResult = sourceFuture.PollValue();
 
-                if (!sourceResult.IsReady) return new FutureResult<IREPLValue>();
+                if (!sourceResult.IsReady) return new FutureResult<IREPLValue?>();
 
-                source = sourceResult.value.ForInSource();
+                source = sourceResult.value!.ForInSource();
 
                 if (source == null)
                     throw new REPLException(sourceExpression,
@@ -199,22 +199,22 @@ public class ForIn : Expression, IVariableContainer {
             if (current == null) {
                 current = source.Next();
 
-                if (current == null) return new FutureResult<IREPLValue>(REPLUnit.INSTANCE);
+                if (current == null) return new FutureResult<IREPLValue?>(REPLUnit.INSTANCE);
 
-                variable.value = variable.declaredType.REPLCast(current.Value);
+                variable!.value = variable.declaredType.REPLCast(current.Value);
             }
 
             loopExpressionFuture ??= loopExpression.Eval(context);
             var loopExpressionResult = loopExpressionFuture.PollValue();
 
-            if (!loopExpressionResult.IsReady) return new FutureResult<IREPLValue>();
+            if (!loopExpressionResult.IsReady) return new FutureResult<IREPLValue?>();
 
-            if (loopExpressionResult.value.IsBreak) return new FutureResult<IREPLValue>(REPLUnit.INSTANCE);
-            if (loopExpressionResult.value.IsReturn) return new FutureResult<IREPLValue>(loopExpressionResult.value);
+            if (loopExpressionResult.value!.IsBreak) return new FutureResult<IREPLValue?>(REPLUnit.INSTANCE);
+            if (loopExpressionResult.value.IsReturn) return new FutureResult<IREPLValue?>(loopExpressionResult.value);
             loopExpressionFuture = null;
             current = null;
 
-            return new FutureResult<IREPLValue>();
+            return new FutureResult<IREPLValue?>();
         }
     }
 }

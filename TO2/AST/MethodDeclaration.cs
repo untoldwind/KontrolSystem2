@@ -18,9 +18,9 @@ public class MethodDeclaration : Node, IVariableContainer {
     //        private readonly bool isConst;
     private readonly List<FunctionParameter> parameters;
     private AsyncClass? asyncClass;
-    private BoundMethodInvokeFactory invokeFactory;
-    private StructTypeAliasDelegate structType;
-    private SyncBlockContext syncBlockContext;
+    private BoundMethodInvokeFactory? invokeFactory;
+    private StructTypeAliasDelegate? structType;
+    private SyncBlockContext? syncBlockContext;
 
     public MethodDeclaration(bool isAsync, string name, string description,
         List<FunctionParameter> parameters,
@@ -43,14 +43,14 @@ public class MethodDeclaration : Node, IVariableContainer {
         set => structType = value;
     }
 
-    public IVariableContainer ParentContainer => null;
+    public IVariableContainer? ParentContainer => null;
 
-    public TO2Type FindVariableLocal(IBlockContext context, string variableName) {
+    public TO2Type? FindVariableLocal(IBlockContext context, string variableName) {
         return variableName == "self" ? structType : parameters.Find(p => p.name == variableName)?.type;
     }
 
     public IMethodInvokeFactory CreateInvokeFactory() {
-        syncBlockContext ??= new SyncBlockContext(structType, isAsync, structType.Name.ToUpper() + "_" + name,
+        syncBlockContext ??= new SyncBlockContext(structType!, isAsync, structType!.Name.ToUpper() + "_" + name,
             declaredReturn, parameters);
 
         if (invokeFactory != null) return invokeFactory;
@@ -60,10 +60,10 @@ public class MethodDeclaration : Node, IVariableContainer {
         invokeFactory = new BoundMethodInvokeFactory(
             description,
             true,
-            () => declaredReturn.UnderlyingType(structType.structContext),
+            () => declaredReturn.UnderlyingType(structType!.structContext),
             () => realizedParameters,
             isAsync,
-            structType.structContext.typeBuilder,
+            structType!.structContext.typeBuilder,
             syncBlockContext.MethodBuilder
         );
 
@@ -71,9 +71,9 @@ public class MethodDeclaration : Node, IVariableContainer {
     }
 
     public IEnumerable<StructuralError> EmitCode() {
-        var valueType = expression.ResultType(syncBlockContext);
+        var valueType = expression.ResultType(syncBlockContext!);
         if (declaredReturn != BuiltinType.Unit &&
-            !declaredReturn.IsAssignableFrom(syncBlockContext.ModuleContext, valueType)) {
+            !declaredReturn.IsAssignableFrom(syncBlockContext!.ModuleContext, valueType)) {
             syncBlockContext.AddError(new StructuralError(
                 StructuralError.ErrorType.IncompatibleTypes,
                 $"Function '{name}' returns {valueType} but should return {declaredReturn}",
@@ -84,33 +84,33 @@ public class MethodDeclaration : Node, IVariableContainer {
         }
 
         var effectiveParameters =
-            new List<FunctionParameter> { new("self", structType, "Reference to self") };
+            new List<FunctionParameter> { new("self", structType!, "Reference to self") };
         effectiveParameters.AddRange(parameters);
 
-        ILChunks.GenerateFunctionEnter(syncBlockContext, structType.Name + "." + name, effectiveParameters);
+        ILChunks.GenerateFunctionEnter(syncBlockContext!, structType!.Name + "." + name, effectiveParameters);
 
         if (isAsync) {
-            asyncClass ??= AsyncClass.Create(syncBlockContext, structType.Name.ToUpper() + "_" + name, declaredReturn,
+            asyncClass ??= AsyncClass.Create(syncBlockContext!, structType.Name.ToUpper() + "_" + name, declaredReturn,
                 effectiveParameters,
                 expression);
 
             for (var idx = 0; idx < effectiveParameters.Count; idx++)
-                MethodParameter.EmitLoadArg(syncBlockContext.IL, idx);
-            syncBlockContext.IL.EmitNew(OpCodes.Newobj, asyncClass.Value.constructor, effectiveParameters.Count);
+                MethodParameter.EmitLoadArg(syncBlockContext!.IL, idx);
+            syncBlockContext!.IL.EmitNew(OpCodes.Newobj, asyncClass.Value.constructor, effectiveParameters.Count);
             syncBlockContext.IL.EmitReturn(asyncClass.Value.type);
 
             return Enumerable.Empty<StructuralError>();
         }
 
-        expression.EmitCode(syncBlockContext, declaredReturn == BuiltinType.Unit);
+        expression.EmitCode(syncBlockContext!, declaredReturn == BuiltinType.Unit);
 
-        if (!syncBlockContext.HasErrors && declaredReturn != BuiltinType.Unit)
+        if (!syncBlockContext!.HasErrors && declaredReturn != BuiltinType.Unit)
             declaredReturn.AssignFrom(syncBlockContext.ModuleContext, expression.ResultType(syncBlockContext))
                 .EmitConvert(syncBlockContext);
         else if (declaredReturn == BuiltinType.Unit) syncBlockContext.IL.Emit(OpCodes.Ldnull);
 
         ILChunks.GenerateFunctionLeave(syncBlockContext);
-        syncBlockContext.IL.EmitReturn(syncBlockContext.MethodBuilder.ReturnType);
+        syncBlockContext.IL.EmitReturn(syncBlockContext.MethodBuilder!.ReturnType);
 
         return syncBlockContext.AllErrors;
     }

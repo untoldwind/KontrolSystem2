@@ -7,7 +7,7 @@ using KontrolSystem.TO2.Generator;
 namespace KontrolSystem.TO2.AST;
 
 public static class Helpers {
-    public static V Get<K, V>(this IDictionary<K, V> dictionary, K key) {
+    public static V? Get<K, V>(this IDictionary<K, V> dictionary, K key) {
         return dictionary.TryGetValue(key, out var value) ? value : default;
     }
 
@@ -16,8 +16,8 @@ public static class Helpers {
     }
 
     public static Dictionary<string, RealizedType> InferrTypes(IBlockContext context,
-        RealizedType declaredResult, List<RealizedParameter> parameters, MethodInfo methodInfo,
-        RealizedType desiredResult, IEnumerable<TO2Type> arguments,
+        RealizedType? declaredResult, List<RealizedParameter> parameters, MethodInfo methodInfo,
+        RealizedType? desiredResult, IEnumerable<TO2Type> arguments,
         IEnumerable<(string name, RealizedType type)> targetTypeArguments, Node node) {
         var inferredDict = new Dictionary<string, RealizedType>();
         if (methodInfo.IsGenericMethod) {
@@ -51,7 +51,7 @@ public static class Helpers {
         MakeGeneric(
             IBlockContext context,
             RealizedType declaredResult, List<RealizedParameter> parameters, MethodInfo methodInfo,
-            RealizedType desiredResult, IEnumerable<TO2Type> arguments,
+            RealizedType? desiredResult, IEnumerable<TO2Type> arguments,
             IEnumerable<(string name, RealizedType type)> targetTypeArguments, Node node) {
         if (methodInfo.IsGenericMethod) {
             var genericNames = methodInfo.GetGenericArguments().Select(t => t.Name).ToArray();

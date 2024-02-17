@@ -40,9 +40,9 @@ namespace KontrolSystem.SpaceWarpMod {
             this.loggerAdapter = loggerAdapter;
             version = pluginInfo.Metadata.Version.ToString();
             enableHotkey = config.Bind("Keyboard", "enableHotKey", true, "Enable Alt-Shift-K hotkey");
-            stdLibPath = config.Bind("Paths", "stdLibPath", Path.Combine(Path.GetDirectoryName(pluginInfo.Location), "to2"),
+            stdLibPath = config.Bind("Paths", "stdLibPath", Path.Combine(Path.GetDirectoryName(pluginInfo.Location)!, "to2"),
                 "Path of the standard library");
-            localLibPath = config.Bind("Paths", "localLibPath", Path.Combine(Path.GetDirectoryName(pluginInfo.Location), "to2Local"),
+            localLibPath = config.Bind("Paths", "localLibPath", Path.Combine(Path.GetDirectoryName(pluginInfo.Location)!, "to2Local"),
                 "Path of the local user library");
             consoleFont = config.Bind("Font", "consoleFont", MonospaceFont.JetBrainsMono,
                 "Font to use in console window");
@@ -83,7 +83,7 @@ namespace KontrolSystem.SpaceWarpMod {
 
 
 
-        public static ConfigAdapter Instance { get; private set; }
+        public static ConfigAdapter? Instance { get; private set; }
 
         public Texture2D WindowsBackground => GetTexture("window_sprite");
 

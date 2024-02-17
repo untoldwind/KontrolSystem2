@@ -9,7 +9,7 @@ namespace KontrolSystem.TO2;
 public interface IKontrolConstant {
     string Name { get; }
 
-    string Description { get; }
+    string? Description { get; }
 
     TO2Type Type { get; }
 
@@ -21,7 +21,7 @@ public interface IKontrolConstant {
 public class CompiledKontrolConstant : IKontrolConstant {
     private readonly FieldInfo runtimeField;
 
-    public CompiledKontrolConstant(string name, string description, TO2Type type, FieldInfo runtimeField) {
+    public CompiledKontrolConstant(string name, string? description, TO2Type type, FieldInfo runtimeField) {
         Name = name;
         Description = description;
         Type = type;
@@ -29,7 +29,7 @@ public class CompiledKontrolConstant : IKontrolConstant {
     }
 
     public string Name { get; }
-    public string Description { get; }
+    public string? Description { get; }
     public TO2Type Type { get; }
 
     public void EmitLoad(IBlockContext context) {

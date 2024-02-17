@@ -9,10 +9,10 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI;
 
 public class UGUIResizableWindow : KerbalMonoBehaviour {
     public UnityEvent onClose = new();
-    private RectTransform canvasTransform;
+    private RectTransform? canvasTransform;
     private Vector2 minSize = new(0, 0);
-    private GameObject window;
-    protected RectTransform windowTransform;
+    private GameObject? window;
+    protected RectTransform? windowTransform;
 
     public bool Closed { get; private set; }
 
@@ -20,7 +20,7 @@ public class UGUIResizableWindow : KerbalMonoBehaviour {
         get => minSize;
         set {
             minSize = value;
-            var windowRect = windowTransform.rect;
+            var windowRect = windowTransform!.rect;
             windowTransform.sizeDelta += new Vector2(
                 Math.Max(windowRect.width, minSize.x) - windowRect.width,
                 Math.Max(windowRect.height, minSize.y) - windowRect.height
@@ -55,7 +55,7 @@ public class UGUIResizableWindow : KerbalMonoBehaviour {
         else
             windowTransform.position = new Vector3(initialRect.x, initialRect.y);
         var windowBackground = window.GetComponent<Image>();
-        windowBackground.sprite = UIFactory.Instance.windowBackground;
+        windowBackground.sprite = UIFactory.Instance!.windowBackground;
         windowBackground.type = Image.Type.Sliced;
         windowBackground.color = Color.white;
         window.AddComponent<UGUIDragHandler>().Init(canvasTransform, OnMove, OnFocus);
@@ -82,12 +82,12 @@ public class UGUIResizableWindow : KerbalMonoBehaviour {
     }
 
     private void OnFocus() {
-        windowTransform.SetAsLastSibling();
+        windowTransform!.SetAsLastSibling();
     }
 
     private void OnMove(Vector2 delta) {
-        var localPosition = windowTransform.localPosition + new Vector3(delta.x, delta.y);
-        var rect = canvasTransform.rect;
+        var localPosition = windowTransform!.localPosition + new Vector3(delta.x, delta.y);
+        var rect = canvasTransform!.rect;
         var minx = rect.min.x - windowTransform.rect.min.x - windowTransform.sizeDelta.x / 2;
         var miny = rect.min.y - windowTransform.rect.min.y - windowTransform.sizeDelta.y / 2;
         var maxx = rect.max.x - windowTransform.rect.max.x + windowTransform.sizeDelta.x / 2;
@@ -100,7 +100,7 @@ public class UGUIResizableWindow : KerbalMonoBehaviour {
     }
 
     protected virtual void OnResize(Vector2 delta) {
-        var size = windowTransform.sizeDelta + new Vector2(delta.x, -delta.y);
+        var size = windowTransform!.sizeDelta + new Vector2(delta.x, -delta.y);
 
         windowTransform.sizeDelta = new Vector2(
             Mathf.Max(minSize.x, size.x),
@@ -108,12 +108,12 @@ public class UGUIResizableWindow : KerbalMonoBehaviour {
     }
 
     internal UGUIVerticalLayout RootVerticalLayout(float gap = 10) {
-        return new UGUIVerticalLayout(windowTransform, gap,
-            new UGUILayout.Padding(UIFactory.Instance.uiFontSize + 20, 20, 10, 10));
+        return new UGUIVerticalLayout(windowTransform!, gap,
+            new UGUILayout.Padding(UIFactory.Instance!.uiFontSize + 20, 20, 10, 10));
     }
 
     internal UGUIHorizontalLayout RootHorizontalLayout(float gap = 10) {
-        return new UGUIHorizontalLayout(windowTransform, gap,
-            new UGUILayout.Padding(UIFactory.Instance.uiFontSize + 20, 20, 10, 10));
+        return new UGUIHorizontalLayout(windowTransform!, gap,
+            new UGUILayout.Padding(UIFactory.Instance!.uiFontSize + 20, 20, 10, 10));
     }
 }

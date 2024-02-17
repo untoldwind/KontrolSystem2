@@ -15,9 +15,9 @@ public partial class KSPDebugModule {
     public class PathRenderer : IMarker {
         private bool enable;
 
-        private LineRenderer line;
+        private LineRenderer? line;
 
-        private GameObject lineObj;
+        private GameObject? lineObj;
 
         public PathRenderer(Position[] path, KSPConsoleModule.RgbaColor color, double width) {
             Path = path;
@@ -97,12 +97,12 @@ public partial class KSPDebugModule {
 
                     points = Path.Where((x, i) => i % nStep == 0)
                         .Select(p => space.TranslateSimPositionToMapPosition(p)).ToArray();
-                    lineObj.layer = 27;
+                    lineObj!.layer = 27;
                     mapWidthMult = 1500 / space.Map3DScaleInv;
                 } else {
-                    var frame = KSPContext.CurrentContext.ActiveVessel.transform?.celestialFrame;
-                    points = Path.Where((x, i) => i % nStep == 0).Select(p => frame.ToLocalPosition(p)).ToArray();
-                    lineObj.layer = 0;
+                    var frame = KSPContext.CurrentContext.ActiveVessel?.transform?.celestialFrame;
+                    points = Path.Where((x, i) => i % nStep == 0).Select(p => frame?.ToLocalPosition(p) ?? Vector3d.zero).ToArray();
+                    lineObj!.layer = 0;
                 }
 
                 useWidth = (float)(Width * mapWidthMult);

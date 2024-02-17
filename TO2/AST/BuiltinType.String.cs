@@ -176,8 +176,8 @@ public abstract partial class BuiltinType {
             return allowedOperators;
         }
 
-        public override IREPLValue REPLCast(object value) {
-            return new REPLString((string)value);
+        public override IREPLValue REPLCast(object? value) {
+            return new REPLString((string)value!);
         }
     }
 }

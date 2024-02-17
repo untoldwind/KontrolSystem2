@@ -11,18 +11,18 @@ public class BoundType : RealizedType {
     public readonly Dictionary<string, IMethodInvokeFactory> allowedMethods;
     private readonly OperatorCollection allowedPrefixOperators;
     private readonly OperatorCollection allowedSuffixOperators;
-    private readonly string description;
+    private readonly string? description;
     public readonly string localName;
-    private readonly string modulePrefix;
+    private readonly string? modulePrefix;
     public readonly Type runtimeType;
     private readonly IEnumerable<RealizedType> typeParameters;
 
-    public BoundType(string modulePrefix, string localName, string description, Type runtimeType,
+    public BoundType(string? modulePrefix, string localName, string? description, Type runtimeType,
         OperatorCollection allowedPrefixOperators,
         OperatorCollection allowedSuffixOperators,
         IEnumerable<(string name, IMethodInvokeFactory invoker)> allowedMethods,
         IEnumerable<(string name, IFieldAccessFactory access)> allowedFields,
-        IEnumerable<RealizedType> typeParameters = null) {
+        IEnumerable<RealizedType>? typeParameters = null) {
         this.modulePrefix = modulePrefix;
         this.localName = localName;
         this.description = description;
@@ -55,7 +55,7 @@ public class BoundType : RealizedType {
         }
     }
 
-    public override string Description => description;
+    public override string Description => description ?? "";
 
     public override string LocalName => localName;
 
@@ -86,7 +86,7 @@ public class BoundType : RealizedType {
     }
 
     public override RealizedType
-        FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) {
+        FillGenerics(ModuleContext context, Dictionary<string, RealizedType>? typeArguments) {
         if (runtimeType.IsGenericType) {
             var filled = typeParameters.Select(t => t.FillGenerics(context, typeArguments)).ToList();
 
@@ -114,7 +114,7 @@ public class BoundType : RealizedType {
     }
 
     public override IEnumerable<(string name, RealizedType type)> InferGenericArgument(ModuleContext context,
-        RealizedType concreteType) {
+        RealizedType? concreteType) {
         if (!runtimeType.IsGenericType) return Enumerable.Empty<(string name, RealizedType type)>();
 
         var otherBoundType = concreteType as BoundType;

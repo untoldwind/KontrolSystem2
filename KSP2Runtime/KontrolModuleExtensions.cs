@@ -9,7 +9,7 @@ using KSP.Sim.impl;
 
 namespace KontrolSystem.KSP.Runtime;
 
-public delegate IAnyFuture Entrypoint(VesselComponent vessel, object[] args = null);
+public delegate IAnyFuture Entrypoint(VesselComponent vessel, object[]? args = null);
 
 public class EntrypointArgumentDescriptor {
     public EntrypointArgumentDescriptor(string name, RealizedType type, object defaultValue) {
@@ -29,7 +29,7 @@ public static class KontrolModuleExtensions {
     private const string MainTracking = "main_tracking";
     private const string MainFlight = "main_flight";
 
-    private static Entrypoint GetEntrypoint(IKontrolModule module, string name, IKSPContext context) {
+    private static Entrypoint? GetEntrypoint(IKontrolModule module, string name, IKSPContext context) {
         try {
             var function = module.FindFunction(name);
             if (function == null || !function.IsAsync) return null;
@@ -62,10 +62,10 @@ public static class KontrolModuleExtensions {
     }
 
     public static EntrypointArgumentDescriptor[] GetEntrypointParameterDescriptors(this IKontrolModule module,
-        KSPGameMode gameMode, ITO2Logger logger = null) {
+        KSPGameMode gameMode, ITO2Logger? logger = null) {
         try {
             var name = GetEntrypointFunctionName(gameMode);
-            var function = module.FindFunction(name);
+            var function = name != null ? module.FindFunction(name) : null;
             if (function == null || function.Parameters.Count <= 1)
                 throw new Exception($"Function {name} does not exist or does not have any parameters");
 
@@ -102,11 +102,11 @@ public static class KontrolModuleExtensions {
 
     public static int GetEntrypointArgumentCount(this IKontrolModule module, KSPGameMode gameMode) {
         var name = GetEntrypointFunctionName(gameMode);
-        var function = module.FindFunction(name);
-        return function?.Parameters?.Count ?? 0;
+        var function = name != null ? module.FindFunction(name) : null;
+        return function?.Parameters.Count ?? 0;
     }
 
-    private static string GetEntrypointFunctionName(KSPGameMode gameMode) {
+    private static string? GetEntrypointFunctionName(KSPGameMode gameMode) {
         return gameMode switch {
             KSPGameMode.VAB => MainEditor,
             KSPGameMode.Tracking => MainTracking,
@@ -130,7 +130,7 @@ public static class KontrolModuleExtensions {
         return HasEntrypoint(module, MainKsc, false);
     }
 
-    public static Entrypoint GetKSCEntrypoint(this IKontrolModule module, IKSPContext context) {
+    public static Entrypoint? GetKSCEntrypoint(this IKontrolModule module, IKSPContext context) {
         return GetEntrypoint(module, MainKsc, context);
     }
 
@@ -138,7 +138,7 @@ public static class KontrolModuleExtensions {
         return HasEntrypoint(module, MainEditor, false);
     }
 
-    public static Entrypoint GetEditorEntrypoint(this IKontrolModule module, IKSPContext context) {
+    public static Entrypoint? GetEditorEntrypoint(this IKontrolModule module, IKSPContext context) {
         return GetEntrypoint(module, MainEditor, context);
     }
 
@@ -146,7 +146,7 @@ public static class KontrolModuleExtensions {
         return HasEntrypoint(module, MainTracking, false);
     }
 
-    public static Entrypoint GetTrackingEntrypoint(this IKontrolModule module, IKSPContext context) {
+    public static Entrypoint? GetTrackingEntrypoint(this IKontrolModule module, IKSPContext context) {
         return GetEntrypoint(module, MainTracking, context);
     }
 
@@ -154,11 +154,11 @@ public static class KontrolModuleExtensions {
         return HasEntrypoint(module, MainFlight, true);
     }
 
-    public static Entrypoint GetFlightEntrypoint(this IKontrolModule module, IKSPContext context) {
+    public static Entrypoint? GetFlightEntrypoint(this IKontrolModule module, IKSPContext context) {
         return GetEntrypoint(module, MainFlight, context);
     }
 
-    public static bool IsBootFlightEntrypointFor(this IKontrolModule module, VesselComponent vessel) {
+    public static bool IsBootFlightEntrypointFor(this IKontrolModule module, VesselComponent? vessel) {
         return vessel != null && module.Name.ToLowerInvariant() ==
                "boot::vessels::" + vessel.Name.ToLowerInvariant().Replace(' ', '_') &&
                HasEntrypoint(module, MainFlight, true);

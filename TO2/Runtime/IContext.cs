@@ -48,7 +48,7 @@ public class EmptyContext : IContext {
 }
 
 public static class ContextHolder {
-    public static readonly ThreadLocal<IContext> CurrentContext = new();
+    public static readonly ThreadLocal<IContext?> CurrentContext = new();
 
     public static void CheckTimeout() {
         var context = CurrentContext.Value;

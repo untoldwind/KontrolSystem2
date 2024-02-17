@@ -7,9 +7,9 @@ using KontrolSystem.TO2.Generator;
 namespace KontrolSystem.TO2.Runtime;
 
 public class REPLContext {
-    public delegate REPLVariable VariableResolver(string name);
+    public delegate REPLVariable? VariableResolver(string? name);
 
-    public readonly VariableResolver externalVariables;
+    public readonly VariableResolver? externalVariables;
     public readonly Dictionary<string, REPLVariable> localVariables = new();
     public readonly REPLBlockContext replBlockContext;
     public readonly REPLModuleContext replModuleContext;
@@ -20,15 +20,15 @@ public class REPLContext {
     }
 
     public REPLContext(IContext runtimeContext, REPLModuleContext replModuleContext,
-        VariableResolver externalVariables = null) {
+        VariableResolver? externalVariables = null) {
         this.runtimeContext = runtimeContext;
         this.replModuleContext = replModuleContext;
         replBlockContext = new REPLBlockContext(this.replModuleContext, FindVariable);
         this.externalVariables = externalVariables;
     }
 
-    public REPLVariable FindVariable(string name) {
-        return localVariables.Get(name) ?? externalVariables?.Invoke(name);
+    public REPLVariable? FindVariable(string? name) {
+        return localVariables!.Get(name) ?? externalVariables?.Invoke(name);
     }
 
     public REPLVariable DeclaredVariable(string name, bool isConst, RealizedType declaredType) {
@@ -47,7 +47,7 @@ public class REPLContext {
         public readonly RealizedType declaredType;
         public readonly bool isConst;
         public readonly string name;
-        public IREPLValue value;
+        public IREPLValue? value;
 
         public REPLVariable(string name, bool isConst, RealizedType declaredType) {
             this.name = name;
@@ -80,18 +80,19 @@ public class REPLModuleContext : ModuleContext {
     }
 }
 
-public delegate IBlockVariable VariableLookup(string name);
+public delegate IBlockVariable? VariableLookup(string? name);
 
 public class REPLBlockContext : IBlockContext {
     private readonly REPLModuleContext moduleContext;
     private readonly VariableLookup variableLookup;
 
     public REPLBlockContext(REPLModuleContext moduleContext, VariableLookup variableLookup,
-        List<StructuralError> errors = null) {
+        List<StructuralError>? errors = null) {
         this.moduleContext = moduleContext;
         this.variableLookup = variableLookup;
         this.AllErrors = errors ?? new List<StructuralError>();
         InferredGenerics = new Dictionary<string, RealizedType>();
+        IL = null!;
     }
 
     public ModuleContext ModuleContext => moduleContext;
@@ -123,7 +124,7 @@ public class REPLBlockContext : IBlockContext {
 
     public (LabelRef start, LabelRef end)? InnerLoop => throw new REPLException("No inner loop");
 
-    public IBlockVariable FindVariable(string name) {
+    public IBlockVariable? FindVariable(string? name) {
         return variableLookup(name);
     }
 

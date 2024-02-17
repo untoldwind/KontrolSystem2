@@ -13,7 +13,7 @@ public class LiteralBool : Expression {
         this.value = value;
     }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set { }
     }
 
@@ -46,7 +46,7 @@ public class LiteralString : Expression {
         value = new string(chars);
     }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set { }
     }
 
@@ -74,7 +74,7 @@ public class LiteralInt : Expression {
         this.value = value;
     }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set { }
     }
 
@@ -102,7 +102,7 @@ public class LiteralFloat : Expression {
         this.value = value;
     }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set { }
     }
 

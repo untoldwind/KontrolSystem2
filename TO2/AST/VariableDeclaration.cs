@@ -1,17 +1,18 @@
-﻿using KontrolSystem.Parsing;
+﻿using System.Diagnostics.CodeAnalysis;
+using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
 using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST;
 
 public interface IVariableContainer {
-    IVariableContainer ParentContainer { get; }
+    IVariableContainer? ParentContainer { get; }
 
-    TO2Type FindVariableLocal(IBlockContext context, string name);
+    TO2Type? FindVariableLocal(IBlockContext context, string name);
 }
 
 public static class VariableContainerExtensions {
-    public static TO2Type FindVariable(this IVariableContainer current, IBlockContext context, string name) {
+    public static TO2Type? FindVariable(this IVariableContainer? current, IBlockContext context, string name) {
         while (current != null) {
             var variableType = current.FindVariableLocal(context, name);
 
@@ -24,9 +25,9 @@ public static class VariableContainerExtensions {
 }
 
 public class DeclarationParameter {
-    public readonly string source;
-    public readonly string target;
-    public readonly TO2Type type;
+    public readonly string? source;
+    public readonly string? target;
+    public readonly TO2Type? type;
 
     public DeclarationParameter() {
         target = null;
@@ -71,7 +72,7 @@ public class VariableDeclaration : Node, IBlockItem, IVariableRef {
         set => expression.VariableContainer = value;
     }
 
-    public TypeHint TypeHint {
+    public TypeHint? TypeHint {
         set { }
     }
 
@@ -88,7 +89,7 @@ public class VariableDeclaration : Node, IBlockItem, IVariableRef {
 
         if (context.HasErrors) return;
 
-        if (context.FindVariable(declaration.target) != null) {
+        if (context.FindVariable(declaration.target!) != null) {
             context.AddError(new StructuralError(
                 StructuralError.ErrorType.DuplicateVariableName,
                 $"Variable '{declaration.target}' already declared in this scope",
@@ -98,7 +99,7 @@ public class VariableDeclaration : Node, IBlockItem, IVariableRef {
             return;
         }
 
-        if (!variableType.IsAssignableFrom(context.ModuleContext, valueType)) {
+        if (!variableType!.IsAssignableFrom(context.ModuleContext, valueType)) {
             context.AddError(new StructuralError(
                 StructuralError.ErrorType.IncompatibleTypes,
                 $"Variable '{declaration.target}' is of type {variableType} but is initialized with {valueType}",
@@ -108,7 +109,7 @@ public class VariableDeclaration : Node, IBlockItem, IVariableRef {
             return;
         }
 
-        var variable = context.DeclaredVariable(declaration.target, isConst,
+        var variable = context.DeclaredVariable(declaration.target!, isConst,
             variableType.UnderlyingType(context.ModuleContext));
 
         variable.Type.AssignFrom(context.ModuleContext, valueType).EmitAssign(context, variable, expression, true);
@@ -121,11 +122,11 @@ public class VariableDeclaration : Node, IBlockItem, IVariableRef {
         if (context.FindVariable(declaration.target) != null)
             throw new REPLException(this, $"Variable '{declaration.target}' already declared in this scope");
 
-        if (!variableType.IsAssignableFrom(context.replModuleContext, expressionFuture.Type))
+        if (!variableType!.IsAssignableFrom(context.replModuleContext, expressionFuture.Type))
             throw new REPLException(this,
                 $"Variable '{declaration.target}' is of type {variableType} but is initialized with {expressionFuture.Type}");
 
-        var variable = context.DeclaredVariable(declaration.target, isConst,
+        var variable = context.DeclaredVariable(declaration.target!, isConst,
             variableType.UnderlyingType(context.replModuleContext));
         var assign = variable.declaredType.AssignFrom(context.replModuleContext, expressionFuture.Type);
 
@@ -138,9 +139,9 @@ public class VariableDeclaration : Node, IBlockItem, IVariableRef {
         });
     }
 
-    public string Name => declaration.target;
+    public string Name => declaration.target!;
 
-    public TO2Type VariableType(IBlockContext context) {
+    public TO2Type? VariableType(IBlockContext context) {
         if (lookingUp) return null;
         lookingUp = true; // Somewhat ugly workaround if there is a cycle in inferred variables that should produce a correct error message
         var type = declaration.IsInferred ? expression.ResultType(context) : declaration.type;

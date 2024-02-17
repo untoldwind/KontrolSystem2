@@ -14,25 +14,25 @@ public partial class KSPDebugModule {
     )]
     public class VectorRenderer : IMarker {
         private bool enable;
-        private Func<Position> endProvider;
-        private LineRenderer hat;
-        private GameObject hatObj;
+        private Func<Position>? endProvider;
+        private LineRenderer? hat;
+        private GameObject? hatObj;
 
-        private TextMeshPro label;
+        private TextMeshPro? label;
 
         private Vector3 labelLocation;
-        private GameObject labelObj;
+        private GameObject? labelObj;
 
         private readonly string labelStr;
 
-        private LineRenderer line;
+        private LineRenderer? line;
 
-        private GameObject lineObj;
+        private GameObject? lineObj;
 
         private Func<Position> startProvider;
-        private Func<Vector> vectorProvider;
+        private Func<Vector>? vectorProvider;
 
-        private VectorRenderer(Func<Position> startProvider, Func<Position> endProvider, Func<Vector> vectorProvider,
+        private VectorRenderer(Func<Position> startProvider, Func<Position>? endProvider, Func<Vector>? vectorProvider,
             KSPConsoleModule.RgbaColor color, string label, double width, bool pointy) {
             this.startProvider = startProvider;
             this.endProvider = endProvider;
@@ -73,7 +73,7 @@ public partial class KSPDebugModule {
 
         [KSField(Description = "The current end position of the debugging vector.")]
         public Position End {
-            get => endProvider?.Invoke() ?? startProvider() + vectorProvider();
+            get => endProvider?.Invoke() ?? (vectorProvider != null ? startProvider() + vectorProvider() : startProvider());
             set {
                 endProvider = () => value;
                 vectorProvider = null;
@@ -179,7 +179,7 @@ public partial class KSPDebugModule {
                 var mapWidthMult = 1.0; // for scaling when on map view.
                 float useWidth;
                 var start = startProvider();
-                var end = endProvider?.Invoke() ?? start + vectorProvider();
+                var end = endProvider?.Invoke() ?? (vectorProvider != null ? start + vectorProvider() : start);
                 Vector3d startLocal;
                 Vector3d vectorLocal;
 
@@ -188,17 +188,17 @@ public partial class KSPDebugModule {
 
                     startLocal = space.TranslateSimPositionToMapPosition(start);
                     vectorLocal = space.TranslateSimPositionToMapPosition(end) - startLocal;
-                    lineObj.layer = 27;
-                    labelObj.layer = 27;
-                    hatObj.layer = 27;
+                    lineObj!.layer = 27;
+                    labelObj!.layer = 27;
+                    hatObj!.layer = 27;
                     mapWidthMult = 1500 / space.Map3DScaleInv;
                 } else {
-                    var frame = KSPContext.CurrentContext.ActiveVessel.transform?.celestialFrame;
-                    startLocal = frame.ToLocalPosition(start);
-                    vectorLocal = frame.ToLocalPosition(end) - startLocal;
-                    lineObj.layer = 0;
-                    labelObj.layer = 0;
-                    hatObj.layer = 0;
+                    var frame = KSPContext.CurrentContext.ActiveVessel?.transform?.celestialFrame;
+                    startLocal = frame?.ToLocalPosition(start) ?? Vector3d.zero;
+                    vectorLocal = (frame?.ToLocalPosition(end) ?? startLocal) - startLocal;
+                    lineObj!.layer = 0;
+                    labelObj!.layer = 0;
+                    hatObj!.layer = 0;
                 }
 
                 var camera = KSPContext.CurrentContext.Game.SessionManager.GetMyActiveCamera();
@@ -207,7 +207,7 @@ public partial class KSPDebugModule {
                 var point2 = mapLengthMult * (startLocal + Scale * 0.95 * vectorLocal);
                 var point3 = mapLengthMult * (startLocal + Scale * vectorLocal);
 
-                label.fontSize = (float)(12.0 * Scale * mapWidthMult);
+                label!.fontSize = (float)(12.0 * Scale * mapWidthMult);
 
                 useWidth = (float)(Width * Scale * mapWidthMult);
 
@@ -247,7 +247,7 @@ public partial class KSPDebugModule {
                 // The hat does not have the fade effect, staying at color c2 the whole way:
                 hat.startColor = c2;
                 hat.endColor = c2;
-                label.color = lCol; // The label does not have the fade effect.
+                label!.color = lCol; // The label does not have the fade effect.
             }
         }
 

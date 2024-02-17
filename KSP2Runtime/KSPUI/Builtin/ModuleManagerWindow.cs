@@ -13,16 +13,16 @@ using UnityEngine.UI;
 namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin;
 
 public class ModuleManagerWindow : UGUIResizableWindow {
-    private RawImage mainframeStateIcon;
+    private RawImage? mainframeStateIcon;
 
     public void OnEnable() {
-        Initialize($"KontrolSystem {Mainframe.Instance.Version}", new Rect(Screen.width - 750, 650, 550, 450));
+        Initialize($"KontrolSystem {Mainframe.Instance!.Version}", new Rect(Screen.width - 750, 650, 550, 450));
 
         var root = RootVerticalLayout();
 
         var mainframeState = new GameObject("MainframeState", typeof(RawImage));
-        UIFactory.Layout(mainframeState, windowTransform, UIFactory.LAYOUT_START, UIFactory.LAYOUT_START,
-            5, -5, UIFactory.Instance.uiFontSize + 10, UIFactory.Instance.uiFontSize + 10);
+        UIFactory.Layout(mainframeState, windowTransform!, UIFactory.LAYOUT_START, UIFactory.LAYOUT_START,
+            5, -5, UIFactory.Instance!.uiFontSize + 10, UIFactory.Instance.uiFontSize + 10);
         mainframeStateIcon = mainframeState.GetComponent<RawImage>();
         mainframeStateIcon.texture = UIFactory.Instance.stateActive;
 
@@ -43,24 +43,24 @@ public class ModuleManagerWindow : UGUIResizableWindow {
 
     public override void OnDisable() {
         base.OnDisable();
-        Mainframe.Instance.availableProcessesChanged.RemoveListener(OnProcessesChanged);
+        Mainframe.Instance!.availableProcessesChanged.RemoveListener(OnProcessesChanged);
     }
 
     internal void OnProcessesChanged() {
-        if (Mainframe.Instance.Rebooting)
-            mainframeStateIcon.texture = UIFactory.Instance.stateInactive;
+        if (Mainframe.Instance!.Rebooting)
+            mainframeStateIcon!.texture = UIFactory.Instance!.stateInactive;
         else if (Mainframe.Instance.LastErrors.Any())
-            mainframeStateIcon.texture = UIFactory.Instance.stateError;
+            mainframeStateIcon!.texture = UIFactory.Instance!.stateError;
         else
-            mainframeStateIcon.texture = UIFactory.Instance.stateActive;
+            mainframeStateIcon!.texture = UIFactory.Instance!.stateActive;
     }
 
     internal class EntrypointsUITab : UITab {
-        private Action onParameterPopupClose;
-        private UGUILayoutContainer parameterPopup;
-        private Transform parent;
-        private UIList<KontrolSystemProcessWithArguments, UIProcessElement> processList;
-        private UGUIButton rebootButton;
+        private Action? onParameterPopupClose;
+        private UGUILayoutContainer? parameterPopup;
+        private Transform? parent;
+        private UIList<KontrolSystemProcessWithArguments, UIProcessElement>? processList;
+        private UGUIButton? rebootButton;
 
         public EntrypointsUITab() : base("Entrypoints") {
         }
@@ -71,16 +71,16 @@ public class ModuleManagerWindow : UGUIResizableWindow {
             var horizonal = new UGUIHorizontalLayout(parent);
 
             processList = new UIList<KontrolSystemProcessWithArguments, UIProcessElement>(
-                UIFactory.Instance.uiFontSize + 10,
+                UIFactory.Instance!.uiFontSize + 10,
                 element => new UIProcessElement(element, ShowParameterPopup, CloseParameterPopup));
 
             horizonal.Add(UGUIElement.VScrollView(processList, new Vector2(200, 200)), UGUILayout.Align.Stretch, 1);
 
             var vertical = horizonal.Add(UGUILayoutContainer.Vertical(20, new UGUILayout.Padding(0, 10, 0, 0)));
 
-            rebootButton = vertical.Add(UGUIButton.Create("Rebooting...", Mainframe.Instance.Reboot));
+            rebootButton = vertical.Add(UGUIButton.Create("Rebooting...", Mainframe.Instance!.Reboot));
             vertical.AddSpace(0, 1);
-            vertical.Add(UGUIButton.Create("New Module", UIWindows.Instance.OpenEditorWindowNew));
+            vertical.Add(UGUIButton.Create("New Module", UIWindows.Instance!.OpenEditorWindowNew));
             vertical.Add(UGUIButton.Create("Telemetry", UIWindows.Instance.OpenTelemetryWindow));
             vertical.Add(UGUIButton.Create("Console", UIWindows.Instance.OpenConsoleWindow));
 
@@ -143,36 +143,36 @@ public class ModuleManagerWindow : UGUIResizableWindow {
             buttonHorizontal.Add(UGUIButton.Create("Close", CloseParameterPopup));
 
             var minSize = parameterPopup.Layout();
-            UIFactory.Layout(parameterPopup.GameObject, parent, UIFactory.LAYOUT_START, UIFactory.LAYOUT_CENTER,
+            UIFactory.Layout(parameterPopup.GameObject, parent!, UIFactory.LAYOUT_START, UIFactory.LAYOUT_CENTER,
                 -0.5f * minSize.x, 0, minSize.x, minSize.y);
         }
 
         internal void CloseParameterPopup() {
             if (parameterPopup != null) {
                 parameterPopup.Destroy();
-                onParameterPopupClose();
+                onParameterPopupClose?.Invoke();
                 parameterPopup = null;
                 onParameterPopupClose = null;
             }
         }
 
         public override void OnDestroy() {
-            Mainframe.Instance.availableProcessesChanged.RemoveListener(OnProcessesChanged);
+            Mainframe.Instance!.availableProcessesChanged.RemoveListener(OnProcessesChanged);
         }
 
         internal void OnProcessesChanged() {
-            var gameMode = Mainframe.Instance.GameMode;
-            processList.Elements = Mainframe.Instance.AvailableProcesses.Select(process =>
+            var gameMode = Mainframe.Instance!.GameMode;
+            processList!.Elements = Mainframe.Instance.AvailableProcesses.Select(process =>
                     new KontrolSystemProcessWithArguments(process, process.EntrypointArgumentDescriptors(gameMode)))
                 .ToArray();
-            rebootButton.Interactable = !Mainframe.Instance.Rebooting;
+            rebootButton!.Interactable = !Mainframe.Instance.Rebooting;
             rebootButton.Label = Mainframe.Instance.Rebooting ? "Rebooting..." : "Reboot";
         }
     }
 
     internal class StateUITab : UITab {
-        private UGUIButton rebootButton;
-        private TextMeshProUGUI rebootMessages;
+        private UGUIButton? rebootButton;
+        private TextMeshProUGUI? rebootMessages;
 
         internal StateUITab() : base("Reboot Errors") {
         }
@@ -180,7 +180,7 @@ public class ModuleManagerWindow : UGUIResizableWindow {
         public override void Create(RectTransform parent) {
             var horizonal = new UGUIHorizontalLayout(parent);
 
-            var rebootErrors = UIFactory.Instance.CreateText("", 20, HorizontalAlignmentOptions.Left,
+            var rebootErrors = UIFactory.Instance!.CreateText("", 20, HorizontalAlignmentOptions.Left,
                 VerticalAlignmentOptions.Top);
             rebootMessages = rebootErrors.GetComponent<TextMeshProUGUI>();
 
@@ -191,7 +191,7 @@ public class ModuleManagerWindow : UGUIResizableWindow {
 
             var vertical = horizonal.Add(UGUILayoutContainer.Vertical(20, new UGUILayout.Padding(0, 10, 0, 0)));
 
-            rebootButton = vertical.Add(UGUIButton.Create("Rebooting...", Mainframe.Instance.Reboot));
+            rebootButton = vertical.Add(UGUIButton.Create("Rebooting...", Mainframe.Instance!.Reboot));
             vertical.Add(UGUIButton.Create("Copy", OnCopyErrors));
 
             horizonal.Layout();
@@ -201,11 +201,11 @@ public class ModuleManagerWindow : UGUIResizableWindow {
         }
 
         public override void OnDestroy() {
-            Mainframe.Instance.availableProcessesChanged.RemoveListener(OnProcessesChanged);
+            Mainframe.Instance!.availableProcessesChanged.RemoveListener(OnProcessesChanged);
         }
 
         internal void OnProcessesChanged() {
-            rebootButton.Interactable = !Mainframe.Instance.Rebooting;
+            rebootButton!.Interactable = !Mainframe.Instance!.Rebooting;
             rebootButton.Label = Mainframe.Instance.Rebooting ? "Rebooting..." : "Reboot";
 
             var sb = new StringBuilder();
@@ -221,13 +221,13 @@ public class ModuleManagerWindow : UGUIResizableWindow {
                     sb.Append("    <color=white>" + error.message + "</color>\n");
                 }
 
-            rebootMessages.text = sb.ToString();
+            rebootMessages!.text = sb.ToString();
         }
 
         private void OnCopyErrors() {
             var sb = new StringBuilder();
 
-            sb.Append($"Rebooted in {Mainframe.Instance.LastRebootTime}\n");
+            sb.Append($"Rebooted in {Mainframe.Instance!.LastRebootTime}\n");
             if (!Mainframe.Instance.LastErrors.Any())
                 sb.Append("\nNo errors\n");
             else
@@ -239,10 +239,10 @@ public class ModuleManagerWindow : UGUIResizableWindow {
     }
 
     internal class ModulesUITab : UITab {
-        private UGUIButton editButton;
-        private TextMeshProUGUI moduleDescriptionText;
-        private UIList<ModuleListElement, UIModuleElement> moduleList;
-        private IKontrolModule selectedModule;
+        private UGUIButton? editButton;
+        private TextMeshProUGUI? moduleDescriptionText;
+        private UIList<ModuleListElement, UIModuleElement>? moduleList;
+        private IKontrolModule? selectedModule;
 
         internal ModulesUITab() : base("Modules") {
         }
@@ -261,7 +261,7 @@ public class ModuleManagerWindow : UGUIResizableWindow {
             var panel = UGUILayoutContainer.VerticalPanel();
             vertical.Add(panel, UGUILayout.Align.Stretch, 1);
 
-            var moduleDescription = UIFactory.Instance.CreateText("");
+            var moduleDescription = UIFactory.Instance!.CreateText("");
             panel.Add(moduleDescription, UGUILayout.Align.Stretch, new Vector2(150, 100), 1);
             moduleDescriptionText = moduleDescription.GetComponent<TextMeshProUGUI>();
             moduleDescriptionText.fontSize = 16;
@@ -271,17 +271,17 @@ public class ModuleManagerWindow : UGUIResizableWindow {
 
             editButton = vertical.Add(UGUIButton.Create("Edit", () => {
                 if (selectedModule != null && !selectedModule.IsBuiltin)
-                    UIWindows.Instance.OpenEditorWindow(selectedModule.SourceFile);
+                    UIWindows.Instance!.OpenEditorWindow(selectedModule.SourceFile!);
             }), UGUILayout.Align.Start);
 
             horizonal.Layout();
 
             OnProcessesChanged();
-            Mainframe.Instance.availableProcessesChanged.AddListener(OnProcessesChanged);
+            Mainframe.Instance!.availableProcessesChanged.AddListener(OnProcessesChanged);
         }
 
         public override void OnDestroy() {
-            Mainframe.Instance.availableProcessesChanged.RemoveListener(OnProcessesChanged);
+            Mainframe.Instance!.availableProcessesChanged.RemoveListener(OnProcessesChanged);
         }
 
         internal void OnSelectModule(IKontrolModule module) {
@@ -292,10 +292,10 @@ public class ModuleManagerWindow : UGUIResizableWindow {
         }
 
         internal void OnProcessesChanged() {
-            var modules = Mainframe.Instance.LastRegistry?.modules.Values.ToArray() ??
+            var modules = Mainframe.Instance!.LastRegistry?.modules.Values.ToArray() ??
                           Array.Empty<IKontrolModule>();
 
-            moduleList.Elements = modules.Select(module => new ModuleListElement(module, module == selectedModule))
+            moduleList!.Elements = modules.Select(module => new ModuleListElement(module, module == selectedModule))
                 .ToArray();
 
             if (selectedModule != null) {
@@ -304,11 +304,11 @@ public class ModuleManagerWindow : UGUIResizableWindow {
                 sb.Append($"Description: {selectedModule.Description}\n");
                 sb.Append($"Builtin: {selectedModule.IsBuiltin}\n");
                 if (!selectedModule.IsBuiltin) sb.Append($"Source: {selectedModule.SourceFile}");
-                moduleDescriptionText.text = sb.ToString();
-                editButton.Interactable = !selectedModule.IsBuiltin;
+                moduleDescriptionText!.text = sb.ToString();
+                editButton!.Interactable = !selectedModule.IsBuiltin;
             } else {
-                moduleDescriptionText.text = "";
-                editButton.Interactable = false;
+                moduleDescriptionText!.text = "";
+                editButton!.Interactable = false;
             }
         }
     }
@@ -333,10 +333,10 @@ public class ModuleManagerWindow : UGUIResizableWindow {
             switch (process.State) {
             case KontrolSystemProcessState.Running:
             case KontrolSystemProcessState.Outdated:
-                Mainframe.Instance.StopProcess(process);
+                Mainframe.Instance!.StopProcess(process);
                 break;
             case KontrolSystemProcessState.Available:
-                Mainframe.Instance.StartProcess(process, null, arguments);
+                Mainframe.Instance!.StartProcess(process, null, arguments);
                 break;
             }
         }
@@ -351,7 +351,7 @@ public class ModuleManagerWindow : UGUIResizableWindow {
         internal UIProcessElement(KontrolSystemProcessWithArguments element,
             Action<KontrolSystemProcessWithArguments, Action> showParameters,
             Action closeParameters) {
-            var uiFontSize = UIFactory.Instance.uiFontSize;
+            var uiFontSize = UIFactory.Instance!.uiFontSize;
             this.Element = element;
 
             root = UGUILayoutContainer.Horizontal(5);
@@ -361,7 +361,7 @@ public class ModuleManagerWindow : UGUIResizableWindow {
             root.Add(label, UGUILayout.Align.Stretch, new Vector2(150, uiFontSize + 10), 1);
             this.label = label.GetComponent<TextMeshProUGUI>();
 
-            var parameters = element.process.EntrypointArgumentDescriptors(Mainframe.Instance.GameMode);
+            var parameters = element.process.EntrypointArgumentDescriptors(Mainframe.Instance!.GameMode);
             parameterToggle = UIFactory.Instance.CreateSelectButton(parameters.Length.ToString());
             root.Add(parameterToggle, UGUILayout.Align.Center, new Vector2(uiFontSize + 4, uiFontSize + 4));
             parameterToggle.SetActive(parameters.Length > 0);
@@ -393,8 +393,8 @@ public class ModuleManagerWindow : UGUIResizableWindow {
             label.SetText($"{element.process.Name} ({element.process.State})");
             startStopIcon.texture = element.process.State == KontrolSystemProcessState.Running ||
                                     element.process.State == KontrolSystemProcessState.Outdated
-                ? UIFactory.Instance.stopIcon
-                : UIFactory.Instance.startIcon;
+                ? UIFactory.Instance!.stopIcon
+                : UIFactory.Instance!.startIcon;
             parameterToggle.GetComponentInChildren<TextMeshProUGUI>().text =
                 element.argumentDescriptors.Length.ToString();
             parameterToggle.SetActive(element.argumentDescriptors.Length > 0);

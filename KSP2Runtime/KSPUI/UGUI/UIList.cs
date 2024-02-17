@@ -19,9 +19,7 @@ public class UIList<T, U> : UGUIElement where U : UIListElement<T> {
     private U[] uiElements;
 
 
-    public UIList(float elementHeight, Func<T, U> createElement) {
-        GameObject = new GameObject("List", typeof(RectTransform));
-        minSize = new Vector2(50, elementHeight * 3);
+    public UIList(float elementHeight, Func<T, U> createElement) : base(new GameObject("List", typeof(RectTransform)), new Vector2(50, elementHeight * 3)) {
         uiElements = Array.Empty<U>();
         this.elementHeight = elementHeight;
         this.createElement = createElement;

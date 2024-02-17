@@ -9,9 +9,9 @@ using KontrolSystem.TO2.Runtime;
 namespace KontrolSystem.TO2.AST;
 
 public class VariableGet : Expression, IAssignContext {
-    private readonly string moduleName;
+    private readonly string? moduleName;
     private readonly string name;
-    private IVariableContainer variableContainer;
+    private IVariableContainer? variableContainer;
 
     public VariableGet(List<string> namePath, Position start = new(), Position end = new()) :
         base(start, end) {
@@ -24,7 +24,7 @@ public class VariableGet : Expression, IAssignContext {
         }
     }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set => variableContainer = value;
     }
 
@@ -75,10 +75,10 @@ public class VariableGet : Expression, IAssignContext {
             if (dropResult) return;
 
             context.IL.Emit(OpCodes.Ldnull);
-            context.IL.EmitPtr(OpCodes.Ldftn, function.RuntimeMethod);
+            context.IL.EmitPtr(OpCodes.Ldftn, function.RuntimeMethod!);
             context.IL.EmitNew(OpCodes.Newobj,
                 function.DelegateType().GeneratedType(context.ModuleContext)
-                    .GetConstructor(new[] { typeof(object), typeof(IntPtr) }));
+                    .GetConstructor(new[] { typeof(object), typeof(IntPtr) })!);
             return;
         }
 
@@ -113,13 +113,13 @@ public class VariableGet : Expression, IAssignContext {
         }
     }
 
-    private IKontrolConstant ReferencedConstant(ModuleContext context) {
+    private IKontrolConstant? ReferencedConstant(ModuleContext context) {
         return moduleName != null
             ? context.FindModule(moduleName)?.FindConstant(name)
             : context.mappedConstants.Get(name);
     }
 
-    private IKontrolFunction ReferencedFunction(ModuleContext context) {
+    private IKontrolFunction? ReferencedFunction(ModuleContext context) {
         return moduleName != null
             ? context.FindModule(moduleName)?.FindFunction(name)
             : context.mappedFunctions.Get(name);

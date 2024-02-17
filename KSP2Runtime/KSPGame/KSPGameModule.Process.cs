@@ -27,8 +27,8 @@ public partial class KSPGameModule {
 
         [KSMethod]
         public bool Start(Option<KSPVesselModule.VesselAdapter> forVessel = new(),
-            string[] arguments = null) {
-            object[] argumentObjs = null;
+            string[]? arguments = null) {
+            object[]? argumentObjs = null;
             if (arguments != null) {
                 argumentObjs = new object[Math.Min(this.Arguments.Length, arguments.Length)];
 
@@ -52,7 +52,7 @@ public partial class KSPGameModule {
             var context = KSPContext.CurrentContext;
             bool result;
             try {
-                result = Mainframe.Instance.StartProcess(process, forVessel.value?.vessel, argumentObjs);
+                result = Mainframe.Instance!.StartProcess(process, forVessel.value?.vessel, argumentObjs);
             } finally {
                 ContextHolder.CurrentContext.Value = context;
             }
@@ -66,7 +66,7 @@ public partial class KSPGameModule {
             bool result;
 
             try {
-                result = Mainframe.Instance.StopProcess(process);
+                result = Mainframe.Instance!.StopProcess(process);
             } finally {
                 ContextHolder.CurrentContext.Value = context;
             }

@@ -53,7 +53,7 @@ public class OptionType : RealizedType {
         return allowedSuffixOperators;
     }
 
-    public override IUnapplyEmitter
+    public override IUnapplyEmitter?
         AllowedUnapplyPatterns(ModuleContext context, string unapplyName, int itemCount) {
         switch (unapplyName) {
         case "Some" when itemCount == 1: return new OptionSomeUnapplyEmitter(this);
@@ -78,7 +78,7 @@ public class OptionType : RealizedType {
     }
 
     public override RealizedType
-        FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) {
+        FillGenerics(ModuleContext context, Dictionary<string, RealizedType>? typeArguments) {
         return new OptionType(elementType.UnderlyingType(context).FillGenerics(context, typeArguments));
     }
 
@@ -87,7 +87,7 @@ public class OptionType : RealizedType {
     }
 
     public override IEnumerable<(string name, RealizedType type)> InferGenericArgument(ModuleContext context,
-        RealizedType concreteType) {
+        RealizedType? concreteType) {
         var concreteOption = concreteType as OptionType;
         if (concreteOption == null) return Enumerable.Empty<(string name, RealizedType type)>();
         return elementType.InferGenericArgument(context, concreteOption.elementType.UnderlyingType(context));
@@ -266,7 +266,7 @@ internal class OptionBitOrOperator : IOperatorEmitter {
         return this;
     }
 
-    public IREPLValue Eval(Node node, IREPLValue left, IREPLValue right) {
+    public IREPLValue Eval(Node node, IREPLValue left, IREPLValue? right) {
         if (left.Type is OptionType lot && left.Value is IAnyOption lo)
             return lot.elementType.REPLCast(lo.Defined ? lo.ValueObject : right);
 
@@ -320,10 +320,10 @@ internal class OptionUnwrapOperator : IOperatorEmitter {
             noneResult.EmitLoad(context);
             if (context.IsAsync)
                 context.IL.EmitNew(OpCodes.Newobj,
-                    context.MethodBuilder.ReturnType.GetConstructor(new[] { noneType }));
+                    context.MethodBuilder!.ReturnType.GetConstructor(new[] { noneType })!);
 
             ILChunks.GenerateFunctionLeave(context);
-            context.IL.EmitReturn(context.MethodBuilder.ReturnType);
+            context.IL.EmitReturn(context.MethodBuilder!.ReturnType);
 
             context.IL.MarkLabel(onSuccess);
 
@@ -343,7 +343,7 @@ internal class OptionUnwrapOperator : IOperatorEmitter {
         return this;
     }
 
-    public IREPLValue Eval(Node node, IREPLValue left, IREPLValue right) {
+    public IREPLValue Eval(Node node, IREPLValue left, IREPLValue? right) {
         if (left.Type is OptionType lot && left.Value is IAnyOption lo)
             return lo.Defined
                 ? lot.elementType.REPLCast(lo.ValueObject)
@@ -360,7 +360,7 @@ internal class OptionMapFactory : IMethodInvokeFactory {
         this.optionType = optionType;
     }
 
-    public TypeHint ReturnHint => null;
+    public TypeHint? ReturnHint => null;
 
     public TypeHint ArgumentHint(int argumentIdx) {
         return _ =>
@@ -383,7 +383,7 @@ internal class OptionMapFactory : IMethodInvokeFactory {
             "Function to be applied on the optional value if defined")
     };
 
-    public IMethodInvokeEmitter Create(IBlockContext context, List<TO2Type> arguments, Node node) {
+    public IMethodInvokeEmitter? Create(IBlockContext context, List<TO2Type> arguments, Node node) {
         if (arguments.Count != 1) return null;
         var mapper = arguments[0].UnderlyingType(context.ModuleContext) as FunctionType;
         if (mapper == null) return null;
@@ -414,7 +414,7 @@ internal class OptionThenFactory : IMethodInvokeFactory {
         this.optionType = optionType;
     }
 
-    public TypeHint ReturnHint => null;
+    public TypeHint? ReturnHint => null;
 
     public TypeHint ArgumentHint(int argumentIdx) {
         return _ =>
@@ -438,7 +438,7 @@ internal class OptionThenFactory : IMethodInvokeFactory {
             "Function to be applied on the optional value if defined")
     };
 
-    public IMethodInvokeEmitter Create(IBlockContext context, List<TO2Type> arguments, Node node) {
+    public IMethodInvokeEmitter? Create(IBlockContext context, List<TO2Type> arguments, Node node) {
         if (arguments.Count != 1) return null;
         var mapper = arguments[0].UnderlyingType(context.ModuleContext) as FunctionType;
         if (mapper == null) return null;
@@ -484,7 +484,7 @@ internal class OptionOkOrFactory : IMethodInvokeFactory {
 
     public bool IsConst => true;
 
-    public TypeHint ArgumentHint(int argumentIdx) {
+    public TypeHint? ArgumentHint(int argumentIdx) {
         return null;
     }
 
@@ -493,7 +493,7 @@ internal class OptionOkOrFactory : IMethodInvokeFactory {
     public List<FunctionParameter> DeclaredParameters => new()
         { new("if_none", BuiltinType.Unit, "Get error message if option is undefined") };
 
-    public IMethodInvokeEmitter Create(IBlockContext context, List<TO2Type> arguments, Node node) {
+    public IMethodInvokeEmitter? Create(IBlockContext context, List<TO2Type> arguments, Node node) {
         if (arguments.Count != 1) return null;
         var errorType = arguments[0].UnderlyingType(context.ModuleContext);
 

@@ -40,7 +40,7 @@ public abstract class UGUILayout {
     public abstract Vector2 Layout();
 
     protected interface ILayoutEntry {
-        RectTransform Transform { get; }
+        RectTransform? Transform { get; }
 
         Vector2 MinSize { get; }
 
@@ -57,7 +57,7 @@ public abstract class UGUILayout {
             MinSize = new Vector2(minSize, minSize);
         }
 
-        public RectTransform Transform => null;
+        public RectTransform? Transform => null;
         public Vector2 MinSize { get; }
         public float Stretch { get; }
         public Align Align => Align.Stretch;

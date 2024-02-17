@@ -19,7 +19,7 @@ public class IndexAssign : Expression {
         this.expression = expression;
     }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set {
             target.VariableContainer = value;
             indexSpec.VariableContainer = value;

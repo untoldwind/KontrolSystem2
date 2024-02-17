@@ -13,7 +13,7 @@ public partial class KSPUIModule {
         private Vector2d[] points;
 
         private double thickness;
-        private Vector2d[] triangleStrip;
+        private Vector2d[]? triangleStrip;
 
         public Line2D(KSPConsoleModule.RgbaColor strokeColor, double thickness, bool closed, Vector2d[] points) {
             StrokeColor = strokeColor;
@@ -53,7 +53,7 @@ public partial class KSPUIModule {
         }
 
         public void OnDraw(GLUIDrawer.GLUIDraw draw) {
-            if (triangleStrip.Length < 3) return;
+            if (triangleStrip!.Length < 3) return;
 
             GL.Begin(GL.TRIANGLE_STRIP);
             GL.Color(StrokeColor.Color);

@@ -24,11 +24,11 @@ public partial class KSPControlModule {
         public abstract void UpdateAutopilot(ref FlightCtrlState st, float deltaTime);
 
         [KSMethod]
-        public Future<object> Release() {
+        public Future<object?> Release() {
             suspended = true;
             context.NextYield = new WaitForFixedUpdate();
             context.OnNextYieldOnce = () => { context.UnhookAutopilot(vessel, this); };
-            return new Future.Success<object>(null);
+            return new Future.Success<object?>(null);
         }
 
         [KSMethod]

@@ -15,11 +15,11 @@ public class UnarySuffix : Expression {
         this.op = op;
     }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set => left.VariableContainer = value;
     }
 
-    public override TypeHint TypeHint {
+    public override TypeHint? TypeHint {
         set => left.TypeHint = value;
     }
 

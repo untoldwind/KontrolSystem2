@@ -6,7 +6,7 @@ using KontrolSystem.TO2.Generator;
 namespace KontrolSystem.TO2.AST;
 
 public interface IOperatorCollection : IEnumerable<(Operator op, List<IOperatorEmitter> emitters)> {
-    IOperatorEmitter GetMatching(ModuleContext context, Operator op, TO2Type otherType);
+    IOperatorEmitter? GetMatching(ModuleContext context, Operator op, TO2Type otherType);
 }
 
 public class OperatorCollection : IOperatorCollection {
@@ -21,7 +21,7 @@ public class OperatorCollection : IOperatorCollection {
             collection.GroupBy(o => o.op, o => o.emitter).ToDictionary(g => g.Key, g => g.ToList());
     }
 
-    public IOperatorEmitter GetMatching(ModuleContext context, Operator op, TO2Type otherType) {
+    public IOperatorEmitter? GetMatching(ModuleContext context, Operator op, TO2Type otherType) {
         if (!collection.ContainsKey(op)) return null;
         return collection[op].Find(o => o.Accepts(context, otherType));
     }

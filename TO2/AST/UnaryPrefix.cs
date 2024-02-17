@@ -15,11 +15,11 @@ public class UnaryPrefix : Expression {
         this.right = right;
     }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set => right.VariableContainer = value;
     }
 
-    public override TypeHint TypeHint {
+    public override TypeHint? TypeHint {
         set => right.TypeHint = value;
     }
 

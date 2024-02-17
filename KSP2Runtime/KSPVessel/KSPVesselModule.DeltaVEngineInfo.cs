@@ -19,7 +19,7 @@ public partial class KSPVesselModule {
         public long StartBurnStage => deltaVEngineInfo.StartBurnStage;
 
         [KSField]
-        public ModuleEngineAdapter EngineModule => new(deltaVEngineInfo.Part as PartComponent, deltaVEngineInfo.Engine);
+        public ModuleEngineAdapter EngineModule => new((deltaVEngineInfo.Part as PartComponent)!, deltaVEngineInfo.Engine);
 
         [KSMethod("get_ISP", Description = "Estimated ISP of the engine in a given `situation`")]
         public double GetIsp(DeltaVSituationOptions situation) {

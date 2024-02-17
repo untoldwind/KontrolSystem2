@@ -29,7 +29,7 @@ internal readonly struct AsyncClass {
 
         foreach (var parameter in parameters) {
             var field = asyncModuleContext.typeBuilder.DefineField(parameter.name,
-                parameter.type.GeneratedType(parent.ModuleContext), FieldAttributes.Private);
+                parameter.type!.GeneratedType(parent.ModuleContext), FieldAttributes.Private);
             clonedParameters.Add(
                 new ClonedFieldVariable(parameter.type.UnderlyingType(parent.ModuleContext), field));
         }
@@ -53,7 +53,7 @@ internal readonly struct AsyncClass {
             throw new CompilationErrorException(asyncContext.AllErrors);
 
         asyncContext.IL.EmitNew(OpCodes.Newobj,
-            asyncContext.MethodBuilder.ReturnType.GetConstructor(new[] { typeParameter }));
+            asyncContext.MethodBuilder.ReturnType.GetConstructor(new[] { typeParameter })!);
         ILChunks.GenerateFunctionLeave(asyncContext);
         asyncContext.IL.EmitReturn(asyncContext.MethodBuilder.ReturnType);
 
@@ -62,18 +62,18 @@ internal readonly struct AsyncClass {
         asyncContext.IL.Emit(OpCodes.Ldarg_0);
         asyncContext.IL.Emit(OpCodes.Ldfld, asyncContext.stateField);
         asyncContext.IL.Emit(OpCodes.Switch,
-            initialState.Yield().Concat(asyncContext.asyncResumes.Select(ar => ar.pollLabel)));
+            initialState.Yield().Concat(asyncContext.asyncResumes!.Select(ar => ar.pollLabel)));
         asyncContext.IL.Emit(OpCodes.Ldarg_0);
         asyncContext.IL.Emit(OpCodes.Ldfld, asyncContext.stateField);
         asyncContext.IL.EmitNew(OpCodes.Newobj,
-            typeof(InvalidAsyncStateException).GetConstructor(new[] { typeof(int) }), 1);
+            typeof(InvalidAsyncStateException).GetConstructor(new[] { typeof(int) })!, 1);
         asyncContext.IL.Emit(OpCodes.Throw);
 
-        foreach (var asyncResume in asyncContext.asyncResumes) asyncResume.EmitPoll(asyncContext);
+        foreach (var asyncResume in asyncContext.asyncResumes!) asyncResume.EmitPoll(asyncContext);
 
         // Restore state
         asyncContext.IL.MarkLabel(asyncContext.resume);
-        foreach (var stateRef in asyncContext.stateRefs) stateRef.EmitRestore(asyncContext);
+        foreach (var stateRef in asyncContext.stateRefs!) stateRef.EmitRestore(asyncContext);
         asyncContext.IL.Emit(OpCodes.Ldarg_0);
         asyncContext.IL.Emit(OpCodes.Ldfld, asyncContext.stateField);
         asyncContext.IL.Emit(OpCodes.Switch,
@@ -81,7 +81,7 @@ internal readonly struct AsyncClass {
         asyncContext.IL.Emit(OpCodes.Ldarg_0);
         asyncContext.IL.Emit(OpCodes.Ldfld, asyncContext.stateField);
         asyncContext.IL.EmitNew(OpCodes.Newobj,
-            typeof(InvalidAsyncStateException).GetConstructor(new[] { typeof(int) }), 1);
+            typeof(InvalidAsyncStateException).GetConstructor(new[] { typeof(int) })!, 1);
         asyncContext.IL.Emit(OpCodes.Throw);
 
         // Store state

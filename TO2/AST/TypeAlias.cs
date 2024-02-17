@@ -30,7 +30,7 @@ public class TypeAlias : Node, IModuleItem {
     }
 
     public IEnumerable<StructuralError> TryDeclareTypes(ModuleContext context) {
-        if (exported) context.exportedTypes.Add((name, new TypeAliasDelegate(context, type, description, this)));
+        if (exported) context.exportedTypes!.Add((name, new TypeAliasDelegate(context, type, description, this)));
         return Enumerable.Empty<StructuralError>();
     }
 
@@ -77,15 +77,15 @@ public class TypeAliasDelegate : TO2Type {
 
     public override string Name => aliasedType.Name;
 
-    public override IFieldAccessFactory FindField(ModuleContext context, string fieldName) {
+    public override IFieldAccessFactory? FindField(ModuleContext context, string fieldName) {
         return aliasedType.FindField(declaredModule, fieldName);
     }
 
-    public override IIndexAccessEmitter AllowedIndexAccess(ModuleContext context, IndexSpec indexSpec) {
+    public override IIndexAccessEmitter? AllowedIndexAccess(ModuleContext context, IndexSpec indexSpec) {
         return aliasedType.AllowedIndexAccess(declaredModule, indexSpec);
     }
 
-    public override IMethodInvokeFactory FindMethod(ModuleContext context, string methodName) {
+    public override IMethodInvokeFactory? FindMethod(ModuleContext context, string methodName) {
         return aliasedType.FindMethod(declaredModule, methodName);
     }
 
@@ -97,7 +97,7 @@ public class TypeAliasDelegate : TO2Type {
         return aliasedType.AllowedSuffixOperators(declaredModule);
     }
 
-    public override IUnapplyEmitter
+    public override IUnapplyEmitter?
         AllowedUnapplyPatterns(ModuleContext context, string unapplyName, int itemCount) {
         return aliasedType.AllowedUnapplyPatterns(context, unapplyName, itemCount);
     }

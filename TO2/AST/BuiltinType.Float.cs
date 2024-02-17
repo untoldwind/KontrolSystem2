@@ -174,8 +174,8 @@ public abstract partial class BuiltinType {
             return !double.IsInfinity(d);
         }
 
-        public override IREPLValue REPLCast(object value) {
-            return new REPLFloat((double)value);
+        public override IREPLValue REPLCast(object? value) {
+            return new REPLFloat((double)value!);
         }
     }
 }

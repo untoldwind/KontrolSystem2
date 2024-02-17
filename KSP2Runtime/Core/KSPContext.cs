@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using KontrolSystem.KSP.Runtime.KSPConsole;
 using KontrolSystem.KSP.Runtime.KSPGame;
@@ -34,7 +35,7 @@ internal class AutopilotHooks {
         return autopilots.Remove(autopilot);
     }
 
-    internal bool TryFindAutopilot<T>(out T autopilot) where T : IKSPAutopilot {
+    internal bool TryFindAutopilot<T>([MaybeNullWhen(false)] out T autopilot) where T : IKSPAutopilot {
         foreach (var item in autopilots)
             if (item is T t) {
                 autopilot = t;
@@ -66,7 +67,7 @@ public class KSPCoreContext : IKSPContext {
     private readonly Stopwatch timeStopwatch;
     private readonly long timeoutMillis;
     private readonly List<KSPUIModule.Window> windows;
-    private object nextYield;
+    private object? nextYield;
     private int stackCallCount;
 
     public KSPCoreContext(ITO2Logger logger, GameInstance gameInstance, KSPConsoleBuffer consoleBuffer,
@@ -137,13 +138,13 @@ public class KSPCoreContext : IKSPContext {
 
     public TimeSeriesCollection TimeSeriesCollection { get; }
 
-    public KSPOrbitModule.IBody FindBody(string name) {
+    public KSPOrbitModule.IBody? FindBody(string name) {
         var body = Game.ViewController.GetBodyByName(name);
 
         return body != null ? new BodyWrapper(this, body) : null;
     }
 
-    public object NextYield {
+    public object? NextYield {
         get {
             var result = nextYield;
             nextYield = new WaitForFixedUpdate();
@@ -152,7 +153,7 @@ public class KSPCoreContext : IKSPContext {
         set => nextYield = value;
     }
 
-    public Action OnNextYieldOnce { get; set; }
+    public Action? OnNextYieldOnce { get; set; }
 
     public void AddMarker(IMarker marker) {
         markers.Add(marker);
@@ -176,7 +177,7 @@ public class KSPCoreContext : IKSPContext {
         windows.Add(window);
     }
 
-    public bool TryFindAutopilot<T>(VesselComponent vessel, out T autopilot) where T : IKSPAutopilot {
+    public bool TryFindAutopilot<T>(VesselComponent vessel, [MaybeNullWhen(false)] out T autopilot) where T : IKSPAutopilot {
         if (autopilotHooks.TryGetValue(vessel, out var hook)) return hook.TryFindAutopilot(out autopilot);
 
         autopilot = default;

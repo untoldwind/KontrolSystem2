@@ -17,7 +17,7 @@ public static class TO2ParserREPL {
         Expression,
         WhileExpression,
         ForInExpression,
-        VariableDeclaration.Map(item => item as Node)
+        VariableDeclaration.Map(item => (item as Node)!)
     ));
 
     public static readonly Parser<List<Node>> REPLItems =

@@ -9,17 +9,17 @@ using KontrolSystem.TO2.Runtime;
 namespace KontrolSystem.TO2;
 
 public interface IKontrolFunction {
-    IKontrolModule Module { get; }
+    IKontrolModule? Module { get; }
 
     string Name { get; }
 
-    string Description { get; }
+    string? Description { get; }
 
     List<RealizedParameter> Parameters { get; }
 
     RealizedType ReturnType { get; }
 
-    MethodInfo RuntimeMethod { get; }
+    MethodInfo? RuntimeMethod { get; }
 
     bool IsCompiled { get; }
 
@@ -40,19 +40,19 @@ public static class KontrolFunctionExtensions {
 }
 
 public class CompiledKontrolFunction : IKontrolFunction {
-    public CompiledKontrolFunction(string name, string description, bool isAsync,
-        List<RealizedParameter> parameters, RealizedType returnType, MethodInfo runtimeMethod) {
+    public CompiledKontrolFunction(string name, string? description, bool isAsync,
+        List<RealizedParameter> parameters, RealizedType returnType, MethodInfo? runtimeMethod) {
         Name = name;
         Description = description;
         IsAsync = isAsync;
         Parameters = parameters;
         ReturnType = returnType;
-        RuntimeMethod = runtimeMethod;
+        RuntimeMethod = runtimeMethod ?? throw new ArgumentException($"Method is null for {name} : {returnType}");
     }
 
-    public IKontrolModule Module { get; internal set; }
+    public IKontrolModule? Module { get; internal set; }
     public string Name { get; }
-    public string Description { get; }
+    public string? Description { get; }
     public List<RealizedParameter> Parameters { get; }
     public RealizedType ReturnType { get; }
     public MethodInfo RuntimeMethod { get; }
@@ -95,7 +95,7 @@ public class DeclaredKontrolFunction : IKontrolFunction {
 
     public string Description => to2Function.description;
 
-    public MethodInfo RuntimeMethod => methodContext.MethodBuilder;
+    public MethodInfo? RuntimeMethod => methodContext.MethodBuilder;
 
     public bool IsCompiled => false;
 
@@ -115,7 +115,7 @@ public class DeclaredKontrolStructConstructor : IKontrolFunction {
         StructDeclaration to2Struct) {
         this.module = module;
         Parameters = to2Struct.constructorParameters.Select(p => new RealizedParameter(methodContext, p)).ToList();
-        ReturnType = to2Struct.typeDelegate.UnderlyingType(methodContext.ModuleContext);
+        ReturnType = to2Struct.typeDelegate!.UnderlyingType(methodContext.ModuleContext);
         this.methodContext = methodContext;
         this.to2Struct = to2Struct;
     }
@@ -129,7 +129,7 @@ public class DeclaredKontrolStructConstructor : IKontrolFunction {
 
     public string Description => to2Struct.description;
 
-    public MethodInfo RuntimeMethod => methodContext.MethodBuilder;
+    public MethodInfo? RuntimeMethod => methodContext.MethodBuilder;
 
     public bool IsCompiled => false;
 

@@ -7,9 +7,9 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI;
 [DisallowMultipleComponent]
 [RequireComponent(typeof(RawImage), typeof(RectTransform))]
 public class UGUICanvasDrawer : MonoBehaviour {
-    private GLUIDrawer drawer;
-    private List<GLUIDrawer.IGLUIDrawable> elements;
-    private RectTransform rectTransform;
+    private GLUIDrawer? drawer;
+    private List<GLUIDrawer.IGLUIDrawable>? elements;
+    private RectTransform? rectTransform;
 
     public int Width => drawer?.Texture.width ?? -1;
 
@@ -28,20 +28,20 @@ public class UGUICanvasDrawer : MonoBehaviour {
     }
 
     private void Update() {
-        var size = Vector2.Scale(rectTransform.rect.size, rectTransform.lossyScale);
+        var size = Vector2.Scale(rectTransform!.rect.size, rectTransform.lossyScale);
 
-        drawer.Resize((int)size.x, (int)size.y);
+        drawer!.Resize((int)size.x, (int)size.y);
 
         using (var draw = drawer.Draw()) {
-            foreach (var element in elements) draw.Draw(element);
+            foreach (var element in elements!) draw.Draw(element);
         }
     }
 
     public void Add(GLUIDrawer.IGLUIDrawable element) {
-        elements.Add(element);
+        elements?.Add(element);
     }
 
     public void Clear() {
-        elements.Clear();
+        elements?.Clear();
     }
 }

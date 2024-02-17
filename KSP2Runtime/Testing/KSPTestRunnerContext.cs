@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using KontrolSystem.KSP.Runtime.KSPConsole;
 using KontrolSystem.KSP.Runtime.KSPGame;
@@ -41,15 +42,15 @@ public class KSPTestRunnerContext : TestRunnerContext, IKSPContext {
 
     public double UniversalTime => 0;
 
-    public VesselComponent ActiveVessel => null;
+    public VesselComponent? ActiveVessel => null;
 
-    public KSPOrbitModule.IBody FindBody(string name) {
+    public KSPOrbitModule.IBody? FindBody(string name) {
         return Bodies.Get(name);
     }
 
-    public object NextYield { get; set; }
+    public object? NextYield { get; set; }
 
-    public Action OnNextYieldOnce { get; set; }
+    public Action? OnNextYieldOnce { get; set; }
 
     public void AddMarker(IMarker marker) {
     }
@@ -66,7 +67,7 @@ public class KSPTestRunnerContext : TestRunnerContext, IKSPContext {
     public void AddWindow(KSPUIModule.Window window) {
     }
 
-    public bool TryFindAutopilot<T>(VesselComponent vessel, out T autopilot) where T : IKSPAutopilot {
+    public bool TryFindAutopilot<T>(VesselComponent vessel, [MaybeNullWhen(false)] out T autopilot) where T : IKSPAutopilot {
         autopilot = default;
         return false;
     }
@@ -82,7 +83,7 @@ public class KSPTestRunnerContext : TestRunnerContext, IKSPContext {
 
     public OptionalAddons OptionalAddons => new();
 
-    public Font ConsoleFont(int fontSize) {
+    public Font? ConsoleFont(int fontSize) {
         return null;
     }
 }

@@ -9,24 +9,24 @@ using KontrolSystem.TO2.Runtime;
 namespace KontrolSystem.TO2.AST;
 
 public class ArrayCreate : Expression {
-    private TypeHint typeHint;
+    private TypeHint? typeHint;
 
-    public ArrayCreate(TO2Type elementType, List<Expression> elements, Position start = new(),
+    public ArrayCreate(TO2Type? elementType, List<Expression> elements, Position start = new(),
         Position end = new()) : base(start, end) {
         ElementType = elementType;
         Elements = elements;
     }
 
-    private TO2Type ElementType { get; }
+    private TO2Type? ElementType { get; }
     private List<Expression> Elements { get; }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set {
             foreach (var element in Elements) element.VariableContainer = value;
         }
     }
 
-    public override TypeHint TypeHint {
+    public override TypeHint? TypeHint {
         set {
             typeHint = value;
             foreach (var element in Elements)

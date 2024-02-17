@@ -17,7 +17,7 @@ public class CoreBackground {
     [KSFunction(Description = "Run a function as background task.")]
     public static BackgroundTask<T> Run<T>(Func<T> function) {
         var tokenSource = new CancellationTokenSource();
-        var backgroundContext = ContextHolder.CurrentContext.Value.CloneBackground(tokenSource);
+        var backgroundContext = ContextHolder.CurrentContext.Value!.CloneBackground(tokenSource);
         var task = Task.Run(() => {
             ContextHolder.CurrentContext.Value = backgroundContext;
             var result = function();

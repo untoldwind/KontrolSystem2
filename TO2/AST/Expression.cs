@@ -11,7 +11,7 @@ public struct ILCount {
     public int stack;
 }
 
-public delegate RealizedType TypeHint(IBlockContext context);
+public delegate RealizedType? TypeHint(IBlockContext context);
 
 /// <summary>
 ///     Base class of all expressions.
@@ -22,9 +22,9 @@ public abstract class Expression : Node, IBlockItem {
 
     public bool IsComment => false;
 
-    public abstract IVariableContainer VariableContainer { set; }
+    public abstract IVariableContainer? VariableContainer { set; }
 
-    public virtual TypeHint TypeHint {
+    public virtual TypeHint? TypeHint {
         set { }
     }
 
@@ -93,7 +93,7 @@ public abstract class Expression : Node, IBlockItem {
     ///     List of variables the expression would like to introduce to the current scope.
     ///     Right now this is only honor by "if" for the "then" scope and by "while" for the loop-scope.
     /// </summary>
-    public virtual Dictionary<string, TO2Type> GetScopeVariables(IBlockContext context) {
+    public virtual Dictionary<string, TO2Type>? GetScopeVariables(IBlockContext context) {
         return null;
     }
 }
@@ -110,11 +110,11 @@ public class Bracket : Expression {
         this.expression = expression;
     }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set => expression.VariableContainer = value;
     }
 
-    public override TypeHint TypeHint {
+    public override TypeHint? TypeHint {
         set => expression.TypeHint = value;
     }
 

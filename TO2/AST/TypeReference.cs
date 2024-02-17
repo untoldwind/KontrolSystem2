@@ -9,7 +9,7 @@ namespace KontrolSystem.TO2.AST;
 
 public class LookupTypeReference : TO2Type {
     private readonly Position end;
-    private readonly string moduleName;
+    private readonly string? moduleName;
     private readonly string name;
     private readonly Position start;
     private readonly List<TO2Type> typeArguments;
@@ -68,24 +68,24 @@ public class LookupTypeReference : TO2Type {
         return ReferencedType(context).AllowedSuffixOperators(context);
     }
 
-    public override IMethodInvokeFactory FindMethod(ModuleContext context, string methodName) {
+    public override IMethodInvokeFactory? FindMethod(ModuleContext context, string methodName) {
         return ReferencedType(context).FindMethod(context, methodName);
     }
 
-    public override IFieldAccessFactory FindField(ModuleContext context, string fieldName) {
+    public override IFieldAccessFactory? FindField(ModuleContext context, string fieldName) {
         return ReferencedType(context).FindField(context, fieldName);
     }
 
-    public override IIndexAccessEmitter AllowedIndexAccess(ModuleContext context, IndexSpec indexSpec) {
+    public override IIndexAccessEmitter? AllowedIndexAccess(ModuleContext context, IndexSpec indexSpec) {
         return ReferencedType(context).AllowedIndexAccess(context, indexSpec);
     }
 
-    public override IUnapplyEmitter
+    public override IUnapplyEmitter?
         AllowedUnapplyPatterns(ModuleContext context, string unapplyName, int itemCount) {
         return ReferencedType(context).AllowedUnapplyPatterns(context, unapplyName, itemCount);
     }
 
-    public override IForInSource ForInSource(ModuleContext context, TO2Type typeHint) {
+    public override IForInSource? ForInSource(ModuleContext context, TO2Type? typeHint) {
         return ReferencedType(context).ForInSource(context, typeHint);
     }
 
@@ -168,16 +168,16 @@ public class DirectTypeReference : RealizedType {
         return UnderlyingType(context).AllowedSuffixOperators(context);
     }
 
-    public override IMethodInvokeFactory FindMethod(ModuleContext context, string methodName) {
+    public override IMethodInvokeFactory? FindMethod(ModuleContext context, string methodName) {
         return UnderlyingType(context).FindMethod(context, methodName);
     }
 
-    public override IFieldAccessFactory FindField(ModuleContext context, string fieldName) {
+    public override IFieldAccessFactory? FindField(ModuleContext context, string fieldName) {
         return UnderlyingType(context).FindField(context, fieldName);
     }
 
     public override RealizedType
-        FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) {
+        FillGenerics(ModuleContext context, Dictionary<string, RealizedType>? typeArguments) {
         return UnderlyingType(context).FillGenerics(context, typeArguments);
     }
 
@@ -190,7 +190,7 @@ public class DirectTypeReference : RealizedType {
     }
 
     public override IEnumerable<(string name, RealizedType type)> InferGenericArgument(ModuleContext context,
-        RealizedType concreteType) {
+        RealizedType? concreteType) {
         return UnderlyingType(context).InferGenericArgument(context, concreteType);
     }
 }

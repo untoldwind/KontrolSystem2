@@ -48,7 +48,7 @@ public class ResultType : RealizedType {
         return allowedSuffixOperators;
     }
 
-    public override IUnapplyEmitter
+    public override IUnapplyEmitter?
         AllowedUnapplyPatterns(ModuleContext context, string unapplyName, int itemCount) {
         switch (unapplyName) {
         case "Ok" when itemCount == 1: return new ResultOkUnapplyEmitter(this);
@@ -75,7 +75,7 @@ public class ResultType : RealizedType {
     }
 
     public override RealizedType
-        FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) {
+        FillGenerics(ModuleContext context, Dictionary<string, RealizedType>? typeArguments) {
         return new ResultType(
             successType.UnderlyingType(context).FillGenerics(context, typeArguments),
             errorType.UnderlyingType(context).FillGenerics(context, typeArguments));
@@ -86,7 +86,7 @@ public class ResultType : RealizedType {
     }
 
     public override IEnumerable<(string name, RealizedType type)> InferGenericArgument(ModuleContext context,
-        RealizedType concreteType) {
+        RealizedType? concreteType) {
         var concreteResult = concreteType as ResultType;
         if (concreteResult == null) return Enumerable.Empty<(string name, RealizedType type)>();
         return successType.InferGenericArgument(context, concreteResult.successType.UnderlyingType(context)).Concat(
@@ -266,10 +266,10 @@ internal class ResultUnwrapOperator : IOperatorEmitter {
                 errorResult.EmitLoad(context);
                 if (context.IsAsync)
                     context.IL.EmitNew(OpCodes.Newobj,
-                        context.MethodBuilder.ReturnType.GetConstructor(new[] { errorResultType }));
+                        context.MethodBuilder!.ReturnType.GetConstructor(new[] { errorResultType })!);
 
                 ILChunks.GenerateFunctionLeave(context);
-                context.IL.EmitReturn(context.MethodBuilder.ReturnType);
+                context.IL.EmitReturn(context.MethodBuilder!.ReturnType);
             }
         }
 
@@ -291,7 +291,7 @@ internal class ResultUnwrapOperator : IOperatorEmitter {
         return this;
     }
 
-    public IREPLValue Eval(Node node, IREPLValue left, IREPLValue right) {
+    public IREPLValue Eval(Node node, IREPLValue left, IREPLValue? right) {
         if (left.Type is ResultType lrt && left.Value is IAnyResult lr)
             return lr.Success
                 ? lrt.successType.REPLCast(lr.ValueObject)

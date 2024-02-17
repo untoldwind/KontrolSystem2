@@ -30,6 +30,6 @@ public class UGUILabel : UGUIElement {
     }
 
     public static UGUILabel Create(string label) {
-        return new UGUILabel(UIFactory.Instance.CreateText(label, UIFactory.Instance.uiFontSize));
+        return new UGUILabel(UIFactory.Instance!.CreateText(label, UIFactory.Instance.uiFontSize));
     }
 }

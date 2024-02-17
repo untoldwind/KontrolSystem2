@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using KontrolSystem.KSP.Runtime.KSPConsole;
 using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
@@ -28,7 +29,7 @@ public interface IKSPContext : IContext {
 
     KSPGameMode GameMode { get; }
 
-    VesselComponent ActiveVessel { get; }
+    VesselComponent? ActiveVessel { get; }
 
     KSPConsoleBuffer ConsoleBuffer { get; }
 
@@ -36,13 +37,13 @@ public interface IKSPContext : IContext {
 
     double UniversalTime { get; }
 
-    object NextYield { get; set; }
+    object? NextYield { get; set; }
 
-    Action OnNextYieldOnce { get; set; }
+    Action? OnNextYieldOnce { get; set; }
 
     OptionalAddons OptionalAddons { get; }
 
-    KSPOrbitModule.IBody FindBody(string name);
+    KSPOrbitModule.IBody? FindBody(string name);
 
     void AddMarker(IMarker marker);
 
@@ -54,7 +55,7 @@ public interface IKSPContext : IContext {
 
     void AddWindow(KSPUIModule.Window window);
 
-    bool TryFindAutopilot<T>(VesselComponent vessel, out T autopilot) where T : IKSPAutopilot;
+    bool TryFindAutopilot<T>(VesselComponent vessel, [MaybeNullWhen(false)] out T autopilot) where T : IKSPAutopilot;
 
     void HookAutopilot(VesselComponent vessel, IKSPAutopilot autopilot);
 

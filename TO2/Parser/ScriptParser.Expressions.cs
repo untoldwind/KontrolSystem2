@@ -49,7 +49,7 @@ public static class TO2ParserExpressions {
         WhiteSpaces0.Then(Char(')')).Then(WhiteSpaces0).Then(Expression)
     ).Map((items, start, end) => {
         if (items.Item1.Item1)
-            return new ForIn(items.Item1.Item2[0].target, items.Item1.Item2[0].type, items.Item2, items.Item3,
+            return new ForIn(items.Item1.Item2[0].target!, items.Item1.Item2[0].type, items.Item2, items.Item3,
                 start, end);
         return new ForInDeconstruct(items.Item1.Item2, items.Item2, items.Item3, start, end) as Expression;
     });

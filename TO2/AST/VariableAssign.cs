@@ -8,7 +8,7 @@ public class VariableAssign : Expression {
     private readonly Expression expression;
     private readonly string name;
     private readonly Operator op;
-    private IVariableContainer variableContainer;
+    private IVariableContainer? variableContainer;
 
     public VariableAssign(string name, Operator op, Expression expression, Position start = new(),
         Position end = new()) : base(start, end) {
@@ -18,7 +18,7 @@ public class VariableAssign : Expression {
         this.expression.TypeHint = context => ResultType(context).UnderlyingType(context.ModuleContext);
     }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set {
             expression.VariableContainer = value;
             variableContainer = value;
@@ -70,7 +70,7 @@ public class VariableAssign : Expression {
         if (context.HasErrors) return;
 
         if (op == Operator.Assign) {
-            EmitAssign(context, blockVariable, valueType, dropResult);
+            EmitAssign(context, blockVariable!, valueType, dropResult);
             return;
         }
 
@@ -139,7 +139,7 @@ public class VariableAssign : Expression {
             throw new REPLException(this, $"Cannot {op} a {variable.declaredType} with a {expressionFuture.Type}");
 
         return expressionFuture.Then(variable.declaredType, value => {
-            var converted = assign.EvalConvert(this, operatorEmitter.Eval(this, variable.value, value));
+            var converted = assign.EvalConvert(this, operatorEmitter.Eval(this, variable.value!, value));
 
             variable.value = converted;
 

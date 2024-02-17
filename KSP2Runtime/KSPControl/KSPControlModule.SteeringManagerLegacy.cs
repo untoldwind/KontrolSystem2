@@ -83,7 +83,7 @@ public partial class KSPControlModule {
         private Vector3d vesselStarboard;
         private Vector3d vesselTop;
 
-        private ITransformModel vesselTransform;
+        private ITransformModel? vesselTransform;
 
         /*
         private KSPDebugModule.VectorRenderer vForward;
@@ -195,10 +195,10 @@ public partial class KSPControlModule {
         }
 
         [KSMethod]
-        public Future<object> Release() {
+        public Future<object?> Release() {
             context.UnhookAutopilot(vessel.vessel, this);
 
-            return new Future.Success<object>(null);
+            return new Future.Success<object?>(null);
         }
 
         [KSMethod]
@@ -393,7 +393,7 @@ public partial class KSPControlModule {
                     // add the part inertiaTensor to the ship inertiaTensor
                     KSPUtil.Add(ref tensor, rotMatrix * partTensor * invMatrix);
 
-                    Vector3 position = QuaternionD.Inverse(vesselTransform.localRotation) *
+                    Vector3 position = QuaternionD.Inverse(vesselTransform?.localRotation ?? QuaternionD.identity) *
                                        (part.SimulationObject.Rigidbody.Position.localPosition - centerOfMass);
 
                     // add the part mass to the ship inertiaTensor

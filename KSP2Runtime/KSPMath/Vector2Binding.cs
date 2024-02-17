@@ -17,54 +17,54 @@ public static class Vector2Binding {
         new OperatorCollection {
             {
                 Operator.Neg,
-                new StaticMethodOperatorEmitter(() => BuiltinType.Unit, () => Vector2Type,
+                new StaticMethodOperatorEmitter(() => BuiltinType.Unit, () => Vector2Type!,
                     typeof(Vector2d).GetMethod("op_UnaryNegation", new[] { typeof(Vector2d) }))
             }, {
                 Operator.Mul,
-                new StaticMethodOperatorEmitter(() => BuiltinType.Float, () => Vector2Type,
+                new StaticMethodOperatorEmitter(() => BuiltinType.Float, () => Vector2Type!,
                     typeof(Vector2d).GetMethod("op_Multiply", new[] { typeof(double), typeof(Vector2d) }))
             }
         },
         new OperatorCollection {
             {
                 Operator.Add,
-                new StaticMethodOperatorEmitter(() => Vector2Type, () => Vector2Type,
+                new StaticMethodOperatorEmitter(() => Vector2Type!, () => Vector2Type!,
                     typeof(Vector2d).GetMethod("op_Addition", new[] { typeof(Vector2d), typeof(Vector2d) }))
             }, {
                 Operator.AddAssign,
-                new StaticMethodOperatorEmitter(() => Vector2Type, () => Vector2Type,
+                new StaticMethodOperatorEmitter(() => Vector2Type!, () => Vector2Type!,
                     typeof(Vector2d).GetMethod("op_Addition", new[] { typeof(Vector2d), typeof(Vector2d) }))
             }, {
                 Operator.Sub,
-                new StaticMethodOperatorEmitter(() => Vector2Type, () => Vector2Type,
+                new StaticMethodOperatorEmitter(() => Vector2Type!, () => Vector2Type!,
                     typeof(Vector2d).GetMethod("op_Subtraction", new[] { typeof(Vector2d), typeof(Vector2d) }))
             }, {
                 Operator.SubAssign,
-                new StaticMethodOperatorEmitter(() => Vector2Type, () => Vector2Type,
+                new StaticMethodOperatorEmitter(() => Vector2Type!, () => Vector2Type!,
                     typeof(Vector2d).GetMethod("op_Subtraction", new[] { typeof(Vector2d), typeof(Vector2d) }))
             }, {
                 Operator.Mul,
-                new StaticMethodOperatorEmitter(() => BuiltinType.Float, () => Vector2Type,
+                new StaticMethodOperatorEmitter(() => BuiltinType.Float, () => Vector2Type!,
                     typeof(Vector2d).GetMethod("op_Multiply", new[] { typeof(Vector2d), typeof(double) }))
             }, {
                 Operator.MulAssign,
-                new StaticMethodOperatorEmitter(() => BuiltinType.Float, () => Vector2Type,
+                new StaticMethodOperatorEmitter(() => BuiltinType.Float, () => Vector2Type!,
                     typeof(Vector2d).GetMethod("op_Multiply", new[] { typeof(Vector2d), typeof(double) }))
             }, {
                 Operator.Div,
-                new StaticMethodOperatorEmitter(() => BuiltinType.Float, () => Vector2Type,
+                new StaticMethodOperatorEmitter(() => BuiltinType.Float, () => Vector2Type!,
                     typeof(Vector2d).GetMethod("op_Division", new[] { typeof(Vector2d), typeof(double) }))
             }, {
                 Operator.DivAssign,
-                new StaticMethodOperatorEmitter(() => BuiltinType.Float, () => Vector2Type,
+                new StaticMethodOperatorEmitter(() => BuiltinType.Float, () => Vector2Type!,
                     typeof(Vector2d).GetMethod("op_Division", new[] { typeof(Vector2d), typeof(double) }))
             }, {
                 Operator.Eq,
-                new StaticMethodOperatorEmitter(() => Vector2Type, () => BuiltinType.Bool,
+                new StaticMethodOperatorEmitter(() => Vector2Type!, () => BuiltinType.Bool,
                     typeof(Vector2d).GetMethod("op_Equality", new[] { typeof(Vector2d), typeof(Vector2d) }))
             }, {
                 Operator.NotEq,
-                new StaticMethodOperatorEmitter(() => Vector2Type, () => BuiltinType.Bool,
+                new StaticMethodOperatorEmitter(() => Vector2Type!, () => BuiltinType.Bool,
                     typeof(Vector2d).GetMethod("op_Equality", new[] { typeof(Vector2d), typeof(Vector2d) }),
                     null, OpCodes.Ldc_I4_0, OpCodes.Ceq)
             }
@@ -75,7 +75,7 @@ public static class Vector2Binding {
                 new BoundMethodInvokeFactory("Calculate the angle in degree to `other` vector.", true,
                     () => BuiltinType.Float,
                     () => new List<RealizedParameter> {
-                        new("other", Vector2Type, "Other vector")
+                        new("other", Vector2Type!, "Other vector")
                     }, false,
                     typeof(Vector2d), typeof(Vector2d).GetMethod("Angle"))
             }, {
@@ -106,7 +106,7 @@ public static class Vector2Binding {
             }, {
                 "normalized",
                 new BoundPropertyLikeFieldAccessFactory("Normalized vector (i.e. scaled to length 1)",
-                    () => Vector2Type, typeof(Vector2d), typeof(Vector2d).GetProperty("normalized"))
+                    () => Vector2Type!, typeof(Vector2d), typeof(Vector2d).GetProperty("normalized"))
             }
         });
 

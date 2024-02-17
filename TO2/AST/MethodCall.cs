@@ -12,7 +12,7 @@ public class MethodCall : Expression {
     private readonly List<Expression> arguments;
     private readonly string methodName;
     private readonly Expression target;
-    private ILocalRef preparedResult;
+    private ILocalRef? preparedResult;
 
     public MethodCall(Expression target, string methodName, List<Expression> arguments,
         Position start = new(), Position end = new()) : base(start, end) {
@@ -30,7 +30,7 @@ public class MethodCall : Expression {
         }
     }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set {
             target.VariableContainer = value;
             foreach (var argument in arguments) argument.VariableContainer = value;
@@ -48,7 +48,7 @@ public class MethodCall : Expression {
                          (expression, parameter) => (expression, parameter.type))) {
                 var type = arg.ResultType(argumentContext);
                 if (param is GenericParameter generic)
-                    argumentContext.InferredGenerics.TryAdd(generic.Name, type.UnderlyingType(context.ModuleContext));
+                    argumentContext.InferredGenerics?.TryAdd(generic.Name, type.UnderlyingType(context.ModuleContext));
                 resolvedTypes.Add(type);
             }
 
@@ -216,7 +216,7 @@ public class MethodCall : Expression {
 
         if (!context.HasErrors)
             for (; i < methodInvoker.Parameters.Count; i++)
-                methodInvoker.Parameters[i].defaultValue.EmitCode(context);
+                methodInvoker.Parameters[i].defaultValue!.EmitCode(context);
 
         if (context.HasErrors) return;
 
@@ -310,7 +310,7 @@ public class MethodCall : Expression {
             if (context.replBlockContext.HasErrors)
                 throw new REPLException(this, context.replBlockContext.AllErrors.First().message);
 
-            if (arguments.Count > methodInvoker.Parameters.Count)
+            if (arguments.Count > methodInvoker!.Parameters.Count)
                 throw new REPLException(this,
                     $"Function '{targetFuture.Type.Name}.{methodName}' only allows {methodInvoker.Parameters.Count} arguments, {arguments.Count} where given");
 

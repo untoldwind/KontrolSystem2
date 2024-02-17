@@ -6,7 +6,7 @@ using KontrolSystem.TO2.Generator;
 namespace KontrolSystem.TO2.Binding;
 
 public static class BoundDefaultValue {
-    public static IDefaultValue DefaultValueFor(ParameterInfo parameter) {
+    public static IDefaultValue? DefaultValueFor(ParameterInfo parameter) {
         if (!parameter.HasDefaultValue) return null;
         if (parameter.DefaultValue == null) return new NullDefaultValue(parameter.ParameterType);
         switch (parameter.DefaultValue) {

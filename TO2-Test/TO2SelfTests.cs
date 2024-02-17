@@ -36,7 +36,7 @@ public class TO2SelfTests {
             Assert.NotNull(kontrolModule.FindFunction("test_asserts"));
 
             var testContext = new TestRunnerContext();
-            kontrolModule.FindFunction("test_asserts").Invoke(testContext);
+            kontrolModule.FindFunction("test_asserts")?.Invoke(testContext);
 
             Assert.Equal(0, testContext.StackCallCount);
             Assert.Equal(9, testContext.AssertionsCount);
@@ -61,7 +61,7 @@ public class TO2SelfTests {
             Assert.NotNull(kontrolModule.FindFunction("test_basic_callback"));
 
             var testContext = new TestRunnerContext();
-            kontrolModule.FindFunction("test_basic_callback")
+            kontrolModule.FindFunction("test_basic_callback")?
                 .Invoke(testContext, new Func<long, string>(demo_target));
 
             Assert.Equal(0, testContext.StackCallCount);

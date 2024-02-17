@@ -117,7 +117,7 @@ public class BackgroundTestContext : IContext {
         "Provides basic assertions for testing. All functions provided by this module should be only used by `test` function."
 )]
 public class CoreTesting {
-    protected static TestRunnerContext TestContext => ContextHolder.CurrentContext.Value as TestRunnerContext;
+    protected static TestRunnerContext? TestContext => ContextHolder.CurrentContext.Value as TestRunnerContext;
 
     [KSFunction(
         Description = "Assert that `actual` is true (Test only)"
@@ -171,7 +171,7 @@ public class CoreTesting {
         if (TestContext != null) TestContext.IncrAssertions();
         else throw new AssertException("assert_some_int: called without context");
         if (!actual.defined) throw new AssertException($"assert_some: Some({expected}) != None");
-        if (!expected.Equals(actual.value))
+        if (!expected!.Equals(actual.value))
             throw new AssertException($"assert_some: Some({expected}) != Some({actual})");
     }
 
@@ -203,8 +203,8 @@ public class CoreTesting {
     [KSFunction(
         Description = "Yield the test case (Async test only)"
     )]
-    public static Future<object> Yield() {
-        return new Future.Success<object>(null);
+    public static Future<object?> Yield() {
+        return new Future.Success<object?>(null);
     }
 
     [KSFunction(

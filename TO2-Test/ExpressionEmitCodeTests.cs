@@ -17,11 +17,11 @@ public class ExpressionEmitCodeTests {
 
         expression.EmitCode(methodContext, false);
         Assert.False(methodContext.HasErrors);
-        methodContext.IL.EmitReturn(methodContext.MethodBuilder.ReturnType);
+        methodContext.IL.EmitReturn(methodContext.MethodBuilder!.ReturnType);
 
         var dynamicType = moduleContext.CreateType();
 
-        return dynamicType.GetMethod("Exec");
+        return dynamicType.GetMethod("Exec")!;
     }
 
     [Fact]

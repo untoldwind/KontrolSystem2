@@ -3,7 +3,7 @@
 public interface IAnyFutureResult {
     bool IsReady { get; }
 
-    object ValueObject { get; }
+    object? ValueObject { get; }
 }
 
 public readonly struct FutureResult<T> : IAnyFutureResult {
@@ -17,7 +17,7 @@ public readonly struct FutureResult<T> : IAnyFutureResult {
 
     public bool IsReady => ready;
 
-    public object ValueObject => value;
+    public object? ValueObject => value;
 }
 
 public interface IAnyFuture {

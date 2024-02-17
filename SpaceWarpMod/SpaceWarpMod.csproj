@@ -66,6 +66,9 @@
     <ItemGroup>
         <Folder Include="Assets"/>
     </ItemGroup>
+    <ItemGroup>
+      <None Include="SpaceWarpMod.csproj.DotSettings.user" />
+    </ItemGroup>
     <Target Name="CopyFiles" AfterTargets="Build">
         <Copy SourceFiles="../bin/$(Configuration)/KontrolSystemSpaceWarpMod.dll" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2"/>
         <Copy SourceFiles="icon.png" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2/assets/images"/>

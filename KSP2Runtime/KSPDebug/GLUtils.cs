@@ -3,7 +3,7 @@
 namespace KontrolSystem.KSP.Runtime.KSPDebug;
 
 public static class GLUtils {
-    private static Material _colored;
+    private static Material? _colored;
 
     public static Material Colored {
         get {

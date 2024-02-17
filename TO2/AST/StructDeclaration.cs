@@ -34,7 +34,7 @@ public class StructDeclaration : Node, IModuleItem, IVariableContainer {
     public readonly bool exported;
     private readonly List<IEither<LineComment, StructField>> fields;
     public readonly string name;
-    public StructTypeAliasDelegate typeDelegate;
+    public StructTypeAliasDelegate? typeDelegate;
 
     public StructDeclaration(bool exported, string name, string description,
         List<FunctionParameter> constructorParameters, List<IEither<LineComment, StructField>> fields,
@@ -53,7 +53,7 @@ public class StructDeclaration : Node, IModuleItem, IVariableContainer {
     public IEnumerable<StructuralError> TryDeclareTypes(ModuleContext context) {
         typeDelegate = new StructTypeAliasDelegate(context, name, description,
             fields.Where(e => e.IsRight).Select(e => e.Right).ToList());
-        if (exported) context.exportedTypes.Add((name, typeDelegate));
+        if (exported) context.exportedTypes!.Add((name, typeDelegate));
         return Enumerable.Empty<StructuralError>();
     }
 
@@ -65,12 +65,12 @@ public class StructDeclaration : Node, IModuleItem, IVariableContainer {
                 Start,
                 End
             ).Yield();
-        context.mappedTypes.Add(name, typeDelegate);
+        context.mappedTypes.Add(name, typeDelegate!);
         return Enumerable.Empty<StructuralError>();
     }
 
     public IEnumerable<StructuralError> TryImportConstants(ModuleContext context) {
-        typeDelegate.EnsureFields();
+        typeDelegate!.EnsureFields();
         return Enumerable.Empty<StructuralError>();
     }
 
@@ -82,9 +82,9 @@ public class StructDeclaration : Node, IModuleItem, IVariableContainer {
         return Enumerable.Empty<StructuralError>();
     }
 
-    public IVariableContainer ParentContainer => null;
+    public IVariableContainer? ParentContainer => null;
 
-    public TO2Type FindVariableLocal(IBlockContext context, string variableName) {
+    public TO2Type? FindVariableLocal(IBlockContext context, string variableName) {
         return constructorParameters.Find(p => p.name == variableName)?.type;
     }
 
@@ -106,7 +106,7 @@ public class StructDeclaration : Node, IModuleItem, IVariableContainer {
 
         if (context.HasErrors) return;
 
-        typeDelegate.EnsureFields();
+        typeDelegate!.EnsureFields();
         typeDelegate.CreateStructType();
 
         var type = typeDelegate.GeneratedType(context.ModuleContext);
@@ -171,12 +171,12 @@ public class StructTypeAliasDelegate : TO2Type {
         return realizedType.runtimeType;
     }
 
-    public override IMethodInvokeFactory FindMethod(ModuleContext context, string methodName) {
+    public override IMethodInvokeFactory? FindMethod(ModuleContext context, string methodName) {
         EnsureFields();
         return realizedType.FindMethod(context, methodName);
     }
 
-    public override IFieldAccessFactory FindField(ModuleContext context, string fieldName) {
+    public override IFieldAccessFactory? FindField(ModuleContext context, string fieldName) {
         EnsureFields();
         return realizedType.FindField(context, fieldName);
     }

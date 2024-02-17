@@ -177,7 +177,7 @@ public class REPLBasicTests {
         }
 
 
-        Assert.Equal(to2Type, mainFutureResult.value.Type);
+        Assert.Equal(to2Type, mainFutureResult.value!.Type);
         Assert.True(mainFutureResult.value.Value is T);
 
         return (T)mainFutureResult.value.Value;

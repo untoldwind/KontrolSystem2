@@ -9,7 +9,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI;
 public partial class KSPUIModule {
     [KSClass]
     public class Slider {
-        private IDisposable bindSubscription;
+        private IDisposable? bindSubscription;
         private readonly double max;
         private readonly double min;
         private AbstractContainer parent;

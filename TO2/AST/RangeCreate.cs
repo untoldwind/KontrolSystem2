@@ -20,7 +20,7 @@ public class RangeCreate : Expression {
         this.to.TypeHint = _ => BuiltinType.Int;
     }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set {
             from.VariableContainer = value;
             to.VariableContainer = value;

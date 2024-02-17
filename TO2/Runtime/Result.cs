@@ -3,19 +3,19 @@
 public interface IAnyResult {
     bool Success { get; }
 
-    object ValueObject { get; }
+    object? ValueObject { get; }
 
-    string ErrorString { get; }
+    string? ErrorString { get; }
 
-    object ErrorObject { get; }
+    object? ErrorObject { get; }
 }
 
 public struct Result<T, E> : IAnyResult {
     public readonly bool success;
-    public readonly T value;
-    public readonly E error;
+    public readonly T? value;
+    public readonly E? error;
 
-    public Result(bool success, T value, E error) {
+    public Result(bool success, T? value, E? error) {
         this.success = success;
         this.value = value;
         this.error = error;
@@ -23,11 +23,11 @@ public struct Result<T, E> : IAnyResult {
 
     public bool Success => success;
 
-    public object ValueObject => value;
+    public object? ValueObject => value;
 
-    public string ErrorString => error?.ToString();
+    public string? ErrorString => error?.ToString();
 
-    public object ErrorObject => error;
+    public object? ErrorObject => error;
 }
 
 public static class Result {

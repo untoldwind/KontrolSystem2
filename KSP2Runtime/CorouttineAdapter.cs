@@ -7,18 +7,18 @@ namespace KontrolSystem.KSP.Runtime;
 
 public class CorouttineAdapter : IEnumerator {
     private readonly IKSPContext context;
-    private readonly Action<string> onDone;
+    private readonly Action<string?> onDone;
 
-    private object current = new WaitForFixedUpdate();
-    private IAnyFuture process;
+    private object? current = new WaitForFixedUpdate();
+    private IAnyFuture? process;
 
-    public CorouttineAdapter(IAnyFuture process, IKSPContext context, Action<string> onDone) {
+    public CorouttineAdapter(IAnyFuture process, IKSPContext context, Action<string?> onDone) {
         this.process = process;
         this.context = context;
         this.onDone = onDone;
     }
 
-    object IEnumerator.Current => current;
+    object? IEnumerator.Current => current;
 
     public bool MoveNext() {
         if (process == null) return false;
@@ -53,7 +53,7 @@ public class CorouttineAdapter : IEnumerator {
     public void Dispose() {
     }
 
-    private string ExtractMessage(object resultValue) {
+    private string? ExtractMessage(object? resultValue) {
         if (resultValue == null) return null;
 
         switch (resultValue) {

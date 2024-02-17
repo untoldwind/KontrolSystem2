@@ -13,9 +13,9 @@ public partial class KSPDebugModule {
         Description = "Represents a ground marker on a given celestial body."
     )]
     public class BillboardRenderer : IMarker {
-        private TextMeshPro billboard;
+        private TextMeshPro? billboard;
 
-        private GameObject billboardObj;
+        private GameObject? billboardObj;
 
         private bool enable;
 
@@ -74,12 +74,12 @@ public partial class KSPDebugModule {
                     var space = mapCore.map3D.GetSpaceProvider();
 
                     positionLocal = space.TranslateSimPositionToMapPosition(position);
-                    billboardObj.layer = 27;
+                    billboardObj!.layer = 27;
                     mapWidthMult = 1500 / space.Map3DScaleInv;
                 } else {
-                    var frame = KSPContext.CurrentContext.ActiveVessel.transform?.celestialFrame;
-                    positionLocal = frame.ToLocalPosition(position);
-                    billboardObj.layer = 0;
+                    var frame = KSPContext.CurrentContext.ActiveVessel?.transform?.celestialFrame;
+                    positionLocal = frame?.ToLocalPosition(position) ?? Vector3d.zero;
+                    billboardObj!.layer = 0;
                 }
 
                 var camera = KSPContext.CurrentContext.Game.SessionManager.GetMyActiveCamera();

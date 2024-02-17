@@ -18,11 +18,11 @@ public class ConsoleWindow : UGUIResizableWindow {
 
     private float charHeight;
     private float charWidth;
-    private Button commandHistoryDownButton;
-    private Button commandHistoryUpButton;
-    private UGUIInputField commandInputField;
-    private KSPConsoleBuffer consoleBuffer;
-    private TextMeshProUGUI consoleText;
+    private Button? commandHistoryDownButton;
+    private Button? commandHistoryUpButton;
+    private UGUIInputField? commandInputField;
+    private KSPConsoleBuffer? consoleBuffer;
+    private TextMeshProUGUI? consoleText;
 
     public void OnEnable() {
         Initialize("KontrolSystem: Console", new Rect(200, Screen.height - 200, 400, 500));
@@ -32,7 +32,7 @@ public class ConsoleWindow : UGUIResizableWindow {
         var consoleBackground = new GameObject("ConsoleBackground", typeof(Image));
         root.Add(consoleBackground, UGUILayout.Align.Stretch, new Vector2(200, 200), 1);
         var image = consoleBackground.GetComponent<Image>();
-        image.sprite = UIFactory.Instance.consoleBackground;
+        image.sprite = UIFactory.Instance!.consoleBackground;
         image.type = Image.Type.Sliced;
         image.color = Color.white;
 
@@ -83,13 +83,13 @@ public class ConsoleWindow : UGUIResizableWindow {
 
         var buttonContainer = root.Add(UGUILayoutContainer.Horizontal(20));
 
-        buttonContainer.Add(UGUIButton.Create("Clear", () => consoleBuffer.Clear()));
+        buttonContainer.Add(UGUIButton.Create("Clear", () => consoleBuffer!.Clear()));
         buttonContainer.Add(UGUIButton.Create("Copy",
-            () => { GUIUtility.systemCopyBuffer = consoleBuffer.ContentAsString(); }));
+            () => { GUIUtility.systemCopyBuffer = consoleBuffer!.ContentAsString(); }));
 
         MinSize = root.Layout();
 
-        consoleBuffer = Mainframe.Instance.ConsoleBuffer;
+        consoleBuffer = Mainframe.Instance!.ConsoleBuffer;
         consoleBuffer.changed.AddListener(OnConsoleBufferChanged);
 
         OnConsoleBufferChanged();
@@ -98,7 +98,7 @@ public class ConsoleWindow : UGUIResizableWindow {
     public override void OnDisable() {
         base.OnDisable();
 
-        consoleBuffer.changed.RemoveListener(OnConsoleBufferChanged);
+        consoleBuffer?.changed.RemoveListener(OnConsoleBufferChanged);
     }
 
     protected override void OnResize(Vector2 delta) {
@@ -108,9 +108,9 @@ public class ConsoleWindow : UGUIResizableWindow {
     }
 
     private void OnConsoleBufferChanged() {
-        var textRect = consoleText.GetComponent<RectTransform>().rect;
+        var textRect = consoleText!.GetComponent<RectTransform>().rect;
 
-        consoleBuffer.Resize((int)(textRect.height / charHeight), (int)(textRect.width / charWidth));
+        consoleBuffer!.Resize((int)(textRect.height / charHeight), (int)(textRect.width / charWidth));
 
         consoleText.SetText(string.Join("\n",
             consoleBuffer.VisibleLines.Select(line =>
@@ -118,11 +118,11 @@ public class ConsoleWindow : UGUIResizableWindow {
     }
 
     private void OnRunCommand() {
-        var replText = commandInputField.Value;
+        var replText = commandInputField!.Value;
 
         if (!string.IsNullOrWhiteSpace(replText)) {
             commandHistory.Add(replText);
-            Mainframe.Instance.Logger.Debug($"Submitted: {replText}");
+            Mainframe.Instance!.Logger.Debug($"Submitted: {replText}");
             consoleBuffer?.PrintLine($"$> {replText}");
             try {
                 var result = REPLExpression.Run(replText);
@@ -152,14 +152,14 @@ public class ConsoleWindow : UGUIResizableWindow {
 
     private void UpdateCommandHistory() {
         if (commandHistoryIndex >= 0 && commandHistoryIndex < commandHistory.Count)
-            commandInputField.Value = commandHistory[commandHistoryIndex];
+            commandInputField!.Value = commandHistory[commandHistoryIndex];
         else
-            commandInputField.Value = "";
+            commandInputField!.Value = "";
 
-        commandHistoryUpButton.interactable = commandHistoryIndex > 0;
-        commandHistoryDownButton.interactable = commandHistoryIndex < commandHistory.Count;
+        commandHistoryUpButton!.interactable = commandHistoryIndex > 0;
+        commandHistoryDownButton!.interactable = commandHistoryIndex < commandHistory.Count;
 
-        Mainframe.Instance.Logger.Info(
+        Mainframe.Instance!.Logger.Info(
             $"Command history: {string.Join(", ", commandHistory)} ({commandHistory.Count} command(s)); Command history index: {commandHistoryIndex}; REPL text: {commandInputField.Value}");
     }
 }

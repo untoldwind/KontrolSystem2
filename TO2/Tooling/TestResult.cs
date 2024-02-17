@@ -14,8 +14,8 @@ public readonly struct TestResult {
     public readonly string testName;
     public readonly int successfulAssertions;
     public readonly int stackCount;
-    public readonly string failure;
-    public readonly Exception exception;
+    public readonly string? failure;
+    public readonly Exception? exception;
     public readonly IEnumerable<string> messages;
 
     public TestResult(string testName, int successfulAssertions, int stackCount, IEnumerable<string> messages) {

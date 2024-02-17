@@ -17,7 +17,7 @@ public class Binary : Expression {
         this.right = right;
     }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set {
             left.VariableContainer = value;
             right.VariableContainer = value;
@@ -84,7 +84,7 @@ public class Binary : Expression {
             if (context.HasErrors) return;
 
             if (leftEmitter != null) leftEmitter.EmitCode(context, this);
-            else rightEmitter.EmitCode(context, this);
+            else rightEmitter!.EmitCode(context, this);
 
             if (dropResult) context.IL.Emit(OpCodes.Pop);
         } catch (CodeGenerationException e) {
@@ -109,7 +109,7 @@ public class Binary : Expression {
         if (leftEmitter == null && rightEmitter == null)
             throw new REPLException(this, $"Cannot {op} a {leftFuture.Type} with a {rightFuture.Type}");
 
-        var opEmitter = leftEmitter ?? rightEmitter;
+        var opEmitter = leftEmitter ?? rightEmitter!;
         return REPLValueFuture.Chain2(opEmitter.ResultType, leftFuture, rightFuture,
             (leftResult, rightResult) => opEmitter.Eval(this, leftResult, rightResult));
     }

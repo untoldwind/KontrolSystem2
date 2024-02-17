@@ -17,7 +17,7 @@ public class KontrolSystemProcess {
     public readonly Guid id;
     internal readonly ITO2Logger logger;
     private readonly IKontrolModule module;
-    internal KSPCoreContext context;
+    internal KSPCoreContext? context;
 
     public KontrolSystemProcess(ITO2Logger logger, IKontrolModule module) {
         this.logger = logger;
@@ -41,10 +41,10 @@ public class KontrolSystemProcess {
         return this;
     }
 
-    public void MarkDone(string message) {
+    public void MarkDone(string? message) {
         if (!string.IsNullOrEmpty(message)) {
             logger.Info($"Process {id} for module {module.Name} terminated with: {message}");
-            context.ConsoleBuffer.Print(
+            context?.ConsoleBuffer.Print(
                 $"\n\n>>>>> ERROR <<<<<<<<<\n\nModule {module.Name} terminated with:\n{message}");
         }
 
@@ -53,7 +53,7 @@ public class KontrolSystemProcess {
         context = null;
     }
 
-    public Entrypoint EntrypointFor(KSPGameMode gameMode, IKSPContext newContext) {
+    public Entrypoint? EntrypointFor(KSPGameMode gameMode, IKSPContext newContext) {
         switch (gameMode) {
         case KSPGameMode.KSC: return module.GetKSCEntrypoint(newContext);
         case KSPGameMode.VAB:

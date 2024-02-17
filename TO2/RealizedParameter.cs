@@ -7,10 +7,10 @@ namespace KontrolSystem.TO2;
 public readonly struct RealizedParameter {
     public readonly string name;
     public readonly RealizedType type;
-    public readonly string description;
-    public readonly IDefaultValue defaultValue;
+    public readonly string? description;
+    public readonly IDefaultValue? defaultValue;
 
-    public RealizedParameter(string name, RealizedType type, string description, IDefaultValue defaultValue = null) {
+    public RealizedParameter(string name, RealizedType type, string? description, IDefaultValue? defaultValue = null) {
         this.name = name;
         this.type = type;
         this.description = description;
@@ -19,7 +19,7 @@ public readonly struct RealizedParameter {
 
     public RealizedParameter(IBlockContext context, FunctionParameter parameter) {
         name = parameter.name;
-        type = parameter.type.UnderlyingType(context.ModuleContext);
+        type = parameter.type!.UnderlyingType(context.ModuleContext);
         description = null;
         defaultValue = DefaultValue.ForParameter(context, parameter);
     }

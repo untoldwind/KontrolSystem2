@@ -27,9 +27,9 @@ public class Lambda : Expression, IVariableContainer {
     private readonly List<FunctionParameter> parameters;
     private LambdaClass? lambdaClass;
 
-    private FunctionType resolvedType;
+    private FunctionType? resolvedType;
 
-    private TypeHint typeHint;
+    private TypeHint? typeHint;
 
     public Lambda(List<FunctionParameter> parameters, Expression expression, Position start = new(),
         Position end = new()) : base(start, end) {
@@ -38,20 +38,20 @@ public class Lambda : Expression, IVariableContainer {
         this.expression.VariableContainer = this;
     }
 
-    public override IVariableContainer VariableContainer {
+    public override IVariableContainer? VariableContainer {
         set {
             ParentContainer = value;
             expression.VariableContainer = this;
         }
     }
 
-    public override TypeHint TypeHint {
+    public override TypeHint? TypeHint {
         set => typeHint = value;
     }
 
-    public IVariableContainer ParentContainer { get; private set; }
+    public IVariableContainer? ParentContainer { get; private set; }
 
-    public TO2Type FindVariableLocal(IBlockContext context, string name) {
+    public TO2Type? FindVariableLocal(IBlockContext context, string name) {
         var idx = parameters.FindIndex(p => p.name == name);
 
         if (idx < 0 || idx >= parameters.Count) return null;
@@ -70,7 +70,7 @@ public class Lambda : Expression, IVariableContainer {
         if (resolvedType != null) return resolvedType;
         // Make an assumption ...
         if (parameters.All(p => p.type != null))
-            resolvedType = new FunctionType(false, parameters.Select(p => p.type).ToList(), BuiltinType.Unit);
+            resolvedType = new FunctionType(false, parameters.Select(p => p.type!).ToList(), BuiltinType.Unit);
         else resolvedType = typeHint?.Invoke(context) as FunctionType;
         if (resolvedType != null) {
             // ... so that it is possible to determine the return type
@@ -106,7 +106,7 @@ public class Lambda : Expression, IVariableContainer {
         for (var i = 0; i < parameters.Count; i++) {
             if (parameters[i].type == null) continue;
             if (!lambdaType.parameterTypes[i].UnderlyingType(context.ModuleContext)
-                    .IsAssignableFrom(context.ModuleContext, parameters[i].type.UnderlyingType(context.ModuleContext)))
+                    .IsAssignableFrom(context.ModuleContext, parameters[i].type!.UnderlyingType(context.ModuleContext)))
                 context.AddError(new StructuralError(
                     StructuralError.ErrorType.InvalidType,
                     $"Expected parameter {parameters[i].name} of lambda to have type {lambdaType.parameterTypes[i]}, found {parameters[i].type}",
@@ -122,7 +122,7 @@ public class Lambda : Expression, IVariableContainer {
         lambdaClass ??= CreateLambdaClass(context, lambdaType);
 
         foreach (var (sourceName, _) in lambdaClass.Value.clonedVariables) {
-            var source = context.FindVariable(sourceName);
+            var source = context.FindVariable(sourceName)!;
             source.EmitLoad(context);
         }
 
@@ -130,7 +130,7 @@ public class Lambda : Expression, IVariableContainer {
         context.IL.EmitPtr(OpCodes.Ldftn, lambdaClass.Value.lambdaImpl);
         context.IL.EmitNew(OpCodes.Newobj,
             lambdaType.GeneratedType(context.ModuleContext)
-                .GetConstructor(new[] { typeof(object), typeof(IntPtr) }));
+                .GetConstructor(new[] { typeof(object), typeof(IntPtr) })!);
     }
 
     private LambdaClass CreateLambdaClass(IBlockContext parent, FunctionType lambdaType) {
@@ -162,7 +162,7 @@ public class Lambda : Expression, IVariableContainer {
         };
 
         expression.EmitCode(lambdaContext, false);
-        lambdaContext.IL.EmitReturn(lambdaContext.MethodBuilder.ReturnType);
+        lambdaContext.IL.EmitReturn(lambdaContext.MethodBuilder!.ReturnType);
 
         foreach (var error in lambdaContext.AllErrors) parent.AddError(error);
 

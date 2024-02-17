@@ -13,7 +13,7 @@ public class BoundEnumType : RealizedType {
     private readonly string description;
     public readonly Type enumType;
     public readonly string localName;
-    internal readonly string modulePrefix;
+    internal readonly string? modulePrefix;
 
     public BoundEnumType(string modulePrefix, string localName, string description, Type enumType) {
         this.modulePrefix = modulePrefix;
@@ -260,7 +260,7 @@ internal class EnumFromStringMethodEmitter : IMethodInvokeEmitter {
 
     public void EmitCode(IBlockContext context) {
         context.IL.EmitCall(OpCodes.Call,
-            typeof(BoundEnumConstType).GetMethod("FromString").MakeGenericMethod(boundEnumType.enumType), 1);
+            typeof(BoundEnumConstType).GetMethod("FromString")!.MakeGenericMethod(boundEnumType.enumType), 1);
     }
 
     public REPLValueFuture Eval(Node node, IREPLValue[] targetWithArguments) {

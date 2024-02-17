@@ -15,7 +15,7 @@ public static class ModuleGenerator {
         if (errors.Any()) throw new CompilationErrorException(errors);
 
         return new DeclaredKontrolModule(module.name, module.description, false, sourceFile, moduleContext, module,
-            moduleContext.exportedTypes);
+            moduleContext.exportedTypes!);
     }
 
     public static void ImportTypes(DeclaredKontrolModule declaredModule) {
@@ -89,7 +89,7 @@ public static class ModuleGenerator {
         foreach (var to2Struct in declaredModule.to2Module.structs) {
             var methodContext = moduleContext.CreateMethodContext(
                 to2Struct.exported ? FunctionModifier.Public : FunctionModifier.Private, false,
-                to2Struct.name, to2Struct.typeDelegate, to2Struct.constructorParameters);
+                to2Struct.name, to2Struct.typeDelegate!, to2Struct.constructorParameters);
             var declaredConstructor =
                 new DeclaredKontrolStructConstructor(declaredModule, methodContext, to2Struct);
 
@@ -183,7 +183,7 @@ public static class ModuleGenerator {
         foreach (var function in declaredModule.declaredFunctions) {
             if (function.to2Function.modifier == FunctionModifier.Private) continue;
             var methodBuilder = function.methodContext.MethodBuilder;
-            var methodInfo = runtimeType.GetMethod(methodBuilder.Name,
+            var methodInfo = runtimeType.GetMethod(methodBuilder!.Name,
                 methodBuilder.GetParameters().Select(p => p.ParameterType).ToArray());
             var compiledFunction = new CompiledKontrolFunction(function.Name,
                 function.Description, function.IsAsync, function.Parameters, function.ReturnType, methodInfo);
@@ -204,7 +204,7 @@ public static class ModuleGenerator {
             declaredModule.Description,
             declaredModule.IsBuiltin,
             declaredModule.SourceFile,
-            moduleContext.exportedTypes.Select(t => (t.alias, t.type.UnderlyingType(moduleContext))),
+            moduleContext.exportedTypes!.Select(t => (t.alias, t.type.UnderlyingType(moduleContext))),
             compiledConstants,
             compiledFunctions,
             testFunctions);

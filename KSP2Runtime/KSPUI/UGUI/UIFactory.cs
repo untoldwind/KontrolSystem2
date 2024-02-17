@@ -138,7 +138,7 @@ public class UIFactory {
         GLUIDrawer.Initialize(graphFont);
     }
 
-    public static UIFactory Instance { get; private set; }
+    public static UIFactory? Instance { get; private set; }
 
     public static void Init(UIAssetsProvider uiAssetsProvider) {
         Instance = new UIFactory(uiAssetsProvider);
@@ -214,7 +214,7 @@ public class UIFactory {
     internal GameObject CreateDeleteButton() {
         var root = new GameObject("CloseButton", typeof(Image), typeof(Button));
         var buttonImage = root.GetComponent<Image>();
-        buttonImage.sprite = Instance.windowCloseButton;
+        buttonImage.sprite = Instance!.windowCloseButton;
         buttonImage.type = Image.Type.Sliced;
         buttonImage.color = Color.white;
         var button = root.GetComponent<Button>();

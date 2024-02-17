@@ -11,7 +11,7 @@ public class FunctionType : RealizedType {
     public readonly bool isAsync;
     public readonly List<TO2Type> parameterTypes;
     public readonly TO2Type returnType;
-    private Type generatedType;
+    private Type? generatedType;
 
     public FunctionType(bool isAsync, List<TO2Type> parameterTypes, TO2Type returnType) {
         this.isAsync = isAsync;
@@ -70,19 +70,19 @@ public class FunctionType : RealizedType {
         return BuiltinType.NoOperators;
     }
 
-    public override IIndexAccessEmitter AllowedIndexAccess(ModuleContext context, IndexSpec indexSpec) {
+    public override IIndexAccessEmitter? AllowedIndexAccess(ModuleContext context, IndexSpec indexSpec) {
         return null;
     }
 
     public override RealizedType
-        FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) {
+        FillGenerics(ModuleContext context, Dictionary<string, RealizedType>? typeArguments) {
         return new FunctionType(isAsync,
             parameterTypes.Select(t => t.UnderlyingType(context).FillGenerics(context, typeArguments) as TO2Type)
                 .ToList(), returnType.UnderlyingType(context).FillGenerics(context, typeArguments));
     }
 
     public override IEnumerable<(string name, RealizedType type)> InferGenericArgument(ModuleContext context,
-        RealizedType concreteType) {
+        RealizedType? concreteType) {
         var concreteFunction = concreteType as FunctionType;
         if (concreteFunction == null) return Enumerable.Empty<(string name, RealizedType type)>();
         return returnType.InferGenericArgument(context, concreteFunction.returnType.UnderlyingType(context)).Concat(

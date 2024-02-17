@@ -37,12 +37,12 @@ public class Mainframe : KerbalMonoBehaviour {
 
     private readonly Dictionary<Guid, Coroutine> coroutines = new();
 
-    private KontrolSystemConfig config;
+    private KontrolSystemConfig? config;
 
-    private List<KontrolSystemProcess> processes;
+    private List<KontrolSystemProcess>? processes;
     private volatile bool rebooting;
 
-    private volatile State state;
+    private volatile State? state;
 
     public bool Initialized => state != null;
 
@@ -53,17 +53,17 @@ public class Mainframe : KerbalMonoBehaviour {
     public bool Rebooting => rebooting;
     public TimeSpan LastRebootTime => state?.bootTime ?? TimeSpan.Zero;
     public IEnumerable<MainframeError> LastErrors => state?.errors ?? Enumerable.Empty<MainframeError>();
-    public KontrolRegistry LastRegistry => state?.registry;
+    public KontrolRegistry? LastRegistry => state?.registry;
 
-    public static Mainframe Instance { get; private set; }
+    public static Mainframe? Instance { get; private set; }
 
-    public ITO2Logger Logger => config.Logger;
+    public ITO2Logger Logger => config!.Logger;
 
-    public OptionalAddons OptionalAddons => config.OptionalAddons;
+    public OptionalAddons OptionalAddons => config!.OptionalAddons;
 
-    public string Version => config.Version;
+    public string Version => config!.Version;
 
-    public string LocalLibPath => config.LocalLibPath;
+    public string LocalLibPath => config!.LocalLibPath;
 
     public KSPGameMode GameMode => GameModeAdapter.GameModeFromState(Game.GlobalGameState.GetState());
 
@@ -113,7 +113,7 @@ public class Mainframe : KerbalMonoBehaviour {
 
     public void Reboot() {
         if (rebooting) return;
-        DoReboot(config);
+        DoReboot(config!);
     }
 
     private async void DoReboot(KontrolSystemConfig config) {
@@ -148,7 +148,7 @@ public class Mainframe : KerbalMonoBehaviour {
 
                 foreach (var error in e.errors) config.Logger.Info(error.ToString());
 
-                return new State(state?.registry, stopwatch.Elapsed, e.errors.Select(error => new MainframeError(
+                return new State(state!.registry, stopwatch.Elapsed, e.errors.Select(error => new MainframeError(
                     error.start,
                     error.errorType.ToString(),
                     error.message
@@ -157,13 +157,13 @@ public class Mainframe : KerbalMonoBehaviour {
                 config.Logger.Debug(e.ToString());
                 config.Logger.Info(e.Message);
 
-                return new State(state?.registry, stopwatch.Elapsed, new List<MainframeError> {
+                return new State(state!.registry, stopwatch.Elapsed, new List<MainframeError> {
                     new(e.position, "Parsing", e.Message)
                 });
             } catch (Exception e) {
                 config.Logger.Error("Mainframe initialization error: " + e);
 
-                return new State(state?.registry, stopwatch.Elapsed, new List<MainframeError> {
+                return new State(state!.registry, stopwatch.Elapsed, new List<MainframeError> {
                     new(new Position(), "Unknown error", e.Message)
                 });
             }
@@ -190,11 +190,11 @@ public class Mainframe : KerbalMonoBehaviour {
             : Enumerable.Empty<KontrolSystemProcess>();
     }
 
-    public bool StartProcess(KontrolSystemProcess process, VesselComponent vessel = null, object[] arguments = null) {
+    public bool StartProcess(KontrolSystemProcess process, VesselComponent? vessel = null, object[]? arguments = null) {
         switch (process.State) {
         case KontrolSystemProcessState.Available:
             var context = new KSPCoreContext(process.logger, Game, ConsoleBuffer, TimeSeriesCollection,
-                config.OptionalAddons);
+                config!.OptionalAddons);
             var entrypoint = process.EntrypointFor(context.GameMode, context);
             if (entrypoint == null) return false;
             arguments ??= process.EntrypointArgumentDescriptors(context.GameMode).Select(arg => arg.DefaultValue)
@@ -255,8 +255,8 @@ public class Mainframe : KerbalMonoBehaviour {
         availableProcessesChanged.Invoke();
     }
 
-    private void OnProcessDone(KontrolSystemProcess process, string message, bool triggerEvent = true) {
-        if (process.State == KontrolSystemProcessState.Outdated) processes.Remove(process);
+    private void OnProcessDone(KontrolSystemProcess process, string? message, bool triggerEvent = true) {
+        if (process.State == KontrolSystemProcessState.Outdated) processes?.Remove(process);
 
         process.MarkDone(message);
         coroutines.Remove(process.id);

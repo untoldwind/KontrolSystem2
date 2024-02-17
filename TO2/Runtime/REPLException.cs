@@ -14,7 +14,7 @@ public class REPLException : Exception {
     }
 
     public REPLException(Node node, string message) : base($"{node?.Start}: {message}") {
-        start = node.Start;
+        start = node!.Start;
         end = node.End;
     }
 

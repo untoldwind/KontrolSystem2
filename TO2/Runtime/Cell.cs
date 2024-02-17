@@ -6,7 +6,7 @@ namespace KontrolSystem.TO2.Runtime;
 public class Cell<T> : IObservable<T> {
     private readonly object cellLock;
     private T element;
-    private List<IObserver<T>> observers;
+    private List<IObserver<T>>? observers;
 
     public Cell(T value) {
         element = value;
@@ -50,7 +50,7 @@ public class Cell<T> : IObservable<T> {
     }
 
     private class Unsubscriber : IDisposable {
-        private readonly IObserver<T> observer;
+        private readonly IObserver<T>? observer;
         private readonly List<IObserver<T>> observers;
 
         public Unsubscriber(List<IObserver<T>> observers, IObserver<T> observer) {

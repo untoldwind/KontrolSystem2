@@ -7,7 +7,7 @@ namespace KontrolSystem.TO2.Generator;
 
 public class ILChunks {
     public static void GenerateCheckTimeout(IBlockContext context) {
-        context.IL.EmitCall(OpCodes.Call, typeof(ContextHolder).GetMethod("CheckTimeout"), 0);
+        context.IL.EmitCall(OpCodes.Call, typeof(ContextHolder).GetMethod("CheckTimeout")!, 0);
     }
 
     public static void GenerateFunctionEnter(IBlockContext context, string name, List<FunctionParameter> parameters) {
@@ -18,15 +18,15 @@ public class ILChunks {
             context.IL.Emit(OpCodes.Dup);
             context.IL.Emit(OpCodes.Ldc_I4, i);
             MethodParameter.EmitLoadArg(context.IL, i);
-            var type = parameters[i].type.GeneratedType(context.ModuleContext);
+            var type = parameters[i].type!.GeneratedType(context.ModuleContext);
             if (type.IsValueType) context.IL.Emit(OpCodes.Box, type);
             context.IL.Emit(OpCodes.Stelem, typeof(object));
         }
 
-        context.IL.EmitCall(OpCodes.Call, typeof(ContextHolder).GetMethod("FunctionEnter"), 2);
+        context.IL.EmitCall(OpCodes.Call, typeof(ContextHolder).GetMethod("FunctionEnter")!, 2);
     }
 
     public static void GenerateFunctionLeave(IBlockContext context) {
-        context.IL.EmitCall(OpCodes.Call, typeof(ContextHolder).GetMethod("FunctionLeave"), 0);
+        context.IL.EmitCall(OpCodes.Call, typeof(ContextHolder).GetMethod("FunctionLeave")!, 0);
     }
 }

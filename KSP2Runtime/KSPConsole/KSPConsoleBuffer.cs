@@ -57,9 +57,9 @@ public class KSPConsoleBuffer {
 
     public UnityEvent changed = new();
 
-    private LinkedListNode<ConsoleLine> cursorLine;
+    private LinkedListNode<ConsoleLine>? cursorLine;
 
-    private LinkedListNode<ConsoleLine> topLine;
+    private LinkedListNode<ConsoleLine>? topLine;
 
     public KSPConsoleBuffer(int visibleRows, int visibleCols, int maxLineLength = 1000, int maxLines = 2000) {
         bufferLines = new LinkedList<ConsoleLine>();
@@ -129,7 +129,7 @@ public class KSPConsoleBuffer {
             for (var i = 0; i < lines.Length; i++) {
                 if (i > 0) {
                     CursorCol = 0;
-                    if (cursorLine.Next == null) {
+                    if (cursorLine?.Next == null) {
                         AddLines(1);
                         cursorLine = bufferLines.Last;
                     } else {
@@ -140,7 +140,7 @@ public class KSPConsoleBuffer {
 
                 var line = lines[i];
                 for (var j = 0; CursorCol < maxLineLength && j < line.Length; j++)
-                    cursorLine.Value.line[CursorCol++] = line[j];
+                    cursorLine!.Value.line[CursorCol++] = line[j];
             }
         }
 
@@ -153,7 +153,7 @@ public class KSPConsoleBuffer {
             CursorCol = Math.Max(Math.Min(col, VisibleCols), 0);
 
             cursorLine = topLine;
-            for (var i = 0; i < CursorRow && cursorLine.Next != null; i++) cursorLine = cursorLine.Next;
+            for (var i = 0; i < CursorRow && cursorLine?.Next != null; i++) cursorLine = cursorLine.Next;
         }
     }
 

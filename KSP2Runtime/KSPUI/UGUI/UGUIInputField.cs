@@ -8,7 +8,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI;
 public class UGUIInputField : UGUIElement {
     private readonly InputFieldExtended inputField;
 
-    private UGUIInputField(GameObject gameObject, Vector2 minSize, UnityAction<string> onChange) : base(gameObject,
+    private UGUIInputField(GameObject gameObject, Vector2 minSize, UnityAction<string>? onChange) : base(gameObject,
         minSize) {
         inputField = gameObject.GetComponent<InputFieldExtended>();
         if (onChange != null) inputField.onValueChanged.AddListener(onChange);
@@ -39,8 +39,8 @@ public class UGUIInputField : UGUIElement {
         inputField.onValueChanged.AddListener(onChange);
     }
 
-    public static UGUIInputField Create(string value, float minWidth, UnityAction<string> onChange = null) {
-        var element = new UGUIInputField(UIFactory.Instance.CreateInputField(),
+    public static UGUIInputField Create(string value, float minWidth, UnityAction<string>? onChange = null) {
+        var element = new UGUIInputField(UIFactory.Instance!.CreateInputField(),
             new Vector2(minWidth, UIFactory.Instance.uiFontSize + 10), onChange);
 
         element.Value = value;

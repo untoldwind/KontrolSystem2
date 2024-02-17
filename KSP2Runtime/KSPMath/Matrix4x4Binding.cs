@@ -11,19 +11,19 @@ public class Matrix4x4Binding {
         new OperatorCollection {
             {
                 Operator.Add,
-                new StaticMethodOperatorEmitter(() => Matrix4x4Type, () => Matrix4x4Type,
+                new StaticMethodOperatorEmitter(() => Matrix4x4Type!, () => Matrix4x4Type!,
                     typeof(Matrix4x4D).GetMethod("op_Addition", new[] { typeof(Matrix4x4D), typeof(Matrix4x4D) }))
             }, {
                 Operator.AddAssign,
-                new StaticMethodOperatorEmitter(() => Matrix4x4Type, () => Matrix4x4Type,
+                new StaticMethodOperatorEmitter(() => Matrix4x4Type!, () => Matrix4x4Type!,
                     typeof(Matrix4x4D).GetMethod("op_Addition", new[] { typeof(Matrix4x4D), typeof(Matrix4x4D) }))
             }, {
                 Operator.Sub,
-                new StaticMethodOperatorEmitter(() => Matrix4x4Type, () => Matrix4x4Type,
+                new StaticMethodOperatorEmitter(() => Matrix4x4Type!, () => Matrix4x4Type!,
                     typeof(Matrix4x4D).GetMethod("op_Subtraction", new[] { typeof(Matrix4x4D), typeof(Matrix4x4D) }))
             }, {
                 Operator.SubAssign,
-                new StaticMethodOperatorEmitter(() => Matrix4x4Type, () => Matrix4x4Type,
+                new StaticMethodOperatorEmitter(() => Matrix4x4Type!, () => Matrix4x4Type!,
                     typeof(Matrix4x4D).GetMethod("op_Subtraction", new[] { typeof(Matrix4x4D), typeof(Matrix4x4D) }))
             }
         },
@@ -95,15 +95,15 @@ public class Matrix4x4Binding {
                     typeof(Matrix4x4D).GetProperty("m33"))
             }, {
                 "determinant",
-                new BoundPropertyLikeFieldAccessFactory("Get determinant of matrix", () => Matrix4x4Type,
+                new BoundPropertyLikeFieldAccessFactory("Get determinant of matrix", () => Matrix4x4Type!,
                     typeof(Matrix4x4D), typeof(Matrix4x4D).GetMethod("Det"), null)
             }, {
                 "inverse",
-                new BoundPropertyLikeFieldAccessFactory("Invert matrix", () => Matrix4x4Type, typeof(Matrix4x4D),
+                new BoundPropertyLikeFieldAccessFactory("Invert matrix", () => Matrix4x4Type!, typeof(Matrix4x4D),
                     typeof(Matrix4x4D).GetMethod("GetInverse"), null)
             }, {
                 "transpose",
-                new BoundPropertyLikeFieldAccessFactory("Transpose matrix", () => Matrix4x4Type, typeof(Matrix4x4D),
+                new BoundPropertyLikeFieldAccessFactory("Transpose matrix", () => Matrix4x4Type!, typeof(Matrix4x4D),
                     typeof(Matrix4x4D).GetMethod("GetTranspose"), null)
             }
         }

@@ -20,7 +20,7 @@ public abstract class UITab {
 public class UITabbedPanels : UGUIElement {
     private readonly UITab[] tabs;
     private int currentTabIdx = -1;
-    private GameObject currentTabPanel;
+    private GameObject? currentTabPanel;
 
     public UITabbedPanels(UITab[] tabs, Vector2 minSize) : base(
         new GameObject("TabbedPanels", typeof(RectTransform), typeof(ToggleGroup)), minSize) {
@@ -31,7 +31,7 @@ public class UITabbedPanels : UGUIElement {
 
         for (var i = 0; i < count; i++) {
             var tab = tabs[i];
-            var tabButton = UIFactory.Instance.CreateSelectButton(tab.title);
+            var tabButton = UIFactory.Instance!.CreateSelectButton(tab.title);
             var tabButtonTransform = tabButton.GetComponent<RectTransform>();
             tabButtonTransform.SetParent(GameObject.transform);
             tabButtonTransform.anchorMin = new Vector2(i / count, 1);
@@ -54,7 +54,7 @@ public class UITabbedPanels : UGUIElement {
             Object.Destroy(currentTabPanel);
             currentTabPanel = new GameObject("TabPanel", typeof(RectTransform));
             var tabPanelTransform = UIFactory.Layout(currentTabPanel, GameObject.transform,
-                UIFactory.LAYOUT_STRETCH, UIFactory.LAYOUT_STRETCH, 0, -UIFactory.Instance.uiFontSize - 20, 0,
+                UIFactory.LAYOUT_STRETCH, UIFactory.LAYOUT_STRETCH, 0, -UIFactory.Instance!.uiFontSize - 20, 0,
                 -UIFactory.Instance.uiFontSize - 20);
 
             tabs[tabIdx].Create(tabPanelTransform);

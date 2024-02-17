@@ -20,8 +20,8 @@ public class RecordTypeTests {
 
         output.WriteLine(block.ILCommands);
 
-        Assert.Equal("(a : int, b : float, done : bool)", block.FindVariable("tuple1").Type.ToString());
-        Assert.Equal("(a : int, b : float, done : bool)", block.FindVariable("tuple2").Type.ToString());
+        Assert.Equal("(a : int, b : float, done : bool)", block.FindVariable("tuple1")!.Type.ToString());
+        Assert.Equal("(a : int, b : float, done : bool)", block.FindVariable("tuple2")!.Type.ToString());
 
         block.AssertCommands(
             "<declare local> 1 = System.ValueTuple`3[System.Int64,System.Double,System.Boolean]",
