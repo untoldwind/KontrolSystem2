@@ -77,6 +77,14 @@ Name | Type | Optional | Description
 --- | --- | --- | ---
 onClick | sync fn() -> Unit |  | 
 
+##### remove
+
+```rust
+button.remove ( ) -> Unit
+```
+
+
+
 ### Canvas
 
 
@@ -257,6 +265,14 @@ gradientWrapper | ksp::ui::Gradient |  |
 
 ```rust
 canvas.clear ( ) -> Unit
+```
+
+
+
+##### remove
+
+```rust
+canvas.remove ( ) -> Unit
 ```
 
 
@@ -510,6 +526,14 @@ gap | float | x | Gap between each element of the panel
 align | ksp::ui::Align | x | Alignment of the panel in its parent container
 stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
+##### remove
+
+```rust
+container.remove ( ) -> Unit
+```
+
+
+
 ### FloatInputField
 
 
@@ -551,6 +575,14 @@ Parameters
 Name | Type | Optional | Description
 --- | --- | --- | ---
 onChange | sync fn(float) -> Unit |  | 
+
+##### remove
+
+```rust
+floatinputfield.remove ( ) -> Unit
+```
+
+
 
 ### Gradient
 
@@ -616,6 +648,14 @@ Name | Type | Optional | Description
 --- | --- | --- | ---
 onChange | sync fn(float) -> Unit |  | 
 
+##### remove
+
+```rust
+intinputfield.remove ( ) -> Unit
+```
+
+
+
 ### Label
 
 
@@ -644,6 +684,14 @@ Name | Type | Optional | Description
 --- | --- | --- | ---
 boundValue | Cell<T> |  | 
 format | string | x | 
+
+##### remove
+
+```rust
+label.remove ( ) -> Unit
+```
+
+
 
 ### Line2D
 
@@ -1100,6 +1148,14 @@ Name | Type | Optional | Description
 --- | --- | --- | ---
 onChange | sync fn(float) -> Unit |  | 
 
+##### remove
+
+```rust
+slider.remove ( ) -> Unit
+```
+
+
+
 ### StringInputField
 
 
@@ -1141,6 +1197,14 @@ Parameters
 Name | Type | Optional | Description
 --- | --- | --- | ---
 onChange | sync fn(string) -> Unit |  | 
+
+##### remove
+
+```rust
+stringinputfield.remove ( ) -> Unit
+```
+
+
 
 ### Text2D
 
@@ -1199,6 +1263,14 @@ Parameters
 Name | Type | Optional | Description
 --- | --- | --- | ---
 onChange | sync fn(bool) -> Unit |  | 
+
+##### remove
+
+```rust
+toggle.remove ( ) -> Unit
+```
+
+
 
 ### Translate2D
 
@@ -1405,7 +1477,10 @@ values | float[] | R/W |
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
-is_closed | bool | R/O | 
+is_closed | bool | R/O | Check if the window has been closed (either be user or script) 
+min_size | [ksp::math::Vec2](/reference/ksp/math.md#vec2) | R/O | Get minimum size of window 
+position | [ksp::math::Vec2](/reference/ksp/math.md#vec2) | R/W | Get or change position of window 
+size | [ksp::math::Vec2](/reference/ksp/math.md#vec2) | R/W | Get or change size of window 
 
 #### Methods
 
@@ -1652,12 +1727,31 @@ gap | float | x | Gap between each element of the panel
 align | ksp::ui::Align | x | Alignment of the panel in its parent container
 stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
+##### center
+
+```rust
+window.center ( ) -> Unit
+```
+
+Center window on the screen.
+
+
 ##### close
 
 ```rust
 window.close ( ) -> Unit
 ```
 
+Close the window
+
+
+##### compact
+
+```rust
+window.compact ( ) -> Unit
+```
+
+Resize window to its minimum size
 
 
 ## Constants

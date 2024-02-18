@@ -4790,6 +4790,7 @@
       "types": {
         "FlightPlan": {
           "name": "FlightPlan",
+          "description": "",
           "fields": {
             "version": {
               "name": "version",
@@ -5668,6 +5669,7 @@
       "types": {
         "MovingAverage": {
           "name": "MovingAverage",
+          "description": "",
           "fields": {
             "mean": {
               "name": "mean",
@@ -5782,6 +5784,7 @@
         },
         "PIDLoop": {
           "name": "PIDLoop",
+          "description": "",
           "fields": {
             "last_sample_time": {
               "name": "last_sample_time",
@@ -5985,6 +5988,7 @@
         },
         "RCSTranslateManager": {
           "name": "RCSTranslateManager",
+          "description": "",
           "fields": {
             "translate": {
               "name": "translate",
@@ -6051,6 +6055,7 @@
         },
         "SteeringManager": {
           "name": "SteeringManager",
+          "description": "",
           "fields": {
             "pitch_yaw_roll": {
               "name": "pitch_yaw_roll",
@@ -6117,6 +6122,7 @@
         },
         "ThrottleManager": {
           "name": "ThrottleManager",
+          "description": "",
           "fields": {
             "throttle": {
               "name": "throttle",
@@ -6181,6 +6187,7 @@
         },
         "TorquePI": {
           "name": "TorquePI",
+          "description": "",
           "fields": {
             "loop": {
               "name": "loop",
@@ -6343,6 +6350,7 @@
         },
         "WheelSteeringManager": {
           "name": "WheelSteeringManager",
+          "description": "",
           "fields": {
             "wheel_steer": {
               "name": "wheel_steer",
@@ -6407,6 +6415,7 @@
         },
         "WheelThrottleManager": {
           "name": "WheelThrottleManager",
+          "description": "",
           "fields": {
             "wheel_throttle": {
               "name": "wheel_throttle",
@@ -7235,6 +7244,7 @@
       "types": {
         "Mainframe": {
           "name": "Mainframe",
+          "description": "",
           "fields": {
             "available_processes": {
               "name": "available_processes",
@@ -7283,6 +7293,7 @@
         },
         "Process": {
           "name": "Process",
+          "description": "",
           "fields": {
             "name": {
               "name": "name",
@@ -7370,6 +7381,7 @@
         },
         "ProcessArgument": {
           "name": "ProcessArgument",
+          "description": "",
           "fields": {
             "name": {
               "name": "name",
@@ -11860,6 +11872,7 @@
         },
         "GeoCoordinates": {
           "name": "GeoCoordinates",
+          "description": "",
           "fields": {
             "body": {
               "name": "body",
@@ -13839,6 +13852,7 @@
         },
         "ResourceContainer": {
           "name": "ResourceContainer",
+          "description": "",
           "fields": {
             "list": {
               "name": "list",
@@ -13887,6 +13901,7 @@
         },
         "ResourceData": {
           "name": "ResourceData",
+          "description": "",
           "fields": {
             "resource": {
               "name": "resource",
@@ -14127,6 +14142,7 @@
         },
         "ResourceTransferEntry": {
           "name": "ResourceTransferEntry",
+          "description": "",
           "fields": {
             "flow_direction": {
               "name": "flow_direction",
@@ -17261,6 +17277,7 @@
       "types": {
         "TimeSeries": {
           "name": "TimeSeries",
+          "description": "",
           "fields": {
             "name": {
               "name": "name",
@@ -18681,6 +18698,7 @@
         },
         "Button": {
           "name": "Button",
+          "description": "",
           "fields": {
             "font_size": {
               "name": "font_size",
@@ -18735,6 +18753,15 @@
                 "kind": "Builtin",
                 "name": "Unit"
               }
+            },
+            "remove": {
+              "isAsync": false,
+              "name": "remove",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
             }
           },
           "assignableFromAny": false,
@@ -18742,6 +18769,7 @@
         },
         "Canvas": {
           "name": "Canvas",
+          "description": "",
           "fields": {
             "min_size": {
               "name": "min_size",
@@ -18773,6 +18801,15 @@
             }
           },
           "methods": {
+            "remove": {
+              "isAsync": false,
+              "name": "remove",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
+            },
             "clear": {
               "isAsync": false,
               "name": "clear",
@@ -19167,8 +19204,18 @@
         },
         "Container": {
           "name": "Container",
+          "description": "",
           "fields": {},
           "methods": {
+            "remove": {
+              "isAsync": false,
+              "name": "remove",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
+            },
             "add_horizontal": {
               "isAsync": false,
               "name": "add_horizontal",
@@ -19675,6 +19722,7 @@
         },
         "Gradient": {
           "name": "Gradient",
+          "description": "",
           "fields": {},
           "methods": {
             "add_color": {
@@ -19712,6 +19760,7 @@
         },
         "StringInputField": {
           "name": "StringInputField",
+          "description": "",
           "fields": {
             "value": {
               "name": "value",
@@ -19794,6 +19843,15 @@
                 "module": "ksp::ui",
                 "name": "StringInputField"
               }
+            },
+            "remove": {
+              "isAsync": false,
+              "name": "remove",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
             }
           },
           "assignableFromAny": false,
@@ -19801,6 +19859,7 @@
         },
         "IntInputField": {
           "name": "IntInputField",
+          "description": "",
           "fields": {
             "value": {
               "name": "value",
@@ -19883,6 +19942,15 @@
                 "module": "ksp::ui",
                 "name": "IntInputField"
               }
+            },
+            "remove": {
+              "isAsync": false,
+              "name": "remove",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
             }
           },
           "assignableFromAny": false,
@@ -19890,6 +19958,7 @@
         },
         "FloatInputField": {
           "name": "FloatInputField",
+          "description": "",
           "fields": {
             "value": {
               "name": "value",
@@ -19972,6 +20041,15 @@
                 "module": "ksp::ui",
                 "name": "FloatInputField"
               }
+            },
+            "remove": {
+              "isAsync": false,
+              "name": "remove",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
             }
           },
           "assignableFromAny": false,
@@ -19979,6 +20057,7 @@
         },
         "Label": {
           "name": "Label",
+          "description": "",
           "fields": {
             "font_size": {
               "name": "font_size",
@@ -20033,6 +20112,15 @@
                 "module": "ksp::ui",
                 "name": "Label"
               }
+            },
+            "remove": {
+              "isAsync": false,
+              "name": "remove",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
             }
           },
           "assignableFromAny": false,
@@ -20040,6 +20128,7 @@
         },
         "Line2D": {
           "name": "Line2D",
+          "description": "",
           "fields": {
             "stroke_color": {
               "name": "stroke_color",
@@ -20087,6 +20176,7 @@
         },
         "PixelLine2D": {
           "name": "PixelLine2D",
+          "description": "",
           "fields": {
             "stroke_color": {
               "name": "stroke_color",
@@ -20126,6 +20216,7 @@
         },
         "Polygon2D": {
           "name": "Polygon2D",
+          "description": "",
           "fields": {
             "fill_color": {
               "name": "fill_color",
@@ -20157,6 +20248,7 @@
         },
         "Rect2D": {
           "name": "Rect2D",
+          "description": "",
           "fields": {
             "point1": {
               "name": "point1",
@@ -20192,6 +20284,7 @@
         },
         "Slider": {
           "name": "Slider",
+          "description": "",
           "fields": {
             "value": {
               "name": "value",
@@ -20266,6 +20359,15 @@
                 "module": "ksp::ui",
                 "name": "Slider"
               }
+            },
+            "remove": {
+              "isAsync": false,
+              "name": "remove",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
             }
           },
           "assignableFromAny": false,
@@ -20273,6 +20375,7 @@
         },
         "Text2D": {
           "name": "Text2D",
+          "description": "",
           "fields": {
             "position": {
               "name": "position",
@@ -20332,6 +20435,7 @@
         },
         "Toggle": {
           "name": "Toggle",
+          "description": "",
           "fields": {
             "font_size": {
               "name": "font_size",
@@ -20422,6 +20526,15 @@
                 "module": "ksp::ui",
                 "name": "Toggle"
               }
+            },
+            "remove": {
+              "isAsync": false,
+              "name": "remove",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
             }
           },
           "assignableFromAny": false,
@@ -20429,6 +20542,7 @@
         },
         "Translate2D": {
           "name": "Translate2D",
+          "description": "",
           "fields": {
             "translate": {
               "name": "translate",
@@ -20835,6 +20949,7 @@
         },
         "Scale2D": {
           "name": "Scale2D",
+          "description": "",
           "fields": {
             "scale": {
               "name": "scale",
@@ -21250,6 +21365,7 @@
         },
         "Rotate2D": {
           "name": "Rotate2D",
+          "description": "",
           "fields": {
             "degrees": {
               "name": "degrees",
@@ -21664,6 +21780,7 @@
         },
         "ValueRaster2D": {
           "name": "ValueRaster2D",
+          "description": "",
           "fields": {
             "raster_width": {
               "name": "raster_width",
@@ -21728,20 +21845,73 @@
         },
         "Window": {
           "name": "Window",
+          "description": "",
           "fields": {
             "is_closed": {
               "name": "is_closed",
+              "description": "Check if the window has been closed (either be user or script)\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
                 "name": "bool"
               }
+            },
+            "size": {
+              "name": "size",
+              "description": "Get or change size of window\n",
+              "readOnly": false,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec2"
+              }
+            },
+            "min_size": {
+              "name": "min_size",
+              "description": "Get minimum size of window\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec2"
+              }
+            },
+            "position": {
+              "name": "position",
+              "description": "Get or change position of window\n",
+              "readOnly": false,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec2"
+              }
             }
           },
           "methods": {
+            "compact": {
+              "isAsync": false,
+              "name": "compact",
+              "description": "Resize window to its minimum size\n",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
+            },
+            "center": {
+              "isAsync": false,
+              "name": "center",
+              "description": "Center window on the screen.\n",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
+            },
             "close": {
               "isAsync": false,
               "name": "close",
+              "description": "Close the window\n",
               "parameters": [],
               "returnType": {
                 "kind": "Builtin",
@@ -31479,6 +31649,7 @@
         },
         "ActionGroups": {
           "name": "ActionGroups",
+          "description": "",
           "fields": {
             "sas": {
               "name": "sas",
@@ -31639,6 +31810,7 @@
         },
         "Autopilot": {
           "name": "Autopilot",
+          "description": "",
           "fields": {
             "enabled": {
               "name": "enabled",
@@ -31700,6 +31872,7 @@
         },
         "EngineDeltaV": {
           "name": "EngineDeltaV",
+          "description": "",
           "fields": {
             "start_burn_stage": {
               "name": "start_burn_stage",
@@ -31791,6 +31964,7 @@
         },
         "StageDeltaV": {
           "name": "StageDeltaV",
+          "description": "",
           "fields": {
             "stage": {
               "name": "stage",
@@ -31966,6 +32140,7 @@
         },
         "EngineMode": {
           "name": "EngineMode",
+          "description": "",
           "fields": {
             "name": {
               "name": "name",
@@ -32031,6 +32206,7 @@
         },
         "Maneuver": {
           "name": "Maneuver",
+          "description": "",
           "fields": {
             "trajectory": {
               "name": "trajectory",
@@ -32193,6 +32369,7 @@
         },
         "ManeuverNode": {
           "name": "ManeuverNode",
+          "description": "",
           "fields": {
             "time": {
               "name": "time",
@@ -32295,6 +32472,7 @@
         },
         "ModuleAirIntake": {
           "name": "ModuleAirIntake",
+          "description": "",
           "fields": {
             "resource_units": {
               "name": "resource_units",
@@ -32319,6 +32497,7 @@
         },
         "ModuleCommand": {
           "name": "ModuleCommand",
+          "description": "",
           "fields": {
             "control_state": {
               "name": "control_state",
@@ -32728,6 +32907,7 @@
         },
         "ModuleControlSurface": {
           "name": "ModuleControlSurface",
+          "description": "",
           "fields": {
             "part_name": {
               "name": "part_name",
@@ -32808,6 +32988,7 @@
         },
         "ModuleDecoupler": {
           "name": "ModuleDecoupler",
+          "description": "",
           "fields": {
             "part_name": {
               "name": "part_name",
@@ -32850,6 +33031,7 @@
         },
         "ModuleDeployable": {
           "name": "ModuleDeployable",
+          "description": "",
           "fields": {
             "part_name": {
               "name": "part_name",
@@ -32910,6 +33092,7 @@
         },
         "ModuleDockingNode": {
           "name": "ModuleDockingNode",
+          "description": "",
           "fields": {
             "is_deployable_docking_port": {
               "name": "is_deployable_docking_port",
@@ -33340,6 +33523,7 @@
         },
         "ModuleEngine": {
           "name": "ModuleEngine",
+          "description": "",
           "fields": {
             "part_name": {
               "name": "part_name",
@@ -33511,6 +33695,7 @@
         },
         "ModuleFairing": {
           "name": "ModuleFairing",
+          "description": "",
           "fields": {
             "part_name": {
               "name": "part_name",
@@ -33553,6 +33738,7 @@
         },
         "ModuleLaunchClamp": {
           "name": "ModuleLaunchClamp",
+          "description": "",
           "fields": {
             "part_name": {
               "name": "part_name",
@@ -33587,6 +33773,7 @@
         },
         "ModuleParachute": {
           "name": "ModuleParachute",
+          "description": "",
           "fields": {
             "deploy_state": {
               "name": "deploy_state",
@@ -33674,6 +33861,7 @@
         },
         "ModuleScienceExperiment": {
           "name": "ModuleScienceExperiment",
+          "description": "",
           "fields": {
             "part_name": {
               "name": "part_name",
@@ -33712,6 +33900,7 @@
         },
         "ModuleSolarPanel": {
           "name": "ModuleSolarPanel",
+          "description": "",
           "fields": {
             "part_name": {
               "name": "part_name",
@@ -33750,6 +33939,7 @@
         },
         "Part": {
           "name": "Part",
+          "description": "",
           "fields": {
             "vessel": {
               "name": "vessel",
@@ -34151,6 +34341,7 @@
         },
         "Staging": {
           "name": "Staging",
+          "description": "",
           "fields": {
             "current": {
               "name": "current",
@@ -34226,6 +34417,7 @@
         },
         "Targetable": {
           "name": "Targetable",
+          "description": "",
           "fields": {
             "name": {
               "name": "name",
@@ -35482,6 +35674,7 @@
         },
         "VesselDeltaV": {
           "name": "VesselDeltaV",
+          "description": "",
           "fields": {
             "stages": {
               "name": "stages",
