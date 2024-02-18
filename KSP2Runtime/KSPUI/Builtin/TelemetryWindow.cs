@@ -34,7 +34,7 @@ public class TelemetryWindow : UGUIResizableWindow {
     public void Update() {
         using (var draw = drawer!.Draw()) {
             var selectedTimeSeries =
-                timeSeriesCollection!.AllTimeSeries.Where(t => selectedTimeSeriesNames.ContainsKey(t.Name)).ToArray();
+                timeSeriesCollection!.AllTimeSeries.Where(t => selectedTimeSeriesNames.ContainsKey(t.Name) && t.HasData).ToArray();
             if (selectedTimeSeries.Length == 0) {
                 draw.DrawText(new Vector2(draw.Width / 2, draw.Height / 2), "No data", 50, new Vector2(0.5f, 0.5f), 0,
                     Color.yellow);
@@ -48,7 +48,6 @@ public class TelemetryWindow : UGUIResizableWindow {
                 var startUTStr = startUT.ToString("F2", CultureInfo.InvariantCulture);
                 var endUT = selectedTimeSeries.Max(t => t.EndUt);
                 var endUTStr = endUT.ToString("F2", CultureInfo.InvariantCulture);
-                ;
 
                 draw.DrawText(new Vector2(offsetLeft, 1), startUTStr, 18, new Vector2(0, 0), 0, Color.white);
                 draw.DrawText(new Vector2(draw.Width - offsetRight, 1), endUTStr, 18, new Vector2(1, 0), 0,
@@ -204,8 +203,10 @@ public class TelemetryWindow : UGUIResizableWindow {
             var closeButton = UIFactory.Instance!.CreateDeleteButton();
             root.Add(closeButton, UGUILayout.Align.Center,
                 new Vector2(UIFactory.Instance.uiFontSize + 4, UIFactory.Instance.uiFontSize + 4));
-            closeButton.GetComponent<Button>().onClick.AddListener(() =>
-                Mainframe.Instance!.TimeSeriesCollection.RemoveTimeSeries(timeSeries.Name));
+            closeButton.GetComponent<Button>().onClick.AddListener(() => {
+                selectedTimeSeriesNames.Remove(timeSeries.Name);
+                Mainframe.Instance!.TimeSeriesCollection.RemoveTimeSeries(timeSeries.Name);
+            });
 
             root.Layout();
         }
