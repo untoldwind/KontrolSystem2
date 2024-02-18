@@ -76,9 +76,9 @@ public class ModuleManagerWindow : UGUIResizableWindow {
 
             horizonal.Add(UGUIElement.VScrollView(processList, new Vector2(200, 200)), UGUILayout.Align.Stretch, 1);
 
-            var vertical = horizonal.Add(UGUILayoutContainer.Vertical(20, new UGUILayout.Padding(0, 10, 0, 0)));
+            var vertical = horizonal.Add(UGUILayoutContainer.Vertical(20, new UGUILayout.Padding(0, 10, 0, 0))).Item1;
 
-            rebootButton = vertical.Add(UGUIButton.Create("Rebooting...", Mainframe.Instance!.Reboot));
+            rebootButton = vertical.Add(UGUIButton.Create("Rebooting...", Mainframe.Instance!.Reboot)).Item1;
             vertical.AddSpace(0, 1);
             vertical.Add(UGUIButton.Create("New Module", UIWindows.Instance!.OpenEditorWindowNew));
             vertical.Add(UGUIButton.Create("Telemetry", UIWindows.Instance.OpenTelemetryWindow));
@@ -96,39 +96,39 @@ public class ModuleManagerWindow : UGUIResizableWindow {
             parameterPopup = UGUILayoutContainer.VerticalPanel();
             onParameterPopupClose = onClose;
 
-            parameterPopup.Add(UGUILabel.Create(element.process.Name), UGUILayout.Align.Center).HorizontalAlignment =
+            parameterPopup.Add(UGUILabel.Create(element.process.Name), UGUILayout.Align.Center).Item1.HorizontalAlignment =
                 HorizontalAlignmentOptions.Center;
 
-            var horizontal = parameterPopup.Add(UGUILayoutContainer.Horizontal(5));
-            var labelVertical = horizontal.Add(UGUILayoutContainer.Vertical(5));
-            var inputVertical = horizontal.Add(UGUILayoutContainer.Vertical(5), UGUILayout.Align.Stretch, 1);
+            var horizontal = parameterPopup.Add(UGUILayoutContainer.Horizontal(5)).Item1;
+            var labelVertical = horizontal.Add(UGUILayoutContainer.Vertical(5)).Item1;
+            var inputVertical = horizontal.Add(UGUILayoutContainer.Vertical(5), UGUILayout.Align.Stretch, 1).Item1;
 
             for (var i = 0; i < element.argumentDescriptors.Length; i++) {
                 var updateArgument = element.UpdateArgument(i);
                 labelVertical.Add(UGUILabel.Create(element.argumentDescriptors[i].Name));
 
                 if (element.argumentDescriptors[i].Type == BuiltinType.Bool) {
-                    var parameterInput = inputVertical.Add(UGUIToggle.Create("", value => updateArgument(value)));
+                    var parameterInput = inputVertical.Add(UGUIToggle.Create("", value => updateArgument(value))).Item1;
                     parameterInput.IsOn = (bool)element.arguments[i];
                 } else {
                     if (element.argumentDescriptors[i].Type == BuiltinType.Int) {
                         var parameterInput =
                             inputVertical.Add(
-                                UGUIInputField.Create("", 200, value => updateArgument(long.Parse(value))));
+                                UGUIInputField.Create("", 200, value => updateArgument(long.Parse(value)))).Item1;
                         parameterInput.CharacterValidation = TMP_InputField.CharacterValidation.Integer;
                         parameterInput.Value = ((long)element.arguments[i]).ToString();
                     } else if (element.argumentDescriptors[i].Type == BuiltinType.Float) {
                         var parameterInput =
                             inputVertical.Add(UGUIInputField.Create("", 200,
-                                value => updateArgument(double.Parse(value))));
+                                value => updateArgument(double.Parse(value)))).Item1;
                         parameterInput.CharacterValidation = TMP_InputField.CharacterValidation.Decimal;
                         parameterInput.Value = ((double)element.arguments[i]).ToString(CultureInfo.InvariantCulture);
                     } else if (element.argumentDescriptors[i].Type == BuiltinType.String) {
                         var parameterInput =
-                            inputVertical.Add(UGUIInputField.Create("", 200, value => updateArgument(value)));
+                            inputVertical.Add(UGUIInputField.Create("", 200, value => updateArgument(value))).Item1;
                         parameterInput.Value = (string)element.arguments[i];
                     } else {
-                        var parameterInput = inputVertical.Add(UGUIInputField.Create("", 200));
+                        var parameterInput = inputVertical.Add(UGUIInputField.Create("", 200)).Item1;
                         parameterInput.Interactable = false;
                         parameterInput.Value = $"Invalid type ${element.argumentDescriptors[i].Type}";
                     }
@@ -136,7 +136,7 @@ public class ModuleManagerWindow : UGUIResizableWindow {
             }
 
             var buttonHorizontal =
-                parameterPopup.Add(UGUILayoutContainer.Horizontal(10, new UGUILayout.Padding(0, 0, 10, 10)));
+                parameterPopup.Add(UGUILayoutContainer.Horizontal(10, new UGUILayout.Padding(0, 0, 10, 10))).Item1;
 
             buttonHorizontal.Add(UGUIButton.Create("Start", element.OnStartStop));
             buttonHorizontal.AddSpace(0, 1);
@@ -189,9 +189,9 @@ public class ModuleManagerWindow : UGUIResizableWindow {
             rebootMessages.enableWordWrapping = true;
             rebootMessages.verticalAlignment = VerticalAlignmentOptions.Top;
 
-            var vertical = horizonal.Add(UGUILayoutContainer.Vertical(20, new UGUILayout.Padding(0, 10, 0, 0)));
+            var vertical = horizonal.Add(UGUILayoutContainer.Vertical(20, new UGUILayout.Padding(0, 10, 0, 0))).Item1;
 
-            rebootButton = vertical.Add(UGUIButton.Create("Rebooting...", Mainframe.Instance!.Reboot));
+            rebootButton = vertical.Add(UGUIButton.Create("Rebooting...", Mainframe.Instance!.Reboot)).Item1;
             vertical.Add(UGUIButton.Create("Copy", OnCopyErrors));
 
             horizonal.Layout();
@@ -256,7 +256,7 @@ public class ModuleManagerWindow : UGUIResizableWindow {
 
             horizonal.Add(UGUIElement.VScrollView(moduleList, new Vector2(200, 200)), UGUILayout.Align.Stretch, 0.6f);
 
-            var vertical = horizonal.Add(UGUILayoutContainer.Vertical(), UGUILayout.Align.Stretch, 0.4f);
+            var vertical = horizonal.Add(UGUILayoutContainer.Vertical(), UGUILayout.Align.Stretch, 0.4f).Item1;
 
             var panel = UGUILayoutContainer.VerticalPanel();
             vertical.Add(panel, UGUILayout.Align.Stretch, 1);
@@ -272,7 +272,7 @@ public class ModuleManagerWindow : UGUIResizableWindow {
             editButton = vertical.Add(UGUIButton.Create("Edit", () => {
                 if (selectedModule != null && !selectedModule.IsBuiltin)
                     UIWindows.Instance!.OpenEditorWindow(selectedModule.SourceFile!);
-            }), UGUILayout.Align.Start);
+            }), UGUILayout.Align.Start).Item1;
 
             horizonal.Layout();
 
@@ -421,7 +421,7 @@ public class ModuleManagerWindow : UGUIResizableWindow {
             root = UGUILayoutContainer.Horizontal();
             selectButton = root.Add(UGUIToggle.CreateSelectButton(element.kontrolModule.Name, isOn => {
                 if (isOn) onSelect(element.kontrolModule);
-            }), UGUILayout.Align.Stretch, 1);
+            }), UGUILayout.Align.Stretch, 1).Item1;
             selectButton.FontSize = 16;
             selectButton.IsOn = element.selected;
 

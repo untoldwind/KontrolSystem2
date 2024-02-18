@@ -12,10 +12,12 @@ public partial class KSPUIModule {
         private IDisposable? bindSubscription;
         private readonly UGUILabel label;
         private readonly AbstractContainer parent;
-
-        public Label(AbstractContainer parent, UGUILabel label) {
+        private readonly UGUILayout.ILayoutEntry entry;
+        
+        public Label(AbstractContainer parent, UGUILabel label, UGUILayout.ILayoutEntry entry) {
             this.parent = parent;
             this.label = label;
+            this.entry = entry;
             this.label.GameObject.AddComponent<UGUILifecycleCallback>().AddOnDestroy(OnDestroy);
         }
 
@@ -47,6 +49,12 @@ public partial class KSPUIModule {
             return this;
         }
 
+        [KSMethod]
+        public void Remove() {
+            entry.Remove();
+            parent.Root.Layout();
+        }
+        
         private void OnDestroy() {
             bindSubscription?.Dispose();
             bindSubscription = null;

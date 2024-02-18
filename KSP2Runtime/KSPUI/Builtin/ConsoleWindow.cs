@@ -58,12 +58,12 @@ public class ConsoleWindow : UGUIResizableWindow {
         charHeight = consoleText.font.faceInfo.lineHeight * fontScale;
         charWidth = consoleText.font.glyphTable[0].metrics.horizontalAdvance * fontScale;
 
-        var replContainer = root.Add(UGUILayoutContainer.Horizontal(2));
+        var replContainer = root.Add(UGUILayoutContainer.Horizontal(2)).Item1;
 
         commandInputField = UGUIInputField.Create("", 120);
         replContainer.Add(commandInputField, UGUILayout.Align.Stretch, 1);
 
-        var replHistoryContainer = replContainer.Add(UGUILayoutContainer.Vertical(0));
+        var replHistoryContainer = replContainer.Add(UGUILayoutContainer.Vertical(0)).Item1;
 
         var replHistoryUp = UIFactory.Instance.CreateIconButton(UIFactory.Instance.upIcon);
         replHistoryContainer.Add(replHistoryUp, UGUILayout.Align.Stretch, new Vector2(15, 15));
@@ -81,7 +81,7 @@ public class ConsoleWindow : UGUIResizableWindow {
         replContainer.Add(replStartStop, UGUILayout.Align.Stretch, new Vector2(30, 30));
         replStartStop.GetComponent<Button>().onClick.AddListener(OnRunCommand);
 
-        var buttonContainer = root.Add(UGUILayoutContainer.Horizontal(20));
+        var buttonContainer = root.Add(UGUILayoutContainer.Horizontal(20)).Item1;
 
         buttonContainer.Add(UGUIButton.Create("Clear", () => consoleBuffer!.Clear()));
         buttonContainer.Add(UGUIButton.Create("Copy",

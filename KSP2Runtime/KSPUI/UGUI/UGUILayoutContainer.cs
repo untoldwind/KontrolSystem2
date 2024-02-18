@@ -22,19 +22,13 @@ public class UGUILayoutContainer : UGUIElement {
         return layout.Layout();
     }
 
-    public void Add(GameObject child, UGUILayout.Align align, Vector2 minSize, float stretch = 0.0f) {
+    public UGUILayout.ILayoutEntry Add(GameObject child, UGUILayout.Align align, Vector2 minSize, float stretch = 0.0f) => 
         layout.Add(child, align, minSize, stretch);
-    }
 
-    public E Add<E>(E element, UGUILayout.Align align = UGUILayout.Align.Stretch, float stretch = 0.0f)
-        where E : UGUIElement {
-        layout.Add(element, align, stretch);
-        return element;
-    }
+    public (E, UGUILayout.ILayoutEntry) Add<E>(E element, UGUILayout.Align align = UGUILayout.Align.Stretch, float stretch = 0.0f)
+        where E : UGUIElement => layout.Add(element, align, stretch);
 
-    public void AddSpace(float minSize, float strech) {
-        layout.AddSpace(minSize, strech);
-    }
+    public UGUILayout.ILayoutEntry AddSpace(float minSize, float strech) => layout.AddSpace(minSize, strech);
 
     public static UGUILayoutContainer Vertical(float gap = 10, UGUILayout.Padding padding = default) {
         var gameObject = new GameObject("VerticalContainer", typeof(RectTransform));

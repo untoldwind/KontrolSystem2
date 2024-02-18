@@ -108,7 +108,7 @@ public class TelemetryWindow : UGUIResizableWindow {
         graphImage = graph.GetComponent<RawImage>();
         graphImage.texture = drawer.Texture;
 
-        var timeSeriesContainer = root.Add(UGUILayoutContainer.Vertical());
+        var timeSeriesContainer = root.Add(UGUILayoutContainer.Vertical()).Item1;
 
         timeSeries = new UIList<KSPTelemetryModule.TimeSeries, UITimeSeriesElement>(UIFactory.Instance!.uiFontSize + 10,
             element =>
@@ -197,7 +197,7 @@ public class TelemetryWindow : UGUIResizableWindow {
                 } else {
                     this.selectedTimeSeriesNames.Remove(timeSeries.Name);
                 }
-            }), UGUILayout.Align.Stretch, 1);
+            }), UGUILayout.Align.Stretch, 1).Item1;
             toggle.IsOn = this.selectedTimeSeriesNames.ContainsKey(timeSeries.Name);
 
             var closeButton = UIFactory.Instance!.CreateDeleteButton();

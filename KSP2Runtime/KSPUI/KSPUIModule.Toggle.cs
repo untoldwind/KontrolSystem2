@@ -11,10 +11,12 @@ public partial class KSPUIModule {
         private IDisposable? bindSubscription;
         private readonly AbstractContainer parent;
         private readonly UGUIToggle toggle;
-
-        public Toggle(AbstractContainer parent, UGUIToggle toggle) {
+        private readonly UGUILayout.ILayoutEntry entry;
+        
+        public Toggle(AbstractContainer parent, UGUIToggle toggle, UGUILayout.ILayoutEntry entry) {
             this.parent = parent;
             this.toggle = toggle;
+            this.entry = entry;
             this.toggle.GameObject.AddComponent<UGUILifecycleCallback>().AddOnDestroy(OnDestroy);
         }
 
@@ -75,6 +77,12 @@ public partial class KSPUIModule {
             return this;
         }
 
+        [KSMethod]
+        public void Remove() {
+            entry.Remove();
+            parent.Root.Layout();
+        }
+        
         private void OnDestroy() {
             bindSubscription?.Dispose();
             bindSubscription = null;

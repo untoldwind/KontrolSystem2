@@ -22,9 +22,9 @@ public partial class KSPUIModule {
             UGUILayout.Align align = UGUILayout.Align.Stretch,
             [KSParameter("Relative amount of available space to acquire (beyond minimal space)")]
             double stretch = 0) {
-            var element = layout.Add(UGUILayoutContainer.Horizontal((float)gap), align, (float)stretch);
+            var (element, entry) = layout.Add(UGUILayoutContainer.Horizontal((float)gap), align, (float)stretch);
             Root.Layout();
-            return new Container(Root, element.layout);
+            return new Container(Root, element.layout, entry);
         }
 
         [KSMethod(Description = "Add sub container with vertical layout to the container")]
@@ -35,9 +35,9 @@ public partial class KSPUIModule {
             UGUILayout.Align align = UGUILayout.Align.Stretch,
             [KSParameter("Relative amount of available space to acquire (beyond minimal space)")]
             double stretch = 0) {
-            var element = layout.Add(UGUILayoutContainer.Vertical((float)gap), align, (float)stretch);
+            var (element, entry) = layout.Add(UGUILayoutContainer.Vertical((float)gap), align, (float)stretch);
             Root.Layout();
-            return new Container(Root, element.layout);
+            return new Container(Root, element.layout, entry);
         }
 
         [KSMethod(Description = "Add sub panel with horizontal layout to the container")]
@@ -46,9 +46,9 @@ public partial class KSPUIModule {
             double gap = 10,
             [KSParameter("Alignment of the panel in its parent container")]
             UGUILayout.Align align = UGUILayout.Align.Stretch, double stretch = 0) {
-            var element = layout.Add(UGUILayoutContainer.HorizontalPanel((float)gap), align, (float)stretch);
+            var (element, entry) = layout.Add(UGUILayoutContainer.HorizontalPanel((float)gap), align, (float)stretch);
             Root.Layout();
-            return new Container(Root, element.layout);
+            return new Container(Root, element.layout, entry);
         }
 
         [KSMethod(Description = "Add sub panel with vertical layout to the container")]
@@ -59,9 +59,9 @@ public partial class KSPUIModule {
             UGUILayout.Align align = UGUILayout.Align.Stretch,
             [KSParameter("Relative amount of available space to acquire (beyond minimal space)")]
             double stretch = 0) {
-            var element = layout.Add(UGUILayoutContainer.VerticalPanel((float)gap), align, (float)stretch);
+            var (element, entry) = layout.Add(UGUILayoutContainer.VerticalPanel((float)gap), align, (float)stretch);
             Root.Layout();
-            return new Container(Root, element.layout);
+            return new Container(Root, element.layout, entry);
         }
 
         [KSMethod(Description = "Add label to the container")]
@@ -70,9 +70,9 @@ public partial class KSPUIModule {
             UGUILayout.Align align = UGUILayout.Align.Stretch,
             [KSParameter("Relative amount of available space to acquire (beyond minimal space)")]
             double stretch = 0) {
-            var element = layout.Add(UGUILabel.Create(label), align, (float)stretch);
+            var (element, entry) = layout.Add(UGUILabel.Create(label), align, (float)stretch);
             Root.Layout();
-            return new Label(this, element);
+            return new Label(this, element, entry);
         }
 
         [KSMethod(Description = "Add button to the container")]
@@ -81,9 +81,9 @@ public partial class KSPUIModule {
             UGUILayout.Align align = UGUILayout.Align.Stretch,
             [KSParameter("Relative amount of available space to acquire (beyond minimal space)")]
             double stretch = 0) {
-            var element = layout.Add(UGUIButton.Create(label), align, (float)stretch);
+            var (element, entry) = layout.Add(UGUIButton.Create(label), align, (float)stretch);
             Root.Layout();
-            return new Button(Root, element);
+            return new Button(Root, element, entry);
         }
 
         [KSMethod(Description = "Add toggle to the container")]
@@ -92,9 +92,9 @@ public partial class KSPUIModule {
             UGUILayout.Align align = UGUILayout.Align.Stretch,
             [KSParameter("Relative amount of available space to acquire (beyond minimal space)")]
             double stretch = 0) {
-            var element = layout.Add(UGUIToggle.Create(label), align, (float)stretch);
+            var (element, entry) = layout.Add(UGUIToggle.Create(label), align, (float)stretch);
             Root.Layout();
-            return new Toggle(Root, element);
+            return new Toggle(Root, element, entry);
         }
 
         [KSMethod(Description = "Add string input field to the container")]
@@ -103,9 +103,9 @@ public partial class KSPUIModule {
             UGUILayout.Align align = UGUILayout.Align.Stretch,
             [KSParameter("Relative amount of available space to acquire (beyond minimal space)")]
             double stretch = 0) {
-            var element = layout.Add(UGUIInputField.Create("", 50.0f), align, (float)stretch);
+            var (element, entry) = layout.Add(UGUIInputField.Create("", 50.0f), align, (float)stretch);
             Root.Layout();
-            return new StringInputField(this, element);
+            return new StringInputField(this, element, entry);
         }
 
         [KSMethod(Description = "Add integer input field to the container")]
@@ -114,9 +114,9 @@ public partial class KSPUIModule {
             UGUILayout.Align align = UGUILayout.Align.Stretch,
             [KSParameter("Relative amount of available space to acquire (beyond minimal space)")]
             double stretch = 0) {
-            var element = layout.Add(UGUIInputField.Create("0", 50.0f), align, (float)stretch);
+            var (element, entry) = layout.Add(UGUIInputField.Create("0", 50.0f), align, (float)stretch);
             Root.Layout();
-            return new IntInputField(this, element);
+            return new IntInputField(this, element, entry);
         }
 
         [KSMethod(Description = "Add float input field to the container")]
@@ -125,9 +125,9 @@ public partial class KSPUIModule {
             UGUILayout.Align align = UGUILayout.Align.Stretch,
             [KSParameter("Relative amount of available space to acquire (beyond minimal space)")]
             double stretch = 0) {
-            var element = layout.Add(UGUIInputField.Create("0.0", 50.0f), align, (float)stretch);
+            var (element, entry) = layout.Add(UGUIInputField.Create("0.0", 50.0f), align, (float)stretch);
             Root.Layout();
-            return new FloatInputField(this, element);
+            return new FloatInputField(this, element, entry);
         }
 
         [KSMethod(Description = "Add horizontal slider to the container")]
@@ -140,9 +140,9 @@ public partial class KSPUIModule {
             UGUILayout.Align align = UGUILayout.Align.Stretch,
             [KSParameter("Relative amount of available space to acquire (beyond minimal space)")]
             double stretch = 0) {
-            var element = layout.Add(UGUISlider.CreateHorizontal(), align, (float)stretch);
+            var (element, entry) = layout.Add(UGUISlider.CreateHorizontal(), align, (float)stretch);
             Root.Layout();
-            return new Slider(this, element, min, max);
+            return new Slider(this, element, min, max, entry);
         }
 
         [KSMethod(Description = "Add canvas to the container")]
@@ -155,9 +155,9 @@ public partial class KSPUIModule {
             UGUILayout.Align align = UGUILayout.Align.Stretch,
             [KSParameter("Relative amount of available space to acquire (beyond minimal space)")]
             double stretch = 0) {
-            var element = layout.Add(UGUICanvas.Create((float)minWidth, (float)minHeight), align, (float)stretch);
+            var (element, entry) = layout.Add(UGUICanvas.Create((float)minWidth, (float)minHeight), align, (float)stretch);
             Root.Layout();
-            return new Canvas(this, element);
+            return new Canvas(this, element, entry);
         }
 
         [KSMethod(Description = "Add empty space between elements")]

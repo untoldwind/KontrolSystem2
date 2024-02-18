@@ -12,10 +12,12 @@ public partial class KSPUIModule {
         protected IDisposable? bindSubscription;
         protected UGUIInputField inputField;
         protected AbstractContainer parent;
-
-        public AbstractInputField(AbstractContainer parent, UGUIInputField inputField) {
+        private readonly UGUILayout.ILayoutEntry entry;
+        
+        public AbstractInputField(AbstractContainer parent, UGUIInputField inputField, UGUILayout.ILayoutEntry entry) {
             this.parent = parent;
             this.inputField = inputField;
+            this.entry = entry;
             this.inputField.GameObject.AddComponent<UGUILifecycleCallback>().AddOnDestroy(OnDestroy);
         }
 
@@ -34,6 +36,12 @@ public partial class KSPUIModule {
             set => inputField.Interactable = value;
         }
 
+        [KSMethod]
+        public void Remove() {
+            entry.Remove();
+            parent.Root.Layout();
+        }
+        
         private void OnDestroy() {
             bindSubscription?.Dispose();
             bindSubscription = null;
@@ -42,7 +50,7 @@ public partial class KSPUIModule {
 
     [KSClass]
     public class StringInputField : AbstractInputField {
-        public StringInputField(AbstractContainer parent, UGUIInputField inputField) : base(parent, inputField) {
+        public StringInputField(AbstractContainer parent, UGUIInputField inputField, UGUILayout.ILayoutEntry entry) : base(parent, inputField, entry) {
         }
 
         [KSField]
@@ -80,7 +88,7 @@ public partial class KSPUIModule {
 
     [KSClass]
     public class IntInputField : AbstractInputField {
-        public IntInputField(AbstractContainer parent, UGUIInputField inputField) : base(parent, inputField) {
+        public IntInputField(AbstractContainer parent, UGUIInputField inputField, UGUILayout.ILayoutEntry entry) : base(parent, inputField, entry) {
             this.inputField.CharacterValidation = TMP_InputField.CharacterValidation.Integer;
         }
 
@@ -123,7 +131,7 @@ public partial class KSPUIModule {
 
     [KSClass]
     public class FloatInputField : AbstractInputField {
-        public FloatInputField(AbstractContainer parent, UGUIInputField inputField) : base(parent, inputField) {
+        public FloatInputField(AbstractContainer parent, UGUIInputField inputField, UGUILayout.ILayoutEntry entry) : base(parent, inputField, entry) {
             this.inputField.CharacterValidation = TMP_InputField.CharacterValidation.Decimal;
         }
 

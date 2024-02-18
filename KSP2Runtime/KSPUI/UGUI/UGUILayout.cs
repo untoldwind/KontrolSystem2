@@ -24,22 +24,27 @@ public abstract class UGUILayout {
 
     public abstract Vector2 MinSize { get; }
 
-    public void Add(GameObject child, Align align, Vector2 minSize, float stretch = 0.0f) {
-        layoutEntries.Add(new LayoutEntry(child, align, minSize, stretch));
+    public ILayoutEntry Add(GameObject child, Align align, Vector2 minSize, float stretch = 0.0f) {
+        var entry = new LayoutEntry(this, child, align, minSize, stretch);
+        layoutEntries.Add(entry);
+        return entry;
     }
 
-    public E Add<E>(E element, Align align = Align.Stretch, float stretch = 0.0f) where E : UGUIElement {
-        layoutEntries.Add(new LayoutElement(element, align, stretch));
-        return element;
+    public (E, ILayoutEntry) Add<E>(E element, Align align = Align.Stretch, float stretch = 0.0f) where E : UGUIElement{
+        var entry = new LayoutElement(this, element, align, stretch);
+        layoutEntries.Add(entry);
+        return (element, entry);
     }
 
-    public void AddSpace(float minSize, float stretch) {
-        layoutEntries.Add(new LayoutSpace(minSize, stretch));
+    public ILayoutEntry AddSpace(float minSize, float stretch) {
+        var entry = new LayoutSpace(this, minSize, stretch);
+        layoutEntries.Add(entry);
+        return entry;
     }
 
     public abstract Vector2 Layout();
 
-    protected interface ILayoutEntry {
+    public interface ILayoutEntry {
         RectTransform? Transform { get; }
 
         Vector2 MinSize { get; }
@@ -49,10 +54,14 @@ public abstract class UGUILayout {
         Align Align { get; }
 
         void Layout();
+
+        void Remove();
     }
 
     private struct LayoutSpace : ILayoutEntry {
-        public LayoutSpace(float minSize, float stretch) {
+        private readonly UGUILayout layout;
+        public LayoutSpace(UGUILayout layout, float minSize, float stretch) {
+            this.layout = layout;
             Stretch = stretch;
             MinSize = new Vector2(minSize, minSize);
         }
@@ -64,12 +73,18 @@ public abstract class UGUILayout {
 
         public void Layout() {
         }
+
+        public void Remove() {
+            layout.layoutEntries.Remove(this);
+        }
     }
 
     private readonly struct LayoutElement : ILayoutEntry {
+        private readonly UGUILayout layout;
         private readonly UGUIElement element;
 
-        public LayoutElement(UGUIElement element, Align align, float stretch) {
+        public LayoutElement(UGUILayout layout, UGUIElement element, Align align, float stretch) {
+            this.layout = layout;
             this.element = element;
             Align = align;
             Stretch = stretch;
@@ -84,12 +99,19 @@ public abstract class UGUILayout {
         public void Layout() {
             element.Layout();
         }
+
+        public void Remove() {
+            if (layout.layoutEntries.Remove(this))
+                element.Destroy();
+        }
     }
 
     private readonly struct LayoutEntry : ILayoutEntry {
+        private readonly UGUILayout layout;
         private readonly GameObject child;
 
-        public LayoutEntry(GameObject child, Align align, Vector2 minSize, float stretch) {
+        public LayoutEntry(UGUILayout layout, GameObject child, Align align, Vector2 minSize, float stretch) {
+            this.layout = layout;
             this.child = child;
             Align = align;
             MinSize = minSize;
@@ -102,6 +124,11 @@ public abstract class UGUILayout {
         public Align Align { get; }
 
         public void Layout() {
+        }
+
+        public void Remove() {
+            if (layout.layoutEntries.Remove(this))
+                GameObject.Destroy(child);
         }
     }
 

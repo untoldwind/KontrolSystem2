@@ -72,7 +72,7 @@ public class EditorWindow : UGUIResizableWindow {
         fileNameInputField = UGUIInputField.Create("", 120);
         root.Add(fileNameInputField);
 
-        var buttonContainer = root.Add(UGUILayoutContainer.Horizontal(10, new UGUILayout.Padding(0, 0, 20, 20)));
+        var buttonContainer = root.Add(UGUILayoutContainer.Horizontal(10, new UGUILayout.Padding(0, 0, 20, 20))).Item1;
 
         var delete = UIFactory.Instance.CreateButton("Delete");
         buttonContainer.Add(delete, UGUILayout.Align.Stretch, new Vector2(120, 30));

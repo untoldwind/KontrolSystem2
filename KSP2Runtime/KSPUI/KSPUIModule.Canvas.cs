@@ -9,10 +9,12 @@ public partial class KSPUIModule {
     public class Canvas : AbstractContainer2D {
         private readonly UGUICanvas canvas;
         private readonly AbstractContainer parent;
+        private readonly UGUILayout.ILayoutEntry entry;
 
-        public Canvas(AbstractContainer parent, UGUICanvas canvas) {
+        public Canvas(AbstractContainer parent, UGUICanvas canvas, UGUILayout.ILayoutEntry entry) {
             this.parent = parent;
             this.canvas = canvas;
+            this.entry = entry;
         }
 
         [KSField(Description = "Minimum size of the canvas.")]
@@ -36,6 +38,12 @@ public partial class KSPUIModule {
 
         protected override void RemoveAllElements() {
             canvas.Clear();
+        }
+        
+        [KSMethod]
+        public void Remove() {
+            entry.Remove();
+            parent.Root.Layout();
         }
     }
 }

@@ -14,12 +14,14 @@ public partial class KSPUIModule {
         private readonly double min;
         private AbstractContainer parent;
         private readonly UGUISlider slider;
-
-        public Slider(AbstractContainer parent, UGUISlider slider, double min, double max) {
+        private readonly UGUILayout.ILayoutEntry entry;
+        
+        public Slider(AbstractContainer parent, UGUISlider slider, double min, double max, UGUILayout.ILayoutEntry entry) {
             this.parent = parent;
             this.slider = slider;
             this.min = min;
             this.max = max;
+            this.entry = entry;
             this.slider.GameObject.AddComponent<UGUILifecycleCallback>().AddOnDestroy(OnDestroy);
         }
 
@@ -62,6 +64,12 @@ public partial class KSPUIModule {
             return this;
         }
 
+        [KSMethod]
+        public void Remove() {
+            entry.Remove();
+            parent.Root.Layout();
+        }
+        
         private void OnDestroy() {
             bindSubscription?.Dispose();
             bindSubscription = null;

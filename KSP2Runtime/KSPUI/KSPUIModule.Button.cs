@@ -10,10 +10,12 @@ public partial class KSPUIModule {
     public class Button {
         private readonly UGUIButton button;
         private readonly AbstractContainer parent;
+        private readonly UGUILayout.ILayoutEntry entry;
 
-        public Button(AbstractContainer parent, UGUIButton button) {
+        public Button(AbstractContainer parent, UGUIButton button, UGUILayout.ILayoutEntry entry) {
             this.parent = parent;
             this.button = button;
+            this.entry = entry;
             this.button.GameObject.AddComponent<UGUILifecycleCallback>().AddOnDestroy(OnDestroy);
         }
 
@@ -52,6 +54,12 @@ public partial class KSPUIModule {
                     ContextHolder.CurrentContext.Value = null;
                 }
             });
+        }
+
+        [KSMethod]
+        public void Remove() {
+            entry.Remove();
+            parent.Root.Layout();
         }
 
         private void OnDestroy() {

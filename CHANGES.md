@@ -11,6 +11,7 @@
   * `window.min_size` property (read-only) to get minimum size of window 
   * `window.compact()` resize window to its minimum size
   * `window.center()` center window on screen
+* Fix an issue when trying to display empty telemetry timeseries
 
 ## 0.5.2.7 -> 0.5.2.8
 
