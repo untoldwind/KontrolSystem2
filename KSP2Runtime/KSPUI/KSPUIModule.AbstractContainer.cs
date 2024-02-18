@@ -166,13 +166,8 @@ public partial class KSPUIModule {
             double size,
             [KSParameter("Relative amount of available space to acquire (beyond minimal space)")]
             double stretch = 0) {
-            var minSize = new Vector2((float)size, (float)size);
 
-            if (layout is UGUIHorizontalLayout)
-                minSize.y = 0;
-            else if (layout is UGUIVerticalLayout) minSize.x = 0;
-
-            layout.Add(UGUIElement.Spacer(minSize), UGUILayout.Align.Start, (float)stretch);
+            layout.AddSpace((float)size, (float)stretch);
         }
     }
 }

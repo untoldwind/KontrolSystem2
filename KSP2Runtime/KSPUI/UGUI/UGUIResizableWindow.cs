@@ -28,6 +28,10 @@ public class UGUIResizableWindow : KerbalMonoBehaviour {
         }
     }
 
+    public Vector2 Size => windowTransform!.sizeDelta;
+
+    public Vector2 Position => windowTransform!.localPosition;
+
     public virtual void OnDisable() {
         Destroy(window);
     }
@@ -85,10 +89,15 @@ public class UGUIResizableWindow : KerbalMonoBehaviour {
         windowTransform!.SetAsLastSibling();
     }
 
-    private void OnMove(Vector2 delta) {
-        var localPosition = windowTransform!.localPosition + new Vector3(delta.x, delta.y);
+    public void Resize(Vector2 size) {
+        windowTransform!.sizeDelta = new Vector2(
+            Mathf.Max(minSize.x, size.x),
+            Mathf.Max(minSize.y, size.y));
+    }
+
+    public void Move(Vector2 localPosition) {
         var rect = canvasTransform!.rect;
-        var minx = rect.min.x - windowTransform.rect.min.x - windowTransform.sizeDelta.x / 2;
+        var minx = rect.min.x - windowTransform!.rect.min.x - windowTransform.sizeDelta.x / 2;
         var miny = rect.min.y - windowTransform.rect.min.y - windowTransform.sizeDelta.y / 2;
         var maxx = rect.max.x - windowTransform.rect.max.x + windowTransform.sizeDelta.x / 2;
         var maxy = rect.max.y - windowTransform.rect.max.y + windowTransform.sizeDelta.y / 2;
@@ -99,12 +108,16 @@ public class UGUIResizableWindow : KerbalMonoBehaviour {
         windowTransform.localPosition = localPosition;
     }
 
+    private void OnMove(Vector2 delta) {
+        var localPosition = windowTransform!.localPosition + new Vector3(delta.x, delta.y);
+
+        Move(localPosition);
+    }
+
     protected virtual void OnResize(Vector2 delta) {
         var size = windowTransform!.sizeDelta + new Vector2(delta.x, -delta.y);
 
-        windowTransform.sizeDelta = new Vector2(
-            Mathf.Max(minSize.x, size.x),
-            Mathf.Max(minSize.y, size.y));
+        Resize(size);
     }
 
     internal UGUIVerticalLayout RootVerticalLayout(float gap = 10) {

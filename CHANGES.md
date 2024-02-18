@@ -1,5 +1,17 @@
 # Changes
 
+## 0.5.2.8 ->
+
+* Internal updates
+  * Migrate code to netstandard2.1 (except unit tests)
+  * Update C# version and enable nullable feature (improving overall code quality)
+* Add methods to manipulate window position/size after creation
+  * `window.position` property (writable) to get current position of window or move it
+  * `window.size` property (writable) to get current size of window or resize it
+  * `window.min_size` property (read-only) to get minimum size of window 
+  * `window.compact()` resize window to its minimum size
+  * `window.center()` center window on screen
+
 ## 0.5.2.7 -> 0.5.2.8
 
 * Improve error handling in struct field initializers (#119)

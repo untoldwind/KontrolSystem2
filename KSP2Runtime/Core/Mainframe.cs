@@ -157,18 +157,18 @@ public class Mainframe : KerbalMonoBehaviour {
                 config.Logger.Debug(e.ToString());
                 config.Logger.Info(e.Message);
 
-                return new State(state!.registry, stopwatch.Elapsed, new List<MainframeError> {
+                return new State(state?.registry, stopwatch.Elapsed, new List<MainframeError> {
                     new(e.position, "Parsing", e.Message)
                 });
             } catch (Exception e) {
                 config.Logger.Error("Mainframe initialization error: " + e);
 
-                return new State(state!.registry, stopwatch.Elapsed, new List<MainframeError> {
+                return new State(state?.registry, stopwatch.Elapsed, new List<MainframeError> {
                     new(new Position(), "Unknown error", e.Message)
                 });
             }
         });
-        if (nextState.errors.Count == 0)
+        if (nextState.errors.Count == 0 && nextState.registry != null)
             processes = (processes ?? Enumerable.Empty<KontrolSystemProcess>())
                 .Where(p => p.State == KontrolSystemProcessState.Running ||
                             p.State == KontrolSystemProcessState.Outdated).Select(p => p.MarkOutdated()).Concat(
