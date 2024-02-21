@@ -34,7 +34,10 @@ public class Lambda : Expression, IVariableContainer {
     public Lambda(List<FunctionParameter> parameters, Expression expression, Position start = new(),
         Position end = new()) : base(start, end) {
         this.parameters = parameters;
-        this.expression = expression;
+        if (expression is Block b)
+            this.expression = b.CollapseFinalReturn();
+        else
+            this.expression = expression;
         this.expression.VariableContainer = this;
     }
 

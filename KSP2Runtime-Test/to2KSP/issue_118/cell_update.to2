@@ -1,0 +1,19 @@
+pub type ThrustSituationConst = int
+
+pub const ThrustSituation: (Current: ThrustSituationConst, CurrentAsOn: ThrustSituationConst, Max_Vac: ThrustSituationConst, Max_Atm: ThrustSituationConst, Min: ThrustSituationConst) = (
+    Current: 2**0,
+    CurrentAsOn: 2**1,
+    Max_Vac: 2**2,
+    Max_Atm: 2**3,
+    Min: 2**4
+)
+
+const displayMode: Cell<ThrustSituationConst> = Cell(ThrustSituation.Current)
+
+fn foobar() -> Unit = {
+    displayMode.update(fn(current) -> {
+        if(current == ThrustSituation.Current)
+            return ThrustSituation.CurrentAsOn
+        return ThrustSituation.Current
+    })
+}
