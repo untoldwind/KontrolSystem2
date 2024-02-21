@@ -13,6 +13,7 @@
   * `window.center()` center window on screen
 * Fix an issue when trying to display empty telemetry timeseries
 * Fix issue using inside a lambda-function (#118)
+* Fix compilation error of if-else-return cascade (#119)
 
 ## 0.5.2.7 -> 0.5.2.8
 

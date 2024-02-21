@@ -38,6 +38,8 @@ public class ReturnEmpty : Expression {
 
         ILChunks.GenerateFunctionLeave(context);
         context.IL.EmitReturn(context.MethodBuilder!.ReturnType);
+        if(!dropResult)
+            context.IL.Emit(OpCodes.Ldnull);
     }
 
     public override REPLValueFuture Eval(REPLContext context) {
@@ -90,6 +92,8 @@ public class ReturnValue : Expression {
 
         ILChunks.GenerateFunctionLeave(context);
         context.IL.EmitReturn(context.MethodBuilder!.ReturnType);
+        if(!dropResult)
+            context.IL.Emit(OpCodes.Ldnull);
     }
 
     public override REPLValueFuture Eval(REPLContext context) {

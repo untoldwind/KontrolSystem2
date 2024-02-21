@@ -1,0 +1,47 @@
+use { Vessel } from ksp::vessel
+use { Body } from ksp::orbit
+
+pub type ApsisConst = int
+
+pub const Apsis: (Periapsis: ApsisConst, Apoapsis: ApsisConst) = (
+    Periapsis: 0,
+    Apoapsis: 1
+)
+
+pub type ApsisModificationConst = float
+
+pub const ApsisModification: (Raise: ApsisModificationConst, Decrease: ApsisModificationConst, Cheaper: ApsisModificationConst) = (
+    Raise: 0,
+    Decrease: 180,
+    Cheaper: -360
+)
+
+sync fn atmosphere_depth(body: Body) -> float = {
+    return if(body.has_atmosphere) body.atmosphere_depth else 0.0
+}
+
+pub fn circularize(vessel: Vessel, way: ApsisModificationConst = ApsisModification.Cheaper) -> Result<Unit, string> = {
+    const body = vessel.main_body
+
+    if(vessel.orbit.periapsis < atmosphere_depth(body) && (!vessel.orbit.apoapsis.defined))
+        return Err("Unable to circularize " + vessel.name)
+    if(vessel.orbit.periapsis < atmosphere_depth(body) && way == ApsisModification.Decrease)
+        return Err("Unable to circularize " + vessel.name + " at " + vessel.orbit.periapsis.to_fixed(0) + " because it's below " + vessel.main_body.name + "'s atmosphere.")
+    if((!vessel.orbit.apoapsis.defined) && way == ApsisModification.Raise)
+        return Err("Unable to circularize " + vessel.name + " at apoapsis because of hyperbolic orbit (escape " + vessel.main_body.name + "'s sphere of influence)")
+
+    if(way == ApsisModification.Raise) {
+        return foobar(vessel, Apsis.Periapsis, vessel.orbit.apoapsis.value)
+    } else if(way == ApsisModification.Decrease) {
+        return foobar(vessel, Apsis.Apoapsis, vessel.orbit.periapsis)
+    }
+    else {
+        return Ok({}) // TODO
+    }
+}
+
+
+fn foobar(vessel: Vessel, apsis: ApsisConst, altitude:float) -> Result<Unit, string> = {
+    //things
+    return Ok({})
+}
