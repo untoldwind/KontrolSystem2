@@ -1,4 +1,5 @@
-﻿using System.Reflection.Emit;
+﻿using System.Collections.Generic;
+using System.Reflection.Emit;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
 using KontrolSystem.TO2.Runtime;
@@ -40,6 +41,10 @@ public class ReturnEmpty : Expression {
         context.IL.EmitReturn(context.MethodBuilder!.ReturnType);
         if(!dropResult)
             context.IL.Emit(OpCodes.Ldnull);
+    }
+
+    internal override Expression CollapseFinalReturn() {
+        return new Block(new List<IBlockItem>(), Start, End);
     }
 
     public override REPLValueFuture Eval(REPLContext context) {
@@ -94,6 +99,10 @@ public class ReturnValue : Expression {
         context.IL.EmitReturn(context.MethodBuilder!.ReturnType);
         if(!dropResult)
             context.IL.Emit(OpCodes.Ldnull);
+    }
+
+    internal override Expression CollapseFinalReturn() {
+        return returnValue;
     }
 
     public override REPLValueFuture Eval(REPLContext context) {

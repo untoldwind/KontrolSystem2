@@ -96,6 +96,8 @@ public abstract class Expression : Node, IBlockItem {
     public virtual Dictionary<string, TO2Type>? GetScopeVariables(IBlockContext context) {
         return null;
     }
+
+    internal virtual Expression CollapseFinalReturn() => this;
 }
 
 /// <summary>

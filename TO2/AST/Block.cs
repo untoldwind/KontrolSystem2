@@ -127,10 +127,12 @@ public class Block : Expression, IVariableContainer {
         if (childScope) context.IL.EndScope();
     }
 
-    internal Block CollapseFinalReturn() {
+    internal override Expression CollapseFinalReturn() {
         var (lastItem, lastIdx) = items.Select((item, idx) => (item, idx)).LastOrDefault(item => !item.item.IsComment);
 
-        if (lastItem != null && lastItem is ReturnValue r) items[lastIdx] = r.returnValue;
+        if (lastItem != null && lastItem is Expression e) {
+            items[lastIdx] = e.CollapseFinalReturn();
+        }
 
         return this;
     }
