@@ -1,6 +1,6 @@
 # Changes
 
-## 0.5.2.8 ->
+## 0.5.2.8 -> 0.5.3.1
 
 * Internal updates
   * Migrate code to netstandard2.1 (except unit tests)
