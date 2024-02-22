@@ -100,7 +100,7 @@ public partial class KSPDebugModule {
                     lineObj!.layer = 27;
                     mapWidthMult = 1500 / space.Map3DScaleInv;
                 } else {
-                    var frame = KSPContext.CurrentContext.ActiveVessel?.transform?.celestialFrame;
+                    var frame = KSPContext.CurrentContext.Game.UniverseModel.inertialReferenceFrame;
                     points = Path.Where((x, i) => i % nStep == 0).Select(p => frame?.ToLocalPosition(p) ?? Vector3d.zero).ToArray();
                     lineObj!.layer = 0;
                 }

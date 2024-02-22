@@ -193,7 +193,7 @@ public partial class KSPDebugModule {
                     hatObj!.layer = 27;
                     mapWidthMult = 1500 / space.Map3DScaleInv;
                 } else {
-                    var frame = KSPContext.CurrentContext.ActiveVessel?.transform?.celestialFrame;
+                    var frame = KSPContext.CurrentContext.Game.UniverseModel.inertialReferenceFrame;
                     startLocal = frame?.ToLocalPosition(start) ?? Vector3d.zero;
                     vectorLocal = (frame?.ToLocalPosition(end) ?? startLocal) - startLocal;
                     lineObj!.layer = 0;

@@ -48,7 +48,7 @@ public partial class KSPDebugModule {
                 bodyUp = (space.TranslateSimPositionToMapPosition(position + GeoCoordinates.Body.GlobalUp) - localPos)
                     .normalized;
             } else {
-                var frame = KSPContext.CurrentContext.ActiveVessel?.transform?.celestialFrame;
+                var frame = KSPContext.CurrentContext.Game.UniverseModel.inertialReferenceFrame;
                 localPos = frame?.ToLocalPosition(position) ?? Vector3d.zero;
                 up = frame?.ToLocalVector(surfaceNormal) ?? Vector3d.zero;
                 bodyUp = frame?.ToLocalVector(GeoCoordinates.Body.GlobalUp) ?? Vector3d.up;

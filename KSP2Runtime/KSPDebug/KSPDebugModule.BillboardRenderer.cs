@@ -77,7 +77,7 @@ public partial class KSPDebugModule {
                     billboardObj!.layer = 27;
                     mapWidthMult = 1500 / space.Map3DScaleInv;
                 } else {
-                    var frame = KSPContext.CurrentContext.ActiveVessel?.transform?.celestialFrame;
+                    var frame = KSPContext.CurrentContext.Game.UniverseModel.inertialReferenceFrame;
                     positionLocal = frame?.ToLocalPosition(position) ?? Vector3d.zero;
                     billboardObj!.layer = 0;
                 }
