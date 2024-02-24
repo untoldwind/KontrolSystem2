@@ -94,7 +94,7 @@ public partial class KSPVesselModule {
         public Option<ModuleEngineAdapter> EngineModule {
             get {
                 if (part.IsPartEngine(out var data))
-                    return new Option<ModuleEngineAdapter>(new ModuleEngineAdapter(part, data));
+                    return new Option<ModuleEngineAdapter>(new ModuleEngineAdapter(part, data, vesselAdapter));
 
                 return new Option<ModuleEngineAdapter>();
             }

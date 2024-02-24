@@ -1,5 +1,13 @@
 # Changes
 
+## 0.5.3.1 ->
+
+* Convert `EngineDeltaV.get_thrust_vector()` to celestial frame
+* Add coordinate independent variant `EngineDeltaV.get_global_thrust_vector()`
+* Add corresponding fields to `ModuleEngine`
+  * `thrust_direction`
+  * `global_thrust_direction`
+
 ## 0.5.2.8 -> 0.5.3.1
 
 * Internal updates

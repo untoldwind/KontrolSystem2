@@ -2,6 +2,7 @@
 using System.Linq;
 using KontrolSystem.TO2.Binding;
 using KSP.Modules;
+using KSP.Sim;
 using KSP.Sim.impl;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel;
@@ -11,10 +12,12 @@ public partial class KSPVesselModule {
     public class ModuleEngineAdapter {
         private readonly Data_Engine dataEngine;
         private readonly PartComponent part;
+        protected readonly VesselAdapter vesselAdapter;
 
-        public ModuleEngineAdapter(PartComponent part, Data_Engine dataEngine) {
+        public ModuleEngineAdapter(PartComponent part, Data_Engine dataEngine, VesselAdapter vesselAdapter) {
             this.part = part;
             this.dataEngine = dataEngine;
+            this.vesselAdapter = vesselAdapter;
         }
 
         [KSField] public string PartName => part?.PartName ?? "Unknown";
@@ -47,6 +50,17 @@ public partial class KSPVesselModule {
 
         [KSField] public double MaxThrustOutputAtm => dataEngine.MaxThrustOutputAtm();
 
+        [KSField(Description = "Direction of thrust in the celestial frame of the main body")]
+        public Vector3d ThrustDirection =>
+            vesselAdapter.vessel.mainBody.transform.celestialFrame.ToLocalVector(
+                KSPContext.CurrentContext.Game.UniverseView.PhysicsSpace.PhysicsToVector(
+                    dataEngine.ThrustDirRelativePartWorldSpace));
+        
+        [KSField(Description = "Coordinate independent direction of thrust.")]
+        public Vector GlobalThrustDirection =>
+            KSPContext.CurrentContext.Game.UniverseView.PhysicsSpace.PhysicsToVector(
+                dataEngine.ThrustDirRelativePartWorldSpace);
+        
         [KSField]
         public EngineModeAdapter[] EngineModes => dataEngine.engineModes
             .Select(engineMode => new EngineModeAdapter(engineMode)).ToArray();

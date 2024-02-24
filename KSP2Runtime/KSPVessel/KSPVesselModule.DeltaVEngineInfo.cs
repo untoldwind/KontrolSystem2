@@ -1,4 +1,5 @@
 ﻿using KontrolSystem.TO2.Binding;
+using KSP.Sim;
 using KSP.Sim.DeltaV;
 using KSP.Sim.impl;
 
@@ -19,7 +20,7 @@ public partial class KSPVesselModule {
         public long StartBurnStage => deltaVEngineInfo.StartBurnStage;
 
         [KSField]
-        public ModuleEngineAdapter EngineModule => new((deltaVEngineInfo.Part as PartComponent)!, deltaVEngineInfo.Engine);
+        public ModuleEngineAdapter EngineModule => new((deltaVEngineInfo.Part as PartComponent)!, deltaVEngineInfo.Engine, vesselAdapter);
 
         [KSMethod("get_ISP", Description = "Estimated ISP of the engine in a given `situation`")]
         public double GetIsp(DeltaVSituationOptions situation) {
@@ -32,8 +33,14 @@ public partial class KSPVesselModule {
         }
 
         [KSMethod(Description = "Estimated thrust vector of the engine in a given `situation`")]
-        public Vector3d GetThrustVector(DeltaVSituationOptions situation) {
-            return deltaVEngineInfo.GetSituationThrustVector(situation);
-        }
+        public Vector3d GetThrustVector(DeltaVSituationOptions situation) =>
+            vesselAdapter.vessel.mainBody.transform.celestialFrame.ToLocalVector(
+                KSPContext.CurrentContext.Game.UniverseView.PhysicsSpace.PhysicsToVector(
+                    deltaVEngineInfo.GetSituationThrustVector(situation)));
+
+        [KSMethod(Description = "Coordinate independent estimated thrust vector of the engine in a given `situation`")]
+        public Vector GetGlobalThrustVector(DeltaVSituationOptions situation) =>
+                KSPContext.CurrentContext.Game.UniverseView.PhysicsSpace.PhysicsToVector(
+                    deltaVEngineInfo.GetSituationThrustVector(situation));
     }
 }

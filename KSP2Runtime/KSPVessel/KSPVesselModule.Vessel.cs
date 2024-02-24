@@ -267,7 +267,7 @@ public partial class KSPVesselModule {
 
         [KSField(Description = "Get a list of all engine parts of the vessel.")]
         public ModuleEngineAdapter[] Engines => vessel.SimulationObject.PartOwner.Parts.SelectMany(part => {
-            if (part.IsPartEngine(out var data)) return new ModuleEngineAdapter(part, data).Yield();
+            if (part.IsPartEngine(out var data)) return new ModuleEngineAdapter(part, data, this).Yield();
 
             return Enumerable.Empty<ModuleEngineAdapter>();
         }).ToArray();
