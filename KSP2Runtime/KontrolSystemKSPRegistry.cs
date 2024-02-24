@@ -4,6 +4,7 @@ using KontrolSystem.KSP.Runtime.KSPControl;
 using KontrolSystem.KSP.Runtime.KSPDebug;
 using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.KSP.Runtime.KSPMath;
+using KontrolSystem.KSP.Runtime.KSPOAB;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.KSP.Runtime.KSPResource;
 using KontrolSystem.KSP.Runtime.KSPScience;
@@ -39,6 +40,8 @@ public static class KontrolSystemKSPRegistry {
             BindingGenerator.BindModule(typeof(KSPScienceModule), scienceTypes, scienceConstants));
         registry.RegisterModule(
             BindingGenerator.BindModule(typeof(KSPVesselModule), vesselTypes, vesselConstants));
+        registry.RegisterModule(
+            BindingGenerator.BindModule(typeof(KSPOABModule)));
         registry.RegisterModule(
             BindingGenerator.BindModule(typeof(KSPGameModule)));
         registry.RegisterModule(
