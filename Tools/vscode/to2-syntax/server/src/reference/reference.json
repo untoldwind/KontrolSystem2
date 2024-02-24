@@ -10635,12 +10635,45 @@
           "name": "ObjectAssemblyPart",
           "description": "Represents are part in an object assembly.\n",
           "fields": {
+            "fuel_cross_feed": {
+              "name": "fuel_cross_feed",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "relative_position": {
+              "name": "relative_position",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec3"
+              }
+            },
             "part_name": {
               "name": "part_name",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
                 "name": "string"
+              }
+            },
+            "activation_stage": {
+              "name": "activation_stage",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "int"
+              }
+            },
+            "decouple_stage": {
+              "name": "decouple_stage",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "int"
               }
             },
             "dry_mass": {
@@ -10676,23 +10709,6 @@
               "type": {
                 "kind": "Builtin",
                 "name": "float"
-              }
-            },
-            "fuel_cross_feed": {
-              "name": "fuel_cross_feed",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "bool"
-              }
-            },
-            "relative_position": {
-              "name": "relative_position",
-              "readOnly": true,
-              "type": {
-                "kind": "Standard",
-                "module": "ksp::math",
-                "name": "Vec3"
               }
             }
           },
@@ -34421,14 +34437,6 @@
                 "name": "Vessel"
               }
             },
-            "part_name": {
-              "name": "part_name",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "string"
-              }
-            },
             "position": {
               "name": "position",
               "description": "Get position of the part in celestial frame of the main body.\n",
@@ -34466,22 +34474,6 @@
                 "name": "bool"
               }
             },
-            "activation_stage": {
-              "name": "activation_stage",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "int"
-              }
-            },
-            "decouple_stage": {
-              "name": "decouple_stage",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "int"
-              }
-            },
             "splashed": {
               "name": "splashed",
               "description": "Indicate if the part has splashed\n",
@@ -34491,36 +34483,9 @@
                 "name": "bool"
               }
             },
-            "dry_mass": {
-              "name": "dry_mass",
-              "description": "Dry mass of the part\n",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "float"
-              }
-            },
             "resource_mass": {
               "name": "resource_mass",
               "description": "Resource mass of the part\n",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "float"
-              }
-            },
-            "green_mass": {
-              "name": "green_mass",
-              "description": "Green mass (Kerbals) of the part\n",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "float"
-              }
-            },
-            "total_mass": {
-              "name": "total_mass",
-              "description": "Total mass of the part\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -34792,6 +34757,65 @@
                     "name": "ModuleParachute"
                   }
                 ]
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            },
+            "activation_stage": {
+              "name": "activation_stage",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "int"
+              }
+            },
+            "decouple_stage": {
+              "name": "decouple_stage",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "int"
+              }
+            },
+            "dry_mass": {
+              "name": "dry_mass",
+              "description": "Dry mass of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "wet_mass": {
+              "name": "wet_mass",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "green_mass": {
+              "name": "green_mass",
+              "description": "Green mass (Kerbals) of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "total_mass": {
+              "name": "total_mass",
+              "description": "Total mass of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
               }
             }
           },
@@ -35037,14 +35061,6 @@
                 "name": "Vessel"
               }
             },
-            "part_name": {
-              "name": "part_name",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "string"
-              }
-            },
             "position": {
               "name": "position",
               "description": "Get position of the part in celestial frame of the main body.\n",
@@ -35082,22 +35098,6 @@
                 "name": "bool"
               }
             },
-            "activation_stage": {
-              "name": "activation_stage",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "int"
-              }
-            },
-            "decouple_stage": {
-              "name": "decouple_stage",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "int"
-              }
-            },
             "splashed": {
               "name": "splashed",
               "description": "Indicate if the part has splashed\n",
@@ -35107,36 +35107,9 @@
                 "name": "bool"
               }
             },
-            "dry_mass": {
-              "name": "dry_mass",
-              "description": "Dry mass of the part\n",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "float"
-              }
-            },
             "resource_mass": {
               "name": "resource_mass",
               "description": "Resource mass of the part\n",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "float"
-              }
-            },
-            "green_mass": {
-              "name": "green_mass",
-              "description": "Green mass (Kerbals) of the part\n",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "float"
-              }
-            },
-            "total_mass": {
-              "name": "total_mass",
-              "description": "Total mass of the part\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -35408,6 +35381,65 @@
                     "name": "ModuleParachute"
                   }
                 ]
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            },
+            "activation_stage": {
+              "name": "activation_stage",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "int"
+              }
+            },
+            "decouple_stage": {
+              "name": "decouple_stage",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "int"
+              }
+            },
+            "dry_mass": {
+              "name": "dry_mass",
+              "description": "Dry mass of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "wet_mass": {
+              "name": "wet_mass",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "green_mass": {
+              "name": "green_mass",
+              "description": "Green mass (Kerbals) of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "total_mass": {
+              "name": "total_mass",
+              "description": "Total mass of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
               }
             }
           },
@@ -35874,14 +35906,6 @@
                 "name": "Vessel"
               }
             },
-            "part_name": {
-              "name": "part_name",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "string"
-              }
-            },
             "position": {
               "name": "position",
               "description": "Get position of the part in celestial frame of the main body.\n",
@@ -35919,22 +35943,6 @@
                 "name": "bool"
               }
             },
-            "activation_stage": {
-              "name": "activation_stage",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "int"
-              }
-            },
-            "decouple_stage": {
-              "name": "decouple_stage",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "int"
-              }
-            },
             "splashed": {
               "name": "splashed",
               "description": "Indicate if the part has splashed\n",
@@ -35944,36 +35952,9 @@
                 "name": "bool"
               }
             },
-            "dry_mass": {
-              "name": "dry_mass",
-              "description": "Dry mass of the part\n",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "float"
-              }
-            },
             "resource_mass": {
               "name": "resource_mass",
               "description": "Resource mass of the part\n",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "float"
-              }
-            },
-            "green_mass": {
-              "name": "green_mass",
-              "description": "Green mass (Kerbals) of the part\n",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "float"
-              }
-            },
-            "total_mass": {
-              "name": "total_mass",
-              "description": "Total mass of the part\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -36245,6 +36226,65 @@
                     "name": "ModuleParachute"
                   }
                 ]
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            },
+            "activation_stage": {
+              "name": "activation_stage",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "int"
+              }
+            },
+            "decouple_stage": {
+              "name": "decouple_stage",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "int"
+              }
+            },
+            "dry_mass": {
+              "name": "dry_mass",
+              "description": "Dry mass of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "wet_mass": {
+              "name": "wet_mass",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "green_mass": {
+              "name": "green_mass",
+              "description": "Green mass (Kerbals) of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "total_mass": {
+              "name": "total_mass",
+              "description": "Total mass of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
               }
             }
           },

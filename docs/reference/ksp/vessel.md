@@ -554,6 +554,7 @@ temperature | float | R/O | Temperature of the part
 thermal_mass | float | R/O | 
 total_mass | float | R/O | Total mass of the part 
 vessel | [ksp::vessel::Vessel](/reference/ksp/vessel.md#vessel) | R/O | 
+wet_mass | float | R/O | 
 
 #### Methods
 
@@ -682,6 +683,7 @@ temperature | float | R/O | Temperature of the part
 thermal_mass | float | R/O | 
 total_mass | float | R/O | Total mass of the part 
 vessel | [ksp::vessel::Vessel](/reference/ksp/vessel.md#vessel) | R/O | 
+wet_mass | float | R/O | 
 
 #### Methods
 
@@ -1019,6 +1021,7 @@ temperature | float | R/O | Temperature of the part
 thermal_mass | float | R/O | 
 total_mass | float | R/O | Total mass of the part 
 vessel | [ksp::vessel::Vessel](/reference/ksp/vessel.md#vessel) | R/O | 
+wet_mass | float | R/O | 
 
 ### StageDeltaV
 

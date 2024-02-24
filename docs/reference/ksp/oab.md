@@ -41,6 +41,8 @@ Represents are part in an object assembly.
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
+activation_stage | int | R/O | 
+decouple_stage | int | R/O | 
 dry_mass | float | R/O | Dry mass of the part 
 fuel_cross_feed | bool | R/O | 
 green_mass | float | R/O | Green mass (Kerbals) of the part 

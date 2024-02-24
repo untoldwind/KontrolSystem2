@@ -9,46 +9,16 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public partial class KSPVesselModule {
     [KSClass("ModuleEngine")]
-    public class ModuleEngineAdapter {
-        private readonly Data_Engine dataEngine;
+    public class ModuleEngineAdapter : BaseEngineAdapter {
         private readonly PartComponent part;
-        protected readonly VesselAdapter vesselAdapter;
+        private readonly VesselAdapter vesselAdapter;
 
-        public ModuleEngineAdapter(PartComponent part, Data_Engine dataEngine, VesselAdapter vesselAdapter) {
+        public ModuleEngineAdapter(PartComponent part, Data_Engine dataEngine, VesselAdapter vesselAdapter) : base(dataEngine) {
             this.part = part;
-            this.dataEngine = dataEngine;
             this.vesselAdapter = vesselAdapter;
         }
 
         [KSField] public string PartName => part?.PartName ?? "Unknown";
-
-        [KSField] public bool IsShutdown => dataEngine.EngineShutdown;
-
-        [KSField] public bool HasIgnited => dataEngine.EngineIgnited;
-
-        [KSField] public bool IsFlameout => dataEngine.Flameout;
-
-        [KSField] public bool IsStaged => dataEngine.staged;
-
-        [KSField] public bool IsOperational => dataEngine.IsOperational;
-
-        [KSField] public bool IsPropellantStarved => dataEngine.IsPropellantStarved;
-
-        [KSField] public double CurrentThrottle => dataEngine.currentThrottle;
-
-        [KSField] public double CurrentThrust => dataEngine.FinalThrustValue;
-
-        [KSField] public double RealIsp => dataEngine.RealISPValue;
-
-        [KSField] public double ThrottleMin => dataEngine.ThrottleMin;
-
-        [KSField] public double MinFuelFlow => dataEngine.MinFuelFlow;
-
-        [KSField] public double MaxFuelFlow => dataEngine.MaxFuelFlow;
-
-        [KSField] public double MaxThrustOutputVac => dataEngine.MaxThrustOutputVac();
-
-        [KSField] public double MaxThrustOutputAtm => dataEngine.MaxThrustOutputAtm();
 
         [KSField(Description = "Direction of thrust in the celestial frame of the main body")]
         public Vector3d ThrustDirection =>
