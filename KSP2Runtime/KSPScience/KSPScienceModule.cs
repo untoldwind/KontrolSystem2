@@ -5,6 +5,7 @@ using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Binding;
 using KSP.Game.Science;
 using KSP.Modules;
+using UniLinq;
 
 namespace KontrolSystem.KSP.Runtime.KSPScience;
 
@@ -44,9 +45,19 @@ public partial class KSPScienceModule {
                         (ScienceSitutation.Atmosphere, "Experiment inside an atmosphere"),
                         (ScienceSitutation.Splashed, "Experiment while splashed"),
                         (ScienceSitutation.Landed, "Experiment while landed")
+                    }),
+                ("ScienceReportType", "Type of science report", typeof(ScienceReportType),
+                    new (Enum value, string description)[] {
+                        (ScienceReportType.DataType, "Science data"),
+                        (ScienceReportType.SampleType, "Science sample for experiments"),
                     })
             });
 
         return (enumTypes, enumConstants);
     }
+
+    [KSFunction(Description = "Get all completed research reports.")]
+    public static CompletedResearchReportAdapter[] GetCompletedResearchReports() =>
+        KSPContext.CurrentContext.Game.ScienceManager.GetSubmittedResearchReports()
+            .Select(report => new CompletedResearchReportAdapter(report)).ToArray();
 }

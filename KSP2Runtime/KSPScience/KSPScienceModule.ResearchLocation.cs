@@ -13,6 +13,8 @@ public partial class KSPScienceModule {
             this.researchLocation = researchLocation;
         }
 
+        [KSField] public string Id => researchLocation.ResearchLocationId;
+
         [KSField] public bool RequiresRegion => researchLocation.RequiresRegion;
 
         [KSField] public string BodyName => researchLocation.BodyName;

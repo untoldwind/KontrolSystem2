@@ -10,6 +10,8 @@
 * Add `ksp::ui::CONSOLE_WINDOW` to control the console window via script (#129)
   * Methods: `CONSOLE_WINDOW.open()`, `CONSOLE_WINDOW.open()`, `CONSOLE_WINDOW.center()`
   * Fields: `CONSOLE_WINDOW.is_closed`, `CONSOLE_WINDOW.size`, `CONSOLE_WINDOW.min_size`, `CONSOLE_WINDOW.position`
+* Improve bindings for science data (#125)
+  * Get a list of all completed research reports via `ksp::science::get_completed_research_reports()`
 
 ## 0.5.2.8 -> 0.5.3.1
 

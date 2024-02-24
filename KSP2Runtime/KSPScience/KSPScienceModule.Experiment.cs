@@ -25,6 +25,8 @@ public partial class KSPScienceModule {
         public ExperimentDefinitionAdapter Definition =>
             new(experimentStanding.ExperimentDefinition);
 
+        [KSField] public string ExperimentId => experimentStanding.ExperimentID;
+
         [KSField] public long CrewRequired => experimentConfiguration.CrewRequired;
 
         [KSField] public double TimeToComplete => experimentConfiguration.TimeToComplete;

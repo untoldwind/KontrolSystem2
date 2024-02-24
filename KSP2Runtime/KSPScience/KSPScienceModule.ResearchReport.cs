@@ -9,10 +9,10 @@ public partial class KSPScienceModule {
         Description = "Represents the stored report of a science experiment")]
     public class ResearchReportAdapter {
         private readonly ResearchReport researchReport;
-        private readonly ScienceStorageComponent scienceStorageComponnt;
+        private readonly ScienceStorageComponent scienceStorageComponent;
 
-        public ResearchReportAdapter(ScienceStorageComponent scienceStorageComponnt, ResearchReport researchReport) {
-            this.scienceStorageComponnt = scienceStorageComponnt;
+        public ResearchReportAdapter(ScienceStorageComponent scienceStorageComponent, ResearchReport researchReport) {
+            this.scienceStorageComponent = scienceStorageComponent;
             this.researchReport = researchReport;
         }
 
@@ -25,6 +25,12 @@ public partial class KSPScienceModule {
                 researchReport.ExperimentID)
         );
 
+        [KSField] public string ResearchLocationId => researchReport.ResearchLocationID;
+
+        [KSField] public string ExperimentId => researchReport.ExperimentID;
+
+        [KSField] public ScienceReportType ReportType => researchReport.ResearchReportType;
+
         [KSField] public bool TransmissionStatus => researchReport.TransmissionStatus;
 
         [KSField] public double TransmissionPercentage => researchReport.TransmissionPercentage;
@@ -34,10 +40,5 @@ public partial class KSPScienceModule {
         [KSField] public double TimeRequired => researchReport.TimeRequired;
 
         [KSField] public double TransmissionSize => researchReport.TransmissionSize;
-
-        [KSMethod]
-        public bool StartTransmit() {
-            return scienceStorageComponnt.StartReportTransmission(researchReport.ResearchReportKey);
-        }
     }
 }
