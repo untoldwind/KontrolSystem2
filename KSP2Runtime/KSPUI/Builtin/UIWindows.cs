@@ -35,6 +35,8 @@ public class UIWindows : KerbalMonoBehaviour {
         if (gameObject.GetComponent<ConsoleWindow>() == null) gameObject.AddComponent<ConsoleWindow>();
     }
 
+    public ConsoleWindow? ConsoleWindow => gameObject.GetComponent<ConsoleWindow>();
+
     public void OpenTelemetryWindow() {
         gameObject.AddComponent<TelemetryWindow>();
     }

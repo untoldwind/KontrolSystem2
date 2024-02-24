@@ -17,6 +17,9 @@ public partial class KSPUIModule {
         return new Vector2d(Screen.width, Screen.height);
     }
 
+    [KSConstant("CONSOLE_WINDOW", Description = "Main console window")]
+    public static readonly ConsoleWindowAdapter MainConsole = new();
+
     [KSFunction]
     public static Window OpenWindow(string title, double x, double y, double width, double height) {
         var uiWindow = UIWindows.Instance!.gameObject.AddComponent<UGUIResizableWindow>();
@@ -47,7 +50,7 @@ public partial class KSPUIModule {
                         (UGUILayout.Align.Start, "Align the element to start of container (left/top)."),
                         (UGUILayout.Align.Center, "Align the element to the center of the container."),
                         (UGUILayout.Align.End, "Align the element to end of container (right/bottom)."),
-                        (UGUILayout.Align.Stretch, "Strech the element to full size of container")
+                        (UGUILayout.Align.Stretch, "Stretch the element to full size of container")
                     })
             });
     }

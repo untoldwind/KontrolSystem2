@@ -13,7 +13,7 @@ public partial class KSPUIModule {
         private readonly UGUILabel label;
         private readonly AbstractContainer parent;
         private readonly UGUILayout.ILayoutEntry entry;
-        
+
         public Label(AbstractContainer parent, UGUILabel label, UGUILayout.ILayoutEntry entry) {
             this.parent = parent;
             this.label = label;
@@ -54,7 +54,7 @@ public partial class KSPUIModule {
             entry.Remove();
             parent.Root.Layout();
         }
-        
+
         private void OnDestroy() {
             bindSubscription?.Dispose();
             bindSubscription = null;

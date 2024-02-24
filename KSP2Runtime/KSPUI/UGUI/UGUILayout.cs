@@ -30,7 +30,7 @@ public abstract class UGUILayout {
         return entry;
     }
 
-    public (E, ILayoutEntry) Add<E>(E element, Align align = Align.Stretch, float stretch = 0.0f) where E : UGUIElement{
+    public (E, ILayoutEntry) Add<E>(E element, Align align = Align.Stretch, float stretch = 0.0f) where E : UGUIElement {
         var entry = new LayoutElement(this, element, align, stretch);
         layoutEntries.Add(entry);
         return (element, entry);

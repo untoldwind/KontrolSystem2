@@ -22,7 +22,7 @@ public class UGUILayoutContainer : UGUIElement {
         return layout.Layout();
     }
 
-    public UGUILayout.ILayoutEntry Add(GameObject child, UGUILayout.Align align, Vector2 minSize, float stretch = 0.0f) => 
+    public UGUILayout.ILayoutEntry Add(GameObject child, UGUILayout.Align align, Vector2 minSize, float stretch = 0.0f) =>
         layout.Add(child, align, minSize, stretch);
 
     public (E, UGUILayout.ILayoutEntry) Add<E>(E element, UGUILayout.Align align = UGUILayout.Align.Stretch, float stretch = 0.0f)

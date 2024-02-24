@@ -15,7 +15,7 @@ public partial class KSPUIModule {
         private AbstractContainer parent;
         private readonly UGUISlider slider;
         private readonly UGUILayout.ILayoutEntry entry;
-        
+
         public Slider(AbstractContainer parent, UGUISlider slider, double min, double max, UGUILayout.ILayoutEntry entry) {
             this.parent = parent;
             this.slider = slider;
@@ -69,7 +69,7 @@ public partial class KSPUIModule {
             entry.Remove();
             parent.Root.Layout();
         }
-        
+
         private void OnDestroy() {
             bindSubscription?.Dispose();
             bindSubscription = null;

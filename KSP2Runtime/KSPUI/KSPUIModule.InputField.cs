@@ -13,7 +13,7 @@ public partial class KSPUIModule {
         protected UGUIInputField inputField;
         protected AbstractContainer parent;
         private readonly UGUILayout.ILayoutEntry entry;
-        
+
         public AbstractInputField(AbstractContainer parent, UGUIInputField inputField, UGUILayout.ILayoutEntry entry) {
             this.parent = parent;
             this.inputField = inputField;
@@ -41,7 +41,7 @@ public partial class KSPUIModule {
             entry.Remove();
             parent.Root.Layout();
         }
-        
+
         private void OnDestroy() {
             bindSubscription?.Dispose();
             bindSubscription = null;

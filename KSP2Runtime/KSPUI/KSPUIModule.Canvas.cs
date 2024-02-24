@@ -39,7 +39,7 @@ public partial class KSPUIModule {
         protected override void RemoveAllElements() {
             canvas.Clear();
         }
-        
+
         [KSMethod]
         public void Remove() {
             entry.Remove();

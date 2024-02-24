@@ -352,7 +352,7 @@ public class IfThenElse : Expression, IVariableContainer {
     internal override Expression CollapseFinalReturn() {
         return new IfThenElse(condition, thenExpression.CollapseFinalReturn(), elseExpression.CollapseFinalReturn());
     }
-    
+
     public override REPLValueFuture Eval(REPLContext context) {
         if (condition.ResultType(context.replBlockContext) != BuiltinType.Bool)
             throw new REPLException(this, "Condition of if is not a boolean");

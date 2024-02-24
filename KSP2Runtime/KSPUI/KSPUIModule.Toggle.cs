@@ -12,7 +12,7 @@ public partial class KSPUIModule {
         private readonly AbstractContainer parent;
         private readonly UGUIToggle toggle;
         private readonly UGUILayout.ILayoutEntry entry;
-        
+
         public Toggle(AbstractContainer parent, UGUIToggle toggle, UGUILayout.ILayoutEntry entry) {
             this.parent = parent;
             this.toggle = toggle;
@@ -82,7 +82,7 @@ public partial class KSPUIModule {
             entry.Remove();
             parent.Root.Layout();
         }
-        
+
         private void OnDestroy() {
             bindSubscription?.Dispose();
             bindSubscription = null;

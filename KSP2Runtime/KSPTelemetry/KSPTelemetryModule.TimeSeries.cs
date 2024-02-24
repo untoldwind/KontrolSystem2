@@ -69,7 +69,7 @@ public partial class KSPTelemetryModule {
         }
 
         public bool HasData => lastBucketIdx >= 0;
-        
+
         public (double, TimeSeriesBucket)[] Values {
             get {
                 lock (seriesLock) {

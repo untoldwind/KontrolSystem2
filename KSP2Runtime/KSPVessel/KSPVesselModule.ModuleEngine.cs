@@ -55,12 +55,12 @@ public partial class KSPVesselModule {
             vesselAdapter.vessel.mainBody.transform.celestialFrame.ToLocalVector(
                 KSPContext.CurrentContext.Game.UniverseView.PhysicsSpace.PhysicsToVector(
                     dataEngine.ThrustDirRelativePartWorldSpace));
-        
+
         [KSField(Description = "Coordinate independent direction of thrust.")]
         public Vector GlobalThrustDirection =>
             KSPContext.CurrentContext.Game.UniverseView.PhysicsSpace.PhysicsToVector(
                 dataEngine.ThrustDirRelativePartWorldSpace);
-        
+
         [KSField]
         public EngineModeAdapter[] EngineModes => dataEngine.engineModes
             .Select(engineMode => new EngineModeAdapter(engineMode)).ToArray();

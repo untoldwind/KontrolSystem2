@@ -2,11 +2,14 @@
 
 ## 0.5.3.1 ->
 
-* Convert `EngineDeltaV.get_thrust_vector()` to celestial frame
+* Convert `EngineDeltaV.get_thrust_vector()` to celestial frame (#128)
 * Add coordinate independent variant `EngineDeltaV.get_global_thrust_vector()`
 * Add corresponding fields to `ModuleEngine`
   * `thrust_direction`
   * `global_thrust_direction`
+* Add `ksp::ui::CONSOLE_WINDOW` to control the console window via script (#129)
+  * Methods: `CONSOLE_WINDOW.open()`, `CONSOLE_WINDOW.open()`, `CONSOLE_WINDOW.center()`
+  * Fields: `CONSOLE_WINDOW.is_closed`, `CONSOLE_WINDOW.size`, `CONSOLE_WINDOW.min_size`, `CONSOLE_WINDOW.position`
 
 ## 0.5.2.8 -> 0.5.3.1
 

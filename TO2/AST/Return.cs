@@ -39,7 +39,7 @@ public class ReturnEmpty : Expression {
 
         ILChunks.GenerateFunctionLeave(context);
         context.IL.EmitReturn(context.MethodBuilder!.ReturnType);
-        if(!dropResult)
+        if (!dropResult)
             context.IL.Emit(OpCodes.Ldnull);
     }
 
@@ -97,7 +97,7 @@ public class ReturnValue : Expression {
 
         ILChunks.GenerateFunctionLeave(context);
         context.IL.EmitReturn(context.MethodBuilder!.ReturnType);
-        if(!dropResult)
+        if (!dropResult)
             context.IL.Emit(OpCodes.Ldnull);
     }
 
