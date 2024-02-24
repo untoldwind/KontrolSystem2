@@ -1,6 +1,6 @@
 # Changes
 
-## 0.5.3.1 ->
+## 0.5.3.1 -> 0.5.3.2
 
 * Convert `EngineDeltaV.get_thrust_vector()` to celestial frame (#128)
 * Add coordinate independent variant `EngineDeltaV.get_global_thrust_vector()`
@@ -12,6 +12,7 @@
   * Fields: `CONSOLE_WINDOW.is_closed`, `CONSOLE_WINDOW.size`, `CONSOLE_WINDOW.min_size`, `CONSOLE_WINDOW.position`
 * Improve bindings for science data (#125)
   * Get a list of all completed research reports via `ksp::science::get_completed_research_reports()`
+* Experimental bindings for object assembly (VAB, #127)
 
 ## 0.5.2.8 -> 0.5.3.1
 

@@ -30,7 +30,7 @@ Name | Type | Read-only | Description
 Center | [ksp::ui::Align](/reference/ksp/ui.md#align) | R/O | Align the element to the center of the container.
 End | [ksp::ui::Align](/reference/ksp/ui.md#align) | R/O | Align the element to end of container (right/bottom).
 Start | [ksp::ui::Align](/reference/ksp/ui.md#align) | R/O | Align the element to start of container (left/top).
-Stretch | [ksp::ui::Align](/reference/ksp/ui.md#align) | R/O | Strech the element to full size of container
+Stretch | [ksp::ui::Align](/reference/ksp/ui.md#align) | R/O | Stretch the element to full size of container
 
 #### Methods
 
@@ -275,6 +275,49 @@ canvas.clear ( ) -> Unit
 canvas.remove ( ) -> Unit
 ```
 
+
+
+### ConsoleWindow
+
+Represents the console window
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+is_closed | bool | R/O | Check if the console window is closed 
+min_size | [ksp::math::Vec2](/reference/ksp/math.md#vec2) | R/O | Get minimum size of window 
+position | [ksp::math::Vec2](/reference/ksp/math.md#vec2) | R/W | Get or change position of window 
+size | [ksp::math::Vec2](/reference/ksp/math.md#vec2) | R/W | Get or change size of window 
+
+#### Methods
+
+##### center
+
+```rust
+consolewindow.center ( ) -> Unit
+```
+
+Center window on the screen.
+
+
+##### close
+
+```rust
+consolewindow.close ( ) -> Unit
+```
+
+Close the console window
+
+
+##### open
+
+```rust
+consolewindow.open ( ) -> Unit
+```
+
+Open the console window
 
 
 ### Container
@@ -1759,6 +1802,7 @@ Resize window to its minimum size
 Name | Type | Description
 --- | --- | ---
 Align | ksp::ui::AlignConstants | Alignment of the element in off direction (horizontal for vertical container and vice versa)
+CONSOLE_WINDOW | ksp::ui::ConsoleWindow | Main console window 
 
 
 ## Functions

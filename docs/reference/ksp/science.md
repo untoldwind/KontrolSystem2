@@ -6,6 +6,20 @@ Collection of types and functions to get information and manipulate in-game scie
 ## Types
 
 
+### CompletedResearchReport
+
+Represents a completed research report
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+definition | [ksp::science::ExperimentDefinition](/reference/ksp/science.md#experimentdefinition) | R/O | Get the definition of the experiment. 
+experiment_id | string | R/O | 
+research_location_id | string | R/O | 
+science_value | float | R/O | 
+
 ### Experiment
 
 Represents an in-game science experiment.
@@ -20,6 +34,7 @@ current_experiment_state | [ksp::science::ExperimentState](/reference/ksp/scienc
 current_running_time | float | R/O | 
 current_situation_is_valid | bool | R/O | 
 definition | [ksp::science::ExperimentDefinition](/reference/ksp/science.md#experimentdefinition) | R/O | 
+experiment_id | string | R/O | 
 experiment_location | Option&lt;[ksp::science::ResearchLocation](/reference/ksp/science.md#researchlocation)> | R/O | Get the research location the experiment was last performed. 
 has_enough_resources | bool | R/O | 
 previous_experiment_state | [ksp::science::ExperimentState](/reference/ksp/science.md#experimentstate) | R/O | 
@@ -130,6 +145,7 @@ Represents a research location of a science experiment.
 Name | Type | Read-only | Description
 --- | --- | --- | ---
 body_name | string | R/O | 
+id | string | R/O | 
 requires_region | bool | R/O | 
 science_region | string | R/O | 
 science_situation | [ksp::science::ScienceSituation](/reference/ksp/science.md#sciencesituation) | R/O | 
@@ -145,21 +161,14 @@ Name | Type | Read-only | Description
 --- | --- | --- | ---
 definition | [ksp::science::ExperimentDefinition](/reference/ksp/science.md#experimentdefinition) | R/O | Get the definition of the experiment. 
 ec_required | float | R/O | 
+experiment_id | string | R/O | 
+report_type | [ksp::science::ScienceReportType](/reference/ksp/science.md#sciencereporttype) | R/O | 
 research_location | [ksp::science::ResearchLocation](/reference/ksp/science.md#researchlocation) | R/O | Get the research location the experiment was performed at. 
+research_location_id | string | R/O | 
 time_required | float | R/O | 
 transmission_percentage | float | R/O | 
 transmission_size | float | R/O | 
 transmission_status | bool | R/O | 
-
-#### Methods
-
-##### start_transmit
-
-```rust
-researchreport.start_transmit ( ) -> bool
-```
-
-
 
 ### ScienceExperimentType
 
@@ -193,6 +202,47 @@ SampleType | [ksp::science::ScienceExperimentType](/reference/ksp/science.md#sci
 
 ```rust
 scienceexperimenttypeconstants.from_string ( value : string ) -> Option<ksp::science::ScienceExperimentType>
+```
+
+Parse from string
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+value | string |  | Enum value to lookup
+
+### ScienceReportType
+
+Type of science report
+
+#### Methods
+
+##### to_string
+
+```rust
+sciencereporttype.to_string ( ) -> string
+```
+
+String representation of the number
+
+### ScienceReportTypeConstants
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+DataType | [ksp::science::ScienceReportType](/reference/ksp/science.md#sciencereporttype) | R/O | Science data
+SampleType | [ksp::science::ScienceReportType](/reference/ksp/science.md#sciencereporttype) | R/O | Science sample for experiments
+
+#### Methods
+
+##### from_string
+
+```rust
+sciencereporttypeconstants.from_string ( value : string ) -> Option<ksp::science::ScienceReportType>
 ```
 
 Parse from string
@@ -276,5 +326,18 @@ Name | Type | Description
 --- | --- | ---
 ExperimentState | ksp::science::ExperimentStateConstants | Science experiment state
 ScienceExperimentType | ksp::science::ScienceExperimentTypeConstants | Science experiment type
+ScienceReportType | ksp::science::ScienceReportTypeConstants | Type of science report
 ScienceSituation | ksp::science::ScienceSituationConstants | Situation of a science experiment
+
+
+## Functions
+
+
+### get_completed_research_reports
+
+```rust
+pub sync fn get_completed_research_reports ( ) -> ksp::science::CompletedResearchReport[]
+```
+
+Get all completed research reports.
 

@@ -261,6 +261,21 @@ Name | Type | Optional | Description
 --- | --- | --- | ---
 situation | ksp::vessel::DeltaVSituation |  | 
 
+##### get_global_thrust_vector
+
+```rust
+enginedeltav.get_global_thrust_vector ( situation : ksp::vessel::DeltaVSituation ) -> ksp::math::GlobalVector
+```
+
+Coordinate independent estimated thrust vector of the engine in a given `situation`
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+situation | ksp::vessel::DeltaVSituation |  | 
+
 ##### get_thrust
 
 ```rust
@@ -690,6 +705,7 @@ current_engine_mode | [ksp::vessel::EngineMode](/reference/ksp/vessel.md#enginem
 current_throttle | float | R/O | 
 current_thrust | float | R/O | 
 engine_modes | [ksp::vessel::EngineMode](/reference/ksp/vessel.md#enginemode)[] | R/O | 
+global_thrust_direction | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | Coordinate independent direction of thrust. 
 has_ignited | bool | R/O | 
 is_flameout | bool | R/O | 
 is_operational | bool | R/O | 
@@ -703,6 +719,7 @@ min_fuel_flow | float | R/O |
 part_name | string | R/O | 
 real_isp | float | R/O | 
 throttle_min | float | R/O | 
+thrust_direction | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Direction of thrust in the celestial frame of the main body 
 
 #### Methods
 
