@@ -1955,7 +1955,22 @@
         {
           "kind": "Standard",
           "module": "ksp::oab",
+          "name": "ObjectAssemblyDeltaV"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
+          "name": "ObjectAssemblyEngineDeltaV"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
           "name": "ObjectAssemblyPart"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
+          "name": "ObjectAssemblyStageDeltaV"
         },
         {
           "kind": "Standard",
@@ -2386,6 +2401,11 @@
           "kind": "Standard",
           "module": "ksp::vessel",
           "name": "ModuleFairing"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleGimbal"
         },
         {
           "kind": "Standard",
@@ -2776,7 +2796,22 @@
         {
           "kind": "Standard",
           "module": "ksp::oab",
+          "name": "ObjectAssemblyDeltaV"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
+          "name": "ObjectAssemblyEngineDeltaV"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
           "name": "ObjectAssemblyPart"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
+          "name": "ObjectAssemblyStageDeltaV"
         },
         {
           "kind": "Standard",
@@ -3207,6 +3242,11 @@
           "kind": "Standard",
           "module": "ksp::vessel",
           "name": "ModuleFairing"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleGimbal"
         },
         {
           "kind": "Standard",
@@ -10586,6 +10626,15 @@
                 "kind": "Builtin",
                 "name": "float"
               }
+            },
+            "delta_v": {
+              "name": "delta_v",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::oab",
+                "name": "ObjectAssemblyDeltaV"
+              }
             }
           },
           "methods": {},
@@ -10628,6 +10677,117 @@
             }
           },
           "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "ObjectAssemblyDeltaV": {
+          "name": "ObjectAssemblyDeltaV",
+          "description": "Delta V information of an object assembly\n",
+          "fields": {
+            "stages": {
+              "name": "stages",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::oab",
+                    "name": "ObjectAssemblyStageDeltaV"
+                  }
+                ]
+              }
+            }
+          },
+          "methods": {
+            "stage": {
+              "isAsync": false,
+              "name": "stage",
+              "description": "Get delta-v information for a specific `stage` of the object assembly, if existent.\n",
+              "parameters": [
+                {
+                  "name": "stage",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "int"
+                  },
+                  "hasDefault": false,
+                  "description": null
+                }
+              ],
+              "returnType": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::oab",
+                    "name": "ObjectAssemblyStageDeltaV"
+                  }
+                ]
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "ObjectAssemblyEngineDeltaV": {
+          "name": "ObjectAssemblyEngineDeltaV",
+          "description": "",
+          "fields": {
+            "start_burn_stage": {
+              "name": "start_burn_stage",
+              "description": "Number of the stage when engine is supposed to start\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "int"
+              }
+            }
+          },
+          "methods": {
+            "get_ISP": {
+              "isAsync": false,
+              "name": "get_ISP",
+              "description": "Estimated ISP of the engine in a given `situation`\n",
+              "parameters": [
+                {
+                  "name": "situation",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "DeltaVSituation"
+                  },
+                  "hasDefault": false,
+                  "description": null
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "get_thrust": {
+              "isAsync": false,
+              "name": "get_thrust",
+              "description": "Estimated thrust of the engine in a given `situation`\n",
+              "parameters": [
+                {
+                  "name": "situation",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "DeltaVSituation"
+                  },
+                  "hasDefault": false,
+                  "description": null
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            }
+          },
           "assignableFromAny": false,
           "assignableFrom": []
         },
@@ -10713,6 +10873,182 @@
             }
           },
           "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "ObjectAssemblyStageDeltaV": {
+          "name": "ObjectAssemblyStageDeltaV",
+          "description": "",
+          "fields": {
+            "engines": {
+              "name": "engines",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::oab",
+                    "name": "ObjectAssemblyEngineDeltaV"
+                  }
+                ]
+              }
+            },
+            "active_engines": {
+              "name": "active_engines",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::oab",
+                    "name": "ObjectAssemblyEngineDeltaV"
+                  }
+                ]
+              }
+            },
+            "stage": {
+              "name": "stage",
+              "description": "The stage number.\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "int"
+              }
+            },
+            "burn_time": {
+              "name": "burn_time",
+              "description": "Estimated burn time of the stage.\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "start_mass": {
+              "name": "start_mass",
+              "description": "Start mass of the stage.\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "end_mass": {
+              "name": "end_mass",
+              "description": "End mass of the stage.\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "fuel_mass": {
+              "name": "fuel_mass",
+              "description": "Mass of the fuel in the stage.\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "dry_mass": {
+              "name": "dry_mass",
+              "description": "Dry mass of the stage.\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            }
+          },
+          "methods": {
+            "get_deltav": {
+              "isAsync": false,
+              "name": "get_deltav",
+              "description": "Estimated delta-v of the stage in a given `situation`\n",
+              "parameters": [
+                {
+                  "name": "situation",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "DeltaVSituation"
+                  },
+                  "hasDefault": false,
+                  "description": null
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "get_ISP": {
+              "isAsync": false,
+              "name": "get_ISP",
+              "description": "Estimated ISP of the stage in a given `situation`\n",
+              "parameters": [
+                {
+                  "name": "situation",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "DeltaVSituation"
+                  },
+                  "hasDefault": false,
+                  "description": null
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "get_TWR": {
+              "isAsync": false,
+              "name": "get_TWR",
+              "description": "Estimated TWR of the stage in a given `situation`\n",
+              "parameters": [
+                {
+                  "name": "situation",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "DeltaVSituation"
+                  },
+                  "hasDefault": false,
+                  "description": null
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "get_thrust": {
+              "isAsync": false,
+              "name": "get_thrust",
+              "description": "Estimated thrust of the stage in a given `situation`\n",
+              "parameters": [
+                {
+                  "name": "situation",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "DeltaVSituation"
+                  },
+                  "hasDefault": false,
+                  "description": null
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            }
+          },
           "assignableFromAny": false,
           "assignableFrom": []
         }
@@ -11162,7 +11498,22 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyStageDeltaV"
             },
             {
               "kind": "Standard",
@@ -11588,6 +11939,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleGimbal"
             },
             {
               "kind": "Standard",
@@ -13659,7 +14015,22 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyStageDeltaV"
             },
             {
               "kind": "Standard",
@@ -14085,6 +14456,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleGimbal"
             },
             {
               "kind": "Standard",
@@ -14895,7 +15271,22 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyStageDeltaV"
             },
             {
               "kind": "Standard",
@@ -15321,6 +15712,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleGimbal"
             },
             {
               "kind": "Standard",
@@ -15874,7 +16270,22 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyStageDeltaV"
             },
             {
               "kind": "Standard",
@@ -16300,6 +16711,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleGimbal"
             },
             {
               "kind": "Standard",
@@ -16793,7 +17209,22 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyStageDeltaV"
             },
             {
               "kind": "Standard",
@@ -17219,6 +17650,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleGimbal"
             },
             {
               "kind": "Standard",
@@ -17672,7 +18108,22 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyStageDeltaV"
             },
             {
               "kind": "Standard",
@@ -18098,6 +18549,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleGimbal"
             },
             {
               "kind": "Standard",
@@ -19624,7 +20080,22 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyStageDeltaV"
             },
             {
               "kind": "Standard",
@@ -20050,6 +20521,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleGimbal"
             },
             {
               "kind": "Standard",
@@ -24572,7 +25048,22 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyStageDeltaV"
             },
             {
               "kind": "Standard",
@@ -24998,6 +25489,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleGimbal"
             },
             {
               "kind": "Standard",
@@ -25461,7 +25957,22 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyStageDeltaV"
             },
             {
               "kind": "Standard",
@@ -25887,6 +26398,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleGimbal"
             },
             {
               "kind": "Standard",
@@ -26370,7 +26886,22 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyStageDeltaV"
             },
             {
               "kind": "Standard",
@@ -26796,6 +27327,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleGimbal"
             },
             {
               "kind": "Standard",
@@ -27259,7 +27795,22 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyStageDeltaV"
             },
             {
               "kind": "Standard",
@@ -27685,6 +28236,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleGimbal"
             },
             {
               "kind": "Standard",
@@ -28158,7 +28714,22 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyStageDeltaV"
             },
             {
               "kind": "Standard",
@@ -28584,6 +29155,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleGimbal"
             },
             {
               "kind": "Standard",
@@ -29147,7 +29723,22 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyStageDeltaV"
             },
             {
               "kind": "Standard",
@@ -29573,6 +30164,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleGimbal"
             },
             {
               "kind": "Standard",
@@ -30086,7 +30682,22 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyStageDeltaV"
             },
             {
               "kind": "Standard",
@@ -30512,6 +31123,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleGimbal"
             },
             {
               "kind": "Standard",
@@ -30985,7 +31601,22 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyStageDeltaV"
             },
             {
               "kind": "Standard",
@@ -31411,6 +32042,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleGimbal"
             },
             {
               "kind": "Standard",
@@ -31904,7 +32540,22 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyStageDeltaV"
             },
             {
               "kind": "Standard",
@@ -32330,6 +32981,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleGimbal"
             },
             {
               "kind": "Standard",
@@ -32833,7 +33489,22 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyStageDeltaV"
             },
             {
               "kind": "Standard",
@@ -33259,6 +33930,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleGimbal"
             },
             {
               "kind": "Standard",
@@ -33772,15 +34448,6 @@
           "name": "EngineDeltaV",
           "description": "",
           "fields": {
-            "start_burn_stage": {
-              "name": "start_burn_stage",
-              "description": "Number of the stage when engine is supposed to start\n",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "int"
-              }
-            },
             "engine_module": {
               "name": "engine_module",
               "readOnly": true,
@@ -33789,51 +34456,18 @@
                 "module": "ksp::vessel",
                 "name": "ModuleEngine"
               }
+            },
+            "start_burn_stage": {
+              "name": "start_burn_stage",
+              "description": "Number of the stage when engine is supposed to start\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "int"
+              }
             }
           },
           "methods": {
-            "get_ISP": {
-              "isAsync": false,
-              "name": "get_ISP",
-              "description": "Estimated ISP of the engine in a given `situation`\n",
-              "parameters": [
-                {
-                  "name": "situation",
-                  "type": {
-                    "kind": "Standard",
-                    "module": "ksp::vessel",
-                    "name": "DeltaVSituation"
-                  },
-                  "hasDefault": false,
-                  "description": null
-                }
-              ],
-              "returnType": {
-                "kind": "Builtin",
-                "name": "float"
-              }
-            },
-            "get_thrust": {
-              "isAsync": false,
-              "name": "get_thrust",
-              "description": "Estimated thrust of the engine in a given `situation`\n",
-              "parameters": [
-                {
-                  "name": "situation",
-                  "type": {
-                    "kind": "Standard",
-                    "module": "ksp::vessel",
-                    "name": "DeltaVSituation"
-                  },
-                  "hasDefault": false,
-                  "description": null
-                }
-              ],
-              "returnType": {
-                "kind": "Builtin",
-                "name": "float"
-              }
-            },
             "get_thrust_vector": {
               "isAsync": false,
               "name": "get_thrust_vector",
@@ -33877,6 +34511,48 @@
                 "module": "ksp::math",
                 "name": "GlobalVector"
               }
+            },
+            "get_ISP": {
+              "isAsync": false,
+              "name": "get_ISP",
+              "description": "Estimated ISP of the engine in a given `situation`\n",
+              "parameters": [
+                {
+                  "name": "situation",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "DeltaVSituation"
+                  },
+                  "hasDefault": false,
+                  "description": null
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "get_thrust": {
+              "isAsync": false,
+              "name": "get_thrust",
+              "description": "Estimated thrust of the engine in a given `situation`\n",
+              "parameters": [
+                {
+                  "name": "situation",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "DeltaVSituation"
+                  },
+                  "hasDefault": false,
+                  "description": null
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "float"
+              }
             }
           },
           "assignableFromAny": false,
@@ -33886,6 +34562,34 @@
           "name": "StageDeltaV",
           "description": "",
           "fields": {
+            "engines": {
+              "name": "engines",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "EngineDeltaV"
+                  }
+                ]
+              }
+            },
+            "active_engines": {
+              "name": "active_engines",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "EngineDeltaV"
+                  }
+                ]
+              }
+            },
             "stage": {
               "name": "stage",
               "description": "The stage number.\n",
@@ -33938,34 +34642,6 @@
               "type": {
                 "kind": "Builtin",
                 "name": "float"
-              }
-            },
-            "engines": {
-              "name": "engines",
-              "readOnly": true,
-              "type": {
-                "kind": "Array",
-                "parameters": [
-                  {
-                    "kind": "Standard",
-                    "module": "ksp::vessel",
-                    "name": "EngineDeltaV"
-                  }
-                ]
-              }
-            },
-            "active_engines": {
-              "name": "active_engines",
-              "readOnly": true,
-              "type": {
-                "kind": "Array",
-                "parameters": [
-                  {
-                    "kind": "Standard",
-                    "module": "ksp::vessel",
-                    "name": "EngineDeltaV"
-                  }
-                ]
               }
             }
           },
@@ -34466,14 +35142,6 @@
                 "name": "GlobalDirection"
               }
             },
-            "is_engine": {
-              "name": "is_engine",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "bool"
-              }
-            },
             "splashed": {
               "name": "splashed",
               "description": "Indicate if the part has splashed\n",
@@ -34561,6 +35229,14 @@
                     "name": "ModuleDockingNode"
                   }
                 ]
+              }
+            },
+            "is_engine": {
+              "name": "is_engine",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
               }
             },
             "engine_module": {
@@ -35090,14 +35766,6 @@
                 "name": "GlobalDirection"
               }
             },
-            "is_engine": {
-              "name": "is_engine",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "bool"
-              }
-            },
             "splashed": {
               "name": "splashed",
               "description": "Indicate if the part has splashed\n",
@@ -35185,6 +35853,14 @@
                     "name": "ModuleDockingNode"
                   }
                 ]
+              }
+            },
+            "is_engine": {
+              "name": "is_engine",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
               }
             },
             "engine_module": {
@@ -35469,6 +36145,71 @@
                 "name": "string"
               }
             },
+            "thrust_direction": {
+              "name": "thrust_direction",
+              "description": "Direction of thrust in the celestial frame of the main body\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec3"
+              }
+            },
+            "global_thrust_direction": {
+              "name": "global_thrust_direction",
+              "description": "Coordinate independent direction of thrust.\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "GlobalVector"
+              }
+            },
+            "engine_modes": {
+              "name": "engine_modes",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "EngineMode"
+                  }
+                ]
+              }
+            },
+            "is_gimbal": {
+              "name": "is_gimbal",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "gimbal": {
+              "name": "gimbal",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ModuleGimbal"
+                  }
+                ]
+              }
+            },
+            "current_engine_mode": {
+              "name": "current_engine_mode",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "EngineMode"
+              }
+            },
             "is_shutdown": {
               "name": "is_shutdown",
               "readOnly": true,
@@ -35581,47 +36322,20 @@
                 "name": "float"
               }
             },
-            "thrust_direction": {
-              "name": "thrust_direction",
-              "description": "Direction of thrust in the celestial frame of the main body\n",
-              "readOnly": true,
+            "independent_throttle_enabled": {
+              "name": "independent_throttle_enabled",
+              "readOnly": false,
               "type": {
-                "kind": "Standard",
-                "module": "ksp::math",
-                "name": "Vec3"
+                "kind": "Builtin",
+                "name": "bool"
               }
             },
-            "global_thrust_direction": {
-              "name": "global_thrust_direction",
-              "description": "Coordinate independent direction of thrust.\n",
-              "readOnly": true,
+            "independent_throttle": {
+              "name": "independent_throttle",
+              "readOnly": false,
               "type": {
-                "kind": "Standard",
-                "module": "ksp::math",
-                "name": "GlobalVector"
-              }
-            },
-            "engine_modes": {
-              "name": "engine_modes",
-              "readOnly": true,
-              "type": {
-                "kind": "Array",
-                "parameters": [
-                  {
-                    "kind": "Standard",
-                    "module": "ksp::vessel",
-                    "name": "EngineMode"
-                  }
-                ]
-              }
-            },
-            "current_engine_mode": {
-              "name": "current_engine_mode",
-              "readOnly": true,
-              "type": {
-                "kind": "Standard",
-                "module": "ksp::vessel",
-                "name": "EngineMode"
+                "kind": "Builtin",
+                "name": "float"
               }
             }
           },
@@ -35689,6 +36403,64 @@
               }
             }
           },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "ModuleGimbal": {
+          "name": "ModuleGimbal",
+          "description": "",
+          "fields": {
+            "enabled": {
+              "name": "enabled",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "enable_pitch": {
+              "name": "enable_pitch",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "enable_yaw": {
+              "name": "enable_yaw",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "enable_roll": {
+              "name": "enable_roll",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "limiter": {
+              "name": "limiter",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "pitch_yaw_roll": {
+              "name": "pitch_yaw_roll",
+              "readOnly": false,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec3"
+              }
+            }
+          },
+          "methods": {},
           "assignableFromAny": false,
           "assignableFrom": []
         },
@@ -35866,14 +36638,6 @@
                 "name": "string"
               }
             },
-            "energy_flow": {
-              "name": "energy_flow",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "float"
-              }
-            },
             "blocking_body": {
               "name": "blocking_body",
               "readOnly": true,
@@ -35886,6 +36650,14 @@
                     "name": "Body"
                   }
                 ]
+              }
+            },
+            "energy_flow": {
+              "name": "energy_flow",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
               }
             }
           },
@@ -35933,14 +36705,6 @@
                 "kind": "Standard",
                 "module": "ksp::math",
                 "name": "GlobalDirection"
-              }
-            },
-            "is_engine": {
-              "name": "is_engine",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "bool"
               }
             },
             "splashed": {
@@ -36030,6 +36794,14 @@
                     "name": "ModuleDockingNode"
                   }
                 ]
+              }
+            },
+            "is_engine": {
+              "name": "is_engine",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
               }
             },
             "engine_module": {

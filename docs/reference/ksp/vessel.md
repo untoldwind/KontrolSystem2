@@ -707,9 +707,13 @@ current_engine_mode | [ksp::vessel::EngineMode](/reference/ksp/vessel.md#enginem
 current_throttle | float | R/O | 
 current_thrust | float | R/O | 
 engine_modes | [ksp::vessel::EngineMode](/reference/ksp/vessel.md#enginemode)[] | R/O | 
+gimbal | Option&lt;[ksp::vessel::ModuleGimbal](/reference/ksp/vessel.md#modulegimbal)> | R/O | 
 global_thrust_direction | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | Coordinate independent direction of thrust. 
 has_ignited | bool | R/O | 
+independent_throttle | float | R/W | 
+independent_throttle_enabled | bool | R/W | 
 is_flameout | bool | R/O | 
+is_gimbal | bool | R/O | 
 is_operational | bool | R/O | 
 is_propellant_starved | bool | R/O | 
 is_shutdown | bool | R/O | 
@@ -760,6 +764,21 @@ modulefairing.jettison ( ) -> bool
 ```
 
 
+
+### ModuleGimbal
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+enable_pitch | bool | R/W | 
+enable_roll | bool | R/W | 
+enable_yaw | bool | R/W | 
+enabled | bool | R/W | 
+limiter | float | R/W | 
+pitch_yaw_roll | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/W | 
 
 ### ModuleLaunchClamp
 
