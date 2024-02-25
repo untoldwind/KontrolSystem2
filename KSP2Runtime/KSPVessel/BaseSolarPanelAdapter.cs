@@ -9,6 +9,6 @@ public abstract class BaseSolarPanelAdapter {
     protected BaseSolarPanelAdapter(Data_SolarPanel dataSolarPanel) {
         this.dataSolarPanel = dataSolarPanel;
     }
-    
+
     [KSField] public double EnergyFlow => dataSolarPanel.EnergyFlow.GetValue();
 }

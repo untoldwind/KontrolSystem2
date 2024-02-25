@@ -13,7 +13,7 @@ public partial class KSPVesselModule {
         public ModuleParachuteAdapter(PartComponent part, Data_Parachute dataParachute) : base(dataParachute) {
             this.part = part;
         }
-        
+
         [KSMethod]
         public bool Deploy() {
             if (!KSPContext.CurrentContext.Game.SpaceSimulation.TryGetViewObject(part.SimulationObject,

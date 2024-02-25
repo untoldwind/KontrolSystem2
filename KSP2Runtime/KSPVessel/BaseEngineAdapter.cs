@@ -9,7 +9,7 @@ public abstract class BaseEngineAdapter {
     protected BaseEngineAdapter(Data_Engine dataEngine) {
         this.dataEngine = dataEngine;
     }
-    
+
     [KSField] public bool IsShutdown => dataEngine.EngineShutdown;
 
     [KSField] public bool HasIgnited => dataEngine.EngineIgnited;

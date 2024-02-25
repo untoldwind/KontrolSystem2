@@ -22,5 +22,8 @@ public partial class KSPOABModule {
         [KSField] public double WetMass => objectAssembly.GetWetMass();
 
         [KSField] public double TotalMass => objectAssembly.GetTotalMass();
+
+        [KSField]
+        public ObjectAssemblyDeltaVAdapter DeltaV => new ObjectAssemblyDeltaVAdapter(objectAssembly.VesselDeltaV);
     }
 }

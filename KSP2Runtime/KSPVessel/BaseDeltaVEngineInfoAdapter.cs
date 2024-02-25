@@ -9,7 +9,7 @@ public abstract class BaseDeltaVEngineInfoAdapter {
     protected BaseDeltaVEngineInfoAdapter(DeltaVEngineInfo deltaVEngineInfo) {
         this.deltaVEngineInfo = deltaVEngineInfo;
     }
-    
+
     [KSField(Description = "Number of the stage when engine is supposed to start")]
     public long StartBurnStage => deltaVEngineInfo.StartBurnStage;
 

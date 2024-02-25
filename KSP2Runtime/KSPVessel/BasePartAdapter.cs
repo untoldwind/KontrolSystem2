@@ -15,7 +15,7 @@ public abstract class BasePartAdapter<T> where T : IDeltaVPart {
     [KSField] public long ActivationStage => part.ActivationStage;
 
     [KSField] public long DecoupleStage => part.DecoupleStage;
-    
+
     [KSField(Description = "Dry mass of the part")]
     public double DryMass => part.DryMass;
 

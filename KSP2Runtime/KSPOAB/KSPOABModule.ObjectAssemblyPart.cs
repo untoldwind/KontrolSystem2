@@ -11,7 +11,7 @@ public partial class KSPOABModule {
     public class ObjectAssemblyPartAdapter : BasePartAdapter<IObjectAssemblyPart> {
         public ObjectAssemblyPartAdapter(IObjectAssemblyPart objectAssemblyPart) : base(objectAssemblyPart) {
         }
-        
+
         [KSField] public bool FuelCrossFeed => part.FuelCrossFeed;
 
         [KSField]

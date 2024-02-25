@@ -9,7 +9,7 @@ public partial class KSPVesselModule {
     public class ModuleControlSurfaceAdapter : BaseControlSurfaceAdapter {
         private readonly PartComponent part;
 
-        public ModuleControlSurfaceAdapter(PartComponent part, Data_ControlSurface dataControlSurface) : base(dataControlSurface) { 
+        public ModuleControlSurfaceAdapter(PartComponent part, Data_ControlSurface dataControlSurface) : base(dataControlSurface) {
             this.part = part;
         }
 

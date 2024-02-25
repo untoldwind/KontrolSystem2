@@ -10,7 +10,7 @@ public abstract class BaseParachuteAdapter {
     protected BaseParachuteAdapter(Data_Parachute dataParachute) {
         this.dataParachute = dataParachute;
     }
-    
+
     [KSField] public Data_Parachute.DeploymentStates DeployState => dataParachute.deployState.GetValue();
 
     [KSField]

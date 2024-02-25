@@ -9,7 +9,7 @@ public abstract class BaseDeltaVStageInfoAdapter {
     protected BaseDeltaVStageInfoAdapter(DeltaVStageInfo deltaVStageInfo) {
         this.deltaVStageInfo = deltaVStageInfo;
     }
-    
+
     [KSField(Description = "The stage number.")]
     public long Stage => deltaVStageInfo.Stage;
 

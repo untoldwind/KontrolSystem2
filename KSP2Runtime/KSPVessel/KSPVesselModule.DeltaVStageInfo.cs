@@ -12,7 +12,7 @@ public partial class KSPVesselModule {
         internal DeltaVStageInfoAdapter(VesselAdapter vesselAdapter, DeltaVStageInfo deltaVStageInfo) : base(deltaVStageInfo) {
             this.vesselAdapter = vesselAdapter;
         }
-        
+
         [KSField]
         public DeltaVEngineInfoAdapter[] Engines => deltaVStageInfo.EnginesInStage
             .Select(e => new DeltaVEngineInfoAdapter(vesselAdapter, e)).ToArray();

@@ -9,7 +9,7 @@ public class BaseControlSurfaceAdapter {
     protected BaseControlSurfaceAdapter(Data_ControlSurface dataControlSurface) {
         this.dataControlSurface = dataControlSurface;
     }
-    
+
     [KSField]
     public bool InvertControl {
         get => dataControlSurface.InvertControl.GetValue();

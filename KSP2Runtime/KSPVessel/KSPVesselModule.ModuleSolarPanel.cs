@@ -17,7 +17,7 @@ public partial class KSPVesselModule {
         }
 
         [KSField] public string PartName => part?.PartName ?? "Unknown";
-        
+
         [KSField]
         public Option<IBody> BlockingBody {
             get {

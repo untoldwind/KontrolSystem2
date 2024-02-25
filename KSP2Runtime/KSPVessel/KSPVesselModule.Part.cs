@@ -20,7 +20,7 @@ public partial class KSPVesselModule {
         }
 
         [KSField] public VesselAdapter Vessel => vesselAdapter;
-        
+
         [KSField(Description = "Get position of the part in celestial frame of the main body.")]
         public Vector3d Position =>
             vesselAdapter.vessel.mainBody.transform.celestialFrame.ToLocalPosition(part.SimulationObject.Position);
@@ -33,13 +33,13 @@ public partial class KSPVesselModule {
             new(new Rotation(part.SimulationObject.transform.bodyFrame, ControlFacingRotation));
 
         [KSField] public bool IsEngine => part.IsPartEngine(out var _);
-        
+
         [KSField(Description = "Indicate if the part has splashed")]
         public bool Splashed => part.Splashed;
 
         [KSField(Description = "Resource mass of the part")]
         public double ResourceMass => part.ResourceMass;
-        
+
         [KSField(Description = "Temperature of the part")]
         public double Temperature => part.Temperature;
 
@@ -98,7 +98,7 @@ public partial class KSPVesselModule {
         public Option<ModuleSolarPanelAdapter> SolarPanel =>
             part.IsPartSolarPanel(out var data)
                 ? Option.Some(new ModuleSolarPanelAdapter(part, data))
-                : Option.None<ModuleSolarPanelAdapter>();  
+                : Option.None<ModuleSolarPanelAdapter>();
 
         [KSField] public bool IsFairing => part.TryGetModuleData<PartComponentModule_Fairing, Data_Fairing>(out var _);
 
