@@ -37,4 +37,16 @@ public abstract class BaseEngineAdapter {
     [KSField] public double MaxThrustOutputVac => dataEngine.MaxThrustOutputVac();
 
     [KSField] public double MaxThrustOutputAtm => dataEngine.MaxThrustOutputAtm();
+
+    [KSField]
+    public bool IndependentThrottleEnabled {
+        get => dataEngine.IndependentThrottle.GetValue();
+        set => dataEngine.IndependentThrottle.SetValue(value);
+    }
+
+    [KSField]
+    public double IndependentThrottle {
+        get => dataEngine.IndependentThrottlePercentage.GetValue() / 100.0;
+        set => dataEngine.IndependentThrottlePercentage.SetValue((float)(value * 100.0));
+    }
 }

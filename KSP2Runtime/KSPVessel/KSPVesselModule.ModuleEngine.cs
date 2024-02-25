@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using KontrolSystem.TO2.Binding;
+using KontrolSystem.TO2.Runtime;
 using KSP.Modules;
 using KSP.Sim;
 using KSP.Sim.impl;
@@ -34,6 +35,14 @@ public partial class KSPVesselModule {
         [KSField]
         public EngineModeAdapter[] EngineModes => dataEngine.engineModes
             .Select(engineMode => new EngineModeAdapter(engineMode)).ToArray();
+
+        [KSField] public bool IsGimbal => part.TryGetModuleData<PartComponentModule_Gimbal, Data_Gimbal>(out var _);
+
+        [KSField]
+        public Option<ModuleGimbalAdapter> Gimbal =>
+            part.TryGetModuleData<PartComponentModule_Gimbal, Data_Gimbal>(out var data)
+                ? Option.Some(new ModuleGimbalAdapter(part, data))
+                : Option.None<ModuleGimbalAdapter>();
 
         [KSField]
         public EngineModeAdapter CurrentEngineMode =>

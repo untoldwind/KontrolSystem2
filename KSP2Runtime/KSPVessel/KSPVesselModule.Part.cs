@@ -31,9 +31,7 @@ public partial class KSPVesselModule {
         [KSField]
         public RotationWrapper GlobalRotation =>
             new(new Rotation(part.SimulationObject.transform.bodyFrame, ControlFacingRotation));
-
-        [KSField] public bool IsEngine => part.IsPartEngine(out var _);
-
+        
         [KSField(Description = "Indicate if the part has splashed")]
         public bool Splashed => part.Splashed;
 
@@ -63,7 +61,9 @@ public partial class KSPVesselModule {
             part.IsPartDockingPort(out var data)
                 ? Option.Some(new ModuleDockingNodeAdapter(vesselAdapter, part, data))
                 : Option.None<ModuleDockingNodeAdapter>();
-
+        
+        [KSField] public bool IsEngine => part.IsPartEngine(out var _);
+        
         [KSField]
         public Option<ModuleEngineAdapter> EngineModule =>
             part.IsPartEngine(out var data)

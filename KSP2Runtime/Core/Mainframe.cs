@@ -148,7 +148,7 @@ public class Mainframe : KerbalMonoBehaviour {
 
                 foreach (var error in e.errors) config.Logger.Info(error.ToString());
 
-                return new State(state!.registry, stopwatch.Elapsed, e.errors.Select(error => new MainframeError(
+                return new State(state?.registry, stopwatch.Elapsed, e.errors.Select(error => new MainframeError(
                     error.start,
                     error.errorType.ToString(),
                     error.message
