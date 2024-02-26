@@ -40,5 +40,10 @@ public partial class KSPScienceModule {
         [KSField] public double TimeRequired => researchReport.TimeRequired;
 
         [KSField] public double TransmissionSize => researchReport.TransmissionSize;
+        
+        [KSMethod]
+        public bool StartTransmit() {
+            return scienceStorageComponent.StartReportTransmission(researchReport.ResearchReportKey);
+        }
     }
 }

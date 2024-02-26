@@ -19049,7 +19049,17 @@
               }
             }
           },
-          "methods": {},
+          "methods": {
+            "start_transmit": {
+              "isAsync": false,
+              "name": "start_transmit",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            }
+          },
           "assignableFromAny": false,
           "assignableFrom": []
         },

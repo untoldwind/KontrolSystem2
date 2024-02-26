@@ -1,5 +1,10 @@
 # Changes
 
+## 0.5.3.3 -> 0.5.3.4 
+
+Hotfix:
+* Re-add accidentally dropped `research_report.start_transmission()` (#125) 
+
 ## 0.5.3.2 -> 0.5.3.3
 
 * Fix stuck in rebooting error if there is an initial compilation failure

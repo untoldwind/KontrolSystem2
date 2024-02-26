@@ -170,6 +170,16 @@ transmission_percentage | float | R/O |
 transmission_size | float | R/O | 
 transmission_status | bool | R/O | 
 
+#### Methods
+
+##### start_transmit
+
+```rust
+researchreport.start_transmit ( ) -> bool
+```
+
+
+
 ### ScienceExperimentType
 
 Science experiment type
