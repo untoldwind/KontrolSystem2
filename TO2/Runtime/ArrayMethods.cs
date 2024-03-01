@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -21,6 +22,28 @@ public static class ArrayMethods {
             result[i] = mapper(source[i], i);
 
         return result;
+    }
+
+    public static U[] FlatMap<T, U>(T[] source, Func<T, U[]> mapper) {
+        var result = new List<U>(source.Length);
+
+        for (var i = 0; i < source.Length; i++)
+            foreach (var item in mapper(source[i]))
+                result.Add(item);
+
+        return result.ToArray();
+    }
+
+    public static U[] FilterMap<T, U>(T[] source, Func<T, Option<U>> mapper) {
+        var result = new List<U>(source.Length);
+
+        for (var i = 0; i < source.Length; i++) {
+            var item = mapper(source[i]);
+
+            if (item.defined) result.Add(item.value);
+        }
+
+        return result.ToArray();
     }
 
     public static Option<T> Find<T>(T[] source, Func<T, bool> predicate) {

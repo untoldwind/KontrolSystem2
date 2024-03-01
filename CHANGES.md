@@ -2,6 +2,14 @@
 
 ## 0.5.3.4 ->
 
+* Extend array functionality:
+  * `array.flat_map`: Map with function that returns an array for each element.
+    Result will be appended.
+    Example `[ 1, 2, 3 ].flat_map(fn(i) -> [0.1 * i, 0.01 * i]) == [ 0.1, 0.01, 0.2, 0.02, 0.3, 0.03]`
+  * `array.filter_map`: Map with function that return an option for each element.
+    Result will only contain values where option is defined.
+    Example `vessel.parts.filter_map(fn(part) -> part.solar_panel)` to get an array of all
+    solar panels of the vessel.
 * Add solar panel flow information:
   * `base_flow_rate` (available in VAB)
   * `efficiency_multiplier` (available in VAB)

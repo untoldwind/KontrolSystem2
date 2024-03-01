@@ -244,3 +244,30 @@ test sync fn test_array_sort_with() -> Unit = {
     assert_string("[2, 18, 4, 20, 12]", struct_arr.map(fn(t) -> t.field1).to_string())
     assert_string("[20, 18, 12, 4, 2]", sorted.map(fn(t) -> t.field1).to_string())    
 }
+
+test sync fn test_array_flat_map() -> Unit = {
+    const int_arr = [ 0, 11, 22, 33, 44 ]
+    const mapped_arr = int_arr.flat_map(fn(i) -> [0.1 * i, 0.01 * i])
+
+    assert_int(10, mapped_arr.length)
+    assert_float(0.0, mapped_arr[0])
+    assert_float(0.0, mapped_arr[1])
+    assert_float(1.1, mapped_arr[2])
+    assert_float(0.11, mapped_arr[3])
+    assert_float(2.2, mapped_arr[4])
+    assert_float(0.22, mapped_arr[5])
+    assert_float(3.3, mapped_arr[6])
+    assert_float(0.33, mapped_arr[7])
+    assert_float(4.4, mapped_arr[8])
+    assert_float(0.44, mapped_arr[9])
+}
+
+test sync fn test_array_filter_map() -> Unit = {
+    const int_arr = [ 0, 11, 22, 33, 44 ]
+    const mapped_arr = int_arr.filter_map(fn(i) -> if(i > 15) 0.1 * i)
+
+    assert_int(3, mapped_arr.length)
+    assert_float(2.2, mapped_arr[0])
+    assert_float(3.3, mapped_arr[1])
+    assert_float(4.4, mapped_arr[2])
+}

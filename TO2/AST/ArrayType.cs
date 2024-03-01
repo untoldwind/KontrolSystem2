@@ -51,6 +51,16 @@ public class ArrayType : RealizedType {
                     false, typeof(ArrayMethods), typeof(ArrayMethods).GetMethod("MapWithIndex"),
                     context => ("T", ElementType.UnderlyingType(context)).Yield())
             }, {
+                "flat_map", new BoundMethodInvokeFactory("Map the content of the array", true,
+                    () => new ArrayType(new GenericParameter("U")),
+                    () => new List<RealizedParameter> {
+                        new("mapper", new FunctionType(false, new List<TO2Type> {
+                            ElementType
+                        }, new ArrayType(new GenericParameter("U"))), "Function to be applied on each element of the array")
+                    },
+                    false, typeof(ArrayMethods), typeof(ArrayMethods).GetMethod("FlatMap"),
+                    context => ("T", ElementType.UnderlyingType(context)).Yield())
+            }, {
                 "filter", new BoundMethodInvokeFactory("Filter the content of the array by a `predicate", true,
                     () => new ArrayType(new GenericParameter("T")),
                     () => new List<RealizedParameter> {
@@ -59,6 +69,16 @@ public class ArrayType : RealizedType {
                             "Predicate function/check to be applied on each element of the array")
                     },
                     false, typeof(ArrayMethods), typeof(ArrayMethods).GetMethod("Filter"),
+                    context => ("T", ElementType.UnderlyingType(context)).Yield())
+            }, {
+                "filter_map", new BoundMethodInvokeFactory("Map the content of the array", true,
+                    () => new ArrayType(new GenericParameter("U")),
+                    () => new List<RealizedParameter> {
+                        new("mapper", new FunctionType(false, new List<TO2Type> {
+                            ElementType
+                        }, new OptionType(new GenericParameter("U"))), "Function to be applied on each element of the array")
+                    },
+                    false, typeof(ArrayMethods), typeof(ArrayMethods).GetMethod("FilterMap"),
                     context => ("T", ElementType.UnderlyingType(context)).Yield())
             }, {
                 "find", new BoundMethodInvokeFactory("Find first item of the array matching `predicate`", true,
