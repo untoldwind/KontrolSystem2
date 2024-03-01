@@ -25,6 +25,12 @@ public partial class KSPVesselModule {
 
         [KSField] public bool IsJettisoned => dataFairing.IsDeployed.GetValue();
 
+        [KSField]
+        public bool Enabled {
+            get => dataFairing.FairingEnabled.GetValue();
+            set => dataFairing.FairingEnabled.SetObject(value);
+        }
+        
         [KSMethod]
         public bool Jettison() {
             if (!KSPContext.CurrentContext.Game.SpaceSimulation.TryGetViewObject(part.SimulationObject,

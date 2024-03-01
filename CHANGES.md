@@ -15,6 +15,8 @@
   * `efficiency_multiplier` (available in VAB)
   * `star_energy_scale`
   * `max_flow` shorthand for `base_flow_rate * efficiency_multiplier * star_energy_scale`
+* Add `fairing.enabled` toggle
+* Add `deployable.extended` toggle
 
 ## 0.5.3.3 -> 0.5.3.4 
 

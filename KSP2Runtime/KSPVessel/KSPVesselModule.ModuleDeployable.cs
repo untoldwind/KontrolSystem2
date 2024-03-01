@@ -23,6 +23,12 @@ public partial class KSPVesselModule {
 
         [KSField] public bool Retractable => dataDeployable.retractable;
 
+        [KSField]
+        public bool Extended {
+            get => dataDeployable.toggleExtend.GetValue();
+            set => dataDeployable.toggleExtend.SetValue(value);
+        }
+        
         [KSMethod]
         public void SetExtended(bool extend) {
             dataDeployable.toggleExtend.SetValue(extend);
