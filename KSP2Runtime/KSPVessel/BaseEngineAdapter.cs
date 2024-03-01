@@ -39,6 +39,12 @@ public abstract class BaseEngineAdapter {
     [KSField] public double MaxThrustOutputAtm => dataEngine.MaxThrustOutputAtm();
 
     [KSField]
+    public double ThrustLimiter {
+        get => dataEngine.thrustPercentage.GetValue() / 100.0;
+        set => dataEngine.thrustPercentage.SetValue((float)(100.0 * value));
+    }
+    
+    [KSField]
     public bool AutoSwitchMode {
         get => dataEngine.EngineAutoSwitchMode.GetValue();
         set => dataEngine.EngineAutoSwitchMode.SetValue(value);

@@ -24,6 +24,7 @@
   * `heatshield.ablator_ratio` (0.0 - 1.0)
 * Add propellant information to engine via `engine.current_propellant` and `engine.propellants`
   * Extend `ResourceDefinition` by `is_recipe` and `recipe_ingredients`
+* Add `engine.thrust_limiter` property
 
 ## 0.5.3.3 -> 0.5.3.4 
 
