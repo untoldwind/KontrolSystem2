@@ -1,5 +1,13 @@
 # Changes
 
+## 0.5.3.4 ->
+
+* Add solar panel flow information:
+  * `base_flow_rate` (available in VAB)
+  * `efficiency_multiplier` (available in VAB)
+  * `star_energy_scale`
+  * `max_flow` shorthand for `base_flow_rate * efficiency_multiplier * star_energy_scale`
+
 ## 0.5.3.3 -> 0.5.3.4 
 
 Hotfix:

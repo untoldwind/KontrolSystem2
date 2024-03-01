@@ -18,6 +18,15 @@ public partial class KSPVesselModule {
 
         [KSField] public string PartName => part?.PartName ?? "Unknown";
 
+        [KSField] public double EnergyFlow => dataSolarPanel.EnergyFlow.GetValue();
+
+        [KSField] public double StarEnergyScale => dataSolarPanel.SimStarEnergyScale;
+
+        [KSField(Description =
+            @"Maximum flow rate in current situation.
+              Shorthand for `base_flow_rate * star_energy_scale * efficiency_multiplier`")]
+        public double MaxFlow => dataSolarPanel.SimStarEnergyScale * dataSolarPanel.EfficiencyMultiplier * dataSolarPanel.ResourceSettings.Rate;
+
         [KSField]
         public Option<IBody> BlockingBody {
             get {

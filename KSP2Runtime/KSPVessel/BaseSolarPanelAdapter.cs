@@ -10,5 +10,8 @@ public abstract class BaseSolarPanelAdapter {
         this.dataSolarPanel = dataSolarPanel;
     }
 
-    [KSField] public double EnergyFlow => dataSolarPanel.EnergyFlow.GetValue();
+    [KSField] public double EfficiencyMultiplier => dataSolarPanel.EfficiencyMultiplier;
+
+    [KSField(Description = "Base flow rate")]
+    public double BaseFlowRate => dataSolarPanel.ResourceSettings.Rate;
 }
