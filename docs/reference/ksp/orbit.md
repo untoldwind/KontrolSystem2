@@ -518,6 +518,9 @@ orbit.perturbed_orbit ( ut : float,
 ```
 
 Returns a new Orbit object that represents the result of applying a given relative `deltaV` to o at `ut`.
+Note: The resulting orbit is calculated as if the velocity change happens instantaneously, which might lead
+to unrealistic results for larger `deltaV`. The main use-case of this method is to be used as part of
+an orbit-optimization algorithm as it is quiet fast.
 
 
 Parameters

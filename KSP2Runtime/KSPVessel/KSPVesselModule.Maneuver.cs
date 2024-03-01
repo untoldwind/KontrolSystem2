@@ -78,7 +78,10 @@ public partial class KSPVesselModule {
         }
 
 
-        [KSMethod]
+        [KSMethod(Description = 
+            @"Add a maneuver node at a given time `ut` with a given `burnVector`.
+              Note: Contrary to `orbit.perturbed_orbit` the maneuver node calculation take the expected
+              burn-time of the vessel into account. Especially for greater delta-v this will lead to different results.")]
         public Future<Result<ManeuverNodeAdapter, string>> AddBurnVector(double ut, Vector3d burnVector) {
             var maneuverPlanSolver = vesselAdapter.vessel.Orbiter.ManeuverPlanSolver;
             IPatchedOrbit patch;

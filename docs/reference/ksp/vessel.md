@@ -442,6 +442,9 @@ maneuver.add_burn_vector ( ut : float,
                            burnVector : ksp::math::Vec3 ) -> Result<ksp::vessel::ManeuverNode, string>
 ```
 
+Add a maneuver node at a given time `ut` with a given `burnVector`.
+Note: Contrary to `orbit.perturbed_orbit` the maneuver node calculation take the expected
+burn-time of the vessel into account. Especially for greater delta-v this will lead to different results.
 
 
 Parameters

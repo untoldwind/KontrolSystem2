@@ -13159,7 +13159,7 @@
             "perturbed_orbit": {
               "isAsync": false,
               "name": "perturbed_orbit",
-              "description": "Returns a new Orbit object that represents the result of applying a given relative `deltaV` to o at `ut`.\n",
+              "description": "Returns a new Orbit object that represents the result of applying a given relative `deltaV` to o at `ut`.\nNote: The resulting orbit is calculated as if the velocity change happens instantaneously, which might lead\nto unrealistic results for larger `deltaV`. The main use-case of this method is to be used as part of\nan orbit-optimization algorithm as it is quiet fast.\n",
               "parameters": [
                 {
                   "name": "ut",
@@ -34933,6 +34933,7 @@
             "add_burn_vector": {
               "isAsync": true,
               "name": "add_burn_vector",
+              "description": "Add a maneuver node at a given time `ut` with a given `burnVector`.\nNote: Contrary to `orbit.perturbed_orbit` the maneuver node calculation take the expected\nburn-time of the vessel into account. Especially for greater delta-v this will lead to different results.\n",
               "parameters": [
                 {
                   "name": "ut",
