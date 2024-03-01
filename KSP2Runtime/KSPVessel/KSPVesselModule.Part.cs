@@ -3,6 +3,7 @@ using KontrolSystem.KSP.Runtime.KSPResource;
 using KontrolSystem.KSP2.Runtime.KSPVessel;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
+using KSP.Iteration.UI.Binding;
 using KSP.Modules;
 using KSP.Sim;
 using KSP.Sim.DeltaV;
@@ -139,5 +140,14 @@ public partial class KSPVesselModule {
             part.IsParachute(out var data)
                 ? Option.Some(new ModuleParachuteAdapter(part, data))
                 : Option.None<ModuleParachuteAdapter>();
+
+        [KSField]
+        public bool IsHeatshield => part.TryGetModuleData<PartComponentModule_Heatshield, Data_Heatshield>(out var _);
+
+        [KSField]
+        public Option<ModuleHeatshieldAdapter> Heatshield =>
+            part.TryGetModuleData<PartComponentModule_Heatshield, Data_Heatshield>(out var data)
+                ? Option.Some(new ModuleHeatshieldAdapter(part, data))
+                : Option.None<ModuleHeatshieldAdapter>();
     }
 }

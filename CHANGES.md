@@ -17,6 +17,11 @@
   * `max_flow` shorthand for `base_flow_rate * efficiency_multiplier * star_energy_scale`
 * Add `fairing.enabled` toggle
 * Add `deployable.extended` toggle
+* Add heatshield information:
+  * `heatshield.is_deployed`
+  * `heatshield.is_ablating`
+  * `heatshield.is_ablator_exhausted`
+  * `heatshield.ablator_ratio` (0.0 - 1.0)
 
 ## 0.5.3.3 -> 0.5.3.4 
 
