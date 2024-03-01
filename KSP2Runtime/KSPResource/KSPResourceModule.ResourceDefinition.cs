@@ -1,5 +1,6 @@
 ﻿using KontrolSystem.TO2.Binding;
 using KSP.Sim.ResourceSystem;
+using UniLinq;
 
 namespace KontrolSystem.KSP.Runtime.KSPResource;
 
@@ -26,6 +27,14 @@ public partial class KSPResourceModule {
         [KSField] public double VolumePerUnit => resourceDefinition.resourceProperties.volumePerUnit;
 
         [KSField] public double MassPerVolume => resourceDefinition.resourceProperties.massPerVolume;
+
+        [KSField] public bool UsesAir => resourceDefinition.UsesAir;
+
+        [KSField] public bool IsRecipe => resourceDefinition.IsRecipe;
+
+        [KSField]
+        public ResourceReceipeIngredientAdapter[] RecipeIngredients => resourceDefinition.recipeProperties.ingredients
+            .Select(pair => new ResourceReceipeIngredientAdapter(pair)).ToArray();
 
         internal static ResourceDefinitionAdapter CreateFromResourceID(ResourceDefinitionID resourceDefinitionID) {
             var context = KSPContext.CurrentContext;

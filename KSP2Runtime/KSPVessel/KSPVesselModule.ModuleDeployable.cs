@@ -28,7 +28,7 @@ public partial class KSPVesselModule {
             get => dataDeployable.toggleExtend.GetValue();
             set => dataDeployable.toggleExtend.SetValue(value);
         }
-        
+
         [KSMethod]
         public void SetExtended(bool extend) {
             dataDeployable.toggleExtend.SetValue(extend);

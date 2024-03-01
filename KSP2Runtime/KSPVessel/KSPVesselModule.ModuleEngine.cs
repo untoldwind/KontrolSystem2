@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using KontrolSystem.KSP.Runtime.KSPResource;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
 using KSP.Modules;
@@ -47,6 +48,15 @@ public partial class KSPVesselModule {
         [KSField]
         public EngineModeAdapter CurrentEngineMode =>
             new(dataEngine.engineModes[dataEngine.currentEngineModeIndex]);
+
+        [KSField]
+        public KSPResourceModule.ResourceDefinitionAdapter CurrentPropellant =>
+            new(dataEngine.CurrentPropellantState.resourceDef);
+
+        [KSField]
+        public KSPResourceModule.ResourceDefinitionAdapter[] Propellants =>
+            dataEngine.PropellantStates
+                .Select(state => new KSPResourceModule.ResourceDefinitionAdapter(state.resourceDef)).ToArray();
 
         [KSMethod]
         public bool ChangeMode(string name) {
