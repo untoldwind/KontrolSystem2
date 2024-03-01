@@ -534,10 +534,12 @@ fairing | Option&lt;[ksp::vessel::ModuleFairing](/reference/ksp/vessel.md#module
 global_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | R/O | Get coordinate independent position of the part. 
 global_rotation | [ksp::math::GlobalDirection](/reference/ksp/math.md#globaldirection) | R/O | 
 green_mass | float | R/O | Green mass (Kerbals) of the part 
+heatshield | Option&lt;[ksp::vessel::ModuleHeatshield](/reference/ksp/vessel.md#moduleheatshield)> | R/O | 
 is_decoupler | bool | R/O | 
 is_deployable | bool | R/O | 
 is_engine | bool | R/O | 
 is_fairing | bool | R/O | 
+is_heatshield | bool | R/O | 
 is_launch_clamp | bool | R/O | 
 is_parachute | bool | R/O | 
 is_science_experiment | bool | R/O | 
@@ -619,6 +621,7 @@ Name | Type | Read-only | Description
 --- | --- | --- | ---
 deploy_state | string | R/O | 
 extendable | bool | R/O | 
+extended | bool | R/W | 
 part_name | string | R/O | 
 retractable | bool | R/O | 
 
@@ -661,11 +664,13 @@ fairing | Option&lt;[ksp::vessel::ModuleFairing](/reference/ksp/vessel.md#module
 global_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | R/O | Get coordinate independent position of the part. 
 global_rotation | [ksp::math::GlobalDirection](/reference/ksp/math.md#globaldirection) | R/O | 
 green_mass | float | R/O | Green mass (Kerbals) of the part 
+heatshield | Option&lt;[ksp::vessel::ModuleHeatshield](/reference/ksp/vessel.md#moduleheatshield)> | R/O | 
 is_decoupler | bool | R/O | 
 is_deployable | bool | R/O | 
 is_deployable_docking_port | bool | R/O | 
 is_engine | bool | R/O | 
 is_fairing | bool | R/O | 
+is_heatshield | bool | R/O | 
 is_launch_clamp | bool | R/O | 
 is_parachute | bool | R/O | 
 is_science_experiment | bool | R/O | 
@@ -706,7 +711,9 @@ moduledockingnode.control_from_here ( ) -> Unit
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
+auto_switch_mode | bool | R/W | 
 current_engine_mode | [ksp::vessel::EngineMode](/reference/ksp/vessel.md#enginemode) | R/O | 
+current_propellant | [ksp::resource::ResourceDefinition](/reference/ksp/resource.md#resourcedefinition) | R/O | 
 current_throttle | float | R/O | 
 current_thrust | float | R/O | 
 engine_modes | [ksp::vessel::EngineMode](/reference/ksp/vessel.md#enginemode)[] | R/O | 
@@ -726,9 +733,11 @@ max_thrust_output_atm | float | R/O |
 max_thrust_output_vac | float | R/O | 
 min_fuel_flow | float | R/O | 
 part_name | string | R/O | 
+propellants | [ksp::resource::ResourceDefinition](/reference/ksp/resource.md#resourcedefinition)[] | R/O | 
 real_isp | float | R/O | 
 throttle_min | float | R/O | 
 thrust_direction | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Direction of thrust in the celestial frame of the main body 
+thrust_limiter | float | R/W | 
 
 #### Methods
 
@@ -755,6 +764,7 @@ name | string |  |
 Name | Type | Read-only | Description
 --- | --- | --- | ---
 ejection_force | float | R/W | 
+enabled | bool | R/W | 
 is_jettisoned | bool | R/O | 
 part_name | string | R/O | 
 
@@ -782,6 +792,19 @@ enable_yaw | bool | R/W |
 enabled | bool | R/W | 
 limiter | float | R/W | 
 pitch_yaw_roll | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/W | 
+
+### ModuleHeatshield
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+ablator_ratio | float | R/O | 
+is_ablating | bool | R/O | 
+is_ablator_exhausted | bool | R/O | 
+is_deployed | bool | R/O | 
 
 ### ModuleLaunchClamp
 
@@ -865,9 +888,13 @@ part_name | string | R/O |
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
+base_flow_rate | float | R/O | Base flow rate 
 blocking_body | Option&lt;[ksp::orbit::Body](/reference/ksp/orbit.md#body)> | R/O | 
+efficiency_multiplier | float | R/O | 
 energy_flow | float | R/O | 
+max_flow | float | R/O | Maximum flow rate in current situation. Shorthand for `base_flow_rate * star_energy_scale * efficiency_multiplier` 
 part_name | string | R/O | 
+star_energy_scale | float | R/O | 
 
 ### ParachuteDeployMode
 
@@ -1020,10 +1047,12 @@ fairing | Option&lt;[ksp::vessel::ModuleFairing](/reference/ksp/vessel.md#module
 global_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | R/O | Get coordinate independent position of the part. 
 global_rotation | [ksp::math::GlobalDirection](/reference/ksp/math.md#globaldirection) | R/O | 
 green_mass | float | R/O | Green mass (Kerbals) of the part 
+heatshield | Option&lt;[ksp::vessel::ModuleHeatshield](/reference/ksp/vessel.md#moduleheatshield)> | R/O | 
 is_decoupler | bool | R/O | 
 is_deployable | bool | R/O | 
 is_engine | bool | R/O | 
 is_fairing | bool | R/O | 
+is_heatshield | bool | R/O | 
 is_launch_clamp | bool | R/O | 
 is_parachute | bool | R/O | 
 is_science_experiment | bool | R/O | 

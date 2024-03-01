@@ -1970,6 +1970,11 @@
         {
           "kind": "Standard",
           "module": "ksp::oab",
+          "name": "ObjectAssemblySolarPanel"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
           "name": "ObjectAssemblyStageDeltaV"
         },
         {
@@ -2021,6 +2026,11 @@
           "kind": "Standard",
           "module": "ksp::resource",
           "name": "ResourceDefinition"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::resource",
+          "name": "ResourceReceipeIngredient"
         },
         {
           "kind": "Standard",
@@ -2406,6 +2416,11 @@
           "kind": "Standard",
           "module": "ksp::vessel",
           "name": "ModuleGimbal"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleHeatshield"
         },
         {
           "kind": "Standard",
@@ -2811,6 +2826,11 @@
         {
           "kind": "Standard",
           "module": "ksp::oab",
+          "name": "ObjectAssemblySolarPanel"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
           "name": "ObjectAssemblyStageDeltaV"
         },
         {
@@ -2862,6 +2882,11 @@
           "kind": "Standard",
           "module": "ksp::resource",
           "name": "ResourceDefinition"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::resource",
+          "name": "ResourceReceipeIngredient"
         },
         {
           "kind": "Standard",
@@ -3247,6 +3272,11 @@
           "kind": "Standard",
           "module": "ksp::vessel",
           "name": "ModuleGimbal"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleHeatshield"
         },
         {
           "kind": "Standard",
@@ -10812,6 +10842,28 @@
                 "name": "Vec3"
               }
             },
+            "is_solar_panel": {
+              "name": "is_solar_panel",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "solar_panel": {
+              "name": "solar_panel",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::oab",
+                    "name": "ObjectAssemblySolarPanel"
+                  }
+                ]
+              }
+            },
             "part_name": {
               "name": "part_name",
               "readOnly": true,
@@ -10865,6 +10917,32 @@
             "total_mass": {
               "name": "total_mass",
               "description": "Total mass of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "ObjectAssemblySolarPanel": {
+          "name": "ObjectAssemblySolarPanel",
+          "description": "",
+          "fields": {
+            "efficiency_multiplier": {
+              "name": "efficiency_multiplier",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "base_flow_rate": {
+              "name": "base_flow_rate",
+              "description": "Base flow rate\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -11513,6 +11591,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblySolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
             },
             {
@@ -11559,6 +11642,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceReceipeIngredient"
             },
             {
               "kind": "Standard",
@@ -11944,6 +12032,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleGimbal"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleHeatshield"
             },
             {
               "kind": "Standard",
@@ -14030,6 +14123,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblySolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
             },
             {
@@ -14076,6 +14174,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceReceipeIngredient"
             },
             {
               "kind": "Standard",
@@ -14465,6 +14568,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleHeatshield"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleLaunchClamp"
             },
             {
@@ -14708,6 +14816,62 @@
               "type": {
                 "kind": "Builtin",
                 "name": "float"
+              }
+            },
+            "uses_air": {
+              "name": "uses_air",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "is_recipe": {
+              "name": "is_recipe",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "recipe_ingredients": {
+              "name": "recipe_ingredients",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::resource",
+                    "name": "ResourceReceipeIngredient"
+                  }
+                ]
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "ResourceReceipeIngredient": {
+          "name": "ResourceReceipeIngredient",
+          "description": "",
+          "fields": {
+            "units": {
+              "name": "units",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "resource": {
+              "name": "resource",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::resource",
+                "name": "ResourceDefinition"
               }
             }
           },
@@ -15286,6 +15450,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblySolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
             },
             {
@@ -15337,6 +15506,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceReceipeIngredient"
             },
             {
               "kind": "Standard",
@@ -15717,6 +15891,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleGimbal"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleHeatshield"
             },
             {
               "kind": "Standard",
@@ -16285,6 +16464,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblySolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
             },
             {
@@ -16336,6 +16520,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceReceipeIngredient"
             },
             {
               "kind": "Standard",
@@ -16716,6 +16905,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleGimbal"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleHeatshield"
             },
             {
               "kind": "Standard",
@@ -17224,6 +17418,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblySolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
             },
             {
@@ -17275,6 +17474,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceReceipeIngredient"
             },
             {
               "kind": "Standard",
@@ -17655,6 +17859,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleGimbal"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleHeatshield"
             },
             {
               "kind": "Standard",
@@ -18123,6 +18332,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblySolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
             },
             {
@@ -18174,6 +18388,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceReceipeIngredient"
             },
             {
               "kind": "Standard",
@@ -18554,6 +18773,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleGimbal"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleHeatshield"
             },
             {
               "kind": "Standard",
@@ -20105,6 +20329,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblySolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
             },
             {
@@ -20156,6 +20385,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceReceipeIngredient"
             },
             {
               "kind": "Standard",
@@ -20536,6 +20770,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleGimbal"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleHeatshield"
             },
             {
               "kind": "Standard",
@@ -25073,6 +25312,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblySolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
             },
             {
@@ -25124,6 +25368,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceReceipeIngredient"
             },
             {
               "kind": "Standard",
@@ -25504,6 +25753,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleGimbal"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleHeatshield"
             },
             {
               "kind": "Standard",
@@ -25982,6 +26236,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblySolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
             },
             {
@@ -26033,6 +26292,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceReceipeIngredient"
             },
             {
               "kind": "Standard",
@@ -26413,6 +26677,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleGimbal"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleHeatshield"
             },
             {
               "kind": "Standard",
@@ -26911,6 +27180,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblySolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
             },
             {
@@ -26962,6 +27236,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceReceipeIngredient"
             },
             {
               "kind": "Standard",
@@ -27342,6 +27621,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleGimbal"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleHeatshield"
             },
             {
               "kind": "Standard",
@@ -27820,6 +28104,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblySolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
             },
             {
@@ -27871,6 +28160,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceReceipeIngredient"
             },
             {
               "kind": "Standard",
@@ -28251,6 +28545,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleGimbal"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleHeatshield"
             },
             {
               "kind": "Standard",
@@ -28739,6 +29038,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblySolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
             },
             {
@@ -28790,6 +29094,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceReceipeIngredient"
             },
             {
               "kind": "Standard",
@@ -29170,6 +29479,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleGimbal"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleHeatshield"
             },
             {
               "kind": "Standard",
@@ -29748,6 +30062,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblySolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
             },
             {
@@ -29799,6 +30118,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceReceipeIngredient"
             },
             {
               "kind": "Standard",
@@ -30179,6 +30503,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleGimbal"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleHeatshield"
             },
             {
               "kind": "Standard",
@@ -30707,6 +31036,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblySolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
             },
             {
@@ -30758,6 +31092,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceReceipeIngredient"
             },
             {
               "kind": "Standard",
@@ -31138,6 +31477,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleGimbal"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleHeatshield"
             },
             {
               "kind": "Standard",
@@ -31626,6 +31970,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblySolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
             },
             {
@@ -31677,6 +32026,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceReceipeIngredient"
             },
             {
               "kind": "Standard",
@@ -32057,6 +32411,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleGimbal"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleHeatshield"
             },
             {
               "kind": "Standard",
@@ -32565,6 +32924,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblySolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
             },
             {
@@ -32616,6 +32980,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceReceipeIngredient"
             },
             {
               "kind": "Standard",
@@ -32996,6 +33365,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleGimbal"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleHeatshield"
             },
             {
               "kind": "Standard",
@@ -33514,6 +33888,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblySolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
             },
             {
@@ -33565,6 +33944,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceReceipeIngredient"
             },
             {
               "kind": "Standard",
@@ -33945,6 +34329,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleGimbal"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleHeatshield"
             },
             {
               "kind": "Standard",
@@ -35446,6 +35835,28 @@
                 ]
               }
             },
+            "is_heatshield": {
+              "name": "is_heatshield",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "heatshield": {
+              "name": "heatshield",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ModuleHeatshield"
+                  }
+                ]
+              }
+            },
             "part_name": {
               "name": "part_name",
               "readOnly": true,
@@ -35675,6 +36086,14 @@
             "retractable": {
               "name": "retractable",
               "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "extended": {
+              "name": "extended",
+              "readOnly": false,
               "type": {
                 "kind": "Builtin",
                 "name": "bool"
@@ -36070,6 +36489,28 @@
                 ]
               }
             },
+            "is_heatshield": {
+              "name": "is_heatshield",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "heatshield": {
+              "name": "heatshield",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ModuleHeatshield"
+                  }
+                ]
+              }
+            },
             "part_name": {
               "name": "part_name",
               "readOnly": true,
@@ -36221,6 +36662,29 @@
                 "name": "EngineMode"
               }
             },
+            "current_propellant": {
+              "name": "current_propellant",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::resource",
+                "name": "ResourceDefinition"
+              }
+            },
+            "propellants": {
+              "name": "propellants",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::resource",
+                    "name": "ResourceDefinition"
+                  }
+                ]
+              }
+            },
             "is_shutdown": {
               "name": "is_shutdown",
               "readOnly": true,
@@ -36333,6 +36797,22 @@
                 "name": "float"
               }
             },
+            "thrust_limiter": {
+              "name": "thrust_limiter",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "auto_switch_mode": {
+              "name": "auto_switch_mode",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
             "independent_throttle_enabled": {
               "name": "independent_throttle_enabled",
               "readOnly": false,
@@ -36397,6 +36877,14 @@
             "is_jettisoned": {
               "name": "is_jettisoned",
               "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "enabled": {
+              "name": "enabled",
+              "readOnly": false,
               "type": {
                 "kind": "Builtin",
                 "name": "bool"
@@ -36468,6 +36956,47 @@
                 "kind": "Standard",
                 "module": "ksp::math",
                 "name": "Vec3"
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "ModuleHeatshield": {
+          "name": "ModuleHeatshield",
+          "description": "",
+          "fields": {
+            "is_deployed": {
+              "name": "is_deployed",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "is_ablating": {
+              "name": "is_ablating",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "is_ablator_exhausted": {
+              "name": "is_ablator_exhausted",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "ablator_ratio": {
+              "name": "ablator_ratio",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
               }
             }
           },
@@ -36649,6 +37178,31 @@
                 "name": "string"
               }
             },
+            "energy_flow": {
+              "name": "energy_flow",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "star_energy_scale": {
+              "name": "star_energy_scale",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "max_flow": {
+              "name": "max_flow",
+              "description": "Maximum flow rate in current situation.\nShorthand for `base_flow_rate * star_energy_scale * efficiency_multiplier`\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
             "blocking_body": {
               "name": "blocking_body",
               "readOnly": true,
@@ -36663,8 +37217,17 @@
                 ]
               }
             },
-            "energy_flow": {
-              "name": "energy_flow",
+            "efficiency_multiplier": {
+              "name": "efficiency_multiplier",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "base_flow_rate": {
+              "name": "base_flow_rate",
+              "description": "Base flow rate\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -37007,6 +37570,28 @@
                     "kind": "Standard",
                     "module": "ksp::vessel",
                     "name": "ModuleParachute"
+                  }
+                ]
+              }
+            },
+            "is_heatshield": {
+              "name": "is_heatshield",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "heatshield": {
+              "name": "heatshield",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ModuleHeatshield"
                   }
                 ]
               }

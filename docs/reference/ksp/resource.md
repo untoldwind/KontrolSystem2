@@ -93,10 +93,24 @@ Name | Type | Read-only | Description
 display_abbreviation | string | R/O | 
 display_name | string | R/O | 
 id | int | R/O | 
+is_recipe | bool | R/O | 
 mass_per_unit | float | R/O | 
 mass_per_volume | float | R/O | 
 name | string | R/O | 
+recipe_ingredients | [ksp::resource::ResourceReceipeIngredient](/reference/ksp/resource.md#resourcereceipeingredient)[] | R/O | 
+uses_air | bool | R/O | 
 volume_per_unit | float | R/O | 
+
+### ResourceReceipeIngredient
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+resource | [ksp::resource::ResourceDefinition](/reference/ksp/resource.md#resourcedefinition) | R/O | 
+units | float | R/O | 
 
 ### ResourceTransfer
 

@@ -117,10 +117,23 @@ decouple_stage | int | R/O |
 dry_mass | float | R/O | Dry mass of the part 
 fuel_cross_feed | bool | R/O | 
 green_mass | float | R/O | Green mass (Kerbals) of the part 
+is_solar_panel | bool | R/O | 
 part_name | string | R/O | 
 relative_position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
+solar_panel | Option&lt;[ksp::oab::ObjectAssemblySolarPanel](/reference/ksp/oab.md#objectassemblysolarpanel)> | R/O | 
 total_mass | float | R/O | Total mass of the part 
 wet_mass | float | R/O | 
+
+### ObjectAssemblySolarPanel
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+base_flow_rate | float | R/O | Base flow rate 
+efficiency_multiplier | float | R/O | 
 
 ### ObjectAssemblyStageDeltaV
 
