@@ -7734,6 +7734,56 @@
             "kind": "Builtin",
             "name": "Unit"
           }
+        },
+        "max_warp_index": {
+          "isAsync": false,
+          "name": "max_warp_index",
+          "description": "Get current maximum allowed time warp index.\n",
+          "parameters": [],
+          "returnType": {
+            "kind": "Builtin",
+            "name": "int"
+          }
+        },
+        "set_time_wrap_index": {
+          "isAsync": false,
+          "name": "set_time_wrap_index",
+          "description": "Set the current time warp index.\n",
+          "parameters": [
+            {
+              "name": "index",
+              "type": {
+                "kind": "Builtin",
+                "name": "int"
+              },
+              "hasDefault": false,
+              "description": null
+            }
+          ],
+          "returnType": {
+            "kind": "Builtin",
+            "name": "bool"
+          }
+        },
+        "is_warping": {
+          "isAsync": false,
+          "name": "is_warping",
+          "description": "Check if time warp is currently active\n",
+          "parameters": [],
+          "returnType": {
+            "kind": "Builtin",
+            "name": "bool"
+          }
+        },
+        "is_physics_time_warp": {
+          "isAsync": false,
+          "name": "is_physics_time_warp",
+          "description": "Check if time warp is still in physics mode\n",
+          "parameters": [],
+          "returnType": {
+            "kind": "Builtin",
+            "name": "bool"
+          }
         }
       }
     },
@@ -37850,6 +37900,28 @@
                     "kind": "Standard",
                     "module": "ksp::resource",
                     "name": "ResourceDefinition"
+                  }
+                ]
+              }
+            },
+            "has_fairing": {
+              "name": "has_fairing",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "fairing": {
+              "name": "fairing",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ModuleFairing"
                   }
                 ]
               }

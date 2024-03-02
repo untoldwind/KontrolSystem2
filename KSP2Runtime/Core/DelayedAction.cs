@@ -5,18 +5,18 @@ using UnityEngine;
 namespace KontrolSystem.KSP.Runtime.Core;
 
 public class DelayedAction<T> : Future<T> {
-    private readonly Action action;
+    private readonly Func<T> action;
     private readonly IKSPContext context;
-    private readonly T result;
     private int delay;
     private int retries;
+    private T defaultResult;
 
-    public DelayedAction(IKSPContext context, T result, int delay, int retries, Action action) {
+    public DelayedAction(IKSPContext context, int delay, int retries, Func<T> action, T defaultResult) {
         this.context = context;
-        this.result = result;
         this.action = action;
         this.delay = delay;
         this.retries = retries;
+        this.defaultResult = defaultResult;
     }
 
     public override FutureResult<T> PollValue() {
@@ -27,7 +27,7 @@ public class DelayedAction<T> : Future<T> {
         }
 
         try {
-            action.Invoke();
+            return new FutureResult<T>(action.Invoke());
         } catch {
             if (retries > 0) {
                 retries--;
@@ -36,6 +36,6 @@ public class DelayedAction<T> : Future<T> {
             }
         }
 
-        return new FutureResult<T>(result);
+        return new FutureResult<T>(defaultResult);
     }
 }

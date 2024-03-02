@@ -71,9 +71,12 @@ public partial class KSPVesselModule {
             var result =
                 Result.Ok<ManeuverNodeAdapter, string>(new ManeuverNodeAdapter(vesselAdapter, maneuverNodeData));
             if (KSPContext.CurrentContext.Game.Map.TryGetMapCore(out var mapCore))
-                return new DelayedAction<Result<ManeuverNodeAdapter, string>>(KSPContext.CurrentContext, result, 1,
+                return new DelayedAction<Result<ManeuverNodeAdapter, string>>(KSPContext.CurrentContext, 1,
                     2,
-                    () => { mapCore.map3D.ManeuverManager.CreateGizmoForLocation(maneuverNodeData); });
+                    () => {
+                        mapCore.map3D.ManeuverManager.CreateGizmoForLocation(maneuverNodeData);
+                        return result;
+                    }, result);
             return new Future.Success<Result<ManeuverNodeAdapter, string>>(result);
         }
 
@@ -111,9 +114,12 @@ public partial class KSPVesselModule {
             var result =
                 Result.Ok<ManeuverNodeAdapter, string>(new ManeuverNodeAdapter(vesselAdapter, maneuverNodeData));
             if (KSPContext.CurrentContext.Game.Map.TryGetMapCore(out var mapCore))
-                return new DelayedAction<Result<ManeuverNodeAdapter, string>>(KSPContext.CurrentContext, result, 1,
+                return new DelayedAction<Result<ManeuverNodeAdapter, string>>(KSPContext.CurrentContext, 1,
                     2,
-                    () => { mapCore.map3D.ManeuverManager.CreateGizmoForLocation(maneuverNodeData); });
+                    () => {
+                        mapCore.map3D.ManeuverManager.CreateGizmoForLocation(maneuverNodeData);
+                        return result;
+                    }, result);
             return new Future.Success<Result<ManeuverNodeAdapter, string>>(result);
         }
     }

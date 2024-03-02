@@ -1,4 +1,5 @@
-﻿using KontrolSystem.TO2.Binding;
+﻿using KontrolSystem.KSP.Runtime.Core;
+using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
 using KSP.Sim.impl;
 using KSP.Sim.State;
@@ -26,9 +27,10 @@ public partial class KSPControlModule {
         [KSMethod]
         public Future<object?> Release() {
             suspended = true;
-            context.NextYield = new WaitForFixedUpdate();
-            context.OnNextYieldOnce = () => { context.UnhookAutopilot(vessel, this); };
-            return new Future.Success<object?>(null);
+            return new DelayedAction<object?>(context, 1, 0, () => {
+                context.UnhookAutopilot(vessel, this);
+                return null;
+            }, null);
         }
 
         [KSMethod]

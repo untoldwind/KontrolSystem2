@@ -1,6 +1,7 @@
-﻿using KontrolSystem.TO2.Binding;
+﻿using KontrolSystem.KSP.Runtime.Core;
+using KontrolSystem.TO2.Binding;
+using KontrolSystem.TO2.Runtime;
 using KSP.Sim.impl;
-using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime.KSPGame;
 
@@ -11,42 +12,33 @@ public class KSPGameWarpModule {
     private static TimeWarp TimeWarp => KSPContext.CurrentContext.Game.ViewController.TimeWarp;
 
     [KSFunction(Description = "Get the current warp index. Actual factor depends on warp mode.")]
-    public static long CurrentIndex() {
-        return TimeWarp.CurrentRateIndex;
-    }
+    public static long CurrentIndex() => TimeWarp.CurrentRateIndex;
 
     [KSFunction(Description = "Get the current warp rate (i.e. actual time multiplier).")]
-    public static double CurrentRate() {
-        return TimeWarp.CurrentRate;
-    }
+    public static double CurrentRate() => TimeWarp.CurrentRate;
 
     [KSFunction(Description = "Warp forward to a specific universal time.")]
-    public static void WarpTo(double ut) {
+    public static Future<object?> WarpTo(double ut) => new DelayedAction<object?>(KSPContext.CurrentContext, 1, 0, () => {
         TimeWarp.WarpTo(ut);
-    }
+        return null;
+    }, null);
 
     [KSFunction(Description = "Cancel time warp")]
-    public static void Cancel() {
+    public static Future<object?> Cancel() => new DelayedAction<object?>(KSPContext.CurrentContext, 1, 0, () => {
         TimeWarp.StopTimeWarp();
-    }
+        return null;
+    }, null);
 
     [KSFunction(Description = "Get current maximum allowed time warp index.")]
-    public static long MaxWarpIndex() {
-        return TimeWarp.GetMaxRateIndex(false, out _);
-    }
+    public static long MaxWarpIndex() => TimeWarp.GetMaxRateIndex(false, out _);
 
     [KSFunction(Description = "Set the current time warp index.")]
-    public static bool SetTimeWrapIndex(long index) {
-        return TimeWarp.SetRateIndex((int)index, true);
-    }
+    public static Future<bool>  SetTimeWrapIndex(long index) => new DelayedAction<bool>(KSPContext.CurrentContext, 1, 0,
+        () => TimeWarp.SetRateIndex((int)index, true), false);
 
     [KSFunction(Description = "Check if time warp is currently active")]
-    public static bool IsWarping() {
-        return TimeWarp.IsWarping;
-    }
+    public static bool IsWarping() => TimeWarp.IsWarping;
 
     [KSFunction(Description = "Check if time warp is still in physics mode")]
-    public static bool IsPhysicsTimeWarp() {
-        return TimeWarp.IsPhysicsTimeWarp;
-    }
+    public static bool IsPhysicsTimeWarp() => TimeWarp.IsPhysicsTimeWarp;
 }

@@ -764,8 +764,10 @@ current_propellant | [ksp::resource::ResourceDefinition](/reference/ksp/resource
 current_throttle | float | R/O | 
 current_thrust | float | R/O | 
 engine_modes | [ksp::vessel::EngineMode](/reference/ksp/vessel.md#enginemode)[] | R/O | 
+fairing | Option&lt;[ksp::vessel::ModuleFairing](/reference/ksp/vessel.md#modulefairing)> | R/O | 
 gimbal | Option&lt;[ksp::vessel::ModuleGimbal](/reference/ksp/vessel.md#modulegimbal)> | R/O | 
 global_thrust_direction | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | Coordinate independent direction of thrust. 
+has_fairing | bool | R/O | 
 has_ignited | bool | R/O | 
 independent_throttle | float | R/W | 
 independent_throttle_enabled | bool | R/W | 

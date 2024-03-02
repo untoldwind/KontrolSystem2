@@ -50,8 +50,6 @@ public class KSPTestRunnerContext : TestRunnerContext, IKSPContext {
 
     public object? NextYield { get; set; }
 
-    public Action? OnNextYieldOnce { get; set; }
-
     public void AddMarker(IMarker marker) {
     }
 

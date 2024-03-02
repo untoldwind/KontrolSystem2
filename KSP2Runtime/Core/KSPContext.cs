@@ -99,11 +99,6 @@ public class KSPCoreContext : IKSPContext {
     }
 
     public void ResetTimeout() {
-        if (OnNextYieldOnce != null) {
-            OnNextYieldOnce();
-            OnNextYieldOnce = null;
-        }
-
         timeStopwatch.Reset();
         timeStopwatch.Start();
     }
@@ -152,8 +147,6 @@ public class KSPCoreContext : IKSPContext {
         }
         set => nextYield = value;
     }
-
-    public Action? OnNextYieldOnce { get; set; }
 
     public void AddMarker(IMarker marker) {
         markers.Add(marker);

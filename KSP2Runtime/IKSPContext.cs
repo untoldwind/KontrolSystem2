@@ -39,8 +39,6 @@ public interface IKSPContext : IContext {
 
     object? NextYield { get; set; }
 
-    Action? OnNextYieldOnce { get; set; }
-
     OptionalAddons OptionalAddons { get; }
 
     KSPOrbitModule.IBody? FindBody(string name);
