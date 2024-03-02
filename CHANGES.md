@@ -28,8 +28,8 @@
 * Add `part.is_cargo_bay`
 * Add `engine.has_fairing` and `engine.fairing` to access engine specific fairings
   * `part.fairing` will now only cover non-engine parts
-* Add `set_time_warp_index(int)`, `max_warp_index()`, `is_warping()` and `is_physics_time_warp()` to `ksp::game::warp`
-  * `warp_to(float)` and `set_time_warp_index(int)` can not be used in a sync function
+* Add `set_warp_index(int)`, `max_warp_index()`, `is_warping()` and `is_physics_time_warp()` to `ksp::game::warp`
+  * `warp_to(float)` and `set_warp_index(int)` can not be used in a sync function
 
 ## 0.5.3.3 -> 0.5.3.4 
 

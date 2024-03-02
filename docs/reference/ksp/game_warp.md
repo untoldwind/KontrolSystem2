@@ -9,7 +9,16 @@ Collection of functions to control time warp.
 ### cancel
 
 ```rust
-pub sync fn cancel ( ) -> Unit
+pub fn cancel ( ) -> Unit
+```
+
+Deprecated: use cancel_warp()
+
+
+### cancel_warp
+
+```rust
+pub fn cancel_warp ( ) -> Unit
 ```
 
 Cancel time warp
@@ -21,7 +30,7 @@ Cancel time warp
 pub sync fn current_index ( ) -> int
 ```
 
-Get the current warp index. Actual factor depends on warp mode.
+Deprecated: Use current_warp_index()
 
 
 ### current_rate
@@ -30,7 +39,34 @@ Get the current warp index. Actual factor depends on warp mode.
 pub sync fn current_rate ( ) -> float
 ```
 
+Deprecated: Use current_warp_rate()
+
+
+### current_warp_index
+
+```rust
+pub sync fn current_warp_index ( ) -> int
+```
+
+Get the current warp index. Actual factor depends on warp mode.
+
+
+### current_warp_rate
+
+```rust
+pub sync fn current_warp_rate ( ) -> float
+```
+
 Get the current warp rate (i.e. actual time multiplier).
+
+
+### get_warp_rates
+
+```rust
+pub sync fn get_warp_rates ( ) -> float[]
+```
+
+Get all available warp rates
 
 
 ### is_physics_time_warp
@@ -60,10 +96,10 @@ pub sync fn max_warp_index ( ) -> int
 Get current maximum allowed time warp index.
 
 
-### set_time_wrap_index
+### set_warp_index
 
 ```rust
-pub sync fn set_time_wrap_index ( index : int ) -> bool
+pub fn set_warp_index ( index : int ) -> bool
 ```
 
 Set the current time warp index.

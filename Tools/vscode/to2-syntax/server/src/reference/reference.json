@@ -7688,6 +7688,16 @@
         "current_index": {
           "isAsync": false,
           "name": "current_index",
+          "description": "Deprecated: Use current_warp_index()\n",
+          "parameters": [],
+          "returnType": {
+            "kind": "Builtin",
+            "name": "int"
+          }
+        },
+        "current_warp_index": {
+          "isAsync": false,
+          "name": "current_warp_index",
           "description": "Get the current warp index. Actual factor depends on warp mode.\n",
           "parameters": [],
           "returnType": {
@@ -7698,6 +7708,16 @@
         "current_rate": {
           "isAsync": false,
           "name": "current_rate",
+          "description": "Deprecated: Use current_warp_rate()\n",
+          "parameters": [],
+          "returnType": {
+            "kind": "Builtin",
+            "name": "float"
+          }
+        },
+        "current_warp_rate": {
+          "isAsync": false,
+          "name": "current_warp_rate",
           "description": "Get the current warp rate (i.e. actual time multiplier).\n",
           "parameters": [],
           "returnType": {
@@ -7728,6 +7748,16 @@
         "cancel": {
           "isAsync": false,
           "name": "cancel",
+          "description": "Deprecated: use cancel_warp()\n",
+          "parameters": [],
+          "returnType": {
+            "kind": "Builtin",
+            "name": "Unit"
+          }
+        },
+        "cancel_warp": {
+          "isAsync": false,
+          "name": "cancel_warp",
           "description": "Cancel time warp\n",
           "parameters": [],
           "returnType": {
@@ -7745,9 +7775,9 @@
             "name": "int"
           }
         },
-        "set_time_wrap_index": {
+        "set_warp_index": {
           "isAsync": false,
-          "name": "set_time_wrap_index",
+          "name": "set_warp_index",
           "description": "Set the current time warp index.\n",
           "parameters": [
             {
@@ -7783,6 +7813,21 @@
           "returnType": {
             "kind": "Builtin",
             "name": "bool"
+          }
+        },
+        "get_warp_rates": {
+          "isAsync": false,
+          "name": "get_warp_rates",
+          "description": "Get all available warp rates\n",
+          "parameters": [],
+          "returnType": {
+            "kind": "Array",
+            "parameters": [
+              {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            ]
           }
         }
       }
