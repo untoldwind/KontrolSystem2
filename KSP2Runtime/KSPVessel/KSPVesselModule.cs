@@ -141,13 +141,36 @@ public partial class KSPVesselModule {
                     (CommandControlState.FullyFunctional, "Command module is functional.")
                 ]),
                 ("DeployableDeployState", "Current state of a deployable part (like CargoBays)", typeof(Data_Deployable.DeployState),
-                    new (Enum value, string description)[] {
-                        (Data_Deployable.DeployState.Retracted, "Part is retracted"),
-                        (Data_Deployable.DeployState.Retracting, "Part is currently retracting"),
-                        (Data_Deployable.DeployState.Extended, "Part is extended"),
-                        (Data_Deployable.DeployState.Extending, "Part is currently extending"),
-                        (Data_Deployable.DeployState.Broken, "Part is broken"),
-                }),
+                [
+                    (Data_Deployable.DeployState.Retracted, "Part is retracted"),
+                    (Data_Deployable.DeployState.Retracting, "Part is currently retracting"),
+                    (Data_Deployable.DeployState.Extended, "Part is extended"),
+                    (Data_Deployable.DeployState.Extending, "Part is currently extending"),
+                    (Data_Deployable.DeployState.Broken, "Part is broken")
+                ]),
+                ("PartCategory", "Vessel part category", typeof(PartCategories), new (Enum value, string description)[] {
+                    (PartCategories.none, "No category"),
+                    (PartCategories.Production, "Production"),
+                    (PartCategories.Control, "Production"),
+                    (PartCategories.Structural, "Production"),
+                    (PartCategories.Aero, "Aerodynamics"),
+                    (PartCategories.Utility, "Utility"),
+                    (PartCategories.Science, "Science"),
+                    (PartCategories.Pods, "Pods"),
+                    (PartCategories.FuelTank, "FuelTank"),
+                    (PartCategories.Engine, "Engine"),
+                    (PartCategories.Communication, "Communication"),
+                    (PartCategories.Electrical, "Electrical"),
+                    (PartCategories.Ground, "Ground"),
+                    (PartCategories.Thermal, "Thermal"),
+                    (PartCategories.Payload, "Payload"),
+                    (PartCategories.Coupling, "Coupling"),
+                    (PartCategories.ColonyEssentials, "ColonyEssentials"),
+                    (PartCategories.Favorites, "Favorites"),
+                    (PartCategories.SubAssemblies, "SubAssemblies"),
+                    (PartCategories.Amenities, "Amenities"),
+                    (PartCategories.Storage, "Storage"),
+                })
             });
 
         BindingGenerator.RegisterTypeMapping(typeof(FlightCtrlState),

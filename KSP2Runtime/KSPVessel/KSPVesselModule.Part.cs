@@ -3,7 +3,6 @@ using KontrolSystem.KSP.Runtime.KSPResource;
 using KontrolSystem.KSP2.Runtime.KSPVessel;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
-using KSP.Iteration.UI.Binding;
 using KSP.Modules;
 using KSP.Sim;
 using KSP.Sim.DeltaV;
@@ -19,6 +18,8 @@ public partial class KSPVesselModule {
         internal PartAdapter(VesselAdapter vesselAdapter, PartComponent part) : base(part) {
             this.vesselAdapter = vesselAdapter;
         }
+
+        [KSField] public PartCategories PartCategory => part.PartData.category;
 
         [KSField] public VesselAdapter Vessel => vesselAdapter;
 
@@ -101,11 +102,11 @@ public partial class KSPVesselModule {
                 ? Option.Some(new ModuleSolarPanelAdapter(part, data))
                 : Option.None<ModuleSolarPanelAdapter>();
 
-        [KSField] public bool IsFairing => !part.IsPartEngine(out _) && part.TryGetModuleData<PartComponentModule_Fairing, Data_Fairing>(out _);
+        [KSField] public bool IsFairing => part.PartData.category == PartCategories.Payload && part.TryGetModuleData<PartComponentModule_Fairing, Data_Fairing>(out _);
 
         [KSField]
         public Option<ModuleFairingAdapter> Fairing =>
-             !part.IsPartEngine(out _) && part.TryGetModuleData<PartComponentModule_Fairing, Data_Fairing>(out var data)
+            part.PartData.category == PartCategories.Payload && part.TryGetModuleData<PartComponentModule_Fairing, Data_Fairing>(out var data)
                 ? Option.Some(new ModuleFairingAdapter(part, data))
                 : Option.None<ModuleFairingAdapter>();
 

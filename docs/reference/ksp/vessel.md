@@ -592,6 +592,7 @@ is_solar_panel | bool | R/O |
 launch_clamp | Option&lt;[ksp::vessel::ModuleLaunchClamp](/reference/ksp/vessel.md#modulelaunchclamp)> | R/O | 
 max_temperature | float | R/O | Maximum temperature of the part 
 parachute | Option&lt;[ksp::vessel::ModuleParachute](/reference/ksp/vessel.md#moduleparachute)> | R/O | 
+part_category | [ksp::vessel::PartCategory](/reference/ksp/vessel.md#partcategory) | R/O | 
 part_name | string | R/O | 
 position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get position of the part in celestial frame of the main body. 
 resource_mass | float | R/O | Resource mass of the part 
@@ -726,6 +727,7 @@ launch_clamp | Option&lt;[ksp::vessel::ModuleLaunchClamp](/reference/ksp/vessel.
 max_temperature | float | R/O | Maximum temperature of the part 
 node_types | string[] | R/O | 
 parachute | Option&lt;[ksp::vessel::ModuleParachute](/reference/ksp/vessel.md#moduleparachute)> | R/O | 
+part_category | [ksp::vessel::PartCategory](/reference/ksp/vessel.md#partcategory) | R/O | 
 part_name | string | R/O | 
 position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get position of the part in celestial frame of the main body. 
 resource_mass | float | R/O | Resource mass of the part 
@@ -1110,6 +1112,7 @@ is_solar_panel | bool | R/O |
 launch_clamp | Option&lt;[ksp::vessel::ModuleLaunchClamp](/reference/ksp/vessel.md#modulelaunchclamp)> | R/O | 
 max_temperature | float | R/O | Maximum temperature of the part 
 parachute | Option&lt;[ksp::vessel::ModuleParachute](/reference/ksp/vessel.md#moduleparachute)> | R/O | 
+part_category | [ksp::vessel::PartCategory](/reference/ksp/vessel.md#partcategory) | R/O | 
 part_name | string | R/O | 
 position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get position of the part in celestial frame of the main body. 
 resource_mass | float | R/O | Resource mass of the part 
@@ -1123,6 +1126,66 @@ thermal_mass | float | R/O |
 total_mass | float | R/O | Total mass of the part 
 vessel | [ksp::vessel::Vessel](/reference/ksp/vessel.md#vessel) | R/O | 
 wet_mass | float | R/O | 
+
+### PartCategory
+
+Vessel part category
+
+#### Methods
+
+##### to_string
+
+```rust
+partcategory.to_string ( ) -> string
+```
+
+String representation of the number
+
+### PartCategoryConstants
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+Aero | [ksp::vessel::PartCategory](/reference/ksp/vessel.md#partcategory) | R/O | Aerodynamics
+Amenities | [ksp::vessel::PartCategory](/reference/ksp/vessel.md#partcategory) | R/O | Amenities
+ColonyEssentials | [ksp::vessel::PartCategory](/reference/ksp/vessel.md#partcategory) | R/O | ColonyEssentials
+Communication | [ksp::vessel::PartCategory](/reference/ksp/vessel.md#partcategory) | R/O | Communication
+Control | [ksp::vessel::PartCategory](/reference/ksp/vessel.md#partcategory) | R/O | Production
+Coupling | [ksp::vessel::PartCategory](/reference/ksp/vessel.md#partcategory) | R/O | Coupling
+Electrical | [ksp::vessel::PartCategory](/reference/ksp/vessel.md#partcategory) | R/O | Electrical
+Engine | [ksp::vessel::PartCategory](/reference/ksp/vessel.md#partcategory) | R/O | Engine
+Favorites | [ksp::vessel::PartCategory](/reference/ksp/vessel.md#partcategory) | R/O | Favorites
+FuelTank | [ksp::vessel::PartCategory](/reference/ksp/vessel.md#partcategory) | R/O | FuelTank
+Ground | [ksp::vessel::PartCategory](/reference/ksp/vessel.md#partcategory) | R/O | Ground
+Payload | [ksp::vessel::PartCategory](/reference/ksp/vessel.md#partcategory) | R/O | Payload
+Pods | [ksp::vessel::PartCategory](/reference/ksp/vessel.md#partcategory) | R/O | Pods
+Production | [ksp::vessel::PartCategory](/reference/ksp/vessel.md#partcategory) | R/O | Production
+Science | [ksp::vessel::PartCategory](/reference/ksp/vessel.md#partcategory) | R/O | Science
+Storage | [ksp::vessel::PartCategory](/reference/ksp/vessel.md#partcategory) | R/O | Storage
+Structural | [ksp::vessel::PartCategory](/reference/ksp/vessel.md#partcategory) | R/O | Production
+SubAssemblies | [ksp::vessel::PartCategory](/reference/ksp/vessel.md#partcategory) | R/O | SubAssemblies
+Thermal | [ksp::vessel::PartCategory](/reference/ksp/vessel.md#partcategory) | R/O | Thermal
+Utility | [ksp::vessel::PartCategory](/reference/ksp/vessel.md#partcategory) | R/O | Utility
+none | [ksp::vessel::PartCategory](/reference/ksp/vessel.md#partcategory) | R/O | No category
+
+#### Methods
+
+##### from_string
+
+```rust
+partcategoryconstants.from_string ( value : string ) -> Option<ksp::vessel::PartCategory>
+```
+
+Parse from string
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+value | string |  | Enum value to lookup
 
 ### StageDeltaV
 
@@ -1744,6 +1807,7 @@ EngineType | ksp::vessel::EngineTypeConstants | Engine types
 ParachuteDeployMode | ksp::vessel::ParachuteDeployModeConstants | Parachute deploy mode
 ParachuteDeployState | ksp::vessel::ParachuteDeployStateConstants | Parachute deploy state
 ParachuteSafeStates | ksp::vessel::ParachuteSafeStatesConstants | Parachute safe states
+PartCategory | ksp::vessel::PartCategoryConstants | Vessel part category
 VesselControlState | ksp::vessel::VesselControlStateConstants | Vessel control state
 VesselSituation | ksp::vessel::VesselSituationConstants | Vessel situation
 
