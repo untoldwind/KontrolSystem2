@@ -149,5 +149,7 @@ public partial class KSPVesselModule {
             part.TryGetModuleData<PartComponentModule_Heatshield, Data_Heatshield>(out var data)
                 ? Option.Some(new ModuleHeatshieldAdapter(part, data))
                 : Option.None<ModuleHeatshieldAdapter>();
+
+        [KSField] public bool IsCargoBay => part.TryGetModuleData<PartComponentModule_CargoBay, Data_CargoBay>(out var _);
     }
 }

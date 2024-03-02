@@ -52,50 +52,61 @@ public partial class KSPVesselModule {
         var (enumTypes, enumConstants) = BindingGenerator.RegisterEnumTypeMappings("ksp::vessel",
             new[] {
                 ("AutopilotMode", "Vessel autopilot (SAS) mode", typeof(AutopilotMode),
-                    new (Enum value, string description)[] {
-                        (AutopilotMode.StabilityAssist,
-                            "Stability assist mode. The autopilot tries to stop the rotation of the vessel. "),
-                        (AutopilotMode.Prograde, "Align the vessel to the prograde vector of its orbit."),
-                        (AutopilotMode.Retrograde, "Align the vessel to the retrograde vector of its orbit."),
-                        (AutopilotMode.Normal, "Align the vessel to the normal vector of its orbit."),
-                        (AutopilotMode.Antinormal, "Align the vessel to the anti-normal vector of its orbit."),
-                        (AutopilotMode.RadialIn, "Align the vessel to the radial-in vector of its orbit."),
-                        (AutopilotMode.RadialOut, "Align the vessel to the radial-out vector of its orbit."),
-                        (AutopilotMode.Target,
-                            "Align the vessel to the vector pointing to its target (if a target is set)."),
-                        (AutopilotMode.AntiTarget,
-                            "Align the vessel to the vector pointing away from its target (if a target is set)."),
-                        (AutopilotMode.Maneuver,
-                            "Align the vessel to the burn vector of the next maneuver node (if a maneuver node exists)."),
-                        (AutopilotMode.Navigation,
-                            "Align the vessel to the `vessel.autopilot.target_orientation` vector."),
-                        (AutopilotMode.Autopilot,
-                            "Align the vessel to the `vessel.autopilot.target_orientation` vector. (probably no difference to AutopilotMode.Navigation)")
-                    }),
+                [
+                    (AutopilotMode.StabilityAssist,
+                        "Stability assist mode. The autopilot tries to stop the rotation of the vessel. "),
+                    (AutopilotMode.Prograde, "Align the vessel to the prograde vector of its orbit."),
+                    (AutopilotMode.Retrograde, "Align the vessel to the retrograde vector of its orbit."),
+                    (AutopilotMode.Normal, "Align the vessel to the normal vector of its orbit."),
+                    (AutopilotMode.Antinormal, "Align the vessel to the anti-normal vector of its orbit."),
+                    (AutopilotMode.RadialIn, "Align the vessel to the radial-in vector of its orbit."),
+                    (AutopilotMode.RadialOut, "Align the vessel to the radial-out vector of its orbit."),
+                    (AutopilotMode.Target,
+                        "Align the vessel to the vector pointing to its target (if a target is set)."),
+                    (AutopilotMode.AntiTarget,
+                        "Align the vessel to the vector pointing away from its target (if a target is set)."),
+                    (AutopilotMode.Maneuver,
+                        "Align the vessel to the burn vector of the next maneuver node (if a maneuver node exists)."),
+                    (AutopilotMode.Navigation,
+                        "Align the vessel to the `vessel.autopilot.target_orientation` vector."),
+                    (AutopilotMode.Autopilot,
+                        "Align the vessel to the `vessel.autopilot.target_orientation` vector. (probably no difference to AutopilotMode.Navigation)")
+                ]),
                 ("DeltaVSituation", "Vessel situation for delta-v calculation", typeof(DeltaVSituationOptions),
-                    new (Enum value, string description)[] {
-                        (DeltaVSituationOptions.SeaLevel, "Calculate delta-v at sea level of the current main body."),
-                        (DeltaVSituationOptions.Altitude, "Calculate delta-v at the current altitude of the vessel."),
-                        (DeltaVSituationOptions.Vaccum, "Calculate delta-v in vaccum.")
-                    }),
+                [
+                    (DeltaVSituationOptions.SeaLevel, "Calculate delta-v at sea level of the current main body."),
+                    (DeltaVSituationOptions.Altitude, "Calculate delta-v at the current altitude of the vessel."),
+                    (DeltaVSituationOptions.Vaccum, "Calculate delta-v in vaccum.")
+                ]),
                 ("ParachuteDeployState", "Parachute deploy state", typeof(Data_Parachute.DeploymentStates),
-                    new (Enum value, string description)[] {
-                    }),
+                [
+                    (Data_Parachute.DeploymentStates.CUT, "Parachute has been cut"),
+                    (Data_Parachute.DeploymentStates.ARMED, "Parachute is armed (i.e. will deploy in the right condition)"),
+                    (Data_Parachute.DeploymentStates.STOWED, "Parachute is stowed"),
+                    (Data_Parachute.DeploymentStates.DEPLOYED, "Parachute is fully deployed"),
+                    (Data_Parachute.DeploymentStates.SEMIDEPLOYED, "Parachute is partly deployed (i.e. not fully extended)")
+                ]),
                 ("ParachuteDeployMode", "Parachute deploy mode", typeof(Data_Parachute.DeployMode),
-                    new (Enum value, string description)[] {
-                    }),
+                [
+                    (Data_Parachute.DeployMode.SAFE, "Parachute will deploy only under safe condition (i.e. will not tear of)"),
+                    (Data_Parachute.DeployMode.RISKY, "Parachute might deploy in risky conditions (i.e. might tear off)"),
+                    (Data_Parachute.DeployMode.IMMEDIATE, "Parachute will deploy immediately regardless of conditions")
+                ]),
                 ("ParachuteSafeStates", "Parachute safe states", typeof(Data_Parachute.DeploymentSafeStates),
-                    new (Enum value, string description)[] {
-                    }),
-                ("EngineType", "Engine types", typeof(EngineType), new (Enum value, string description)[] {
+                [
+                    (Data_Parachute.DeploymentSafeStates.SAFE, "Parachute can be safely deployed"),
+                    (Data_Parachute.DeploymentSafeStates.RISKY, "Deployment of parachute is risky"),
+                    (Data_Parachute.DeploymentSafeStates.UNSAFE, "Deployment of parachute is unsafe"),
+                ]),
+                ("EngineType", "Engine types", typeof(EngineType), [
                     (EngineType.Generic, "Generic engine type (not specified)"),
                     (EngineType.SolidBooster, "Engine is a solid fuel booster"),
                     (EngineType.Methalox, "Methan-oxigene rocket engine"),
                     (EngineType.Turbine, "Turbine engine"),
                     (EngineType.Nuclear, "Nuclear engine"),
                     (EngineType.MonoProp, "Mono-propellant engine")
-                }),
-                ("VesselSituation", "Vessel situation", typeof(VesselSituations), new (Enum value, string description)[] {
+                ]),
+                ("VesselSituation", "Vessel situation", typeof(VesselSituations), [
                     (VesselSituations.PreLaunch, "Vessel is in pre-launch situation."),
                     (VesselSituations.Landed, "Vessel has landed."),
                     (VesselSituations.Splashed, "Vessel has splashed in water."),
@@ -104,22 +115,39 @@ public partial class KSPVesselModule {
                     (VesselSituations.Orbiting, "Vessel is orbiting its main body."),
                     (VesselSituations.Escaping, "Vessel is on an escape trajectory."),
                     (VesselSituations.Unknown, "Vessel situation is unknown.")
-                }),
+                ]),
                 ("VesselControlState", "Vessel control state", typeof(VesselControlState),
-                    new (Enum value, string description)[] {
-                    }),
+                [
+                    (VesselControlState.NoControl, "Vessel can not be controlled."),
+                    (VesselControlState.NoCommNet, "Vessel has no connection to mission control."),
+                    (VesselControlState.FullControl, "Vessel can be fully controlled."),
+                    (VesselControlState.FullControlHibernation, "Vessel is in hibernation with full control.")
+                ]),
                 ("DockingState", "Current state of a docking node", typeof(Data_DockingNode.DockingState),
-                    new (Enum value, string description)[] {
-                    }),
+                [
+                    (Data_DockingNode.DockingState.Docked, "Vessel is docked"),
+                    (Data_DockingNode.DockingState.Disengaged, "Vessel is disengaged"),
+                    (Data_DockingNode.DockingState.Ready, "Docking port is ready for docking"),
+                    (Data_DockingNode.DockingState.Acquire_Docker, "Acquiring docker"),
+                    (Data_DockingNode.DockingState.Acquire_Dockee, "Acquiring dockee"),
+                ]),
                 ("CommandControlState", "Current state of a command module", typeof(CommandControlState),
+                [
+                    (CommandControlState.Disabled, "Command module disabled."),
+                    (CommandControlState.NotEnoughCrew, "Command module has not enough crew."),
+                    (CommandControlState.NotEnoughResources, "Command module has not resource crew."),
+                    (CommandControlState.NoCommNetConnection, "Command module has no comm net connection."),
+                    (CommandControlState.Hibernating, "Command module is hibernating."),
+                    (CommandControlState.FullyFunctional, "Command module is functional.")
+                ]),
+                ("DeployableDeployState", "Current state of a deployable part (like CargoBays)", typeof(Data_Deployable.DeployState),
                     new (Enum value, string description)[] {
-                        (CommandControlState.Disabled, "Command module disabled."),
-                        (CommandControlState.NotEnoughCrew, "Command module has not enough crew."),
-                        (CommandControlState.NotEnoughResources, "Command module has not resource crew."),
-                        (CommandControlState.NoCommNetConnection, "Command module has no comm net connection."),
-                        (CommandControlState.Hibernating, "Command module is hibernating."),
-                        (CommandControlState.FullyFunctional, "Command module is functional.")
-                    })
+                        (Data_Deployable.DeployState.Retracted, "Part is retracted"),                    
+                        (Data_Deployable.DeployState.Retracting, "Part is currently retracting"),                    
+                        (Data_Deployable.DeployState.Extended, "Part is extended"),                    
+                        (Data_Deployable.DeployState.Extending, "Part is currently extending"),
+                        (Data_Deployable.DeployState.Broken, "Part is broken"),
+                }),
             });
 
         BindingGenerator.RegisterTypeMapping(typeof(FlightCtrlState),

@@ -188,6 +188,50 @@ Name | Type | Optional | Description
 --- | --- | --- | ---
 value | string |  | Enum value to lookup
 
+### DeployableDeployState
+
+Current state of a deployable part (like CargoBays)
+
+#### Methods
+
+##### to_string
+
+```rust
+deployabledeploystate.to_string ( ) -> string
+```
+
+String representation of the number
+
+### DeployableDeployStateConstants
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+Broken | [ksp::vessel::DeployableDeployState](/reference/ksp/vessel.md#deployabledeploystate) | R/O | Part is broken
+Extended | [ksp::vessel::DeployableDeployState](/reference/ksp/vessel.md#deployabledeploystate) | R/O | Part is extended
+Extending | [ksp::vessel::DeployableDeployState](/reference/ksp/vessel.md#deployabledeploystate) | R/O | Part is currently extending
+Retracted | [ksp::vessel::DeployableDeployState](/reference/ksp/vessel.md#deployabledeploystate) | R/O | Part is retracted
+Retracting | [ksp::vessel::DeployableDeployState](/reference/ksp/vessel.md#deployabledeploystate) | R/O | Part is currently retracting
+
+#### Methods
+
+##### from_string
+
+```rust
+deployabledeploystateconstants.from_string ( value : string ) -> Option<ksp::vessel::DeployableDeployState>
+```
+
+Parse from string
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+value | string |  | Enum value to lookup
+
 ### DockingState
 
 Current state of a docking node
@@ -210,12 +254,12 @@ String representation of the number
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
-Acquire_Dockee | [ksp::vessel::DockingState](/reference/ksp/vessel.md#dockingstate) | R/O | 
-Acquire_Docker | [ksp::vessel::DockingState](/reference/ksp/vessel.md#dockingstate) | R/O | 
-Disengaged | [ksp::vessel::DockingState](/reference/ksp/vessel.md#dockingstate) | R/O | 
-Docked | [ksp::vessel::DockingState](/reference/ksp/vessel.md#dockingstate) | R/O | 
+Acquire_Dockee | [ksp::vessel::DockingState](/reference/ksp/vessel.md#dockingstate) | R/O | Acquiring dockee
+Acquire_Docker | [ksp::vessel::DockingState](/reference/ksp/vessel.md#dockingstate) | R/O | Acquiring docker
+Disengaged | [ksp::vessel::DockingState](/reference/ksp/vessel.md#dockingstate) | R/O | Vessel is disengaged
+Docked | [ksp::vessel::DockingState](/reference/ksp/vessel.md#dockingstate) | R/O | Vessel is docked
 None | [ksp::vessel::DockingState](/reference/ksp/vessel.md#dockingstate) | R/O | 
-Ready | [ksp::vessel::DockingState](/reference/ksp/vessel.md#dockingstate) | R/O | 
+Ready | [ksp::vessel::DockingState](/reference/ksp/vessel.md#dockingstate) | R/O | Docking port is ready for docking
 
 #### Methods
 
@@ -535,6 +579,7 @@ global_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposit
 global_rotation | [ksp::math::GlobalDirection](/reference/ksp/math.md#globaldirection) | R/O | 
 green_mass | float | R/O | Green mass (Kerbals) of the part 
 heatshield | Option&lt;[ksp::vessel::ModuleHeatshield](/reference/ksp/vessel.md#moduleheatshield)> | R/O | 
+is_cargo_bay | bool | R/O | 
 is_decoupler | bool | R/O | 
 is_deployable | bool | R/O | 
 is_engine | bool | R/O | 
@@ -619,7 +664,8 @@ moduledecoupler.decouple ( ) -> bool
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
-deploy_state | string | R/O | 
+deploy_limit | float | R/W | 
+deploy_state | [ksp::vessel::DeployableDeployState](/reference/ksp/vessel.md#deployabledeploystate) | R/O | 
 extendable | bool | R/O | 
 extended | bool | R/W | 
 part_name | string | R/O | 
@@ -665,6 +711,7 @@ global_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposit
 global_rotation | [ksp::math::GlobalDirection](/reference/ksp/math.md#globaldirection) | R/O | 
 green_mass | float | R/O | Green mass (Kerbals) of the part 
 heatshield | Option&lt;[ksp::vessel::ModuleHeatshield](/reference/ksp/vessel.md#moduleheatshield)> | R/O | 
+is_cargo_bay | bool | R/O | 
 is_decoupler | bool | R/O | 
 is_deployable | bool | R/O | 
 is_deployable_docking_port | bool | R/O | 
@@ -918,9 +965,9 @@ String representation of the number
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
-IMMEDIATE | [ksp::vessel::ParachuteDeployMode](/reference/ksp/vessel.md#parachutedeploymode) | R/O | 
-RISKY | [ksp::vessel::ParachuteDeployMode](/reference/ksp/vessel.md#parachutedeploymode) | R/O | 
-SAFE | [ksp::vessel::ParachuteDeployMode](/reference/ksp/vessel.md#parachutedeploymode) | R/O | 
+IMMEDIATE | [ksp::vessel::ParachuteDeployMode](/reference/ksp/vessel.md#parachutedeploymode) | R/O | Parachute will deploy immediately regardless of conditions
+RISKY | [ksp::vessel::ParachuteDeployMode](/reference/ksp/vessel.md#parachutedeploymode) | R/O | Parachute might deploy in risky conditions (i.e. might tear off)
+SAFE | [ksp::vessel::ParachuteDeployMode](/reference/ksp/vessel.md#parachutedeploymode) | R/O | Parachute will deploy only under safe condition (i.e. will not tear of)
 
 #### Methods
 
@@ -960,11 +1007,11 @@ String representation of the number
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
-ARMED | [ksp::vessel::ParachuteDeployState](/reference/ksp/vessel.md#parachutedeploystate) | R/O | 
-CUT | [ksp::vessel::ParachuteDeployState](/reference/ksp/vessel.md#parachutedeploystate) | R/O | 
-DEPLOYED | [ksp::vessel::ParachuteDeployState](/reference/ksp/vessel.md#parachutedeploystate) | R/O | 
-SEMIDEPLOYED | [ksp::vessel::ParachuteDeployState](/reference/ksp/vessel.md#parachutedeploystate) | R/O | 
-STOWED | [ksp::vessel::ParachuteDeployState](/reference/ksp/vessel.md#parachutedeploystate) | R/O | 
+ARMED | [ksp::vessel::ParachuteDeployState](/reference/ksp/vessel.md#parachutedeploystate) | R/O | Parachute is armed (i.e. will deploy in the right condition)
+CUT | [ksp::vessel::ParachuteDeployState](/reference/ksp/vessel.md#parachutedeploystate) | R/O | Parachute has been cut
+DEPLOYED | [ksp::vessel::ParachuteDeployState](/reference/ksp/vessel.md#parachutedeploystate) | R/O | Parachute is fully deployed
+SEMIDEPLOYED | [ksp::vessel::ParachuteDeployState](/reference/ksp/vessel.md#parachutedeploystate) | R/O | Parachute is partly deployed (i.e. not fully extended)
+STOWED | [ksp::vessel::ParachuteDeployState](/reference/ksp/vessel.md#parachutedeploystate) | R/O | Parachute is stowed
 
 #### Methods
 
@@ -1005,9 +1052,9 @@ String representation of the number
 Name | Type | Read-only | Description
 --- | --- | --- | ---
 NONE | [ksp::vessel::ParachuteSafeStates](/reference/ksp/vessel.md#parachutesafestates) | R/O | 
-RISKY | [ksp::vessel::ParachuteSafeStates](/reference/ksp/vessel.md#parachutesafestates) | R/O | 
-SAFE | [ksp::vessel::ParachuteSafeStates](/reference/ksp/vessel.md#parachutesafestates) | R/O | 
-UNSAFE | [ksp::vessel::ParachuteSafeStates](/reference/ksp/vessel.md#parachutesafestates) | R/O | 
+RISKY | [ksp::vessel::ParachuteSafeStates](/reference/ksp/vessel.md#parachutesafestates) | R/O | Deployment of parachute is risky
+SAFE | [ksp::vessel::ParachuteSafeStates](/reference/ksp/vessel.md#parachutesafestates) | R/O | Parachute can be safely deployed
+UNSAFE | [ksp::vessel::ParachuteSafeStates](/reference/ksp/vessel.md#parachutesafestates) | R/O | Deployment of parachute is unsafe
 
 #### Methods
 
@@ -1048,6 +1095,7 @@ global_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposit
 global_rotation | [ksp::math::GlobalDirection](/reference/ksp/math.md#globaldirection) | R/O | 
 green_mass | float | R/O | Green mass (Kerbals) of the part 
 heatshield | Option&lt;[ksp::vessel::ModuleHeatshield](/reference/ksp/vessel.md#moduleheatshield)> | R/O | 
+is_cargo_bay | bool | R/O | 
 is_decoupler | bool | R/O | 
 is_deployable | bool | R/O | 
 is_engine | bool | R/O | 
@@ -1586,10 +1634,10 @@ String representation of the number
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
-FullControl | [ksp::vessel::VesselControlState](/reference/ksp/vessel.md#vesselcontrolstate) | R/O | 
-FullControlHibernation | [ksp::vessel::VesselControlState](/reference/ksp/vessel.md#vesselcontrolstate) | R/O | 
-NoCommNet | [ksp::vessel::VesselControlState](/reference/ksp/vessel.md#vesselcontrolstate) | R/O | 
-NoControl | [ksp::vessel::VesselControlState](/reference/ksp/vessel.md#vesselcontrolstate) | R/O | 
+FullControl | [ksp::vessel::VesselControlState](/reference/ksp/vessel.md#vesselcontrolstate) | R/O | Vessel can be fully controlled.
+FullControlHibernation | [ksp::vessel::VesselControlState](/reference/ksp/vessel.md#vesselcontrolstate) | R/O | Vessel is in hibernation with full control.
+NoCommNet | [ksp::vessel::VesselControlState](/reference/ksp/vessel.md#vesselcontrolstate) | R/O | Vessel has no connection to mission control.
+NoControl | [ksp::vessel::VesselControlState](/reference/ksp/vessel.md#vesselcontrolstate) | R/O | Vessel can not be controlled.
 
 #### Methods
 
@@ -1688,6 +1736,7 @@ Name | Type | Description
 AutopilotMode | ksp::vessel::AutopilotModeConstants | Vessel autopilot (SAS) mode
 CommandControlState | ksp::vessel::CommandControlStateConstants | Current state of a command module
 DeltaVSituation | ksp::vessel::DeltaVSituationConstants | Vessel situation for delta-v calculation
+DeployableDeployState | ksp::vessel::DeployableDeployStateConstants | Current state of a deployable part (like CargoBays)
 DockingState | ksp::vessel::DockingStateConstants | Current state of a docking node
 EngineType | ksp::vessel::EngineTypeConstants | Engine types
 ParachuteDeployMode | ksp::vessel::ParachuteDeployModeConstants | Parachute deploy mode

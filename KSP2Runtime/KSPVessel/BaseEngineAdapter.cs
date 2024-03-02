@@ -43,7 +43,7 @@ public abstract class BaseEngineAdapter {
         get => dataEngine.thrustPercentage.GetValue() / 100.0;
         set => dataEngine.thrustPercentage.SetValue((float)(100.0 * value));
     }
-    
+
     [KSField]
     public bool AutoSwitchMode {
         get => dataEngine.EngineAutoSwitchMode.GetValue();

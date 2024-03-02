@@ -2335,6 +2335,16 @@
         {
           "kind": "Standard",
           "module": "ksp::vessel",
+          "name": "DeployableDeployState"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "DeployableDeployStateConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
           "name": "FlightCtrlState"
         },
         {
@@ -3187,6 +3197,16 @@
           "kind": "Standard",
           "module": "ksp::vessel",
           "name": "CommandControlStateConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "DeployableDeployState"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "DeployableDeployStateConstants"
         },
         {
           "kind": "Standard",
@@ -11951,6 +11971,16 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "DeployableDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeployableDeployStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "FlightCtrlState"
             },
             {
@@ -14483,6 +14513,16 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "DeployableDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeployableDeployStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "FlightCtrlState"
             },
             {
@@ -15810,6 +15850,16 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "DeployableDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeployableDeployStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "FlightCtrlState"
             },
             {
@@ -16824,6 +16874,16 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "DeployableDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeployableDeployStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "FlightCtrlState"
             },
             {
@@ -17778,6 +17838,16 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "DeployableDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeployableDeployStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "FlightCtrlState"
             },
             {
@@ -18688,6 +18758,16 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "CommandControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeployableDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeployableDeployStateConstants"
             },
             {
               "kind": "Standard",
@@ -20685,6 +20765,16 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "CommandControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeployableDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeployableDeployStateConstants"
             },
             {
               "kind": "Standard",
@@ -25672,6 +25762,16 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "DeployableDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeployableDeployStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "FlightCtrlState"
             },
             {
@@ -26596,6 +26696,16 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "DeployableDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeployableDeployStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "FlightCtrlState"
             },
             {
@@ -26843,7 +26953,7 @@
           "fields": {
             "STOWED": {
               "name": "STOWED",
-              "description": "",
+              "description": "Parachute is stowed",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -26853,7 +26963,7 @@
             },
             "ARMED": {
               "name": "ARMED",
-              "description": "",
+              "description": "Parachute is armed (i.e. will deploy in the right condition)",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -26863,7 +26973,7 @@
             },
             "SEMIDEPLOYED": {
               "name": "SEMIDEPLOYED",
-              "description": "",
+              "description": "Parachute is partly deployed (i.e. not fully extended)",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -26873,7 +26983,7 @@
             },
             "DEPLOYED": {
               "name": "DEPLOYED",
-              "description": "",
+              "description": "Parachute is fully deployed",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -26883,7 +26993,7 @@
             },
             "CUT": {
               "name": "CUT",
-              "description": "",
+              "description": "Parachute has been cut",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -27540,6 +27650,16 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "DeployableDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeployableDeployStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "FlightCtrlState"
             },
             {
@@ -27787,7 +27907,7 @@
           "fields": {
             "SAFE": {
               "name": "SAFE",
-              "description": "",
+              "description": "Parachute will deploy only under safe condition (i.e. will not tear of)",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -27797,7 +27917,7 @@
             },
             "RISKY": {
               "name": "RISKY",
-              "description": "",
+              "description": "Parachute might deploy in risky conditions (i.e. might tear off)",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -27807,7 +27927,7 @@
             },
             "IMMEDIATE": {
               "name": "IMMEDIATE",
-              "description": "",
+              "description": "Parachute will deploy immediately regardless of conditions",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -28464,6 +28584,16 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "DeployableDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeployableDeployStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "FlightCtrlState"
             },
             {
@@ -28711,7 +28841,7 @@
           "fields": {
             "SAFE": {
               "name": "SAFE",
-              "description": "",
+              "description": "Parachute can be safely deployed",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -28721,7 +28851,7 @@
             },
             "RISKY": {
               "name": "RISKY",
-              "description": "",
+              "description": "Deployment of parachute is risky",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -28731,7 +28861,7 @@
             },
             "UNSAFE": {
               "name": "UNSAFE",
-              "description": "",
+              "description": "Deployment of parachute is unsafe",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -29394,6 +29524,16 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "CommandControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeployableDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeployableDeployStateConstants"
             },
             {
               "kind": "Standard",
@@ -30422,6 +30562,16 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "DeployableDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeployableDeployStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "FlightCtrlState"
             },
             {
@@ -31396,6 +31546,16 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "DeployableDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeployableDeployStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "FlightCtrlState"
             },
             {
@@ -31643,7 +31803,7 @@
           "fields": {
             "NoControl": {
               "name": "NoControl",
-              "description": "",
+              "description": "Vessel can not be controlled.",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -31653,7 +31813,7 @@
             },
             "NoCommNet": {
               "name": "NoCommNet",
-              "description": "",
+              "description": "Vessel has no connection to mission control.",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -31663,7 +31823,7 @@
             },
             "FullControlHibernation": {
               "name": "FullControlHibernation",
-              "description": "",
+              "description": "Vessel is in hibernation with full control.",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -31673,7 +31833,7 @@
             },
             "FullControl": {
               "name": "FullControl",
-              "description": "",
+              "description": "Vessel can be fully controlled.",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -32330,6 +32490,16 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "DeployableDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeployableDeployStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "FlightCtrlState"
             },
             {
@@ -32587,7 +32757,7 @@
             },
             "Ready": {
               "name": "Ready",
-              "description": "",
+              "description": "Docking port is ready for docking",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -32597,7 +32767,7 @@
             },
             "Acquire_Dockee": {
               "name": "Acquire_Dockee",
-              "description": "",
+              "description": "Acquiring dockee",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -32607,7 +32777,7 @@
             },
             "Acquire_Docker": {
               "name": "Acquire_Docker",
-              "description": "",
+              "description": "Acquiring docker",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -32617,7 +32787,7 @@
             },
             "Docked": {
               "name": "Docked",
-              "description": "",
+              "description": "Vessel is docked",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -32627,7 +32797,7 @@
             },
             "Disengaged": {
               "name": "Disengaged",
-              "description": "",
+              "description": "Vessel is disengaged",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -33280,6 +33450,16 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "CommandControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeployableDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeployableDeployStateConstants"
             },
             {
               "kind": "Standard",
@@ -34244,6 +34424,970 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "CommandControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeployableDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeployableDeployStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "FlightCtrlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ActionGroups"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Autopilot"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "StageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Maneuver"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ManeuverNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleCommand"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleControlSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDockingNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleEngine"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleGimbal"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleHeatshield"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleScienceExperiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Staging"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Targetable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Vessel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringController"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringControl"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "BodyParameters"
+            },
+            {
+              "kind": "Record",
+              "names": [
+                "brake_time",
+                "end_latitude",
+                "end_longitude",
+                "end_time",
+                "path"
+              ],
+              "parameters": [
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Array",
+                  "parameters": [
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "GlobalPosition"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "ReentrySimulation"
+            }
+          ]
+        },
+        "DeployableDeployState": {
+          "name": "DeployableDeployState",
+          "description": "Current state of a deployable part (like CargoBays)",
+          "fields": {},
+          "methods": {
+            "to_string": {
+              "isAsync": false,
+              "name": "to_string",
+              "description": "String representation of the number",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            }
+          },
+          "suffixOperators": {
+            "==": [
+              {
+                "op": "==",
+                "otherType": {
+                  "kind": "Standard",
+                  "module": "ksp::vessel",
+                  "name": "DeployableDeployState"
+                },
+                "resultType": {
+                  "kind": "Builtin",
+                  "name": "bool"
+                }
+              }
+            ],
+            "!=": [
+              {
+                "op": "!=",
+                "otherType": {
+                  "kind": "Standard",
+                  "module": "ksp::vessel",
+                  "name": "DeployableDeployState"
+                },
+                "resultType": {
+                  "kind": "Builtin",
+                  "name": "bool"
+                }
+              }
+            ]
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "DeployableDeployStateConstants": {
+          "name": "DeployableDeployStateConstants",
+          "description": "",
+          "fields": {
+            "Retracted": {
+              "name": "Retracted",
+              "description": "Part is retracted",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "DeployableDeployState"
+              }
+            },
+            "Extended": {
+              "name": "Extended",
+              "description": "Part is extended",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "DeployableDeployState"
+              }
+            },
+            "Retracting": {
+              "name": "Retracting",
+              "description": "Part is currently retracting",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "DeployableDeployState"
+              }
+            },
+            "Extending": {
+              "name": "Extending",
+              "description": "Part is currently extending",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "DeployableDeployState"
+              }
+            },
+            "Broken": {
+              "name": "Broken",
+              "description": "Part is broken",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "DeployableDeployState"
+              }
+            }
+          },
+          "methods": {
+            "from_string": {
+              "isAsync": false,
+              "name": "from_string",
+              "description": "Parse from string",
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "string"
+                  },
+                  "hasDefault": false,
+                  "description": "Enum value to lookup"
+                }
+              ],
+              "returnType": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "DeployableDeployState"
+                  }
+                ]
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": [
+            {
+              "kind": "Builtin",
+              "name": "Unit"
+            },
+            {
+              "kind": "Builtin",
+              "name": "bool"
+            },
+            {
+              "kind": "Builtin",
+              "name": "int"
+            },
+            {
+              "kind": "Builtin",
+              "name": "float"
+            },
+            {
+              "kind": "Builtin",
+              "name": "string"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Range"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "ArrayBuilder",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Cell",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Option",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Result",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "R"
+                },
+                {
+                  "kind": "Generic",
+                  "name": "E"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::background",
+              "name": "Task",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::math",
+              "name": "Random"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::addons",
+              "name": "FlightPlan"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "Console"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "RgbaColor"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "MovingAverage"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "PIDLoop"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "RCSTranslateManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "SteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "ThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "TorquePI"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelSteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugBillboard"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "Debug"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "GroundMarker"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugPath"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Process"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ProcessArgument"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec3"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Direction"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Matrix2x2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalAngularVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalPosition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "TransformFrame"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssembly"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyBuilder"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblySolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyStageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "PatchTransitionType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "PatchTransitionTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Body"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "GeoCoordinates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Orbit"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirectionConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceContainer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceData"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceReceipeIngredient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransfer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransferEntry"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceReportType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceReportTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "CompletedResearchReport"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "Experiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchLocation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchReport"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceStorage"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::telemetry",
+              "name": "TimeSeries"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Align"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "AlignConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Button"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Canvas"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "ConsoleWindow"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Container"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Gradient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "StringInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "IntInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "FloatInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Label"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Line2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "PixelLine2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Polygon2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rect2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Slider"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Text2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Toggle"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Translate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Scale2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rotate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "ValueRaster2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Window"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStatesConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "CommandControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "CommandControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeployableDeployState"
             },
             {
               "kind": "Standard",
@@ -35857,6 +37001,14 @@
                 ]
               }
             },
+            "is_cargo_bay": {
+              "name": "is_cargo_bay",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
             "part_name": {
               "name": "part_name",
               "readOnly": true,
@@ -36071,8 +37223,9 @@
               "name": "deploy_state",
               "readOnly": true,
               "type": {
-                "kind": "Builtin",
-                "name": "string"
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "DeployableDeployState"
               }
             },
             "extendable": {
@@ -36089,6 +37242,14 @@
               "type": {
                 "kind": "Builtin",
                 "name": "bool"
+              }
+            },
+            "deploy_limit": {
+              "name": "deploy_limit",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
               }
             },
             "extended": {
@@ -36509,6 +37670,14 @@
                     "name": "ModuleHeatshield"
                   }
                 ]
+              }
+            },
+            "is_cargo_bay": {
+              "name": "is_cargo_bay",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
               }
             },
             "part_name": {
@@ -37594,6 +38763,14 @@
                     "name": "ModuleHeatshield"
                   }
                 ]
+              }
+            },
+            "is_cargo_bay": {
+              "name": "is_cargo_bay",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
               }
             },
             "part_name": {
@@ -39145,6 +40322,15 @@
             "kind": "Standard",
             "module": "ksp::vessel",
             "name": "CommandControlStateConstants"
+          }
+        },
+        "DeployableDeployState": {
+          "name": "DeployableDeployState",
+          "description": "Current state of a deployable part (like CargoBays)",
+          "type": {
+            "kind": "Standard",
+            "module": "ksp::vessel",
+            "name": "DeployableDeployStateConstants"
           }
         }
       },

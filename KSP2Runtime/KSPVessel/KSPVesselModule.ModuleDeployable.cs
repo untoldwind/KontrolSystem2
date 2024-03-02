@@ -17,12 +17,18 @@ public partial class KSPVesselModule {
 
         [KSField] public string PartName => part?.PartName ?? "Unknown";
 
-        [KSField] public string DeployState => dataDeployable.CurrentDeployState.GetValue().ToString();
+        [KSField] public Data_Deployable.DeployState DeployState => dataDeployable.CurrentDeployState.GetValue();
 
         [KSField] public bool Extendable => dataDeployable.extendable;
 
         [KSField] public bool Retractable => dataDeployable.retractable;
 
+        [KSField]
+        public double DeployLimit {
+            get => dataDeployable.DeployLimit.GetValue();
+            set => dataDeployable.DeployLimit.SetValue((float)value);
+        }
+        
         [KSField]
         public bool Extended {
             get => dataDeployable.toggleExtend.GetValue();
