@@ -1,5 +1,6 @@
 ﻿using KontrolSystem.TO2.Binding;
 using KSP.Sim.impl;
+using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime.KSPGame;
 
@@ -27,5 +28,25 @@ public class KSPGameWarpModule {
     [KSFunction(Description = "Cancel time warp")]
     public static void Cancel() {
         TimeWarp.StopTimeWarp();
+    }
+
+    [KSFunction(Description = "Get current maximum allowed time warp index.")]
+    public static long MaxWarpIndex() {
+        return TimeWarp.GetMaxRateIndex(false, out _);
+    }
+
+    [KSFunction(Description = "Set the current time warp index.")]
+    public static bool SetTimeWrapIndex(long index) {
+        return TimeWarp.SetRateIndex((int)index, true);
+    }
+
+    [KSFunction(Description = "Check if time warp is currently active")]
+    public static bool IsWarping() {
+        return TimeWarp.IsWarping;
+    }
+
+    [KSFunction(Description = "Check if time warp is still in physics mode")]
+    public static bool IsPhysicsTimeWarp() {
+        return TimeWarp.IsPhysicsTimeWarp;
     }
 }
