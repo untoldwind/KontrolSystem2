@@ -28,7 +28,7 @@ public partial class KSPVesselModule {
             get => dataDeployable.DeployLimit.GetValue();
             set => dataDeployable.DeployLimit.SetValue((float)value);
         }
-        
+
         [KSField]
         public bool Extended {
             get => dataDeployable.toggleExtend.GetValue();

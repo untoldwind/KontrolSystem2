@@ -58,6 +58,14 @@ public partial class KSPVesselModule {
             dataEngine.PropellantStates
                 .Select(state => new KSPResourceModule.ResourceDefinitionAdapter(state.resourceDef)).ToArray();
 
+        [KSField] public bool HasFairing => part.TryGetModuleData<PartComponentModule_Fairing, Data_Fairing>(out _);
+
+        [KSField]
+        public Option<ModuleFairingAdapter> Fairing =>
+            part.TryGetModuleData<PartComponentModule_Fairing, Data_Fairing>(out var data)
+                ? Option.Some(new ModuleFairingAdapter(part, data))
+                : Option.None<ModuleFairingAdapter>();
+
         [KSMethod]
         public bool ChangeMode(string name) {
             if (part == null) return false;

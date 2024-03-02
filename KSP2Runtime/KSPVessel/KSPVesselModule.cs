@@ -142,9 +142,9 @@ public partial class KSPVesselModule {
                 ]),
                 ("DeployableDeployState", "Current state of a deployable part (like CargoBays)", typeof(Data_Deployable.DeployState),
                     new (Enum value, string description)[] {
-                        (Data_Deployable.DeployState.Retracted, "Part is retracted"),                    
-                        (Data_Deployable.DeployState.Retracting, "Part is currently retracting"),                    
-                        (Data_Deployable.DeployState.Extended, "Part is extended"),                    
+                        (Data_Deployable.DeployState.Retracted, "Part is retracted"),
+                        (Data_Deployable.DeployState.Retracting, "Part is currently retracting"),
+                        (Data_Deployable.DeployState.Extended, "Part is extended"),
                         (Data_Deployable.DeployState.Extending, "Part is currently extending"),
                         (Data_Deployable.DeployState.Broken, "Part is broken"),
                 }),
