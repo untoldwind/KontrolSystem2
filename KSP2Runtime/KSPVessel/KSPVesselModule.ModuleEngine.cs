@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Linq;
-using KontrolSystem.KSP.Runtime.KSPResource;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
 using KSP.Modules;
@@ -33,10 +31,6 @@ public partial class KSPVesselModule {
             KSPContext.CurrentContext.Game.UniverseView.PhysicsSpace.PhysicsToVector(
                 dataEngine.ThrustDirRelativePartWorldSpace);
 
-        [KSField]
-        public EngineModeAdapter[] EngineModes => dataEngine.engineModes
-            .Select(engineMode => new EngineModeAdapter(engineMode)).ToArray();
-
         [KSField] public bool IsGimbal => part.TryGetModuleData<PartComponentModule_Gimbal, Data_Gimbal>(out var _);
 
         [KSField]
@@ -44,19 +38,6 @@ public partial class KSPVesselModule {
             part.TryGetModuleData<PartComponentModule_Gimbal, Data_Gimbal>(out var data)
                 ? Option.Some(new ModuleGimbalAdapter(part, data))
                 : Option.None<ModuleGimbalAdapter>();
-
-        [KSField]
-        public EngineModeAdapter CurrentEngineMode =>
-            new(dataEngine.engineModes[dataEngine.currentEngineModeIndex]);
-
-        [KSField]
-        public KSPResourceModule.ResourceDefinitionAdapter CurrentPropellant =>
-            new(dataEngine.CurrentPropellantState.resourceDef);
-
-        [KSField]
-        public KSPResourceModule.ResourceDefinitionAdapter[] Propellants =>
-            dataEngine.PropellantStates
-                .Select(state => new KSPResourceModule.ResourceDefinitionAdapter(state.resourceDef)).ToArray();
 
         [KSField] public bool HasFairing => part.TryGetModuleData<PartComponentModule_Fairing, Data_Fairing>(out _);
 

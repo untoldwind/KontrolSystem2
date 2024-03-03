@@ -1960,6 +1960,11 @@
         {
           "kind": "Standard",
           "module": "ksp::oab",
+          "name": "ObjectAssemblyEngine"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
           "name": "ObjectAssemblyEngineDeltaV"
         },
         {
@@ -2832,6 +2837,11 @@
           "kind": "Standard",
           "module": "ksp::oab",
           "name": "ObjectAssemblyDeltaV"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
+          "name": "ObjectAssemblyEngine"
         },
         {
           "kind": "Standard",
@@ -10895,6 +10905,223 @@
           "assignableFromAny": false,
           "assignableFrom": []
         },
+        "ObjectAssemblyEngine": {
+          "name": "ObjectAssemblyEngine",
+          "description": "",
+          "fields": {
+            "thrust_direction": {
+              "name": "thrust_direction",
+              "description": "Direction of thrust\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec3"
+              }
+            },
+            "is_shutdown": {
+              "name": "is_shutdown",
+              "description": "Check if engine is shutdown\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "has_ignited": {
+              "name": "has_ignited",
+              "description": "Check if engine has ignited\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "is_flameout": {
+              "name": "is_flameout",
+              "description": "Check if engine had a flame-out\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "is_staged": {
+              "name": "is_staged",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "is_operational": {
+              "name": "is_operational",
+              "description": "Check if engine is operational\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "is_propellant_starved": {
+              "name": "is_propellant_starved",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "current_throttle": {
+              "name": "current_throttle",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "current_thrust": {
+              "name": "current_thrust",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "real_isp": {
+              "name": "real_isp",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "throttle_min": {
+              "name": "throttle_min",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "min_fuel_flow": {
+              "name": "min_fuel_flow",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "max_fuel_flow": {
+              "name": "max_fuel_flow",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "max_thrust_output_vac": {
+              "name": "max_thrust_output_vac",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "max_thrust_output_atm": {
+              "name": "max_thrust_output_atm",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "thrust_limiter": {
+              "name": "thrust_limiter",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "auto_switch_mode": {
+              "name": "auto_switch_mode",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "independent_throttle_enabled": {
+              "name": "independent_throttle_enabled",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "independent_throttle": {
+              "name": "independent_throttle",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "engine_modes": {
+              "name": "engine_modes",
+              "description": "Get all engine modes\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "EngineMode"
+                  }
+                ]
+              }
+            },
+            "current_engine_mode": {
+              "name": "current_engine_mode",
+              "description": "Get the current engine mode\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "EngineMode"
+              }
+            },
+            "current_propellant": {
+              "name": "current_propellant",
+              "description": "Get the propellant of the current engine mode\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::resource",
+                "name": "ResourceDefinition"
+              }
+            },
+            "propellants": {
+              "name": "propellants",
+              "description": "Get the propellants of the different engine modes\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::resource",
+                    "name": "ResourceDefinition"
+                  }
+                ]
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
         "ObjectAssemblyEngineDeltaV": {
           "name": "ObjectAssemblyEngineDeltaV",
           "description": "",
@@ -10975,6 +11202,28 @@
                 "kind": "Standard",
                 "module": "ksp::math",
                 "name": "Vec3"
+              }
+            },
+            "is_engine": {
+              "name": "is_engine",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "engine": {
+              "name": "engine",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::oab",
+                    "name": "ObjectAssemblyEngine"
+                  }
+                ]
               }
             },
             "is_solar_panel": {
@@ -11712,6 +11961,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyEngine"
             },
             {
               "kind": "Standard",
@@ -14275,6 +14529,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyEngine"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyEngineDeltaV"
             },
             {
@@ -15637,6 +15896,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyEngine"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyEngineDeltaV"
             },
             {
@@ -16671,6 +16935,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyEngine"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyEngineDeltaV"
             },
             {
@@ -17645,6 +17914,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyEngine"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyEngineDeltaV"
             },
             {
@@ -18575,6 +18849,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyEngine"
             },
             {
               "kind": "Standard",
@@ -20592,6 +20871,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyEngine"
             },
             {
               "kind": "Standard",
@@ -25599,6 +25883,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyEngine"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyEngineDeltaV"
             },
             {
@@ -26539,6 +26828,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyEngine"
             },
             {
               "kind": "Standard",
@@ -27507,6 +27801,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyEngine"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyEngineDeltaV"
             },
             {
@@ -28447,6 +28746,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyEngine"
             },
             {
               "kind": "Standard",
@@ -29401,6 +29705,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyEngine"
             },
             {
               "kind": "Standard",
@@ -30449,6 +30758,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyEngine"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyEngineDeltaV"
             },
             {
@@ -31443,6 +31757,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyEngine"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyEngineDeltaV"
             },
             {
@@ -32393,6 +32712,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyEngine"
             },
             {
               "kind": "Standard",
@@ -33367,6 +33691,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyEngine"
             },
             {
               "kind": "Standard",
@@ -34355,6 +34684,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyEngine"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyEngineDeltaV"
             },
             {
@@ -35315,6 +35649,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyEngine"
             },
             {
               "kind": "Standard",
@@ -36439,6 +36778,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyEngine"
             },
             {
               "kind": "Standard",
@@ -39245,20 +39589,6 @@
                 "name": "GlobalVector"
               }
             },
-            "engine_modes": {
-              "name": "engine_modes",
-              "readOnly": true,
-              "type": {
-                "kind": "Array",
-                "parameters": [
-                  {
-                    "kind": "Standard",
-                    "module": "ksp::vessel",
-                    "name": "EngineMode"
-                  }
-                ]
-              }
-            },
             "is_gimbal": {
               "name": "is_gimbal",
               "readOnly": true,
@@ -39277,38 +39607,6 @@
                     "kind": "Standard",
                     "module": "ksp::vessel",
                     "name": "ModuleGimbal"
-                  }
-                ]
-              }
-            },
-            "current_engine_mode": {
-              "name": "current_engine_mode",
-              "readOnly": true,
-              "type": {
-                "kind": "Standard",
-                "module": "ksp::vessel",
-                "name": "EngineMode"
-              }
-            },
-            "current_propellant": {
-              "name": "current_propellant",
-              "readOnly": true,
-              "type": {
-                "kind": "Standard",
-                "module": "ksp::resource",
-                "name": "ResourceDefinition"
-              }
-            },
-            "propellants": {
-              "name": "propellants",
-              "readOnly": true,
-              "type": {
-                "kind": "Array",
-                "parameters": [
-                  {
-                    "kind": "Standard",
-                    "module": "ksp::resource",
-                    "name": "ResourceDefinition"
                   }
                 ]
               }
@@ -39337,6 +39635,7 @@
             },
             "is_shutdown": {
               "name": "is_shutdown",
+              "description": "Check if engine is shutdown\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -39345,6 +39644,7 @@
             },
             "has_ignited": {
               "name": "has_ignited",
+              "description": "Check if engine has ignited\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -39353,6 +39653,7 @@
             },
             "is_flameout": {
               "name": "is_flameout",
+              "description": "Check if engine had a flame-out\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -39369,6 +39670,7 @@
             },
             "is_operational": {
               "name": "is_operational",
+              "description": "Check if engine is operational\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -39478,6 +39780,56 @@
                 "kind": "Builtin",
                 "name": "float"
               }
+            },
+            "engine_modes": {
+              "name": "engine_modes",
+              "description": "Get all engine modes\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "EngineMode"
+                  }
+                ]
+              }
+            },
+            "current_engine_mode": {
+              "name": "current_engine_mode",
+              "description": "Get the current engine mode\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "EngineMode"
+              }
+            },
+            "current_propellant": {
+              "name": "current_propellant",
+              "description": "Get the propellant of the current engine mode\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::resource",
+                "name": "ResourceDefinition"
+              }
+            },
+            "propellants": {
+              "name": "propellants",
+              "description": "Get the propellants of the different engine modes\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::resource",
+                    "name": "ResourceDefinition"
+                  }
+                ]
+              }
             }
           },
           "methods": {
@@ -39559,6 +39911,15 @@
           "name": "ModuleGimbal",
           "description": "",
           "fields": {
+            "pitch_yaw_roll": {
+              "name": "pitch_yaw_roll",
+              "readOnly": false,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec3"
+              }
+            },
             "enabled": {
               "name": "enabled",
               "readOnly": false,
@@ -39597,15 +39958,6 @@
               "type": {
                 "kind": "Builtin",
                 "name": "float"
-              }
-            },
-            "pitch_yaw_roll": {
-              "name": "pitch_yaw_roll",
-              "readOnly": false,
-              "type": {
-                "kind": "Standard",
-                "module": "ksp::math",
-                "name": "Vec3"
               }
             }
           },

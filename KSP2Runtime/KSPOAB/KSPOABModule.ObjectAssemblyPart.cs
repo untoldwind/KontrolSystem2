@@ -20,6 +20,14 @@ public partial class KSPOABModule {
         public Vector3d RelativePosition =>
             part.HasParent() ? part.AssemblyRelativePosition : Vector3.zero;
 
+        [KSField] public bool IsEngine => part.IsPartEngine(out var _);
+
+        [KSField]
+        public Option<ObjectAssemblyEngineAdapter> Engine =>
+            part.IsPartEngine(out var data)
+                ? Option.Some(new ObjectAssemblyEngineAdapter(data))
+                : Option.None<ObjectAssemblyEngineAdapter>();
+
         [KSField] public bool IsSolarPanel => part.IsPartSolarPanel(out var _);
 
         [KSField]

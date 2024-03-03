@@ -61,6 +61,38 @@ Name | Type | Optional | Description
 --- | --- | --- | ---
 stage | int |  | 
 
+### ObjectAssemblyEngine
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+auto_switch_mode | bool | R/W | 
+current_engine_mode | [ksp::vessel::EngineMode](/reference/ksp/vessel.md#enginemode) | R/O | Get the current engine mode 
+current_propellant | [ksp::resource::ResourceDefinition](/reference/ksp/resource.md#resourcedefinition) | R/O | Get the propellant of the current engine mode 
+current_throttle | float | R/O | 
+current_thrust | float | R/O | 
+engine_modes | [ksp::vessel::EngineMode](/reference/ksp/vessel.md#enginemode)[] | R/O | Get all engine modes 
+has_ignited | bool | R/O | Check if engine has ignited 
+independent_throttle | float | R/W | 
+independent_throttle_enabled | bool | R/W | 
+is_flameout | bool | R/O | Check if engine had a flame-out 
+is_operational | bool | R/O | Check if engine is operational 
+is_propellant_starved | bool | R/O | 
+is_shutdown | bool | R/O | Check if engine is shutdown 
+is_staged | bool | R/O | 
+max_fuel_flow | float | R/O | 
+max_thrust_output_atm | float | R/O | 
+max_thrust_output_vac | float | R/O | 
+min_fuel_flow | float | R/O | 
+propellants | [ksp::resource::ResourceDefinition](/reference/ksp/resource.md#resourcedefinition)[] | R/O | Get the propellants of the different engine modes 
+real_isp | float | R/O | 
+throttle_min | float | R/O | 
+thrust_direction | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Direction of thrust 
+thrust_limiter | float | R/W | 
+
 ### ObjectAssemblyEngineDeltaV
 
 
@@ -115,8 +147,10 @@ Name | Type | Read-only | Description
 activation_stage | int | R/O | 
 decouple_stage | int | R/O | 
 dry_mass | float | R/O | Dry mass of the part 
+engine | Option&lt;[ksp::oab::ObjectAssemblyEngine](/reference/ksp/oab.md#objectassemblyengine)> | R/O | 
 fuel_cross_feed | bool | R/O | 
 green_mass | float | R/O | Green mass (Kerbals) of the part 
+is_engine | bool | R/O | 
 is_solar_panel | bool | R/O | 
 part_name | string | R/O | 
 relative_position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 

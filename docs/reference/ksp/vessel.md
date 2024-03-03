@@ -761,30 +761,30 @@ moduledockingnode.control_from_here ( ) -> Unit
 Name | Type | Read-only | Description
 --- | --- | --- | ---
 auto_switch_mode | bool | R/W | 
-current_engine_mode | [ksp::vessel::EngineMode](/reference/ksp/vessel.md#enginemode) | R/O | 
-current_propellant | [ksp::resource::ResourceDefinition](/reference/ksp/resource.md#resourcedefinition) | R/O | 
+current_engine_mode | [ksp::vessel::EngineMode](/reference/ksp/vessel.md#enginemode) | R/O | Get the current engine mode 
+current_propellant | [ksp::resource::ResourceDefinition](/reference/ksp/resource.md#resourcedefinition) | R/O | Get the propellant of the current engine mode 
 current_throttle | float | R/O | 
 current_thrust | float | R/O | 
-engine_modes | [ksp::vessel::EngineMode](/reference/ksp/vessel.md#enginemode)[] | R/O | 
+engine_modes | [ksp::vessel::EngineMode](/reference/ksp/vessel.md#enginemode)[] | R/O | Get all engine modes 
 fairing | Option&lt;[ksp::vessel::ModuleFairing](/reference/ksp/vessel.md#modulefairing)> | R/O | 
 gimbal | Option&lt;[ksp::vessel::ModuleGimbal](/reference/ksp/vessel.md#modulegimbal)> | R/O | 
 global_thrust_direction | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | Coordinate independent direction of thrust. 
 has_fairing | bool | R/O | 
-has_ignited | bool | R/O | 
+has_ignited | bool | R/O | Check if engine has ignited 
 independent_throttle | float | R/W | 
 independent_throttle_enabled | bool | R/W | 
-is_flameout | bool | R/O | 
+is_flameout | bool | R/O | Check if engine had a flame-out 
 is_gimbal | bool | R/O | 
-is_operational | bool | R/O | 
+is_operational | bool | R/O | Check if engine is operational 
 is_propellant_starved | bool | R/O | 
-is_shutdown | bool | R/O | 
+is_shutdown | bool | R/O | Check if engine is shutdown 
 is_staged | bool | R/O | 
 max_fuel_flow | float | R/O | 
 max_thrust_output_atm | float | R/O | 
 max_thrust_output_vac | float | R/O | 
 min_fuel_flow | float | R/O | 
 part_name | string | R/O | 
-propellants | [ksp::resource::ResourceDefinition](/reference/ksp/resource.md#resourcedefinition)[] | R/O | 
+propellants | [ksp::resource::ResourceDefinition](/reference/ksp/resource.md#resourcedefinition)[] | R/O | Get the propellants of the different engine modes 
 real_isp | float | R/O | 
 throttle_min | float | R/O | 
 thrust_direction | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Direction of thrust in the celestial frame of the main body 

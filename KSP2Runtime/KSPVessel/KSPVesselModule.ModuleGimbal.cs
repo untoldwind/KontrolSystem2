@@ -6,43 +6,11 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public partial class KSPVesselModule {
     [KSClass("ModuleGimbal")]
-    public class ModuleGimbalAdapter {
-        private readonly Data_Gimbal dataGimbal;
+    public class ModuleGimbalAdapter : BaseGimbalAdapter {
         private readonly PartComponent part;
 
-        public ModuleGimbalAdapter(PartComponent part, Data_Gimbal dataGimbal) {
-            this.dataGimbal = dataGimbal;
+        public ModuleGimbalAdapter(PartComponent part, Data_Gimbal dataGimbal) : base(dataGimbal) {
             this.part = part;
-        }
-
-        [KSField]
-        public bool Enabled {
-            get => dataGimbal.isEnabled.GetValue();
-            set => dataGimbal.isEnabled.SetValue(value);
-        }
-
-        [KSField]
-        public bool EnablePitch {
-            get => dataGimbal.enablePitch.GetValue();
-            set => dataGimbal.enablePitch.SetValue(value);
-        }
-
-        [KSField]
-        public bool EnableYaw {
-            get => dataGimbal.enableYaw.GetValue();
-            set => dataGimbal.enableYaw.SetValue(value);
-        }
-
-        [KSField]
-        public bool EnableRoll {
-            get => dataGimbal.enableRoll.GetValue();
-            set => dataGimbal.enableRoll.SetValue(value);
-        }
-
-        [KSField]
-        public double Limiter {
-            get => dataGimbal.gimbalLimiter.GetValue();
-            set => dataGimbal.gimbalLimiter.SetValue((float)value);
         }
 
         [KSField]

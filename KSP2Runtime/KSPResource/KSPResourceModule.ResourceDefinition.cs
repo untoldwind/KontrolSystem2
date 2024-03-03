@@ -15,28 +15,28 @@ public partial class KSPResourceModule {
             this.resourceDefinition = resourceDefinition;
         }
 
-        [KSField(Description = "Resource identifier")] 
+        [KSField(Description = "Resource identifier")]
         public long Id => resourceDefinition.resourceDatabaseID.Value;
 
-        [KSField(Description = "Name of the resource")] 
+        [KSField(Description = "Name of the resource")]
         public string Name => resourceDefinition.name;
 
-        [KSField(Description = "Name of the resource as displayed in UI")] 
+        [KSField(Description = "Name of the resource as displayed in UI")]
         public string DisplayName => resourceDefinition.DisplayName;
 
-        [KSField(Description = "Resource abbreviation as displayed in UI")] 
+        [KSField(Description = "Resource abbreviation as displayed in UI")]
         public string DisplayAbbreviation => resourceDefinition.DisplayAbbreviation;
 
-        [KSField(Description = "Mass per resource unit")] 
+        [KSField(Description = "Mass per resource unit")]
         public double MassPerUnit => resourceDefinition.resourceProperties.massPerUnit;
 
-        [KSField(Description = "Volume per resource unit")] 
+        [KSField(Description = "Volume per resource unit")]
         public double VolumePerUnit => resourceDefinition.resourceProperties.volumePerUnit;
 
-        [KSField(Description = "Mass per volume aka. density")] 
+        [KSField(Description = "Mass per volume aka. density")]
         public double MassPerVolume => resourceDefinition.resourceProperties.massPerVolume;
 
-        [KSField(Description = "Check if resource requires air to be used.")] 
+        [KSField(Description = "Check if resource requires air to be used.")]
         public bool UsesAir => resourceDefinition.UsesAir;
 
         [KSField(Description = "Check if resource is a recipe, i.e. a combination of resource")]
