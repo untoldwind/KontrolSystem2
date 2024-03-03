@@ -71,25 +71,25 @@ public partial class KSPOrbitModule {
 
         [KSMethod(Description =
             "Get the surface normal at a `latitude` and `longitude` (i.e. the vector pointing up at this geo coordinate)")]
-        Vector3d SurfaceNormal(double latitude, double longitude);
+        Vector3d SurfaceNormal([KSParameter("Latitude in degrees")] double latitude, [KSParameter("Longitude in degrees")] double longitude);
 
         [KSMethod(Description =
             "Get the surface normal at a `latitude` and `longitude` (i.e. the vector pointing up at this geo coordinate, coordinate system independent)")]
-        Vector GlobalSurfaceNormal(double latitude, double longitude);
+        Vector GlobalSurfaceNormal([KSParameter("Latitude in degrees")] double latitude, [KSParameter("Longitude in degrees")] double longitude);
 
-        [KSMethod(Description = "Height of the terrain relative to sea-level a a `latitude` and `longitude`")]
-        double TerrainHeight(double latitude, double longitude);
+        [KSMethod(Description = "Height of the terrain relative to sea-level at `latitude` and `longitude`")]
+        double TerrainHeight([KSParameter("Latitude in degrees")] double latitude, [KSParameter("Longitude in degrees")] double longitude);
 
         [KSMethod(Description =
             "Position of a `latitude` and `longitude` at an altitude relative to sea-level in the celestial frame of the body")]
-        Vector3d SurfacePosition(double latitude, double longitude, double altitude);
+        Vector3d SurfacePosition([KSParameter("Latitude in degrees")] double latitude, [KSParameter("Longitude in degrees")] double longitude, [KSParameter("Altitude relative to sea-level")] double altitude);
 
         [KSMethod(Description =
             "Position of a `latitude` and `longitude` at an altitude relative to sea-level (coordinate system independent)")]
-        Position GlobalSurfacePosition(double latitude, double longitude, double altitude);
+        Position GlobalSurfacePosition([KSParameter("Latitude in degrees")] double latitude, [KSParameter("Longitude in degrees")] double longitude, [KSParameter("Altitude relative to sea-level")] double altitude);
 
         [KSMethod(Description = "Get `GeoCoordinates` struct representing a `latitude` and `longitude` of the body")]
-        GeoCoordinates GeoCoordinates(double latitude, double longitude);
+        GeoCoordinates GeoCoordinates([KSParameter("Latitude in degrees")] double latitude, [KSParameter("Longitude in degrees")] double longitude);
 
         [KSMethod(Description =
             "Create a new orbit around this body starting at a given relative `position` and `velocity` at universal time `ut`")]

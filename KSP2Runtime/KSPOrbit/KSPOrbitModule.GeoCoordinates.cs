@@ -4,7 +4,7 @@ using KSP.Sim;
 namespace KontrolSystem.KSP.Runtime.KSPOrbit;
 
 public partial class KSPOrbitModule {
-    [KSClass]
+    [KSClass(Description = "Represents a geo coordinate (longitude, latitude) of a specific celestial body.")]
     public class GeoCoordinates {
         public GeoCoordinates(IBody body, double latitude, double longitude) {
             this.Body = body;
@@ -12,25 +12,31 @@ public partial class KSPOrbitModule {
             Longitude = longitude;
         }
 
-        [KSField] public IBody Body { get; }
+        [KSField(Description = "The celestial body the geo coordinate is based on.")]
+        public IBody Body { get; }
 
-        [KSField] public double Latitude { get; set; }
+        [KSField(Description = "Latitude in degrees")]
+        public double Latitude { get; set; }
 
-        [KSField] public double Longitude { get; set; }
+        [KSField(Description = "Longitude in degrees")]
+        public double Longitude { get; set; }
 
-        [KSField] public Vector3d SurfaceNormal => Body.SurfaceNormal(Latitude, Longitude);
+        [KSField(Description = "The surface normal (i.e. up vector) in the celestial frame of the body")]
+        public Vector3d SurfaceNormal => Body.SurfaceNormal(Latitude, Longitude);
 
-        [KSField] public Vector GlobalSurfaceNormal => Body.GlobalSurfaceNormal(Latitude, Longitude);
+        [KSField("Coordinate system independent surface normal (i.e. up vector)")]
+        public Vector GlobalSurfaceNormal => Body.GlobalSurfaceNormal(Latitude, Longitude);
 
-        [KSField] public double TerrainHeight => Body.TerrainHeight(Latitude, Longitude);
+        [KSField(Description = "Height of the terrain relative to sea-level")]
+        public double TerrainHeight => Body.TerrainHeight(Latitude, Longitude);
 
-        [KSMethod]
-        public Vector3d AltitudePosition(double altitude) {
+        [KSMethod(Description = "Position of the geo coordinate in the celestial frame of the body")]
+        public Vector3d AltitudePosition([KSParameter("Altitude relative to sea-level")] double altitude) {
             return Body.SurfacePosition(Latitude, Longitude, altitude);
         }
 
-        [KSMethod]
-        public Position GlobalAltitudePosition(double altitude) {
+        [KSMethod(Description = "Coordinate system independent position of the geo coordinate")]
+        public Position GlobalAltitudePosition([KSParameter("Altitude relative to sea-level")] double altitude) {
             return Body.GlobalSurfacePosition(Latitude, Longitude, altitude);
         }
     }

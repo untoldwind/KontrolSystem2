@@ -70,8 +70,8 @@ Parameters
 
 Name | Type | Optional | Description
 --- | --- | --- | ---
-latitude | float |  | 
-longitude | float |  | 
+latitude | float |  | Latitude in degrees
+longitude | float |  | Longitude in degrees
 
 ##### global_create_orbit
 
@@ -104,8 +104,8 @@ Parameters
 
 Name | Type | Optional | Description
 --- | --- | --- | ---
-latitude | float |  | 
-longitude | float |  | 
+latitude | float |  | Latitude in degrees
+longitude | float |  | Longitude in degrees
 
 ##### global_surface_position
 
@@ -122,9 +122,9 @@ Parameters
 
 Name | Type | Optional | Description
 --- | --- | --- | ---
-latitude | float |  | 
-longitude | float |  | 
-altitude | float |  | 
+latitude | float |  | Latitude in degrees
+longitude | float |  | Longitude in degrees
+altitude | float |  | Altitude relative to sea-level
 
 ##### surface_normal
 
@@ -140,8 +140,8 @@ Parameters
 
 Name | Type | Optional | Description
 --- | --- | --- | ---
-latitude | float |  | 
-longitude | float |  | 
+latitude | float |  | Latitude in degrees
+longitude | float |  | Longitude in degrees
 
 ##### surface_position
 
@@ -158,9 +158,9 @@ Parameters
 
 Name | Type | Optional | Description
 --- | --- | --- | ---
-latitude | float |  | 
-longitude | float |  | 
-altitude | float |  | 
+latitude | float |  | Latitude in degrees
+longitude | float |  | Longitude in degrees
+altitude | float |  | Altitude relative to sea-level
 
 ##### terrain_height
 
@@ -169,30 +169,31 @@ body.terrain_height ( latitude : float,
                       longitude : float ) -> float
 ```
 
-Height of the terrain relative to sea-level a a `latitude` and `longitude`
+Height of the terrain relative to sea-level at `latitude` and `longitude`
 
 
 Parameters
 
 Name | Type | Optional | Description
 --- | --- | --- | ---
-latitude | float |  | 
-longitude | float |  | 
+latitude | float |  | Latitude in degrees
+longitude | float |  | Longitude in degrees
 
 ### GeoCoordinates
 
+Represents a geo coordinate (longitude, latitude) of a specific celestial body.
 
 
 #### Fields
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
-body | [ksp::orbit::Body](/reference/ksp/orbit.md#body) | R/O | 
-global_surface_normal | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | 
-latitude | float | R/W | 
-longitude | float | R/W | 
-surface_normal | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
-terrain_height | float | R/O | 
+Coordinate system independent surface normal (i.e. up vector) | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | 
+body | [ksp::orbit::Body](/reference/ksp/orbit.md#body) | R/O | The celestial body the geo coordinate is based on. 
+latitude | float | R/W | Latitude in degrees 
+longitude | float | R/W | Longitude in degrees 
+surface_normal | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | The surface normal (i.e. up vector) in the celestial frame of the body 
+terrain_height | float | R/O | Height of the terrain relative to sea-level 
 
 #### Methods
 
@@ -202,13 +203,14 @@ terrain_height | float | R/O |
 geocoordinates.altitude_position ( altitude : float ) -> ksp::math::Vec3
 ```
 
+Position of the geo coordinate in the celestial frame of the body
 
 
 Parameters
 
 Name | Type | Optional | Description
 --- | --- | --- | ---
-altitude | float |  | 
+altitude | float |  | Altitude relative to sea-level
 
 ##### global_altitude_position
 
@@ -216,13 +218,14 @@ altitude | float |  |
 geocoordinates.global_altitude_position ( altitude : float ) -> ksp::math::GlobalPosition
 ```
 
+Coordinate system independent position of the geo coordinate
 
 
 Parameters
 
 Name | Type | Optional | Description
 --- | --- | --- | ---
-altitude | float |  | 
+altitude | float |  | Altitude relative to sea-level
 
 ### Orbit
 

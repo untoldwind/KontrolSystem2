@@ -12519,7 +12519,7 @@
                     "name": "float"
                   },
                   "hasDefault": false,
-                  "description": null
+                  "description": "Latitude in degrees"
                 },
                 {
                   "name": "longitude",
@@ -12528,7 +12528,7 @@
                     "name": "float"
                   },
                   "hasDefault": false,
-                  "description": null
+                  "description": "Longitude in degrees"
                 }
               ],
               "returnType": {
@@ -12549,7 +12549,7 @@
                     "name": "float"
                   },
                   "hasDefault": false,
-                  "description": null
+                  "description": "Latitude in degrees"
                 },
                 {
                   "name": "longitude",
@@ -12558,7 +12558,7 @@
                     "name": "float"
                   },
                   "hasDefault": false,
-                  "description": null
+                  "description": "Longitude in degrees"
                 }
               ],
               "returnType": {
@@ -12570,7 +12570,7 @@
             "terrain_height": {
               "isAsync": false,
               "name": "terrain_height",
-              "description": "Height of the terrain relative to sea-level a a `latitude` and `longitude`\n",
+              "description": "Height of the terrain relative to sea-level at `latitude` and `longitude`\n",
               "parameters": [
                 {
                   "name": "latitude",
@@ -12579,7 +12579,7 @@
                     "name": "float"
                   },
                   "hasDefault": false,
-                  "description": null
+                  "description": "Latitude in degrees"
                 },
                 {
                   "name": "longitude",
@@ -12588,7 +12588,7 @@
                     "name": "float"
                   },
                   "hasDefault": false,
-                  "description": null
+                  "description": "Longitude in degrees"
                 }
               ],
               "returnType": {
@@ -12608,7 +12608,7 @@
                     "name": "float"
                   },
                   "hasDefault": false,
-                  "description": null
+                  "description": "Latitude in degrees"
                 },
                 {
                   "name": "longitude",
@@ -12617,7 +12617,7 @@
                     "name": "float"
                   },
                   "hasDefault": false,
-                  "description": null
+                  "description": "Longitude in degrees"
                 },
                 {
                   "name": "altitude",
@@ -12626,7 +12626,7 @@
                     "name": "float"
                   },
                   "hasDefault": false,
-                  "description": null
+                  "description": "Altitude relative to sea-level"
                 }
               ],
               "returnType": {
@@ -12647,7 +12647,7 @@
                     "name": "float"
                   },
                   "hasDefault": false,
-                  "description": null
+                  "description": "Latitude in degrees"
                 },
                 {
                   "name": "longitude",
@@ -12656,7 +12656,7 @@
                     "name": "float"
                   },
                   "hasDefault": false,
-                  "description": null
+                  "description": "Longitude in degrees"
                 },
                 {
                   "name": "altitude",
@@ -12665,7 +12665,7 @@
                     "name": "float"
                   },
                   "hasDefault": false,
-                  "description": null
+                  "description": "Altitude relative to sea-level"
                 }
               ],
               "returnType": {
@@ -12686,7 +12686,7 @@
                     "name": "float"
                   },
                   "hasDefault": false,
-                  "description": null
+                  "description": "Latitude in degrees"
                 },
                 {
                   "name": "longitude",
@@ -12695,7 +12695,7 @@
                     "name": "float"
                   },
                   "hasDefault": false,
-                  "description": null
+                  "description": "Longitude in degrees"
                 }
               ],
               "returnType": {
@@ -12782,10 +12782,11 @@
         },
         "GeoCoordinates": {
           "name": "GeoCoordinates",
-          "description": "",
+          "description": "Represents a geo coordinate (longitude, latitude) of a specific celestial body.\n",
           "fields": {
             "body": {
               "name": "body",
+              "description": "The celestial body the geo coordinate is based on.\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -12795,6 +12796,7 @@
             },
             "latitude": {
               "name": "latitude",
+              "description": "Latitude in degrees\n",
               "readOnly": false,
               "type": {
                 "kind": "Builtin",
@@ -12803,6 +12805,7 @@
             },
             "longitude": {
               "name": "longitude",
+              "description": "Longitude in degrees\n",
               "readOnly": false,
               "type": {
                 "kind": "Builtin",
@@ -12811,6 +12814,7 @@
             },
             "surface_normal": {
               "name": "surface_normal",
+              "description": "The surface normal (i.e. up vector) in the celestial frame of the body\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -12818,8 +12822,8 @@
                 "name": "Vec3"
               }
             },
-            "global_surface_normal": {
-              "name": "global_surface_normal",
+            "Coordinate system independent surface normal (i.e. up vector)": {
+              "name": "Coordinate system independent surface normal (i.e. up vector)",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -12829,6 +12833,7 @@
             },
             "terrain_height": {
               "name": "terrain_height",
+              "description": "Height of the terrain relative to sea-level\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -12840,6 +12845,7 @@
             "altitude_position": {
               "isAsync": false,
               "name": "altitude_position",
+              "description": "Position of the geo coordinate in the celestial frame of the body\n",
               "parameters": [
                 {
                   "name": "altitude",
@@ -12848,7 +12854,7 @@
                     "name": "float"
                   },
                   "hasDefault": false,
-                  "description": null
+                  "description": "Altitude relative to sea-level"
                 }
               ],
               "returnType": {
@@ -12860,6 +12866,7 @@
             "global_altitude_position": {
               "isAsync": false,
               "name": "global_altitude_position",
+              "description": "Coordinate system independent position of the geo coordinate\n",
               "parameters": [
                 {
                   "name": "altitude",
@@ -12868,7 +12875,7 @@
                     "name": "float"
                   },
                   "hasDefault": false,
-                  "description": null
+                  "description": "Altitude relative to sea-level"
                 }
               ],
               "returnType": {
