@@ -14946,6 +14946,7 @@
           "fields": {
             "id": {
               "name": "id",
+              "description": "Resource identifier\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -14954,6 +14955,7 @@
             },
             "name": {
               "name": "name",
+              "description": "Name of the resource\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -14962,6 +14964,7 @@
             },
             "display_name": {
               "name": "display_name",
+              "description": "Name of the resource as displayed in UI\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -14970,6 +14973,7 @@
             },
             "display_abbreviation": {
               "name": "display_abbreviation",
+              "description": "Resource abbreviation as displayed in UI\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -14978,6 +14982,7 @@
             },
             "mass_per_unit": {
               "name": "mass_per_unit",
+              "description": "Mass per resource unit\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -14986,6 +14991,7 @@
             },
             "volume_per_unit": {
               "name": "volume_per_unit",
+              "description": "Volume per resource unit\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -14994,6 +15000,7 @@
             },
             "mass_per_volume": {
               "name": "mass_per_volume",
+              "description": "Mass per volume aka. density\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -15002,6 +15009,7 @@
             },
             "uses_air": {
               "name": "uses_air",
+              "description": "Check if resource requires air to be used.\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -15010,6 +15018,7 @@
             },
             "is_recipe": {
               "name": "is_recipe",
+              "description": "Check if resource is a recipe, i.e. a combination of resource\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -15018,14 +15027,20 @@
             },
             "recipe_ingredients": {
               "name": "recipe_ingredients",
+              "description": "Get ingredients if resource is a recipe.\n",
               "readOnly": true,
               "type": {
-                "kind": "Array",
+                "kind": "Option",
                 "parameters": [
                   {
-                    "kind": "Standard",
-                    "module": "ksp::resource",
-                    "name": "ResourceReceipeIngredient"
+                    "kind": "Array",
+                    "parameters": [
+                      {
+                        "kind": "Standard",
+                        "module": "ksp::resource",
+                        "name": "ResourceReceipeIngredient"
+                      }
+                    ]
                   }
                 ]
               }

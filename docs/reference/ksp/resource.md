@@ -90,16 +90,16 @@ Represents an in-game resource.
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
-display_abbreviation | string | R/O | 
-display_name | string | R/O | 
-id | int | R/O | 
-is_recipe | bool | R/O | 
-mass_per_unit | float | R/O | 
-mass_per_volume | float | R/O | 
-name | string | R/O | 
-recipe_ingredients | [ksp::resource::ResourceReceipeIngredient](/reference/ksp/resource.md#resourcereceipeingredient)[] | R/O | 
-uses_air | bool | R/O | 
-volume_per_unit | float | R/O | 
+display_abbreviation | string | R/O | Resource abbreviation as displayed in UI 
+display_name | string | R/O | Name of the resource as displayed in UI 
+id | int | R/O | Resource identifier 
+is_recipe | bool | R/O | Check if resource is a recipe, i.e. a combination of resource 
+mass_per_unit | float | R/O | Mass per resource unit 
+mass_per_volume | float | R/O | Mass per volume aka. density 
+name | string | R/O | Name of the resource 
+recipe_ingredients | [Option<ksp::resource::ResourceReceipeIngredient](/reference/Option<ksp/resource.md#resourcereceipeingredient)[] | R/O | Get ingredients if resource is a recipe. 
+uses_air | bool | R/O | Check if resource requires air to be used. 
+volume_per_unit | float | R/O | Volume per resource unit 
 
 ### ResourceReceipeIngredient
 

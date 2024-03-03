@@ -1,4 +1,5 @@
 ﻿using KontrolSystem.TO2.Binding;
+using KontrolSystem.TO2.Runtime;
 using KSP.Sim.ResourceSystem;
 using UniLinq;
 
@@ -14,27 +15,40 @@ public partial class KSPResourceModule {
             this.resourceDefinition = resourceDefinition;
         }
 
-        [KSField] public long Id => resourceDefinition.resourceDatabaseID.Value;
+        [KSField(Description = "Resource identifier")] 
+        public long Id => resourceDefinition.resourceDatabaseID.Value;
 
-        [KSField] public string Name => resourceDefinition.name;
+        [KSField(Description = "Name of the resource")] 
+        public string Name => resourceDefinition.name;
 
-        [KSField] public string DisplayName => resourceDefinition.DisplayName;
+        [KSField(Description = "Name of the resource as displayed in UI")] 
+        public string DisplayName => resourceDefinition.DisplayName;
 
-        [KSField] public string DisplayAbbreviation => resourceDefinition.DisplayAbbreviation;
+        [KSField(Description = "Resource abbreviation as displayed in UI")] 
+        public string DisplayAbbreviation => resourceDefinition.DisplayAbbreviation;
 
-        [KSField] public double MassPerUnit => resourceDefinition.resourceProperties.massPerUnit;
+        [KSField(Description = "Mass per resource unit")] 
+        public double MassPerUnit => resourceDefinition.resourceProperties.massPerUnit;
 
-        [KSField] public double VolumePerUnit => resourceDefinition.resourceProperties.volumePerUnit;
+        [KSField(Description = "Volume per resource unit")] 
+        public double VolumePerUnit => resourceDefinition.resourceProperties.volumePerUnit;
 
-        [KSField] public double MassPerVolume => resourceDefinition.resourceProperties.massPerVolume;
+        [KSField(Description = "Mass per volume aka. density")] 
+        public double MassPerVolume => resourceDefinition.resourceProperties.massPerVolume;
 
-        [KSField] public bool UsesAir => resourceDefinition.UsesAir;
+        [KSField(Description = "Check if resource requires air to be used.")] 
+        public bool UsesAir => resourceDefinition.UsesAir;
 
-        [KSField] public bool IsRecipe => resourceDefinition.IsRecipe;
+        [KSField(Description = "Check if resource is a recipe, i.e. a combination of resource")]
+        public bool IsRecipe => resourceDefinition.IsRecipe;
 
-        [KSField]
-        public ResourceReceipeIngredientAdapter[] RecipeIngredients => resourceDefinition.recipeProperties.ingredients
-            .Select(pair => new ResourceReceipeIngredientAdapter(pair)).ToArray();
+        [KSField(Description = "Get ingredients if resource is a recipe.")]
+        public Option<ResourceReceipeIngredientAdapter[]> RecipeIngredients =>
+            resourceDefinition.IsRecipe && resourceDefinition.recipeProperties.ingredients != null
+                ? Option.Some(resourceDefinition.recipeProperties.ingredients
+                    .Select(pair => new ResourceReceipeIngredientAdapter(pair)).ToArray())
+                : Option.None<ResourceReceipeIngredientAdapter[]>();
+
 
         internal static ResourceDefinitionAdapter CreateFromResourceID(ResourceDefinitionID resourceDefinitionID) {
             var context = KSPContext.CurrentContext;
