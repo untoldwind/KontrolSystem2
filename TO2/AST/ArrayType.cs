@@ -32,88 +32,84 @@ public class ArrayType : RealizedType {
             {
                 "map", new BoundMethodInvokeFactory("Map the content of the array", true,
                     () => new ArrayType(new GenericParameter("U")),
-                    () => new List<RealizedParameter> {
-                        new("mapper", new FunctionType(false, new List<TO2Type> {
-                            ElementType
-                        }, new GenericParameter("U")), "Function to be applied on each element of the array")
-                    },
+                    () => [
+                        new("mapper", new FunctionType(false, [ElementType], new GenericParameter("U")), "Function to be applied on each element of the array")
+                    ],
                     false, typeof(ArrayMethods), typeof(ArrayMethods).GetMethod("Map"),
                     context => ("T", ElementType.UnderlyingType(context)).Yield())
             }, {
                 "map_with_index", new BoundMethodInvokeFactory("Map the content of the array", true,
                     () => new ArrayType(new GenericParameter("U")),
-                    () => new List<RealizedParameter> {
+                    () => [
                         new("mapper",
-                            new FunctionType(false, new List<TO2Type> { ElementType, BuiltinType.Int },
+                            new FunctionType(false, [ElementType, BuiltinType.Int],
                                 new GenericParameter("U")),
                             "Function to be applied on each element of the array including index of the element")
-                    },
+                    ],
                     false, typeof(ArrayMethods), typeof(ArrayMethods).GetMethod("MapWithIndex"),
                     context => ("T", ElementType.UnderlyingType(context)).Yield())
             }, {
                 "flat_map", new BoundMethodInvokeFactory("Map the content of the array", true,
                     () => new ArrayType(new GenericParameter("U")),
-                    () => new List<RealizedParameter> {
-                        new("mapper", new FunctionType(false, new List<TO2Type> {
-                            ElementType
-                        }, new ArrayType(new GenericParameter("U"))), "Function to be applied on each element of the array")
-                    },
+                    () => [
+                        new("mapper", new FunctionType(false, [ElementType], new ArrayType(new GenericParameter("U"))),
+                            "Function to be applied on each element of the array")
+                    ],
                     false, typeof(ArrayMethods), typeof(ArrayMethods).GetMethod("FlatMap"),
                     context => ("T", ElementType.UnderlyingType(context)).Yield())
             }, {
                 "filter", new BoundMethodInvokeFactory("Filter the content of the array by a `predicate", true,
                     () => new ArrayType(new GenericParameter("T")),
-                    () => new List<RealizedParameter> {
-                        new("predictate",
-                            new FunctionType(false, new List<TO2Type> { ElementType }, BuiltinType.Bool),
+                    () => [
+                        new("predicate",
+                            new FunctionType(false, [ElementType], BuiltinType.Bool),
                             "Predicate function/check to be applied on each element of the array")
-                    },
+                    ],
                     false, typeof(ArrayMethods), typeof(ArrayMethods).GetMethod("Filter"),
                     context => ("T", ElementType.UnderlyingType(context)).Yield())
             }, {
                 "filter_map", new BoundMethodInvokeFactory("Map the content of the array", true,
                     () => new ArrayType(new GenericParameter("U")),
-                    () => new List<RealizedParameter> {
-                        new("mapper", new FunctionType(false, new List<TO2Type> {
-                            ElementType
-                        }, new OptionType(new GenericParameter("U"))), "Function to be applied on each element of the array")
-                    },
+                    () => [
+                        new("mapper", new FunctionType(false, [ElementType], new OptionType(new GenericParameter("U"))),
+                            "Function to be applied on each element of the array")
+                    ],
                     false, typeof(ArrayMethods), typeof(ArrayMethods).GetMethod("FilterMap"),
                     context => ("T", ElementType.UnderlyingType(context)).Yield())
             }, {
                 "find", new BoundMethodInvokeFactory("Find first item of the array matching `predicate`", true,
                     () => new OptionType(new GenericParameter("T")),
-                    () => new List<RealizedParameter> {
-                        new("predictate",
-                            new FunctionType(false, new List<TO2Type> { ElementType }, BuiltinType.Bool),
+                    () => [
+                        new("predicate",
+                            new FunctionType(false, [ElementType], BuiltinType.Bool),
                             "Predicate function/check to be applied on each element of the array until element is found.")
-                    },
+                    ],
                     false, typeof(ArrayMethods), typeof(ArrayMethods).GetMethod("Find"),
                     context => ("T", ElementType.UnderlyingType(context)).Yield())
             }, {
                 "exists", new BoundMethodInvokeFactory("Check if an item of the array matches `predicate`", true,
                     () => BuiltinType.Bool,
-                    () => new List<RealizedParameter> {
-                        new("predictate",
-                            new FunctionType(false, new List<TO2Type> { ElementType }, BuiltinType.Bool),
+                    () => [
+                        new("predicate",
+                            new FunctionType(false, [ElementType], BuiltinType.Bool),
                             "Predicate function/check to be applied on each element of the array until element is found.")
-                    },
+                    ],
                     false, typeof(ArrayMethods), typeof(ArrayMethods).GetMethod("Exists"),
                     context => ("T", ElementType.UnderlyingType(context)).Yield())
             }, {
                 "slice",
                 new BoundMethodInvokeFactory("Get a slice of the array", true, () => new ArrayType(ElementType),
-                    () => new List<RealizedParameter> {
+                    () => [
                         new("start", BuiltinType.Int, "Start index of the slice (inclusive)"),
                         new("end", BuiltinType.Int, "End index of the slice (exclusive)", new IntDefaultValue(-1))
-                    }, false, typeof(ArrayMethods),
+                    ], false, typeof(ArrayMethods),
                     typeof(ArrayMethods).GetMethod("Slice"),
                     context => ("T", ElementType.UnderlyingType(context)).Yield())
             }, {
                 "sort",
                 new BoundMethodInvokeFactory("Sort the array (if possible) and returns new sorted array", true,
                     () => new ArrayType(ElementType),
-                    () => new List<RealizedParameter>(), false, typeof(ArrayMethods),
+                    () => [], false, typeof(ArrayMethods),
                     typeof(ArrayMethods).GetMethod("Sort"),
                     context => ("T", ElementType.UnderlyingType(context)).Yield())
             }, {
@@ -121,11 +117,11 @@ public class ArrayType : RealizedType {
                 new BoundMethodInvokeFactory(
                     "Sort the array by value extracted from items. Sort value can be other number or string",
                     true, () => new ArrayType(ElementType),
-                    () => new List<RealizedParameter> {
+                    () => [
                         new("value",
-                            new FunctionType(false, new List<TO2Type> { ElementType }, new GenericParameter("U")),
+                            new FunctionType(false, [ElementType], new GenericParameter("U")),
                             "Function to be applied on each element, array will be sorted by result of this function")
-                    }, false, typeof(ArrayMethods),
+                    ], false, typeof(ArrayMethods),
                     typeof(ArrayMethods).GetMethod("SortBy"),
                     context => ("T", ElementType.UnderlyingType(context)).Yield())
             }, {
@@ -133,24 +129,24 @@ public class ArrayType : RealizedType {
                 new BoundMethodInvokeFactory(
                     "Sort the array with explicit comparator. Comparator should return -1 for less, 0 for equal and 1 for greater",
                     true, () => new ArrayType(ElementType),
-                    () => new List<RealizedParameter> {
-                        new("comarator",
-                            new FunctionType(false, new List<TO2Type> { ElementType, ElementType }, BuiltinType.Int),
+                    () => [
+                        new("comparator",
+                            new FunctionType(false, [ElementType, ElementType], BuiltinType.Int),
                             "Compare two elements of the array to each other, `-1` less then, `0` equal, `1` greater than")
-                    }, false, typeof(ArrayMethods),
+                    ], false, typeof(ArrayMethods),
                     typeof(ArrayMethods).GetMethod("SortWith"),
                     context => ("T", ElementType.UnderlyingType(context)).Yield())
             }, {
                 "reduce",
                 new BoundMethodInvokeFactory("Reduce array by an operation", true, () => new GenericParameter("U"),
-                    () => new List<RealizedParameter> {
+                    () => [
                         new("initial", new GenericParameter("U"), "Initial value of the accumulator"),
-                        new("reducer", new FunctionType(false, new List<TO2Type> {
+                        new("reducer", new FunctionType(false, [
                                 new GenericParameter("U"),
                                 ElementType
-                            }, new GenericParameter("U")),
+                            ], new GenericParameter("U")),
                             "Combines accumulator with each element of the array and returns new accumulator value")
-                    }, false, typeof(ArrayMethods),
+                    ], false, typeof(ArrayMethods),
                     typeof(ArrayMethods).GetMethod("Reduce"),
                     context => ("T", ElementType.UnderlyingType(context)).Yield())
             }, {

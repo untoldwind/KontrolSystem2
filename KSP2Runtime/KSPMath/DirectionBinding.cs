@@ -74,9 +74,7 @@ public static class DirectionBinding {
                 new BoundMethodInvokeFactory("Associate this direction with a coordinate system",
                     true,
                     () => RotationBinding.RotationType,
-                    () => new List<RealizedParameter> {
-                        new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")
-                    },
+                    () => [new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")],
                     false, typeof(DirectionBinding), typeof(DirectionBinding).GetMethod("ToGlobal"))
             }
         },

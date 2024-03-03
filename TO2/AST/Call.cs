@@ -244,7 +244,7 @@ public class Call : Expression {
             return;
         }
 
-        (var genericMethod, var genericResult, var genericParameters) =
+        var (genericMethod, genericResult, genericParameters) =
             Helpers.MakeGeneric(context,
                 function.ReturnType, function.Parameters, function.RuntimeMethod!,
                 typeHint?.Invoke(context), arguments.Select(e => e.ResultType(context)),
@@ -370,7 +370,7 @@ public class Call : Expression {
             throw new REPLException(this,
                 $"Function '{FullName}' requires at least {function.RequiredParameterCount()} arguments, {arguments.Count} where given");
 
-        (var genericMethod, var genericResult, var genericParameters) =
+        var (genericMethod, genericResult, genericParameters) =
             Helpers.MakeGeneric(context.replBlockContext,
                 function.ReturnType, function.Parameters, function.RuntimeMethod!,
                 typeHint?.Invoke(context.replBlockContext),

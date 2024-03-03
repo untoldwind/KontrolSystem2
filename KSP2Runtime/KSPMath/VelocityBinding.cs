@@ -17,25 +17,19 @@ public class VelocityBinding {
                 "to_relative",
                 new BoundMethodInvokeFactory("Get relative velocity to frame of reference", true,
                     () => VectorBinding.VectorType,
-                    () => new List<RealizedParameter> {
-                        new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")
-                    }, false,
+                    () => [new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")], false,
                     typeof(VelocityBinding), typeof(VelocityBinding).GetMethod("ToRelative"))
             }, {
                 "to_local",
                 new BoundMethodInvokeFactory("Get local velocity in a frame of reference", true,
                     () => Vector3Binding.Vector3Type,
-                    () => new List<RealizedParameter> {
-                        new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")
-                    }, false,
+                    () => [new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")], false,
                     typeof(VelocityBinding), typeof(VelocityBinding).GetMethod("ToLocal"))
             }, {
                 "to_string",
                 new BoundMethodInvokeFactory("Convert vector to string in a given coordinate system.", true,
                     () => BuiltinType.String,
-                    () => new List<RealizedParameter> {
-                        new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")
-                    }, false, typeof(VelocityBinding),
+                    () => [new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")], false, typeof(VelocityBinding),
                     typeof(VelocityBinding).GetMethod("ToString",
                         new[] { typeof(VelocityAtPosition), typeof(ITransformFrame) }))
             }, {
@@ -44,10 +38,10 @@ public class VelocityBinding {
                     "Convert the vector to string with fixed number of `decimals` in a given coordinate system.",
                     true,
                     () => BuiltinType.String,
-                    () => new List<RealizedParameter> {
+                    () => [
                         new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference"),
                         new("decimals", BuiltinType.Int, "Number of decimals")
-                    },
+                    ],
                     false, typeof(VelocityBinding), typeof(VelocityBinding).GetMethod("ToFixed"))
             }
         },

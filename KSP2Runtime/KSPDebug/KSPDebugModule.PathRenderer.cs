@@ -83,7 +83,6 @@ public partial class KSPDebugModule {
 
         private void RenderPointCoords() {
             if (line != null) {
-                var mapLengthMult = 1.0; // for scaling when on map view.
                 var mapWidthMult = 1.0; // for scaling when on map view.
                 float useWidth;
                 var positions = Path;

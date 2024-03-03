@@ -57,17 +57,13 @@ public class VectorBinding {
                 "to_local",
                 new BoundMethodInvokeFactory("Get local vector in a coordinate system", true,
                     () => Vector3Binding.Vector3Type,
-                    () => new List<RealizedParameter> {
-                        new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")
-                    }, false,
+                    () => [new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")], false,
                     typeof(VectorBinding), typeof(VectorBinding).GetMethod("ToLocal"))
             }, {
                 "to_string",
                 new BoundMethodInvokeFactory("Convert vector to string in a given coordinate system.", true,
                     () => BuiltinType.String,
-                    () => new List<RealizedParameter> {
-                        new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")
-                    }, false, typeof(VectorBinding),
+                    () => [new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")], false, typeof(VectorBinding),
                     typeof(VectorBinding).GetMethod("ToString", new[] { typeof(Vector), typeof(ITransformFrame) }))
             }, {
                 "to_fixed",
@@ -75,33 +71,29 @@ public class VectorBinding {
                     "Convert the vector to string with fixed number of `decimals` in a given coordinate system.",
                     true,
                     () => BuiltinType.String,
-                    () => new List<RealizedParameter> {
+                    () => [
                         new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference"),
                         new("decimals", BuiltinType.Int, "Number of decimals")
-                    },
+                    ],
                     false, typeof(VectorBinding), typeof(VectorBinding).GetMethod("ToFixed"))
             }, {
                 "to_direction",
                 new BoundMethodInvokeFactory("Convert the vector to a rotation/direction in space.",
                     true,
                     () => RotationBinding.RotationType,
-                    () => new List<RealizedParameter>(),
+                    () => [],
                     false, typeof(VectorBinding), typeof(VectorBinding).GetMethod("ToDirection"))
             }, {
                 "cross",
                 new BoundMethodInvokeFactory("Calculate the cross/other product with `other` vector.", true,
                     () => VectorType!,
-                    () => new List<RealizedParameter> {
-                        new("other", VectorType!, "Other vector")
-                    }, false,
+                    () => [new("other", VectorType!, "Other vector")], false,
                     typeof(Vector), typeof(Vector).GetMethod("cross"))
             }, {
                 "dot",
                 new BoundMethodInvokeFactory("Calculate the dot/inner product with `other` vector.", true,
                     () => BuiltinType.Float,
-                    () => new List<RealizedParameter> {
-                        new("other", VectorType!, "Other vector")
-                    }, false,
+                    () => [new("other", VectorType!, "Other vector")], false,
                     typeof(Vector), typeof(Vector).GetMethod("dot"))
             }, {
                 "lerp_to",
@@ -109,16 +101,14 @@ public class VectorBinding {
                     "Linear interpolate position between this and `other` vector, where `t = 0.0` is this and `t = 1.0` is `other`.",
                     true,
                     () => VectorType!,
-                    () => new List<RealizedParameter> {
+                    () => [
                         new("other", VectorType!, "Other vector"),
                         new("t", BuiltinType.Float, "Relative position of mid-point (0.0 - 1.0)")
-                    }, false, typeof(Vector), typeof(Vector).GetMethod("Lerp"))
+                    ], false, typeof(Vector), typeof(Vector).GetMethod("Lerp"))
             }, {
                 "exclude_from",
                 new BoundMethodInvokeFactory("Exclude this from `other` vector.", true, () => VectorType!,
-                    () => new List<RealizedParameter> {
-                        new("other", VectorType!, "Other vector")
-                    }, false,
+                    () => [new("other", VectorType!, "Other vector")], false,
                     typeof(VectorBinding), typeof(VectorBinding).GetMethod("ExcludeFrom"))
             }
         },

@@ -72,48 +72,36 @@ public static class RotationBinding {
                 "euler",
                 new BoundMethodInvokeFactory("Get euler angles in a specific coordinate system", true,
                     () => Vector3Binding.Vector3Type,
-                    () => new List<RealizedParameter> {
-                        new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")
-                    }, false, typeof(RotationWrapper),
+                    () => [new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")], false, typeof(RotationWrapper),
                     typeof(RotationWrapper).GetMethod("Euler"))
             }, {
                 "pitch",
                 new BoundMethodInvokeFactory("Get pitch angle in a specific coordinate system", true,
                     () => BuiltinType.Float,
-                    () => new List<RealizedParameter> {
-                        new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")
-                    }, false, typeof(RotationWrapper),
+                    () => [new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")], false, typeof(RotationWrapper),
                     typeof(RotationWrapper).GetMethod("Pitch"))
             }, {
                 "yaw",
                 new BoundMethodInvokeFactory("Get yaw angle in a specific coordinate system", true,
                     () => BuiltinType.Float,
-                    () => new List<RealizedParameter> {
-                        new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")
-                    }, false, typeof(RotationWrapper),
+                    () => [new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")], false, typeof(RotationWrapper),
                     typeof(RotationWrapper).GetMethod("Yaw"))
             }, {
                 "roll",
                 new BoundMethodInvokeFactory("Get roll angle in a specific coordinate system", true,
                     () => BuiltinType.Float,
-                    () => new List<RealizedParameter> {
-                        new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")
-                    }, false, typeof(RotationWrapper),
+                    () => [new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")], false, typeof(RotationWrapper),
                     typeof(RotationWrapper).GetMethod("Roll"))
             }, {
                 "to_local",
                 new BoundMethodInvokeFactory("Get local direction in a coordinate system", true,
                     () => DirectionBinding.DirectionType,
-                    () => new List<RealizedParameter> {
-                        new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")
-                    }, false,
+                    () => [new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")], false,
                     typeof(RotationWrapper), typeof(RotationWrapper).GetMethod("ToLocal"))
             }, {
                 "to_string",
                 new BoundMethodInvokeFactory("Convert the direction to string", true, () => BuiltinType.String,
-                    () => new List<RealizedParameter> {
-                        new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")
-                    }, false, typeof(RotationWrapper),
+                    () => [new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")], false, typeof(RotationWrapper),
                     typeof(RotationWrapper).GetMethod("ToString", new[] { typeof(ITransformFrame) }))
             }
         },

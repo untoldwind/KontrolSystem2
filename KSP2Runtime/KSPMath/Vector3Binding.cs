@@ -79,25 +79,19 @@ public static class Vector3Binding {
                 "cross",
                 new BoundMethodInvokeFactory("Calculate the cross/other product with `other` vector.", true,
                     () => Vector3Type!,
-                    () => new List<RealizedParameter> {
-                        new("other", Vector3Type!, "Other vector")
-                    }, false,
+                    () => [new("other", Vector3Type!, "Other vector")], false,
                     typeof(Vector3d), typeof(Vector3d).GetMethod("Cross"))
             }, {
                 "dot",
                 new BoundMethodInvokeFactory("Calculate the dot/inner product with `other` vector.", true,
                     () => BuiltinType.Float,
-                    () => new List<RealizedParameter> {
-                        new("other", Vector3Type!, "Other vector")
-                    }, false,
+                    () => [new("other", Vector3Type!, "Other vector")], false,
                     typeof(Vector3d), typeof(Vector3d).GetMethod("Dot"))
             }, {
                 "angle_to",
                 new BoundMethodInvokeFactory("Calculate the angle in degree to `other` vector.", true,
                     () => BuiltinType.Float,
-                    () => new List<RealizedParameter> {
-                        new("other", Vector3Type!, "Other vector")
-                    }, false,
+                    () => [new("other", Vector3Type!, "Other vector")], false,
                     typeof(Vector3d), typeof(Vector3d).GetMethod("Angle"))
             }, {
                 "lerp_to",
@@ -105,70 +99,58 @@ public static class Vector3Binding {
                     "Linear interpolate position between this and `other` vector, where `t = 0.0` is this and `t = 1.0` is `other`.",
                     true,
                     () => Vector3Type!,
-                    () => new List<RealizedParameter> {
+                    () => [
                         new("other", Vector3Type!, "Other vector"),
                         new("t", BuiltinType.Float, "Relative position of mid-point (0.0 - 1.0)")
-                    }, false, typeof(Vector3d), typeof(Vector3d).GetMethod("Lerp"))
+                    ], false, typeof(Vector3d), typeof(Vector3d).GetMethod("Lerp"))
             }, {
                 "project_to",
                 new BoundMethodInvokeFactory("Project this on `other` vector.", true, () => Vector3Type!,
-                    () => new List<RealizedParameter> {
-                        new("other", Vector3Type!, "Other vector")
-                    }, false,
+                    () => [new("other", Vector3Type!, "Other vector")], false,
                     typeof(Vector3d), typeof(Vector3d).GetMethod("Project"))
             }, {
                 "distance_to",
                 new BoundMethodInvokeFactory("Calculate the distance between this and `other` vector.", true,
                     () => BuiltinType.Float,
-                    () => new List<RealizedParameter> {
-                        new("other", Vector3Type!, "Other vector")
-                    }, false,
+                    () => [new("other", Vector3Type!, "Other vector")], false,
                     typeof(Vector3d), typeof(Vector3d).GetMethod("Distance"))
             }, {
                 "exclude_from",
                 new BoundMethodInvokeFactory("Exclude this from `other` vector.", true, () => Vector3Type!,
-                    () => new List<RealizedParameter> {
-                        new("other", Vector3Type!, "Other vector")
-                    }, false,
+                    () => [new("other", Vector3Type!, "Other vector")], false,
                     typeof(Vector3d), typeof(Vector3d).GetMethod("Exclude"))
             }, {
                 "to_string",
                 new BoundMethodInvokeFactory("Convert vector to string.", true, () => BuiltinType.String,
-                    () => new List<RealizedParameter>(), false, typeof(Vector3Binding),
+                    () => [], false, typeof(Vector3Binding),
                     typeof(Vector3Binding).GetMethod("ToString", new[] { typeof(Vector3d) }))
             }, {
                 "to_fixed",
                 new BoundMethodInvokeFactory("Convert the vector to string with fixed number of `decimals`.",
                     true,
                     () => BuiltinType.String,
-                    () => new List<RealizedParameter> {
-                        new("decimals", BuiltinType.Int, "Number of decimals")
-                    },
+                    () => [new("decimals", BuiltinType.Int, "Number of decimals")],
                     false, typeof(Vector3Binding), typeof(Vector3Binding).GetMethod("ToFixed"))
             }, {
                 "to_position",
                 new BoundMethodInvokeFactory("Consider this vector as position in a coordinate system",
                     true,
                     () => PositionBinding.PositionType,
-                    () => new List<RealizedParameter> {
-                        new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")
-                    },
+                    () => [new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")],
                     false, typeof(Vector3Binding), typeof(Vector3Binding).GetMethod("ToPosition"))
             }, {
                 "to_global",
                 new BoundMethodInvokeFactory("Associate this vector with a coordinate system",
                     true,
                     () => VectorBinding.VectorType,
-                    () => new List<RealizedParameter> {
-                        new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")
-                    },
+                    () => [new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")],
                     false, typeof(Vector3Binding), typeof(Vector3Binding).GetMethod("ToGlobal"))
             }, {
                 "to_direction",
                 new BoundMethodInvokeFactory("Point in direction of this vector.",
                     true,
                     () => DirectionBinding.DirectionType,
-                    () => new List<RealizedParameter>(),
+                    () => [],
                     false, typeof(Vector3Binding), typeof(Vector3Binding).GetMethod("ToDirection"))
             }
         },

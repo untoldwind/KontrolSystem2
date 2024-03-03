@@ -74,23 +74,19 @@ public static class Vector2Binding {
                 "angle_to",
                 new BoundMethodInvokeFactory("Calculate the angle in degree to `other` vector.", true,
                     () => BuiltinType.Float,
-                    () => new List<RealizedParameter> {
-                        new("other", Vector2Type!, "Other vector")
-                    }, false,
+                    () => [new("other", Vector2Type!, "Other vector")], false,
                     typeof(Vector2d), typeof(Vector2d).GetMethod("Angle"))
             }, {
                 "to_string",
                 new BoundMethodInvokeFactory("Convert the vector to string", true, () => BuiltinType.String,
-                    () => new List<RealizedParameter>(), false, typeof(Vector2Binding),
+                    () => [], false, typeof(Vector2Binding),
                     typeof(Vector2Binding).GetMethod("ToString", new[] { typeof(Vector2d) }))
             }, {
                 "to_fixed",
                 new BoundMethodInvokeFactory("Convert the vector to string with fixed number of `decimals`.",
                     true,
                     () => BuiltinType.String,
-                    () => new List<RealizedParameter> {
-                        new("decimals", BuiltinType.Int, "Number of decimals")
-                    },
+                    () => [new("decimals", BuiltinType.Int, "Number of decimals")],
                     false, typeof(Vector2Binding), typeof(Vector2Binding).GetMethod("ToFixed"))
             }
         },
