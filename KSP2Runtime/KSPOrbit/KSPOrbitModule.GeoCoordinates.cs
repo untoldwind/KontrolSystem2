@@ -24,7 +24,7 @@ public partial class KSPOrbitModule {
         [KSField(Description = "The surface normal (i.e. up vector) in the celestial frame of the body")]
         public Vector3d SurfaceNormal => Body.SurfaceNormal(Latitude, Longitude);
 
-        [KSField("Coordinate system independent surface normal (i.e. up vector)")]
+        [KSField(Description = "Coordinate system independent surface normal (i.e. up vector)")]
         public Vector GlobalSurfaceNormal => Body.GlobalSurfaceNormal(Latitude, Longitude);
 
         [KSField(Description = "Height of the terrain relative to sea-level")]
