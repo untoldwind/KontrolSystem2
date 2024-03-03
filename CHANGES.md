@@ -1,6 +1,6 @@
 # Changes
 
-## 0.5.3.4 ->
+## 0.5.3.4 -> 0.5.4.0
 
 * Extend array functionality:
   * `array.flat_map`: Map with function that returns an array for each element.
