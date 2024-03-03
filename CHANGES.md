@@ -1,5 +1,12 @@
 # Changes
 
+## 0.5.4.0 -> 0.5.4.1
+
+Hotfix:
+* Fix coordinate system mismatch in `GeoCoordinate.surface_position`
+* Fix broken `GeoCoordinate.global_surface_normal`
+
+
 ## 0.5.3.4 -> 0.5.4.0
 
 * Extend array functionality:

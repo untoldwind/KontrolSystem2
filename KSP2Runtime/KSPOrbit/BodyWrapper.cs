@@ -83,7 +83,7 @@ public class BodyWrapper : KSPOrbitModule.IBody, KSPVesselModule.IKSPTargetable 
     }
 
     public Vector3d SurfacePosition(double latitude, double longitude, double altitude) {
-        return body.GetWorldSurfacePosition(latitude, longitude, altitude, body.transform.celestialFrame);
+        return body.GetSurfaceNVector(latitude, longitude) * (body.radius + altitude);
     }
 
     public Position GlobalSurfacePosition(double latitude, double longitude, double altitude) {

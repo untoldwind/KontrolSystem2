@@ -188,8 +188,8 @@ Represents a geo coordinate (longitude, latitude) of a specific celestial body.
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
-Coordinate system independent surface normal (i.e. up vector) | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | 
 body | [ksp::orbit::Body](/reference/ksp/orbit.md#body) | R/O | The celestial body the geo coordinate is based on. 
+global_surface_normal | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | Coordinate system independent surface normal (i.e. up vector) 
 latitude | float | R/W | Latitude in degrees 
 longitude | float | R/W | Longitude in degrees 
 surface_normal | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | The surface normal (i.e. up vector) in the celestial frame of the body 

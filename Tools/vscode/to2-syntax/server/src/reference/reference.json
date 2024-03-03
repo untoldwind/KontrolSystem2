@@ -13076,8 +13076,9 @@
                 "name": "Vec3"
               }
             },
-            "Coordinate system independent surface normal (i.e. up vector)": {
-              "name": "Coordinate system independent surface normal (i.e. up vector)",
+            "global_surface_normal": {
+              "name": "global_surface_normal",
+              "description": "Coordinate system independent surface normal (i.e. up vector)\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
