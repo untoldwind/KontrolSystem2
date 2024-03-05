@@ -152,5 +152,15 @@ public partial class KSPVesselModule {
                 : Option.None<ModuleHeatshieldAdapter>();
 
         [KSField] public bool IsCargoBay => part.TryGetModuleData<PartComponentModule_CargoBay, Data_CargoBay>(out _);
+
+        [KSField]
+        public bool IsTransmitter =>
+            part.TryGetModuleData<PartComponentModule_DataTransmitter, Data_Transmitter>(out _);
+
+        [KSField]
+        public Option<ModuleTransmitterAdapter> Transmitter =>
+            part.TryGetModuleData<PartComponentModule_DataTransmitter, Data_Transmitter>(out var data)
+                ? Option.Some(new ModuleTransmitterAdapter(this, data))
+                : Option.None<ModuleTransmitterAdapter>();
     }
 }

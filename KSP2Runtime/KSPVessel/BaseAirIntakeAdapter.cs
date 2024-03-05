@@ -1,4 +1,5 @@
-﻿using KontrolSystem.TO2.Binding;
+﻿using KontrolSystem.KSP.Runtime.KSPResource;
+using KontrolSystem.TO2.Binding;
 using KSP.Modules;
 using KSP.Sim.DeltaV;
 
@@ -11,7 +12,18 @@ public abstract class BaseAirIntakeAdapter<P, T> : BaseModuleAdapter<P, T> where
         this.dataResourceIntake = dataResourceIntake;
     }
 
+    [KSField]
+    public KSPResourceModule.ResourceDefinitionAdapter Resource => new(dataResourceIntake.ResourceDefinitionData);
+    
     [KSField] public double ResourceUnits => dataResourceIntake.ResourceUnits;
 
     [KSField] public bool Enabled => dataResourceIntake.ModuleEnabled;
+
+    [KSField]
+    public bool ToogleIntake {
+        get => dataResourceIntake.toggleResourceIntake.GetValue();
+        set => dataResourceIntake.toggleResourceIntake.SetValue(value);
+    }
+
+    [KSField] public double FlowRate => dataResourceIntake.flowRate.GetValue();
 }
