@@ -6,21 +6,9 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public partial class KSPVesselModule {
     [KSClass("ModuleHeatshield")]
-    public class ModuleHeatshieldAdapter {
-        private readonly Data_Heatshield dataHeatshield;
-        private readonly PartComponent part;
-
-        public ModuleHeatshieldAdapter(PartComponent part, Data_Heatshield dataHeatshield) {
-            this.dataHeatshield = dataHeatshield;
-            this.part = part;
+    public class ModuleHeatshieldAdapter : BaseHeatshieldAdapter<PartAdapter, PartComponent> {
+        public ModuleHeatshieldAdapter(PartAdapter part, Data_Heatshield dataHeatshield) : base(part, dataHeatshield) {
         }
 
-        [KSField] public bool IsDeployed => dataHeatshield.IsDeployed;
-
-        [KSField] public bool IsAblating => dataHeatshield.IsAblating;
-
-        [KSField] public bool IsAblatorExhausted => dataHeatshield.IsAblatorExhausted;
-
-        [KSField] public double AblatorRatio => dataHeatshield.AblatorRatio;
     }
 }

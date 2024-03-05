@@ -1,12 +1,13 @@
 ﻿using KontrolSystem.TO2.Binding;
 using KSP.Modules;
+using KSP.Sim.DeltaV;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
-public abstract class BaseGimbalAdapter {
+public abstract class BaseGimbalAdapter<P, T> : BaseModuleAdapter<P, T> where P : BasePartAdapter<T> where T : IDeltaVPart {
     protected readonly Data_Gimbal dataGimbal;
 
-    protected BaseGimbalAdapter(Data_Gimbal dataGimbal) {
+    protected BaseGimbalAdapter(P part, Data_Gimbal dataGimbal) : base(part) {
         this.dataGimbal = dataGimbal;
     }
 

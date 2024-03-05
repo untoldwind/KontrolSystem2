@@ -13,7 +13,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 public partial class KSPVesselModule {
     [KSClass("Part")]
     public class PartAdapter : BasePartAdapter<PartComponent> {
-        protected readonly VesselAdapter vesselAdapter;
+        internal readonly VesselAdapter vesselAdapter;
 
         internal PartAdapter(VesselAdapter vesselAdapter, PartComponent part) : base(part) {
             this.vesselAdapter = vesselAdapter;
@@ -55,13 +55,13 @@ public partial class KSPVesselModule {
         [KSField]
         public Option<ModuleAirIntakeAdapter> AirIntake =>
             part.IsPartAirIntake(out var data)
-                ? Option.Some(new ModuleAirIntakeAdapter(part, data))
+                ? Option.Some(new ModuleAirIntakeAdapter(this, data))
                 : Option.None<ModuleAirIntakeAdapter>();
 
         [KSField]
         public Option<ModuleDockingNodeAdapter> DockingNode =>
             part.IsPartDockingPort(out var data)
-                ? Option.Some(new ModuleDockingNodeAdapter(vesselAdapter, part, data))
+                ? Option.Some(new ModuleDockingNodeAdapter(this, data))
                 : Option.None<ModuleDockingNodeAdapter>();
 
         [KSField] public bool IsEngine => part.IsPartEngine(out _);
@@ -69,19 +69,19 @@ public partial class KSPVesselModule {
         [KSField]
         public Option<ModuleEngineAdapter> EngineModule =>
             part.IsPartEngine(out var data)
-                ? Option.Some(new ModuleEngineAdapter(part, data, vesselAdapter))
+                ? Option.Some(new ModuleEngineAdapter(this, data))
                 : Option.None<ModuleEngineAdapter>();
 
         [KSField]
         public Option<ModuleControlSurfaceAdapter> ControlSurface =>
             part.TryGetModuleData<PartComponentModule_ControlSurface, Data_ControlSurface>(out var data)
-                ? Option.Some(new ModuleControlSurfaceAdapter(part, data))
+                ? Option.Some(new ModuleControlSurfaceAdapter(this, data))
                 : Option.None<ModuleControlSurfaceAdapter>();
 
         [KSField]
         public Option<ModuleCommandAdapter> CommandModule =>
             part.TryGetModuleData<PartComponentModule_Command, Data_Command>(out var data)
-                ? Option.Some(new ModuleCommandAdapter(vesselAdapter, part, data))
+                ? Option.Some(new ModuleCommandAdapter(this, data))
                 : Option.None<ModuleCommandAdapter>();
 
         [KSField]
@@ -91,7 +91,7 @@ public partial class KSPVesselModule {
         [KSField]
         public Option<ModuleScienceExperimentAdapter> ScienceExperiment =>
             part.TryGetModuleData<PartComponentModule_ScienceExperiment, Data_ScienceExperiment>(out var data)
-                ? Option.Some(new ModuleScienceExperimentAdapter(part, data))
+                ? Option.Some(new ModuleScienceExperimentAdapter(this, data))
                 : Option.None<ModuleScienceExperimentAdapter>();
 
         [KSField] public bool IsSolarPanel => part.IsPartSolarPanel(out _);
@@ -99,7 +99,7 @@ public partial class KSPVesselModule {
         [KSField]
         public Option<ModuleSolarPanelAdapter> SolarPanel =>
             part.IsPartSolarPanel(out var data)
-                ? Option.Some(new ModuleSolarPanelAdapter(part, data))
+                ? Option.Some(new ModuleSolarPanelAdapter(this, data))
                 : Option.None<ModuleSolarPanelAdapter>();
 
         [KSField] public bool IsFairing => part.PartData.category == PartCategories.Payload && part.TryGetModuleData<PartComponentModule_Fairing, Data_Fairing>(out _);
@@ -107,7 +107,7 @@ public partial class KSPVesselModule {
         [KSField]
         public Option<ModuleFairingAdapter> Fairing =>
             part.PartData.category == PartCategories.Payload && part.TryGetModuleData<PartComponentModule_Fairing, Data_Fairing>(out var data)
-                ? Option.Some(new ModuleFairingAdapter(part, data))
+                ? Option.Some(new ModuleFairingAdapter(this, data))
                 : Option.None<ModuleFairingAdapter>();
 
         [KSField] public bool IsDeployable => part.IsPartDeployable(out _);
@@ -115,7 +115,7 @@ public partial class KSPVesselModule {
         [KSField]
         public Option<ModuleDeployableAdapter> Deployable =>
             part.IsPartDeployable(out var data)
-                ? Option.Some(new ModuleDeployableAdapter(part, data))
+                ? Option.Some(new ModuleDeployableAdapter(this, data))
                 : Option.None<ModuleDeployableAdapter>();
 
         [KSField] public bool IsDecoupler => part.IsPartDecoupler(out _);
@@ -123,7 +123,7 @@ public partial class KSPVesselModule {
         [KSField]
         public Option<ModuleDecouplerAdapter> Decoupler =>
             part.IsPartDecoupler(out var data)
-                ? Option.Some(new ModuleDecouplerAdapter(part, data))
+                ? Option.Some(new ModuleDecouplerAdapter(this, data))
                 : Option.None<ModuleDecouplerAdapter>();
 
         [KSField] public bool IsLaunchClamp => part.IsPartLaunchClamp(out _);
@@ -131,7 +131,7 @@ public partial class KSPVesselModule {
         [KSField]
         public Option<ModuleLaunchClampAdapter> LaunchClamp =>
             part.IsPartLaunchClamp(out var data)
-                ? Option.Some(new ModuleLaunchClampAdapter(part, data))
+                ? Option.Some(new ModuleLaunchClampAdapter(this, data))
                 : Option.None<ModuleLaunchClampAdapter>();
 
         [KSField] public bool IsParachute => part.IsParachute(out _);
@@ -139,7 +139,7 @@ public partial class KSPVesselModule {
         [KSField]
         public Option<ModuleParachuteAdapter> Parachute =>
             part.IsParachute(out var data)
-                ? Option.Some(new ModuleParachuteAdapter(part, data))
+                ? Option.Some(new ModuleParachuteAdapter(this, data))
                 : Option.None<ModuleParachuteAdapter>();
 
         [KSField]
@@ -148,7 +148,7 @@ public partial class KSPVesselModule {
         [KSField]
         public Option<ModuleHeatshieldAdapter> Heatshield =>
             part.TryGetModuleData<PartComponentModule_Heatshield, Data_Heatshield>(out var data)
-                ? Option.Some(new ModuleHeatshieldAdapter(part, data))
+                ? Option.Some(new ModuleHeatshieldAdapter(this, data))
                 : Option.None<ModuleHeatshieldAdapter>();
 
         [KSField] public bool IsCargoBay => part.TryGetModuleData<PartComponentModule_CargoBay, Data_CargoBay>(out _);

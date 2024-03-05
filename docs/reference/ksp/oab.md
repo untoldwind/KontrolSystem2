@@ -168,6 +168,8 @@ Name | Type | Read-only | Description
 --- | --- | --- | ---
 base_flow_rate | float | R/O | Base flow rate 
 efficiency_multiplier | float | R/O | 
+part | [ksp::oab::ObjectAssemblyPart](/reference/ksp/oab.md#objectassemblypart) | R/O | 
+part_name | string | R/O | 
 
 ### ObjectAssemblyStageDeltaV
 

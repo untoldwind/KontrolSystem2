@@ -2475,6 +2475,11 @@
         {
           "kind": "Standard",
           "module": "ksp::vessel",
+          "name": "ResourceSetting"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
           "name": "Staging"
         },
         {
@@ -3352,6 +3357,11 @@
           "kind": "Standard",
           "module": "ksp::vessel",
           "name": "Part"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ResourceSetting"
         },
         {
           "kind": "Standard",
@@ -11332,6 +11342,23 @@
                 "kind": "Builtin",
                 "name": "float"
               }
+            },
+            "part": {
+              "name": "part",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::oab",
+                "name": "ObjectAssemblyPart"
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
             }
           },
           "methods": {},
@@ -12471,6 +12498,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -15040,6 +15072,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ResourceSetting"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "Staging"
             },
             {
@@ -16407,6 +16444,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ResourceSetting"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "Staging"
             },
             {
@@ -17446,6 +17488,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ResourceSetting"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "Staging"
             },
             {
@@ -18425,6 +18472,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ResourceSetting"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "Staging"
             },
             {
@@ -19360,6 +19412,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -21382,6 +21439,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -26394,6 +26456,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ResourceSetting"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "Staging"
             },
             {
@@ -27339,6 +27406,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -28312,6 +28384,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ResourceSetting"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "Staging"
             },
             {
@@ -29257,6 +29334,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -30216,6 +30298,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -31269,6 +31356,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ResourceSetting"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "Staging"
             },
             {
@@ -32268,6 +32360,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ResourceSetting"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "Staging"
             },
             {
@@ -33223,6 +33320,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -34202,6 +34304,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -35195,6 +35302,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ResourceSetting"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "Staging"
             },
             {
@@ -36160,6 +36272,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -37293,6 +37410,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ResourceSetting"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "Staging"
             },
             {
@@ -38123,6 +38245,15 @@
                 "module": "ksp::vessel",
                 "name": "EngineType"
               }
+            },
+            "propellant": {
+              "name": "propellant",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::resource",
+                "name": "ResourceDefinition"
+              }
             }
           },
           "methods": {},
@@ -38434,433 +38565,42 @@
                 "name": "CommandControlState"
               }
             },
-            "part_category": {
-              "name": "part_category",
-              "readOnly": true,
-              "type": {
-                "kind": "Standard",
-                "module": "ksp::vessel",
-                "name": "PartCategory"
-              }
-            },
-            "vessel": {
-              "name": "vessel",
-              "readOnly": true,
-              "type": {
-                "kind": "Standard",
-                "module": "ksp::vessel",
-                "name": "Vessel"
-              }
-            },
-            "position": {
-              "name": "position",
-              "description": "Get position of the part in celestial frame of the main body.\n",
-              "readOnly": true,
-              "type": {
-                "kind": "Standard",
-                "module": "ksp::math",
-                "name": "Vec3"
-              }
-            },
-            "global_position": {
-              "name": "global_position",
-              "description": "Get coordinate independent position of the part.\n",
-              "readOnly": true,
-              "type": {
-                "kind": "Standard",
-                "module": "ksp::math",
-                "name": "GlobalPosition"
-              }
-            },
-            "global_rotation": {
-              "name": "global_rotation",
-              "readOnly": true,
-              "type": {
-                "kind": "Standard",
-                "module": "ksp::math",
-                "name": "GlobalDirection"
-              }
-            },
-            "splashed": {
-              "name": "splashed",
-              "description": "Indicate if the part has splashed\n",
+            "has_hibernation": {
+              "name": "has_hibernation",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
                 "name": "bool"
               }
             },
-            "resource_mass": {
-              "name": "resource_mass",
-              "description": "Resource mass of the part\n",
+            "is_hibernating": {
+              "name": "is_hibernating",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "hibernation_multiplier": {
+              "name": "hibernation_multiplier",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
                 "name": "float"
               }
             },
-            "temperature": {
-              "name": "temperature",
-              "description": "Temperature of the part\n",
+            "required_resources": {
+              "name": "required_resources",
               "readOnly": true,
               "type": {
-                "kind": "Builtin",
-                "name": "float"
-              }
-            },
-            "max_temperature": {
-              "name": "max_temperature",
-              "description": "Maximum temperature of the part\n",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "float"
-              }
-            },
-            "thermal_mass": {
-              "name": "thermal_mass",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "float"
-              }
-            },
-            "resource_thermal_mass": {
-              "name": "resource_thermal_mass",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "float"
-              }
-            },
-            "resources": {
-              "name": "resources",
-              "readOnly": true,
-              "type": {
-                "kind": "Standard",
-                "module": "ksp::resource",
-                "name": "ResourceContainer"
-              }
-            },
-            "air_intake": {
-              "name": "air_intake",
-              "readOnly": true,
-              "type": {
-                "kind": "Option",
+                "kind": "Array",
                 "parameters": [
                   {
                     "kind": "Standard",
                     "module": "ksp::vessel",
-                    "name": "ModuleAirIntake"
+                    "name": "ResourceSetting"
                   }
                 ]
-              }
-            },
-            "docking_node": {
-              "name": "docking_node",
-              "readOnly": true,
-              "type": {
-                "kind": "Option",
-                "parameters": [
-                  {
-                    "kind": "Standard",
-                    "module": "ksp::vessel",
-                    "name": "ModuleDockingNode"
-                  }
-                ]
-              }
-            },
-            "is_engine": {
-              "name": "is_engine",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "bool"
-              }
-            },
-            "engine_module": {
-              "name": "engine_module",
-              "readOnly": true,
-              "type": {
-                "kind": "Option",
-                "parameters": [
-                  {
-                    "kind": "Standard",
-                    "module": "ksp::vessel",
-                    "name": "ModuleEngine"
-                  }
-                ]
-              }
-            },
-            "control_surface": {
-              "name": "control_surface",
-              "readOnly": true,
-              "type": {
-                "kind": "Option",
-                "parameters": [
-                  {
-                    "kind": "Standard",
-                    "module": "ksp::vessel",
-                    "name": "ModuleControlSurface"
-                  }
-                ]
-              }
-            },
-            "command_module": {
-              "name": "command_module",
-              "readOnly": true,
-              "type": {
-                "kind": "Option",
-                "parameters": [
-                  {
-                    "kind": "Standard",
-                    "module": "ksp::vessel",
-                    "name": "ModuleCommand"
-                  }
-                ]
-              }
-            },
-            "is_science_experiment": {
-              "name": "is_science_experiment",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "bool"
-              }
-            },
-            "science_experiment": {
-              "name": "science_experiment",
-              "readOnly": true,
-              "type": {
-                "kind": "Option",
-                "parameters": [
-                  {
-                    "kind": "Standard",
-                    "module": "ksp::vessel",
-                    "name": "ModuleScienceExperiment"
-                  }
-                ]
-              }
-            },
-            "is_solar_panel": {
-              "name": "is_solar_panel",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "bool"
-              }
-            },
-            "solar_panel": {
-              "name": "solar_panel",
-              "readOnly": true,
-              "type": {
-                "kind": "Option",
-                "parameters": [
-                  {
-                    "kind": "Standard",
-                    "module": "ksp::vessel",
-                    "name": "ModuleSolarPanel"
-                  }
-                ]
-              }
-            },
-            "is_fairing": {
-              "name": "is_fairing",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "bool"
-              }
-            },
-            "fairing": {
-              "name": "fairing",
-              "readOnly": true,
-              "type": {
-                "kind": "Option",
-                "parameters": [
-                  {
-                    "kind": "Standard",
-                    "module": "ksp::vessel",
-                    "name": "ModuleFairing"
-                  }
-                ]
-              }
-            },
-            "is_deployable": {
-              "name": "is_deployable",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "bool"
-              }
-            },
-            "deployable": {
-              "name": "deployable",
-              "readOnly": true,
-              "type": {
-                "kind": "Option",
-                "parameters": [
-                  {
-                    "kind": "Standard",
-                    "module": "ksp::vessel",
-                    "name": "ModuleDeployable"
-                  }
-                ]
-              }
-            },
-            "is_decoupler": {
-              "name": "is_decoupler",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "bool"
-              }
-            },
-            "decoupler": {
-              "name": "decoupler",
-              "readOnly": true,
-              "type": {
-                "kind": "Option",
-                "parameters": [
-                  {
-                    "kind": "Standard",
-                    "module": "ksp::vessel",
-                    "name": "ModuleDecoupler"
-                  }
-                ]
-              }
-            },
-            "is_launch_clamp": {
-              "name": "is_launch_clamp",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "bool"
-              }
-            },
-            "launch_clamp": {
-              "name": "launch_clamp",
-              "readOnly": true,
-              "type": {
-                "kind": "Option",
-                "parameters": [
-                  {
-                    "kind": "Standard",
-                    "module": "ksp::vessel",
-                    "name": "ModuleLaunchClamp"
-                  }
-                ]
-              }
-            },
-            "is_parachute": {
-              "name": "is_parachute",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "bool"
-              }
-            },
-            "parachute": {
-              "name": "parachute",
-              "readOnly": true,
-              "type": {
-                "kind": "Option",
-                "parameters": [
-                  {
-                    "kind": "Standard",
-                    "module": "ksp::vessel",
-                    "name": "ModuleParachute"
-                  }
-                ]
-              }
-            },
-            "is_heatshield": {
-              "name": "is_heatshield",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "bool"
-              }
-            },
-            "heatshield": {
-              "name": "heatshield",
-              "readOnly": true,
-              "type": {
-                "kind": "Option",
-                "parameters": [
-                  {
-                    "kind": "Standard",
-                    "module": "ksp::vessel",
-                    "name": "ModuleHeatshield"
-                  }
-                ]
-              }
-            },
-            "is_cargo_bay": {
-              "name": "is_cargo_bay",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "bool"
-              }
-            },
-            "part_name": {
-              "name": "part_name",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "string"
-              }
-            },
-            "activation_stage": {
-              "name": "activation_stage",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "int"
-              }
-            },
-            "decouple_stage": {
-              "name": "decouple_stage",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "int"
-              }
-            },
-            "dry_mass": {
-              "name": "dry_mass",
-              "description": "Dry mass of the part\n",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "float"
-              }
-            },
-            "wet_mass": {
-              "name": "wet_mass",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "float"
-              }
-            },
-            "green_mass": {
-              "name": "green_mass",
-              "description": "Green mass (Kerbals) of the part\n",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "float"
-              }
-            },
-            "total_mass": {
-              "name": "total_mass",
-              "description": "Total mass of the part\n",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "float"
               }
             }
           },
@@ -40173,14 +39913,6 @@
           "name": "ModuleSolarPanel",
           "description": "",
           "fields": {
-            "part_name": {
-              "name": "part_name",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "string"
-              }
-            },
             "energy_flow": {
               "name": "energy_flow",
               "readOnly": true,
@@ -40235,6 +39967,23 @@
               "type": {
                 "kind": "Builtin",
                 "name": "float"
+              }
+            },
+            "part": {
+              "name": "part",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "Part"
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
               }
             }
           },
@@ -40682,14 +40431,43 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
-              "name": "ModuleCommand"
-            },
-            {
-              "kind": "Standard",
-              "module": "ksp::vessel",
               "name": "ModuleDockingNode"
             }
           ]
+        },
+        "ResourceSetting": {
+          "name": "ResourceSetting",
+          "description": "",
+          "fields": {
+            "resource": {
+              "name": "resource",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::resource",
+                "name": "ResourceDefinition"
+              }
+            },
+            "rate": {
+              "name": "rate",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "acceptance_threshold": {
+              "name": "acceptance_threshold",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
         },
         "Staging": {
           "name": "Staging",

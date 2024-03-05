@@ -8,24 +8,15 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public partial class KSPVesselModule {
     [KSClass("ModuleScienceExperiment")]
-    public class ModuleScienceExperimentAdapter {
-        private readonly Data_ScienceExperiment dataScienceExperiment;
-        private readonly PartComponent part;
-
-        public ModuleScienceExperimentAdapter(PartComponent part, Data_ScienceExperiment dataScienceExperiment) {
-            this.part = part;
-            this.dataScienceExperiment = dataScienceExperiment;
+    public class ModuleScienceExperimentAdapter : BaseScienceExperimentAdapter<PartAdapter, PartComponent> {
+        public ModuleScienceExperimentAdapter(PartAdapter part, Data_ScienceExperiment dataScienceExperiment) : base(part, dataScienceExperiment) {
         }
-
-        [KSField] public string PartName => part?.PartName ?? "Unknown";
-
-        [KSField] public bool IsDeployed => dataScienceExperiment.PartIsDeployed;
-
+        
         [KSField]
         public KSPScienceModule.ExperimentAdapter[] Experiments =>
             dataScienceExperiment.ExperimentStandings.Zip(dataScienceExperiment.Experiments,
                     (standing, config) =>
-                        new KSPScienceModule.ExperimentAdapter(part.SimulationObject, standing, config))
+                        new KSPScienceModule.ExperimentAdapter(part.part.SimulationObject, standing, config))
                 .ToArray();
     }
 }

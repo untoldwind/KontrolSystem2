@@ -15,18 +15,18 @@ pub fn dock_vessel(vessel : Vessel, target : Targetable) -> Result<Unit, string>
 
     const (vessel_port, target_port) = choose_docking_nodes(vessel, target)?
         
-    DEBUG.add_vector(fn() -> vessel_port.global_position, fn() -> vessel_port.global_rotation.vector * 10, RED, "", 1)
-    DEBUG.add_vector(fn() -> vessel_port.global_position, fn() -> vessel_port.global_rotation.up_vector * 10, BLUE, "", 1)
+    DEBUG.add_vector(fn() -> vessel_port.part.global_position, fn() -> vessel_port.part.global_rotation.vector * 10, RED, "", 1)
+    DEBUG.add_vector(fn() -> vessel_port.part.global_position, fn() -> vessel_port.part.global_rotation.up_vector * 10, BLUE, "", 1)
 
-    DEBUG.add_vector(fn() -> target_port.global_position, fn() -> target_port.global_rotation.vector * 10, RED, "", 1)
-    DEBUG.add_vector(fn() -> target_port.global_position, fn() ->target_port.global_rotation.up_vector * 10, BLUE, "", 1)
+    DEBUG.add_vector(fn() -> target_port.part.global_position, fn() -> target_port.part.global_rotation.vector * 10, RED, "", 1)
+    DEBUG.add_vector(fn() -> target_port.part.global_position, fn() -> target_port.part.global_rotation.up_vector * 10, BLUE, "", 1)
 
 
     vessel.actions.sas = false
     vessel.actions.rcs = false
 
     const steering_control = control_steering(vessel)
-    const target_dir = global_look_dir_up(-target_port.global_rotation.vector, target_port.global_rotation.up_vector)
+    const target_dir = global_look_dir_up(-target_port.part.global_rotation.vector, target_port.part.global_rotation.up_vector)
 
     steering_control.set_global_direction(target_dir)
 
@@ -77,8 +77,8 @@ pub fn dock_move_correct_side(vessel : Vessel, target_port : ModuleDockingNode) 
     const dock_z = pid_loop(0.8, 0, 0.4, -1, 1)
     
     const rcs_manager = vessel.manage_rcs_translate(fn(delta_t) -> {
-        const vel_diff = vessel.orbital_velocity - target_port.vessel.orbital_velocity
-        const target_pos = target_port.position - vessel.position
+        const vel_diff = vessel.orbital_velocity - target_port.part.vessel.orbital_velocity
+        const target_pos = target_port.part.position - vessel.position
         const x = target_pos * vessel.facing.right_vector
         const y = -target_pos * vessel.facing.up_vector
         const z = target_pos * vessel.facing.vector
@@ -112,7 +112,7 @@ pub fn dock_move_correct_side(vessel : Vessel, target_port : ModuleDockingNode) 
     })
 
     wait_until(fn() -> {
-        const target_pos = target_port.position - vessel.position
+        const target_pos = target_port.part.position - vessel.position
         const x = target_pos * vessel.facing.right_vector
         const y = -target_pos * vessel.facing.up_vector
         const z = target_pos * vessel.facing.vector
@@ -135,8 +135,8 @@ pub fn dock_approach(vessel : Vessel, target_port : ModuleDockingNode) -> Result
     const dock_z = pid_loop(0.8, 0, 0.4, -1, 1)
     
     const rcs_manager = vessel.manage_rcs_translate(fn(delta_t) -> {
-        const vel_diff = vessel.orbital_velocity - target_port.vessel.orbital_velocity
-        const target_pos = target_port.position - vessel.position
+        const vel_diff = vessel.orbital_velocity - target_port.part.vessel.orbital_velocity
+        const target_pos = target_port.part.position - vessel.position
         const x = target_pos * vessel.facing.right_vector
         const y = -target_pos * vessel.facing.up_vector
         const z = target_pos * vessel.facing.vector

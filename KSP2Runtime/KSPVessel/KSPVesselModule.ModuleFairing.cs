@@ -6,34 +6,14 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public partial class KSPVesselModule {
     [KSClass("ModuleFairing")]
-    public class ModuleFairingAdapter {
-        private readonly Data_Fairing dataFairing;
-        private readonly PartComponent part;
-
-        public ModuleFairingAdapter(PartComponent part, Data_Fairing dataFairing) {
-            this.part = part;
-            this.dataFairing = dataFairing;
+    public class ModuleFairingAdapter : BaseFairingAdapter<PartAdapter, PartComponent> {
+        public ModuleFairingAdapter(PartAdapter part, Data_Fairing dataFairing) : base(part, dataFairing) {
         }
 
-        [KSField] public string PartName => part?.PartName ?? "Unknown";
-
-        [KSField]
-        public double EjectionForce {
-            get => dataFairing.EjectionForce.GetValue();
-            set => dataFairing.EjectionForce.SetValue((float)value);
-        }
-
-        [KSField] public bool IsJettisoned => dataFairing.IsDeployed.GetValue();
-
-        [KSField]
-        public bool Enabled {
-            get => dataFairing.FairingEnabled.GetValue();
-            set => dataFairing.FairingEnabled.SetObject(value);
-        }
 
         [KSMethod]
         public bool Jettison() {
-            if (!KSPContext.CurrentContext.Game.SpaceSimulation.TryGetViewObject(part.SimulationObject,
+            if (!KSPContext.CurrentContext.Game.SpaceSimulation.TryGetViewObject(part.part.SimulationObject,
                     out var viewObject)) return false;
 
             if (!viewObject.TryGetComponent<Module_Fairing>(out var moduleFairing)) return false;

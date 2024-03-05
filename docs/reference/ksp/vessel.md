@@ -364,6 +364,7 @@ engine_type | [ksp::vessel::EngineType](/reference/ksp/vessel.md#enginetype) | R
 max_thrust | float | R/O | 
 min_thrust | float | R/O | 
 name | string | R/O | 
+propellant | [ksp::resource::ResourceDefinition](/reference/ksp/resource.md#resourcedefinition) | R/O | 
 throttle_locked | bool | R/O | 
 
 ### EngineType
@@ -563,49 +564,11 @@ resource_units | float | R/O |
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
-activation_stage | int | R/O | 
-air_intake | Option&lt;[ksp::vessel::ModuleAirIntake](/reference/ksp/vessel.md#moduleairintake)> | R/O | 
-command_module | Option&lt;[ksp::vessel::ModuleCommand](/reference/ksp/vessel.md#modulecommand)> | R/O | 
 control_state | [ksp::vessel::CommandControlState](/reference/ksp/vessel.md#commandcontrolstate) | R/O | 
-control_surface | Option&lt;[ksp::vessel::ModuleControlSurface](/reference/ksp/vessel.md#modulecontrolsurface)> | R/O | 
-decouple_stage | int | R/O | 
-decoupler | Option&lt;[ksp::vessel::ModuleDecoupler](/reference/ksp/vessel.md#moduledecoupler)> | R/O | 
-deployable | Option&lt;[ksp::vessel::ModuleDeployable](/reference/ksp/vessel.md#moduledeployable)> | R/O | 
-docking_node | Option&lt;[ksp::vessel::ModuleDockingNode](/reference/ksp/vessel.md#moduledockingnode)> | R/O | 
-dry_mass | float | R/O | Dry mass of the part 
-engine_module | Option&lt;[ksp::vessel::ModuleEngine](/reference/ksp/vessel.md#moduleengine)> | R/O | 
-fairing | Option&lt;[ksp::vessel::ModuleFairing](/reference/ksp/vessel.md#modulefairing)> | R/O | 
-global_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | R/O | Get coordinate independent position of the part. 
-global_rotation | [ksp::math::GlobalDirection](/reference/ksp/math.md#globaldirection) | R/O | 
-green_mass | float | R/O | Green mass (Kerbals) of the part 
-heatshield | Option&lt;[ksp::vessel::ModuleHeatshield](/reference/ksp/vessel.md#moduleheatshield)> | R/O | 
-is_cargo_bay | bool | R/O | 
-is_decoupler | bool | R/O | 
-is_deployable | bool | R/O | 
-is_engine | bool | R/O | 
-is_fairing | bool | R/O | 
-is_heatshield | bool | R/O | 
-is_launch_clamp | bool | R/O | 
-is_parachute | bool | R/O | 
-is_science_experiment | bool | R/O | 
-is_solar_panel | bool | R/O | 
-launch_clamp | Option&lt;[ksp::vessel::ModuleLaunchClamp](/reference/ksp/vessel.md#modulelaunchclamp)> | R/O | 
-max_temperature | float | R/O | Maximum temperature of the part 
-parachute | Option&lt;[ksp::vessel::ModuleParachute](/reference/ksp/vessel.md#moduleparachute)> | R/O | 
-part_category | [ksp::vessel::PartCategory](/reference/ksp/vessel.md#partcategory) | R/O | 
-part_name | string | R/O | 
-position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get position of the part in celestial frame of the main body. 
-resource_mass | float | R/O | Resource mass of the part 
-resource_thermal_mass | float | R/O | 
-resources | [ksp::resource::ResourceContainer](/reference/ksp/resource.md#resourcecontainer) | R/O | 
-science_experiment | Option&lt;[ksp::vessel::ModuleScienceExperiment](/reference/ksp/vessel.md#modulescienceexperiment)> | R/O | 
-solar_panel | Option&lt;[ksp::vessel::ModuleSolarPanel](/reference/ksp/vessel.md#modulesolarpanel)> | R/O | 
-splashed | bool | R/O | Indicate if the part has splashed 
-temperature | float | R/O | Temperature of the part 
-thermal_mass | float | R/O | 
-total_mass | float | R/O | Total mass of the part 
-vessel | [ksp::vessel::Vessel](/reference/ksp/vessel.md#vessel) | R/O | 
-wet_mass | float | R/O | 
+has_hibernation | bool | R/O | 
+hibernation_multiplier | float | R/O | 
+is_hibernating | bool | R/O | 
+required_resources | [ksp::vessel::ResourceSetting](/reference/ksp/vessel.md#resourcesetting)[] | R/O | 
 
 #### Methods
 
@@ -944,6 +907,7 @@ blocking_body | Option&lt;[ksp::orbit::Body](/reference/ksp/orbit.md#body)> | R/
 efficiency_multiplier | float | R/O | 
 energy_flow | float | R/O | 
 max_flow | float | R/O | Maximum flow rate in current situation. Shorthand for `base_flow_rate * star_energy_scale * efficiency_multiplier` 
+part | [ksp::vessel::Part](/reference/ksp/vessel.md#part) | R/O | 
 part_name | string | R/O | 
 star_energy_scale | float | R/O | 
 
@@ -1186,6 +1150,18 @@ Parameters
 Name | Type | Optional | Description
 --- | --- | --- | ---
 value | string |  | Enum value to lookup
+
+### ResourceSetting
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+acceptance_threshold | float | R/O | 
+rate | float | R/O | 
+resource | [ksp::resource::ResourceDefinition](/reference/ksp/resource.md#resourcedefinition) | R/O | 
 
 ### StageDeltaV
 

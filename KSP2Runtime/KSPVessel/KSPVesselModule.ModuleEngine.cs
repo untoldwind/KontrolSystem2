@@ -9,20 +9,13 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public partial class KSPVesselModule {
     [KSClass("ModuleEngine")]
-    public class ModuleEngineAdapter : BaseEngineAdapter {
-        private readonly PartComponent part;
-        private readonly VesselAdapter vesselAdapter;
-
-        public ModuleEngineAdapter(PartComponent part, Data_Engine dataEngine, VesselAdapter vesselAdapter) : base(dataEngine) {
-            this.part = part;
-            this.vesselAdapter = vesselAdapter;
+    public class ModuleEngineAdapter : BaseEngineAdapter<PartAdapter, PartComponent> {
+        public ModuleEngineAdapter(PartAdapter part, Data_Engine dataEngine) : base(part, dataEngine) {
         }
-
-        [KSField] public string PartName => part?.PartName ?? "Unknown";
 
         [KSField(Description = "Direction of thrust in the celestial frame of the main body")]
         public Vector3d ThrustDirection =>
-            vesselAdapter.vessel.mainBody.transform.celestialFrame.ToLocalVector(
+            part.vesselAdapter.vessel.mainBody.transform.celestialFrame.ToLocalVector(
                 KSPContext.CurrentContext.Game.UniverseView.PhysicsSpace.PhysicsToVector(
                     dataEngine.ThrustDirRelativePartWorldSpace));
 
@@ -31,19 +24,19 @@ public partial class KSPVesselModule {
             KSPContext.CurrentContext.Game.UniverseView.PhysicsSpace.PhysicsToVector(
                 dataEngine.ThrustDirRelativePartWorldSpace);
 
-        [KSField] public bool IsGimbal => part.TryGetModuleData<PartComponentModule_Gimbal, Data_Gimbal>(out var _);
+        [KSField] public bool IsGimbal => part.part.TryGetModuleData<PartComponentModule_Gimbal, Data_Gimbal>(out var _);
 
         [KSField]
         public Option<ModuleGimbalAdapter> Gimbal =>
-            part.TryGetModuleData<PartComponentModule_Gimbal, Data_Gimbal>(out var data)
+            part.part.TryGetModuleData<PartComponentModule_Gimbal, Data_Gimbal>(out var data)
                 ? Option.Some(new ModuleGimbalAdapter(part, data))
                 : Option.None<ModuleGimbalAdapter>();
 
-        [KSField] public bool HasFairing => part.TryGetModuleData<PartComponentModule_Fairing, Data_Fairing>(out _);
+        [KSField] public bool HasFairing => part.part.TryGetModuleData<PartComponentModule_Fairing, Data_Fairing>(out _);
 
         [KSField]
         public Option<ModuleFairingAdapter> Fairing =>
-            part.TryGetModuleData<PartComponentModule_Fairing, Data_Fairing>(out var data)
+            part.part.TryGetModuleData<PartComponentModule_Fairing, Data_Fairing>(out var data)
                 ? Option.Some(new ModuleFairingAdapter(part, data))
                 : Option.None<ModuleFairingAdapter>();
 
@@ -56,7 +49,7 @@ public partial class KSPVesselModule {
 
             if (idx < 0 || idx == dataEngine.currentEngineModeIndex) return false;
 
-            if (!KSPContext.CurrentContext.Game.SpaceSimulation.TryGetViewObject(part.SimulationObject,
+            if (!KSPContext.CurrentContext.Game.SpaceSimulation.TryGetViewObject(part.part.SimulationObject,
                     out var viewObject)) return false;
 
             if (!viewObject.TryGetComponent<Module_Engine>(out var moduleEngine)) return false;

@@ -9,14 +9,10 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public partial class KSPVesselModule {
     [KSClass("ModuleSolarPanel")]
-    public class ModuleSolarPanelAdapter : BaseSolarPanelAdapter {
-        private readonly PartComponent part;
+    public class ModuleSolarPanelAdapter : BaseSolarPanelAdapter<PartAdapter, PartComponent> {
 
-        public ModuleSolarPanelAdapter(PartComponent part, Data_SolarPanel dataSolarPanel) : base(dataSolarPanel) {
-            this.part = part;
+        public ModuleSolarPanelAdapter(PartAdapter part, Data_SolarPanel dataSolarPanel) : base(part, dataSolarPanel) {
         }
-
-        [KSField] public string PartName => part?.PartName ?? "Unknown";
 
         [KSField] public double EnergyFlow => dataSolarPanel.EnergyFlow.GetValue();
 

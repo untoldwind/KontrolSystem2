@@ -25,7 +25,7 @@ public partial class KSPOABModule {
         [KSField]
         public Option<ObjectAssemblyEngineAdapter> Engine =>
             part.IsPartEngine(out var data)
-                ? Option.Some(new ObjectAssemblyEngineAdapter(data))
+                ? Option.Some(new ObjectAssemblyEngineAdapter(this, data))
                 : Option.None<ObjectAssemblyEngineAdapter>();
 
         [KSField] public bool IsSolarPanel => part.IsPartSolarPanel(out var _);
@@ -33,7 +33,7 @@ public partial class KSPOABModule {
         [KSField]
         public Option<ObjectAssemblySolarPanelAdapter> SolarPanel =>
             part.IsPartSolarPanel(out var data)
-                ? Option.Some(new ObjectAssemblySolarPanelAdapter(data))
+                ? Option.Some(new ObjectAssemblySolarPanelAdapter(this, data))
                 : Option.None<ObjectAssemblySolarPanelAdapter>();
     }
 }

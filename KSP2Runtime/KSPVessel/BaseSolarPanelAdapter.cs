@@ -1,12 +1,13 @@
 ﻿using KontrolSystem.TO2.Binding;
 using KSP.Modules;
+using KSP.Sim.DeltaV;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
-public abstract class BaseSolarPanelAdapter {
+public abstract class BaseSolarPanelAdapter<P, T> : BaseModuleAdapter<P, T> where P : BasePartAdapter<T> where T : IDeltaVPart {
     protected readonly Data_SolarPanel dataSolarPanel;
 
-    protected BaseSolarPanelAdapter(Data_SolarPanel dataSolarPanel) {
+    protected BaseSolarPanelAdapter(P part, Data_SolarPanel dataSolarPanel) : base(part) {
         this.dataSolarPanel = dataSolarPanel;
     }
 

@@ -7,16 +7,13 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public partial class KSPVesselModule {
     [KSClass("ModuleParachute")]
-    public class ModuleParachuteAdapter : BaseParachuteAdapter {
-        private readonly PartComponent part;
-
-        public ModuleParachuteAdapter(PartComponent part, Data_Parachute dataParachute) : base(dataParachute) {
-            this.part = part;
+    public class ModuleParachuteAdapter : BaseParachuteAdapter<PartAdapter, PartComponent> {
+        public ModuleParachuteAdapter(PartAdapter part, Data_Parachute dataParachute) : base(part, dataParachute) {
         }
 
         [KSMethod]
         public bool Deploy() {
-            if (!KSPContext.CurrentContext.Game.SpaceSimulation.TryGetViewObject(part.SimulationObject,
+            if (!KSPContext.CurrentContext.Game.SpaceSimulation.TryGetViewObject(part.part.SimulationObject,
                     out var viewObject)) return false;
 
             if (!viewObject.TryGetComponent<Module_Parachute>(out var moduleParachute)) return false;
@@ -33,7 +30,7 @@ public partial class KSPVesselModule {
 
         [KSMethod]
         public bool Cut() {
-            if (!KSPContext.CurrentContext.Game.SpaceSimulation.TryGetViewObject(part.SimulationObject,
+            if (!KSPContext.CurrentContext.Game.SpaceSimulation.TryGetViewObject(part.part.SimulationObject,
                     out var viewObject)) return false;
 
             if (!viewObject.TryGetComponent<Module_Parachute>(out var moduleParachute)) return false;
@@ -45,7 +42,7 @@ public partial class KSPVesselModule {
 
         [KSMethod]
         public bool Repack() {
-            if (!KSPContext.CurrentContext.Game.SpaceSimulation.TryGetViewObject(part.SimulationObject,
+            if (!KSPContext.CurrentContext.Game.SpaceSimulation.TryGetViewObject(part.part.SimulationObject,
                     out var viewObject)) return false;
 
             if (!viewObject.TryGetComponent<Module_Parachute>(out var moduleParachute)) return false;

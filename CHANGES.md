@@ -3,7 +3,10 @@
 ## 0.5.4.1 ->
 
 * Add `engineMode.propellant` field
-
+* Protentially breaking changes:
+  * Cleanup `ModuleCommand`: Remove fields that belong to `Part` to access those use `moduleCommand.part.field`
+  * Cleanup `ModuleDockingNode`: Remove fields that belong to `Part` to access those use `dockingNode.part.field`
+* Add `.part` field to all `Module*` types
 
 ## 0.5.4.0 -> 0.5.4.1
 

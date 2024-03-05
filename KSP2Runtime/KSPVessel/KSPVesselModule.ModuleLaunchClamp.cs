@@ -6,22 +6,14 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public partial class KSPVesselModule {
     [KSClass("ModuleLaunchClamp")]
-    public class ModuleLaunchClampAdapter {
-        private readonly Data_GroundLaunchClamp dataLaunchClamp;
-        private readonly PartComponent part;
+    public class ModuleLaunchClampAdapter : BaseLaunchClampAdapter<PartAdapter, PartComponent> {
 
-        public ModuleLaunchClampAdapter(PartComponent part, Data_GroundLaunchClamp dataLaunchClamp) {
-            this.part = part;
-            this.dataLaunchClamp = dataLaunchClamp;
+        public ModuleLaunchClampAdapter(PartAdapter part, Data_GroundLaunchClamp dataLaunchClamp) : base(part, dataLaunchClamp) {
         }
-
-        [KSField] public string PartName => part?.PartName ?? "Unknown";
-
-        [KSField] public bool IsReleased => dataLaunchClamp.isReleased;
 
         [KSMethod]
         public bool Release() {
-            if (!KSPContext.CurrentContext.Game.SpaceSimulation.TryGetViewObject(part.SimulationObject,
+            if (!KSPContext.CurrentContext.Game.SpaceSimulation.TryGetViewObject(part.part.SimulationObject,
                     out var viewObject)) return false;
 
             if (!viewObject.TryGetComponent<Module_GroundLaunchClamp>(out var moduleLaunchClamp)) return false;

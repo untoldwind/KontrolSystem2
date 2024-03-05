@@ -1,12 +1,13 @@
 ﻿using KontrolSystem.TO2.Binding;
 using KSP.Modules;
+using KSP.Sim.DeltaV;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
-public class BaseControlSurfaceAdapter {
+public class BaseControlSurfaceAdapter<P, T> : BaseModuleAdapter<P, T> where P : BasePartAdapter<T> where T : IDeltaVPart {
     protected readonly Data_ControlSurface dataControlSurface;
 
-    protected BaseControlSurfaceAdapter(Data_ControlSurface dataControlSurface) {
+    protected BaseControlSurfaceAdapter(P part, Data_ControlSurface dataControlSurface) : base(part) {
         this.dataControlSurface = dataControlSurface;
     }
 

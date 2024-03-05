@@ -15,7 +15,7 @@ public partial class KSPVesselModule {
         }
 
         [KSField]
-        public ModuleEngineAdapter EngineModule => new((deltaVEngineInfo.Part as PartComponent)!, deltaVEngineInfo.Engine, vesselAdapter);
+        public ModuleEngineAdapter EngineModule => new(new PartAdapter(vesselAdapter, (PartComponent)deltaVEngineInfo.Part), deltaVEngineInfo.Engine);
 
         [KSMethod(Description = "Estimated thrust vector of the engine in a given `situation`")]
         public Vector3d GetThrustVector(DeltaVSituationOptions situation) =>

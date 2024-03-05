@@ -4,7 +4,7 @@ using KSP.Sim.DeltaV;
 namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public abstract class BasePartAdapter<T> where T : IDeltaVPart {
-    protected readonly T part;
+    internal readonly T part;
 
     protected BasePartAdapter(T part) {
         this.part = part;

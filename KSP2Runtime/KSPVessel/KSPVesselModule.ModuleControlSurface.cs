@@ -6,13 +6,9 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public partial class KSPVesselModule {
     [KSClass("ModuleControlSurface")]
-    public class ModuleControlSurfaceAdapter : BaseControlSurfaceAdapter {
-        private readonly PartComponent part;
+    public class ModuleControlSurfaceAdapter : BaseControlSurfaceAdapter<PartAdapter, PartComponent> {
 
-        public ModuleControlSurfaceAdapter(PartComponent part, Data_ControlSurface dataControlSurface) : base(dataControlSurface) {
-            this.part = part;
+        public ModuleControlSurfaceAdapter(PartAdapter part, Data_ControlSurface dataControlSurface) : base(part, dataControlSurface) {
         }
-
-        [KSField] public string PartName => part?.PartName ?? "Unknown";
     }
 }

@@ -8,23 +8,13 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public partial class KSPVesselModule {
     [KSClass("ModuleDockingNode")]
-    public class ModuleDockingNodeAdapter : PartAdapter, IKSPTargetable {
-        private readonly Data_DockingNode dataDockingNode;
-
-        public ModuleDockingNodeAdapter(VesselAdapter vesselAdapter, PartComponent part,
-            Data_DockingNode dataDockingNode) : base(vesselAdapter, part) {
-            this.dataDockingNode = dataDockingNode;
+    public class ModuleDockingNodeAdapter : BaseDockingNodeAdapter<PartAdapter, PartComponent>, IKSPTargetable {
+        public ModuleDockingNodeAdapter(PartAdapter part, Data_DockingNode dataDockingNode) : base(part, dataDockingNode) {
         }
 
-        [KSField] public bool IsDeployableDockingPort => dataDockingNode.IsDeployableDockingPort;
+        public string Name => part.PartName;
 
-        [KSField] public Data_DockingNode.DockingState DockingState => dataDockingNode.CurrentState;
-
-        [KSField] public string[] NodeTypes => dataDockingNode.NodeTypes;
-
-        public string Name => part.Name;
-
-        public KSPOrbitModule.IOrbit Orbit => vesselAdapter.Orbit;
+        public KSPOrbitModule.IOrbit Orbit => part.vesselAdapter.Orbit;
 
         public Option<KSPOrbitModule.IBody> AsBody => new();
 
@@ -32,11 +22,11 @@ public partial class KSPVesselModule {
 
         public Option<ModuleDockingNodeAdapter> AsDockingPort => new(this);
 
-        public IGGuid UnderlyingId => part.GlobalId;
+        public IGGuid UnderlyingId => part.part.GlobalId;
 
         [KSMethod]
         public void ControlFromHere() {
-            vesselAdapter.vessel.SetControlOwner(part);
+            part.vesselAdapter.vessel.SetControlOwner(part.part);
         }
     }
 }

@@ -7,19 +7,13 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public partial class KSPVesselModule {
     [KSClass("ModuleCommand")]
-    public class ModuleCommandAdapter : PartAdapter {
-        private readonly Data_Command dataCommand;
-
-        public ModuleCommandAdapter(VesselAdapter vesselAdapter, PartComponent part, Data_Command dataCommand) : base(
-            vesselAdapter, part) {
-            this.dataCommand = dataCommand;
+    public class ModuleCommandAdapter : BaseCommandAdapter<PartAdapter, PartComponent> {
+        public ModuleCommandAdapter(PartAdapter part, Data_Command dataCommand) : base(part, dataCommand) {
         }
-
-        [KSField] public CommandControlState ControlState => dataCommand.controlStatus.GetValue();
 
         [KSMethod]
         public void ControlFromHere() {
-            vesselAdapter.vessel.SetControlOwner(part);
+            part.vesselAdapter.vessel.SetControlOwner(part.part);
         }
     }
 }

@@ -1,13 +1,14 @@
 ﻿using KontrolSystem.TO2.Binding;
 using KSP.Modules;
+using KSP.Sim.DeltaV;
 using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
-public abstract class BaseParachuteAdapter {
+public abstract class BaseParachuteAdapter<P, T> : BaseModuleAdapter<P, T> where P : BasePartAdapter<T> where T : IDeltaVPart {
     protected readonly Data_Parachute dataParachute;
 
-    protected BaseParachuteAdapter(Data_Parachute dataParachute) {
+    protected BaseParachuteAdapter(P part, Data_Parachute dataParachute) : base(part) {
         this.dataParachute = dataParachute;
     }
 

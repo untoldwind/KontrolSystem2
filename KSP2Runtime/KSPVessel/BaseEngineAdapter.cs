@@ -2,13 +2,14 @@
 using KontrolSystem.KSP.Runtime.KSPResource;
 using KontrolSystem.TO2.Binding;
 using KSP.Modules;
+using KSP.Sim.DeltaV;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
-public abstract class BaseEngineAdapter {
+public abstract class BaseEngineAdapter<P, T> : BaseModuleAdapter<P, T> where P : BasePartAdapter<T> where T : IDeltaVPart {
     protected readonly Data_Engine dataEngine;
 
-    protected BaseEngineAdapter(Data_Engine dataEngine) {
+    protected BaseEngineAdapter(P part, Data_Engine dataEngine) : base(part) {
         this.dataEngine = dataEngine;
     }
 
