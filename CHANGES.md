@@ -11,6 +11,7 @@
 * Add `moduleSolarPanel.resource_setting`
 * Add `moduleHeatshield.required_resources`
 * Add binding for transmitter modules
+* Add binding for lighting modules
 
 ## 0.5.4.0 -> 0.5.4.1
 

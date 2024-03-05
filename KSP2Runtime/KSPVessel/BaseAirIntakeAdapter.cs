@@ -14,7 +14,7 @@ public abstract class BaseAirIntakeAdapter<P, T> : BaseModuleAdapter<P, T> where
 
     [KSField]
     public KSPResourceModule.ResourceDefinitionAdapter Resource => new(dataResourceIntake.ResourceDefinitionData);
-    
+
     [KSField] public double ResourceUnits => dataResourceIntake.ResourceUnits;
 
     [KSField] public bool Enabled => dataResourceIntake.ModuleEnabled;

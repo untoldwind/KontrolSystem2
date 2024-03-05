@@ -11,7 +11,7 @@ public partial class KSPVesselModule {
     public class ModuleScienceExperimentAdapter : BaseScienceExperimentAdapter<PartAdapter, PartComponent> {
         public ModuleScienceExperimentAdapter(PartAdapter part, Data_ScienceExperiment dataScienceExperiment) : base(part, dataScienceExperiment) {
         }
-        
+
         [KSField]
         public KSPScienceModule.ExperimentAdapter[] Experiments =>
             dataScienceExperiment.ExperimentStandings.Zip(dataScienceExperiment.Experiments,

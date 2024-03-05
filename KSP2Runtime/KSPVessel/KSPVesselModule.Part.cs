@@ -162,5 +162,16 @@ public partial class KSPVesselModule {
             part.TryGetModuleData<PartComponentModule_DataTransmitter, Data_Transmitter>(out var data)
                 ? Option.Some(new ModuleTransmitterAdapter(this, data))
                 : Option.None<ModuleTransmitterAdapter>();
+
+        [KSField]
+        public bool IsLight =>
+            part.TryGetModuleData<PartComponentModule_Light, Data_Light>(out _);
+
+        [KSField]
+        public Option<ModuleLightAdapter> Light =>
+            part.TryGetModuleData<PartComponentModule_Light, Data_Light>(out var data)
+                ? Option.Some(new ModuleLightAdapter(this, data))
+                : Option.None<ModuleLightAdapter>();
+
     }
 }
