@@ -1,4 +1,5 @@
-﻿using KontrolSystem.TO2.Binding;
+﻿using System.Linq;
+using KontrolSystem.TO2.Binding;
 using KSP.Modules;
 using KSP.Sim.DeltaV;
 
@@ -18,5 +19,9 @@ public abstract class BaseHeatshieldAdapter<P, T> : BaseModuleAdapter<P, T> wher
     [KSField] public bool IsAblatorExhausted => dataHeatshield.IsAblatorExhausted;
 
     [KSField] public double AblatorRatio => dataHeatshield.AblatorRatio;
+
+    [KSField]
+    public KSPVesselModule.ResourceSettingAdapter[] RequiredResources =>
+        dataHeatshield.requiredResources.Select(settings => new KSPVesselModule.ResourceSettingAdapter(settings)).ToArray();
 
 }

@@ -15,4 +15,7 @@ public abstract class BaseSolarPanelAdapter<P, T> : BaseModuleAdapter<P, T> wher
 
     [KSField(Description = "Base flow rate")]
     public double BaseFlowRate => dataSolarPanel.ResourceSettings.Rate;
+
+    [KSField]
+    public KSPVesselModule.ResourceSettingAdapter ResourceSetting => new(dataSolarPanel.ResourceSettings);
 }

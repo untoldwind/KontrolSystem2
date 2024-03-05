@@ -7,6 +7,9 @@
   * Cleanup `ModuleCommand`: Remove fields that belong to `Part` to access those use `moduleCommand.part.field`
   * Cleanup `ModuleDockingNode`: Remove fields that belong to `Part` to access those use `dockingNode.part.field`
 * Add `.part` field to all `Module*` types
+* Add `moduleCommand.required_resources`
+* Add `moduleSolarPanel.resource_setting`
+* Add `moduleHeatshield.required_resources`
 
 ## 0.5.4.0 -> 0.5.4.1
 
