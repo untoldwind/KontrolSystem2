@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using KontrolSystem.Parsing;
+﻿using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
 using KontrolSystem.TO2.Runtime;
 

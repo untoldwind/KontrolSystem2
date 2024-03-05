@@ -1,5 +1,10 @@
 # Changes
 
+## 0.5.4.1 ->
+
+* Add `engineMode.propellant` field
+
+
 ## 0.5.4.0 -> 0.5.4.1
 
 Hotfix:
