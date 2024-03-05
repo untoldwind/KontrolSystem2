@@ -14,6 +14,7 @@
 * Add binding for lighting modules
 * Add binding for generator modules
 * Support air intake, command, decoupler, docking node, generator, light, transmitter in VAB
+* Add a `sync_warp_to` to `ksp::game::warp` as a temporary workaround (to be used with care)
 
 ## 0.5.4.0 -> 0.5.4.1
 

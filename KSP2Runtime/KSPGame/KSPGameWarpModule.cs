@@ -30,6 +30,9 @@ public class KSPGameWarpModule {
         return null;
     }, null);
 
+    [KSFunction(Description = "Synchronized version of `warp_to`. Use with care.")]
+    public static void SyncWarpTo(double ut) => TimeWarp.WarpTo(ut);
+
     [KSFunction(Description = "Deprecated: use cancel_warp()")]
     public static Future<object?> Cancel() => CancelWarp();
 

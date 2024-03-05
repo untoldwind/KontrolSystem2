@@ -111,6 +111,21 @@ Name | Type | Optional | Description
 --- | --- | --- | ---
 index | int |  | 
 
+### sync_warp_to
+
+```rust
+pub sync fn sync_warp_to ( ut : float ) -> Unit
+```
+
+Synchronized version of `warp_to`. Use with care.
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+ut | float |  | 
+
 ### warp_to
 
 ```rust

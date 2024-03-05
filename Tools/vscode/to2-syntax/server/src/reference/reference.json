@@ -7895,6 +7895,26 @@
             "name": "Unit"
           }
         },
+        "sync_warp_to": {
+          "isAsync": false,
+          "name": "sync_warp_to",
+          "description": "Synchronized version of `warp_to`. Use with care.\n",
+          "parameters": [
+            {
+              "name": "ut",
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              },
+              "hasDefault": false,
+              "description": null
+            }
+          ],
+          "returnType": {
+            "kind": "Builtin",
+            "name": "Unit"
+          }
+        },
         "cancel": {
           "isAsync": false,
           "name": "cancel",
