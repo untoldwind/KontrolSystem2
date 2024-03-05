@@ -11800,6 +11800,15 @@
           "name": "ObjectAssemblyPart",
           "description": "Represents are part in an object assembly.\n",
           "fields": {
+            "part_category": {
+              "name": "part_category",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "PartCategory"
+              }
+            },
             "fuel_cross_feed": {
               "name": "fuel_cross_feed",
               "readOnly": true,
