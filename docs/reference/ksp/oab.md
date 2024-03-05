@@ -21,6 +21,22 @@ parts | [ksp::oab::ObjectAssemblyPart](/reference/ksp/oab.md#objectassemblypart)
 total_mass | float | R/O | 
 wet_mass | float | R/O | 
 
+### ObjectAssemblyAirIntake
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+enabled | bool | R/O | 
+flow_rate | float | R/O | 
+part | [ksp::oab::ObjectAssemblyPart](/reference/ksp/oab.md#objectassemblypart) | R/O | 
+part_name | string | R/O | 
+resource | [ksp::resource::ResourceDefinition](/reference/ksp/resource.md#resourcedefinition) | R/O | 
+resource_units | float | R/O | 
+toogle_intake | bool | R/W | 
+
 ### ObjectAssemblyBuilder
 
 Represents the current object assembly builder/
@@ -32,6 +48,35 @@ Name | Type | Read-only | Description
 --- | --- | --- | ---
 assemblies | [ksp::oab::ObjectAssembly](/reference/ksp/oab.md#objectassembly)[] | R/O | Get all object assemblies (i.e. all parts that are not fully connected) 
 main_assembly | Option&lt;[ksp::oab::ObjectAssembly](/reference/ksp/oab.md#objectassembly)> | R/O | Get the current main assembly if there is one. 
+
+### ObjectAssemblyCommand
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+control_state | [ksp::vessel::CommandControlState](/reference/ksp/vessel.md#commandcontrolstate) | R/O | 
+has_hibernation | bool | R/O | 
+hibernation_multiplier | float | R/O | 
+is_hibernating | bool | R/O | 
+part | [ksp::oab::ObjectAssemblyPart](/reference/ksp/oab.md#objectassemblypart) | R/O | 
+part_name | string | R/O | 
+required_resources | [ksp::vessel::ResourceSetting](/reference/ksp/vessel.md#resourcesetting)[] | R/O | 
+
+### ObjectAssemblyDecoupler
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+ejection_impulse | float | R/W | 
+is_decoupled | bool | R/O | 
+part | [ksp::oab::ObjectAssemblyPart](/reference/ksp/oab.md#objectassemblypart) | R/O | 
+part_name | string | R/O | 
 
 ### ObjectAssemblyDeltaV
 
@@ -61,6 +106,52 @@ Name | Type | Optional | Description
 --- | --- | --- | ---
 stage | int |  | 
 
+### ObjectAssemblyDeployable
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+deploy_limit | float | R/W | 
+deploy_state | [ksp::vessel::DeployableDeployState](/reference/ksp/vessel.md#deployabledeploystate) | R/O | 
+extendable | bool | R/O | 
+extended | bool | R/W | 
+part | [ksp::oab::ObjectAssemblyPart](/reference/ksp/oab.md#objectassemblypart) | R/O | 
+part_name | string | R/O | 
+retractable | bool | R/O | 
+
+#### Methods
+
+##### set_extended
+
+```rust
+objectassemblydeployable.set_extended ( extend : bool ) -> Unit
+```
+
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+extend | bool |  | 
+
+### ObjectAssemblyDockingNode
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+docking_state | [ksp::vessel::DockingState](/reference/ksp/vessel.md#dockingstate) | R/O | 
+is_deployable_docking_port | bool | R/O | 
+node_types | string[] | R/O | 
+part | [ksp::oab::ObjectAssemblyPart](/reference/ksp/oab.md#objectassemblypart) | R/O | 
+part_name | string | R/O | 
+
 ### ObjectAssemblyEngine
 
 
@@ -87,6 +178,8 @@ max_fuel_flow | float | R/O |
 max_thrust_output_atm | float | R/O | 
 max_thrust_output_vac | float | R/O | 
 min_fuel_flow | float | R/O | 
+part | [ksp::oab::ObjectAssemblyPart](/reference/ksp/oab.md#objectassemblypart) | R/O | 
+part_name | string | R/O | 
 propellants | [ksp::resource::ResourceDefinition](/reference/ksp/resource.md#resourcedefinition)[] | R/O | Get the propellants of the different engine modes 
 real_isp | float | R/O | 
 throttle_min | float | R/O | 
@@ -135,6 +228,40 @@ Name | Type | Optional | Description
 --- | --- | --- | ---
 situation | ksp::vessel::DeltaVSituation |  | 
 
+### ObjectAssemblyGenerator
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+enabled | bool | R/W | 
+generator_output | float | R/O | 
+is_always_active | bool | R/O | 
+part | [ksp::oab::ObjectAssemblyPart](/reference/ksp/oab.md#objectassemblypart) | R/O | 
+part_name | string | R/O | 
+resource_setting | [ksp::vessel::ResourceSetting](/reference/ksp/vessel.md#resourcesetting) | R/O | 
+
+### ObjectAssemblyLight
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+blink_enabled | bool | R/W | 
+blink_rate | float | R/W | 
+has_resources_to_operate | bool | R/O | 
+light_color | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/W | 
+light_enabled | bool | R/W | 
+part | [ksp::oab::ObjectAssemblyPart](/reference/ksp/oab.md#objectassemblypart) | R/O | 
+part_name | string | R/O | 
+pitch | float | R/W | 
+required_resource | [ksp::vessel::ResourceSetting](/reference/ksp/vessel.md#resourcesetting) | R/O | 
+rotation | float | R/W | 
+
 ### ObjectAssemblyPart
 
 Represents are part in an object assembly.
@@ -145,17 +272,30 @@ Represents are part in an object assembly.
 Name | Type | Read-only | Description
 --- | --- | --- | ---
 activation_stage | int | R/O | 
+air_intake | Option&lt;[ksp::oab::ObjectAssemblyAirIntake](/reference/ksp/oab.md#objectassemblyairintake)> | R/O | 
+command_module | Option&lt;[ksp::oab::ObjectAssemblyCommand](/reference/ksp/oab.md#objectassemblycommand)> | R/O | 
 decouple_stage | int | R/O | 
+decoupler | Option&lt;[ksp::oab::ObjectAssemblyDecoupler](/reference/ksp/oab.md#objectassemblydecoupler)> | R/O | 
+deployable | Option&lt;[ksp::oab::ObjectAssemblyDeployable](/reference/ksp/oab.md#objectassemblydeployable)> | R/O | 
+docking_node | Option&lt;[ksp::oab::ObjectAssemblyDockingNode](/reference/ksp/oab.md#objectassemblydockingnode)> | R/O | 
 dry_mass | float | R/O | Dry mass of the part 
 engine | Option&lt;[ksp::oab::ObjectAssemblyEngine](/reference/ksp/oab.md#objectassemblyengine)> | R/O | 
 fuel_cross_feed | bool | R/O | 
+generator | Option&lt;[ksp::oab::ObjectAssemblyGenerator](/reference/ksp/oab.md#objectassemblygenerator)> | R/O | 
 green_mass | float | R/O | Green mass (Kerbals) of the part 
+is_decoupler | bool | R/O | 
+is_deployable | bool | R/O | 
 is_engine | bool | R/O | 
+is_generator | bool | R/O | 
+is_light | bool | R/O | 
 is_solar_panel | bool | R/O | 
+is_transmitter | bool | R/O | 
+light | Option&lt;[ksp::oab::ObjectAssemblyLight](/reference/ksp/oab.md#objectassemblylight)> | R/O | 
 part_name | string | R/O | 
 relative_position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
 solar_panel | Option&lt;[ksp::oab::ObjectAssemblySolarPanel](/reference/ksp/oab.md#objectassemblysolarpanel)> | R/O | 
 total_mass | float | R/O | Total mass of the part 
+transmitter | Option&lt;[ksp::oab::ObjectAssemblyTransmitter](/reference/ksp/oab.md#objectassemblytransmitter)> | R/O | 
 wet_mass | float | R/O | 
 
 ### ObjectAssemblySolarPanel
@@ -170,6 +310,7 @@ base_flow_rate | float | R/O | Base flow rate
 efficiency_multiplier | float | R/O | 
 part | [ksp::oab::ObjectAssemblyPart](/reference/ksp/oab.md#objectassemblypart) | R/O | 
 part_name | string | R/O | 
+resource_setting | [ksp::vessel::ResourceSetting](/reference/ksp/vessel.md#resourcesetting) | R/O | 
 
 ### ObjectAssemblyStageDeltaV
 
@@ -249,6 +390,25 @@ Parameters
 Name | Type | Optional | Description
 --- | --- | --- | ---
 situation | ksp::vessel::DeltaVSituation |  | 
+
+### ObjectAssemblyTransmitter
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+active_transmission_completed | float | R/O | 
+active_transmission_size | float | R/O | 
+communication_range | float | R/O | 
+data_packet_size | float | R/O | 
+data_transmission_interval | float | R/O | 
+has_resources_to_operate | bool | R/O | 
+is_transmitting | bool | R/O | 
+part | [ksp::oab::ObjectAssemblyPart](/reference/ksp/oab.md#objectassemblypart) | R/O | 
+part_name | string | R/O | 
+required_resources | [ksp::vessel::ResourceSetting](/reference/ksp/vessel.md#resourcesetting)[] | R/O | 
 
 ## Functions
 

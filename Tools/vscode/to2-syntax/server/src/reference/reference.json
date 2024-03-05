@@ -1950,12 +1950,37 @@
         {
           "kind": "Standard",
           "module": "ksp::oab",
+          "name": "ObjectAssemblyAirIntake"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
           "name": "ObjectAssemblyBuilder"
         },
         {
           "kind": "Standard",
           "module": "ksp::oab",
+          "name": "ObjectAssemblyCommand"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
+          "name": "ObjectAssemblyDecoupler"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
           "name": "ObjectAssemblyDeltaV"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
+          "name": "ObjectAssemblyDeployable"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
+          "name": "ObjectAssemblyDockingNode"
         },
         {
           "kind": "Standard",
@@ -1966,6 +1991,16 @@
           "kind": "Standard",
           "module": "ksp::oab",
           "name": "ObjectAssemblyEngineDeltaV"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
+          "name": "ObjectAssemblyGenerator"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
+          "name": "ObjectAssemblyLight"
         },
         {
           "kind": "Standard",
@@ -1981,6 +2016,11 @@
           "kind": "Standard",
           "module": "ksp::oab",
           "name": "ObjectAssemblyStageDeltaV"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
+          "name": "ObjectAssemblyTransmitter"
         },
         {
           "kind": "Standard",
@@ -2440,6 +2480,11 @@
         {
           "kind": "Standard",
           "module": "ksp::vessel",
+          "name": "ModuleGenerator"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
           "name": "ModuleGimbal"
         },
         {
@@ -2455,6 +2500,11 @@
         {
           "kind": "Standard",
           "module": "ksp::vessel",
+          "name": "ModuleLight"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
           "name": "ModuleParachute"
         },
         {
@@ -2466,6 +2516,11 @@
           "kind": "Standard",
           "module": "ksp::vessel",
           "name": "ModuleSolarPanel"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleTransmitter"
         },
         {
           "kind": "Standard",
@@ -2836,12 +2891,37 @@
         {
           "kind": "Standard",
           "module": "ksp::oab",
+          "name": "ObjectAssemblyAirIntake"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
           "name": "ObjectAssemblyBuilder"
         },
         {
           "kind": "Standard",
           "module": "ksp::oab",
+          "name": "ObjectAssemblyCommand"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
+          "name": "ObjectAssemblyDecoupler"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
           "name": "ObjectAssemblyDeltaV"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
+          "name": "ObjectAssemblyDeployable"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
+          "name": "ObjectAssemblyDockingNode"
         },
         {
           "kind": "Standard",
@@ -2852,6 +2932,16 @@
           "kind": "Standard",
           "module": "ksp::oab",
           "name": "ObjectAssemblyEngineDeltaV"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
+          "name": "ObjectAssemblyGenerator"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
+          "name": "ObjectAssemblyLight"
         },
         {
           "kind": "Standard",
@@ -2867,6 +2957,11 @@
           "kind": "Standard",
           "module": "ksp::oab",
           "name": "ObjectAssemblyStageDeltaV"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
+          "name": "ObjectAssemblyTransmitter"
         },
         {
           "kind": "Standard",
@@ -3326,6 +3421,11 @@
         {
           "kind": "Standard",
           "module": "ksp::vessel",
+          "name": "ModuleGenerator"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
           "name": "ModuleGimbal"
         },
         {
@@ -3341,6 +3441,11 @@
         {
           "kind": "Standard",
           "module": "ksp::vessel",
+          "name": "ModuleLight"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
           "name": "ModuleParachute"
         },
         {
@@ -3352,6 +3457,11 @@
           "kind": "Standard",
           "module": "ksp::vessel",
           "name": "ModuleSolarPanel"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleTransmitter"
         },
         {
           "kind": "Standard",
@@ -10826,6 +10936,73 @@
           "assignableFromAny": false,
           "assignableFrom": []
         },
+        "ObjectAssemblyAirIntake": {
+          "name": "ObjectAssemblyAirIntake",
+          "description": "",
+          "fields": {
+            "resource": {
+              "name": "resource",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::resource",
+                "name": "ResourceDefinition"
+              }
+            },
+            "resource_units": {
+              "name": "resource_units",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "enabled": {
+              "name": "enabled",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "toogle_intake": {
+              "name": "toogle_intake",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "flow_rate": {
+              "name": "flow_rate",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "part": {
+              "name": "part",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::oab",
+                "name": "ObjectAssemblyPart"
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
         "ObjectAssemblyBuilder": {
           "name": "ObjectAssemblyBuilder",
           "description": "Represents the current object assembly builder/\n",
@@ -10858,6 +11035,121 @@
                     "name": "ObjectAssembly"
                   }
                 ]
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "ObjectAssemblyCommand": {
+          "name": "ObjectAssemblyCommand",
+          "description": "",
+          "fields": {
+            "control_state": {
+              "name": "control_state",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "CommandControlState"
+              }
+            },
+            "has_hibernation": {
+              "name": "has_hibernation",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "is_hibernating": {
+              "name": "is_hibernating",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "hibernation_multiplier": {
+              "name": "hibernation_multiplier",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "required_resources": {
+              "name": "required_resources",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ResourceSetting"
+                  }
+                ]
+              }
+            },
+            "part": {
+              "name": "part",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::oab",
+                "name": "ObjectAssemblyPart"
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "ObjectAssemblyDecoupler": {
+          "name": "ObjectAssemblyDecoupler",
+          "description": "",
+          "fields": {
+            "ejection_impulse": {
+              "name": "ejection_impulse",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "is_decoupled": {
+              "name": "is_decoupled",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "part": {
+              "name": "part",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::oab",
+                "name": "ObjectAssemblyPart"
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
               }
             }
           },
@@ -10912,6 +11204,149 @@
               }
             }
           },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "ObjectAssemblyDeployable": {
+          "name": "ObjectAssemblyDeployable",
+          "description": "",
+          "fields": {
+            "deploy_state": {
+              "name": "deploy_state",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "DeployableDeployState"
+              }
+            },
+            "extendable": {
+              "name": "extendable",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "retractable": {
+              "name": "retractable",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "deploy_limit": {
+              "name": "deploy_limit",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "extended": {
+              "name": "extended",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "part": {
+              "name": "part",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::oab",
+                "name": "ObjectAssemblyPart"
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            }
+          },
+          "methods": {
+            "set_extended": {
+              "isAsync": false,
+              "name": "set_extended",
+              "parameters": [
+                {
+                  "name": "extend",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "bool"
+                  },
+                  "hasDefault": false,
+                  "description": null
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "ObjectAssemblyDockingNode": {
+          "name": "ObjectAssemblyDockingNode",
+          "description": "",
+          "fields": {
+            "is_deployable_docking_port": {
+              "name": "is_deployable_docking_port",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "docking_state": {
+              "name": "docking_state",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "DockingState"
+              }
+            },
+            "node_types": {
+              "name": "node_types",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "string"
+                  }
+                ]
+              }
+            },
+            "part": {
+              "name": "part",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::oab",
+                "name": "ObjectAssemblyPart"
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            }
+          },
+          "methods": {},
           "assignableFromAny": false,
           "assignableFrom": []
         },
@@ -11126,6 +11561,23 @@
                   }
                 ]
               }
+            },
+            "part": {
+              "name": "part",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::oab",
+                "name": "ObjectAssemblyPart"
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
             }
           },
           "methods": {},
@@ -11193,6 +11645,157 @@
           "assignableFromAny": false,
           "assignableFrom": []
         },
+        "ObjectAssemblyGenerator": {
+          "name": "ObjectAssemblyGenerator",
+          "description": "",
+          "fields": {
+            "generator_output": {
+              "name": "generator_output",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "enabled": {
+              "name": "enabled",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "is_always_active": {
+              "name": "is_always_active",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "resource_setting": {
+              "name": "resource_setting",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "ResourceSetting"
+              }
+            },
+            "part": {
+              "name": "part",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::oab",
+                "name": "ObjectAssemblyPart"
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "ObjectAssemblyLight": {
+          "name": "ObjectAssemblyLight",
+          "description": "",
+          "fields": {
+            "light_enabled": {
+              "name": "light_enabled",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "blink_enabled": {
+              "name": "blink_enabled",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "blink_rate": {
+              "name": "blink_rate",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "light_color": {
+              "name": "light_color",
+              "readOnly": false,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec3"
+              }
+            },
+            "rotation": {
+              "name": "rotation",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "pitch": {
+              "name": "pitch",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "has_resources_to_operate": {
+              "name": "has_resources_to_operate",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "required_resource": {
+              "name": "required_resource",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "ResourceSetting"
+              }
+            },
+            "part": {
+              "name": "part",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::oab",
+                "name": "ObjectAssemblyPart"
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
         "ObjectAssemblyPart": {
           "name": "ObjectAssemblyPart",
           "description": "Represents are part in an object assembly.\n",
@@ -11254,6 +11857,158 @@
                     "kind": "Standard",
                     "module": "ksp::oab",
                     "name": "ObjectAssemblySolarPanel"
+                  }
+                ]
+              }
+            },
+            "air_intake": {
+              "name": "air_intake",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::oab",
+                    "name": "ObjectAssemblyAirIntake"
+                  }
+                ]
+              }
+            },
+            "docking_node": {
+              "name": "docking_node",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::oab",
+                    "name": "ObjectAssemblyDockingNode"
+                  }
+                ]
+              }
+            },
+            "is_deployable": {
+              "name": "is_deployable",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "deployable": {
+              "name": "deployable",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::oab",
+                    "name": "ObjectAssemblyDeployable"
+                  }
+                ]
+              }
+            },
+            "is_decoupler": {
+              "name": "is_decoupler",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "decoupler": {
+              "name": "decoupler",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::oab",
+                    "name": "ObjectAssemblyDecoupler"
+                  }
+                ]
+              }
+            },
+            "is_transmitter": {
+              "name": "is_transmitter",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "transmitter": {
+              "name": "transmitter",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::oab",
+                    "name": "ObjectAssemblyTransmitter"
+                  }
+                ]
+              }
+            },
+            "is_light": {
+              "name": "is_light",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "light": {
+              "name": "light",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::oab",
+                    "name": "ObjectAssemblyLight"
+                  }
+                ]
+              }
+            },
+            "is_generator": {
+              "name": "is_generator",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "generator": {
+              "name": "generator",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::oab",
+                    "name": "ObjectAssemblyGenerator"
+                  }
+                ]
+              }
+            },
+            "command_module": {
+              "name": "command_module",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::oab",
+                    "name": "ObjectAssemblyCommand"
                   }
                 ]
               }
@@ -11341,6 +12096,15 @@
               "type": {
                 "kind": "Builtin",
                 "name": "float"
+              }
+            },
+            "resource_setting": {
+              "name": "resource_setting",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "ResourceSetting"
               }
             },
             "part": {
@@ -11538,6 +12302,102 @@
               }
             }
           },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "ObjectAssemblyTransmitter": {
+          "name": "ObjectAssemblyTransmitter",
+          "description": "",
+          "fields": {
+            "communication_range": {
+              "name": "communication_range",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "data_transmission_interval": {
+              "name": "data_transmission_interval",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "data_packet_size": {
+              "name": "data_packet_size",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "is_transmitting": {
+              "name": "is_transmitting",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "active_transmission_size": {
+              "name": "active_transmission_size",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "active_transmission_completed": {
+              "name": "active_transmission_completed",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "has_resources_to_operate": {
+              "name": "has_resources_to_operate",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "required_resources": {
+              "name": "required_resources",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ResourceSetting"
+                  }
+                ]
+              }
+            },
+            "part": {
+              "name": "part",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::oab",
+                "name": "ObjectAssemblyPart"
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            }
+          },
+          "methods": {},
           "assignableFromAny": false,
           "assignableFrom": []
         }
@@ -11982,12 +12842,37 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyBuilder"
             },
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyCommand"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDockingNode"
             },
             {
               "kind": "Standard",
@@ -11998,6 +12883,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLight"
             },
             {
               "kind": "Standard",
@@ -12013,6 +12908,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyTransmitter"
             },
             {
               "kind": "Standard",
@@ -12467,6 +13367,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleGimbal"
             },
             {
@@ -12482,6 +13387,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleLight"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleParachute"
             },
             {
@@ -12493,6 +13403,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleTransmitter"
             },
             {
               "kind": "Standard",
@@ -14552,12 +15467,37 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyBuilder"
             },
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyCommand"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDockingNode"
             },
             {
               "kind": "Standard",
@@ -14568,6 +15508,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLight"
             },
             {
               "kind": "Standard",
@@ -14583,6 +15533,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyTransmitter"
             },
             {
               "kind": "Standard",
@@ -15037,6 +15992,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleGimbal"
             },
             {
@@ -15052,6 +16012,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleLight"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleParachute"
             },
             {
@@ -15063,6 +16028,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleTransmitter"
             },
             {
               "kind": "Standard",
@@ -15924,12 +16894,37 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyBuilder"
             },
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyCommand"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDockingNode"
             },
             {
               "kind": "Standard",
@@ -15940,6 +16935,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLight"
             },
             {
               "kind": "Standard",
@@ -15955,6 +16960,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyTransmitter"
             },
             {
               "kind": "Standard",
@@ -16409,6 +17419,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleGimbal"
             },
             {
@@ -16424,6 +17439,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleLight"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleParachute"
             },
             {
@@ -16435,6 +17455,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleTransmitter"
             },
             {
               "kind": "Standard",
@@ -16968,12 +17993,37 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyBuilder"
             },
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyCommand"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDockingNode"
             },
             {
               "kind": "Standard",
@@ -16984,6 +18034,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLight"
             },
             {
               "kind": "Standard",
@@ -16999,6 +18059,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyTransmitter"
             },
             {
               "kind": "Standard",
@@ -17453,6 +18518,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleGimbal"
             },
             {
@@ -17468,6 +18538,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleLight"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleParachute"
             },
             {
@@ -17479,6 +18554,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleTransmitter"
             },
             {
               "kind": "Standard",
@@ -17952,12 +19032,37 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyBuilder"
             },
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyCommand"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDockingNode"
             },
             {
               "kind": "Standard",
@@ -17968,6 +19073,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLight"
             },
             {
               "kind": "Standard",
@@ -17983,6 +19098,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyTransmitter"
             },
             {
               "kind": "Standard",
@@ -18437,6 +19557,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleGimbal"
             },
             {
@@ -18452,6 +19577,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleLight"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleParachute"
             },
             {
@@ -18463,6 +19593,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleTransmitter"
             },
             {
               "kind": "Standard",
@@ -18896,12 +20031,37 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyBuilder"
             },
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyCommand"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDockingNode"
             },
             {
               "kind": "Standard",
@@ -18912,6 +20072,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLight"
             },
             {
               "kind": "Standard",
@@ -18927,6 +20097,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyTransmitter"
             },
             {
               "kind": "Standard",
@@ -19381,6 +20556,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleGimbal"
             },
             {
@@ -19396,6 +20576,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleLight"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleParachute"
             },
             {
@@ -19407,6 +20592,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleTransmitter"
             },
             {
               "kind": "Standard",
@@ -20923,12 +22113,37 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyBuilder"
             },
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyCommand"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDockingNode"
             },
             {
               "kind": "Standard",
@@ -20939,6 +22154,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLight"
             },
             {
               "kind": "Standard",
@@ -20954,6 +22179,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyTransmitter"
             },
             {
               "kind": "Standard",
@@ -21408,6 +22638,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleGimbal"
             },
             {
@@ -21423,6 +22658,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleLight"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleParachute"
             },
             {
@@ -21434,6 +22674,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleTransmitter"
             },
             {
               "kind": "Standard",
@@ -25936,12 +27181,37 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyBuilder"
             },
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyCommand"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDockingNode"
             },
             {
               "kind": "Standard",
@@ -25952,6 +27222,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLight"
             },
             {
               "kind": "Standard",
@@ -25967,6 +27247,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyTransmitter"
             },
             {
               "kind": "Standard",
@@ -26421,6 +27706,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleGimbal"
             },
             {
@@ -26436,6 +27726,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleLight"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleParachute"
             },
             {
@@ -26447,6 +27742,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleTransmitter"
             },
             {
               "kind": "Standard",
@@ -26890,12 +28190,37 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyBuilder"
             },
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyCommand"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDockingNode"
             },
             {
               "kind": "Standard",
@@ -26906,6 +28231,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLight"
             },
             {
               "kind": "Standard",
@@ -26921,6 +28256,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyTransmitter"
             },
             {
               "kind": "Standard",
@@ -27375,6 +28715,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleGimbal"
             },
             {
@@ -27390,6 +28735,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleLight"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleParachute"
             },
             {
@@ -27401,6 +28751,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleTransmitter"
             },
             {
               "kind": "Standard",
@@ -27864,12 +29219,37 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyBuilder"
             },
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyCommand"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDockingNode"
             },
             {
               "kind": "Standard",
@@ -27880,6 +29260,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLight"
             },
             {
               "kind": "Standard",
@@ -27895,6 +29285,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyTransmitter"
             },
             {
               "kind": "Standard",
@@ -28349,6 +29744,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleGimbal"
             },
             {
@@ -28364,6 +29764,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleLight"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleParachute"
             },
             {
@@ -28375,6 +29780,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleTransmitter"
             },
             {
               "kind": "Standard",
@@ -28818,12 +30228,37 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyBuilder"
             },
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyCommand"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDockingNode"
             },
             {
               "kind": "Standard",
@@ -28834,6 +30269,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLight"
             },
             {
               "kind": "Standard",
@@ -28849,6 +30294,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyTransmitter"
             },
             {
               "kind": "Standard",
@@ -29303,6 +30753,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleGimbal"
             },
             {
@@ -29318,6 +30773,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleLight"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleParachute"
             },
             {
@@ -29329,6 +30789,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleTransmitter"
             },
             {
               "kind": "Standard",
@@ -29782,12 +31247,37 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyBuilder"
             },
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyCommand"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDockingNode"
             },
             {
               "kind": "Standard",
@@ -29798,6 +31288,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLight"
             },
             {
               "kind": "Standard",
@@ -29813,6 +31313,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyTransmitter"
             },
             {
               "kind": "Standard",
@@ -30267,6 +31772,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleGimbal"
             },
             {
@@ -30282,6 +31792,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleLight"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleParachute"
             },
             {
@@ -30293,6 +31808,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleTransmitter"
             },
             {
               "kind": "Standard",
@@ -30836,12 +32356,37 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyBuilder"
             },
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyCommand"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDockingNode"
             },
             {
               "kind": "Standard",
@@ -30852,6 +32397,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLight"
             },
             {
               "kind": "Standard",
@@ -30867,6 +32422,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyTransmitter"
             },
             {
               "kind": "Standard",
@@ -31321,6 +32881,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleGimbal"
             },
             {
@@ -31336,6 +32901,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleLight"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleParachute"
             },
             {
@@ -31347,6 +32917,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleTransmitter"
             },
             {
               "kind": "Standard",
@@ -31840,12 +33415,37 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyBuilder"
             },
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyCommand"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDockingNode"
             },
             {
               "kind": "Standard",
@@ -31856,6 +33456,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLight"
             },
             {
               "kind": "Standard",
@@ -31871,6 +33481,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyTransmitter"
             },
             {
               "kind": "Standard",
@@ -32325,6 +33940,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleGimbal"
             },
             {
@@ -32340,6 +33960,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleLight"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleParachute"
             },
             {
@@ -32351,6 +33976,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleTransmitter"
             },
             {
               "kind": "Standard",
@@ -32804,12 +34434,37 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyBuilder"
             },
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyCommand"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDockingNode"
             },
             {
               "kind": "Standard",
@@ -32820,6 +34475,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLight"
             },
             {
               "kind": "Standard",
@@ -32835,6 +34500,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyTransmitter"
             },
             {
               "kind": "Standard",
@@ -33289,6 +34959,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleGimbal"
             },
             {
@@ -33304,6 +34979,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleLight"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleParachute"
             },
             {
@@ -33315,6 +34995,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleTransmitter"
             },
             {
               "kind": "Standard",
@@ -33788,12 +35473,37 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyBuilder"
             },
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyCommand"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDockingNode"
             },
             {
               "kind": "Standard",
@@ -33804,6 +35514,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLight"
             },
             {
               "kind": "Standard",
@@ -33819,6 +35539,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyTransmitter"
             },
             {
               "kind": "Standard",
@@ -34273,6 +35998,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleGimbal"
             },
             {
@@ -34288,6 +36018,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleLight"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleParachute"
             },
             {
@@ -34299,6 +36034,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleTransmitter"
             },
             {
               "kind": "Standard",
@@ -34782,12 +36522,37 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyBuilder"
             },
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyCommand"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDockingNode"
             },
             {
               "kind": "Standard",
@@ -34798,6 +36563,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLight"
             },
             {
               "kind": "Standard",
@@ -34813,6 +36588,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyTransmitter"
             },
             {
               "kind": "Standard",
@@ -35267,6 +37047,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleGimbal"
             },
             {
@@ -35282,6 +37067,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleLight"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleParachute"
             },
             {
@@ -35293,6 +37083,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleTransmitter"
             },
             {
               "kind": "Standard",
@@ -35756,12 +37551,37 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyBuilder"
             },
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyCommand"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDockingNode"
             },
             {
               "kind": "Standard",
@@ -35772,6 +37592,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLight"
             },
             {
               "kind": "Standard",
@@ -35787,6 +37617,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyTransmitter"
             },
             {
               "kind": "Standard",
@@ -36241,6 +38076,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleGimbal"
             },
             {
@@ -36256,6 +38096,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleLight"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleParachute"
             },
             {
@@ -36267,6 +38112,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleTransmitter"
             },
             {
               "kind": "Standard",
@@ -36890,12 +38740,37 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyBuilder"
             },
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyCommand"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDockingNode"
             },
             {
               "kind": "Standard",
@@ -36906,6 +38781,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLight"
             },
             {
               "kind": "Standard",
@@ -36921,6 +38806,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyStageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyTransmitter"
             },
             {
               "kind": "Standard",
@@ -37375,6 +39265,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleGimbal"
             },
             {
@@ -37390,6 +39285,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleLight"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleParachute"
             },
             {
@@ -37401,6 +39301,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleTransmitter"
             },
             {
               "kind": "Standard",
@@ -38531,6 +40436,15 @@
           "name": "ModuleAirIntake",
           "description": "",
           "fields": {
+            "resource": {
+              "name": "resource",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::resource",
+                "name": "ResourceDefinition"
+              }
+            },
             "resource_units": {
               "name": "resource_units",
               "readOnly": true,
@@ -38545,6 +40459,39 @@
               "type": {
                 "kind": "Builtin",
                 "name": "bool"
+              }
+            },
+            "toogle_intake": {
+              "name": "toogle_intake",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "flow_rate": {
+              "name": "flow_rate",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "part": {
+              "name": "part",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "Part"
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
               }
             }
           },
@@ -38602,6 +40549,23 @@
                   }
                 ]
               }
+            },
+            "part": {
+              "name": "part",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "Part"
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
             }
           },
           "methods": {
@@ -38622,14 +40586,6 @@
           "name": "ModuleControlSurface",
           "description": "",
           "fields": {
-            "part_name": {
-              "name": "part_name",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "string"
-              }
-            },
             "invert_control": {
               "name": "invert_control",
               "readOnly": false,
@@ -38693,6 +40649,23 @@
                 "kind": "Builtin",
                 "name": "float"
               }
+            },
+            "part": {
+              "name": "part",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "Part"
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
             }
           },
           "methods": {},
@@ -38703,14 +40676,6 @@
           "name": "ModuleDecoupler",
           "description": "",
           "fields": {
-            "part_name": {
-              "name": "part_name",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "string"
-              }
-            },
             "ejection_impulse": {
               "name": "ejection_impulse",
               "readOnly": false,
@@ -38725,6 +40690,23 @@
               "type": {
                 "kind": "Builtin",
                 "name": "bool"
+              }
+            },
+            "part": {
+              "name": "part",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "Part"
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
               }
             }
           },
@@ -38746,14 +40728,6 @@
           "name": "ModuleDeployable",
           "description": "",
           "fields": {
-            "part_name": {
-              "name": "part_name",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "string"
-              }
-            },
             "deploy_state": {
               "name": "deploy_state",
               "readOnly": true,
@@ -38793,6 +40767,23 @@
               "type": {
                 "kind": "Builtin",
                 "name": "bool"
+              }
+            },
+            "part": {
+              "name": "part",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "Part"
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
               }
             }
           },
@@ -38854,374 +40845,13 @@
                 ]
               }
             },
-            "part_category": {
-              "name": "part_category",
+            "part": {
+              "name": "part",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
                 "module": "ksp::vessel",
-                "name": "PartCategory"
-              }
-            },
-            "vessel": {
-              "name": "vessel",
-              "readOnly": true,
-              "type": {
-                "kind": "Standard",
-                "module": "ksp::vessel",
-                "name": "Vessel"
-              }
-            },
-            "position": {
-              "name": "position",
-              "description": "Get position of the part in celestial frame of the main body.\n",
-              "readOnly": true,
-              "type": {
-                "kind": "Standard",
-                "module": "ksp::math",
-                "name": "Vec3"
-              }
-            },
-            "global_position": {
-              "name": "global_position",
-              "description": "Get coordinate independent position of the part.\n",
-              "readOnly": true,
-              "type": {
-                "kind": "Standard",
-                "module": "ksp::math",
-                "name": "GlobalPosition"
-              }
-            },
-            "global_rotation": {
-              "name": "global_rotation",
-              "readOnly": true,
-              "type": {
-                "kind": "Standard",
-                "module": "ksp::math",
-                "name": "GlobalDirection"
-              }
-            },
-            "splashed": {
-              "name": "splashed",
-              "description": "Indicate if the part has splashed\n",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "bool"
-              }
-            },
-            "resource_mass": {
-              "name": "resource_mass",
-              "description": "Resource mass of the part\n",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "float"
-              }
-            },
-            "temperature": {
-              "name": "temperature",
-              "description": "Temperature of the part\n",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "float"
-              }
-            },
-            "max_temperature": {
-              "name": "max_temperature",
-              "description": "Maximum temperature of the part\n",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "float"
-              }
-            },
-            "thermal_mass": {
-              "name": "thermal_mass",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "float"
-              }
-            },
-            "resource_thermal_mass": {
-              "name": "resource_thermal_mass",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "float"
-              }
-            },
-            "resources": {
-              "name": "resources",
-              "readOnly": true,
-              "type": {
-                "kind": "Standard",
-                "module": "ksp::resource",
-                "name": "ResourceContainer"
-              }
-            },
-            "air_intake": {
-              "name": "air_intake",
-              "readOnly": true,
-              "type": {
-                "kind": "Option",
-                "parameters": [
-                  {
-                    "kind": "Standard",
-                    "module": "ksp::vessel",
-                    "name": "ModuleAirIntake"
-                  }
-                ]
-              }
-            },
-            "docking_node": {
-              "name": "docking_node",
-              "readOnly": true,
-              "type": {
-                "kind": "Option",
-                "parameters": [
-                  {
-                    "kind": "Standard",
-                    "module": "ksp::vessel",
-                    "name": "ModuleDockingNode"
-                  }
-                ]
-              }
-            },
-            "is_engine": {
-              "name": "is_engine",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "bool"
-              }
-            },
-            "engine_module": {
-              "name": "engine_module",
-              "readOnly": true,
-              "type": {
-                "kind": "Option",
-                "parameters": [
-                  {
-                    "kind": "Standard",
-                    "module": "ksp::vessel",
-                    "name": "ModuleEngine"
-                  }
-                ]
-              }
-            },
-            "control_surface": {
-              "name": "control_surface",
-              "readOnly": true,
-              "type": {
-                "kind": "Option",
-                "parameters": [
-                  {
-                    "kind": "Standard",
-                    "module": "ksp::vessel",
-                    "name": "ModuleControlSurface"
-                  }
-                ]
-              }
-            },
-            "command_module": {
-              "name": "command_module",
-              "readOnly": true,
-              "type": {
-                "kind": "Option",
-                "parameters": [
-                  {
-                    "kind": "Standard",
-                    "module": "ksp::vessel",
-                    "name": "ModuleCommand"
-                  }
-                ]
-              }
-            },
-            "is_science_experiment": {
-              "name": "is_science_experiment",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "bool"
-              }
-            },
-            "science_experiment": {
-              "name": "science_experiment",
-              "readOnly": true,
-              "type": {
-                "kind": "Option",
-                "parameters": [
-                  {
-                    "kind": "Standard",
-                    "module": "ksp::vessel",
-                    "name": "ModuleScienceExperiment"
-                  }
-                ]
-              }
-            },
-            "is_solar_panel": {
-              "name": "is_solar_panel",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "bool"
-              }
-            },
-            "solar_panel": {
-              "name": "solar_panel",
-              "readOnly": true,
-              "type": {
-                "kind": "Option",
-                "parameters": [
-                  {
-                    "kind": "Standard",
-                    "module": "ksp::vessel",
-                    "name": "ModuleSolarPanel"
-                  }
-                ]
-              }
-            },
-            "is_fairing": {
-              "name": "is_fairing",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "bool"
-              }
-            },
-            "fairing": {
-              "name": "fairing",
-              "readOnly": true,
-              "type": {
-                "kind": "Option",
-                "parameters": [
-                  {
-                    "kind": "Standard",
-                    "module": "ksp::vessel",
-                    "name": "ModuleFairing"
-                  }
-                ]
-              }
-            },
-            "is_deployable": {
-              "name": "is_deployable",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "bool"
-              }
-            },
-            "deployable": {
-              "name": "deployable",
-              "readOnly": true,
-              "type": {
-                "kind": "Option",
-                "parameters": [
-                  {
-                    "kind": "Standard",
-                    "module": "ksp::vessel",
-                    "name": "ModuleDeployable"
-                  }
-                ]
-              }
-            },
-            "is_decoupler": {
-              "name": "is_decoupler",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "bool"
-              }
-            },
-            "decoupler": {
-              "name": "decoupler",
-              "readOnly": true,
-              "type": {
-                "kind": "Option",
-                "parameters": [
-                  {
-                    "kind": "Standard",
-                    "module": "ksp::vessel",
-                    "name": "ModuleDecoupler"
-                  }
-                ]
-              }
-            },
-            "is_launch_clamp": {
-              "name": "is_launch_clamp",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "bool"
-              }
-            },
-            "launch_clamp": {
-              "name": "launch_clamp",
-              "readOnly": true,
-              "type": {
-                "kind": "Option",
-                "parameters": [
-                  {
-                    "kind": "Standard",
-                    "module": "ksp::vessel",
-                    "name": "ModuleLaunchClamp"
-                  }
-                ]
-              }
-            },
-            "is_parachute": {
-              "name": "is_parachute",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "bool"
-              }
-            },
-            "parachute": {
-              "name": "parachute",
-              "readOnly": true,
-              "type": {
-                "kind": "Option",
-                "parameters": [
-                  {
-                    "kind": "Standard",
-                    "module": "ksp::vessel",
-                    "name": "ModuleParachute"
-                  }
-                ]
-              }
-            },
-            "is_heatshield": {
-              "name": "is_heatshield",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "bool"
-              }
-            },
-            "heatshield": {
-              "name": "heatshield",
-              "readOnly": true,
-              "type": {
-                "kind": "Option",
-                "parameters": [
-                  {
-                    "kind": "Standard",
-                    "module": "ksp::vessel",
-                    "name": "ModuleHeatshield"
-                  }
-                ]
-              }
-            },
-            "is_cargo_bay": {
-              "name": "is_cargo_bay",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "bool"
+                "name": "Part"
               }
             },
             "part_name": {
@@ -39230,57 +40860,6 @@
               "type": {
                 "kind": "Builtin",
                 "name": "string"
-              }
-            },
-            "activation_stage": {
-              "name": "activation_stage",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "int"
-              }
-            },
-            "decouple_stage": {
-              "name": "decouple_stage",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "int"
-              }
-            },
-            "dry_mass": {
-              "name": "dry_mass",
-              "description": "Dry mass of the part\n",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "float"
-              }
-            },
-            "wet_mass": {
-              "name": "wet_mass",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "float"
-              }
-            },
-            "green_mass": {
-              "name": "green_mass",
-              "description": "Green mass (Kerbals) of the part\n",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "float"
-              }
-            },
-            "total_mass": {
-              "name": "total_mass",
-              "description": "Total mass of the part\n",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "float"
               }
             }
           },
@@ -39302,14 +40881,6 @@
           "name": "ModuleEngine",
           "description": "",
           "fields": {
-            "part_name": {
-              "name": "part_name",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "string"
-              }
-            },
             "thrust_direction": {
               "name": "thrust_direction",
               "description": "Direction of thrust in the celestial frame of the main body\n",
@@ -39571,6 +41142,23 @@
                   }
                 ]
               }
+            },
+            "part": {
+              "name": "part",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "Part"
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
             }
           },
           "methods": {
@@ -39601,14 +41189,6 @@
           "name": "ModuleFairing",
           "description": "",
           "fields": {
-            "part_name": {
-              "name": "part_name",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "string"
-              }
-            },
             "ejection_force": {
               "name": "ejection_force",
               "readOnly": false,
@@ -39632,6 +41212,23 @@
                 "kind": "Builtin",
                 "name": "bool"
               }
+            },
+            "part": {
+              "name": "part",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "Part"
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
             }
           },
           "methods": {
@@ -39645,6 +41242,65 @@
               }
             }
           },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "ModuleGenerator": {
+          "name": "ModuleGenerator",
+          "description": "",
+          "fields": {
+            "generator_output": {
+              "name": "generator_output",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "enabled": {
+              "name": "enabled",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "is_always_active": {
+              "name": "is_always_active",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "resource_setting": {
+              "name": "resource_setting",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "ResourceSetting"
+              }
+            },
+            "part": {
+              "name": "part",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "Part"
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            }
+          },
+          "methods": {},
           "assignableFromAny": false,
           "assignableFrom": []
         },
@@ -39700,6 +41356,23 @@
                 "kind": "Builtin",
                 "name": "float"
               }
+            },
+            "part": {
+              "name": "part",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "Part"
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
             }
           },
           "methods": {},
@@ -39741,6 +41414,37 @@
                 "kind": "Builtin",
                 "name": "float"
               }
+            },
+            "required_resources": {
+              "name": "required_resources",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ResourceSetting"
+                  }
+                ]
+              }
+            },
+            "part": {
+              "name": "part",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "Part"
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
             }
           },
           "methods": {},
@@ -39751,20 +41455,29 @@
           "name": "ModuleLaunchClamp",
           "description": "",
           "fields": {
-            "part_name": {
-              "name": "part_name",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "string"
-              }
-            },
             "is_released": {
               "name": "is_released",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
                 "name": "bool"
+              }
+            },
+            "part": {
+              "name": "part",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "Part"
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
               }
             }
           },
@@ -39779,6 +41492,98 @@
               }
             }
           },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "ModuleLight": {
+          "name": "ModuleLight",
+          "description": "",
+          "fields": {
+            "light_enabled": {
+              "name": "light_enabled",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "blink_enabled": {
+              "name": "blink_enabled",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "blink_rate": {
+              "name": "blink_rate",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "light_color": {
+              "name": "light_color",
+              "readOnly": false,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec3"
+              }
+            },
+            "rotation": {
+              "name": "rotation",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "pitch": {
+              "name": "pitch",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "has_resources_to_operate": {
+              "name": "has_resources_to_operate",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "required_resource": {
+              "name": "required_resource",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "ResourceSetting"
+              }
+            },
+            "part": {
+              "name": "part",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "Part"
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            }
+          },
+          "methods": {},
           "assignableFromAny": false,
           "assignableFrom": []
         },
@@ -39836,6 +41641,23 @@
                 "kind": "Builtin",
                 "name": "bool"
               }
+            },
+            "part": {
+              "name": "part",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "Part"
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
             }
           },
           "methods": {
@@ -39874,22 +41696,6 @@
           "name": "ModuleScienceExperiment",
           "description": "",
           "fields": {
-            "part_name": {
-              "name": "part_name",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "string"
-              }
-            },
-            "is_deployed": {
-              "name": "is_deployed",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "bool"
-              }
-            },
             "experiments": {
               "name": "experiments",
               "readOnly": true,
@@ -39902,6 +41708,31 @@
                     "name": "Experiment"
                   }
                 ]
+              }
+            },
+            "is_deployed": {
+              "name": "is_deployed",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "part": {
+              "name": "part",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "Part"
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
               }
             }
           },
@@ -39967,6 +41798,111 @@
               "type": {
                 "kind": "Builtin",
                 "name": "float"
+              }
+            },
+            "resource_setting": {
+              "name": "resource_setting",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "ResourceSetting"
+              }
+            },
+            "part": {
+              "name": "part",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "Part"
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "ModuleTransmitter": {
+          "name": "ModuleTransmitter",
+          "description": "",
+          "fields": {
+            "communication_range": {
+              "name": "communication_range",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "data_transmission_interval": {
+              "name": "data_transmission_interval",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "data_packet_size": {
+              "name": "data_packet_size",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "is_transmitting": {
+              "name": "is_transmitting",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "active_transmission_size": {
+              "name": "active_transmission_size",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "active_transmission_completed": {
+              "name": "active_transmission_completed",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "has_resources_to_operate": {
+              "name": "has_resources_to_operate",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "required_resources": {
+              "name": "required_resources",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ResourceSetting"
+                  }
+                ]
               }
             },
             "part": {
@@ -40365,6 +42301,72 @@
                 "name": "bool"
               }
             },
+            "is_transmitter": {
+              "name": "is_transmitter",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "transmitter": {
+              "name": "transmitter",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ModuleTransmitter"
+                  }
+                ]
+              }
+            },
+            "is_light": {
+              "name": "is_light",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "light": {
+              "name": "light",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ModuleLight"
+                  }
+                ]
+              }
+            },
+            "is_generator": {
+              "name": "is_generator",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "generator": {
+              "name": "generator",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ModuleGenerator"
+                  }
+                ]
+              }
+            },
             "part_name": {
               "name": "part_name",
               "readOnly": true,
@@ -40427,13 +42429,7 @@
           },
           "methods": {},
           "assignableFromAny": false,
-          "assignableFrom": [
-            {
-              "kind": "Standard",
-              "module": "ksp::vessel",
-              "name": "ModuleDockingNode"
-            }
-          ]
+          "assignableFrom": []
         },
         "ResourceSetting": {
           "name": "ResourceSetting",

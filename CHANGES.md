@@ -13,6 +13,7 @@
 * Add binding for transmitter modules
 * Add binding for lighting modules
 * Add binding for generator modules
+* Support air intake, command, decoupler, docking node, generator, light, transmitter in VAB
 
 ## 0.5.4.0 -> 0.5.4.1
 

@@ -6,7 +6,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public abstract class BaseGeneratorAdatper<P, T> : BaseModuleAdapter<P, T> where P : BasePartAdapter<T> where T : IDeltaVPart {
     protected Data_ModuleGenerator dataModuleGenerator;
-    
+
     public BaseGeneratorAdatper(P part, Data_ModuleGenerator dataModuleGenerator) : base(part) {
         this.dataModuleGenerator = dataModuleGenerator;
     }

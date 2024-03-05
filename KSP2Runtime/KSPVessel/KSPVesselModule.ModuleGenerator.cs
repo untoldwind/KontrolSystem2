@@ -7,8 +7,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 public partial class KSPVesselModule {
     [KSClass("ModuleGenerator")]
     public class ModuleGeneratorAdapter : BaseGeneratorAdatper<PartAdapter, PartComponent> {
-        public ModuleGeneratorAdapter(PartAdapter part, Data_ModuleGenerator dataModuleGenerator) : base(part, dataModuleGenerator)
-        {
+        public ModuleGeneratorAdapter(PartAdapter part, Data_ModuleGenerator dataModuleGenerator) : base(part, dataModuleGenerator) {
         }
     }
 }
