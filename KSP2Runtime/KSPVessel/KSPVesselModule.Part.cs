@@ -173,5 +173,15 @@ public partial class KSPVesselModule {
                 ? Option.Some(new ModuleLightAdapter(this, data))
                 : Option.None<ModuleLightAdapter>();
 
+        [KSField]
+        public bool IsGenerator =>
+            part.TryGetModuleData<PartComponentModule_Generator, Data_ModuleGenerator>(out _);
+
+        [KSField]
+        public Option<ModuleGeneratorAdapter> Generator =>
+            part.TryGetModuleData<PartComponentModule_Generator, Data_ModuleGenerator>(out var data)
+                ? Option.Some(new ModuleGeneratorAdapter(this, data))
+                : Option.None<ModuleGeneratorAdapter>();
+
     }
 }
