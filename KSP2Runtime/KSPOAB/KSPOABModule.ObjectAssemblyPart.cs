@@ -1,4 +1,5 @@
-﻿using KontrolSystem.KSP.Runtime.KSPVessel;
+﻿using System.Linq;
+using KontrolSystem.KSP.Runtime.KSPVessel;
 using KontrolSystem.KSP2.Runtime.KSPVessel;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
@@ -6,7 +7,6 @@ using KSP.Modules;
 using KSP.OAB;
 using KSP.Sim.DeltaV;
 using KSP.Sim.impl;
-using UniLinq;
 using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime.KSPOAB;
@@ -20,6 +20,10 @@ public partial class KSPOABModule {
         [KSField] public PartCategories PartCategory => part.Category;
 
         [KSField] public bool FuelCrossFeed => part.FuelCrossFeed;
+
+        [KSField]
+        public ObjectAssemblyResourceAdapter[] Resources =>
+            part.Resources.Select(resource => new ObjectAssemblyResourceAdapter(resource)).ToArray();
 
         [KSField]
         public Vector3d RelativePosition =>
