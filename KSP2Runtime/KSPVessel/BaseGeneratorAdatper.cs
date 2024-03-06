@@ -1,4 +1,5 @@
-﻿using KontrolSystem.TO2.Binding;
+﻿using KontrolSystem.KSP.Runtime.KSPResource;
+using KontrolSystem.TO2.Binding;
 using KSP.Modules;
 using KSP.Sim.DeltaV;
 
@@ -23,5 +24,5 @@ public abstract class BaseGeneratorAdatper<P, T> : BaseModuleAdapter<P, T> where
     [KSField] public bool IsAlwaysActive => dataModuleGenerator.IsAlwaysActive;
 
     [KSField]
-    public KSPVesselModule.ResourceSettingAdapter ResourceSetting => new(dataModuleGenerator.ResourceSetting);
+    public KSPResourceModule.ResourceSettingAdapter ResourceSetting => new(dataModuleGenerator.ResourceSetting);
 }

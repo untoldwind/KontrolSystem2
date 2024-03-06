@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using KontrolSystem.KSP.Runtime.KSPResource;
 using KontrolSystem.TO2.Binding;
 using KSP.Modules;
 using KSP.Sim.DeltaV;
@@ -27,7 +28,7 @@ public abstract class BaseTransmitterAdapter<P, T> : BaseModuleAdapter<P, T> whe
     [KSField] public bool HasResourcesToOperate => dataTransmitter.HasResourcesToOperate;
 
     [KSField]
-    public KSPVesselModule.ResourceSettingAdapter[] RequiredResources =>
-        dataTransmitter.RequiredResources.Select(settings => new KSPVesselModule.ResourceSettingAdapter(settings)).ToArray();
+    public KSPResourceModule.ResourceSettingAdapter[] RequiredResources =>
+        dataTransmitter.RequiredResources.Select(settings => new KSPResourceModule.ResourceSettingAdapter(settings)).ToArray();
 
 }

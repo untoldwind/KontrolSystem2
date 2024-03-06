@@ -45,7 +45,7 @@ namespace KontrolSystem.SpaceWarpMod {
             var mainframe = gameObject.AddComponent<Mainframe>();
             mainframe.Initialize(ConfigAdapter.Instance);
 
-            Appbar.RegisterAppButton("Kontrol System 2", "BTN-KontrolSystem", AssetManager.GetAsset<Texture2D>($"{SpaceWarpMetadata.ModID}/images/icon.png"),
+            Appbar.RegisterAppButton("Kontrol System 2", "BTN-KontrolSystem", AssetManager.GetAsset<Texture2D>($"{SWMetadata.Folder.Name}/images/icon.png"),
                 toggle => {
                     if (toggle) {
                         moduleManagerWindow = uiWindows.OpenModuleManager(() => GameObject.Find("BTN-KontrolSystem")?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(false));
@@ -56,7 +56,7 @@ namespace KontrolSystem.SpaceWarpMod {
                 });
 
             // VAB Button
-            Appbar.RegisterOABAppButton("Kontrol System 2", "BTN-KontrolSystem-VAB", AssetManager.GetAsset<Texture2D>($"{SpaceWarpMetadata.ModID}/images/icon.png"),
+            Appbar.RegisterOABAppButton("Kontrol System 2", "BTN-KontrolSystem-VAB", AssetManager.GetAsset<Texture2D>($"{SWMetadata.Folder.Name}/images/icon.png"),
                 toggle => {
                     if (toggle) {
                         moduleManagerWindow = uiWindows.OpenModuleManager(() => GameObject.Find("BTN-KontrolSystem-VAB")?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(false));

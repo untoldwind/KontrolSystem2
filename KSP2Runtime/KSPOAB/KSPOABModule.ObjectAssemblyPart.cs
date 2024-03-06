@@ -18,7 +18,7 @@ public partial class KSPOABModule {
         }
 
         [KSField] public PartCategories PartCategory => part.Category;
-        
+
         [KSField] public bool FuelCrossFeed => part.FuelCrossFeed;
 
         [KSField]
@@ -105,5 +105,16 @@ public partial class KSPOABModule {
             part.TryGetModuleData<PartComponentModule_Command, Data_Command>(out var data)
                 ? Option.Some(new ObjectAssemblyCommandAdapter(this, data))
                 : Option.None<ObjectAssemblyCommandAdapter>();
+
+        [KSField]
+        public bool IsSScienceExperiment =>
+            part.TryGetModuleData<PartComponentModule_ScienceExperiment, Data_ScienceExperiment>(out _);
+
+        [KSField]
+        public Option<ObjectAssemblyScienceExperimentAdapter> ScienceExperiment =>
+            part.TryGetModuleData<PartComponentModule_ScienceExperiment, Data_ScienceExperiment>(out var data)
+                ? Option.Some(new ObjectAssemblyScienceExperimentAdapter(this, data))
+                : Option.None<ObjectAssemblyScienceExperimentAdapter>();
+
     }
 }

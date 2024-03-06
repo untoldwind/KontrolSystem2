@@ -1,10 +1,9 @@
-﻿using KontrolSystem.KSP.Runtime.KSPResource;
-using KontrolSystem.TO2.Binding;
+﻿using KontrolSystem.TO2.Binding;
 using KSP.Sim.Definitions;
 
-namespace KontrolSystem.KSP.Runtime.KSPVessel;
+namespace KontrolSystem.KSP.Runtime.KSPResource;
 
-public partial class KSPVesselModule {
+public partial class KSPResourceModule {
     [KSClass("ResourceSetting")]
     public class ResourceSettingAdapter {
         private readonly PartModuleResourceSetting resourceSetting;
@@ -14,7 +13,7 @@ public partial class KSPVesselModule {
         }
 
         [KSField]
-        public KSPResourceModule.ResourceDefinitionAdapter Resource {
+        public ResourceDefinitionAdapter Resource {
             get {
                 var context = KSPContext.CurrentContext;
                 var resourceId =
@@ -22,7 +21,7 @@ public partial class KSPVesselModule {
                 var resourceDefinitionData =
                     context.Game.ResourceDefinitionDatabase.GetDefinitionData(resourceId);
 
-                return new KSPResourceModule.ResourceDefinitionAdapter(resourceDefinitionData);
+                return new ResourceDefinitionAdapter(resourceDefinitionData);
             }
         }
 

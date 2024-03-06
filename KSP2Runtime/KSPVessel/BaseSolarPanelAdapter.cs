@@ -1,4 +1,5 @@
-﻿using KontrolSystem.TO2.Binding;
+﻿using KontrolSystem.KSP.Runtime.KSPResource;
+using KontrolSystem.TO2.Binding;
 using KSP.Modules;
 using KSP.Sim.DeltaV;
 
@@ -17,5 +18,5 @@ public abstract class BaseSolarPanelAdapter<P, T> : BaseModuleAdapter<P, T> wher
     public double BaseFlowRate => dataSolarPanel.ResourceSettings.Rate;
 
     [KSField]
-    public KSPVesselModule.ResourceSettingAdapter ResourceSetting => new(dataSolarPanel.ResourceSettings);
+    public KSPResourceModule.ResourceSettingAdapter ResourceSetting => new(dataSolarPanel.ResourceSettings);
 }

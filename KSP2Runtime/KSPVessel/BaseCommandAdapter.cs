@@ -1,4 +1,5 @@
-﻿using KontrolSystem.TO2.Binding;
+﻿using KontrolSystem.KSP.Runtime.KSPResource;
+using KontrolSystem.TO2.Binding;
 using KSP.Modules;
 using KSP.Sim.Definitions;
 using KSP.Sim.DeltaV;
@@ -22,6 +23,6 @@ public abstract class BaseCommandAdapter<P, T> : BaseModuleAdapter<P, T> where P
     [KSField] public double HibernationMultiplier => dataCommand.hibernationMultiplier;
 
     [KSField]
-    public KSPVesselModule.ResourceSettingAdapter[] RequiredResources =>
-        dataCommand.requiredResources.Select(settings => new KSPVesselModule.ResourceSettingAdapter(settings)).ToArray();
+    public KSPResourceModule.ResourceSettingAdapter[] RequiredResources =>
+        dataCommand.requiredResources.Select(settings => new KSPResourceModule.ResourceSettingAdapter(settings)).ToArray();
 }

@@ -9,27 +9,15 @@ namespace KontrolSystem.KSP.Runtime.KSPScience;
 public partial class KSPScienceModule {
     [KSClass("Experiment",
         Description = "Represents an in-game science experiment.")]
-    public class ExperimentAdapter {
-        private readonly ExperimentConfiguration experimentConfiguration;
+    public class ExperimentAdapter : BaseExperimentAdapter {
         private readonly ExperimentStanding experimentStanding;
         private readonly SimulationObjectModel simulationObject;
 
         public ExperimentAdapter(SimulationObjectModel simulationObject, ExperimentStanding experimentStanding,
-            ExperimentConfiguration experimentConfiguration) {
+            ExperimentConfiguration experimentConfiguration) : base(experimentConfiguration) {
             this.simulationObject = simulationObject;
             this.experimentStanding = experimentStanding;
-            this.experimentConfiguration = experimentConfiguration;
         }
-
-        [KSField]
-        public ExperimentDefinitionAdapter Definition =>
-            new(experimentStanding.ExperimentDefinition);
-
-        [KSField] public string ExperimentId => experimentStanding.ExperimentID;
-
-        [KSField] public long CrewRequired => experimentConfiguration.CrewRequired;
-
-        [KSField] public double TimeToComplete => experimentConfiguration.TimeToComplete;
 
         [KSField] public bool HasEnoughResources => experimentStanding.HasEnoughResources;
 

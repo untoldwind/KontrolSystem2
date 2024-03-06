@@ -8,8 +8,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOAB;
 public partial class KSPOABModule {
     [KSClass("ObjectAssemblyDockingNode")]
     public class ObjectAssemblyDockingNodeAdapter : BaseDockingNodeAdapter<ObjectAssemblyPartAdapter, IObjectAssemblyPart> {
-        public ObjectAssemblyDockingNodeAdapter(ObjectAssemblyPartAdapter part, Data_DockingNode dataDockingNode) : base(part, dataDockingNode)
-        {
+        public ObjectAssemblyDockingNodeAdapter(ObjectAssemblyPartAdapter part, Data_DockingNode dataDockingNode) : base(part, dataDockingNode) {
         }
     }
 }

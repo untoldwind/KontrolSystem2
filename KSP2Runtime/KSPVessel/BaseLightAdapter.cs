@@ -1,4 +1,5 @@
-﻿using KontrolSystem.TO2.Binding;
+﻿using KontrolSystem.KSP.Runtime.KSPResource;
+using KontrolSystem.TO2.Binding;
 using KSP.Modules;
 using KSP.Sim.DeltaV;
 
@@ -54,6 +55,6 @@ public abstract class BaseLightAdapter<P, T> : BaseModuleAdapter<P, T> where P :
 
     [KSField] public bool HasResourcesToOperate => dataLight.HasResourcesToOperate;
 
-    [KSField] public KSPVesselModule.ResourceSettingAdapter RequiredResource => new(dataLight.requiredResource);
+    [KSField] public KSPResourceModule.ResourceSettingAdapter RequiredResource => new(dataLight.requiredResource);
 
 }
