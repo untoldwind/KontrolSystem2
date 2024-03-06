@@ -63,7 +63,7 @@ hibernation_multiplier | float | R/O |
 is_hibernating | bool | R/O | 
 part | [ksp::oab::ObjectAssemblyPart](/reference/ksp/oab.md#objectassemblypart) | R/O | 
 part_name | string | R/O | 
-required_resources | [ksp::vessel::ResourceSetting](/reference/ksp/vessel.md#resourcesetting)[] | R/O | 
+required_resources | [ksp::resource::ResourceSetting](/reference/ksp/resource.md#resourcesetting)[] | R/O | 
 
 ### ObjectAssemblyDecoupler
 
@@ -228,6 +228,21 @@ Name | Type | Optional | Description
 --- | --- | --- | ---
 situation | ksp::vessel::DeltaVSituation |  | 
 
+### ObjectAssemblyExperiment
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+crew_required | int | R/O | 
+definition | [ksp::science::ExperimentDefinition](/reference/ksp/science.md#experimentdefinition) | R/O | Get the definition of the experiment. 
+experiment_id | string | R/O | 
+experiment_uses_resources | bool | R/O | 
+resources_cost | [ksp::resource::ResourceSetting](/reference/ksp/resource.md#resourcesetting)[] | R/O | 
+time_to_complete | float | R/O | 
+
 ### ObjectAssemblyGenerator
 
 
@@ -241,7 +256,7 @@ generator_output | float | R/O |
 is_always_active | bool | R/O | 
 part | [ksp::oab::ObjectAssemblyPart](/reference/ksp/oab.md#objectassemblypart) | R/O | 
 part_name | string | R/O | 
-resource_setting | [ksp::vessel::ResourceSetting](/reference/ksp/vessel.md#resourcesetting) | R/O | 
+resource_setting | [ksp::resource::ResourceSetting](/reference/ksp/resource.md#resourcesetting) | R/O | 
 
 ### ObjectAssemblyLight
 
@@ -259,7 +274,7 @@ light_enabled | bool | R/W |
 part | [ksp::oab::ObjectAssemblyPart](/reference/ksp/oab.md#objectassemblypart) | R/O | 
 part_name | string | R/O | 
 pitch | float | R/W | 
-required_resource | [ksp::vessel::ResourceSetting](/reference/ksp/vessel.md#resourcesetting) | R/O | 
+required_resource | [ksp::resource::ResourceSetting](/reference/ksp/resource.md#resourcesetting) | R/O | 
 rotation | float | R/W | 
 
 ### ObjectAssemblyPart
@@ -288,16 +303,45 @@ is_deployable | bool | R/O |
 is_engine | bool | R/O | 
 is_generator | bool | R/O | 
 is_light | bool | R/O | 
+is_s_science_experiment | bool | R/O | 
 is_solar_panel | bool | R/O | 
 is_transmitter | bool | R/O | 
 light | Option&lt;[ksp::oab::ObjectAssemblyLight](/reference/ksp/oab.md#objectassemblylight)> | R/O | 
 part_category | [ksp::vessel::PartCategory](/reference/ksp/vessel.md#partcategory) | R/O | 
 part_name | string | R/O | 
 relative_position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
+resources | [ksp::oab::ObjectAssemblyResource](/reference/ksp/oab.md#objectassemblyresource)[] | R/O | 
+science_experiment | Option&lt;[ksp::oab::ObjectAssemblyScienceExperiment](/reference/ksp/oab.md#objectassemblyscienceexperiment)> | R/O | 
 solar_panel | Option&lt;[ksp::oab::ObjectAssemblySolarPanel](/reference/ksp/oab.md#objectassemblysolarpanel)> | R/O | 
 total_mass | float | R/O | Total mass of the part 
 transmitter | Option&lt;[ksp::oab::ObjectAssemblyTransmitter](/reference/ksp/oab.md#objectassemblytransmitter)> | R/O | 
 wet_mass | float | R/O | 
+
+### ObjectAssemblyResource
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+capacity_units | float | R/O | 
+resource | [ksp::resource::ResourceDefinition](/reference/ksp/resource.md#resourcedefinition) | R/O | 
+stored_units | float | R/O | 
+total_mass | float | R/O | 
+
+### ObjectAssemblyScienceExperiment
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+experiments | [ksp::oab::ObjectAssemblyExperiment](/reference/ksp/oab.md#objectassemblyexperiment)[] | R/O | 
+is_deployed | bool | R/O | 
+part | [ksp::oab::ObjectAssemblyPart](/reference/ksp/oab.md#objectassemblypart) | R/O | 
+part_name | string | R/O | 
 
 ### ObjectAssemblySolarPanel
 
@@ -311,7 +355,7 @@ base_flow_rate | float | R/O | Base flow rate
 efficiency_multiplier | float | R/O | 
 part | [ksp::oab::ObjectAssemblyPart](/reference/ksp/oab.md#objectassemblypart) | R/O | 
 part_name | string | R/O | 
-resource_setting | [ksp::vessel::ResourceSetting](/reference/ksp/vessel.md#resourcesetting) | R/O | 
+resource_setting | [ksp::resource::ResourceSetting](/reference/ksp/resource.md#resourcesetting) | R/O | 
 
 ### ObjectAssemblyStageDeltaV
 
@@ -409,7 +453,7 @@ has_resources_to_operate | bool | R/O |
 is_transmitting | bool | R/O | 
 part | [ksp::oab::ObjectAssemblyPart](/reference/ksp/oab.md#objectassemblypart) | R/O | 
 part_name | string | R/O | 
-required_resources | [ksp::vessel::ResourceSetting](/reference/ksp/vessel.md#resourcesetting)[] | R/O | 
+required_resources | [ksp::resource::ResourceSetting](/reference/ksp/resource.md#resourcesetting)[] | R/O | 
 
 ## Functions
 

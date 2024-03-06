@@ -112,6 +112,18 @@ Name | Type | Read-only | Description
 resource | [ksp::resource::ResourceDefinition](/reference/ksp/resource.md#resourcedefinition) | R/O | 
 units | float | R/O | 
 
+### ResourceSetting
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+acceptance_threshold | float | R/O | 
+rate | float | R/O | 
+resource | [ksp::resource::ResourceDefinition](/reference/ksp/resource.md#resourcedefinition) | R/O | 
+
 ### ResourceTransfer
 
 Represents a resource transfer

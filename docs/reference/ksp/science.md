@@ -33,12 +33,14 @@ crew_required | int | R/O |
 current_experiment_state | [ksp::science::ExperimentState](/reference/ksp/science.md#experimentstate) | R/O | 
 current_running_time | float | R/O | 
 current_situation_is_valid | bool | R/O | 
-definition | [ksp::science::ExperimentDefinition](/reference/ksp/science.md#experimentdefinition) | R/O | 
+definition | [ksp::science::ExperimentDefinition](/reference/ksp/science.md#experimentdefinition) | R/O | Get the definition of the experiment. 
 experiment_id | string | R/O | 
 experiment_location | Option&lt;[ksp::science::ResearchLocation](/reference/ksp/science.md#researchlocation)> | R/O | Get the research location the experiment was last performed. 
+experiment_uses_resources | bool | R/O | 
 has_enough_resources | bool | R/O | 
 previous_experiment_state | [ksp::science::ExperimentState](/reference/ksp/science.md#experimentstate) | R/O | 
 region_required | bool | R/O | 
+resources_cost | [ksp::resource::ResourceSetting](/reference/ksp/resource.md#resourcesetting)[] | R/O | 
 time_to_complete | float | R/O | 
 valid_locations | [ksp::science::ResearchLocation](/reference/ksp/science.md#researchlocation)[] | R/O | 
 

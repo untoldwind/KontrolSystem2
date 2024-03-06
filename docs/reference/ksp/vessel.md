@@ -575,7 +575,7 @@ hibernation_multiplier | float | R/O |
 is_hibernating | bool | R/O | 
 part | [ksp::vessel::Part](/reference/ksp/vessel.md#part) | R/O | 
 part_name | string | R/O | 
-required_resources | [ksp::vessel::ResourceSetting](/reference/ksp/vessel.md#resourcesetting)[] | R/O | 
+required_resources | [ksp::resource::ResourceSetting](/reference/ksp/resource.md#resourcesetting)[] | R/O | 
 
 #### Methods
 
@@ -777,7 +777,7 @@ generator_output | float | R/O |
 is_always_active | bool | R/O | 
 part | [ksp::vessel::Part](/reference/ksp/vessel.md#part) | R/O | 
 part_name | string | R/O | 
-resource_setting | [ksp::vessel::ResourceSetting](/reference/ksp/vessel.md#resourcesetting) | R/O | 
+resource_setting | [ksp::resource::ResourceSetting](/reference/ksp/resource.md#resourcesetting) | R/O | 
 
 ### ModuleGimbal
 
@@ -810,7 +810,7 @@ is_ablator_exhausted | bool | R/O |
 is_deployed | bool | R/O | 
 part | [ksp::vessel::Part](/reference/ksp/vessel.md#part) | R/O | 
 part_name | string | R/O | 
-required_resources | [ksp::vessel::ResourceSetting](/reference/ksp/vessel.md#resourcesetting)[] | R/O | 
+required_resources | [ksp::resource::ResourceSetting](/reference/ksp/resource.md#resourcesetting)[] | R/O | 
 
 ### ModuleLaunchClamp
 
@@ -850,7 +850,7 @@ light_enabled | bool | R/W |
 part | [ksp::vessel::Part](/reference/ksp/vessel.md#part) | R/O | 
 part_name | string | R/O | 
 pitch | float | R/W | 
-required_resource | [ksp::vessel::ResourceSetting](/reference/ksp/vessel.md#resourcesetting) | R/O | 
+required_resource | [ksp::resource::ResourceSetting](/reference/ksp/resource.md#resourcesetting) | R/O | 
 rotation | float | R/W | 
 
 ### ModuleParachute
@@ -924,7 +924,7 @@ energy_flow | float | R/O |
 max_flow | float | R/O | Maximum flow rate in current situation. Shorthand for `base_flow_rate * star_energy_scale * efficiency_multiplier` 
 part | [ksp::vessel::Part](/reference/ksp/vessel.md#part) | R/O | 
 part_name | string | R/O | 
-resource_setting | [ksp::vessel::ResourceSetting](/reference/ksp/vessel.md#resourcesetting) | R/O | 
+resource_setting | [ksp::resource::ResourceSetting](/reference/ksp/resource.md#resourcesetting) | R/O | 
 star_energy_scale | float | R/O | 
 
 ### ModuleTransmitter
@@ -944,7 +944,7 @@ has_resources_to_operate | bool | R/O |
 is_transmitting | bool | R/O | 
 part | [ksp::vessel::Part](/reference/ksp/vessel.md#part) | R/O | 
 part_name | string | R/O | 
-required_resources | [ksp::vessel::ResourceSetting](/reference/ksp/vessel.md#resourcesetting)[] | R/O | 
+required_resources | [ksp::resource::ResourceSetting](/reference/ksp/resource.md#resourcesetting)[] | R/O | 
 
 ### ParachuteDeployMode
 
@@ -1191,18 +1191,6 @@ Parameters
 Name | Type | Optional | Description
 --- | --- | --- | ---
 value | string |  | Enum value to lookup
-
-### ResourceSetting
-
-
-
-#### Fields
-
-Name | Type | Read-only | Description
---- | --- | --- | ---
-acceptance_threshold | float | R/O | 
-rate | float | R/O | 
-resource | [ksp::resource::ResourceDefinition](/reference/ksp/resource.md#resourcedefinition) | R/O | 
 
 ### StageDeltaV
 

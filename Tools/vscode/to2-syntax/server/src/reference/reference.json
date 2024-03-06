@@ -1402,7 +1402,9 @@
     "ArrayBuilder": {
       "name": "ArrayBuilder",
       "description": "Helper to create an array of initially unknown size",
-      "genericParameters": ["T"],
+      "genericParameters": [
+        "T"
+      ],
       "fields": {
         "length": {
           "name": "length",
@@ -1486,7 +1488,9 @@
     "Cell": {
       "name": "Cell",
       "description": "Holds a single value that can be mutated at any time",
-      "genericParameters": ["T"],
+      "genericParameters": [
+        "T"
+      ],
       "fields": {
         "value": {
           "name": "value",
@@ -1563,7 +1567,9 @@
     "Option": {
       "name": "Option",
       "description": "",
-      "genericParameters": ["T"],
+      "genericParameters": [
+        "T"
+      ],
       "fields": {
         "defined": {
           "name": "defined",
@@ -1989,6 +1995,11 @@
         {
           "kind": "Standard",
           "module": "ksp::oab",
+          "name": "ObjectAssemblyExperiment"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
           "name": "ObjectAssemblyGenerator"
         },
         {
@@ -2000,6 +2011,16 @@
           "kind": "Standard",
           "module": "ksp::oab",
           "name": "ObjectAssemblyPart"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
+          "name": "ObjectAssemblyResource"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
+          "name": "ObjectAssemblyScienceExperiment"
         },
         {
           "kind": "Standard",
@@ -2070,6 +2091,11 @@
           "kind": "Standard",
           "module": "ksp::resource",
           "name": "ResourceReceipeIngredient"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::resource",
+          "name": "ResourceSetting"
         },
         {
           "kind": "Standard",
@@ -2524,11 +2550,6 @@
         {
           "kind": "Standard",
           "module": "ksp::vessel",
-          "name": "ResourceSetting"
-        },
-        {
-          "kind": "Standard",
-          "module": "ksp::vessel",
           "name": "Staging"
         },
         {
@@ -2609,7 +2630,10 @@
     "Result": {
       "name": "Result",
       "description": "",
-      "genericParameters": ["R", "E"],
+      "genericParameters": [
+        "R",
+        "E"
+      ],
       "fields": {
         "success": {
           "name": "success",
@@ -2927,6 +2951,11 @@
         {
           "kind": "Standard",
           "module": "ksp::oab",
+          "name": "ObjectAssemblyExperiment"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
           "name": "ObjectAssemblyGenerator"
         },
         {
@@ -2938,6 +2967,16 @@
           "kind": "Standard",
           "module": "ksp::oab",
           "name": "ObjectAssemblyPart"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
+          "name": "ObjectAssemblyResource"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
+          "name": "ObjectAssemblyScienceExperiment"
         },
         {
           "kind": "Standard",
@@ -3008,6 +3047,11 @@
           "kind": "Standard",
           "module": "ksp::resource",
           "name": "ResourceReceipeIngredient"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::resource",
+          "name": "ResourceSetting"
         },
         {
           "kind": "Standard",
@@ -3462,11 +3506,6 @@
         {
           "kind": "Standard",
           "module": "ksp::vessel",
-          "name": "ResourceSetting"
-        },
-        {
-          "kind": "Standard",
-          "module": "ksp::vessel",
           "name": "Staging"
         },
         {
@@ -3553,7 +3592,9 @@
         "Task": {
           "name": "Task",
           "description": "Represents a background task\n",
-          "genericParameters": ["T"],
+          "genericParameters": [
+            "T"
+          ],
           "fields": {
             "is_completed": {
               "name": "is_completed",
@@ -11096,7 +11137,7 @@
                 "parameters": [
                   {
                     "kind": "Standard",
-                    "module": "ksp::vessel",
+                    "module": "ksp::resource",
                     "name": "ResourceSetting"
                   }
                 ]
@@ -11654,6 +11695,71 @@
           "assignableFromAny": false,
           "assignableFrom": []
         },
+        "ObjectAssemblyExperiment": {
+          "name": "ObjectAssemblyExperiment",
+          "description": "",
+          "fields": {
+            "experiment_id": {
+              "name": "experiment_id",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            },
+            "definition": {
+              "name": "definition",
+              "description": "Get the definition of the experiment.\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::science",
+                "name": "ExperimentDefinition"
+              }
+            },
+            "crew_required": {
+              "name": "crew_required",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "int"
+              }
+            },
+            "time_to_complete": {
+              "name": "time_to_complete",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "experiment_uses_resources": {
+              "name": "experiment_uses_resources",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "resources_cost": {
+              "name": "resources_cost",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::resource",
+                    "name": "ResourceSetting"
+                  }
+                ]
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
         "ObjectAssemblyGenerator": {
           "name": "ObjectAssemblyGenerator",
           "description": "",
@@ -11687,7 +11793,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::vessel",
+                "module": "ksp::resource",
                 "name": "ResourceSetting"
               }
             },
@@ -11779,7 +11885,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::vessel",
+                "module": "ksp::resource",
                 "name": "ResourceSetting"
               }
             },
@@ -11824,6 +11930,20 @@
               "type": {
                 "kind": "Builtin",
                 "name": "bool"
+              }
+            },
+            "resources": {
+              "name": "resources",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::oab",
+                    "name": "ObjectAssemblyResource"
+                  }
+                ]
               }
             },
             "relative_position": {
@@ -12031,6 +12151,28 @@
                 ]
               }
             },
+            "is_s_science_experiment": {
+              "name": "is_s_science_experiment",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "science_experiment": {
+              "name": "science_experiment",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::oab",
+                    "name": "ObjectAssemblyScienceExperiment"
+                  }
+                ]
+              }
+            },
             "part_name": {
               "name": "part_name",
               "readOnly": true,
@@ -12095,6 +12237,96 @@
           "assignableFromAny": false,
           "assignableFrom": []
         },
+        "ObjectAssemblyResource": {
+          "name": "ObjectAssemblyResource",
+          "description": "",
+          "fields": {
+            "resource": {
+              "name": "resource",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::resource",
+                "name": "ResourceDefinition"
+              }
+            },
+            "stored_units": {
+              "name": "stored_units",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "capacity_units": {
+              "name": "capacity_units",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "total_mass": {
+              "name": "total_mass",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "ObjectAssemblyScienceExperiment": {
+          "name": "ObjectAssemblyScienceExperiment",
+          "description": "",
+          "fields": {
+            "experiments": {
+              "name": "experiments",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::oab",
+                    "name": "ObjectAssemblyExperiment"
+                  }
+                ]
+              }
+            },
+            "is_deployed": {
+              "name": "is_deployed",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "part": {
+              "name": "part",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::oab",
+                "name": "ObjectAssemblyPart"
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
         "ObjectAssemblySolarPanel": {
           "name": "ObjectAssemblySolarPanel",
           "description": "",
@@ -12121,7 +12353,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::vessel",
+                "module": "ksp::resource",
                 "name": "ResourceSetting"
               }
             },
@@ -12391,7 +12623,7 @@
                 "parameters": [
                   {
                     "kind": "Standard",
-                    "module": "ksp::vessel",
+                    "module": "ksp::resource",
                     "name": "ResourceSetting"
                   }
                 ]
@@ -12905,6 +13137,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyExperiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
             },
             {
@@ -12916,6 +13153,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyResource"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -12981,6 +13228,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceReceipeIngredient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -13431,11 +13683,6 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
-            },
-            {
-              "kind": "Standard",
-              "module": "ksp::vessel",
-              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -15530,6 +15777,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyExperiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
             },
             {
@@ -15541,6 +15793,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyResource"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -15606,6 +15868,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceReceipeIngredient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -16060,11 +16327,6 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
-              "name": "ResourceSetting"
-            },
-            {
-              "kind": "Standard",
-              "module": "ksp::vessel",
               "name": "Staging"
             },
             {
@@ -16354,6 +16616,40 @@
                 "kind": "Standard",
                 "module": "ksp::resource",
                 "name": "ResourceDefinition"
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "ResourceSetting": {
+          "name": "ResourceSetting",
+          "description": "",
+          "fields": {
+            "resource": {
+              "name": "resource",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::resource",
+                "name": "ResourceDefinition"
+              }
+            },
+            "rate": {
+              "name": "rate",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "acceptance_threshold": {
+              "name": "acceptance_threshold",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
               }
             }
           },
@@ -16957,6 +17253,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyExperiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
             },
             {
@@ -16968,6 +17269,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyResource"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -17038,6 +17349,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceReceipeIngredient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -17483,11 +17799,6 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
-            },
-            {
-              "kind": "Standard",
-              "module": "ksp::vessel",
-              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -18056,6 +18367,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyExperiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
             },
             {
@@ -18067,6 +18383,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyResource"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -18137,6 +18463,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceReceipeIngredient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -18582,11 +18913,6 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
-            },
-            {
-              "kind": "Standard",
-              "module": "ksp::vessel",
-              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -19095,6 +19421,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyExperiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
             },
             {
@@ -19106,6 +19437,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyResource"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -19176,6 +19517,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceReceipeIngredient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -19621,11 +19967,6 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
-            },
-            {
-              "kind": "Standard",
-              "module": "ksp::vessel",
-              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -20094,6 +20435,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyExperiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
             },
             {
@@ -20105,6 +20451,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyResource"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -20175,6 +20531,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceReceipeIngredient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -20624,11 +20985,6 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
-              "name": "ResourceSetting"
-            },
-            {
-              "kind": "Standard",
-              "module": "ksp::vessel",
               "name": "Staging"
             },
             {
@@ -20753,39 +21109,6 @@
           "name": "Experiment",
           "description": "Represents an in-game science experiment.\n",
           "fields": {
-            "definition": {
-              "name": "definition",
-              "readOnly": true,
-              "type": {
-                "kind": "Standard",
-                "module": "ksp::science",
-                "name": "ExperimentDefinition"
-              }
-            },
-            "experiment_id": {
-              "name": "experiment_id",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "string"
-              }
-            },
-            "crew_required": {
-              "name": "crew_required",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "int"
-              }
-            },
-            "time_to_complete": {
-              "name": "time_to_complete",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "float"
-              }
-            },
             "has_enough_resources": {
               "name": "has_enough_resources",
               "readOnly": true,
@@ -20861,6 +21184,62 @@
                     "kind": "Standard",
                     "module": "ksp::science",
                     "name": "ResearchLocation"
+                  }
+                ]
+              }
+            },
+            "experiment_id": {
+              "name": "experiment_id",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            },
+            "definition": {
+              "name": "definition",
+              "description": "Get the definition of the experiment.\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::science",
+                "name": "ExperimentDefinition"
+              }
+            },
+            "crew_required": {
+              "name": "crew_required",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "int"
+              }
+            },
+            "time_to_complete": {
+              "name": "time_to_complete",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "experiment_uses_resources": {
+              "name": "experiment_uses_resources",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "resources_cost": {
+              "name": "resources_cost",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::resource",
+                    "name": "ResourceSetting"
                   }
                 ]
               }
@@ -22176,6 +22555,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyExperiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
             },
             {
@@ -22187,6 +22571,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyResource"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -22257,6 +22651,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceReceipeIngredient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -22702,11 +23101,6 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
-            },
-            {
-              "kind": "Standard",
-              "module": "ksp::vessel",
-              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -27244,6 +27638,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyExperiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
             },
             {
@@ -27255,6 +27654,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyResource"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -27325,6 +27734,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceReceipeIngredient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -27770,11 +28184,6 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
-            },
-            {
-              "kind": "Standard",
-              "module": "ksp::vessel",
-              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -28253,6 +28662,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyExperiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
             },
             {
@@ -28264,6 +28678,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyResource"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -28334,6 +28758,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceReceipeIngredient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -28779,11 +29208,6 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
-            },
-            {
-              "kind": "Standard",
-              "module": "ksp::vessel",
-              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -29282,6 +29706,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyExperiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
             },
             {
@@ -29293,6 +29722,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyResource"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -29363,6 +29802,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceReceipeIngredient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -29808,11 +30252,6 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
-            },
-            {
-              "kind": "Standard",
-              "module": "ksp::vessel",
-              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -30291,6 +30730,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyExperiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
             },
             {
@@ -30302,6 +30746,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyResource"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -30372,6 +30826,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceReceipeIngredient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -30817,11 +31276,6 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
-            },
-            {
-              "kind": "Standard",
-              "module": "ksp::vessel",
-              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -31310,6 +31764,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyExperiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
             },
             {
@@ -31321,6 +31780,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyResource"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -31391,6 +31860,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceReceipeIngredient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -31836,11 +32310,6 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
-            },
-            {
-              "kind": "Standard",
-              "module": "ksp::vessel",
-              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -32419,6 +32888,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyExperiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
             },
             {
@@ -32430,6 +32904,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyResource"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -32500,6 +32984,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceReceipeIngredient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -32945,11 +33434,6 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
-            },
-            {
-              "kind": "Standard",
-              "module": "ksp::vessel",
-              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -33478,6 +33962,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyExperiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
             },
             {
@@ -33489,6 +33978,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyResource"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -33559,6 +34058,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceReceipeIngredient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -34004,11 +34508,6 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
-            },
-            {
-              "kind": "Standard",
-              "module": "ksp::vessel",
-              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -34497,6 +34996,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyExperiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
             },
             {
@@ -34508,6 +35012,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyResource"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -34578,6 +35092,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceReceipeIngredient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -35023,11 +35542,6 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
-            },
-            {
-              "kind": "Standard",
-              "module": "ksp::vessel",
-              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -35536,6 +36050,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyExperiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
             },
             {
@@ -35547,6 +36066,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyResource"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -35617,6 +36146,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceReceipeIngredient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -36062,11 +36596,6 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
-            },
-            {
-              "kind": "Standard",
-              "module": "ksp::vessel",
-              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -36585,6 +37114,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyExperiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
             },
             {
@@ -36596,6 +37130,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyResource"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -36666,6 +37210,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceReceipeIngredient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -37111,11 +37660,6 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
-            },
-            {
-              "kind": "Standard",
-              "module": "ksp::vessel",
-              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -37614,6 +38158,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyExperiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
             },
             {
@@ -37625,6 +38174,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyResource"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -37695,6 +38254,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceReceipeIngredient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -38140,11 +38704,6 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
-            },
-            {
-              "kind": "Standard",
-              "module": "ksp::vessel",
-              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -38803,6 +39362,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyExperiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
             },
             {
@@ -38814,6 +39378,16 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyResource"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -38884,6 +39458,11 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceReceipeIngredient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -39329,11 +39908,6 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
-            },
-            {
-              "kind": "Standard",
-              "module": "ksp::vessel",
-              "name": "ResourceSetting"
             },
             {
               "kind": "Standard",
@@ -40562,7 +41136,7 @@
                 "parameters": [
                   {
                     "kind": "Standard",
-                    "module": "ksp::vessel",
+                    "module": "ksp::resource",
                     "name": "ResourceSetting"
                   }
                 ]
@@ -41296,7 +41870,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::vessel",
+                "module": "ksp::resource",
                 "name": "ResourceSetting"
               }
             },
@@ -41441,7 +42015,7 @@
                 "parameters": [
                   {
                     "kind": "Standard",
-                    "module": "ksp::vessel",
+                    "module": "ksp::resource",
                     "name": "ResourceSetting"
                   }
                 ]
@@ -41579,7 +42153,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::vessel",
+                "module": "ksp::resource",
                 "name": "ResourceSetting"
               }
             },
@@ -41823,7 +42397,7 @@
               "readOnly": true,
               "type": {
                 "kind": "Standard",
-                "module": "ksp::vessel",
+                "module": "ksp::resource",
                 "name": "ResourceSetting"
               }
             },
@@ -41917,7 +42491,7 @@
                 "parameters": [
                   {
                     "kind": "Standard",
-                    "module": "ksp::vessel",
+                    "module": "ksp::resource",
                     "name": "ResourceSetting"
                   }
                 ]
@@ -42438,40 +43012,6 @@
             "total_mass": {
               "name": "total_mass",
               "description": "Total mass of the part\n",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "float"
-              }
-            }
-          },
-          "methods": {},
-          "assignableFromAny": false,
-          "assignableFrom": []
-        },
-        "ResourceSetting": {
-          "name": "ResourceSetting",
-          "description": "",
-          "fields": {
-            "resource": {
-              "name": "resource",
-              "readOnly": true,
-              "type": {
-                "kind": "Standard",
-                "module": "ksp::resource",
-                "name": "ResourceDefinition"
-              }
-            },
-            "rate": {
-              "name": "rate",
-              "readOnly": true,
-              "type": {
-                "kind": "Builtin",
-                "name": "float"
-              }
-            },
-            "acceptance_threshold": {
-              "name": "acceptance_threshold",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -45136,7 +45676,11 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": ["iters", "v1", "v2"],
+            "names": [
+              "iters",
+              "v1",
+              "v2"
+            ],
             "parameters": [
               {
                 "kind": "Builtin",
@@ -45500,7 +46044,10 @@
               ],
               "returnType": {
                 "kind": "Record",
-                "names": ["latitude", "longitude"],
+                "names": [
+                  "latitude",
+                  "longitude"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -46681,7 +47228,10 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["UT", "delta_v"],
+                "names": [
+                  "UT",
+                  "delta_v"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -46722,7 +47272,10 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["UT", "delta_v"],
+                "names": [
+                  "UT",
+                  "delta_v"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -46969,7 +47522,11 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["TT", "UT", "delta_v"],
+                "names": [
+                  "TT",
+                  "UT",
+                  "delta_v"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -47042,7 +47599,11 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["TT", "UT", "delta_v"],
+                "names": [
+                  "TT",
+                  "UT",
+                  "delta_v"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -47115,7 +47676,11 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["TT", "UT", "delta_v"],
+                "names": [
+                  "TT",
+                  "UT",
+                  "delta_v"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -47244,7 +47809,10 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": ["start_velocity", "target_velocity"],
+            "names": [
+              "start_velocity",
+              "target_velocity"
+            ],
             "parameters": [
               {
                 "kind": "Standard",
@@ -47356,7 +47924,10 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": ["UT", "delta_v"],
+            "names": [
+              "UT",
+              "delta_v"
+            ],
             "parameters": [
               {
                 "kind": "Builtin",
@@ -47438,7 +48009,10 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": ["UT", "delta_v"],
+            "names": [
+              "UT",
+              "delta_v"
+            ],
             "parameters": [
               {
                 "kind": "Builtin",
@@ -47480,7 +48054,10 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": ["UT", "delta_v"],
+            "names": [
+              "UT",
+              "delta_v"
+            ],
             "parameters": [
               {
                 "kind": "Builtin",
@@ -47522,7 +48099,10 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": ["UT", "delta_v"],
+            "names": [
+              "UT",
+              "delta_v"
+            ],
             "parameters": [
               {
                 "kind": "Builtin",
@@ -47567,7 +48147,10 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["UT", "delta_v"],
+                "names": [
+                  "UT",
+                  "delta_v"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -47741,7 +48324,11 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["iters", "x", "y"],
+                "names": [
+                  "iters",
+                  "x",
+                  "y"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -47831,7 +48418,11 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["iters", "x", "y"],
+                "names": [
+                  "iters",
+                  "x",
+                  "y"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -47950,11 +48541,18 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": ["best", "points"],
+            "names": [
+              "best",
+              "points"
+            ],
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["f", "x", "y"],
+                "names": [
+                  "f",
+                  "x",
+                  "y"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -47975,7 +48573,11 @@
                 "parameters": [
                   {
                     "kind": "Record",
-                    "names": ["f", "x", "y"],
+                    "names": [
+                      "f",
+                      "x",
+                      "y"
+                    ],
                     "parameters": [
                       {
                         "kind": "Builtin",
@@ -48120,7 +48722,10 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["fx", "x"],
+                "names": [
+                  "fx",
+                  "x"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -48340,7 +48945,11 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["position", "t", "velocity"],
+                "names": [
+                  "position",
+                  "t",
+                  "velocity"
+                ],
                 "parameters": [
                   {
                     "kind": "Standard",
@@ -48441,7 +49050,10 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["target_port", "vessel_port"],
+                "names": [
+                  "target_port",
+                  "vessel_port"
+                ],
                 "parameters": [
                   {
                     "kind": "Standard",
@@ -49046,7 +49658,10 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": ["burn_time", "half_burn_time"],
+            "names": [
+              "burn_time",
+              "half_burn_time"
+            ],
             "parameters": [
               {
                 "kind": "Builtin",
