@@ -74,7 +74,7 @@ export class GenericParameter implements RealizedType {
   }
 
   isAssignableFrom(otherType: RealizedType): boolean {
-    return false;
+    return true;
   }
 
   findSuffixOperator(op: Operator): TO2Type | undefined {

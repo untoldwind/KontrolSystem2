@@ -54,14 +54,14 @@ export class OptionType implements RealizedType {
     }
   }
 
-  public findSuffixOperator( 
+  public findSuffixOperator(
     op: Operator,
-    rightType: RealizedType
-): TO2Type | undefined {
+    rightType: RealizedType,
+  ): TO2Type | undefined {
     if (op === "|" && rightType.name === this.elementType.name) {
-      return this.elementType
+      return this.elementType;
     } else {
-      return undefined
+      return undefined;
     }
   }
 
