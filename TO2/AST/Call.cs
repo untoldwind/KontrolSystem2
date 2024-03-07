@@ -50,7 +50,7 @@ public class Call : Expression {
         TO2Type? variable = ReferencedVariable(context)?.UnderlyingType(context.ModuleContext);
         if (variable != null) return (variable as FunctionType)?.returnType ?? BuiltinType.Unit;
 
-        var function = ReferencedFunction(context.ModuleContext);
+        var function = ReferencedFunction(context.ModuleContext)?.ForContext(context);
         if (function == null) {
             context.AddError(new StructuralError(
                 StructuralError.ErrorType.NoSuchFunction,
@@ -74,7 +74,7 @@ public class Call : Expression {
         if (preparedResult != null) return;
         if (ReferencedVariable(context) != null) return;
 
-        var function = ReferencedFunction(context.ModuleContext);
+        var function = ReferencedFunction(context.ModuleContext)?.ForContext(context);
 
         if (function == null || !function.IsAsync || !context.IsAsync) return;
 
@@ -202,7 +202,7 @@ public class Call : Expression {
     }
 
     private void EmitCodeFunction(IBlockContext context, bool dropResult) {
-        var function = ReferencedFunction(context.ModuleContext);
+        var function = ReferencedFunction(context.ModuleContext)?.ForContext(context);
 
         if (function == null) {
             context.AddError(new StructuralError(
@@ -298,7 +298,7 @@ public class Call : Expression {
         return moduleName != null ? null : variableContainer.FindVariable(context, functionName);
     }
 
-    private IKontrolFunction? ReferencedFunction(ModuleContext context) {
+    private KontrolFunctionSelector? ReferencedFunction(ModuleContext context) {
         return moduleName != null
             ? context.FindModule(moduleName)?.FindFunction(functionName)
             : BuiltinFunctions.ByName.Get(functionName) ?? context.mappedFunctions.Get(functionName);
@@ -317,7 +317,7 @@ public class Call : Expression {
                 parameterTypes = functionVariable.parameterTypes
                     .Select(t => t.UnderlyingType(context.ModuleContext)).ToList();
             } else {
-                var function = ReferencedFunction(context.ModuleContext);
+                var function = ReferencedFunction(context.ModuleContext)?.ForContext(context);
                 if (function == null) return null;
 
                 returnType = function.ReturnType;
@@ -355,7 +355,7 @@ public class Call : Expression {
     public override REPLValueFuture Eval(REPLContext context) {
         var argumentFutures = arguments.Select(p => p.Eval(context)).ToList();
 
-        var function = ReferencedFunction(context.replModuleContext);
+        var function = ReferencedFunction(context.replModuleContext)?.PreferSync;
 
         if (function == null) throw new REPLException(this, $"Function '{FullName}' not found");
 

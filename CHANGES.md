@@ -16,6 +16,7 @@
 * Support air intake, command, decoupler, docking node, generator, light, transmitter, science_experiment in VAB
 * Make resource container information available in VAB
 * Add a `sync_warp_to` to `ksp::game::warp` as a temporary workaround (to be used with care)
+* Add `.flat_map` and `.filter_map` to ranges
 
 ## 0.5.4.0 -> 0.5.4.1
 

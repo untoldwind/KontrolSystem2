@@ -35,12 +35,12 @@ public static class BuiltinFunctions {
         },
         BuiltinType.ArrayBuilder, typeof(ArrayBuilder).GetMethod("Create"));
 
-    public static readonly Dictionary<string, IKontrolFunction> ByName = new() {
-        { "Some", Some },
-        { "None", None },
-        { "Ok", Ok },
-        { "Err", Err },
-        { "Cell", Cell },
-        { "ArrayBuilder", ArrayBuilder }
+    public static readonly Dictionary<string, KontrolFunctionSelector> ByName = new() {
+        { "Some", KontrolFunctionSelector.From(Some) },
+        { "None", KontrolFunctionSelector.From(None) },
+        { "Ok", KontrolFunctionSelector.From(Ok) },
+        { "Err", KontrolFunctionSelector.From(Err) },
+        { "Cell", KontrolFunctionSelector.From(Cell) },
+        { "ArrayBuilder", KontrolFunctionSelector.From(ArrayBuilder) }
     };
 }

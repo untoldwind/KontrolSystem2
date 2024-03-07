@@ -13,7 +13,7 @@ public class ModuleContext {
     public readonly IILEmitter? constructorEmitter;
     public readonly List<(string alias, TO2Type type)>? exportedTypes;
     public readonly Dictionary<string, IKontrolConstant> mappedConstants;
-    public readonly Dictionary<string, IKontrolFunction> mappedFunctions;
+    public readonly Dictionary<string, KontrolFunctionSelector> mappedFunctions;
     public readonly Dictionary<string, TO2Type> mappedTypes;
     public readonly Dictionary<string, string> moduleAliases;
     public readonly string? moduleName;
@@ -32,7 +32,7 @@ public class ModuleContext {
         };
         exportedTypes = new List<(string alias, TO2Type type)>();
         mappedConstants = new Dictionary<string, IKontrolConstant>();
-        mappedFunctions = new Dictionary<string, IKontrolFunction>();
+        mappedFunctions = new Dictionary<string, KontrolFunctionSelector>();
         subTypes = new Dictionary<string, TypeBuilder>();
     }
 
@@ -48,7 +48,7 @@ public class ModuleContext {
         };
         exportedTypes = new List<(string alias, TO2Type type)>();
         mappedConstants = new Dictionary<string, IKontrolConstant>();
-        mappedFunctions = new Dictionary<string, IKontrolFunction>();
+        mappedFunctions = new Dictionary<string, KontrolFunctionSelector>();
         subTypes = new Dictionary<string, TypeBuilder>();
 
         constructorBuilder = typeBuilder.DefineTypeInitializer();

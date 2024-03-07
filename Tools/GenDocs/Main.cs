@@ -123,7 +123,7 @@ namespace KontrolSystem.GenDocs {
                 output.WriteLine();
 
                 foreach (string functionName in module.AllFunctionNames.OrderBy(name => name)) {
-                    IKontrolFunction function = module.FindFunction(functionName)!;
+                    IKontrolFunction function = module.FindFunction(functionName)?.PreferSync!;
 
                     output.WriteLine();
                     output.WriteLine($"### {functionName}");

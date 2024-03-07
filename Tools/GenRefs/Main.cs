@@ -95,7 +95,7 @@ namespace KontrolSystem.GenRefs {
             }
 
             foreach (var functionName in module.AllFunctionNames) {
-                IKontrolFunction function = module.FindFunction(functionName)!;
+                IKontrolFunction function = module.FindFunction(functionName)?.PreferSync!;
                 var functionReference = new FunctionReference(moduleContext, function);
                 Functions.Add(functionReference.Name, functionReference);
             }

@@ -18,7 +18,7 @@ public class YieldTimeoutTests {
 
     [Fact]
     public void SyncInfiniteLoop() {
-        var function = SetupModule().FindFunction("sync_infinite_loop");
+        var function = SetupModule().FindFunction("sync_infinite_loop")?.PreferSync;
         Assert.NotNull(function);
 
         var result = function.Invoke(TestRunner.DefaultTestContextFactory(), 10L);
@@ -29,7 +29,7 @@ public class YieldTimeoutTests {
 
     [Fact]
     public void AsyncInfiniteLoop() {
-        var function = SetupModule().FindFunction("async_infinite_loop");
+        var function = SetupModule().FindFunction("async_infinite_loop")?.PreferSync;
         Assert.NotNull(function);
 
         var context = TestRunner.DefaultTestContextFactory();

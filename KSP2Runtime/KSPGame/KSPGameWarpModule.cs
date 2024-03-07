@@ -24,14 +24,14 @@ public class KSPGameWarpModule {
     [KSFunction(Description = "Get the current warp rate (i.e. actual time multiplier).")]
     public static double CurrentWarpRate() => TimeWarp.CurrentRate;
 
-    [KSFunction(Description = "Warp forward to a specific universal time.")]
-    public static Future<object?> WarpTo(double ut) => new DelayedAction<object?>(KSPContext.CurrentContext, 1, 0, () => {
+    [KSFunction("warp_to", Description = "Warp forward to a specific universal time.")]
+    public static Future<object?> WarpToAsync(double ut) => new DelayedAction<object?>(KSPContext.CurrentContext, 1, 0, () => {
         TimeWarp.WarpTo(ut);
         return null;
     }, null);
 
-    [KSFunction(Description = "Synchronized version of `warp_to`. Use with care.")]
-    public static void SyncWarpTo(double ut) => TimeWarp.WarpTo(ut);
+    [KSFunction("warp_to", Description = "Synchronized version of `warp_to`. Use with care.")]
+    public static void WarpToSync(double ut) => TimeWarp.WarpTo(ut);
 
     [KSFunction(Description = "Deprecated: use cancel_warp()")]
     public static Future<object?> Cancel() => CancelWarp();

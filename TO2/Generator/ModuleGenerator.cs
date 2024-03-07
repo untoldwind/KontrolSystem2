@@ -80,10 +80,20 @@ public static class ModuleGenerator {
                     )
                 });
 
-            moduleContext.mappedFunctions.Add(declaredFunction.Name, declaredFunction);
+            if (moduleContext.mappedFunctions.TryGetValue(declaredFunction.Name, out var contextExisting)) {
+                moduleContext.mappedFunctions[declaredFunction.Name] = contextExisting + declaredFunction;
+            } else {
+                moduleContext.mappedFunctions.Add(declaredFunction.Name, KontrolFunctionSelector.From( declaredFunction));
+            }
+
             declaredModule.declaredFunctions.Add(declaredFunction);
-            if (function.modifier == FunctionModifier.Public)
-                declaredModule.publicFunctions.Add(declaredFunction.Name, declaredFunction);
+            if (function.modifier == FunctionModifier.Public) {
+                if (declaredModule.publicFunctions.TryGetValue(declaredFunction.Name,  out var declaredExisting)) {
+                    declaredModule.publicFunctions[declaredFunction.Name] = declaredExisting + declaredFunction;
+                } else {
+                    declaredModule.publicFunctions.Add(declaredFunction.Name, KontrolFunctionSelector.From(declaredFunction));
+                }
+            }
         }
 
         foreach (var to2Struct in declaredModule.to2Module.structs) {
@@ -93,10 +103,20 @@ public static class ModuleGenerator {
             var declaredConstructor =
                 new DeclaredKontrolStructConstructor(declaredModule, methodContext, to2Struct);
 
-            moduleContext.mappedFunctions.Add(declaredConstructor.Name, declaredConstructor);
+            if (moduleContext.mappedFunctions.TryGetValue(declaredConstructor.Name, out var contextExisting)) {
+                moduleContext.mappedFunctions[declaredConstructor.Name] = contextExisting + declaredConstructor;
+            } else {
+                moduleContext.mappedFunctions.Add(declaredConstructor.Name, KontrolFunctionSelector.From(declaredConstructor));
+            }
+
             declaredModule.declaredStructConstructors.Add(declaredConstructor);
-            if (to2Struct.exported)
-                declaredModule.publicFunctions.Add(declaredConstructor.Name, declaredConstructor);
+            if (to2Struct.exported) {
+                if (declaredModule.publicFunctions.TryGetValue(declaredConstructor.Name, out var declaredExisting)) {
+                    declaredModule.publicFunctions[declaredConstructor.Name] = declaredExisting + declaredConstructor;
+                } else {
+                    declaredModule.publicFunctions.Add(declaredConstructor.Name, KontrolFunctionSelector.From(declaredConstructor));
+                }
+            }
         }
     }
 

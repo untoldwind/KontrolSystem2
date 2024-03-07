@@ -121,8 +121,8 @@ public class VariableGet : Expression, IAssignContext {
 
     private IKontrolFunction? ReferencedFunction(ModuleContext context) {
         return moduleName != null
-            ? context.FindModule(moduleName)?.FindFunction(name)
-            : context.mappedFunctions.Get(name);
+            ? context.FindModule(moduleName)?.FindFunction(name)?.PreferSync
+            : context.mappedFunctions.Get(name)?.PreferSync;
     }
 
     public override REPLValueFuture Eval(REPLContext context) {

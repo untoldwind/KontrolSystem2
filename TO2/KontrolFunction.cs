@@ -28,6 +28,37 @@ public interface IKontrolFunction {
     object Invoke(IContext context, params object[] args);
 }
 
+public class KontrolFunctionSelector {
+    public readonly IKontrolFunction? async;
+    public readonly IKontrolFunction? sync;
+
+    public KontrolFunctionSelector(IKontrolFunction? async = null, IKontrolFunction? sync = null) {
+        this.async = async;
+        this.sync = sync;
+    }
+
+    public IKontrolFunction? PreferAsync => async ?? sync;
+
+    public IKontrolFunction? PreferSync => sync ?? async;
+
+    public IKontrolFunction? ForContext(IBlockContext context) => context.IsAsync ? PreferAsync : PreferSync;
+    
+    public static KontrolFunctionSelector From(IKontrolFunction function) =>
+        function.IsAsync
+            ? new KontrolFunctionSelector(function, null)
+            : new KontrolFunctionSelector(null, function);
+
+    public static KontrolFunctionSelector operator +(KontrolFunctionSelector a, IKontrolFunction function) {
+        if (function.IsAsync) {
+            if (a.async != null) throw new Exception($"Duplicate async function registration {function.Name}");
+            return new KontrolFunctionSelector(function, a.sync);
+        } else {
+            if (a.sync != null) throw new Exception($"Duplicate sync function registration {function.Name}");
+            return new KontrolFunctionSelector(a.async, function);
+        }
+    }
+}
+
 public static class KontrolFunctionExtensions {
     public static RealizedType DelegateType(this IKontrolFunction function) {
         return new FunctionType(function.IsAsync, function.Parameters.Select(p => p.type as TO2Type).ToList(),

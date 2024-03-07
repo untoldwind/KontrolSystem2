@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Generator;
@@ -28,12 +29,12 @@ public interface IKontrolModule {
 
     IKontrolConstant? FindConstant(string name);
 
-    IKontrolFunction? FindFunction(string name);
+    KontrolFunctionSelector? FindFunction(string name);
 }
 
 public class CompiledKontrolModule : IKontrolModule {
     private readonly Dictionary<string, IKontrolConstant> constants;
-    private readonly Dictionary<string, CompiledKontrolFunction> publicFunctions;
+    private readonly Dictionary<string, KontrolFunctionSelector> publicFunctions;
     private readonly List<CompiledKontrolFunction> testFunctions;
     private readonly Dictionary<string, RealizedType> types;
 
@@ -52,7 +53,7 @@ public class CompiledKontrolModule : IKontrolModule {
         var compiledKontrolConstants = constants.ToList();
         this.constants = compiledKontrolConstants.ToDictionary(constant => constant.Name);
         var compiledKontrolFunctions = functions.ToList();
-        publicFunctions = compiledKontrolFunctions.ToDictionary(function => function.Name);
+        publicFunctions = compiledKontrolFunctions.GroupBy(function => function.Name, function => function, (functionName, group) => (functionName, group.Aggregate(new KontrolFunctionSelector(), (selector, function) => selector + function))).ToDictionary(t => t.functionName, t => t.Item2);
         this.testFunctions = testFunctions;
         this.types = types.ToDictionary(t => t.alias, t => t.type);
 
@@ -82,7 +83,7 @@ public class CompiledKontrolModule : IKontrolModule {
 
     public IEnumerable<string> AllFunctionNames => publicFunctions.Keys;
 
-    public IKontrolFunction? FindFunction(string name) {
+    public KontrolFunctionSelector? FindFunction(string name) {
         return publicFunctions.Get(name);
     }
 
@@ -98,7 +99,7 @@ public class DeclaredKontrolModule : IKontrolModule {
     public readonly List<DeclaredKontrolFunction> declaredFunctions;
     public readonly List<DeclaredKontrolStructConstructor> declaredStructConstructors;
     public readonly ModuleContext moduleContext;
-    public readonly Dictionary<string, IKontrolFunction> publicFunctions;
+    public readonly Dictionary<string, KontrolFunctionSelector> publicFunctions;
     private readonly Dictionary<string, TO2Type> publicTypes;
     public readonly TO2Module to2Module;
 
@@ -114,7 +115,7 @@ public class DeclaredKontrolModule : IKontrolModule {
         this.moduleContext = moduleContext;
         this.to2Module = to2Module;
         publicTypes = types.ToDictionary(t => t.alias, t => t.type);
-        publicFunctions = new Dictionary<string, IKontrolFunction>();
+        publicFunctions = new Dictionary<string, KontrolFunctionSelector>();
         declaredFunctions = new List<DeclaredKontrolFunction>();
         declaredStructConstructors = new List<DeclaredKontrolStructConstructor>();
         declaredConstants = new Dictionary<string, DeclaredKontrolConstant>();
@@ -142,7 +143,7 @@ public class DeclaredKontrolModule : IKontrolModule {
 
     public IEnumerable<string> AllFunctionNames => publicFunctions.Keys;
 
-    public IKontrolFunction? FindFunction(string name) {
+    public KontrolFunctionSelector? FindFunction(string name) {
         return publicFunctions.Get(name);
     }
 

@@ -31,7 +31,7 @@ public static class KontrolModuleExtensions {
 
     private static Entrypoint? GetEntrypoint(IKontrolModule module, string name, IKSPContext context) {
         try {
-            var function = module.FindFunction(name);
+            var function = module.FindFunction(name)?.PreferSync;
             if (function == null || !function.IsAsync) return null;
 
             if (function.Parameters.Count == 0) return (_, _arg) => (IAnyFuture)function.Invoke(context);
@@ -65,7 +65,7 @@ public static class KontrolModuleExtensions {
         KSPGameMode gameMode, ITO2Logger? logger = null) {
         try {
             var name = GetEntrypointFunctionName(gameMode);
-            var function = name != null ? module.FindFunction(name) : null;
+            var function = name != null ? module.FindFunction(name)?.PreferSync : null;
             if (function == null || function.Parameters.Count <= 1)
                 throw new Exception($"Function {name} does not exist or does not have any parameters");
 
@@ -102,7 +102,7 @@ public static class KontrolModuleExtensions {
 
     public static int GetEntrypointArgumentCount(this IKontrolModule module, KSPGameMode gameMode) {
         var name = GetEntrypointFunctionName(gameMode);
-        var function = name != null ? module.FindFunction(name) : null;
+        var function = name != null ? module.FindFunction(name)?.PreferSync : null;
         return function?.Parameters.Count ?? 0;
     }
 
@@ -117,7 +117,7 @@ public static class KontrolModuleExtensions {
     }
 
     private static bool HasEntrypoint(IKontrolModule module, string name, bool allowVessel) {
-        var function = module.FindFunction(name);
+        var function = module.FindFunction(name)?.PreferSync;
         if (function == null || !function.IsAsync) return false;
         if (function.Parameters.Count == 0) return true;
         if (allowVessel && function.Parameters.Count > 0 &&
