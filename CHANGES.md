@@ -19,6 +19,7 @@
 * Make `warp_to`, `cancel_warp` and `set_warp_index` in `ksp::game::warp` available in sync context (i.e. inside UI callback)
   * This is in part a rollback of the previous change to `warp_to`
 * Add binding for RCS modules
+* Add binding for ReactionWheel modules
 
 ## 0.5.4.0 -> 0.5.4.1
 

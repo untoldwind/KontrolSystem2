@@ -193,5 +193,15 @@ public partial class KSPVesselModule {
                 ? Option.Some(new ModuleRCSAdapter(this, data))
                 : Option.None<ModuleRCSAdapter>();
 
+        [KSField]
+        public bool IsReactionWheel =>
+            part.TryGetModuleData<PartComponentModule_ReactionWheel, Data_ReactionWheel>(out _);
+
+        [KSField]
+        public Option<ModuleReactionWheelAdapter> ReactionWheel =>
+            part.TryGetModuleData<PartComponentModule_ReactionWheel, Data_ReactionWheel>(out var data)
+                ? Option.Some(new ModuleReactionWheelAdapter(this, data))
+                : Option.None<ModuleReactionWheelAdapter>();
+
     }
 }

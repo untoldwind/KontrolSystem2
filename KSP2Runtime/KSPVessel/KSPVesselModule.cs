@@ -170,7 +170,17 @@ public partial class KSPVesselModule {
                     (PartCategories.SubAssemblies, "SubAssemblies"),
                     (PartCategories.Amenities, "Amenities"),
                     (PartCategories.Storage, "Storage"),
-                })
+                }),
+                ("ActuatorMode", "Actuator mode of a reaction wheel", typeof(Data_ReactionWheel.ActuatorModes), new (Enum value, string description)[] {
+                    (Data_ReactionWheel.ActuatorModes.All, "Always on"),
+                    (Data_ReactionWheel.ActuatorModes.ManualOnly, "Only active in manual control"),
+                    (Data_ReactionWheel.ActuatorModes.SASOnly, "Only active with SAS"),
+                }),
+                ("ReactionWheelState", "State of a reaction wheel", typeof(Data_ReactionWheel.ReactionWheelState), new (Enum value, string description)[] {
+                    (Data_ReactionWheel.ReactionWheelState.Active, "Wheel active"),
+                    (Data_ReactionWheel.ReactionWheelState.Disabled, "Wheel disabled"),
+                    (Data_ReactionWheel.ReactionWheelState.Broken, "Wheel broken"),
+                    })
             });
 
         BindingGenerator.RegisterTypeMapping(typeof(FlightCtrlState),

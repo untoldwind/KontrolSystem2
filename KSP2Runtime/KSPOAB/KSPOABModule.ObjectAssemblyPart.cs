@@ -130,6 +130,14 @@ public partial class KSPOABModule {
                 ? Option.Some(new ObjectAssemblyRCS(this, data))
                 : Option.None<ObjectAssemblyRCS>();
 
+        [KSField]
+        public bool IsReactionWheel =>
+            part.TryGetModuleData<PartComponentModule_ReactionWheel, Data_ReactionWheel>(out _);
 
+        [KSField]
+        public Option<ObjectAssemblyReactionWheelAdapter> ReactionWheel =>
+            part.TryGetModuleData<PartComponentModule_ReactionWheel, Data_ReactionWheel>(out var data)
+                ? Option.Some(new ObjectAssemblyReactionWheelAdapter(this, data))
+                : Option.None<ObjectAssemblyReactionWheelAdapter>();
     }
 }
