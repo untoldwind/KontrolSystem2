@@ -42,7 +42,7 @@ public class KontrolFunctionSelector {
     public IKontrolFunction? PreferSync => sync ?? async;
 
     public IKontrolFunction? ForContext(IBlockContext context) => context.IsAsync ? PreferAsync : PreferSync;
-    
+
     public static KontrolFunctionSelector From(IKontrolFunction function) =>
         function.IsAsync
             ? new KontrolFunctionSelector(function, null)

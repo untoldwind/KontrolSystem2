@@ -83,12 +83,12 @@ public static class ModuleGenerator {
             if (moduleContext.mappedFunctions.TryGetValue(declaredFunction.Name, out var contextExisting)) {
                 moduleContext.mappedFunctions[declaredFunction.Name] = contextExisting + declaredFunction;
             } else {
-                moduleContext.mappedFunctions.Add(declaredFunction.Name, KontrolFunctionSelector.From( declaredFunction));
+                moduleContext.mappedFunctions.Add(declaredFunction.Name, KontrolFunctionSelector.From(declaredFunction));
             }
 
             declaredModule.declaredFunctions.Add(declaredFunction);
             if (function.modifier == FunctionModifier.Public) {
-                if (declaredModule.publicFunctions.TryGetValue(declaredFunction.Name,  out var declaredExisting)) {
+                if (declaredModule.publicFunctions.TryGetValue(declaredFunction.Name, out var declaredExisting)) {
                     declaredModule.publicFunctions[declaredFunction.Name] = declaredExisting + declaredFunction;
                 } else {
                     declaredModule.publicFunctions.Add(declaredFunction.Name, KontrolFunctionSelector.From(declaredFunction));

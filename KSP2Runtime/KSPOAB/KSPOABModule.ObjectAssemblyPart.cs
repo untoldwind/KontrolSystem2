@@ -120,5 +120,16 @@ public partial class KSPOABModule {
                 ? Option.Some(new ObjectAssemblyScienceExperimentAdapter(this, data))
                 : Option.None<ObjectAssemblyScienceExperimentAdapter>();
 
+        [KSField("is_rcs")]
+        public bool IsRCS =>
+            part.TryGetModuleData<PartComponentModule_RCS, Data_RCS>(out _);
+
+        [KSField("rcs")]
+        public Option<ObjectAssemblyRCS> RCS =>
+            part.TryGetModuleData<PartComponentModule_RCS, Data_RCS>(out var data)
+                ? Option.Some(new ObjectAssemblyRCS(this, data))
+                : Option.None<ObjectAssemblyRCS>();
+
+
     }
 }

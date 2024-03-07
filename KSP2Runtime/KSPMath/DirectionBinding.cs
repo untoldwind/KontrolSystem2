@@ -120,7 +120,7 @@ public static class DirectionBinding {
         });
 
     private static BoundType LazyDirectionType() => DirectionType;
-    
+
     public static Direction LookDirUp(Vector3d lookDirection, Vector3d upDirection) {
         return Direction.LookRotation(lookDirection, upDirection);
     }

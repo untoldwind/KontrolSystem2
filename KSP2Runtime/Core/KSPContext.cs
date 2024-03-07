@@ -219,7 +219,7 @@ public class KSPCoreContext : IKSPContext {
         Logger.Debug($"Unhooking from vessel: {vessel.Name}");
         vessel.SimulationObject.objVesselBehavior.OnPreAutopilotUpdate -= autopilots.RunAutopilots;
     }
-    
+
     public OptionalAddons OptionalAddons { get; }
 
     public void TriggerMarkerUpdate() {
@@ -265,9 +265,9 @@ public class KSPCoreContext : IKSPContext {
         autopilotHooks.Clear();
         childContexts.Clear();
     }
-    
+
     public void AddNextUpdateOnce(Action action) {
-       nextUpdateOnce.Add(action);
+        nextUpdateOnce.Add(action);
     }
 }
 

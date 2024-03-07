@@ -41,7 +41,7 @@ public static class Matrix2x2Binding {
         });
 
     private static RecordStructType LazyMatrix2x2Type() => Matrix2x2Type;
-    
+
     public static Matrix2x2 Matrix2x2(double a, double b, double c, double d) {
         return new Matrix2x2(a, b, c, d);
     }

@@ -107,7 +107,7 @@ public static class Vector2Binding {
         });
 
     private static RecordStructType LazyVector2Type() => Vector2Type;
-    
+
     public static Vector2d Vec2(double x, double y) {
         return new Vector2d(x, y);
     }

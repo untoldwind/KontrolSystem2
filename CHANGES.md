@@ -15,8 +15,10 @@
 * Add binding for generator modules
 * Support air intake, command, decoupler, docking node, generator, light, transmitter, science_experiment in VAB
 * Make resource container information available in VAB
-* Add a `sync_warp_to` to `ksp::game::warp` as a temporary workaround (to be used with care)
 * Add `.flat_map` and `.filter_map` to ranges
+* Make `warp_to`, `cancel_warp` and `set_warp_index` in `ksp::game::warp` available in sync context (i.e. inside UI callback)
+  * This is in part a rollback of the previous change to `warp_to`
+* Add binding for RCS modules
 
 ## 0.5.4.0 -> 0.5.4.1
 

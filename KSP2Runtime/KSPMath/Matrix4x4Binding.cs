@@ -108,7 +108,7 @@ public class Matrix4x4Binding {
             }
         }
     );
-    
+
     private static BoundType LazyMatrix4x4Type() => Matrix4x4Type;
 
     public static Matrix4x4D Matrix4x4() {

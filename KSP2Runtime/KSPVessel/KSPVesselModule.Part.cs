@@ -183,5 +183,15 @@ public partial class KSPVesselModule {
                 ? Option.Some(new ModuleGeneratorAdapter(this, data))
                 : Option.None<ModuleGeneratorAdapter>();
 
+        [KSField("is_rcs")]
+        public bool IsRCS =>
+            part.TryGetModuleData<PartComponentModule_RCS, Data_RCS>(out _);
+
+        [KSField("rcs")]
+        public Option<ModuleRCSAdapter> RCS =>
+            part.TryGetModuleData<PartComponentModule_RCS, Data_RCS>(out var data)
+                ? Option.Some(new ModuleRCSAdapter(this, data))
+                : Option.None<ModuleRCSAdapter>();
+
     }
 }

@@ -175,7 +175,7 @@ public static class Vector3Binding {
         });
 
     private static RecordStructType LazyVector3Type() => Vector3Type;
-    
+
     public static Vector3d Vec3(double x, double y, double z) {
         return new Vector3d(x, y, z);
     }

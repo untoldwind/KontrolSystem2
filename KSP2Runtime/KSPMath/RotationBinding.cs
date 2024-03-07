@@ -125,7 +125,7 @@ public static class RotationBinding {
         });
 
     private static BoundType LazyRotationType() => RotationType;
-    
+
     public static RotationWrapper GlobalLookDirUp(Vector lookDirection, Vector upDirection) {
         return RotationWrapper.LookRotation(lookDirection, upDirection);
     }

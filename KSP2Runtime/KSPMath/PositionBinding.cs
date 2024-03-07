@@ -81,7 +81,7 @@ public class PositionBinding {
         new Dictionary<string, IFieldAccessFactory>());
 
     private static BoundType LazyPositionType() => PositionType;
-    
+
     public static Vector3d ToLocal(Position position, ITransformFrame frame) {
         return frame.ToLocalPosition(position);
     }

@@ -50,7 +50,7 @@ public class KSPGameWarpModule {
         var context = KSPContext.CurrentContext;
         context.AddNextUpdateOnce(() => TimeWarp.StopTimeWarp());
     }
-    
+
     [KSFunction(Description = "Get current maximum allowed time warp index.")]
     public static long MaxWarpIndex() => TimeWarp.GetMaxRateIndex(false, out _);
 
@@ -66,7 +66,7 @@ public class KSPGameWarpModule {
         var context = KSPContext.CurrentContext;
         context.AddNextUpdateOnce(() => TimeWarp.SetRateIndex((int)index, true));
     }
-    
+
     [KSFunction(Description = "Check if time warp is currently active")]
     public static bool IsWarping() => TimeWarp.IsWarping;
 
