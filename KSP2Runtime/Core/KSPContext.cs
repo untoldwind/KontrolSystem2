@@ -69,6 +69,7 @@ public class KSPCoreContext : IKSPContext {
     private readonly List<KSPUIModule.Window> windows;
     private object? nextYield;
     private int stackCallCount;
+    private readonly List<Action> nextUpdateOnce;
 
     public KSPCoreContext(ITO2Logger logger, GameInstance gameInstance, KSPConsoleBuffer consoleBuffer,
         TimeSeriesCollection timeSeriesCollection, OptionalAddons optionalAddons) {
@@ -86,6 +87,7 @@ public class KSPCoreContext : IKSPContext {
         childContexts = new List<BackgroundKSPContext>();
         timeStopwatch = Stopwatch.StartNew();
         timeoutMillis = 100;
+        nextUpdateOnce = new List<Action>();
     }
 
 
@@ -217,7 +219,7 @@ public class KSPCoreContext : IKSPContext {
         Logger.Debug($"Unhooking from vessel: {vessel.Name}");
         vessel.SimulationObject.objVesselBehavior.OnPreAutopilotUpdate -= autopilots.RunAutopilots;
     }
-
+    
     public OptionalAddons OptionalAddons { get; }
 
     public void TriggerMarkerUpdate() {
@@ -225,6 +227,10 @@ public class KSPCoreContext : IKSPContext {
             ContextHolder.CurrentContext.Value = this;
             foreach (var marker in markers)
                 marker.OnUpdate();
+            foreach (var action in nextUpdateOnce) {
+                action();
+            }
+            nextUpdateOnce.Clear();
         } finally {
             ContextHolder.CurrentContext.Value = null;
         }
@@ -258,6 +264,10 @@ public class KSPCoreContext : IKSPContext {
         resourceTransfers.Clear();
         autopilotHooks.Clear();
         childContexts.Clear();
+    }
+    
+    public void AddNextUpdateOnce(Action action) {
+       nextUpdateOnce.Add(action);
     }
 }
 

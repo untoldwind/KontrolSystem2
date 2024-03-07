@@ -31,24 +31,42 @@ public class KSPGameWarpModule {
     }, null);
 
     [KSFunction("warp_to", Description = "Synchronized version of `warp_to`. Use with care.")]
-    public static void WarpToSync(double ut) => TimeWarp.WarpTo(ut);
+    public static void WarpToSync(double ut) {
+        var context = KSPContext.CurrentContext;
+        context.AddNextUpdateOnce(() => TimeWarp.WarpTo(ut));
+    }
 
     [KSFunction(Description = "Deprecated: use cancel_warp()")]
-    public static Future<object?> Cancel() => CancelWarp();
+    public static Future<object?> Cancel() => CancelWarpAsync();
 
-    [KSFunction(Description = "Cancel time warp")]
-    public static Future<object?> CancelWarp() => new DelayedAction<object?>(KSPContext.CurrentContext, 1, 0, () => {
+    [KSFunction("cancel_warp", Description = "Cancel time warp")]
+    public static Future<object?> CancelWarpAsync() => new DelayedAction<object?>(KSPContext.CurrentContext, 1, 0, () => {
         TimeWarp.StopTimeWarp();
         return null;
     }, null);
 
+    [KSFunction("cancel_warp", Description = "Cancel time warp")]
+    public static void CancelWarpSync() {
+        var context = KSPContext.CurrentContext;
+        context.AddNextUpdateOnce(() => TimeWarp.StopTimeWarp());
+    }
+    
     [KSFunction(Description = "Get current maximum allowed time warp index.")]
     public static long MaxWarpIndex() => TimeWarp.GetMaxRateIndex(false, out _);
 
-    [KSFunction(Description = "Set the current time warp index.")]
-    public static Future<bool> SetWarpIndex(long index) => new DelayedAction<bool>(KSPContext.CurrentContext, 1, 0,
-        () => TimeWarp.SetRateIndex((int)index, true), false);
+    [KSFunction("set_warp_index", Description = "Set the current time warp index.")]
+    public static Future<object?> SetWarpIndexAsync(long index) => new DelayedAction<object?>(KSPContext.CurrentContext, 1, 0,
+        () => {
+            TimeWarp.SetRateIndex((int)index, true);
+            return null;
+        }, false);
 
+    [KSFunction("set_warp_index", Description = "Set the current time warp index.")]
+    public static void set_warp_index(long index) {
+        var context = KSPContext.CurrentContext;
+        context.AddNextUpdateOnce(() => TimeWarp.SetRateIndex((int)index, true));
+    }
+    
     [KSFunction(Description = "Check if time warp is currently active")]
     public static bool IsWarping() => TimeWarp.IsWarping;
 

@@ -79,6 +79,9 @@ public class KSPTestRunnerContext : TestRunnerContext, IKSPContext {
     public void UnhookAllAutopilots(VesselComponent vessel) {
     }
 
+    public void AddNextUpdateOnce(Action action) {
+    }
+
     public OptionalAddons OptionalAddons => new();
 
     public Font? ConsoleFont(int fontSize) {

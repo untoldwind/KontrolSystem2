@@ -60,6 +60,9 @@ public interface IKSPContext : IContext {
     void UnhookAutopilot(VesselComponent vessel, IKSPAutopilot autopilot);
 
     void UnhookAllAutopilots(VesselComponent vessel);
+
+    // Note: To be removed once it is possible to spawn coroutines from sync context
+    void AddNextUpdateOnce(Action action);
 }
 
 public class OptionalAddons {
