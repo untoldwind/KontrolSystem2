@@ -14,19 +14,19 @@ public class PositionBinding {
         new OperatorCollection {
             {
                 Operator.Add,
-                new StaticMethodOperatorEmitter(() => VectorBinding.VectorType, () => PositionType!,
+                new StaticMethodOperatorEmitter(() => VectorBinding.VectorType, LazyPositionType,
                     typeof(Position).GetMethod("op_Addition", new[] { typeof(Position), typeof(Vector) }))
             }, {
                 Operator.AddAssign,
-                new StaticMethodOperatorEmitter(() => VectorBinding.VectorType, () => PositionType!,
+                new StaticMethodOperatorEmitter(() => VectorBinding.VectorType, LazyPositionType,
                     typeof(Position).GetMethod("op_Addition", new[] { typeof(Position), typeof(Vector) }))
             }, {
                 Operator.Sub,
-                new StaticMethodOperatorEmitter(() => PositionType!, () => VectorBinding.VectorType,
+                new StaticMethodOperatorEmitter(LazyPositionType, () => VectorBinding.VectorType,
                     typeof(Position).GetMethod("op_Subtraction", new[] { typeof(Position), typeof(Position) }))
             }, {
                 Operator.SubAssign,
-                new StaticMethodOperatorEmitter(() => PositionType!, () => VectorBinding.VectorType,
+                new StaticMethodOperatorEmitter(LazyPositionType, () => VectorBinding.VectorType,
                     typeof(Position).GetMethod("op_Subtraction", new[] { typeof(Position), typeof(Position) }))
             }
         },
@@ -71,7 +71,7 @@ public class PositionBinding {
                 new BoundMethodInvokeFactory(
                     "Linear interpolate position between this and `other` position, where `t = 0.0` is this and `t = 1.0` is `other`.",
                     true,
-                    () => PositionType!,
+                    LazyPositionType,
                     () => [
                         new("other", PositionType!, "Other position"),
                         new("t", BuiltinType.Float, "Relative position of mid-point (0.0 - 1.0)")
@@ -80,6 +80,8 @@ public class PositionBinding {
         },
         new Dictionary<string, IFieldAccessFactory>());
 
+    private static BoundType LazyPositionType() => PositionType;
+    
     public static Vector3d ToLocal(Position position, ITransformFrame frame) {
         return frame.ToLocalPosition(position);
     }

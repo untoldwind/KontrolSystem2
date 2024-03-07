@@ -16,7 +16,7 @@ public static class Matrix2x2Binding {
         new OperatorCollection {
             {
                 Operator.Neg,
-                new StaticMethodOperatorEmitter(() => BuiltinType.Unit, () => Matrix2x2Type!,
+                new StaticMethodOperatorEmitter(() => BuiltinType.Unit, LazyMatrix2x2Type,
                     typeof(Matrix2x2).GetMethod("op_UnaryNegation", new[] { typeof(Matrix2x2) }))
             }
         },
@@ -35,11 +35,13 @@ public static class Matrix2x2Binding {
                     typeof(Matrix2x2), typeof(Matrix2x2).GetProperty("Determinant"))
             }, {
                 "inverse",
-                new BoundPropertyLikeFieldAccessFactory("Invert matrix", () => Matrix2x2Type!,
+                new BoundPropertyLikeFieldAccessFactory("Invert matrix", LazyMatrix2x2Type,
                     typeof(Matrix2x2), typeof(Matrix2x2).GetProperty("Inverse"))
             }
         });
 
+    private static RecordStructType LazyMatrix2x2Type() => Matrix2x2Type;
+    
     public static Matrix2x2 Matrix2x2(double a, double b, double c, double d) {
         return new Matrix2x2(a, b, c, d);
     }
