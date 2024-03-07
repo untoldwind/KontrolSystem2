@@ -68,3 +68,29 @@ test sync fn test_reduce() -> Unit = {
     assert_int(145, (10..20).reduce(0, fn(sum, item) -> sum + item))
     assert_int(5050, (1...100).reduce(0, fn(sum, item) -> sum + item)) // Gauss
 }
+
+test sync fn test_range_flat_map() -> Unit = {
+    const mapped_arr = (0..5).flat_map(fn(i) -> [0.1 * i, 0.01 * i])
+
+    assert_int(10, mapped_arr.length)
+    assert_float(0.0, mapped_arr[0])
+    assert_float(0.0, mapped_arr[1])
+    assert_float(0.1, mapped_arr[2])
+    assert_float(0.01, mapped_arr[3])
+    assert_float(0.2, mapped_arr[4])
+    assert_float(0.02, mapped_arr[5])
+    assert_float(0.3, mapped_arr[6])
+    assert_float(0.03, mapped_arr[7])
+    assert_float(0.4, mapped_arr[8])
+    assert_float(0.04, mapped_arr[9])
+}
+
+test sync fn test_range_filter_map() -> Unit = {
+    const int_arr = [ 0, 11, 22, 33, 44 ]
+    const mapped_arr = (0..5).filter_map(fn(i) -> if(i > 1) 0.1 * i)
+
+    assert_int(3, mapped_arr.length)
+    assert_float(0.2, mapped_arr[0])
+    assert_float(0.3, mapped_arr[1])
+    assert_float(0.4, mapped_arr[2])
+}

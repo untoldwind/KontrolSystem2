@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace KontrolSystem.TO2.Runtime;
 
@@ -22,6 +23,31 @@ public struct Range {
             result[i - from] = mapper(i);
 
         return result;
+    }
+
+    public T[] FlatMap<T>(Func<long, T[]> mapper) {
+        if (to < from) return new T[0];
+        var result = new List<T>((int)(to - from));
+
+        for (var i = from; i < to; i++)
+            foreach (var item in mapper(i))
+                result.Add(item);
+
+        return result.ToArray();
+    }
+
+    public T[] FilterMap<T>(Func<long, Option<T>> mapper) {
+        if (to < from) return new T[0];
+
+        var result = new List<T>((int)(to - from));
+
+        for (var i = from; i < to; i++) {
+            var item = mapper(i);
+
+            if (item.defined) result.Add(item.value);
+        }
+
+        return result.ToArray();
     }
 
     public long[] Reverse() {

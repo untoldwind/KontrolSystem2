@@ -16,31 +16,47 @@ public class RangeType : RealizedType {
                     () => new ArrayType(new GenericParameter("T")),
                     () => new List<RealizedParameter> {
                         new("mapper",
-                            new FunctionType(false, new List<TO2Type> { BuiltinType.Int }, new GenericParameter("T")),
+                            new FunctionType(false, [BuiltinType.Int], new GenericParameter("T")),
                             "Function to be applied on each element of the range")
                     },
                     false, typeof(Range), typeof(Range).GetMethod("Map"))
+            }, {
+                "flat_map", new BoundMethodInvokeFactory("Map the content of the array", true,
+                    () => new ArrayType(new GenericParameter("T")),
+                    () => [
+                        new("mapper", new FunctionType(false, [BuiltinType.Int], new ArrayType(new GenericParameter("T"))),
+                            "Function to be applied on each element of the range")
+                    ],
+                    false, typeof(Range), typeof(Range).GetMethod("FlatMap"))
+            }, {
+                "filter_map", new BoundMethodInvokeFactory("Map the content of the array", true,
+                    () => new ArrayType(new GenericParameter("T")),
+                    () => [
+                        new("mapper", new FunctionType(false, [BuiltinType.Int], new OptionType(new GenericParameter("T"))),
+                            "Function to be applied on each element of the range")
+                    ],
+                    false, typeof(Range), typeof(Range).GetMethod("FilterMap"))
             }, {
                 "reduce",
                 new BoundMethodInvokeFactory("Reduce range by an operation", true, () => new GenericParameter("U"),
                     () => new List<RealizedParameter> {
                         new("initial", new GenericParameter("U"), "Initial value of the accumulator"),
-                        new("reducer", new FunctionType(false, new List<TO2Type> {
+                        new("reducer", new FunctionType(false, [
                                 new GenericParameter("U"),
                                 BuiltinType.Int
-                            }, new GenericParameter("U")),
+                            ], new GenericParameter("U")),
                             "Combines accumulator with each element of the array and returns new accumulator value")
                     }, false, typeof(Range),
                     typeof(Range).GetMethod("Reduce"))
             }, {
                 "reverse", new BoundMethodInvokeFactory("Reverse order", true,
                     () => new ArrayType(BuiltinType.Int),
-                    () => new List<RealizedParameter>(),
+                    () => [],
                     false, typeof(Range), typeof(Range).GetMethod("Reverse"))
             }, {
                 "to_string", new BoundMethodInvokeFactory("Get string representation of the range", true,
                     () => BuiltinType.String,
-                    () => new List<RealizedParameter>(),
+                    () => [],
                     false, typeof(Range), typeof(Range).GetMethod("RangeToString"))
             }
         };
