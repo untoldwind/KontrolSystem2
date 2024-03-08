@@ -22,8 +22,8 @@ export class MethodCall extends Expression {
   public resultType(context: BlockContext, typeHint?: RealizedType): TO2Type {
     return (
       this.findMethod(context)?.value.guessReturnType(
-        context.module,
-        this.args.map((arg) => arg.resultType(context)),
+        context,
+        this.args,
         typeHint,
       ) ?? UNKNOWN_TYPE
     );

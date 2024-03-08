@@ -34,6 +34,10 @@ export class ReferencedType implements RealizedType {
     this.description = typeReference.description || "";
   }
 
+  public hasGnerics(context: ModuleContext): boolean {
+    return this.typeReference.genericParameters !== undefined;
+  }
+
   public isAssignableFrom(otherType: RealizedType): boolean {
     if (this.name === otherType.name || this.typeReference.assignableFromAny)
       return true;

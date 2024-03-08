@@ -42,11 +42,7 @@ export class Call extends Expression {
 
     const realizedType = variableType?.realizedType(context.module);
     return isFunctionType(realizedType)
-      ? realizedType.guessReturnType(
-          context.module,
-          this.args.map((arg) => arg.resultType(context)),
-          typeHint,
-        )
+      ? realizedType.guessReturnType(context, this.args, typeHint)
       : UNKNOWN_TYPE;
   }
 

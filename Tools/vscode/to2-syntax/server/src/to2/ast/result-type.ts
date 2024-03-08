@@ -19,6 +19,13 @@ export class ResultType implements RealizedType {
     this.description = "";
   }
 
+  public hasGnerics(context: ModuleContext): boolean {
+    return (
+      this.successType.realizedType(context).hasGnerics(context) ||
+      this.errorType.realizedType(context).hasGnerics(context)
+    );
+  }
+
   public isAssignableFrom(otherType: RealizedType): boolean {
     return this.name === otherType.name;
   }

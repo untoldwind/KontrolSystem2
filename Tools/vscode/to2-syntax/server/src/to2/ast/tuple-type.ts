@@ -16,6 +16,14 @@ export class TupleType implements RealizedType {
     this.description = "";
   }
 
+  public hasGnerics(context: ModuleContext): boolean {
+    return (
+      this.itemTypes.find((item) =>
+        item.realizedType(context).hasGnerics(context),
+      ) !== undefined
+    );
+  }
+
   public isAssignableFrom(otherType: RealizedType): boolean {
     return this.name === otherType.name;
   }

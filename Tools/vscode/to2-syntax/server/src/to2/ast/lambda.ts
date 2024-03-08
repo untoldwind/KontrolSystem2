@@ -29,12 +29,17 @@ export class Lambda extends Expression {
         value: parameter[1],
       });
     }
-    const returnType =
+    let returnType =
       typeHint &&
       isFunctionType(typeHint) &&
       typeHint.returnType !== UNKNOWN_TYPE
-        ? typeHint.returnType
-        : this.expression.resultType(lambdaContext);
+        ? typeHint.returnType.realizedType(context.module)
+        : undefined;
+    if (!returnType || returnType.hasGnerics(context.module))
+      returnType = this.expression
+        .resultType(lambdaContext)
+        .realizedType(context.module);
+
     return new FunctionType(
       false,
       resolved.map(([name, type, hasDefault]) => [

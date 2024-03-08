@@ -26,6 +26,14 @@ export class RecordType implements RealizedType {
     this.methods = methods ?? new Map();
   }
 
+  public hasGnerics(context: ModuleContext): boolean {
+    return (
+      this.itemTypes.find((item) =>
+        item[1].realizedType(context).hasGnerics(context),
+      ) !== undefined
+    );
+  }
+
   public isAssignableFrom(otherType: RealizedType): boolean {
     return this.name === otherType.name;
   }

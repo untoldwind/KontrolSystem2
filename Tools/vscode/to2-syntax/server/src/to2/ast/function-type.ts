@@ -1,6 +1,7 @@
-import { ModuleContext } from "./context";
+import { BlockContext, ModuleContext } from "./context";
 import { RealizedType, TO2Type } from "./to2-type";
 import { WithDefinitionRef } from "./definition-ref";
+import { Expression } from ".";
 
 export class FunctionType implements RealizedType {
   public readonly kind = "Function";
@@ -21,6 +22,15 @@ export class FunctionType implements RealizedType {
     this.localName = this.name;
     this.maxParams = parameterTypes.length;
     this.requiredParams = parameterTypes.filter((param) => !param[2]).length;
+  }
+
+  public hasGnerics(context: ModuleContext): boolean {
+    return (
+      this.returnType.realizedType(context).hasGnerics(context) ||
+      this.parameterTypes.find((parameter) =>
+        parameter[1].realizedType(context).hasGnerics(context),
+      ) !== undefined
+    );
   }
 
   public isAssignableFrom(otherType: RealizedType): boolean {
@@ -115,25 +125,28 @@ export class FunctionType implements RealizedType {
   }
 
   public guessReturnType(
-    context: ModuleContext,
-    args: TO2Type[],
+    context: BlockContext,
+    args: Expression[],
     typeHint: RealizedType | undefined,
   ): RealizedType {
     const genericMap: Record<string, RealizedType> = {};
 
     if (typeHint)
       this.returnType
-        .realizedType(context)
-        .guessGeneric(context, genericMap, typeHint);
+        .realizedType(context.module)
+        .guessGeneric(context.module, genericMap, typeHint);
     for (let i = 0; i < args.length && i < this.parameterTypes.length; i++) {
-      this.parameterTypes[i][1]
-        .realizedType(context)
-        .guessGeneric(context, genericMap, args[i].realizedType(context));
+      const paramType = this.parameterTypes[i][1].realizedType(context.module);
+      const argType = args[i]
+        .resultType(context, paramType)
+        .realizedType(context.module);
+
+      paramType.guessGeneric(context.module, genericMap, argType);
     }
 
     return this.returnType
-      .realizedType(context)
-      .fillGenerics(context, genericMap);
+      .realizedType(context.module)
+      .fillGenerics(context.module, genericMap);
   }
 }
 

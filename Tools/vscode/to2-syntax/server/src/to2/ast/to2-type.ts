@@ -33,6 +33,8 @@ export interface RealizedType extends TO2Type {
     | "Option";
   description: string;
 
+  hasGnerics(context: ModuleContext): boolean;
+
   isAssignableFrom(otherType: RealizedType): boolean;
 
   findSuffixOperator(
@@ -73,11 +75,15 @@ export class GenericParameter implements RealizedType {
     this.localName = name;
   }
 
-  isAssignableFrom(otherType: RealizedType): boolean {
+  hasGnerics(_: ModuleContext): boolean {
     return true;
   }
 
-  findSuffixOperator(op: Operator): TO2Type | undefined {
+  isAssignableFrom(_: RealizedType): boolean {
+    return true;
+  }
+
+  findSuffixOperator(_: Operator): TO2Type | undefined {
     return undefined;
   }
 
@@ -105,19 +111,19 @@ export class GenericParameter implements RealizedType {
     return undefined;
   }
 
-  realizedType(context: ModuleContext): RealizedType {
+  realizedType(_: ModuleContext): RealizedType {
     return this;
   }
 
   fillGenerics(
-    context: ModuleContext,
+    _: ModuleContext,
     genericMap: Record<string, RealizedType>,
   ): RealizedType {
     return genericMap.hasOwnProperty(this.name) ? genericMap[this.name] : this;
   }
 
   guessGeneric(
-    context: ModuleContext,
+    _: ModuleContext,
     genericMap: Record<string, RealizedType>,
     realizedType: RealizedType,
   ) {
@@ -175,6 +181,10 @@ export const UNKNOWN_TYPE: RealizedType = {
   name: "<unknown>",
   localName: "<unknown>",
   description: "Undeterminded type",
+
+  hasGnerics(context: ModuleContext): boolean {
+    return false;
+  },
 
   isAssignableFrom(): boolean {
     return false;

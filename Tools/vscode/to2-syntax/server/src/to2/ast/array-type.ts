@@ -25,6 +25,10 @@ export class ArrayType implements RealizedType {
     this.description = "";
   }
 
+  public hasGnerics(context: ModuleContext): boolean {
+    return this.elementType.realizedType(context).hasGnerics(context);
+  }
+
   public isAssignableFrom(otherType: RealizedType): boolean {
     return this.name === otherType.name;
   }
