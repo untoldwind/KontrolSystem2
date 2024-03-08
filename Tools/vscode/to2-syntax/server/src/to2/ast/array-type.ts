@@ -3,6 +3,7 @@ import { FunctionType } from "./function-type";
 import {
   BUILTIN_BOOL,
   BUILTIN_INT,
+  BUILTIN_STRING,
   GenericParameter,
   RealizedType,
   TO2Type,
@@ -199,12 +200,105 @@ export class ArrayType implements RealizedType {
             "Convert array by applying a function on each element",
           ),
         };
+      case "slice":
+        return {
+          value: new FunctionType(
+            false,
+            [
+              ["start", BUILTIN_INT, false],
+              ["end", BUILTIN_INT, true],
+            ],
+            new ArrayType(this.elementType),
+            "Get a slice of the array",
+          ),
+        };
+      case "reverse":
+        return {
+          value: new FunctionType(
+            false,
+            [],
+            new ArrayType(this.elementType),
+            "Reverse the order of the array",
+          ),
+        };
+      case "sort":
+        return {
+          value: new FunctionType(
+            false,
+            [],
+            new ArrayType(this.elementType),
+            "Sort the array (if possible) and returns new sorted array",
+          ),
+        };
+      case "sort_by":
+        return {
+          value: new FunctionType(
+            false,
+            [
+              [
+                "convert",
+                new FunctionType(
+                  false,
+                  [["item", this.elementType, false]],
+                  new GenericParameter("U"),
+                ),
+                false,
+              ],
+            ],
+            new ArrayType(this.elementType),
+            "Sort the array by value extracted from items. Sort value can be other number or string",
+          ),
+        };
+      case "sort_with":
+        return {
+          value: new FunctionType(
+            false,
+            [
+              [
+                "comparator",
+                new FunctionType(
+                  false,
+                  [
+                    ["item1", this.elementType, false],
+                    ["item2", this.elementType, false],
+                  ],
+                  BUILTIN_INT,
+                ),
+                false,
+              ],
+            ],
+            new ArrayType(this.elementType),
+            "Sort the array with explicit comparator. Comparator should return -1 for less, 0 for equal and 1 for greater",
+          ),
+        };
+      case "to_string":
+        return {
+          value: new FunctionType(
+            false,
+            [],
+            BUILTIN_STRING,
+            "Get string representation of the array",
+          ),
+        };
     }
     return undefined;
   }
 
   public allMethodNames(): string[] {
-    return ["filter", "find", "exists", "map", "flat_map", "filter_map"];
+    return [
+      "filter",
+      "find",
+      "exists",
+      "map",
+      "flat_map",
+      "filter_map",
+      "slice",
+      "reverse",
+      "sort",
+      "sort_by",
+      "sort_with",
+      "to_string",
+    ];
   }
 
   public forInSource(): TO2Type | undefined {
