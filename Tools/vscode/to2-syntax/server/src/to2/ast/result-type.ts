@@ -2,7 +2,7 @@ import { ModuleContext } from "./context";
 import { WithDefinitionRef } from "./definition-ref";
 import { FunctionType } from "./function-type";
 import { Operator } from "./operator";
-import { RealizedType, TO2Type } from "./to2-type";
+import { BUILTIN_BOOL, RealizedType, TO2Type } from "./to2-type";
 
 export class ResultType implements RealizedType {
   public readonly kind = "Result";
@@ -79,11 +79,20 @@ export class ResultType implements RealizedType {
   }
 
   public findField(name: string): WithDefinitionRef<TO2Type> | undefined {
-    return undefined;
+    switch (name) {
+      case "success":
+        return { value: BUILTIN_BOOL };
+      case "value":
+        return { value: this.successType };
+      case "error":
+        return { value: this.errorType };
+      default:
+        return undefined;
+    }
   }
 
   public allFieldNames(): string[] {
-    return [];
+    return ["success", "value", "error"];
   }
 
   public findMethod(name: string): WithDefinitionRef<FunctionType> | undefined {
