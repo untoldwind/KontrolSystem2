@@ -154,7 +154,45 @@ export class ArrayType implements RealizedType {
               ],
             ],
             new ArrayType(new GenericParameter("T")),
-            "Check if an item satisfying a predicate exists",
+            "Convert array by applying a function on each element",
+          ),
+        };
+      case "flat_map":
+        return {
+          value: new FunctionType(
+            false,
+            [
+              [
+                "convert",
+                new FunctionType(
+                  false,
+                  [["item", this.elementType, false]],
+                  new ArrayType(new GenericParameter("T")),
+                ),
+                false,
+              ],
+            ],
+            new ArrayType(new GenericParameter("T")),
+            "Convert array by applying a function on each element",
+          ),
+        };
+      case "filter_map":
+        return {
+          value: new FunctionType(
+            false,
+            [
+              [
+                "convert",
+                new FunctionType(
+                  false,
+                  [["item", this.elementType, false]],
+                  new OptionType(new GenericParameter("T")),
+                ),
+                false,
+              ],
+            ],
+            new ArrayType(new GenericParameter("T")),
+            "Convert array by applying a function on each element",
           ),
         };
     }
@@ -162,7 +200,7 @@ export class ArrayType implements RealizedType {
   }
 
   public allMethodNames(): string[] {
-    return ["filter", "find", "exists", "map"];
+    return ["filter", "find", "exists", "map", "flat_map", "filter_map"];
   }
 
   public forInSource(): TO2Type | undefined {
