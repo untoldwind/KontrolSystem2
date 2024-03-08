@@ -18,7 +18,7 @@ Deprecated: use cancel_warp()
 ### cancel_warp
 
 ```rust
-pub fn cancel_warp ( ) -> Unit
+pub sync fn cancel_warp ( ) -> Unit
 ```
 
 Cancel time warp
@@ -99,7 +99,7 @@ Get current maximum allowed time warp index.
 ### set_warp_index
 
 ```rust
-pub fn set_warp_index ( index : int ) -> bool
+pub sync fn set_warp_index ( index : int ) -> Unit
 ```
 
 Set the current time warp index.
@@ -111,28 +111,13 @@ Name | Type | Optional | Description
 --- | --- | --- | ---
 index | int |  | 
 
-### sync_warp_to
-
-```rust
-pub sync fn sync_warp_to ( ut : float ) -> Unit
-```
-
-Synchronized version of `warp_to`. Use with care.
-
-
-Parameters
-
-Name | Type | Optional | Description
---- | --- | --- | ---
-ut | float |  | 
-
 ### warp_to
 
 ```rust
-pub fn warp_to ( ut : float ) -> Unit
+pub sync fn warp_to ( ut : float ) -> Unit
 ```
 
-Warp forward to a specific universal time.
+Synchronized version of `warp_to`. Use with care.
 
 
 Parameters

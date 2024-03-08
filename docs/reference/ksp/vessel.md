@@ -34,6 +34,48 @@ sas | bool | R/W |
 science | bool | R/W | 
 solar_panels | bool | R/W | 
 
+### ActuatorMode
+
+Actuator mode of a reaction wheel
+
+#### Methods
+
+##### to_string
+
+```rust
+actuatormode.to_string ( ) -> string
+```
+
+String representation of the number
+
+### ActuatorModeConstants
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+All | [ksp::vessel::ActuatorMode](/reference/ksp/vessel.md#actuatormode) | R/O | Always on
+ManualOnly | [ksp::vessel::ActuatorMode](/reference/ksp/vessel.md#actuatormode) | R/O | Only active in manual control
+SASOnly | [ksp::vessel::ActuatorMode](/reference/ksp/vessel.md#actuatormode) | R/O | Only active with SAS
+
+#### Methods
+
+##### from_string
+
+```rust
+actuatormodeconstants.from_string ( value : string ) -> Option<ksp::vessel::ActuatorMode>
+```
+
+Parse from string
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+value | string |  | Enum value to lookup
+
 ### Autopilot
 
 
@@ -896,6 +938,43 @@ moduleparachute.repack ( ) -> bool
 
 
 
+### ModuleRCS
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+enable_pitch | bool | R/W | 
+enable_roll | bool | R/W | 
+enable_x | bool | R/W | 
+enable_y | bool | R/W | 
+enable_yaw | bool | R/W | 
+enable_z | bool | R/W | 
+enabled | bool | R/W | 
+part | [ksp::vessel::Part](/reference/ksp/vessel.md#part) | R/O | 
+part_name | string | R/O | 
+propellant | [ksp::resource::ResourceDefinition](/reference/ksp/resource.md#resourcedefinition) | R/O | 
+thrust_limiter | float | R/W | 
+
+### ModuleReactionWheel
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+has_resources_to_operate | bool | R/O | 
+part | [ksp::vessel::Part](/reference/ksp/vessel.md#part) | R/O | 
+part_name | string | R/O | 
+required_resources | [ksp::resource::ResourceSetting](/reference/ksp/resource.md#resourcesetting)[] | R/O | 
+toggle_torque | bool | R/W | 
+wheel_actuator_mode | [ksp::vessel::ActuatorMode](/reference/ksp/vessel.md#actuatormode) | R/W | 
+wheel_authority | float | R/W | 
+wheel_state | [ksp::vessel::ReactionWheelState](/reference/ksp/vessel.md#reactionwheelstate) | R/O | 
+
 ### ModuleScienceExperiment
 
 
@@ -1109,6 +1188,8 @@ is_heatshield | bool | R/O |
 is_launch_clamp | bool | R/O | 
 is_light | bool | R/O | 
 is_parachute | bool | R/O | 
+is_rcs | bool | R/O | 
+is_reaction_wheel | bool | R/O | 
 is_science_experiment | bool | R/O | 
 is_solar_panel | bool | R/O | 
 is_transmitter | bool | R/O | 
@@ -1119,6 +1200,8 @@ parachute | Option&lt;[ksp::vessel::ModuleParachute](/reference/ksp/vessel.md#mo
 part_category | [ksp::vessel::PartCategory](/reference/ksp/vessel.md#partcategory) | R/O | 
 part_name | string | R/O | 
 position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get position of the part in celestial frame of the main body. 
+rcs | Option&lt;[ksp::vessel::ModuleRCS](/reference/ksp/vessel.md#modulercs)> | R/O | 
+reaction_wheel | Option&lt;[ksp::vessel::ModuleReactionWheel](/reference/ksp/vessel.md#modulereactionwheel)> | R/O | 
 resource_mass | float | R/O | Resource mass of the part 
 resource_thermal_mass | float | R/O | 
 resources | [ksp::resource::ResourceContainer](/reference/ksp/resource.md#resourcecontainer) | R/O | 
@@ -1182,6 +1265,48 @@ none | [ksp::vessel::PartCategory](/reference/ksp/vessel.md#partcategory) | R/O 
 
 ```rust
 partcategoryconstants.from_string ( value : string ) -> Option<ksp::vessel::PartCategory>
+```
+
+Parse from string
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+value | string |  | Enum value to lookup
+
+### ReactionWheelState
+
+State of a reaction wheel
+
+#### Methods
+
+##### to_string
+
+```rust
+reactionwheelstate.to_string ( ) -> string
+```
+
+String representation of the number
+
+### ReactionWheelStateConstants
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+Active | [ksp::vessel::ReactionWheelState](/reference/ksp/vessel.md#reactionwheelstate) | R/O | Wheel active
+Broken | [ksp::vessel::ReactionWheelState](/reference/ksp/vessel.md#reactionwheelstate) | R/O | Wheel broken
+Disabled | [ksp::vessel::ReactionWheelState](/reference/ksp/vessel.md#reactionwheelstate) | R/O | Wheel disabled
+
+#### Methods
+
+##### from_string
+
+```rust
+reactionwheelstateconstants.from_string ( value : string ) -> Option<ksp::vessel::ReactionWheelState>
 ```
 
 Parse from string
@@ -1803,6 +1928,7 @@ value | string |  | Enum value to lookup
 
 Name | Type | Description
 --- | --- | ---
+ActuatorMode | ksp::vessel::ActuatorModeConstants | Actuator mode of a reaction wheel
 AutopilotMode | ksp::vessel::AutopilotModeConstants | Vessel autopilot (SAS) mode
 CommandControlState | ksp::vessel::CommandControlStateConstants | Current state of a command module
 DeltaVSituation | ksp::vessel::DeltaVSituationConstants | Vessel situation for delta-v calculation
@@ -1813,6 +1939,7 @@ ParachuteDeployMode | ksp::vessel::ParachuteDeployModeConstants | Parachute depl
 ParachuteDeployState | ksp::vessel::ParachuteDeployStateConstants | Parachute deploy state
 ParachuteSafeStates | ksp::vessel::ParachuteSafeStatesConstants | Parachute safe states
 PartCategory | ksp::vessel::PartCategoryConstants | Vessel part category
+ReactionWheelState | ksp::vessel::ReactionWheelStateConstants | State of a reaction wheel
 VesselControlState | ksp::vessel::VesselControlStateConstants | Vessel control state
 VesselSituation | ksp::vessel::VesselSituationConstants | Vessel situation
 

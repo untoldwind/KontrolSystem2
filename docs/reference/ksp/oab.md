@@ -303,12 +303,16 @@ is_deployable | bool | R/O |
 is_engine | bool | R/O | 
 is_generator | bool | R/O | 
 is_light | bool | R/O | 
+is_rcs | bool | R/O | 
+is_reaction_wheel | bool | R/O | 
 is_s_science_experiment | bool | R/O | 
 is_solar_panel | bool | R/O | 
 is_transmitter | bool | R/O | 
 light | Option&lt;[ksp::oab::ObjectAssemblyLight](/reference/ksp/oab.md#objectassemblylight)> | R/O | 
 part_category | [ksp::vessel::PartCategory](/reference/ksp/vessel.md#partcategory) | R/O | 
 part_name | string | R/O | 
+rcs | Option&lt;[ksp::oab::ObjectAssemblyRCS](/reference/ksp/oab.md#objectassemblyrcs)> | R/O | 
+reaction_wheel | Option&lt;[ksp::oab::ObjectAssemblyReactionWheel](/reference/ksp/oab.md#objectassemblyreactionwheel)> | R/O | 
 relative_position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
 resources | [ksp::oab::ObjectAssemblyResource](/reference/ksp/oab.md#objectassemblyresource)[] | R/O | 
 science_experiment | Option&lt;[ksp::oab::ObjectAssemblyScienceExperiment](/reference/ksp/oab.md#objectassemblyscienceexperiment)> | R/O | 
@@ -316,6 +320,43 @@ solar_panel | Option&lt;[ksp::oab::ObjectAssemblySolarPanel](/reference/ksp/oab.
 total_mass | float | R/O | Total mass of the part 
 transmitter | Option&lt;[ksp::oab::ObjectAssemblyTransmitter](/reference/ksp/oab.md#objectassemblytransmitter)> | R/O | 
 wet_mass | float | R/O | 
+
+### ObjectAssemblyRCS
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+enable_pitch | bool | R/W | 
+enable_roll | bool | R/W | 
+enable_x | bool | R/W | 
+enable_y | bool | R/W | 
+enable_yaw | bool | R/W | 
+enable_z | bool | R/W | 
+enabled | bool | R/W | 
+part | [ksp::oab::ObjectAssemblyPart](/reference/ksp/oab.md#objectassemblypart) | R/O | 
+part_name | string | R/O | 
+propellant | [ksp::resource::ResourceDefinition](/reference/ksp/resource.md#resourcedefinition) | R/O | 
+thrust_limiter | float | R/W | 
+
+### ObjectAssemblyReactionWheel
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+has_resources_to_operate | bool | R/O | 
+part | [ksp::oab::ObjectAssemblyPart](/reference/ksp/oab.md#objectassemblypart) | R/O | 
+part_name | string | R/O | 
+required_resources | [ksp::resource::ResourceSetting](/reference/ksp/resource.md#resourcesetting)[] | R/O | 
+toggle_torque | bool | R/W | 
+wheel_actuator_mode | [ksp::vessel::ActuatorMode](/reference/ksp/vessel.md#actuatormode) | R/W | 
+wheel_authority | float | R/W | 
+wheel_state | [ksp::vessel::ReactionWheelState](/reference/ksp/vessel.md#reactionwheelstate) | R/O | 
 
 ### ObjectAssemblyResource
 
