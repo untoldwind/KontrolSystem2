@@ -2,7 +2,7 @@
   "name": "to2-syntax",
   "displayName": "to2-syntax",
   "description": "",
-  "version": "0.0.30",
+  "version": "0.0.31",
   "license": "MIT",
   "engines": {
     "vscode": "^1.76.0"
@@ -84,9 +84,9 @@
     "postinstall": "cd client && npm install && cd ../server && npm install"
   },
   "devDependencies": {
-    "@types/node": "20.10.5",
-    "@vscode/vsce": "2.22.0",
-    "prettier": "3.1.1",
-    "typescript": "^5.3.3"
+    "@types/node": "20.11.25",
+    "@vscode/vsce": "2.24.0",
+    "prettier": "3.2.5",
+    "typescript": "^5.4.2"
   }
 }
