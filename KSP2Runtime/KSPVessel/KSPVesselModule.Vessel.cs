@@ -51,6 +51,9 @@ public partial class KSPVesselModule {
         [KSField(Description = "Current control status of the vessel.")]
         public VesselControlState ControlStatus => vessel.ControlStatus;
 
+        [KSField]
+        public ConnectionNodeStatus ConnectionStatus => vessel.SimulationObject.Telemetry.CommNetConnectionStatus;
+
         [KSField(Description = "Collection of methods to interact with the maneuver plan of the vessel.")]
         public ManeuverAdapter Maneuver { get; }
 
@@ -216,12 +219,12 @@ public partial class KSPVesselModule {
                 : new Option<KSPScienceModule.ResearchLocationAdapter>();
 
         [KSField(Description = "Access the science storage/research inventory of the vessel.")]
-        public Option<KSPScienceModule.ScienceStorageAdapter> ScienceStorage {
+        public Option<ScienceStorageAdapter> ScienceStorage {
             get {
                 if (vessel.SimulationObject.TryFindComponent<ScienceStorageComponent>(out var component))
-                    return new Option<KSPScienceModule.ScienceStorageAdapter>(
-                        new KSPScienceModule.ScienceStorageAdapter(component));
-                return new Option<KSPScienceModule.ScienceStorageAdapter>();
+                    return new Option<ScienceStorageAdapter>(
+                        new ScienceStorageAdapter(this, component));
+                return new Option<ScienceStorageAdapter>();
             }
         }
 

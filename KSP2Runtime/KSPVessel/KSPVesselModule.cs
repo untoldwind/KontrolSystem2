@@ -180,6 +180,12 @@ public partial class KSPVesselModule {
                     (Data_ReactionWheel.ReactionWheelState.Active, "Wheel active"),
                     (Data_ReactionWheel.ReactionWheelState.Disabled, "Wheel disabled"),
                     (Data_ReactionWheel.ReactionWheelState.Broken, "Wheel broken"),
+                    }),
+                ("ConnectionNodeStatus", "State of the comm-net connection", typeof(ConnectionNodeStatus), new (Enum value, string description)[] {
+                    (ConnectionNodeStatus.Connected, "Connected"),
+                    (ConnectionNodeStatus.Disconnected, "Disconnected"),
+                    (ConnectionNodeStatus.Pending, "Pending"),
+                    (ConnectionNodeStatus.Invalid, "Invalid"),
                     })
             });
 

@@ -20,6 +20,9 @@
   * This is in part a rollback of the previous change to `warp_to`
 * Add binding for RCS modules
 * Add binding for ReactionWheel modules
+* Add `.active_transmitter` field to `ScienceStorage`
+  * `ScienceStorage` had to be moved from `ksp::science` to `ksp::vessel`
+* Add `.connection_status` to vessel
 
 ## 0.5.4.0 -> 0.5.4.1
 
