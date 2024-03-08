@@ -36,7 +36,7 @@ import {
 import { Registry } from "./to2/ast/registry";
 import { TO2ModuleNode, isTO2ModuleNode } from "./to2/ast/to2-module";
 import { module } from "./to2/parser-module";
-import { pathToUri, uriToPath } from "./utils";
+import { isDirectory, pathToUri, uriToPath } from "./utils";
 
 export class LspServerSingleton {
   private readonly registry = new Registry();
@@ -168,16 +168,32 @@ export class LspServerSingleton {
 
   async indexWorkspace(workspaceUri: string) {
     const workspacePath = uriToPath(workspaceUri);
-    if (!workspacePath) return;
+    if (!workspacePath || !(await isDirectory(workspacePath))) return;
 
     this.workspaceFolders.add(workspaceUri);
+
+    let pathsToIndex = [workspacePath];
+    if (path.basename(workspacePath) === "KontrolSystem2") {
+      // Editor has been opened on plugin folder, try to find "to2" and "to2Local" subdirectories
+      const files = await fs.readdir(workspacePath, { withFileTypes: true });
+      const subDirs = files
+        .filter(
+          (f) => f.isDirectory() && (f.name === "to2" || f.name === "to2Local"),
+        )
+        .map((f) => path.join(workspacePath, f.name));
+
+      if (subDirs.length > 0) {
+        pathsToIndex = subDirs;
+      }
+    }
+
     const progress = this.hasWorkDonwCapability
       ? await this.connection.window.createWorkDoneProgress()
       : undefined;
 
-    progress?.begin("Indexing", 0, workspacePath, true);
+    progress?.begin("Indexing", 0, pathsToIndex.join(", "), true);
 
-    const stack: string[] = [workspacePath];
+    const stack: string[] = pathsToIndex;
     const indexedModules: TO2ModuleNode[] = [];
 
     while (progress === undefined || !progress.token.isCancellationRequested) {
@@ -222,16 +238,13 @@ export class LspServerSingleton {
   async updateConfig(config: To2LspSettings) {
     this.globalSettings = config;
 
-    if (config.libraryPath.length === 0) return;
-    try {
-      const stat = await fs.stat(config.libraryPath);
-      if (!stat.isDirectory()) return;
-      const libraryUri = pathToUri(config.libraryPath, this.documents);
+    for (const libraryPath of [config.libraryPath, config.localLibraryPath]) {
+      if (libraryPath.length === 0 || !(await isDirectory(libraryPath)))
+        continue;
+      const libraryUri = pathToUri(libraryPath, this.documents);
       if (!this.workspaceFolders.has(libraryUri)) {
-        this.indexWorkspace(libraryUri);
+        await this.indexWorkspace(libraryUri);
       }
-    } catch {
-      return;
     }
   }
 

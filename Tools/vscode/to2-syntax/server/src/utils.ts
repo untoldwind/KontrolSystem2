@@ -1,6 +1,7 @@
 import { TextDocuments } from "vscode-languageserver";
 import { DocumentUri, TextDocument } from "vscode-languageserver-textdocument";
 import { URI } from "vscode-uri";
+import * as fs from "fs/promises";
 
 export function uriToPath(stringUri: DocumentUri): string | undefined {
   if (stringUri.startsWith("zipfile:")) {
@@ -46,4 +47,13 @@ const RE_PATHSEP_WINDOWS = /\\/g;
  */
 export function normalizeFsPath(fsPath: string): string {
   return fsPath.replace(RE_PATHSEP_WINDOWS, "/");
+}
+
+export async function isDirectory(fsPath: string): Promise<boolean> {
+  try {
+    const stat = await fs.stat(fsPath);
+    return stat.isDirectory();
+  } catch {
+    return false;
+  }
 }

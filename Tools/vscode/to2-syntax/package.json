@@ -29,6 +29,12 @@
           "default": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Kerbal Space Program 2\\BepInEx\\plugins\\KontrolSystem2\\to2",
           "description": "TO2 library folder"
         },
+        "to2LspServer.localLibraryPath": {
+          "scope": "window",
+          "type": "string",
+          "default": "",
+          "description": "TO2 local library folder (if somewhere else than to2Local)"
+        },
         "to2LspServer.maxNumberOfProblems": {
           "scope": "resource",
           "type": "number",
