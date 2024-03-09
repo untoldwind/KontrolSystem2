@@ -5,12 +5,11 @@ using KSP.Sim.DeltaV;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
-public abstract class BaseAirIntakeAdapter<P, T> : BaseModuleAdapter<P, T> where P : BasePartAdapter<T> where T : IDeltaVPart {
-    protected readonly Data_ResourceIntake dataResourceIntake;
-
-    public BaseAirIntakeAdapter(P part, Data_ResourceIntake dataResourceIntake) : base(part) {
-        this.dataResourceIntake = dataResourceIntake;
-    }
+public abstract class BaseAirIntakeAdapter<P, T>(P part, Data_ResourceIntake dataResourceIntake)
+    : BaseModuleAdapter<P, T>(part)
+    where P : BasePartAdapter<T>
+    where T : IDeltaVPart {
+    protected readonly Data_ResourceIntake dataResourceIntake = dataResourceIntake;
 
     [KSField]
     public KSPResourceModule.ResourceDefinitionAdapter Resource => new(dataResourceIntake.ResourceDefinitionData);

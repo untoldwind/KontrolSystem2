@@ -4,12 +4,10 @@ using KSP.Sim.DeltaV;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
-public abstract class BaseDecouplerAdapter<P, T> : BaseModuleAdapter<P, T> where P : BasePartAdapter<T> where T : IDeltaVPart {
-    protected readonly Data_Decouple dataDecouple;
-
-    protected BaseDecouplerAdapter(P part, Data_Decouple dataDecouple) : base(part) {
-        this.dataDecouple = dataDecouple;
-    }
+public abstract class BaseDecouplerAdapter<P, T>(P part, Data_Decouple dataDecouple) : BaseModuleAdapter<P, T>(part)
+    where P : BasePartAdapter<T>
+    where T : IDeltaVPart {
+    protected readonly Data_Decouple dataDecouple = dataDecouple;
 
     [KSField]
     public double EjectionImpulse {

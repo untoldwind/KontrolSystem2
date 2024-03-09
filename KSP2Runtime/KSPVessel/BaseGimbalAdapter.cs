@@ -4,12 +4,10 @@ using KSP.Sim.DeltaV;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
-public abstract class BaseGimbalAdapter<P, T> : BaseModuleAdapter<P, T> where P : BasePartAdapter<T> where T : IDeltaVPart {
-    protected readonly Data_Gimbal dataGimbal;
-
-    protected BaseGimbalAdapter(P part, Data_Gimbal dataGimbal) : base(part) {
-        this.dataGimbal = dataGimbal;
-    }
+public abstract class BaseGimbalAdapter<P, T>(P part, Data_Gimbal dataGimbal) : BaseModuleAdapter<P, T>(part)
+    where P : BasePartAdapter<T>
+    where T : IDeltaVPart {
+    protected readonly Data_Gimbal dataGimbal = dataGimbal;
 
     [KSField]
     public bool Enabled {

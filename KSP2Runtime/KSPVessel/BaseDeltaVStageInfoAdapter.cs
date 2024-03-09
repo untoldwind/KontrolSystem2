@@ -3,12 +3,8 @@ using KSP.Sim.DeltaV;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
-public abstract class BaseDeltaVStageInfoAdapter {
-    protected readonly DeltaVStageInfo deltaVStageInfo;
-
-    protected BaseDeltaVStageInfoAdapter(DeltaVStageInfo deltaVStageInfo) {
-        this.deltaVStageInfo = deltaVStageInfo;
-    }
+public abstract class BaseDeltaVStageInfoAdapter(DeltaVStageInfo deltaVStageInfo) {
+    protected readonly DeltaVStageInfo deltaVStageInfo = deltaVStageInfo;
 
     [KSField(Description = "The stage number.")]
     public long Stage => deltaVStageInfo.Stage;

@@ -4,12 +4,11 @@ using KSP.Sim.DeltaV;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
-public abstract class BaseDeployableAdapter<P, T> : BaseModuleAdapter<P, T> where P : BasePartAdapter<T> where T : IDeltaVPart {
-    protected readonly Data_Deployable dataDeployable;
-
-    protected BaseDeployableAdapter(P part, Data_Deployable dataDeployable) : base(part) {
-        this.dataDeployable = dataDeployable;
-    }
+public abstract class BaseDeployableAdapter<P, T>(P part, Data_Deployable dataDeployable)
+    : BaseModuleAdapter<P, T>(part)
+    where P : BasePartAdapter<T>
+    where T : IDeltaVPart {
+    protected readonly Data_Deployable dataDeployable = dataDeployable;
 
     [KSField] public Data_Deployable.DeployState DeployState => dataDeployable.CurrentDeployState.GetValue();
 

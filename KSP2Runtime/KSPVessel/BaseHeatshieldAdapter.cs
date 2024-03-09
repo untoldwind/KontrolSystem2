@@ -6,12 +6,11 @@ using KSP.Sim.DeltaV;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
-public abstract class BaseHeatshieldAdapter<P, T> : BaseModuleAdapter<P, T> where P : BasePartAdapter<T> where T : IDeltaVPart {
-    protected readonly Data_Heatshield dataHeatshield;
-
-    protected BaseHeatshieldAdapter(P part, Data_Heatshield dataHeatshield) : base(part) {
-        this.dataHeatshield = dataHeatshield;
-    }
+public abstract class BaseHeatshieldAdapter<P, T>(P part, Data_Heatshield dataHeatshield)
+    : BaseModuleAdapter<P, T>(part)
+    where P : BasePartAdapter<T>
+    where T : IDeltaVPart {
+    protected readonly Data_Heatshield dataHeatshield = dataHeatshield;
 
     [KSField] public bool IsDeployed => dataHeatshield.IsDeployed;
 

@@ -6,12 +6,11 @@ using KSP.Sim.DeltaV;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
-public abstract class BaseTransmitterAdapter<P, T> : BaseModuleAdapter<P, T> where P : BasePartAdapter<T> where T : IDeltaVPart {
-    protected readonly Data_Transmitter dataTransmitter;
-
-    protected BaseTransmitterAdapter(P part, Data_Transmitter dataTransmitter) : base(part) {
-        this.dataTransmitter = dataTransmitter;
-    }
+public abstract class BaseTransmitterAdapter<P, T>(P part, Data_Transmitter dataTransmitter)
+    : BaseModuleAdapter<P, T>(part)
+    where P : BasePartAdapter<T>
+    where T : IDeltaVPart {
+    protected readonly Data_Transmitter dataTransmitter = dataTransmitter;
 
     [KSField] public double CommunicationRange => dataTransmitter.CommunicationRange;
 

@@ -6,12 +6,11 @@ using KSP.Sim.DeltaV;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
-public abstract class BaseReactionWheelAdapter<P, T> : BaseModuleAdapter<P, T> where P : BasePartAdapter<T> where T : IDeltaVPart {
-    protected readonly Data_ReactionWheel reactionWheel;
-
-    protected BaseReactionWheelAdapter(P part, Data_ReactionWheel reactionWheel) : base(part) {
-        this.reactionWheel = reactionWheel;
-    }
+public abstract class BaseReactionWheelAdapter<P, T>(P part, Data_ReactionWheel reactionWheel)
+    : BaseModuleAdapter<P, T>(part)
+    where P : BasePartAdapter<T>
+    where T : IDeltaVPart {
+    protected readonly Data_ReactionWheel reactionWheel = reactionWheel;
 
     [KSField]
     public double WheelAuthority {

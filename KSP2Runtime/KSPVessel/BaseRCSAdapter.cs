@@ -5,12 +5,10 @@ using KSP.Sim.DeltaV;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
-public abstract class BaseRCSAdapter<P, T> : BaseModuleAdapter<P, T> where P : BasePartAdapter<T> where T : IDeltaVPart {
-    protected readonly Data_RCS dataRcs;
-
-    protected BaseRCSAdapter(P part, Data_RCS dataRcs) : base(part) {
-        this.dataRcs = dataRcs;
-    }
+public abstract class BaseRCSAdapter<P, T>(P part, Data_RCS dataRcs) : BaseModuleAdapter<P, T>(part)
+    where P : BasePartAdapter<T>
+    where T : IDeltaVPart {
+    protected readonly Data_RCS dataRcs = dataRcs;
 
     [KSField]
     public bool Enabled {

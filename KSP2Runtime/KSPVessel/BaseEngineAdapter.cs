@@ -6,12 +6,10 @@ using KSP.Sim.DeltaV;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
-public abstract class BaseEngineAdapter<P, T> : BaseModuleAdapter<P, T> where P : BasePartAdapter<T> where T : IDeltaVPart {
-    protected readonly Data_Engine dataEngine;
-
-    protected BaseEngineAdapter(P part, Data_Engine dataEngine) : base(part) {
-        this.dataEngine = dataEngine;
-    }
+public abstract class BaseEngineAdapter<P, T>(P part, Data_Engine dataEngine) : BaseModuleAdapter<P, T>(part)
+    where P : BasePartAdapter<T>
+    where T : IDeltaVPart {
+    protected readonly Data_Engine dataEngine = dataEngine;
 
     [KSField(Description = "Check if engine is shutdown")]
     public bool IsShutdown => dataEngine.EngineShutdown;

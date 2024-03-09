@@ -5,12 +5,11 @@ using KSP.Sim.DeltaV;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
-public abstract class BaseSolarPanelAdapter<P, T> : BaseModuleAdapter<P, T> where P : BasePartAdapter<T> where T : IDeltaVPart {
-    protected readonly Data_SolarPanel dataSolarPanel;
-
-    protected BaseSolarPanelAdapter(P part, Data_SolarPanel dataSolarPanel) : base(part) {
-        this.dataSolarPanel = dataSolarPanel;
-    }
+public abstract class BaseSolarPanelAdapter<P, T>(P part, Data_SolarPanel dataSolarPanel)
+    : BaseModuleAdapter<P, T>(part)
+    where P : BasePartAdapter<T>
+    where T : IDeltaVPart {
+    protected readonly Data_SolarPanel dataSolarPanel = dataSolarPanel;
 
     [KSField] public double EfficiencyMultiplier => dataSolarPanel.EfficiencyMultiplier;
 

@@ -5,12 +5,10 @@ using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
-public abstract class BaseParachuteAdapter<P, T> : BaseModuleAdapter<P, T> where P : BasePartAdapter<T> where T : IDeltaVPart {
-    protected readonly Data_Parachute dataParachute;
-
-    protected BaseParachuteAdapter(P part, Data_Parachute dataParachute) : base(part) {
-        this.dataParachute = dataParachute;
-    }
+public abstract class BaseParachuteAdapter<P, T>(P part, Data_Parachute dataParachute) : BaseModuleAdapter<P, T>(part)
+    where P : BasePartAdapter<T>
+    where T : IDeltaVPart {
+    protected readonly Data_Parachute dataParachute = dataParachute;
 
     [KSField] public Data_Parachute.DeploymentStates DeployState => dataParachute.deployState.GetValue();
 

@@ -3,12 +3,10 @@ using KSP.Sim.DeltaV;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
-public abstract class BaseModuleAdapter<P, T> where P : BasePartAdapter<T> where T : IDeltaVPart {
-    protected readonly P part;
-
-    protected BaseModuleAdapter(P part) {
-        this.part = part;
-    }
+public abstract class BaseModuleAdapter<P, T>(P part)
+    where P : BasePartAdapter<T>
+    where T : IDeltaVPart {
+    protected readonly P part = part;
 
     [KSField] public P Part => part;
 

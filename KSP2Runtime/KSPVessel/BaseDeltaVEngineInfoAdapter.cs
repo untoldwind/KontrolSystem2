@@ -3,12 +3,8 @@ using KSP.Sim.DeltaV;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
-public abstract class BaseDeltaVEngineInfoAdapter {
-    protected readonly DeltaVEngineInfo deltaVEngineInfo;
-
-    protected BaseDeltaVEngineInfoAdapter(DeltaVEngineInfo deltaVEngineInfo) {
-        this.deltaVEngineInfo = deltaVEngineInfo;
-    }
+public abstract class BaseDeltaVEngineInfoAdapter(DeltaVEngineInfo deltaVEngineInfo) {
+    protected readonly DeltaVEngineInfo deltaVEngineInfo = deltaVEngineInfo;
 
     [KSField(Description = "Number of the stage when engine is supposed to start")]
     public long StartBurnStage => deltaVEngineInfo.StartBurnStage;

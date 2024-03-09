@@ -4,12 +4,10 @@ using KSP.Sim.DeltaV;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
-public abstract class BaseFairingAdapter<P, T> : BaseModuleAdapter<P, T> where P : BasePartAdapter<T> where T : IDeltaVPart {
-    protected readonly Data_Fairing dataFairing;
-
-    protected BaseFairingAdapter(P part, Data_Fairing dataFairing) : base(part) {
-        this.dataFairing = dataFairing;
-    }
+public abstract class BaseFairingAdapter<P, T>(P part, Data_Fairing dataFairing) : BaseModuleAdapter<P, T>(part)
+    where P : BasePartAdapter<T>
+    where T : IDeltaVPart {
+    protected readonly Data_Fairing dataFairing = dataFairing;
 
     [KSField]
     public double EjectionForce {

@@ -5,12 +5,11 @@ using KSP.Sim.DeltaV;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
-public abstract class BaseGeneratorAdatper<P, T> : BaseModuleAdapter<P, T> where P : BasePartAdapter<T> where T : IDeltaVPart {
-    protected Data_ModuleGenerator dataModuleGenerator;
-
-    public BaseGeneratorAdatper(P part, Data_ModuleGenerator dataModuleGenerator) : base(part) {
-        this.dataModuleGenerator = dataModuleGenerator;
-    }
+public abstract class BaseGeneratorAdatper<P, T>(P part, Data_ModuleGenerator dataModuleGenerator)
+    : BaseModuleAdapter<P, T>(part)
+    where P : BasePartAdapter<T>
+    where T : IDeltaVPart {
+    protected Data_ModuleGenerator dataModuleGenerator = dataModuleGenerator;
 
     [KSField]
     public double GeneratorOutput => dataModuleGenerator.GeneratorOutput.GetValue();

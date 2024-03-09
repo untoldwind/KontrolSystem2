@@ -7,13 +7,9 @@ using UniLinq;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
-public abstract class BaseCommandAdapter<P, T> : BaseModuleAdapter<P, T> where P : BasePartAdapter<T> where T : IDeltaVPart {
-    private readonly Data_Command dataCommand;
-
-    protected BaseCommandAdapter(P part, Data_Command dataCommand) : base(part) {
-        this.dataCommand = dataCommand;
-    }
-
+public abstract class BaseCommandAdapter<P, T>(P part, Data_Command dataCommand) : BaseModuleAdapter<P, T>(part)
+    where P : BasePartAdapter<T>
+    where T : IDeltaVPart {
     [KSField] public CommandControlState ControlState => dataCommand.controlStatus.GetValue();
 
     [KSField] public bool HasHibernation => dataCommand.hasHibernation;
