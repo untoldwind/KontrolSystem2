@@ -1,0 +1,8 @@
+use * from ksp::testing
+use { ULTRAMARINE } from issue_136::color1
+
+test sync fn test_issue_136() -> Unit = {
+    assert_float(0, ULTRAMARINE.red)
+    assert_float(0, ULTRAMARINE.green)
+    assert_float(0.5, ULTRAMARINE.blue)
+}  

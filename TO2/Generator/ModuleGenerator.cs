@@ -50,6 +50,8 @@ public static class ModuleGenerator {
 
             moduleContext.mappedConstants.Add(declaredConstant.Name, declaredConstant);
             declaredModule.declaredConstants.Add(declaredConstant.Name, declaredConstant);
+            if (declaredConstant.IsPublic)
+                declaredModule.publicConstants.Add(declaredConstant.Name, declaredConstant);
         }
     }
 

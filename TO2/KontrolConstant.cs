@@ -18,19 +18,11 @@ public interface IKontrolConstant {
     IREPLValue REPLValue();
 }
 
-public class CompiledKontrolConstant : IKontrolConstant {
-    private readonly FieldInfo runtimeField;
-
-    public CompiledKontrolConstant(string name, string? description, TO2Type type, FieldInfo runtimeField) {
-        Name = name;
-        Description = description;
-        Type = type;
-        this.runtimeField = runtimeField;
-    }
-
-    public string Name { get; }
-    public string? Description { get; }
-    public TO2Type Type { get; }
+public class CompiledKontrolConstant(string name, string? description, TO2Type type, FieldInfo runtimeField)
+    : IKontrolConstant {
+    public string Name { get; } = name;
+    public string? Description { get; } = description;
+    public TO2Type Type { get; } = type;
 
     public void EmitLoad(IBlockContext context) {
         context.IL.Emit(OpCodes.Ldsfld, runtimeField);
@@ -41,20 +33,12 @@ public class CompiledKontrolConstant : IKontrolConstant {
     }
 }
 
-public class EnumKontrolConstant : IKontrolConstant {
-    private readonly BoundEnumConstType enumType;
+public class EnumKontrolConstant(string name, BoundEnumConstType type, string description) : IKontrolConstant {
+    public string Name { get; } = name;
 
-    public EnumKontrolConstant(string name, BoundEnumConstType type, string description) {
-        Name = name;
-        enumType = type;
-        Description = description;
-    }
+    public TO2Type Type => type;
 
-    public string Name { get; }
-
-    public TO2Type Type => enumType;
-
-    public string Description { get; }
+    public string Description { get; } = description;
 
     public void EmitLoad(IBlockContext context) {
     }
@@ -64,16 +48,10 @@ public class EnumKontrolConstant : IKontrolConstant {
     }
 }
 
-public class DeclaredKontrolConstant : IKontrolConstant {
-    private readonly DeclaredKontrolModule module;
-    public readonly FieldInfo runtimeField;
-    public readonly ConstDeclaration to2Constant;
-
-    public DeclaredKontrolConstant(DeclaredKontrolModule module, ConstDeclaration to2Constant, FieldInfo runtimeField) {
-        this.module = module;
-        this.to2Constant = to2Constant;
-        this.runtimeField = runtimeField;
-    }
+public class DeclaredKontrolConstant(DeclaredKontrolModule module, ConstDeclaration to2Constant, FieldInfo runtimeField)
+    : IKontrolConstant {
+    public readonly FieldInfo runtimeField = runtimeField;
+    public readonly ConstDeclaration to2Constant = to2Constant;
 
     public bool IsPublic => to2Constant.isPublic;
 

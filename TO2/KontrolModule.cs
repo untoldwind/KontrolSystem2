@@ -99,6 +99,7 @@ public class DeclaredKontrolModule : IKontrolModule {
     public readonly List<DeclaredKontrolFunction> declaredFunctions;
     public readonly List<DeclaredKontrolStructConstructor> declaredStructConstructors;
     public readonly ModuleContext moduleContext;
+    public readonly Dictionary<string, DeclaredKontrolConstant> publicConstants;
     public readonly Dictionary<string, KontrolFunctionSelector> publicFunctions;
     private readonly Dictionary<string, TO2Type> publicTypes;
     public readonly TO2Module to2Module;
@@ -119,6 +120,7 @@ public class DeclaredKontrolModule : IKontrolModule {
         declaredFunctions = new List<DeclaredKontrolFunction>();
         declaredStructConstructors = new List<DeclaredKontrolStructConstructor>();
         declaredConstants = new Dictionary<string, DeclaredKontrolConstant>();
+        publicConstants = new Dictionary<string, DeclaredKontrolConstant>();
     }
 
     public string Name { get; }
@@ -135,10 +137,10 @@ public class DeclaredKontrolModule : IKontrolModule {
     }
 
     public IEnumerable<string> AllConstantNames =>
-        declaredConstants.Where(kv => kv.Value.IsPublic).Select(kv => kv.Key);
+        publicConstants.Select(kv => kv.Key);
 
     public IKontrolConstant? FindConstant(string name) {
-        return declaredConstants.Get(name);
+        return publicConstants.Get(name);
     }
 
     public IEnumerable<string> AllFunctionNames => publicFunctions.Keys;
