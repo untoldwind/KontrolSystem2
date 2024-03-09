@@ -9,11 +9,11 @@ namespace KontrolSystem.TO2.Runtime;
 public class REPLContext {
     public delegate REPLVariable? VariableResolver(string? name);
 
-    public readonly VariableResolver? externalVariables;
-    public readonly Dictionary<string, REPLVariable> localVariables = new();
+    private readonly VariableResolver? externalVariables;
+    private readonly Dictionary<string, REPLVariable> localVariables = new();
     public readonly REPLBlockContext replBlockContext;
     public readonly REPLModuleContext replModuleContext;
-    public readonly IContext runtimeContext;
+    private readonly IContext runtimeContext;
 
     public REPLContext(KontrolRegistry registry, IContext runtimeContext) : this(runtimeContext,
         new REPLModuleContext(new Context(registry))) {
@@ -43,17 +43,10 @@ public class REPLContext {
         return new REPLContext(runtimeContext, replModuleContext, FindVariable);
     }
 
-    public class REPLVariable : IBlockVariable {
-        public readonly RealizedType declaredType;
-        public readonly bool isConst;
-        public readonly string name;
+    public class REPLVariable(string name, bool isConst, RealizedType declaredType) : IBlockVariable {
+        public readonly RealizedType declaredType = declaredType;
+        public readonly bool isConst = isConst;
         public IREPLValue? value;
-
-        public REPLVariable(string name, bool isConst, RealizedType declaredType) {
-            this.name = name;
-            this.isConst = isConst;
-            this.declaredType = declaredType;
-        }
 
         public string Name => name;
 
@@ -75,29 +68,18 @@ public class REPLContext {
     }
 }
 
-public class REPLModuleContext : ModuleContext {
-    public REPLModuleContext(Context rootContext) : base(rootContext, "repl") {
-    }
-}
+public class REPLModuleContext(Context rootContext) : ModuleContext(rootContext, "repl");
 
 public delegate IBlockVariable? VariableLookup(string? name);
 
-public class REPLBlockContext : IBlockContext {
-    private readonly REPLModuleContext moduleContext;
-    private readonly VariableLookup variableLookup;
-
-    public REPLBlockContext(REPLModuleContext moduleContext, VariableLookup variableLookup,
-        List<StructuralError>? errors = null) {
-        this.moduleContext = moduleContext;
-        this.variableLookup = variableLookup;
-        this.AllErrors = errors ?? new List<StructuralError>();
-        InferredGenerics = new Dictionary<string, RealizedType>();
-        IL = null!;
-    }
-
+public class REPLBlockContext(
+    REPLModuleContext moduleContext,
+    VariableLookup variableLookup,
+    List<StructuralError>? errors = null)
+    : IBlockContext {
     public ModuleContext ModuleContext => moduleContext;
     public MethodBuilder MethodBuilder => throw new REPLException("No method builder");
-    public IILEmitter IL { get; }
+    public IILEmitter IL { get; } = null!;
     public TO2Type ExpectedReturn => BuiltinType.Unit;
 
     public bool IsAsync => false;
@@ -108,7 +90,7 @@ public class REPLBlockContext : IBlockContext {
 
     public bool HasErrors => AllErrors.Count > 0;
 
-    public List<StructuralError> AllErrors { get; }
+    public List<StructuralError> AllErrors { get; } = errors ?? [];
 
     public IBlockContext CreateChildContext() {
         return new REPLBlockContext(moduleContext, variableLookup, AllErrors);
@@ -144,5 +126,5 @@ public class REPLBlockContext : IBlockContext {
         throw new REPLException("No async resume");
     }
 
-    public Dictionary<string, RealizedType> InferredGenerics { get; }
+    public Dictionary<string, RealizedType> InferredGenerics { get; } = new();
 }

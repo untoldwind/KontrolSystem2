@@ -24,7 +24,7 @@ namespace KontrolSystem.GenRefs {
         }
 
         public static Reference GenerateReference(ModuleContext moduleContext, KontrolRegistry registry) =>
-            new Reference(moduleContext, registry);
+            new(moduleContext, registry);
     }
 
     public class Reference {
@@ -41,7 +41,7 @@ namespace KontrolSystem.GenRefs {
                 Builtin.Add(type.LocalName, new TypeReference(moduleContext, type, type.LocalName));
             }
 
-            foreach (IKontrolModule module in registry.modules.Values) {
+            foreach (var module in registry.modules.Values) {
                 if (IsModuleEmpty(module) || !module.Name.Contains("::")) continue;
                 var moduleReference = new ModuleReference(moduleContext, module);
                 Modules.Add(moduleReference.Name, moduleReference);
@@ -78,8 +78,8 @@ namespace KontrolSystem.GenRefs {
             Constants = new Dictionary<string, ConstantReference>();
             Functions = new Dictionary<string, FunctionReference>();
 
-            foreach (string typeName in module.AllTypeNames) {
-                RealizedType type = module.FindType(typeName)!.UnderlyingType(moduleContext);
+            foreach (var typeName in module.AllTypeNames) {
+                var type = module.FindType(typeName)!.UnderlyingType(moduleContext);
                 if (type is FunctionType functionType) {
                     TypeAliases.Add(typeName, new TypeRef(moduleContext, functionType));
                 } else {
@@ -88,14 +88,14 @@ namespace KontrolSystem.GenRefs {
                 }
             }
 
-            foreach (string constantName in module.AllConstantNames) {
-                IKontrolConstant constant = module.FindConstant(constantName)!;
+            foreach (var constantName in module.AllConstantNames) {
+                var constant = module.FindConstant(constantName)!;
                 var constantReference = new ConstantReference(moduleContext, constant);
                 Constants.Add(constantReference.Name, constantReference);
             }
 
             foreach (var functionName in module.AllFunctionNames) {
-                IKontrolFunction function = module.FindFunction(functionName)?.PreferSync!;
+                var function = module.FindFunction(functionName)?.PreferSync!;
                 var functionReference = new FunctionReference(moduleContext, function);
                 Functions.Add(functionReference.Name, functionReference);
             }

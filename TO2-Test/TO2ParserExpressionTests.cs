@@ -7,7 +7,7 @@ using Xunit;
 namespace KontrolSystem.TO2.Test;
 
 public class TO2ParserExpressionTests {
-    private static readonly string[]? IgnorePosition = { "start", "end", "parentContainer" };
+    private static readonly string[]? IgnorePosition = ["start", "end", "parentContainer"];
 
     [Fact]
     public void TestExpressionInvalid() {
@@ -87,7 +87,7 @@ public class TO2ParserExpressionTests {
 
         Assert.True(result.WasSuccessful);
         Assert.Equal(" ", result.Remaining.ToString());
-        Helpers.ShouldDeepEqual(new Block(new List<IBlockItem>()), result.Value, IgnorePosition);
+        Helpers.ShouldDeepEqual(new Block([]), result.Value, IgnorePosition);
     }
 
     [Fact]
@@ -96,14 +96,14 @@ public class TO2ParserExpressionTests {
 
         Assert.True(result.WasSuccessful);
         Assert.Equal(" ", result.Remaining.ToString());
-        Helpers.ShouldDeepEqual(new VariableGet(new List<string> { "ab" }), result.Value, IgnorePosition);
+        Helpers.ShouldDeepEqual(new VariableGet(["ab"]), result.Value, IgnorePosition);
 
         result = TO2ParserExpressions.Expression.TryParse("ab + 12");
 
         Assert.True(result.WasSuccessful);
         Assert.Equal("", result.Remaining.ToString());
         Helpers.ShouldDeepEqual(
-            new Binary(new VariableGet(new List<string> { "ab" }), Operator.Add, new LiteralInt(12)), result.Value,
+            new Binary(new VariableGet(["ab"]), Operator.Add, new LiteralInt(12)), result.Value,
             IgnorePosition);
 
         result = TO2ParserExpressions.Expression.TryParse("ab + 12 * _be13");
@@ -111,7 +111,7 @@ public class TO2ParserExpressionTests {
         Assert.True(result.WasSuccessful);
         Assert.Equal("", result.Remaining.ToString());
         Helpers.ShouldDeepEqual(
-            new Binary(new VariableGet(new List<string> { "ab" }), Operator.Add,
+            new Binary(new VariableGet(["ab"]), Operator.Add,
                 new Binary(new LiteralInt(12), Operator.Mul, new VariableGet(new List<string> { "_be13" }))),
             result.Value, IgnorePosition);
     }
@@ -123,7 +123,7 @@ public class TO2ParserExpressionTests {
         Assert.True(result.WasSuccessful);
         Assert.Equal(" ", result.Remaining.ToString());
         Helpers.ShouldDeepEqual(
-            new MethodCall(new VariableGet(new List<string> { "ab" }), "to_int", new List<Expression>()),
+            new MethodCall(new VariableGet(["ab"]), "to_int", new List<Expression>()),
             result.Value, IgnorePosition);
 
         result = TO2ParserExpressions.Expression.TryParse("de.amethod(1, 2) ");
@@ -131,7 +131,7 @@ public class TO2ParserExpressionTests {
         Assert.True(result.WasSuccessful);
         Assert.Equal(" ", result.Remaining.ToString());
         Helpers.ShouldDeepEqual(
-            new MethodCall(new VariableGet(new List<string> { "de" }), "amethod",
+            new MethodCall(new VariableGet(["de"]), "amethod",
                 new List<Expression> { new LiteralInt(1), new LiteralInt(2) }), result.Value, IgnorePosition);
 
         result = TO2ParserExpressions.Expression.TryParse("(12 + 56).to_float() ");
@@ -148,7 +148,7 @@ public class TO2ParserExpressionTests {
         Assert.Equal(" ", result.Remaining.ToString());
         Helpers.ShouldDeepEqual(
             new MethodCall(
-                new MethodCall(new VariableGet(new List<string> { "de" }), "amethod",
+                new MethodCall(new VariableGet(["de"]), "amethod",
                     new List<Expression> { new LiteralInt(1), new LiteralInt(2) }), "to_something",
                 new List<Expression>()), result.Value, IgnorePosition);
     }

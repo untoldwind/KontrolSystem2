@@ -15,13 +15,13 @@ public readonly struct Result<T, E>(bool success, T? value, E? error) : IAnyResu
     public readonly T? value = value;
     public readonly E? error = error;
 
-    public readonly bool Success => success;
+    public bool Success => success;
 
-    public readonly object? ValueObject => value;
+    public object? ValueObject => value;
 
-    public readonly string? ErrorString => error?.ToString();
+    public string? ErrorString => error?.ToString();
 
-    public readonly object? ErrorObject => error;
+    public object? ErrorObject => error;
 }
 
 public static class Result {

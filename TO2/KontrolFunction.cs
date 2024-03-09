@@ -29,8 +29,8 @@ public interface IKontrolFunction {
 }
 
 public class KontrolFunctionSelector {
-    public readonly IKontrolFunction? async;
-    public readonly IKontrolFunction? sync;
+    private readonly IKontrolFunction? async;
+    private readonly IKontrolFunction? sync;
 
     public KontrolFunctionSelector(IKontrolFunction? async = null, IKontrolFunction? sync = null) {
         this.async = async;

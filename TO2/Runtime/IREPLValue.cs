@@ -205,15 +205,15 @@ public class REPLReturn(IREPLValue returnValue) : IREPLValue {
 public readonly struct REPLBool(bool boolValue) : IREPLValue {
     public readonly bool boolValue = boolValue;
 
-    public readonly TO2Type Type => BuiltinType.Bool;
+    public TO2Type Type => BuiltinType.Bool;
 
-    public readonly object Value => boolValue;
+    public object Value => boolValue;
 
-    public readonly bool IsBreak => false;
+    public bool IsBreak => false;
 
-    public readonly bool IsContinue => false;
+    public bool IsContinue => false;
 
-    public readonly bool IsReturn => false;
+    public bool IsReturn => false;
 
     public IREPLForInSource? ForInSource() {
         return null;
@@ -267,15 +267,15 @@ public readonly struct REPLBool(bool boolValue) : IREPLValue {
 public readonly struct REPLInt(long intValue) : IREPLValue {
     public readonly long intValue = intValue;
 
-    public readonly TO2Type Type => BuiltinType.Int;
+    public TO2Type Type => BuiltinType.Int;
 
-    public readonly object Value => intValue;
+    public object Value => intValue;
 
-    public readonly bool IsBreak => false;
+    public bool IsBreak => false;
 
-    public readonly bool IsContinue => false;
+    public bool IsContinue => false;
 
-    public readonly bool IsReturn => false;
+    public bool IsReturn => false;
 
     public IREPLForInSource? ForInSource() {
         return null;
@@ -387,15 +387,15 @@ public readonly struct REPLInt(long intValue) : IREPLValue {
 public readonly struct REPLFloat(double floatValue) : IREPLValue {
     public readonly double floatValue = floatValue;
 
-    public readonly TO2Type Type => BuiltinType.Float;
+    public TO2Type Type => BuiltinType.Float;
 
-    public readonly object Value => floatValue;
+    public object Value => floatValue;
 
-    public readonly bool IsBreak => false;
+    public bool IsBreak => false;
 
-    public readonly bool IsContinue => false;
+    public bool IsContinue => false;
 
-    public readonly bool IsReturn => false;
+    public bool IsReturn => false;
 
     public IREPLForInSource? ForInSource() {
         return null;
@@ -483,15 +483,15 @@ public readonly struct REPLFloat(double floatValue) : IREPLValue {
 public readonly struct REPLString(string stringValue) : IREPLValue {
     public readonly string stringValue = stringValue;
 
-    public readonly TO2Type Type => BuiltinType.String;
+    public TO2Type Type => BuiltinType.String;
 
-    public readonly object Value => stringValue;
+    public object Value => stringValue;
 
-    public readonly bool IsBreak => false;
+    public bool IsBreak => false;
 
-    public readonly bool IsContinue => false;
+    public bool IsContinue => false;
 
-    public readonly bool IsReturn => false;
+    public bool IsReturn => false;
 
     public IREPLForInSource? ForInSource() {
         return null;
@@ -502,15 +502,15 @@ public readonly struct REPLArray(ArrayType arrayType, Array arrayValue) : IREPLV
     public readonly Array arrayValue = arrayValue;
     public readonly ArrayType arrayType = arrayType;
 
-    public readonly TO2Type Type => arrayType;
+    public TO2Type Type => arrayType;
 
-    public readonly object Value => arrayValue;
+    public object Value => arrayValue;
 
-    public readonly bool IsBreak => false;
+    public bool IsBreak => false;
 
-    public readonly bool IsContinue => false;
+    public bool IsContinue => false;
 
-    public readonly bool IsReturn => false;
+    public bool IsReturn => false;
 
     public IREPLForInSource ForInSource() {
         return new REPLArrayForInSource(arrayValue, arrayType);
@@ -518,8 +518,6 @@ public readonly struct REPLArray(ArrayType arrayType, Array arrayValue) : IREPLV
 }
 
 public class REPLArrayForInSource(Array arrayValue, ArrayType arrayType) : IREPLForInSource {
-    private readonly ArrayType arrayType = arrayType;
-    private readonly Array arrayValue = arrayValue;
     private int nextIdx = 0;
 
     public TO2Type ElementType => arrayType.ElementType;
@@ -552,9 +550,6 @@ public readonly struct REPLRange(Range rangeValue) : IREPLValue {
 }
 
 public class REPLRangeForInSource(long next, long to) : IREPLForInSource {
-    private readonly long to = to;
-    private long next = next;
-
     public TO2Type ElementType => BuiltinType.Int;
 
     public IREPLValue? Next() {
@@ -567,18 +562,17 @@ public class REPLRangeForInSource(long next, long to) : IREPLForInSource {
 }
 
 public readonly struct REPLAny(TO2Type type, object? anyValue) : IREPLValue {
-    public readonly TO2Type type = type;
-    public readonly object? anyValue = anyValue;
+    private readonly object? anyValue = anyValue;
 
-    public readonly TO2Type Type => type;
+    public TO2Type Type => type;
 
-    public readonly object? Value => anyValue;
+    public object? Value => anyValue;
 
-    public readonly bool IsBreak => false;
+    public bool IsBreak => false;
 
-    public readonly bool IsContinue => false;
+    public bool IsContinue => false;
 
-    public readonly bool IsReturn => false;
+    public bool IsReturn => false;
 
     public IREPLForInSource? ForInSource() {
         return null;

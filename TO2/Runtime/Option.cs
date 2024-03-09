@@ -8,7 +8,7 @@ public interface IAnyOption {
     object? ValueObject { get; }
 }
 
-public struct Option<T> : IAnyOption {
+public readonly struct Option<T> : IAnyOption {
     public readonly bool defined;
     public readonly T value;
 

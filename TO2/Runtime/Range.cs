@@ -7,9 +7,9 @@ public readonly struct Range(long from, long to) {
     public readonly long from = from;
     public readonly long to = to;
 
-    public readonly long Length => to < from ? 0 : to - from;
+    public long Length => to < from ? 0 : to - from;
 
-    public readonly T[] Map<T>(Func<long, T> mapper) {
+    public T[] Map<T>(Func<long, T> mapper) {
         if (to < from) return [];
 
         var result = new T[to - from];
@@ -20,7 +20,7 @@ public readonly struct Range(long from, long to) {
         return result;
     }
 
-    public readonly T[] FlatMap<T>(Func<long, T[]> mapper) {
+    public T[] FlatMap<T>(Func<long, T[]> mapper) {
         if (to < from) return [];
         var result = new List<T>((int)(to - from));
 
@@ -31,7 +31,7 @@ public readonly struct Range(long from, long to) {
         return result.ToArray();
     }
 
-    public readonly T[] FilterMap<T>(Func<long, Option<T>> mapper) {
+    public T[] FilterMap<T>(Func<long, Option<T>> mapper) {
         if (to < from) return [];
 
         var result = new List<T>((int)(to - from));
@@ -45,7 +45,7 @@ public readonly struct Range(long from, long to) {
         return result.ToArray();
     }
 
-    public readonly long[] Reverse() {
+    public long[] Reverse() {
         if (to < from) return [];
 
         var result = new long[to - from];
@@ -55,13 +55,13 @@ public readonly struct Range(long from, long to) {
         return result;
     }
 
-    public readonly U Reduce<U>(U initial, Func<U, long, U> reducer) {
+    public U Reduce<U>(U initial, Func<U, long, U> reducer) {
         var result = initial;
         for (var i = from; i < to; i++) result = reducer(result, i);
         return result;
     }
 
-    public readonly string RangeToString() {
+    public string RangeToString() {
         return $"{from}..{to}";
     }
 }

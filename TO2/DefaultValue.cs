@@ -47,60 +47,40 @@ public static class DefaultValue {
     }
 }
 
-public class BoolDefaultValue : IDefaultValue {
-    public BoolDefaultValue(bool value) {
-        this.Value = value;
-    }
-
-    public bool Value { get; }
+public class BoolDefaultValue(bool value) : IDefaultValue {
+    public bool Value { get; } = value;
 
     public void EmitCode(IBlockContext context) {
         context.IL.Emit(Value ? OpCodes.Ldc_I4_1 : OpCodes.Ldc_I4_0);
     }
 }
 
-public class IntDefaultValue : IDefaultValue {
-    public IntDefaultValue(long value) {
-        this.Value = value;
-    }
-
-    public long Value { get; }
+public class IntDefaultValue(long value) : IDefaultValue {
+    public long Value { get; } = value;
 
     public void EmitCode(IBlockContext context) {
         context.IL.Emit(OpCodes.Ldc_I8, Value);
     }
 }
 
-public class FloatDefaultValue : IDefaultValue {
-    public FloatDefaultValue(double value) {
-        this.Value = value;
-    }
-
-    public double Value { get; }
+public class FloatDefaultValue(double value) : IDefaultValue {
+    public double Value { get; } = value;
 
     public void EmitCode(IBlockContext context) {
         context.IL.Emit(OpCodes.Ldc_R8, Value);
     }
 }
 
-public class EnumDefaultValue : IDefaultValue {
-    private readonly int intValue;
-
-    public EnumDefaultValue(Enum value) {
-        intValue = (int)Convert.ChangeType(value, typeof(int));
-    }
+public class EnumDefaultValue(Enum value) : IDefaultValue {
+    private readonly int intValue = (int)Convert.ChangeType(value, typeof(int));
 
     public void EmitCode(IBlockContext context) {
         context.IL.Emit(OpCodes.Ldc_I4, intValue);
     }
 }
 
-public class StringDefaultValue : IDefaultValue {
-    public StringDefaultValue(string value) {
-        this.Value = value;
-    }
-
-    public string Value { get; }
+public class StringDefaultValue(string value) : IDefaultValue {
+    public string Value { get; } = value;
 
     public void EmitCode(IBlockContext context) {
         context.IL.Emit(OpCodes.Ldstr, Value);
