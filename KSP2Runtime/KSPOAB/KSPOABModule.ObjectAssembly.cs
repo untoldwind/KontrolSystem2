@@ -6,12 +6,8 @@ namespace KontrolSystem.KSP.Runtime.KSPOAB;
 
 public partial class KSPOABModule {
     [KSClass("ObjectAssembly", Description = "Represents an object assembly, i.e. a potential vessel.")]
-    public class ObjectAssemblyAdapter {
-        private readonly IObjectAssembly objectAssembly;
-
-        public ObjectAssemblyAdapter(IObjectAssembly objectAssembly) {
-            this.objectAssembly = objectAssembly;
-        }
+    public class ObjectAssemblyAdapter(IObjectAssembly objectAssembly) {
+        private readonly IObjectAssembly objectAssembly = objectAssembly;
 
         [KSField]
         public ObjectAssemblyPartAdapter[] Parts =>
@@ -24,6 +20,6 @@ public partial class KSPOABModule {
         [KSField] public double TotalMass => objectAssembly.GetTotalMass();
 
         [KSField]
-        public ObjectAssemblyDeltaVAdapter DeltaV => new ObjectAssemblyDeltaVAdapter(objectAssembly.VesselDeltaV);
+        public ObjectAssemblyDeltaVAdapter DeltaV => new(objectAssembly.VesselDeltaV);
     }
 }

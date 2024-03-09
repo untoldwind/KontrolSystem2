@@ -8,12 +8,8 @@ namespace KontrolSystem.KSP.Runtime.KSPResource;
 public partial class KSPResourceModule {
     [KSClass("ResourceDefinition",
         Description = "Represents an in-game resource.")]
-    public class ResourceDefinitionAdapter {
-        private readonly ResourceDefinitionData resourceDefinition;
-
-        public ResourceDefinitionAdapter(ResourceDefinitionData resourceDefinition) {
-            this.resourceDefinition = resourceDefinition;
-        }
+    public class ResourceDefinitionAdapter(ResourceDefinitionData resourceDefinition) {
+        private readonly ResourceDefinitionData resourceDefinition = resourceDefinition;
 
         [KSField(Description = "Resource identifier")]
         public long Id => resourceDefinition.resourceDatabaseID.Value;

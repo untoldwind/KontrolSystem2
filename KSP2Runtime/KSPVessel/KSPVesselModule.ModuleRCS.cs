@@ -6,9 +6,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public partial class KSPVesselModule {
     [KSClass("ModuleRCS")]
-    public class ModuleRCSAdapter : BaseRCSAdapter<PartAdapter, PartComponent> {
-        public ModuleRCSAdapter(PartAdapter part, Data_RCS dataRcs) : base(part, dataRcs) {
-        }
+    public class ModuleRCSAdapter(KSPVesselModule.PartAdapter part, Data_RCS dataRcs) : BaseRCSAdapter<PartAdapter, PartComponent>(part, dataRcs) {
     }
 
 }

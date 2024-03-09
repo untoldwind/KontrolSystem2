@@ -108,24 +108,16 @@ public partial class KSPResourceModule {
     }
 
     [KSClass("ResourceTransferEntry")]
-    public class ResourceTransferEntry {
-        private readonly ResourceFlowRequestBroker broker;
-        internal readonly List<ResourceLimit> resourceLimits;
-        private readonly List<ResourceFlowRequestCommandConfig> commands;
+    public class ResourceTransferEntry(FlowDirection flowDirection, KSPResourceModule.ResourceContainerAdapter resourceContainer,
+        List<KSPResourceModule.ResourceLimit> resourceLimits) {
+        private readonly ResourceFlowRequestBroker broker = resourceContainer.partComponent.PartResourceFlowRequestBroker;
+        internal readonly List<ResourceLimit> resourceLimits = resourceLimits;
+        private readonly List<ResourceFlowRequestCommandConfig> commands = new List<ResourceFlowRequestCommandConfig>();
         private ResourceFlowRequestHandle resourceFlowRequestHandle;
 
-        public ResourceTransferEntry(FlowDirection flowDirection, ResourceContainerAdapter resourceContainer,
-            List<ResourceLimit> resourceLimits) {
-            this.FlowDirection = flowDirection;
-            this.ResourceContainer = resourceContainer;
-            this.resourceLimits = resourceLimits;
-            broker = resourceContainer.partComponent.PartResourceFlowRequestBroker;
-            commands = new List<ResourceFlowRequestCommandConfig>();
-        }
+        [KSField] public FlowDirection FlowDirection { get; } = flowDirection;
 
-        [KSField] public FlowDirection FlowDirection { get; }
-
-        [KSField] public ResourceContainerAdapter ResourceContainer { get; }
+        [KSField] public ResourceContainerAdapter ResourceContainer { get; } = resourceContainer;
 
         public IEnumerable<ResourceDefinitionID> ResourceDefinitionIDs =>
             resourceLimits.Select(resourceLimit => resourceLimit.resourceDefinitionID);
@@ -203,13 +195,8 @@ public partial class KSPResourceModule {
         }
     }
 
-    public struct ResourceLimit {
-        public ResourceDefinitionID resourceDefinitionID;
-        public double maxUnits;
-
-        public ResourceLimit(ResourceDefinitionID resourceDefinitionID, double maxUnits) {
-            this.resourceDefinitionID = resourceDefinitionID;
-            this.maxUnits = maxUnits;
-        }
+    public struct ResourceLimit(ResourceDefinitionID resourceDefinitionID, double maxUnits) {
+        public ResourceDefinitionID resourceDefinitionID = resourceDefinitionID;
+        public double maxUnits = maxUnits;
     }
 }

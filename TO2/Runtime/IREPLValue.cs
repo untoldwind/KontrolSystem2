@@ -3,12 +3,8 @@ using KontrolSystem.TO2.AST;
 
 namespace KontrolSystem.TO2.Runtime;
 
-public abstract class REPLValueFuture : Future<IREPLValue?> {
-    protected REPLValueFuture(TO2Type to2Type) {
-        this.Type = to2Type;
-    }
-
-    public TO2Type Type { get; }
+public abstract class REPLValueFuture(TO2Type to2Type) : Future<IREPLValue?> {
+    public TO2Type Type { get; } = to2Type;
 
     public static REPLValueFuture Success(IREPLValue? value) {
         return new SuccessImpl(value);
@@ -45,24 +41,16 @@ public abstract class REPLValueFuture : Future<IREPLValue?> {
         return new ChainNImpl(resultType, futures, map);
     }
 
-    internal class SuccessImpl : REPLValueFuture {
-        private readonly IREPLValue? value;
-
-        public SuccessImpl(IREPLValue? value) : base(value?.Type ?? BuiltinType.Unit) {
-            this.value = value;
-        }
+    internal class SuccessImpl(IREPLValue? value) : REPLValueFuture(value?.Type ?? BuiltinType.Unit) {
+        private readonly IREPLValue? value = value;
 
         public override FutureResult<IREPLValue?> PollValue() {
             return new FutureResult<IREPLValue?>(value);
         }
     }
 
-    internal class WrapImpl : REPLValueFuture {
-        private readonly IAnyFuture future;
-
-        public WrapImpl(TO2Type resultType, IAnyFuture future) : base(resultType) {
-            this.future = future;
-        }
+    internal class WrapImpl(TO2Type resultType, IAnyFuture future) : REPLValueFuture(resultType) {
+        private readonly IAnyFuture future = future;
 
         public override FutureResult<IREPLValue?> PollValue() {
             var result = future.Poll();
@@ -196,12 +184,8 @@ public class REPLContinue : IREPLValue {
     }
 }
 
-public class REPLReturn : IREPLValue {
-    public readonly IREPLValue returnValue;
-
-    public REPLReturn(IREPLValue returnValue) {
-        this.returnValue = returnValue;
-    }
+public class REPLReturn(IREPLValue returnValue) : IREPLValue {
+    public readonly IREPLValue returnValue = returnValue;
 
     public TO2Type Type => returnValue.Type;
 
@@ -218,12 +202,8 @@ public class REPLReturn : IREPLValue {
     }
 }
 
-public readonly struct REPLBool : IREPLValue {
-    public readonly bool boolValue;
-
-    public REPLBool(bool boolValue) {
-        this.boolValue = boolValue;
-    }
+public readonly struct REPLBool(bool boolValue) : IREPLValue {
+    public readonly bool boolValue = boolValue;
 
     public readonly TO2Type Type => BuiltinType.Bool;
 
@@ -284,12 +264,8 @@ public readonly struct REPLBool : IREPLValue {
     }
 }
 
-public readonly struct REPLInt : IREPLValue {
-    public readonly long intValue;
-
-    public REPLInt(long intValue) {
-        this.intValue = intValue;
-    }
+public readonly struct REPLInt(long intValue) : IREPLValue {
+    public readonly long intValue = intValue;
 
     public readonly TO2Type Type => BuiltinType.Int;
 
@@ -408,12 +384,8 @@ public readonly struct REPLInt : IREPLValue {
     }
 }
 
-public readonly struct REPLFloat : IREPLValue {
-    public readonly double floatValue;
-
-    public REPLFloat(double floatValue) {
-        this.floatValue = floatValue;
-    }
+public readonly struct REPLFloat(double floatValue) : IREPLValue {
+    public readonly double floatValue = floatValue;
 
     public readonly TO2Type Type => BuiltinType.Float;
 
@@ -508,12 +480,8 @@ public readonly struct REPLFloat : IREPLValue {
     }
 }
 
-public readonly struct REPLString : IREPLValue {
-    public readonly string stringValue;
-
-    public REPLString(string stringValue) {
-        this.stringValue = stringValue;
-    }
+public readonly struct REPLString(string stringValue) : IREPLValue {
+    public readonly string stringValue = stringValue;
 
     public readonly TO2Type Type => BuiltinType.String;
 
@@ -530,14 +498,9 @@ public readonly struct REPLString : IREPLValue {
     }
 }
 
-public readonly struct REPLArray : IREPLValue {
-    public readonly Array arrayValue;
-    public readonly ArrayType arrayType;
-
-    public REPLArray(ArrayType arrayType, Array arrayValue) {
-        this.arrayType = arrayType;
-        this.arrayValue = arrayValue;
-    }
+public readonly struct REPLArray(ArrayType arrayType, Array arrayValue) : IREPLValue {
+    public readonly Array arrayValue = arrayValue;
+    public readonly ArrayType arrayType = arrayType;
 
     public readonly TO2Type Type => arrayType;
 
@@ -554,16 +517,10 @@ public readonly struct REPLArray : IREPLValue {
     }
 }
 
-public class REPLArrayForInSource : IREPLForInSource {
-    private readonly ArrayType arrayType;
-    private readonly Array arrayValue;
-    private int nextIdx;
-
-    public REPLArrayForInSource(Array arrayValue, ArrayType arrayType) {
-        this.arrayValue = arrayValue;
-        this.arrayType = arrayType;
-        nextIdx = 0;
-    }
+public class REPLArrayForInSource(Array arrayValue, ArrayType arrayType) : IREPLForInSource {
+    private readonly ArrayType arrayType = arrayType;
+    private readonly Array arrayValue = arrayValue;
+    private int nextIdx = 0;
 
     public TO2Type ElementType => arrayType.ElementType;
 
@@ -576,12 +533,8 @@ public class REPLArrayForInSource : IREPLForInSource {
     }
 }
 
-public readonly struct REPLRange : IREPLValue {
-    public readonly Range rangeValue;
-
-    public REPLRange(Range rangeValue) {
-        this.rangeValue = rangeValue;
-    }
+public readonly struct REPLRange(Range rangeValue) : IREPLValue {
+    public readonly Range rangeValue = rangeValue;
 
     public readonly TO2Type Type => BuiltinType.Range;
 
@@ -598,14 +551,9 @@ public readonly struct REPLRange : IREPLValue {
     }
 }
 
-public class REPLRangeForInSource : IREPLForInSource {
-    private readonly long to;
-    private long next;
-
-    public REPLRangeForInSource(long next, long to) {
-        this.next = next;
-        this.to = to;
-    }
+public class REPLRangeForInSource(long next, long to) : IREPLForInSource {
+    private readonly long to = to;
+    private long next = next;
 
     public TO2Type ElementType => BuiltinType.Int;
 
@@ -618,14 +566,9 @@ public class REPLRangeForInSource : IREPLForInSource {
     }
 }
 
-public readonly struct REPLAny : IREPLValue {
-    public readonly TO2Type type;
-    public readonly object? anyValue;
-
-    public REPLAny(TO2Type type, object? anyValue) {
-        this.type = type;
-        this.anyValue = anyValue;
-    }
+public readonly struct REPLAny(TO2Type type, object? anyValue) : IREPLValue {
+    public readonly TO2Type type = type;
+    public readonly object? anyValue = anyValue;
 
     public readonly TO2Type Type => type;
 

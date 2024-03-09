@@ -2,21 +2,14 @@
 
 namespace KontrolSystem.Parsing;
 
-public readonly struct Position : IEquatable<Position> {
-    public readonly string sourceName;
+public readonly struct Position(string sourceName, int position = 0, int line = 1, int column = 1) : IEquatable<Position> {
+    public readonly string sourceName = sourceName;
 
-    public readonly int position;
+    public readonly int position = position;
 
-    public readonly int line;
+    public readonly int line = line;
 
-    public readonly int column;
-
-    public Position(string sourceName, int position = 0, int line = 1, int column = 1) {
-        this.sourceName = sourceName;
-        this.position = position;
-        this.line = line;
-        this.column = column;
-    }
+    public readonly int column = column;
 
     public override bool Equals(object obj) {
         return !ReferenceEquals(null, obj) && Equals((Position)obj);

@@ -7,10 +7,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOAB;
 
 public partial class KSPOABModule {
     [KSClass("ObjectAssemblyStageDeltaV")]
-    public class ObjectAssemblyStageDeltaVAdapter : BaseDeltaVStageInfoAdapter {
-        public ObjectAssemblyStageDeltaVAdapter(DeltaVStageInfo deltaVStageInfo) : base(deltaVStageInfo) {
-        }
-
+    public class ObjectAssemblyStageDeltaVAdapter(DeltaVStageInfo deltaVStageInfo) : BaseDeltaVStageInfoAdapter(deltaVStageInfo) {
         [KSField]
         public ObjectAssemblyEngineDeltaV[] Engines => deltaVStageInfo.EnginesInStage
             .Select(e => new ObjectAssemblyEngineDeltaV(e)).ToArray();

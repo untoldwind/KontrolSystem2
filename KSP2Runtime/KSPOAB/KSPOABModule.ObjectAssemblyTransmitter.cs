@@ -7,8 +7,6 @@ namespace KontrolSystem.KSP.Runtime.KSPOAB;
 
 public partial class KSPOABModule {
     [KSClass("ObjectAssemblyTransmitter")]
-    public class ObjectAssemblyTransmitterAdapter : BaseTransmitterAdapter<ObjectAssemblyPartAdapter, IObjectAssemblyPart> {
-        public ObjectAssemblyTransmitterAdapter(ObjectAssemblyPartAdapter part, Data_Transmitter dataTransmitter) : base(part, dataTransmitter) {
-        }
+    public class ObjectAssemblyTransmitterAdapter(KSPOABModule.ObjectAssemblyPartAdapter part, Data_Transmitter dataTransmitter) : BaseTransmitterAdapter<ObjectAssemblyPartAdapter, IObjectAssemblyPart>(part, dataTransmitter) {
     }
 }

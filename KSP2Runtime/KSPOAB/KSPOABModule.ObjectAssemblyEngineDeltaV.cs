@@ -6,8 +6,6 @@ namespace KontrolSystem.KSP.Runtime.KSPOAB;
 
 public partial class KSPOABModule {
     [KSClass("ObjectAssemblyEngineDeltaV")]
-    public class ObjectAssemblyEngineDeltaV : BaseDeltaVEngineInfoAdapter {
-        public ObjectAssemblyEngineDeltaV(DeltaVEngineInfo deltaVEngineInfo) : base(deltaVEngineInfo) {
-        }
+    public class ObjectAssemblyEngineDeltaV(DeltaVEngineInfo deltaVEngineInfo) : BaseDeltaVEngineInfoAdapter(deltaVEngineInfo) {
     }
 }

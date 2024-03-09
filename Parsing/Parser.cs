@@ -39,15 +39,10 @@ public static class ParserExtensions {
 /// <summary>
 ///     Exception when parsing fails, containing the position of the input where the failure occured.
 /// </summary>
-public class ParseException : Exception {
-    public readonly List<string> expected;
-    public readonly Position position;
-
-    public ParseException(Position position, List<string> expected) : base(
-        $"{position}: Expected {string.Join(" or ", expected)}") {
-        this.position = position;
-        this.expected = expected;
-    }
+public class ParseException(Position position, List<string> expected) : Exception(
+    $"{position}: Expected {string.Join(" or ", expected)}") {
+    public readonly List<string> expected = expected;
+    public readonly Position position = position;
 }
 
 public static class ObjectExt {

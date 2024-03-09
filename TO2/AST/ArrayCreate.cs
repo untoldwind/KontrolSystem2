@@ -8,17 +8,12 @@ using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST;
 
-public class ArrayCreate : Expression {
+public class ArrayCreate(TO2Type? elementType, List<Expression> elements, Position start = new(),
+    Position end = new()) : Expression(start, end) {
     private TypeHint? typeHint;
 
-    public ArrayCreate(TO2Type? elementType, List<Expression> elements, Position start = new(),
-        Position end = new()) : base(start, end) {
-        ElementType = elementType;
-        Elements = elements;
-    }
-
-    private TO2Type? ElementType { get; }
-    private List<Expression> Elements { get; }
+    private TO2Type? ElementType { get; } = elementType;
+    private List<Expression> Elements { get; } = elements;
 
     public override IVariableContainer? VariableContainer {
         set {

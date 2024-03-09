@@ -6,12 +6,8 @@ namespace KontrolSystem.KSP.Runtime.KSPOAB;
 
 public partial class KSPOABModule {
     [KSClass("ObjectAssemblyResource")]
-    public class ObjectAssemblyResourceAdapter {
-        private readonly IObjectAssemblyResource resource;
-
-        public ObjectAssemblyResourceAdapter(IObjectAssemblyResource resource) {
-            this.resource = resource;
-        }
+    public class ObjectAssemblyResourceAdapter(IObjectAssemblyResource resource) {
+        private readonly IObjectAssemblyResource resource = resource;
 
         [KSField]
         public KSPResourceModule.ResourceDefinitionAdapter Resource {

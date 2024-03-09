@@ -6,11 +6,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public partial class KSPVesselModule {
     [KSClass("ModuleLaunchClamp")]
-    public class ModuleLaunchClampAdapter : BaseLaunchClampAdapter<PartAdapter, PartComponent> {
-
-        public ModuleLaunchClampAdapter(PartAdapter part, Data_GroundLaunchClamp dataLaunchClamp) : base(part, dataLaunchClamp) {
-        }
-
+    public class ModuleLaunchClampAdapter(KSPVesselModule.PartAdapter part, Data_GroundLaunchClamp dataLaunchClamp) : BaseLaunchClampAdapter<PartAdapter, PartComponent>(part, dataLaunchClamp) {
         [KSMethod]
         public bool Release() {
             if (!KSPContext.CurrentContext.Game.SpaceSimulation.TryGetViewObject(part.part.SimulationObject,

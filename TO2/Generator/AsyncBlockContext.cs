@@ -81,7 +81,7 @@ public class AsyncBlockContext : IBlockContext {
         storeState = parent.storeState;
         notReady = parent.notReady;
         resume = parent.resume;
-        InferredGenerics = new Dictionary<string, RealizedType>();
+        InferredGenerics = [];
     }
 
     private AsyncBlockContext(AsyncBlockContext parent, IILEmitter il, (LabelRef start, LabelRef end)? innerLoop) {
@@ -111,20 +111,20 @@ public class AsyncBlockContext : IBlockContext {
                 ? MethodAttributes.Private | MethodAttributes.HideBySig | MethodAttributes.Virtual
                 : MethodAttributes.Public | MethodAttributes.HideBySig | MethodAttributes.Virtual,
             generatedReturn,
-            new Type[0]);
+            []);
         ExpectedReturn = expectedReturn;
         IL = new GeneratorILEmitter(MethodBuilder.GetILGenerator());
         variables = parameters.ToDictionary(p => p.Name);
-        AllErrors = new List<StructuralError>();
+        AllErrors = [];
         InnerLoop = null;
         stateField =
             ModuleContext.typeBuilder.DefineField("<async>_state", typeof(int), FieldAttributes.Private);
-        asyncResumes = new List<AsyncResume>();
-        stateRefs = new List<StateRef>();
+        asyncResumes = [];
+        stateRefs = [];
         storeState = IL.DefineLabel(false);
         notReady = IL.DefineLabel(false);
         resume = IL.DefineLabel(false);
-        InferredGenerics = new Dictionary<string, RealizedType>();
+        InferredGenerics = [];
     }
 
     public ModuleContext ModuleContext { get; }

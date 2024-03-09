@@ -9,10 +9,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public partial class KSPVesselModule {
     [KSClass("ModuleEngine")]
-    public class ModuleEngineAdapter : BaseEngineAdapter<PartAdapter, PartComponent> {
-        public ModuleEngineAdapter(PartAdapter part, Data_Engine dataEngine) : base(part, dataEngine) {
-        }
-
+    public class ModuleEngineAdapter(KSPVesselModule.PartAdapter part, Data_Engine dataEngine) : BaseEngineAdapter<PartAdapter, PartComponent>(part, dataEngine) {
         [KSField(Description = "Direction of thrust in the celestial frame of the main body")]
         public Vector3d ThrustDirection =>
             part.vesselAdapter.vessel.mainBody.transform.celestialFrame.ToLocalVector(

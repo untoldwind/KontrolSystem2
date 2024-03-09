@@ -3,19 +3,14 @@ using System.Collections.Generic;
 
 namespace KontrolSystem.TO2.Runtime;
 
-public readonly struct Range {
-    public readonly long from;
-    public readonly long to;
-
-    public Range(long from, long to) {
-        this.from = from;
-        this.to = to;
-    }
+public readonly struct Range(long from, long to) {
+    public readonly long from = from;
+    public readonly long to = to;
 
     public readonly long Length => to < from ? 0 : to - from;
 
     public readonly T[] Map<T>(Func<long, T> mapper) {
-        if (to < from) return new T[0];
+        if (to < from) return [];
 
         var result = new T[to - from];
 
@@ -26,7 +21,7 @@ public readonly struct Range {
     }
 
     public readonly T[] FlatMap<T>(Func<long, T[]> mapper) {
-        if (to < from) return new T[0];
+        if (to < from) return [];
         var result = new List<T>((int)(to - from));
 
         for (var i = from; i < to; i++)
@@ -37,7 +32,7 @@ public readonly struct Range {
     }
 
     public readonly T[] FilterMap<T>(Func<long, Option<T>> mapper) {
-        if (to < from) return new T[0];
+        if (to < from) return [];
 
         var result = new List<T>((int)(to - from));
 
@@ -51,7 +46,7 @@ public readonly struct Range {
     }
 
     public readonly long[] Reverse() {
-        if (to < from) return new long[0];
+        if (to < from) return [];
 
         var result = new long[to - from];
 

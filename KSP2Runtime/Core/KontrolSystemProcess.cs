@@ -13,22 +13,15 @@ public enum KontrolSystemProcessState {
     Error
 }
 
-public class KontrolSystemProcess {
-    public readonly Guid id;
-    internal readonly ITO2Logger logger;
-    private readonly IKontrolModule module;
+public class KontrolSystemProcess(ITO2Logger logger, IKontrolModule module) {
+    public readonly Guid id = Guid.NewGuid();
+    internal readonly ITO2Logger logger = logger;
+    private readonly IKontrolModule module = module;
     internal KSPCoreContext? context;
-
-    public KontrolSystemProcess(ITO2Logger logger, IKontrolModule module) {
-        this.logger = logger;
-        this.module = module;
-        State = KontrolSystemProcessState.Available;
-        id = Guid.NewGuid();
-    }
 
     public string Name => module.Name;
 
-    public KontrolSystemProcessState State { get; private set; }
+    public KontrolSystemProcessState State { get; private set; } = KontrolSystemProcessState.Available;
 
     public void MarkRunning(KSPCoreContext newContext) {
         State = KontrolSystemProcessState.Running;

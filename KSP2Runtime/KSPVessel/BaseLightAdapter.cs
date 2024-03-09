@@ -5,12 +5,8 @@ using KSP.Sim.DeltaV;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
-public abstract class BaseLightAdapter<P, T> : BaseModuleAdapter<P, T> where P : BasePartAdapter<T> where T : IDeltaVPart {
-    protected readonly Data_Light dataLight;
-
-    protected BaseLightAdapter(P part, Data_Light dataLight) : base(part) {
-        this.dataLight = dataLight;
-    }
+public abstract class BaseLightAdapter<P, T>(P part, Data_Light dataLight) : BaseModuleAdapter<P, T>(part) where P : BasePartAdapter<T> where T : IDeltaVPart {
+    protected readonly Data_Light dataLight = dataLight;
 
     [KSField]
     public bool LightEnabled {
@@ -32,7 +28,7 @@ public abstract class BaseLightAdapter<P, T> : BaseModuleAdapter<P, T> where P :
 
     [KSField]
     public Vector3d LightColor {
-        get => new Vector3d(dataLight.lightColorR.GetValue(), dataLight.lightColorG.GetValue(),
+        get => new(dataLight.lightColorR.GetValue(), dataLight.lightColorG.GetValue(),
             dataLight.lightColorB.GetValue());
         set {
             dataLight.lightColorR.SetValue((float)value.x);

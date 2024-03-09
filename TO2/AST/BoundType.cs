@@ -6,34 +6,22 @@ using KontrolSystem.TO2.Generator;
 
 namespace KontrolSystem.TO2.AST;
 
-public class BoundType : RealizedType {
-    public readonly Dictionary<string, IFieldAccessFactory> allowedFields;
-    public readonly Dictionary<string, IMethodInvokeFactory> allowedMethods;
-    private readonly OperatorCollection allowedPrefixOperators;
-    private readonly OperatorCollection allowedSuffixOperators;
-    private readonly string? description;
-    public readonly string localName;
-    private readonly string? modulePrefix;
-    public readonly Type runtimeType;
-    private readonly IEnumerable<RealizedType> typeParameters;
-
-    public BoundType(string? modulePrefix, string localName, string? description, Type runtimeType,
-        OperatorCollection allowedPrefixOperators,
-        OperatorCollection allowedSuffixOperators,
-        IEnumerable<(string name, IMethodInvokeFactory invoker)> allowedMethods,
-        IEnumerable<(string name, IFieldAccessFactory access)> allowedFields,
-        IEnumerable<RealizedType>? typeParameters = null) {
-        this.modulePrefix = modulePrefix;
-        this.localName = localName;
-        this.description = description;
-        this.runtimeType = runtimeType;
-        this.allowedPrefixOperators = allowedPrefixOperators;
-        this.allowedSuffixOperators = allowedSuffixOperators;
-        this.allowedMethods = allowedMethods.ToDictionary(m => m.name, m => m.invoker);
-        this.allowedFields = allowedFields.ToDictionary(m => m.name, m => m.access);
-        this.typeParameters = typeParameters ??
+public class BoundType(string? modulePrefix, string localName, string? description, Type runtimeType,
+    OperatorCollection allowedPrefixOperators,
+    OperatorCollection allowedSuffixOperators,
+    IEnumerable<(string name, IMethodInvokeFactory invoker)> allowedMethods,
+    IEnumerable<(string name, IFieldAccessFactory access)> allowedFields,
+    IEnumerable<RealizedType>? typeParameters = null) : RealizedType {
+    public readonly Dictionary<string, IFieldAccessFactory> allowedFields = allowedFields.ToDictionary(m => m.name, m => m.access);
+    public readonly Dictionary<string, IMethodInvokeFactory> allowedMethods = allowedMethods.ToDictionary(m => m.name, m => m.invoker);
+    private readonly OperatorCollection allowedPrefixOperators = allowedPrefixOperators;
+    private readonly OperatorCollection allowedSuffixOperators = allowedSuffixOperators;
+    private readonly string? description = description;
+    public readonly string localName = localName;
+    private readonly string? modulePrefix = modulePrefix;
+    public readonly Type runtimeType = runtimeType;
+    private readonly IEnumerable<RealizedType> typeParameters = typeParameters ??
                               runtimeType.GetGenericArguments().Select(t => new GenericParameter(t.Name));
-    }
 
     public override string Name {
         get {

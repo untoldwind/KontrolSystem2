@@ -13,10 +13,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOAB;
 
 public partial class KSPOABModule {
     [KSClass("ObjectAssemblyPart", Description = "Represents are part in an object assembly.")]
-    public class ObjectAssemblyPartAdapter : BasePartAdapter<IObjectAssemblyPart> {
-        public ObjectAssemblyPartAdapter(IObjectAssemblyPart objectAssemblyPart) : base(objectAssemblyPart) {
-        }
-
+    public class ObjectAssemblyPartAdapter(IObjectAssemblyPart objectAssemblyPart) : BasePartAdapter<IObjectAssemblyPart>(objectAssemblyPart) {
         [KSField] public PartCategories PartCategory => part.Category;
 
         [KSField] public bool FuelCrossFeed => part.FuelCrossFeed;

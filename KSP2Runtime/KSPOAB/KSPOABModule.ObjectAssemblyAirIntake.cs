@@ -7,8 +7,6 @@ namespace KontrolSystem.KSP.Runtime.KSPOAB;
 
 public partial class KSPOABModule {
     [KSClass("ObjectAssemblyAirIntake")]
-    public class ObjectAssemblyAirIntakeAdapter : BaseAirIntakeAdapter<ObjectAssemblyPartAdapter, IObjectAssemblyPart> {
-        public ObjectAssemblyAirIntakeAdapter(ObjectAssemblyPartAdapter part, Data_ResourceIntake dataResourceIntake) : base(part, dataResourceIntake) {
-        }
+    public class ObjectAssemblyAirIntakeAdapter(KSPOABModule.ObjectAssemblyPartAdapter part, Data_ResourceIntake dataResourceIntake) : BaseAirIntakeAdapter<ObjectAssemblyPartAdapter, IObjectAssemblyPart>(part, dataResourceIntake) {
     }
 }

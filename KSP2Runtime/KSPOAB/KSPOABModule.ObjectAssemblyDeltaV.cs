@@ -7,12 +7,8 @@ namespace KontrolSystem.KSP.Runtime.KSPOAB;
 
 public partial class KSPOABModule {
     [KSClass("ObjectAssemblyDeltaV", Description = "Delta V information of an object assembly")]
-    public class ObjectAssemblyDeltaVAdapter {
-        private readonly VesselDeltaVComponent vesselDeltaVComponent;
-
-        public ObjectAssemblyDeltaVAdapter(VesselDeltaVComponent vesselDeltaVComponent) {
-            this.vesselDeltaVComponent = vesselDeltaVComponent;
-        }
+    public class ObjectAssemblyDeltaVAdapter(VesselDeltaVComponent vesselDeltaVComponent) {
+        private readonly VesselDeltaVComponent vesselDeltaVComponent = vesselDeltaVComponent;
 
         [KSField]
         public ObjectAssemblyStageDeltaVAdapter[] Stages => vesselDeltaVComponent.StageInfo

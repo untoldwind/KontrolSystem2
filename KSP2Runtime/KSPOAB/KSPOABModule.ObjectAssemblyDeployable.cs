@@ -7,8 +7,6 @@ namespace KontrolSystem.KSP.Runtime.KSPOAB;
 
 public partial class KSPOABModule {
     [KSClass("ObjectAssemblyDeployable")]
-    public class ObjectAssemblyDeployableAdapter : BaseDeployableAdapter<ObjectAssemblyPartAdapter, IObjectAssemblyPart> {
-        public ObjectAssemblyDeployableAdapter(ObjectAssemblyPartAdapter part, Data_Deployable dataDeployable) : base(part, dataDeployable) {
-        }
+    public class ObjectAssemblyDeployableAdapter(KSPOABModule.ObjectAssemblyPartAdapter part, Data_Deployable dataDeployable) : BaseDeployableAdapter<ObjectAssemblyPartAdapter, IObjectAssemblyPart>(part, dataDeployable) {
     }
 }

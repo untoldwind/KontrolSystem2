@@ -10,16 +10,10 @@ public interface IAnyResult {
     object? ErrorObject { get; }
 }
 
-public readonly struct Result<T, E> : IAnyResult {
-    public readonly bool success;
-    public readonly T? value;
-    public readonly E? error;
-
-    public Result(bool success, T? value, E? error) {
-        this.success = success;
-        this.value = value;
-        this.error = error;
-    }
+public readonly struct Result<T, E>(bool success, T? value, E? error) : IAnyResult {
+    public readonly bool success = success;
+    public readonly T? value = value;
+    public readonly E? error = error;
 
     public readonly bool Success => success;
 

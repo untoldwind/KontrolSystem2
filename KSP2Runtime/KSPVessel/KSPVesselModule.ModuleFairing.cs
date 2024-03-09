@@ -6,11 +6,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public partial class KSPVesselModule {
     [KSClass("ModuleFairing")]
-    public class ModuleFairingAdapter : BaseFairingAdapter<PartAdapter, PartComponent> {
-        public ModuleFairingAdapter(PartAdapter part, Data_Fairing dataFairing) : base(part, dataFairing) {
-        }
-
-
+    public class ModuleFairingAdapter(KSPVesselModule.PartAdapter part, Data_Fairing dataFairing) : BaseFairingAdapter<PartAdapter, PartComponent>(part, dataFairing) {
         [KSMethod]
         public bool Jettison() {
             if (!KSPContext.CurrentContext.Game.SpaceSimulation.TryGetViewObject(part.part.SimulationObject,

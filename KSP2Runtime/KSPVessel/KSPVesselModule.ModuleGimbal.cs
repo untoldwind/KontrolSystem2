@@ -6,10 +6,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public partial class KSPVesselModule {
     [KSClass("ModuleGimbal")]
-    public class ModuleGimbalAdapter : BaseGimbalAdapter<PartAdapter, PartComponent> {
-        public ModuleGimbalAdapter(PartAdapter part, Data_Gimbal dataGimbal) : base(part, dataGimbal) {
-        }
-
+    public class ModuleGimbalAdapter(KSPVesselModule.PartAdapter part, Data_Gimbal dataGimbal) : BaseGimbalAdapter<PartAdapter, PartComponent>(part, dataGimbal) {
         [KSField]
         public Vector3d PitchYawRoll {
             get {

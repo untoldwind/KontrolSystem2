@@ -8,10 +8,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOAB;
 
 public partial class KSPOABModule {
     [KSClass("ObjectAssemblyScienceExperiment")]
-    public class ObjectAssemblyScienceExperimentAdapter : BaseScienceExperimentAdapter<ObjectAssemblyPartAdapter, IObjectAssemblyPart> {
-        public ObjectAssemblyScienceExperimentAdapter(ObjectAssemblyPartAdapter part, Data_ScienceExperiment dataScienceExperiment) : base(part, dataScienceExperiment) {
-        }
-
+    public class ObjectAssemblyScienceExperimentAdapter(KSPOABModule.ObjectAssemblyPartAdapter part, Data_ScienceExperiment dataScienceExperiment) : BaseScienceExperimentAdapter<ObjectAssemblyPartAdapter, IObjectAssemblyPart>(part, dataScienceExperiment) {
         [KSField]
         public ObjectAssemblyExperimentAdapter[] Experiments => dataScienceExperiment.Experiments
             .Select(expoeriment => new ObjectAssemblyExperimentAdapter(expoeriment)).ToArray();

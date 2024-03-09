@@ -7,10 +7,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOAB;
 
 public partial class KSPOABModule {
     [KSClass("ObjectAssemblyEngine")]
-    public class ObjectAssemblyEngineAdapter : BaseEngineAdapter<ObjectAssemblyPartAdapter, IObjectAssemblyPart> {
-        public ObjectAssemblyEngineAdapter(ObjectAssemblyPartAdapter part, Data_Engine dataSolarPanel) : base(part, dataSolarPanel) {
-        }
-
+    public class ObjectAssemblyEngineAdapter(KSPOABModule.ObjectAssemblyPartAdapter part, Data_Engine dataSolarPanel) : BaseEngineAdapter<ObjectAssemblyPartAdapter, IObjectAssemblyPart>(part, dataSolarPanel) {
         [KSField(Description = "Direction of thrust")]
         public Vector3d ThrustDirection => dataEngine.ThrustDirRelativePartWorldSpace;
     }

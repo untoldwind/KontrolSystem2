@@ -7,10 +7,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public partial class KSPVesselModule {
     [KSClass("ModuleParachute")]
-    public class ModuleParachuteAdapter : BaseParachuteAdapter<PartAdapter, PartComponent> {
-        public ModuleParachuteAdapter(PartAdapter part, Data_Parachute dataParachute) : base(part, dataParachute) {
-        }
-
+    public class ModuleParachuteAdapter(KSPVesselModule.PartAdapter part, Data_Parachute dataParachute) : BaseParachuteAdapter<PartAdapter, PartComponent>(part, dataParachute) {
         [KSMethod]
         public bool Deploy() {
             if (!KSPContext.CurrentContext.Game.SpaceSimulation.TryGetViewObject(part.part.SimulationObject,
