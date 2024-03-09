@@ -34,6 +34,9 @@ public abstract class BaseReactionWheelAdapter<P, T>(P part, Data_ReactionWheel 
     }
 
     [KSField]
+    public Vector3d PotentialTorque => new(reactionWheel.PitchTorque, reactionWheel.RollTorque, reactionWheel.YawTorque);
+    
+    [KSField]
     public bool HasResourcesToOperate => reactionWheel.HasResourcesToOperate;
 
     [KSField]
