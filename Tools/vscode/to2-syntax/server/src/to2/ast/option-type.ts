@@ -62,7 +62,10 @@ export class OptionType implements RealizedType {
     op: Operator,
     rightType: RealizedType,
   ): TO2Type | undefined {
-    if (op === "|" && rightType.name === this.elementType.name) {
+    if (
+      op === "|" &&
+      (this.elementType as RealizedType).isAssignableFrom(rightType)
+    ) {
       return this.elementType;
     } else {
       return undefined;

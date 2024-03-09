@@ -30,8 +30,13 @@ export class RecordCreate extends Expression {
       combine(initialValue, this),
     );
   }
+
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
+
+    for (const item of this.items) {
+      errors.push(...item[1].validateBlock(context));
+    }
 
     return errors;
   }
