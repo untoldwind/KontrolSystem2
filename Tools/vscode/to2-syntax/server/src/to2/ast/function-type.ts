@@ -139,7 +139,8 @@ export class FunctionType implements RealizedType {
       const paramType = this.parameterTypes[i][1].realizedType(context.module);
       const argType = args[i]
         .resultType(context, paramType)
-        .realizedType(context.module);
+        .realizedType(context.module)
+        .fillGenerics(context.module, genericMap);
 
       paramType.guessGeneric(context.module, genericMap, argType);
     }

@@ -72,16 +72,20 @@ export class MethodCall extends Expression {
         });
       } else {
         for (let i = 0; i < this.args.length; i++) {
-          methodType.parameterTypes[i][1]
-            .realizedType(context.module)
-            .guessGeneric(
-              context.module,
-              genericMap,
-              this.args[i].resultType(context).realizedType(context.module),
-            );
+          const parameterType = methodType.parameterTypes[i][1].realizedType(
+            context.module,
+          );
+
+          parameterType.guessGeneric(
+            context.module,
+            genericMap,
+            this.args[i]
+              .resultType(context, parameterType)
+              .realizedType(context.module)
+              .fillGenerics(context.module, genericMap),
+          );
         }
 
-        methodType.returnType;
         for (let i = 0; i < this.args.length; i++) {
           errors.push(
             ...this.args[i].validateBlock(
