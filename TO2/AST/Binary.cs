@@ -5,18 +5,13 @@ using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST;
 
-public class Binary : Expression {
-    private readonly Expression left;
-    private readonly Operator op;
-    private readonly Expression right;
-
-    public Binary(Expression left, Operator op, Expression right, Position start = new(),
-        Position end = new()) : base(start, end) {
-        this.left = left;
-        this.op = op;
-        this.right = right;
-    }
-
+public class Binary(
+    Expression left,
+    Operator op,
+    Expression right,
+    Position start = new(),
+    Position end = new())
+    : Expression(start, end) {
     public override IVariableContainer? VariableContainer {
         set {
             left.VariableContainer = value;

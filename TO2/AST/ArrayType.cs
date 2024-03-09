@@ -223,7 +223,7 @@ public class ArrayType : RealizedType {
         return ElementType.InferGenericArgument(context, concreteArray.ElementType.UnderlyingType(context));
     }
 
-    public static IREPLValue REPLArrayLength(Node node, IREPLValue target) {
+    private static IREPLValue REPLArrayLength(Node node, IREPLValue target) {
         if (target.Value is Array a) return new REPLInt(a.Length);
 
         throw new REPLException(node, $"Get array length from a non-array: {target.Type.Name}");
@@ -238,18 +238,12 @@ public class ArrayType : RealizedType {
     }
 }
 
-public class ArrayForInSource : IForInSource {
-    private readonly Type arrayType;
+public class ArrayForInSource(Type arrayType, RealizedType elementType) : IForInSource {
     private ILocalRef? arrayRef;
 
     private ILocalRef? currentIndex;
 
-    public ArrayForInSource(Type arrayType, RealizedType elementType) {
-        this.arrayType = arrayType;
-        ElementType = elementType;
-    }
-
-    public RealizedType ElementType { get; }
+    public RealizedType ElementType { get; } = elementType;
 
     public void EmitInitialize(IBlockContext context) {
         arrayRef = context.DeclareHiddenLocal(arrayType);

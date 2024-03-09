@@ -5,20 +5,14 @@ using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST;
 
-public class IndexAssign : Expression {
-    private readonly Expression expression;
-    private readonly IndexSpec indexSpec;
-    private readonly Operator op;
-    private readonly Expression target;
-
-    public IndexAssign(Expression target, IndexSpec indexSpec, Operator op, Expression expression,
-        Position start = new(), Position end = new()) : base(start, end) {
-        this.target = target;
-        this.indexSpec = indexSpec;
-        this.op = op;
-        this.expression = expression;
-    }
-
+public class IndexAssign(
+    Expression target,
+    IndexSpec indexSpec,
+    Operator op,
+    Expression expression,
+    Position start = new(),
+    Position end = new())
+    : Expression(start, end) {
     public override IVariableContainer? VariableContainer {
         set {
             target.VariableContainer = value;

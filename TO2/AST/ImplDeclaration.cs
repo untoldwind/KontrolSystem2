@@ -7,16 +7,12 @@ using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST;
 
-public class ImplDeclaration : Node, IModuleItem {
-    private readonly List<IEither<LineComment, MethodDeclaration>> methods;
-    private readonly string name;
-
-    public ImplDeclaration(string name, List<IEither<LineComment, MethodDeclaration>> methods, Position start = new(),
-        Position end = new()) : base(start, end) {
-        this.name = name;
-        this.methods = methods;
-    }
-
+public class ImplDeclaration(
+    string name,
+    List<IEither<LineComment, MethodDeclaration>> methods,
+    Position start = new(),
+    Position end = new())
+    : Node(start, end), IModuleItem {
     public IEnumerable<StructuralError> TryDeclareTypes(ModuleContext context) {
         return Enumerable.Empty<StructuralError>();
     }

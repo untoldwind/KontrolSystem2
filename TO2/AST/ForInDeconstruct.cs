@@ -6,19 +6,14 @@ using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST;
 
-public class ForInDeconstruct : Expression, IVariableContainer {
-    private readonly List<DeclarationParameter> declarations;
-    private readonly Expression loopExpression;
-    private readonly Expression sourceExpression;
-
-    public ForInDeconstruct(List<DeclarationParameter> declarations, Expression sourceExpression,
-        Expression loopExpression, Position start = new(), Position end = new()) : base(start,
-        end) {
-        this.declarations = declarations;
-        this.sourceExpression = sourceExpression;
-        this.loopExpression = loopExpression;
-    }
-
+public class ForInDeconstruct(
+    List<DeclarationParameter> declarations,
+    Expression sourceExpression,
+    Expression loopExpression,
+    Position start = new(),
+    Position end = new())
+    : Expression(start,
+        end), IVariableContainer {
     public override IVariableContainer? VariableContainer {
         set {
             ParentContainer = value;
@@ -90,7 +85,7 @@ public class ForInDeconstruct : Expression, IVariableContainer {
         default:
             context.AddError(new StructuralError(
                 StructuralError.ErrorType.InvalidType,
-                $"Expected source of for loop to be an array of tupple or record, but got {sourceType}",
+                $"Expected source of for loop to be an array of tuple or record, but got {sourceType}",
                 Start,
                 End
             ));

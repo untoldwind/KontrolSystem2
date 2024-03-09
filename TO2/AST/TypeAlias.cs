@@ -7,20 +7,14 @@ using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST;
 
-public class TypeAlias : Node, IModuleItem {
-    private readonly string description;
-    private readonly bool exported;
-    private readonly string name;
-    private readonly TO2Type type;
-
-    public TypeAlias(bool exported, string name, string description, TO2Type type, Position start = new(),
-        Position end = new()) : base(start, end) {
-        this.exported = exported;
-        this.name = name;
-        this.description = description;
-        this.type = type;
-    }
-
+public class TypeAlias(
+    bool exported,
+    string name,
+    string description,
+    TO2Type type,
+    Position start = new(),
+    Position end = new())
+    : Node(start, end), IModuleItem {
     public IEnumerable<StructuralError> TryImportConstants(ModuleContext context) {
         return Enumerable.Empty<StructuralError>();
     }
@@ -30,7 +24,7 @@ public class TypeAlias : Node, IModuleItem {
     }
 
     public IEnumerable<StructuralError> TryDeclareTypes(ModuleContext context) {
-        if (exported) context.exportedTypes!.Add((name, new TypeAliasDelegate(context, type, description, this)));
+        if (exported) context.exportedTypes!.Add((name: name, new TypeAliasDelegate(context, type, description, this)));
         return Enumerable.Empty<StructuralError>();
     }
 

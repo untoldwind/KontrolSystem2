@@ -5,10 +5,7 @@ using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST;
 
-public class Break : Expression {
-    public Break(Position start = new(), Position end = new()) : base(start, end) {
-    }
-
+public class Break(Position start = new(), Position end = new()) : Expression(start, end) {
     public override IVariableContainer? VariableContainer {
         set { }
     }
@@ -40,10 +37,7 @@ public class Break : Expression {
     }
 }
 
-public class Continue : Expression {
-    public Continue(Position start = new(), Position end = new()) : base(start, end) {
-    }
-
+public class Continue(Position start = new(), Position end = new()) : Expression(start, end) {
     public override IVariableContainer? VariableContainer {
         set { }
     }

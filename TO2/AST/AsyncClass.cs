@@ -12,7 +12,7 @@ internal readonly struct AsyncClass {
     internal readonly TypeBuilder type;
     internal readonly ConstructorInfo constructor;
 
-    internal AsyncClass(TypeBuilder type, ConstructorInfo constructor) {
+    private AsyncClass(TypeBuilder type, ConstructorInfo constructor) {
         this.type = type;
         this.constructor = constructor;
     }

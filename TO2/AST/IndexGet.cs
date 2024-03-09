@@ -4,16 +4,12 @@ using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST;
 
-public class IndexGet : Expression, IAssignContext {
-    private readonly IndexSpec indexSpec;
-    private readonly Expression target;
-
-    public IndexGet(Expression target, IndexSpec indexSpec, Position start = new(),
-        Position end = new()) : base(start, end) {
-        this.target = target;
-        this.indexSpec = indexSpec;
-    }
-
+public class IndexGet(
+    Expression target,
+    IndexSpec indexSpec,
+    Position start = new(),
+    Position end = new())
+    : Expression(start, end), IAssignContext {
     public override IVariableContainer? VariableContainer {
         set {
             target.VariableContainer = value;

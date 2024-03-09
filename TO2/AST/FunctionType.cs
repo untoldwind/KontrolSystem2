@@ -7,17 +7,12 @@ using KontrolSystem.TO2.Generator;
 
 namespace KontrolSystem.TO2.AST;
 
-public class FunctionType : RealizedType {
-    public readonly bool isAsync;
-    public readonly List<TO2Type> parameterTypes;
-    public readonly TO2Type returnType;
+public class FunctionType(bool isAsync, List<TO2Type> parameterTypes, TO2Type returnType)
+    : RealizedType {
+    public readonly bool isAsync = isAsync;
+    public readonly List<TO2Type> parameterTypes = parameterTypes;
+    public readonly TO2Type returnType = returnType;
     private Type? generatedType;
-
-    public FunctionType(bool isAsync, List<TO2Type> parameterTypes, TO2Type returnType) {
-        this.isAsync = isAsync;
-        this.parameterTypes = parameterTypes;
-        this.returnType = returnType;
-    }
 
     public override string Name => $"{(isAsync ? "" : "sync ")}fn({string.Join(", ", parameterTypes)}) -> {returnType}";
 

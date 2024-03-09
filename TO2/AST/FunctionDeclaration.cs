@@ -14,19 +14,18 @@ public enum FunctionModifier {
     Test
 }
 
-public class FunctionParameter : Node {
-    public readonly Expression? defaultValue;
-    public readonly string? description;
-    public readonly string name;
-    public readonly TO2Type? type;
-
-    public FunctionParameter(string name, TO2Type? type, string? description, Expression? defaultValue = null,
-        Position start = new(), Position end = new()) : base(start, end) {
-        this.name = name;
-        this.type = type;
-        this.description = description;
-        this.defaultValue = defaultValue;
-    }
+public class FunctionParameter(
+    string name,
+    TO2Type? type,
+    string? description,
+    Expression? defaultValue = null,
+    Position start = new(),
+    Position end = new())
+    : Node(start, end) {
+    public readonly Expression? defaultValue = defaultValue;
+    public readonly string? description = description;
+    public readonly string name = name;
+    public readonly TO2Type? type = type;
 
     public bool HasDefault => defaultValue != null;
 

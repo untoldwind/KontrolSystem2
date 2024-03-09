@@ -14,18 +14,13 @@ public interface IUnapplyEmitter {
     void EmitExtract(IBlockContext context, List<IBlockVariable> targetVariables);
 }
 
-public class Unapply : Expression {
-    private readonly Expression expression;
-    private readonly List<string> extractNames;
-    private readonly string pattern;
-
-    public Unapply(string pattern, List<string> extractNames, Expression expression, Position start,
-        Position end) : base(start, end) {
-        this.pattern = pattern;
-        this.extractNames = extractNames;
-        this.expression = expression;
-    }
-
+public class Unapply(
+    string pattern,
+    List<string> extractNames,
+    Expression expression,
+    Position start,
+    Position end)
+    : Expression(start, end) {
     public override IVariableContainer? VariableContainer {
         set => expression.VariableContainer = value;
     }

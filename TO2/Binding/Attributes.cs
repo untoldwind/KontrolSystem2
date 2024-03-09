@@ -3,67 +3,43 @@
 namespace KontrolSystem.TO2.Binding;
 
 [AttributeUsage(AttributeTargets.Class)]
-public class KSModule : Attribute {
-    public KSModule(string name) {
-        Name = name;
-    }
-
-    public string Name { get; }
+public class KSModule(string name) : Attribute {
+    public string Name { get; } = name;
 
     public string? Description { get; set; }
 }
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface)]
-public class KSClass : Attribute {
-    public KSClass(string? name = null) {
-        Name = name;
-    }
-
-    public string? Name { get; }
+public class KSClass(string? name = null) : Attribute {
+    public string? Name { get; } = name;
 
     public string? Description { get; set; }
 }
 
 [AttributeUsage(AttributeTargets.Field)]
-public class KSConstant : Attribute {
-    public KSConstant(string? name = null) {
-        Name = name;
-    }
-
-    public string? Name { get; }
+public class KSConstant(string? name = null) : Attribute {
+    public string? Name { get; } = name;
 
     public string? Description { get; set; }
 }
 
 [AttributeUsage(AttributeTargets.Method)]
-public class KSFunction : Attribute {
-    public KSFunction(string? name = null) {
-        Name = name;
-    }
-
-    public string? Name { get; }
+public class KSFunction(string? name = null) : Attribute {
+    public string? Name { get; } = name;
 
     public string? Description { get; set; }
 }
 
 [AttributeUsage(AttributeTargets.Method)]
-public class KSMethod : Attribute {
-    public KSMethod(string? name = null) {
-        Name = name;
-    }
-
-    public string? Name { get; }
+public class KSMethod(string? name = null) : Attribute {
+    public string? Name { get; } = name;
 
     public string? Description { get; set; }
 }
 
 [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-public class KSField : Attribute {
-    public KSField(string? name = null) {
-        Name = name;
-    }
-
-    public string? Name { get; }
+public class KSField(string? name = null) : Attribute {
+    public string? Name { get; } = name;
 
     public string? Description { get; set; }
 
@@ -71,10 +47,6 @@ public class KSField : Attribute {
 }
 
 [AttributeUsage(AttributeTargets.Parameter)]
-public class KSParameter : Attribute {
-    public KSParameter(string description) {
-        Description = description;
-    }
-
-    public string Description { get; }
+public class KSParameter(string description) : Attribute {
+    public string Description { get; } = description;
 }

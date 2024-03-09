@@ -6,16 +6,10 @@ using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST;
 
-public class LineComment : IBlockItem, IModuleItem {
-    public LineComment(string comment, Position start, Position end) {
-        Comment = comment;
-        Start = start;
-        End = end;
-    }
-
-    public string Comment { get; }
-    public Position Start { get; }
-    public Position End { get; }
+public class LineComment(string comment, Position start, Position end) : IBlockItem, IModuleItem {
+    public string Comment { get; } = comment;
+    public Position Start { get; } = start;
+    public Position End { get; } = end;
 
     public bool IsComment => true;
 

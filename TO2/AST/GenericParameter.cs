@@ -6,13 +6,7 @@ using KontrolSystem.TO2.Generator;
 
 namespace KontrolSystem.TO2.AST;
 
-public class GenericParameter : RealizedType {
-    private readonly string name;
-
-    public GenericParameter(string name) {
-        this.name = name;
-    }
-
+public class GenericParameter(string name) : RealizedType {
     public override string Name => name;
 
     public override Type GeneratedType(ModuleContext context) {
@@ -31,7 +25,7 @@ public class GenericParameter : RealizedType {
     public override IEnumerable<(string name, RealizedType type)> InferGenericArgument(ModuleContext context,
         RealizedType? concreteType) {
         return concreteType != null
-            ? (name, concreteType).Yield()
+            ? (name: name, concreteType).Yield()
             : Enumerable.Empty<(string name, RealizedType concreteType)>();
     }
 }

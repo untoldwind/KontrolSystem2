@@ -71,17 +71,9 @@ public class InlineFieldAccessFactory : IFieldAccessFactory {
     }
 }
 
-public class InlineFieldAccessEmitter : IFieldAccessEmitter {
-    private readonly OpCode[] loadOpCodes;
-    private readonly REPLFieldAccess replFieldAccess;
-
-    public InlineFieldAccessEmitter(RealizedType fieldType, REPLFieldAccess replFieldAccess, OpCode[] loadOpCodes) {
-        FieldType = fieldType;
-        this.replFieldAccess = replFieldAccess;
-        this.loadOpCodes = loadOpCodes;
-    }
-
-    public RealizedType FieldType { get; }
+public class InlineFieldAccessEmitter(RealizedType fieldType, REPLFieldAccess replFieldAccess, OpCode[] loadOpCodes)
+    : IFieldAccessEmitter {
+    public RealizedType FieldType { get; } = fieldType;
 
     public bool RequiresPtr => false;
 
@@ -169,17 +161,9 @@ public class BoundFieldAccessFactory : IFieldAccessFactory {
     }
 }
 
-public class BoundFieldAccessEmitter : IFieldAccessEmitter {
-    private readonly List<FieldInfo> fieldInfos;
-    private readonly Type fieldTarget;
-
-    public BoundFieldAccessEmitter(RealizedType fieldType, Type fieldTarget, List<FieldInfo> fieldInfos) {
-        FieldType = fieldType;
-        this.fieldTarget = fieldTarget;
-        this.fieldInfos = fieldInfos;
-    }
-
-    public RealizedType FieldType { get; }
+public class BoundFieldAccessEmitter(RealizedType fieldType, Type fieldTarget, List<FieldInfo> fieldInfos)
+    : IFieldAccessEmitter {
+    public RealizedType FieldType { get; } = fieldType;
 
     public bool RequiresPtr => fieldTarget.IsValueType;
 
@@ -327,27 +311,19 @@ public class BoundPropertyLikeFieldAccessFactory : IFieldAccessFactory {
     }
 }
 
-public class BoundPropertyLikeFieldAccessEmitter : IFieldAccessEmitter {
-    private readonly MethodInfo getter;
-    private readonly Type methodTarget;
-    private readonly OpCode[] opCodes;
-    private readonly MethodInfo? setter;
-
-    public BoundPropertyLikeFieldAccessEmitter(RealizedType fieldType, Type methodTarget, MethodInfo getter,
-        MethodInfo? setter, bool isAsyncStore, OpCode[] opCodes) {
-        FieldType = fieldType;
-        this.methodTarget = methodTarget;
-        this.getter = getter;
-        this.setter = setter;
-        this.opCodes = opCodes;
-        IsAsyncStore = isAsyncStore;
-    }
-
-    public RealizedType FieldType { get; }
+public class BoundPropertyLikeFieldAccessEmitter(
+    RealizedType fieldType,
+    Type methodTarget,
+    MethodInfo getter,
+    MethodInfo? setter,
+    bool isAsyncStore,
+    OpCode[] opCodes)
+    : IFieldAccessEmitter {
+    public RealizedType FieldType { get; } = fieldType;
 
     public bool CanStore => setter != null;
 
-    public bool IsAsyncStore { get; }
+    public bool IsAsyncStore { get; } = isAsyncStore;
 
     public bool RequiresPtr =>
         methodTarget.IsValueType && (getter.CallingConvention & CallingConventions.HasThis) != 0;

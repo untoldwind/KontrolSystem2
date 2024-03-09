@@ -362,23 +362,17 @@ public class IfThenElse : Expression, IVariableContainer {
         return new REPLIfThenElseFuture(thenResultType, context, condition, thenExpression, elseExpression);
     }
 
-    internal class REPLIfThenElseFuture : REPLValueFuture {
-        private readonly Expression condition;
-        private readonly REPLContext context;
-        private readonly Expression elseExpression;
-        private readonly Expression thenExpression;
+    internal class REPLIfThenElseFuture(
+        TO2Type to2Type,
+        REPLContext context,
+        Expression condition,
+        Expression thenExpression,
+        Expression elseExpression)
+        : REPLValueFuture(new OptionType(to2Type)) {
         private REPLValueFuture? conditionFuture;
         private IREPLValue? conditionResult;
         private REPLValueFuture? elseFuture;
         private REPLValueFuture? thenFuture;
-
-        public REPLIfThenElseFuture(TO2Type to2Type, REPLContext context, Expression condition,
-            Expression thenExpression, Expression elseExpression) : base(new OptionType(to2Type)) {
-            this.context = context;
-            this.condition = condition;
-            this.thenExpression = thenExpression;
-            this.elseExpression = elseExpression;
-        }
 
         public override FutureResult<IREPLValue?> PollValue() {
             conditionFuture ??= condition.Eval(context);

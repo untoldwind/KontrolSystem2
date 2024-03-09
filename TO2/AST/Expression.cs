@@ -16,10 +16,7 @@ public delegate RealizedType? TypeHint(IBlockContext context);
 /// <summary>
 ///     Base class of all expressions.
 /// </summary>
-public abstract class Expression : Node, IBlockItem {
-    protected Expression(Position start, Position end) : base(start, end) {
-    }
-
+public abstract class Expression(Position start, Position end) : Node(start, end), IBlockItem {
     public bool IsComment => false;
 
     public abstract IVariableContainer? VariableContainer { set; }

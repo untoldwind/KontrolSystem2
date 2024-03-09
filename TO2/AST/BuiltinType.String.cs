@@ -56,100 +56,86 @@ public abstract partial class BuiltinType {
                     "repeat",
                     new BoundMethodInvokeFactory("Repeat the string `count` number of time", true,
                         () => String,
-                        () => new List<RealizedParameter> {
-                            new("count", Int, "Number of times string should be repeated.")
-                        },
+                        () => [new("count", Int, "Number of times string should be repeated.")],
                         false, typeof(FormatUtils), typeof(FormatUtils).GetMethod("StringRepeat"))
                 }, {
                     "pad_left",
                     new BoundMethodInvokeFactory("Pad the string to `length` by filling spaces from the left side",
                         true,
                         () => String,
-                        () => new List<RealizedParameter> {
-                            new("length", Int, "Desired length of the string")
-                        },
+                        () => [new("length", Int, "Desired length of the string")],
                         false, typeof(FormatUtils), typeof(FormatUtils).GetMethod("StringPadLeft"))
                 }, {
                     "pad_right",
                     new BoundMethodInvokeFactory("Pad the string to `length` by filling spaces from the right side",
                         true,
                         () => String,
-                        () => new List<RealizedParameter> {
-                            new("length", Int, "Desired length of the string")
-                        },
+                        () => [new("length", Int, "Desired length of the string")],
                         false, typeof(FormatUtils), typeof(FormatUtils).GetMethod("StringPadRight"))
                 }, {
                     "contains",
                     new BoundMethodInvokeFactory("Check if the string contains a sub string `other`", true,
                         () => Bool,
-                        () => new List<RealizedParameter> {
-                            new("other", String, "Search string")
-                        },
+                        () => [new("other", String, "Search string")],
                         false, typeof(string), typeof(string).GetMethod("Contains", new[] { typeof(string) }))
                 }, {
                     "starts_with",
                     new BoundMethodInvokeFactory("Check if the string starts with `other`", true,
                         () => Bool,
-                        () => new List<RealizedParameter> {
-                            new("other", String, "Search string")
-                        },
+                        () => [new("other", String, "Search string")],
                         false, typeof(string), typeof(string).GetMethod("StartsWith", new[] { typeof(string) }))
                 }, {
                     "ends_with",
                     new BoundMethodInvokeFactory("Check if the string ends with `other`", true,
                         () => Bool,
-                        () => new List<RealizedParameter> {
-                            new("other", String, "Search string")
-                        },
+                        () => [new("other", String, "Search string")],
                         false, typeof(string), typeof(string).GetMethod("EndsWith", new[] { typeof(string) }))
                 }, {
                     "to_lower",
                     new BoundMethodInvokeFactory("Convert string to lower case", true,
                         () => String,
-                        () => new List<RealizedParameter>(),
+                        () => [],
                         false, typeof(string), typeof(string).GetMethod("ToLowerInvariant"))
                 }, {
                     "to_upper",
                     new BoundMethodInvokeFactory("Convert string to upper case", true,
                         () => String,
-                        () => new List<RealizedParameter>(),
+                        () => [],
                         false, typeof(string), typeof(string).GetMethod("ToUpperInvariant"))
                 }, {
                     "index_of",
                     new BoundMethodInvokeFactory("Find index of a sub string, will return -1 if not found", true,
                         () => Int,
-                        () => new List<RealizedParameter> {
+                        () => [
                             new("other", String, "Search string"),
                             new("startIndex", Int, "Start index", new IntDefaultValue(0))
-                        },
+                        ],
                         false, typeof(StringMethods), typeof(StringMethods).GetMethod("IndexOf"))
                 }, {
                     "slice",
                     new BoundMethodInvokeFactory("Get a sub string/slice for the string defined by start and end index",
                         true,
                         () => String,
-                        () => new List<RealizedParameter> {
+                        () => [
                             new("startIndex", Int, "Start index of the slice (inclusive)"),
                             new("endIndex", Int, "End index of the slice (exclusive)", new IntDefaultValue(-1))
-                        },
+                        ],
                         false, typeof(StringMethods), typeof(StringMethods).GetMethod("Slice"))
                 }, {
                     "replace",
                     new BoundMethodInvokeFactory("Replace sub string with another sub string", true,
                         () => String,
-                        () => new List<RealizedParameter> {
+                        () => [
                             new("oldString", String, "Search string"),
                             new("newString", String, "Replacement")
-                        },
+                        ],
                         false, typeof(string),
                         typeof(string).GetMethod("Replace", new[] { typeof(string), typeof(string) }))
                 }, {
                     "split",
                     new BoundMethodInvokeFactory("Split string into substrings by separator", true,
                         () => new ArrayType(String),
-                        () => new List<RealizedParameter> {
-                            new("separator", String, "Search string (separator)")
-                        },
+                        () => [new("separator", String, "Search string (separator)")],
                         false, typeof(StringMethods), typeof(StringMethods).GetMethod("Split"))
                 }
             };
