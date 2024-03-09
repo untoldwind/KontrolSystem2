@@ -26,7 +26,7 @@ public static class Result {
     }
 
     public static IResult<T> Failure<T>(IInput input, string expected) {
-        return new FailureResult<T>(input, new List<string> { expected });
+        return new FailureResult<T>(input, [expected]);
     }
 
     public static IResult<T> Failure<T>(IInput input, IEnumerable<string> expected) {
@@ -45,7 +45,7 @@ public static class Result {
 
         public bool WasSuccessful => true;
 
-        public List<string> Expected => new();
+        public List<string> Expected => [];
 
         public Position Position => Remaining.Position;
 

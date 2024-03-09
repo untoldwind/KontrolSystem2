@@ -11,12 +11,12 @@ public class RecordTupleType : RecordType {
     private Type? generatedType;
 
     public RecordTupleType(IEnumerable<(string name, TO2Type type)> itemTypes) : base(BuiltinType.NoOperators) {
-        this.itemTypes = new SortedDictionary<string, TO2Type>();
+        this.itemTypes = [];
         foreach (var kv in itemTypes) this.itemTypes.Add(kv.name, kv.type);
         DeclaredFields = this.itemTypes.Keys
             .Select((name, idx) => (name,
                 new TupleFieldAccessFactory(this, this.itemTypes.Values.ToList(), idx) as IFieldAccessFactory))
-            .ToDictionary(item => item.Item1, item => item.Item2);
+            .ToDictionary(item => item.name, item => item.Item2);
     }
 
     public override SortedDictionary<string, TO2Type> ItemTypes => itemTypes;

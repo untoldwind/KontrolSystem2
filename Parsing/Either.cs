@@ -21,7 +21,7 @@ public static class Either {
         return new RightEither<L, R>(value);
     }
 
-    private struct LeftEither<L, R> : IEither<L, R> {
+    private readonly struct LeftEither<L, R> : IEither<L, R> {
         internal LeftEither(L value) {
             this.Left = value;
         }
@@ -35,7 +35,7 @@ public static class Either {
         public R Right => throw new InvalidOperationException("Either has no right");
     }
 
-    private struct RightEither<L, R> : IEither<L, R> {
+    private readonly struct RightEither<L, R> : IEither<L, R> {
         internal RightEither(R value) {
             this.Right = value;
         }

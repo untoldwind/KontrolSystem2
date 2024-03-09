@@ -42,13 +42,13 @@ public static class Option {
     }
 
     private struct NoneOption<T> : IOption<T> {
-        public bool IsEmpty => true;
+        public readonly bool IsEmpty => true;
 
-        public bool IsDefined => false;
+        public readonly bool IsDefined => false;
 
-        public T Value => throw new InvalidOperationException("None has no value");
+        public readonly T Value => throw new InvalidOperationException("None has no value");
 
-        public IOption<U> Map<U>(Func<T, U> convert) {
+        public readonly IOption<U> Map<U>(Func<T, U> convert) {
             return new NoneOption<U>();
         }
     }

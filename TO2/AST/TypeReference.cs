@@ -102,25 +102,25 @@ public class LookupTypeReference : TO2Type {
             ? context.FindModule(moduleName)?.FindType(name)?.UnderlyingType(context)
             : context.mappedTypes.Get(name)?.UnderlyingType(context);
         if (realizedType == null)
-            throw new CompilationErrorException(new List<StructuralError> {
+            throw new CompilationErrorException([
                 new(
                     StructuralError.ErrorType.InvalidType,
                     $"Unable to lookup type {Name}",
                     start,
                     end
                 )
-            });
+            ]);
 
         var typeParameterNames = realizedType.GenericParameters;
         if (typeParameterNames.Length != typeArguments.Count)
-            throw new CompilationErrorException(new List<StructuralError> {
+            throw new CompilationErrorException([
                 new(
                     StructuralError.ErrorType.InvalidType,
                     $"Type {realizedType.Name} expects {typeParameterNames.Length} type parameters, only {typeArguments.Count} where given",
                     start,
                     end
                 )
-            });
+            ]);
 
         var namedTypeArguments = new Dictionary<string, RealizedType>();
         for (var i = 0; i < typeArguments.Count; i++)
@@ -155,7 +155,7 @@ public class DirectTypeReference : RealizedType {
     public override RealizedType UnderlyingType(ModuleContext context) {
         var arguments = referencedType.GenericParameters
             .Zip(declaredTypeArguments, (name, type) => (name, type.UnderlyingType(context)))
-            .ToDictionary(i => i.Item1.Name, i => i.Item2);
+            .ToDictionary(i => i.name.Name, i => i.Item2);
 
         return referencedType.FillGenerics(context, arguments);
     }

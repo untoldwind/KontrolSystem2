@@ -57,42 +57,42 @@ public partial class KSPAddonsModule {
         [KSMethod]
         public bool Circularize(double burnUt, double burnOffsetFactor = -0.5) {
             if (circularize != null)
-                return (bool)circularize.Invoke(instance, new object[] { burnUt, burnOffsetFactor });
+                return (bool)circularize.Invoke(instance, [burnUt, burnOffsetFactor]);
             return false;
         }
 
         [KSMethod]
         public bool SetNewPe(double burnUt, double newPe, double burnOffsetFactor = -0.5) {
             if (setNewPe != null)
-                return (bool)setNewPe.Invoke(instance, new object[] { burnUt, newPe, burnOffsetFactor });
+                return (bool)setNewPe.Invoke(instance, [burnUt, newPe, burnOffsetFactor]);
             return false;
         }
 
         [KSMethod]
         public bool SetNewAp(double burnUt, double newAp, double burnOffsetFactor = -0.5) {
             if (setNewAp != null)
-                return (bool)setNewAp.Invoke(instance, new object[] { burnUt, newAp, burnOffsetFactor });
+                return (bool)setNewAp.Invoke(instance, [burnUt, newAp, burnOffsetFactor]);
             return false;
         }
 
         [KSMethod]
         public bool Ellipticize(double burnUt, double newAp, double newPe, double burnOffsetFactor = -0.5) {
             if (ellipticize != null)
-                return (bool)ellipticize.Invoke(instance, new object[] { burnUt, newAp, newPe, burnOffsetFactor });
+                return (bool)ellipticize.Invoke(instance, [burnUt, newAp, newPe, burnOffsetFactor]);
             return false;
         }
 
         [KSMethod]
         public bool SetInclination(double burnUt, double inclination, double burnOffsetFactor = -0.5) {
             if (setInclination != null)
-                return (bool)setInclination.Invoke(instance, new object[] { burnUt, inclination, burnOffsetFactor });
+                return (bool)setInclination.Invoke(instance, [burnUt, inclination, burnOffsetFactor]);
             return false;
         }
 
         [KSMethod]
         public bool SetNewLan(double burnUt, double newLanValue, double burnOffsetFactor = -0.5) {
             if (setNewLAN != null)
-                return (bool)setNewLAN.Invoke(instance, new object[] { burnUt, newLanValue, burnOffsetFactor });
+                return (bool)setNewLAN.Invoke(instance, [burnUt, newLanValue, burnOffsetFactor]);
             return false;
         }
 
@@ -100,63 +100,63 @@ public partial class KSPAddonsModule {
         public bool SetNodeLongitude(double burnUt, double newNodeLongValue, double burnOffsetFactor = -0.5) {
             if (setNodeLongitude != null)
                 return (bool)setNodeLongitude.Invoke(instance,
-                    new object[] { burnUt, newNodeLongValue, burnOffsetFactor });
+                    [burnUt, newNodeLongValue, burnOffsetFactor]);
             return false;
         }
 
         [KSMethod]
         public bool SetNewSma(double burnUt, double newSma, double burnOffsetFactor = -0.5) {
             if (setNewSMA != null)
-                return (bool)setNewSMA.Invoke(instance, new object[] { burnUt, newSma, burnOffsetFactor });
+                return (bool)setNewSMA.Invoke(instance, [burnUt, newSma, burnOffsetFactor]);
             return false;
         }
 
         [KSMethod]
         public bool MatchPlanes(double burnUt, double burnOffsetFactor = -0.5) {
             if (matchPlanes != null)
-                return (bool)matchPlanes.Invoke(instance, new object[] { burnUt, burnOffsetFactor });
+                return (bool)matchPlanes.Invoke(instance, [burnUt, burnOffsetFactor]);
             return false;
         }
 
         [KSMethod]
         public bool HohmannTransfer(double burnUt, double burnOffsetFactor = -0.5) {
             if (hohmannTransfer != null)
-                return (bool)hohmannTransfer.Invoke(instance, new object[] { burnUt, burnOffsetFactor });
+                return (bool)hohmannTransfer.Invoke(instance, [burnUt, burnOffsetFactor]);
             return false;
         }
 
         [KSMethod]
         public bool InterceptTgt(double burnUt, double tgtUt, double burnOffsetFactor = -0.5) {
             if (interceptTgt != null)
-                return (bool)interceptTgt.Invoke(instance, new object[] { burnUt, tgtUt, burnOffsetFactor });
+                return (bool)interceptTgt.Invoke(instance, [burnUt, tgtUt, burnOffsetFactor]);
             return false;
         }
 
         [KSMethod]
         public bool CourseCorrection(double burnUt, double burnOffsetFactor = -0.5) {
             if (courseCorrection != null)
-                return (bool)courseCorrection.Invoke(instance, new object[] { burnUt, burnOffsetFactor });
+                return (bool)courseCorrection.Invoke(instance, [burnUt, burnOffsetFactor]);
             return false;
         }
 
         [KSMethod]
         public bool MoonReturn(double burnUt, double burnOffsetFactor = -0.5) {
             if (moonReturn != null)
-                return (bool)moonReturn.Invoke(instance, new object[] { burnUt, burnOffsetFactor });
+                return (bool)moonReturn.Invoke(instance, [burnUt, burnOffsetFactor]);
             return false;
         }
 
         [KSMethod]
         public bool MatchVelocity(double burnUt, double burnOffsetFactor = -0.5) {
             if (matchVelocity != null)
-                return (bool)matchVelocity.Invoke(instance, new object[] { burnUt, burnOffsetFactor });
+                return (bool)matchVelocity.Invoke(instance, [burnUt, burnOffsetFactor]);
             return false;
         }
 
         [KSMethod]
         public bool PlanetaryXfer(double burnUt, double burnOffsetFactor = -0.5) {
             if (planetaryXfer != null)
-                return (bool)planetaryXfer.Invoke(instance, new object[] { burnUt, burnOffsetFactor });
+                return (bool)planetaryXfer.Invoke(instance, [burnUt, burnOffsetFactor]);
             return false;
         }
     }

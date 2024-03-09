@@ -18,8 +18,8 @@ public class BoundTypeTests {
         var type = new BoundType("module", "NonGeneric", "", typeof(NonGeneric),
             BuiltinType.NoOperators,
             BuiltinType.NoOperators,
-            Enumerable.Empty<(string name, IMethodInvokeFactory invoker)>(),
-            Enumerable.Empty<(string name, IFieldAccessFactory access)>()
+            [],
+            []
         );
         var context = new Context(KontrolRegistry.CreateCore());
         var moduleContext = context.CreateModuleContext("Test");
@@ -37,8 +37,8 @@ public class BoundTypeTests {
         var type = new BoundType("module", "SimpleGeneric", "", typeof(SimpleGeneric<>),
             BuiltinType.NoOperators,
             BuiltinType.NoOperators,
-            Enumerable.Empty<(string name, IMethodInvokeFactory invoker)>(),
-            Enumerable.Empty<(string name, IFieldAccessFactory access)>()
+            [],
+            []
         );
         var context = new Context(KontrolRegistry.CreateCore());
         var moduleContext = context.CreateModuleContext("Test");

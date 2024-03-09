@@ -100,7 +100,7 @@ public class BoundType : RealizedType {
 
             var arguments = filled.Select(t => t.GeneratedType(context)).ToArray();
             var originalTypeArguments = runtimeType.GetGenericArguments()
-                .Zip(filled, (o, t) => (o.Name, t)).ToDictionary(i => i.Item1, i => i.Item2);
+                .Zip(filled, (o, t) => (o.Name, t)).ToDictionary(i => i.Name, i => i.t);
 
             return new BoundType(modulePrefix, localName, description, runtimeType.MakeGenericType(arguments),
                 allowedPrefixOperators.FillGenerics(context, originalTypeArguments),
@@ -115,11 +115,11 @@ public class BoundType : RealizedType {
 
     public override IEnumerable<(string name, RealizedType type)> InferGenericArgument(ModuleContext context,
         RealizedType? concreteType) {
-        if (!runtimeType.IsGenericType) return Enumerable.Empty<(string name, RealizedType type)>();
+        if (!runtimeType.IsGenericType) return [];
 
         var otherBoundType = concreteType as BoundType;
         if (otherBoundType == null || otherBoundType.runtimeType.GetGenericTypeDefinition() != runtimeType)
-            return Enumerable.Empty<(string name, RealizedType type)>();
+            return [];
 
         return typeParameters.Zip(otherBoundType.typeParameters, (t, o) => t.InferGenericArgument(context, o))
             .SelectMany(t => t);

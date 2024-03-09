@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace KontrolSystem.TO2.Runtime;
 
-public struct Range {
+public readonly struct Range {
     public readonly long from;
     public readonly long to;
 
@@ -12,9 +12,9 @@ public struct Range {
         this.to = to;
     }
 
-    public long Length => to < from ? 0 : to - from;
+    public readonly long Length => to < from ? 0 : to - from;
 
-    public T[] Map<T>(Func<long, T> mapper) {
+    public readonly T[] Map<T>(Func<long, T> mapper) {
         if (to < from) return new T[0];
 
         var result = new T[to - from];
@@ -25,7 +25,7 @@ public struct Range {
         return result;
     }
 
-    public T[] FlatMap<T>(Func<long, T[]> mapper) {
+    public readonly T[] FlatMap<T>(Func<long, T[]> mapper) {
         if (to < from) return new T[0];
         var result = new List<T>((int)(to - from));
 
@@ -36,7 +36,7 @@ public struct Range {
         return result.ToArray();
     }
 
-    public T[] FilterMap<T>(Func<long, Option<T>> mapper) {
+    public readonly T[] FilterMap<T>(Func<long, Option<T>> mapper) {
         if (to < from) return new T[0];
 
         var result = new List<T>((int)(to - from));
@@ -50,7 +50,7 @@ public struct Range {
         return result.ToArray();
     }
 
-    public long[] Reverse() {
+    public readonly long[] Reverse() {
         if (to < from) return new long[0];
 
         var result = new long[to - from];
@@ -60,13 +60,13 @@ public struct Range {
         return result;
     }
 
-    public U Reduce<U>(U initial, Func<U, long, U> reducer) {
+    public readonly U Reduce<U>(U initial, Func<U, long, U> reducer) {
         var result = initial;
         for (var i = from; i < to; i++) result = reducer(result, i);
         return result;
     }
 
-    public string RangeToString() {
+    public readonly string RangeToString() {
         return $"{from}..{to}";
     }
 }

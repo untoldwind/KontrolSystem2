@@ -20,24 +20,24 @@ public abstract class REPLValueFuture : Future<IREPLValue?> {
 
     public REPLValueFuture Then(TO2Type resultType, Func<IREPLValue, IREPLValue> map) {
         return new ChainNImpl(resultType,
-            new[] { this }, results => Success(map(results[0])));
+            [this], results => Success(map(results[0])));
     }
 
     public REPLValueFuture Then(TO2Type resultType, Func<IREPLValue, REPLValueFuture> map) {
         return new ChainNImpl(resultType,
-            new[] { this }, results => map(results[0]));
+            [this], results => map(results[0]));
     }
 
     public static REPLValueFuture Chain2(TO2Type resultType, REPLValueFuture first, REPLValueFuture second,
         Func<IREPLValue, IREPLValue, IREPLValue> map) {
         return new ChainNImpl(resultType,
-            new[] { first, second }, results => Success(map(results[0], results[1])));
+            [first, second], results => Success(map(results[0], results[1])));
     }
 
     public static REPLValueFuture Chain2(TO2Type resultType, REPLValueFuture first, REPLValueFuture second,
         Func<IREPLValue, IREPLValue, REPLValueFuture> map) {
         return new ChainNImpl(resultType,
-            new[] { first, second }, results => map(results[0], results[1]));
+            [first, second], results => map(results[0], results[1]));
     }
 
     public static REPLValueFuture ChainN(TO2Type resultType, REPLValueFuture[] futures,
@@ -218,22 +218,22 @@ public class REPLReturn : IREPLValue {
     }
 }
 
-public struct REPLBool : IREPLValue {
+public readonly struct REPLBool : IREPLValue {
     public readonly bool boolValue;
 
     public REPLBool(bool boolValue) {
         this.boolValue = boolValue;
     }
 
-    public TO2Type Type => BuiltinType.Bool;
+    public readonly TO2Type Type => BuiltinType.Bool;
 
-    public object Value => boolValue;
+    public readonly object Value => boolValue;
 
-    public bool IsBreak => false;
+    public readonly bool IsBreak => false;
 
-    public bool IsContinue => false;
+    public readonly bool IsContinue => false;
 
-    public bool IsReturn => false;
+    public readonly bool IsReturn => false;
 
     public IREPLForInSource? ForInSource() {
         return null;
@@ -284,22 +284,22 @@ public struct REPLBool : IREPLValue {
     }
 }
 
-public struct REPLInt : IREPLValue {
+public readonly struct REPLInt : IREPLValue {
     public readonly long intValue;
 
     public REPLInt(long intValue) {
         this.intValue = intValue;
     }
 
-    public TO2Type Type => BuiltinType.Int;
+    public readonly TO2Type Type => BuiltinType.Int;
 
-    public object Value => intValue;
+    public readonly object Value => intValue;
 
-    public bool IsBreak => false;
+    public readonly bool IsBreak => false;
 
-    public bool IsContinue => false;
+    public readonly bool IsContinue => false;
 
-    public bool IsReturn => false;
+    public readonly bool IsReturn => false;
 
     public IREPLForInSource? ForInSource() {
         return null;
@@ -408,22 +408,22 @@ public struct REPLInt : IREPLValue {
     }
 }
 
-public struct REPLFloat : IREPLValue {
+public readonly struct REPLFloat : IREPLValue {
     public readonly double floatValue;
 
     public REPLFloat(double floatValue) {
         this.floatValue = floatValue;
     }
 
-    public TO2Type Type => BuiltinType.Float;
+    public readonly TO2Type Type => BuiltinType.Float;
 
-    public object Value => floatValue;
+    public readonly object Value => floatValue;
 
-    public bool IsBreak => false;
+    public readonly bool IsBreak => false;
 
-    public bool IsContinue => false;
+    public readonly bool IsContinue => false;
 
-    public bool IsReturn => false;
+    public readonly bool IsReturn => false;
 
     public IREPLForInSource? ForInSource() {
         return null;
@@ -508,29 +508,29 @@ public struct REPLFloat : IREPLValue {
     }
 }
 
-public struct REPLString : IREPLValue {
+public readonly struct REPLString : IREPLValue {
     public readonly string stringValue;
 
     public REPLString(string stringValue) {
         this.stringValue = stringValue;
     }
 
-    public TO2Type Type => BuiltinType.String;
+    public readonly TO2Type Type => BuiltinType.String;
 
-    public object Value => stringValue;
+    public readonly object Value => stringValue;
 
-    public bool IsBreak => false;
+    public readonly bool IsBreak => false;
 
-    public bool IsContinue => false;
+    public readonly bool IsContinue => false;
 
-    public bool IsReturn => false;
+    public readonly bool IsReturn => false;
 
     public IREPLForInSource? ForInSource() {
         return null;
     }
 }
 
-public struct REPLArray : IREPLValue {
+public readonly struct REPLArray : IREPLValue {
     public readonly Array arrayValue;
     public readonly ArrayType arrayType;
 
@@ -539,15 +539,15 @@ public struct REPLArray : IREPLValue {
         this.arrayValue = arrayValue;
     }
 
-    public TO2Type Type => arrayType;
+    public readonly TO2Type Type => arrayType;
 
-    public object Value => arrayValue;
+    public readonly object Value => arrayValue;
 
-    public bool IsBreak => false;
+    public readonly bool IsBreak => false;
 
-    public bool IsContinue => false;
+    public readonly bool IsContinue => false;
 
-    public bool IsReturn => false;
+    public readonly bool IsReturn => false;
 
     public IREPLForInSource ForInSource() {
         return new REPLArrayForInSource(arrayValue, arrayType);
@@ -576,22 +576,22 @@ public class REPLArrayForInSource : IREPLForInSource {
     }
 }
 
-public struct REPLRange : IREPLValue {
+public readonly struct REPLRange : IREPLValue {
     public readonly Range rangeValue;
 
     public REPLRange(Range rangeValue) {
         this.rangeValue = rangeValue;
     }
 
-    public TO2Type Type => BuiltinType.Range;
+    public readonly TO2Type Type => BuiltinType.Range;
 
-    public object Value => rangeValue;
+    public readonly object Value => rangeValue;
 
-    public bool IsBreak => false;
+    public readonly bool IsBreak => false;
 
-    public bool IsContinue => false;
+    public readonly bool IsContinue => false;
 
-    public bool IsReturn => false;
+    public readonly bool IsReturn => false;
 
     public IREPLForInSource ForInSource() {
         return new REPLRangeForInSource(rangeValue.from, rangeValue.to);
@@ -618,7 +618,7 @@ public class REPLRangeForInSource : IREPLForInSource {
     }
 }
 
-public struct REPLAny : IREPLValue {
+public readonly struct REPLAny : IREPLValue {
     public readonly TO2Type type;
     public readonly object? anyValue;
 
@@ -627,15 +627,15 @@ public struct REPLAny : IREPLValue {
         this.anyValue = anyValue;
     }
 
-    public TO2Type Type => type;
+    public readonly TO2Type Type => type;
 
-    public object? Value => anyValue;
+    public readonly object? Value => anyValue;
 
-    public bool IsBreak => false;
+    public readonly bool IsBreak => false;
 
-    public bool IsContinue => false;
+    public readonly bool IsContinue => false;
 
-    public bool IsReturn => false;
+    public readonly bool IsReturn => false;
 
     public IREPLForInSource? ForInSource() {
         return null;

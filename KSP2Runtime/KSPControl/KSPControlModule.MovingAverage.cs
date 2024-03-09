@@ -4,7 +4,7 @@ using KontrolSystem.TO2.Binding;
 namespace KontrolSystem.KSP.Runtime.KSPControl;
 
 public partial class KSPControlModule {
-    internal struct MovingAverageValue {
+    internal readonly struct MovingAverageValue {
         internal readonly double sampleTime;
         internal readonly double value;
 
@@ -17,7 +17,7 @@ public partial class KSPControlModule {
     // For the most part this is a rip-off from KOS
     [KSClass("MovingAverage")]
     public class MovingAverage {
-        private List<MovingAverageValue> values = new();
+        private List<MovingAverageValue> values = [];
 
         public MovingAverage() {
             Reset();
@@ -39,7 +39,7 @@ public partial class KSPControlModule {
             Mean = 0;
             MeanDiff = 0;
             LastSampleTime = 0;
-            if (values == null) values = new List<MovingAverageValue>();
+            if (values == null) values = [];
             else values.Clear();
         }
 

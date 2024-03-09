@@ -10,7 +10,7 @@ public interface IAnyResult {
     object? ErrorObject { get; }
 }
 
-public struct Result<T, E> : IAnyResult {
+public readonly struct Result<T, E> : IAnyResult {
     public readonly bool success;
     public readonly T? value;
     public readonly E? error;
@@ -21,13 +21,13 @@ public struct Result<T, E> : IAnyResult {
         this.error = error;
     }
 
-    public bool Success => success;
+    public readonly bool Success => success;
 
-    public object? ValueObject => value;
+    public readonly object? ValueObject => value;
 
-    public string? ErrorString => error?.ToString();
+    public readonly string? ErrorString => error?.ToString();
 
-    public object? ErrorObject => error;
+    public readonly object? ErrorObject => error;
 }
 
 public static class Result {
