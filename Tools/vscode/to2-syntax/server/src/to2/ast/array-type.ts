@@ -11,6 +11,7 @@ import {
 } from "./to2-type";
 import { OptionType } from "./option-type";
 import { WithDefinitionRef } from "./definition-ref";
+import { OPERATORS, Operator } from "./operator";
 
 export class ArrayType implements RealizedType {
   public readonly kind = "Array";
@@ -63,11 +64,23 @@ export class ArrayType implements RealizedType {
     }
   }
 
-  public findSuffixOperator(): RealizedType | undefined {
-    return undefined;
+  public findSuffixOperator(
+    op: Operator,
+    rightType: RealizedType,
+  ): TO2Type | undefined {
+    switch (op) {
+      case "+":
+      case "+=":
+        return this.isAssignableFrom(rightType) ||
+          (this.elementType as RealizedType).isAssignableFrom(rightType)
+          ? this
+          : undefined;
+      default:
+        return undefined;
+    }
   }
 
-  public findPrefixOperator(): RealizedType | undefined {
+  public findPrefixOperator(): TO2Type | undefined {
     return undefined;
   }
 
