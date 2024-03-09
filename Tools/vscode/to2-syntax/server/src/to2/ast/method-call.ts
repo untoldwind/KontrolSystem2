@@ -55,6 +55,8 @@ export class MethodCall extends Expression {
     }
 
     if (methodType) {
+      const genericMap: Record<string, RealizedType> = {};
+
       if (this.args.length > methodType.maxParams) {
         errors.push({
           status:
@@ -70,17 +72,31 @@ export class MethodCall extends Expression {
         });
       } else {
         for (let i = 0; i < this.args.length; i++) {
+          methodType.parameterTypes[i][1]
+            .realizedType(context.module)
+            .guessGeneric(
+              context.module,
+              genericMap,
+              this.args[i].resultType(context).realizedType(context.module),
+            );
+        }
+
+        methodType.returnType;
+        for (let i = 0; i < this.args.length; i++) {
           errors.push(
             ...this.args[i].validateBlock(
               context,
-              methodType.parameterTypes[i][1].realizedType(context.module),
+              methodType.parameterTypes[i][1]
+                .realizedType(context.module)
+                .fillGenerics(context.module, genericMap),
             ),
           );
         }
       }
       const targetType = this.target
         .resultType(context)
-        .realizedType(context.module);
+        .realizedType(context.module)
+        .fillGenerics(context.module, genericMap);
       this.documentation = [
         this.methodName.range.with(
           `Method \`${targetType.name}.${
