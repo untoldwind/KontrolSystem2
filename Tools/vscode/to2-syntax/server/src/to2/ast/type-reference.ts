@@ -5,9 +5,9 @@ import { ModuleContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
 
 export class LookupTypeReference implements Node, TO2Type {
-  public name: string;
-  public description: string;
-  public localName: string;
+  public readonly name: string;
+  public readonly description: string;
+  public readonly localName: string;
   public readonly range: InputRange;
 
   constructor(

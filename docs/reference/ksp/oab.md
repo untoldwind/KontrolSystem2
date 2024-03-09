@@ -352,6 +352,7 @@ Name | Type | Read-only | Description
 has_resources_to_operate | bool | R/O | 
 part | [ksp::oab::ObjectAssemblyPart](/reference/ksp/oab.md#objectassemblypart) | R/O | 
 part_name | string | R/O | 
+potential_torque | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
 required_resources | [ksp::resource::ResourceSetting](/reference/ksp/resource.md#resourcesetting)[] | R/O | 
 toggle_torque | bool | R/W | 
 wheel_actuator_mode | [ksp::vessel::ActuatorMode](/reference/ksp/vessel.md#actuatormode) | R/W | 

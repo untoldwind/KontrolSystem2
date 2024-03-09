@@ -310,28 +310,6 @@ Name | Type | Optional | Description
 --- | --- | --- | ---
 value | string |  | Enum value to lookup
 
-### ScienceStorage
-
-Represents the science storage / research inventory of a vessel.
-
-
-#### Fields
-
-Name | Type | Read-only | Description
---- | --- | --- | ---
-is_active | bool | R/O | 
-research_reports | [ksp::science::ResearchReport](/reference/ksp/science.md#researchreport)[] | R/O | 
-
-#### Methods
-
-##### start_transmit_all
-
-```rust
-sciencestorage.start_transmit_all ( ) -> bool
-```
-
-
-
 ## Constants
 
 Name | Type | Description

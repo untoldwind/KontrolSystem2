@@ -188,6 +188,49 @@ Name | Type | Optional | Description
 --- | --- | --- | ---
 value | string |  | Enum value to lookup
 
+### ConnectionNodeStatus
+
+State of the comm-net connection
+
+#### Methods
+
+##### to_string
+
+```rust
+connectionnodestatus.to_string ( ) -> string
+```
+
+String representation of the number
+
+### ConnectionNodeStatusConstants
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+Connected | [ksp::vessel::ConnectionNodeStatus](/reference/ksp/vessel.md#connectionnodestatus) | R/O | Connected
+Disconnected | [ksp::vessel::ConnectionNodeStatus](/reference/ksp/vessel.md#connectionnodestatus) | R/O | Disconnected
+Invalid | [ksp::vessel::ConnectionNodeStatus](/reference/ksp/vessel.md#connectionnodestatus) | R/O | Invalid
+Pending | [ksp::vessel::ConnectionNodeStatus](/reference/ksp/vessel.md#connectionnodestatus) | R/O | Pending
+
+#### Methods
+
+##### from_string
+
+```rust
+connectionnodestatusconstants.from_string ( value : string ) -> Option<ksp::vessel::ConnectionNodeStatus>
+```
+
+Parse from string
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+value | string |  | Enum value to lookup
+
 ### DeltaVSituation
 
 Vessel situation for delta-v calculation
@@ -969,6 +1012,7 @@ Name | Type | Read-only | Description
 has_resources_to_operate | bool | R/O | 
 part | [ksp::vessel::Part](/reference/ksp/vessel.md#part) | R/O | 
 part_name | string | R/O | 
+potential_torque | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
 required_resources | [ksp::resource::ResourceSetting](/reference/ksp/resource.md#resourcesetting)[] | R/O | 
 toggle_torque | bool | R/W | 
 wheel_actuator_mode | [ksp::vessel::ActuatorMode](/reference/ksp/vessel.md#actuatormode) | R/W | 
@@ -1317,6 +1361,29 @@ Name | Type | Optional | Description
 --- | --- | --- | ---
 value | string |  | Enum value to lookup
 
+### ScienceStorage
+
+Represents the science storage / research inventory of a vessel.
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+active_transmitter | Option&lt;[ksp::vessel::ModuleTransmitter](/reference/ksp/vessel.md#moduletransmitter)> | R/O | 
+is_active | bool | R/O | 
+research_reports | [ksp::science::ResearchReport](/reference/ksp/science.md#researchreport)[] | R/O | 
+
+#### Methods
+
+##### start_transmit_all
+
+```rust
+sciencestorage.start_transmit_all ( ) -> bool
+```
+
+
+
 ### StageDeltaV
 
 
@@ -1470,6 +1537,7 @@ available_thrust | float | R/O | Returns the maximum thrust of all engines in th
 body_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/O | The body/rotating reference frame of the vessel. 
 celestial_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/O | The celestial/non-rotating reference frame of the vessel. 
 command_modules | [ksp::vessel::ModuleCommand](/reference/ksp/vessel.md#modulecommand)[] | R/O | Get a list of all command module parts of the vessel. 
+connection_status | [ksp::vessel::ConnectionNodeStatus](/reference/ksp/vessel.md#connectionnodestatus) | R/O | 
 control_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/O | Reference frame for the current control position. 
 control_status | [ksp::vessel::VesselControlState](/reference/ksp/vessel.md#vesselcontrolstate) | R/O | Current control status of the vessel. 
 control_surfaces | [ksp::vessel::ModuleControlSurface](/reference/ksp/vessel.md#modulecontrolsurface)[] | R/O | Get a list of all control service parts of the vessel. 
@@ -1510,7 +1578,7 @@ parts | [ksp::vessel::Part](/reference/ksp/vessel.md#part)[] | R/O | Get a list 
 pitch_yaw_roll | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Returns the pitch, yaw/heading and roll of the vessel relative to the horizon. 
 position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Coordinate position of the vessel in the celestial frame of the main body. 
 research_location | Option&lt;[ksp::science::ResearchLocation](/reference/ksp/science.md#researchlocation)> | R/O | Get the current research location of the vessel. 
-science_storage | Option&lt;[ksp::science::ScienceStorage](/reference/ksp/science.md#sciencestorage)> | R/O | Access the science storage/research inventory of the vessel. 
+science_storage | Option&lt;[ksp::vessel::ScienceStorage](/reference/ksp/vessel.md#sciencestorage)> | R/O | Access the science storage/research inventory of the vessel. 
 situation | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | Get the current situation of the vessel. 
 solar_panels | [ksp::vessel::ModuleSolarPanel](/reference/ksp/vessel.md#modulesolarpanel)[] | R/O | Get a list of all solar panel parts of the vessel. 
 sound_speed | float | R/O | 
@@ -1931,6 +1999,7 @@ Name | Type | Description
 ActuatorMode | ksp::vessel::ActuatorModeConstants | Actuator mode of a reaction wheel
 AutopilotMode | ksp::vessel::AutopilotModeConstants | Vessel autopilot (SAS) mode
 CommandControlState | ksp::vessel::CommandControlStateConstants | Current state of a command module
+ConnectionNodeStatus | ksp::vessel::ConnectionNodeStatusConstants | State of the comm-net connection
 DeltaVSituation | ksp::vessel::DeltaVSituationConstants | Vessel situation for delta-v calculation
 DeployableDeployState | ksp::vessel::DeployableDeployStateConstants | Current state of a deployable part (like CargoBays)
 DockingState | ksp::vessel::DockingStateConstants | Current state of a docking node
