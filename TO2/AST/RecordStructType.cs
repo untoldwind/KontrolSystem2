@@ -6,18 +6,11 @@ using KontrolSystem.TO2.Generator;
 
 namespace KontrolSystem.TO2.AST;
 
-public readonly struct RecordStructField {
-    public readonly string name;
-    public readonly RealizedType type;
-    public readonly FieldInfo field;
-    public readonly string description;
-
-    public RecordStructField(string name, string description, RealizedType type, FieldInfo field) {
-        this.name = name;
-        this.description = description;
-        this.type = type;
-        this.field = field;
-    }
+public readonly struct RecordStructField(string name, string description, RealizedType type, FieldInfo field) {
+    public readonly string name = name;
+    public readonly RealizedType type = type;
+    public readonly FieldInfo field = field;
+    public readonly string description = description;
 }
 
 public class RecordStructType : RecordType {

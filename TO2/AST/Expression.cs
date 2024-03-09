@@ -101,14 +101,8 @@ public abstract class Expression(Position start, Position end) : Node(start, end
 ///     A bracket expression.
 ///     I.e. just an other expression surrounded by round brackets '(', ')'
 /// </summary>
-public class Bracket : Expression {
-    private readonly Expression expression;
-
-    public Bracket(Expression expression, Position start = new(), Position end = new()) :
-        base(start, end) {
-        this.expression = expression;
-    }
-
+public class Bracket(Expression expression, Position start = new(), Position end = new())
+    : Expression(start, end) {
     public override IVariableContainer? VariableContainer {
         set => expression.VariableContainer = value;
     }

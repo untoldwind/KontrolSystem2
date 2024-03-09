@@ -151,7 +151,7 @@ public class IfThen : Expression, IVariableContainer {
         return new REPLIfThenFuture(thenResultType, context, condition, thenExpression);
     }
 
-    internal class REPLIfThenFuture : REPLValueFuture {
+    private class REPLIfThenFuture : REPLValueFuture {
         private readonly Expression condition;
         private readonly REPLContext context;
         private readonly Expression thenExpression;
@@ -192,18 +192,13 @@ public class IfThen : Expression, IVariableContainer {
     }
 }
 
-public class IfThenElse : Expression, IVariableContainer {
-    private readonly Expression condition;
-    private readonly Expression elseExpression;
-    private readonly Expression thenExpression;
-
-    public IfThenElse(Expression condition, Expression thenExpression, Expression elseExpression,
-        Position start = new(), Position end = new()) : base(start, end) {
-        this.condition = condition;
-        this.thenExpression = thenExpression;
-        this.elseExpression = elseExpression;
-    }
-
+public class IfThenElse(
+    Expression condition,
+    Expression thenExpression,
+    Expression elseExpression,
+    Position start = new(),
+    Position end = new())
+    : Expression(start, end), IVariableContainer {
     public override IVariableContainer? VariableContainer {
         set {
             ParentContainer = value;
@@ -362,7 +357,7 @@ public class IfThenElse : Expression, IVariableContainer {
         return new REPLIfThenElseFuture(thenResultType, context, condition, thenExpression, elseExpression);
     }
 
-    internal class REPLIfThenElseFuture(
+    private class REPLIfThenElseFuture(
         TO2Type to2Type,
         REPLContext context,
         Expression condition,

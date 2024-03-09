@@ -229,7 +229,7 @@ public class BoundPropertyLikeFieldAccessFactory : IFieldAccessFactory {
         this.opCodes = opCodes;
     }
 
-    public BoundPropertyLikeFieldAccessFactory(string? description, Func<RealizedType> fieldType, Type methodTarget,
+    private BoundPropertyLikeFieldAccessFactory(string? description, Func<RealizedType> fieldType, Type methodTarget,
         MethodInfo? getter, MethodInfo? setter, bool isAsyncStore, params OpCode[] opCodes) {
         this.Description = description;
         this.fieldType = fieldType;
@@ -286,7 +286,7 @@ public class BoundPropertyLikeFieldAccessFactory : IFieldAccessFactory {
                 return typeArguments[t.Name].GeneratedType(context);
             }).ToArray();
             var genericTarget = methodTarget.MakeGenericType(arguments);
-            var genericGetterMethod = genericTarget.GetMethod(getter.Name, new Type[0]);
+            var genericGetterMethod = genericTarget.GetMethod(getter.Name, Type.EmptyTypes);
 
             if (genericGetterMethod == null)
                 throw new ArgumentException(

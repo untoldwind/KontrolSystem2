@@ -135,10 +135,10 @@ internal class OptionFieldAccess : IFieldAccessFactory {
         switch (field) {
         case OptionField.Defined:
             return new BoundFieldAccessEmitter(BuiltinType.Bool, generateType,
-                new List<FieldInfo> { generateType.GetField("defined") });
+                [generateType.GetField("defined")]);
         case OptionField.Value:
             return new BoundFieldAccessEmitter(optionType.elementType.UnderlyingType(context), generateType,
-                new List<FieldInfo> { generateType.GetField("value") });
+                [generateType.GetField("value")]);
         default: throw new InvalidOperationException($"Unknown option field: {field}");
         }
     }

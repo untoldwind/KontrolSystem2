@@ -5,20 +5,14 @@ using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST;
 
-public class FieldAssign : Expression {
-    private readonly Expression expression;
-    private readonly string fieldName;
-    private readonly Operator op;
-    private readonly Expression target;
-
-    public FieldAssign(Expression target, string fieldName, Operator op, Expression expression,
-        Position start = new(), Position end = new()) : base(start, end) {
-        this.target = target;
-        this.fieldName = fieldName;
-        this.op = op;
-        this.expression = expression;
-    }
-
+public class FieldAssign(
+    Expression target,
+    string fieldName,
+    Operator op,
+    Expression expression,
+    Position start = new(),
+    Position end = new())
+    : Expression(start, end) {
     public override IVariableContainer? VariableContainer {
         set {
             target.VariableContainer = value;

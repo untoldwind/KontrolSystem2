@@ -4,16 +4,12 @@ using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST;
 
-public class FieldGet : Expression, IAssignContext {
-    private readonly string fieldName;
-    private readonly Expression target;
-
-    public FieldGet(Expression target, string fieldName, Position start = new(),
-        Position end = new()) : base(start, end) {
-        this.target = target;
-        this.fieldName = fieldName;
-    }
-
+public class FieldGet(
+    Expression target,
+    string fieldName,
+    Position start = new(),
+    Position end = new())
+    : Expression(start, end), IAssignContext {
     public override IVariableContainer? VariableContainer {
         set => target.VariableContainer = value;
     }

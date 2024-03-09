@@ -24,7 +24,7 @@ public class TypeAlias(
     }
 
     public IEnumerable<StructuralError> TryDeclareTypes(ModuleContext context) {
-        if (exported) context.exportedTypes!.Add((name: name, new TypeAliasDelegate(context, type, description, this)));
+        if (exported) context.exportedTypes!.Add((name, new TypeAliasDelegate(context, type, description, this)));
         return Enumerable.Empty<StructuralError>();
     }
 

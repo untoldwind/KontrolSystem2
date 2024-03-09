@@ -150,26 +150,19 @@ public class ForIn : Expression, IVariableContainer {
             loopExpression);
     }
 
-    internal class REPLForInFuture : REPLValueFuture {
-        private readonly REPLContext context;
-        private readonly Expression loopExpression;
-        private readonly Expression sourceExpression;
-        private readonly string variableName;
-        private readonly TO2Type? variableType;
+    internal class REPLForInFuture(
+        REPLContext context,
+        string variableName,
+        TO2Type variableType,
+        Expression sourceExpression,
+        Expression loopExpression)
+        : REPLValueFuture(BuiltinType.Unit) {
+        private readonly TO2Type? variableType = variableType;
         private IREPLValue? current;
         private REPLValueFuture? loopExpressionFuture;
         private IREPLForInSource? source;
         private REPLValueFuture? sourceFuture;
         private REPLContext.REPLVariable? variable;
-
-        public REPLForInFuture(REPLContext context, string variableName, TO2Type variableType,
-            Expression sourceExpression, Expression loopExpression) : base(BuiltinType.Unit) {
-            this.context = context;
-            this.variableName = variableName;
-            this.variableType = variableType;
-            this.sourceExpression = sourceExpression;
-            this.loopExpression = loopExpression;
-        }
 
         public override FutureResult<IREPLValue?> PollValue() {
             sourceFuture ??= sourceExpression.Eval(context);

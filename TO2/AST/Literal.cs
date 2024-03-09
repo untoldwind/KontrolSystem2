@@ -5,13 +5,9 @@ using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST;
 
-public class LiteralBool : Expression {
-    public readonly bool value;
-
-    public LiteralBool(bool value, Position start = new(), Position end = new()) : base(start,
-        end) {
-        this.value = value;
-    }
+public class LiteralBool(bool value, Position start = new(), Position end = new()) : Expression(start,
+    end) {
+    public readonly bool value = value;
 
     public override IVariableContainer? VariableContainer {
         set { }
@@ -66,13 +62,8 @@ public class LiteralString : Expression {
     }
 }
 
-public class LiteralInt : Expression {
-    public readonly long value;
-
-    public LiteralInt(long value, Position start = new(), Position end = new()) :
-        base(start, end) {
-        this.value = value;
-    }
+public class LiteralInt(long value, Position start = new(), Position end = new()) : Expression(start, end) {
+    public readonly long value = value;
 
     public override IVariableContainer? VariableContainer {
         set { }
@@ -94,13 +85,9 @@ public class LiteralInt : Expression {
     }
 }
 
-public class LiteralFloat : Expression {
-    public readonly double value;
-
-    public LiteralFloat(double value, Position start = new(), Position end = new()) : base(start,
-        end) {
-        this.value = value;
-    }
+public class LiteralFloat(double value, Position start = new(), Position end = new()) : Expression(start,
+    end) {
+    public readonly double value = value;
 
     public override IVariableContainer? VariableContainer {
         set { }

@@ -7,15 +7,10 @@ using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST;
 
-public class TupleCreate : Expression {
-    private readonly List<Expression> items;
+public class TupleCreate(List<Expression> items, Position start, Position end) : Expression(start, end) {
     private TupleType? resultType;
 
     private TypeHint? typeHint;
-
-    public TupleCreate(List<Expression> items, Position start, Position end) : base(start, end) {
-        this.items = items;
-    }
 
     public override IVariableContainer? VariableContainer {
         set {

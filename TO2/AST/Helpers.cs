@@ -15,7 +15,7 @@ public static class Helpers {
         return dictionary.TryGetValue(key, out var value) ? value : defaultValue;
     }
 
-    public static Dictionary<string, RealizedType> InferrTypes(IBlockContext context,
+    private static Dictionary<string, RealizedType> InferrTypes(IBlockContext context,
         RealizedType? declaredResult, List<RealizedParameter> parameters, MethodInfo methodInfo,
         RealizedType? desiredResult, IEnumerable<TO2Type> arguments,
         IEnumerable<(string name, RealizedType type)> targetTypeArguments, Node node) {

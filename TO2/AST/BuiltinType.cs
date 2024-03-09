@@ -24,18 +24,18 @@ public abstract partial class BuiltinType : RealizedType {
         new OperatorCollection {
             {
                 Operator.AddAssign,
-                new StaticMethodOperatorEmitter(() => new GenericParameter("T"), () => ArrayBuilder!,
+                new StaticMethodOperatorEmitter(() => new GenericParameter("T"), LazyArrayBuilder,
                     typeof(ArrayBuilderOps).GetMethod("AddTo"))
             }
         },
         new List<(string name, IMethodInvokeFactory invoker)> {
             ("append",
-                new BoundMethodInvokeFactory("Append an element to the array", true, () => ArrayBuilder!,
+                new BoundMethodInvokeFactory("Append an element to the array", true, LazyArrayBuilder,
                     () => [new("element", new GenericParameter("T"), "Value ot append")],
                     false, typeof(ArrayBuilder<>), typeof(ArrayBuilder<>).GetMethod("Append"))),
             ("result",
                 new BoundMethodInvokeFactory("Build the resulting array", true,
-                    () => new ArrayType(new GenericParameter("T")), () => new List<RealizedParameter>(), false,
+                    () => new ArrayType(new GenericParameter("T")), () => [], false,
                     typeof(ArrayBuilder<>), typeof(ArrayBuilder<>).GetMethod("Result")))
         },
         new List<(string name, IFieldAccessFactory access)> {
@@ -44,6 +44,8 @@ public abstract partial class BuiltinType : RealizedType {
                     typeof(ArrayBuilder<>).GetProperty("Length")))
         }
     );
+
+    private static RealizedType LazyArrayBuilder() => ArrayBuilder;
 
     public static readonly RealizedType Cell = new BoundType(null, "Cell",
         "Holds a single value that can be mutated at any time", typeof(Cell<>),
@@ -56,7 +58,7 @@ public abstract partial class BuiltinType : RealizedType {
                     false, typeof(Cell<>), typeof(Cell<>).GetProperty("Value")?.SetMethod)),
             ("update",
                 new BoundMethodInvokeFactory("Atomically update the value of the cell", true,
-                    () => Cell!,
+                    LazyCell,
                     () => [
                         new("updater",
                             new FunctionType(false, [new GenericParameter("T")],
@@ -70,6 +72,8 @@ public abstract partial class BuiltinType : RealizedType {
                     typeof(Cell<>).GetProperty("Value")))
         }
     );
+
+    private static RealizedType LazyCell() => Cell;
 
     public override RealizedType UnderlyingType(ModuleContext context) {
         return this;

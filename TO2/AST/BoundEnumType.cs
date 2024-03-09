@@ -9,7 +9,7 @@ using KontrolSystem.TO2.Runtime;
 namespace KontrolSystem.TO2.AST;
 
 public class BoundEnumType : RealizedType {
-    public readonly OperatorCollection allowedSuffixOperators;
+    private readonly OperatorCollection allowedSuffixOperators;
     private readonly string description;
     public readonly Type enumType;
     public readonly string localName;

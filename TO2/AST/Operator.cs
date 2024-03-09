@@ -59,20 +59,12 @@ public interface IOperatorEmitter {
     IREPLValue Eval(Node node, IREPLValue left, IREPLValue? right);
 }
 
-public class DirectOperatorEmitter : IOperatorEmitter {
-    private readonly OpCode[] opCodes;
-    private readonly Func<TO2Type> otherTypeFactory;
-    private readonly REPLOperator replOperator;
-    private readonly Func<TO2Type> resultTypeFactory;
-
-    public DirectOperatorEmitter(Func<TO2Type> otherTypeFactory, Func<TO2Type> resultTypeFactory,
-        REPLOperator replOperator, params OpCode[] opCodes) {
-        this.otherTypeFactory = otherTypeFactory;
-        this.resultTypeFactory = resultTypeFactory;
-        this.replOperator = replOperator;
-        this.opCodes = opCodes;
-    }
-
+public class DirectOperatorEmitter(
+    Func<TO2Type> otherTypeFactory,
+    Func<TO2Type> resultTypeFactory,
+    REPLOperator replOperator,
+    params OpCode[] opCodes)
+    : IOperatorEmitter {
     public bool Accepts(ModuleContext context, TO2Type otherType) {
         return otherTypeFactory().IsAssignableFrom(context, otherType);
     }

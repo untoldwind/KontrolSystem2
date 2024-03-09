@@ -14,11 +14,7 @@ public class BoundType(string? modulePrefix, string localName, string? descripti
     IEnumerable<RealizedType>? typeParameters = null) : RealizedType {
     public readonly Dictionary<string, IFieldAccessFactory> allowedFields = allowedFields.ToDictionary(m => m.name, m => m.access);
     public readonly Dictionary<string, IMethodInvokeFactory> allowedMethods = allowedMethods.ToDictionary(m => m.name, m => m.invoker);
-    private readonly OperatorCollection allowedPrefixOperators = allowedPrefixOperators;
-    private readonly OperatorCollection allowedSuffixOperators = allowedSuffixOperators;
-    private readonly string? description = description;
     public readonly string localName = localName;
-    private readonly string? modulePrefix = modulePrefix;
     public readonly Type runtimeType = runtimeType;
     private readonly IEnumerable<RealizedType> typeParameters = typeParameters ??
                               runtimeType.GetGenericArguments().Select(t => new GenericParameter(t.Name));
