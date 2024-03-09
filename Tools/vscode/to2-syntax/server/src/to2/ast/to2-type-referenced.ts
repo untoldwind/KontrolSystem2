@@ -56,11 +56,10 @@ export class ReferencedType implements RealizedType {
     op: Operator,
     rightType: RealizedType,
   ): TO2Type | undefined {
-    const opRef = this.typeReference.suffixOperators?.[op]?.find(
-      (opRef) =>
-        resolveTypeRef(opRef.otherType, this.genericMap)?.isAssignableFrom(
-          rightType,
-        ),
+    const opRef = this.typeReference.suffixOperators?.[op]?.find((opRef) =>
+      resolveTypeRef(opRef.otherType, this.genericMap)?.isAssignableFrom(
+        rightType,
+      ),
     );
 
     return opRef
@@ -72,11 +71,10 @@ export class ReferencedType implements RealizedType {
     op: Operator,
     leftType: RealizedType,
   ): TO2Type | undefined {
-    const opRef = this.typeReference.prefixOperators?.[op]?.find(
-      (opRef) =>
-        resolveTypeRef(opRef.otherType, this.genericMap)?.isAssignableFrom(
-          leftType,
-        ),
+    const opRef = this.typeReference.prefixOperators?.[op]?.find((opRef) =>
+      resolveTypeRef(opRef.otherType, this.genericMap)?.isAssignableFrom(
+        leftType,
+      ),
     );
 
     return opRef

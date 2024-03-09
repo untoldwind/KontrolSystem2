@@ -221,6 +221,29 @@ export class ArrayType implements RealizedType {
             "Reverse the order of the array",
           ),
         };
+      case "reduce":
+        return {
+          value: new FunctionType(
+            false,
+            [
+              ["initial", new GenericParameter("T"), false],
+              [
+                "reducer",
+                new FunctionType(
+                  false,
+                  [
+                    ["item1", new GenericParameter("T"), false],
+                    ["item2", this.elementType, false],
+                  ],
+                  new GenericParameter("T"),
+                ),
+                false,
+              ],
+            ],
+            new GenericParameter("T"),
+            "Reduce array by an operation",
+          ),
+        };
       case "sort":
         return {
           value: new FunctionType(
@@ -294,6 +317,7 @@ export class ArrayType implements RealizedType {
       "filter_map",
       "slice",
       "reverse",
+      "reduce",
       "sort",
       "sort_by",
       "sort_with",

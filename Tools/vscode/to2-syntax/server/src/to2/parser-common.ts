@@ -96,7 +96,11 @@ export const identifierPath = delimited1(
   "<identifier path>",
 );
 
-export const commaDelimiter = between(whitespace0, tag(","), whitespace0);
+export const commaDelimiter = between(
+  preceded(lineComments, whitespace0),
+  tag(","),
+  preceded(lineComments, whitespace0),
+);
 
 export const eqDelimiter = between(whitespace0, tag("="), whitespace0);
 
@@ -130,7 +134,7 @@ const functionType = map(
 
 const tupleType = map(
   between(
-    terminated(tag("("), whitespace0),
+    terminated(tag("("), preceded(lineComments, whitespace0)),
     delimitedM_N(
       2,
       undefined,
@@ -138,14 +142,14 @@ const tupleType = map(
       commaDelimiter,
       "<type>",
     ),
-    preceded(whitespace0, tag(")")),
+    preceded(preceded(lineComments, whitespace0), tag(")")),
   ),
   (items) => new TupleType(items),
 );
 
 const recordType = map(
   between(
-    terminated(tag("("), whitespace0),
+    terminated(tag("("), preceded(lineComments, whitespace0)),
     delimited1(
       preceded(
         opt(terminated(lineComment, whitespace0)),
@@ -154,7 +158,7 @@ const recordType = map(
       commaDelimiter,
       "<identifier : type>",
     ),
-    preceded(whitespace0, tag(")")),
+    preceded(preceded(lineComments, whitespace0), tag(")")),
   ),
   (items) => new RecordType(items.map(([name, type]) => [name, type.value])),
 );

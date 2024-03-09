@@ -426,17 +426,24 @@ const suffixOps = alt(
   map(preceded(spacing0, suffixOp), (op) => new OperatorSuffix(op)),
 );
 
-const termWithSuffixOps = fold0(
-  term,
-  suffixOps,
-  (target, suffixOp, start, end) => suffixOp.getExpression(target, start, end),
+const termWithSuffixOps = terminated(
+  fold0(
+    term,
+    terminated(suffixOps, lineComments),
+    (target, suffixOp, start, end) =>
+      suffixOp.getExpression(target, start, end),
+  ),
+  lineComments,
 );
 
 const unaryPrefixOp = withPosition(alt(tag("-"), tag("!"), tag("~")));
 
 const unaryPrefixExpr = alt(
   map(
-    seq(unaryPrefixOp, preceded(whitespace0, termWithSuffixOps)),
+    seq(
+      unaryPrefixOp,
+      preceded(preceded(lineComments, whitespace0), termWithSuffixOps),
+    ),
     ([op, right], start, end) => new UnaryPrefix(op, right, start, end),
   ),
   termWithSuffixOps,
