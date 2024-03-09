@@ -49,7 +49,7 @@ export class StructDeclaration implements Node, TypeDeclaration {
 
   public readonly range: InputRange;
   public readonly name: WithPosition<string>;
-  public readonly type: TO2Type;
+  public type: TO2Type;
   public readonly constructorType: FunctionType;
 
   constructor(
@@ -115,6 +115,7 @@ export class StructDeclaration implements Node, TypeDeclaration {
         range: this.structName.range,
       });
     } else {
+      this.type = this.type.realizedType(context);
       context.mappedFunctions.set(this.structName.value, {
         definition: {
           moduleName: context.moduleName,
