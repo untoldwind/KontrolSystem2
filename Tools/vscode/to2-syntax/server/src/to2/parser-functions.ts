@@ -67,7 +67,10 @@ export const functionDeclaration = map(
     preceded(whitespace0, functionPrefix),
     withPosition(identifier),
     preceded(whitespace0, functionParameters),
-    preceded(between(whitespace0, tag("->"), whitespace0), typeRef),
+    preceded(
+      between(whitespace0, tag("->"), whitespace0),
+      withPosition(typeRef),
+    ),
     preceded(eqDelimiter, expression),
   ),
   (

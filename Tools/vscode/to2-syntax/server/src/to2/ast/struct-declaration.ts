@@ -6,11 +6,11 @@ import {
   TypeDeclaration,
   ValidationError,
 } from ".";
-import { TO2Type, UNKNOWN_TYPE } from "./to2-type";
+import { BUILTIN_UNIT, RealizedType, TO2Type, UNKNOWN_TYPE } from "./to2-type";
 import { FunctionParameter } from "./function-declaration";
 import { LineComment, isLineComment } from "./line-comment";
 import { InputPosition, InputRange, WithPosition } from "../../parser";
-import { ModuleContext } from "./context";
+import { BlockContext, FunctionContext, ModuleContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
 import { RecordType } from "./record-type";
 import { FunctionType } from "./function-type";
@@ -35,8 +35,16 @@ export class StructField implements Node {
   ): T {
     return this.initializer.reduceNode(combine, combine(initialValue, this));
   }
-  public validate(): ValidationError[] {
+
+  public validate(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
+
+    errors.push(
+      ...this.initializer.validateBlock(
+        context,
+        this.type.value.realizedType(context.module),
+      ),
+    );
 
     return errors;
   }
@@ -46,7 +54,6 @@ export class StructField implements Node {
 
 export class StructDeclaration implements Node, TypeDeclaration {
   public readonly isTypeDecl: true = true;
-
   public readonly range: InputRange;
   public readonly name: WithPosition<string>;
   public type: TO2Type;
@@ -130,6 +137,23 @@ export class StructDeclaration implements Node, TypeDeclaration {
 
   public validateModuleSecondPass(context: ModuleContext): ValidationError[] {
     const errors: ValidationError[] = [];
+
+    const blockContext = new FunctionContext(context, BUILTIN_UNIT);
+
+    for (const parameter of this.constructorParameters) {
+      errors.push(...parameter.validateBlock(blockContext));
+      blockContext.localVariables.set(parameter.name.value, {
+        definition: {
+          moduleName: context.moduleName,
+          range: parameter.name.range,
+        },
+        value: parameter.resultType(blockContext),
+      });
+    }
+    for (const field of this.fields) {
+      if (isLineComment(field)) continue;
+      errors.push(...field.validate(blockContext));
+    }
 
     return errors;
   }

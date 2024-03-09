@@ -12,6 +12,7 @@ export enum FunctionModifier {
 }
 
 export class FunctionParameter implements Node {
+  public documentation?: WithPosition<string>[];
   public readonly range: InputRange;
 
   constructor(
@@ -42,6 +43,17 @@ export class FunctionParameter implements Node {
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
+    const variableType = this.resultType(context).realizedType(context.module);
+
+    this.documentation = [
+      this.range.with(
+        `Parameter \`${this.name.value} : ${variableType.name}\``,
+      ),
+    ];
+    if (this.type) {
+      this.documentation.push(this.type.range.with(variableType.description));
+    }
+
     return errors;
   }
 
@@ -53,6 +65,7 @@ export class FunctionParameter implements Node {
 }
 
 export class FunctionDeclaration implements Node, ModuleItem {
+  public documentation?: WithPosition<string>[];
   public isFunctionDecl: true = true;
   public functionType: FunctionType;
   public readonly modifier: FunctionModifier;
@@ -64,7 +77,7 @@ export class FunctionDeclaration implements Node, ModuleItem {
     public readonly name: WithPosition<string>,
     public readonly description: string,
     public readonly parameters: FunctionParameter[],
-    public readonly declaredReturn: TO2Type,
+    public readonly declaredReturn: WithPosition<TO2Type>,
     public readonly expression: Expression,
     start: InputPosition,
     end: InputPosition,
@@ -84,7 +97,7 @@ export class FunctionDeclaration implements Node, ModuleItem {
         param.type?.value ?? UNKNOWN_TYPE,
         param.defaultValue !== undefined,
       ]),
-      declaredReturn,
+      declaredReturn.value,
       description,
     );
   }
@@ -112,7 +125,8 @@ export class FunctionDeclaration implements Node, ModuleItem {
         range: this.name.range,
       });
     } else {
-      const blockContext = new FunctionContext(context, this.declaredReturn);
+      const returnType = this.declaredReturn.value.realizedType(context);
+      const blockContext = new FunctionContext(context, returnType);
 
       this.functionType = new FunctionType(
         this.isAsync,
@@ -121,7 +135,7 @@ export class FunctionDeclaration implements Node, ModuleItem {
           param.resultType(blockContext).realizedType(context),
           param.defaultValue !== undefined,
         ]),
-        this.declaredReturn.realizedType(context),
+        returnType,
       );
       context.mappedFunctions.set(this.name.value, {
         definition: { moduleName: context.moduleName, range: this.name.range },
@@ -135,7 +149,8 @@ export class FunctionDeclaration implements Node, ModuleItem {
   public validateModuleSecondPass(context: ModuleContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
-    const blockContext = new FunctionContext(context, this.declaredReturn);
+    const returnType = this.declaredReturn.value.realizedType(context);
+    const blockContext = new FunctionContext(context, returnType);
 
     for (const parameter of this.parameters) {
       errors.push(...parameter.validateBlock(blockContext));
@@ -156,6 +171,11 @@ export class FunctionDeclaration implements Node, ModuleItem {
       }
     }
     errors.push(...this.expression.validateBlock(blockContext));
+
+    this.documentation = [
+      this.declaredReturn.range.with(returnType.name),
+      this.declaredReturn.range.with(returnType.description),
+    ];
 
     return errors;
   }

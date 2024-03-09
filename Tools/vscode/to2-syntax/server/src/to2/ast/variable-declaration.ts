@@ -77,7 +77,9 @@ export class VariableDeclaration implements Node, BlockItem {
         range: this.declaration.target.range,
       });
     } else {
-      const variableType = this.resultType(context);
+      const variableType = this.resultType(context).realizedType(
+        context.module,
+      );
 
       if (!this.declaration.type && variableType !== UNKNOWN_TYPE) {
         this.inlayHints = [
