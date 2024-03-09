@@ -6,6 +6,10 @@ This is the successor of [KontrolSystem](https://github.com/untoldwind/KontrolSy
 
 [Documentation](https://kontrolsystem2.readthedocs.io)
 
+## Showcases / Projects that use KontrolSystem2
+
+* https://github.com/lefouvert/ToTheMoon
+
 ## Installation
 
 * Install [BepInEx](https://github.com/BepInEx/BepInEx) and [SpaceWarp](https://github.com/SpaceWarpDev/SpaceWarp) v0.4.0
