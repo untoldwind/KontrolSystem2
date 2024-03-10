@@ -347,7 +347,7 @@ export class ArrayType implements RealizedType {
   }
 
   public setLookupContext(context: ModuleContext): void {
-    this.elementType.setLookupContext?.(context);  
+    this.elementType.setLookupContext?.(context);
   }
 }
 

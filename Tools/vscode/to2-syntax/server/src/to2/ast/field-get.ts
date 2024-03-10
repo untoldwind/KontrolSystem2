@@ -45,8 +45,11 @@ export class FieldGet extends Expression {
     const targetType = this.target
       .resultType(context)
       .realizedType(context.module);
-    const { definition, value: fieldType } =
-      targetType.findField(this.fieldName.value) ?? {};
+    const {
+      definition,
+      description,
+      value: fieldType,
+    } = targetType.findField(this.fieldName.value) ?? {};
     if (definition) {
       this.reference = {
         sourceRange: this.fieldName.range,
@@ -71,7 +74,9 @@ export class FieldGet extends Expression {
           `Field \`${targetType.name}.${this.fieldName.value} : ${fieldRealized.name}\``,
         ),
       ];
-      if (fieldRealized.description)
+      if (description)
+        this.documentation.push(this.fieldName.range.with(description));
+      else if (fieldRealized.description)
         this.documentation.push(
           this.fieldName.range.with(fieldRealized.description),
         );

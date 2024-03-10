@@ -5,6 +5,7 @@ import { ModuleContext } from "./context";
 import { TO2Type } from "./to2-type";
 
 export class ConstDeclaration implements Node, ModuleItem {
+  public documentation?: WithPosition<string>[];
   public isConstDecl: true = true;
   public readonly range: InputRange;
 
@@ -48,6 +49,12 @@ export class ConstDeclaration implements Node, ModuleItem {
   }
 
   public validateModuleSecondPass(context: ModuleContext): ValidationError[] {
+    const type = this.type.value.realizedType(context);
+    this.documentation = [
+      this.type.range.with(type.name),
+      this.type.range.with(type.description),
+    ];
+
     return [];
   }
 

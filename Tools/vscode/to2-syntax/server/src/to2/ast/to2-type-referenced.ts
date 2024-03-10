@@ -87,7 +87,9 @@ export class ReferencedType implements RealizedType {
     if (!fieldReference) return undefined;
 
     const resolved = resolveTypeRef(fieldReference.type, this.genericMap);
-    return resolved ? { value: resolved } : undefined;
+    return resolved
+      ? { description: fieldReference.description, value: resolved }
+      : undefined;
   }
 
   public allFieldNames(): string[] {
