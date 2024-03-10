@@ -8,4 +8,6 @@ test sync fn test_string_interpolation() -> Unit = {
     const b = 3456
     
     assert_string("ab edfg with 3456", $"ab {a} with {b}")
+
+    assert_string("ab edfg       with       3456", $"ab {a,-10} with {b,10}")
 }

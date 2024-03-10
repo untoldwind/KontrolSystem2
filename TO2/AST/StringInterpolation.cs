@@ -15,8 +15,9 @@ public abstract class StringInterpolationPart {
         public readonly string value = value;
     }
 
-    public class ExpressionPart(Expression expression) : StringInterpolationPart {
+    public class ExpressionPart(Expression expression, string alignOrFormat) : StringInterpolationPart {
         public readonly Expression expression = expression;
+        public readonly string alignOrFormat = alignOrFormat;
     }
 }
 
@@ -35,7 +36,7 @@ public class StringInterpolation : Expression {
                 format.Append(stringPart.value);
                 break;
             case StringInterpolationPart.ExpressionPart expressionPart:
-                format.Append("{" + placeholders.Count + "}");
+                format.Append("{" + placeholders.Count + expressionPart.alignOrFormat + "}");
                 placeholders.Add(expressionPart.expression);
                 break;
             }
@@ -84,6 +85,12 @@ public class StringInterpolation : Expression {
     }
 
     public override REPLValueFuture Eval(REPLContext context) {
-        return REPLValueFuture.Success(new REPLString(formatString));
+        var expressionFutures = placeholders.Select(p => p.Eval(context)).ToArray();
+        return REPLValueFuture.ChainN(new ArrayType(BuiltinType.Unit), expressionFutures, values => {
+            var args = new object?[values.Length];
+            for (var i = 0; i < values.Length; i++)
+                args[i] = values[i].Value;
+            return REPLValueFuture.Success(new REPLString(string.Format(CultureInfo.InvariantCulture, formatString, args)));
+        });
     }
 }

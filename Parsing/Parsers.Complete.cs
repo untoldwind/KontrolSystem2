@@ -125,10 +125,17 @@ public static partial class Parsers {
     }
 
     /// <summary>
-    ///     One or more characters not in list
+    ///     Zero or more characters not in list
     /// </summary>
     public static Parser<string> CharsExcept0(string c) {
         return Chars0(ch => !c.Contains(ch));
+    }
+
+    /// <summary>
+    ///     One or more characters not in list
+    /// </summary>
+    public static Parser<string> CharsExcept1(string c, string expected) {
+        return Chars1(ch => !c.Contains(ch), expected);
     }
 
     public static Parser<char> CharExcept(string c) {
