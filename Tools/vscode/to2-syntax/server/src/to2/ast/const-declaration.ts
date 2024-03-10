@@ -12,7 +12,7 @@ export class ConstDeclaration implements Node, ModuleItem {
     public readonly isPublic: boolean,
     public readonly name: WithPosition<string>,
     public readonly description: string,
-    public type: WithPosition<TO2Type>,
+    public readonly type: WithPosition<TO2Type>,
     public readonly expression: Expression,
     start: InputPosition,
     end: InputPosition,
@@ -30,6 +30,7 @@ export class ConstDeclaration implements Node, ModuleItem {
   public validateModuleFirstPass(context: ModuleContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
+    this.type.value.setLookupContext?.(context);
     if (context.mappedConstants.has(this.name.value)) {
       errors.push({
         status: "error",
@@ -37,7 +38,6 @@ export class ConstDeclaration implements Node, ModuleItem {
         range: this.range,
       });
     } else {
-      this.type.value = this.type.value.realizedType(context);
       context.mappedConstants.set(this.name.value, {
         definition: { moduleName: context.moduleName, range: this.name.range },
         value: this.type.value,

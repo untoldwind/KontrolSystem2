@@ -122,7 +122,6 @@ export class StructDeclaration implements Node, TypeDeclaration {
         range: this.structName.range,
       });
     } else {
-      this.type = this.type.realizedType(context);
       context.mappedFunctions.set(this.structName.value, {
         definition: {
           moduleName: context.moduleName,
@@ -139,6 +138,8 @@ export class StructDeclaration implements Node, TypeDeclaration {
     const errors: ValidationError[] = [];
 
     const blockContext = new FunctionContext(context, BUILTIN_UNIT);
+
+    this.type.setLookupContext?.(context);
 
     for (const parameter of this.constructorParameters) {
       errors.push(...parameter.validateBlock(blockContext));

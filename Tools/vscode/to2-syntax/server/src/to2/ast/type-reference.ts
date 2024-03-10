@@ -9,6 +9,7 @@ export class LookupTypeReference implements Node, TO2Type {
   public readonly description: string;
   public readonly localName: string;
   public readonly range: InputRange;
+  private lookupContext?: ModuleContext;
 
   constructor(
     public readonly namePath: string[],
@@ -36,13 +37,18 @@ export class LookupTypeReference implements Node, TO2Type {
   }
 
   public realizedType(context: ModuleContext): RealizedType {
+    const effectiveContext = this.lookupContext ?? context;
     return (
-      context.findType(
+      effectiveContext.findType(
         this.namePath,
-        this.typeArguments.map((type) => type.realizedType(context)),
+        this.typeArguments.map((type) => type.realizedType(effectiveContext)),
       ) ?? UNKNOWN_TYPE
     );
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
+
+  public setLookupContext(context: ModuleContext): void {
+    this.lookupContext = context;
+  }
 }

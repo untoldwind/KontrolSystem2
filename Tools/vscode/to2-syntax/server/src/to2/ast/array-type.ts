@@ -341,6 +341,14 @@ export class ArrayType implements RealizedType {
   public forInSource(): TO2Type | undefined {
     return this.elementType;
   }
+
+  public setModuleName(moduleName: string): void {
+    this.elementType.setModuleName?.(moduleName);
+  }
+
+  public setLookupContext(context: ModuleContext): void {
+    this.elementType.setLookupContext?.(context);  
+  }
 }
 
 export function isArrayType(node: RealizedType): node is ArrayType {

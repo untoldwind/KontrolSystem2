@@ -106,6 +106,16 @@ export class ResultType implements RealizedType {
   public forInSource(): TO2Type | undefined {
     return undefined;
   }
+
+  public setModuleName(moduleName: string): void {
+    this.successType.setModuleName?.(moduleName);
+    this.errorType.setModuleName?.(moduleName);
+  }
+
+  public setLookupContext(context: ModuleContext): void {
+    this.successType.setLookupContext?.(context);
+    this.errorType.setLookupContext?.(context);
+  }
 }
 
 export function isResultType(type: RealizedType): type is ResultType {

@@ -149,10 +149,12 @@ export class FunctionDeclaration implements Node, ModuleItem {
   public validateModuleSecondPass(context: ModuleContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
+    this.declaredReturn.value.setLookupContext?.(context);
     const returnType = this.declaredReturn.value.realizedType(context);
     const blockContext = new FunctionContext(context, returnType);
 
     for (const parameter of this.parameters) {
+      parameter.type?.value.setLookupContext?.(context);
       errors.push(...parameter.validateBlock(blockContext));
       if (blockContext.localVariables.has(parameter.name.value)) {
         errors.push({

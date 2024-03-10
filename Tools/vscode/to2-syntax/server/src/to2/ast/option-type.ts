@@ -113,6 +113,14 @@ export class OptionType implements RealizedType {
   public forInSource(): TO2Type | undefined {
     return undefined;
   }
+
+  public setModuleName(moduleName: string): void {
+    this.elementType.setModuleName?.(moduleName);
+  }
+
+  public setLookupContext(context: ModuleContext): void {
+    this.elementType.setLookupContext?.(context);
+  }
 }
 
 export function isOptionType(type: RealizedType): type is OptionType {

@@ -79,6 +79,7 @@ export class MethodDeclaration implements Node, ModuleItem {
 
     const errors: ValidationError[] = [];
 
+    this.declaredReturn.setLookupContext?.(context);
     const blockContext = new FunctionContext(context, this.declaredReturn);
 
     blockContext.localVariables.set("self", {
@@ -86,6 +87,7 @@ export class MethodDeclaration implements Node, ModuleItem {
       value: context.structType,
     });
     for (const parameter of this.parameters) {
+      parameter.type?.value.setLookupContext?.(context);
       errors.push(...parameter.validateBlock(blockContext));
       if (blockContext.localVariables.has(parameter.name.value)) {
         errors.push({

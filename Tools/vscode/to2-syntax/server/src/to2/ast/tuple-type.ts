@@ -92,6 +92,14 @@ export class TupleType implements RealizedType {
   public forInSource(): TO2Type | undefined {
     return undefined;
   }
+
+  public setModuleName(moduleName: string): void {
+    this.itemTypes.forEach((item) => item.setModuleName?.(moduleName));
+  }
+
+  public setLookupContext(context: ModuleContext): void {
+    this.itemTypes.forEach((item) => item.setLookupContext?.(context));
+  }
 }
 
 export function isTupleType(node: RealizedType): node is TupleType {
