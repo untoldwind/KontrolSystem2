@@ -1242,7 +1242,9 @@ light | Option&lt;[ksp::vessel::ModuleLight](/reference/ksp/vessel.md#moduleligh
 max_temperature | float | R/O | Maximum temperature of the part 
 parachute | Option&lt;[ksp::vessel::ModuleParachute](/reference/ksp/vessel.md#moduleparachute)> | R/O | 
 part_category | [ksp::vessel::PartCategory](/reference/ksp/vessel.md#partcategory) | R/O | 
+part_description | string | R/O | 
 part_name | string | R/O | 
+part_title | string | R/O | 
 position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get position of the part in celestial frame of the main body. 
 rcs | Option&lt;[ksp::vessel::ModuleRCS](/reference/ksp/vessel.md#modulercs)> | R/O | 
 reaction_wheel | Option&lt;[ksp::vessel::ModuleReactionWheel](/reference/ksp/vessel.md#modulereactionwheel)> | R/O | 

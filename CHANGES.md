@@ -1,6 +1,6 @@
 # Changes
 
-## 0.5.5.5 ->
+## 0.5.5.5 -> 0.5.6.0
 
 * Add `part.part_title` and `part.part_description` to `ksp::vessel` and `ksp::oab`
 * Support for c# style string interpolation

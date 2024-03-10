@@ -310,7 +310,9 @@ is_solar_panel | bool | R/O |
 is_transmitter | bool | R/O | 
 light | Option&lt;[ksp::oab::ObjectAssemblyLight](/reference/ksp/oab.md#objectassemblylight)> | R/O | 
 part_category | [ksp::vessel::PartCategory](/reference/ksp/vessel.md#partcategory) | R/O | 
+part_description | string | R/O | 
 part_name | string | R/O | 
+part_title | string | R/O | 
 rcs | Option&lt;[ksp::oab::ObjectAssemblyRCS](/reference/ksp/oab.md#objectassemblyrcs)> | R/O | 
 reaction_wheel | Option&lt;[ksp::oab::ObjectAssemblyReactionWheel](/reference/ksp/oab.md#objectassemblyreactionwheel)> | R/O | 
 relative_position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
