@@ -1,0 +1,11 @@
+use * from core::testing
+
+test sync fn test_string_interpolation() -> Unit = {
+    assert_string("", $"")
+    assert_string("abcdef1234 to 34.56", $"abcdef{1234} to {34.56}")
+    
+    const a = "edfg"
+    const b = 3456
+    
+    assert_string("ab edfg with 3456", $"ab {a} with {b}")
+}

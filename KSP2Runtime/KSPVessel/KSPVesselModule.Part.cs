@@ -22,7 +22,7 @@ public partial class KSPVesselModule {
         [KSField] public PartCategories PartCategory => part.PartData.category;
 
         [KSField] public string PartTitle => part.PartData.Title;
-        
+
         [KSField] public string PartDescription => part.PartData.Description;
 
         [KSField] public VesselAdapter Vessel => vesselAdapter;

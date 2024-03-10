@@ -17,7 +17,7 @@ public partial class KSPOABModule {
         [KSField] public PartCategories PartCategory => part.Category;
 
         [KSField] public string PartTitle => part.AvailablePart.Title;
-        
+
         [KSField] public string PartDescription => part.AvailablePart.Description;
 
         [KSField] public bool FuelCrossFeed => part.FuelCrossFeed;

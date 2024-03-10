@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.AST;
@@ -8,6 +9,7 @@ namespace KontrolSystem.TO2.Parser;
 using static Parsers;
 using static TO2ParserCommon;
 using static TO2ParserLiterals;
+using static TO2ParserStringInterpolation;
 
 public static class TO2ParserExpressions {
     public static readonly Parser<Expression> Expression = ExpressionImpl;
@@ -119,10 +121,16 @@ public static class TO2ParserExpressions {
         .Between(Char('(').Then(WhiteSpaces0), WhiteSpaces0.Then(Char(')')))
         .Map((expression, start, end) => new Bracket(expression, start, end));
 
+    private static readonly Parser<Expression> StringInterpolationContent = StringInterpolationContentImpl;
+
+    private static readonly Parser<Expression> StringInterpolation =
+        StringInterpolationContent.Between(StringInterpolationStart, DoubleQuote);
+
     private static readonly Parser<Expression> Term = Alt(
         LiteralBool,
         LiteralFloat,
         LiteralInt,
+        StringInterpolation,
         LiteralString,
         BracketTerm,
         Block,

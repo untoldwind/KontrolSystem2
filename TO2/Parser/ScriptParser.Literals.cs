@@ -9,7 +9,7 @@ using static Parsers;
 using static TO2ParserCommon;
 
 public static class TO2ParserLiterals {
-    private static readonly Parser<char> DoubleQuote = Char('"');
+    public static readonly Parser<char> DoubleQuote = Char('"');
 
     private static readonly Parser<char> EscapedStringChar = Alt(
         CharExcept("\\\"\r\n"),
