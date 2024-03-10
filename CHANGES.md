@@ -4,6 +4,9 @@
 
 * Add `part.part_title` and `part.part_description` to `ksp::vessel` and `ksp::oab`
 * Support for c# style string interpolation
+  * Instead of `"Hello " + a.to_string() + " world " + b.to_string()` one can now just write `$"Hello {a} world {b}"`
+  * Formatting is supported via `{<interpolationExpression>[,<alignment>][:<formatString>]}`
+  * See https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/tokens/interpolated for more details
 
 ## 0.5.4.1 -> 0.5.5.5
 
@@ -28,7 +31,7 @@
 * Add `.active_transmitter` field to `ScienceStorage`
   * `ScienceStorage` had to be moved from `ksp::science` to `ksp::vessel`
 * Add `.connection_status` to vessel
-``
+
 ## 0.5.4.0 -> 0.5.4.1
 
 Hotfix:

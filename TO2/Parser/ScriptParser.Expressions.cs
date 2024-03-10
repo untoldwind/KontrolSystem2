@@ -121,11 +121,6 @@ public static class TO2ParserExpressions {
         .Between(Char('(').Then(WhiteSpaces0), WhiteSpaces0.Then(Char(')')))
         .Map((expression, start, end) => new Bracket(expression, start, end));
 
-    private static readonly Parser<Expression> StringInterpolationContent = StringInterpolationContentImpl;
-
-    private static readonly Parser<Expression> StringInterpolation =
-        StringInterpolationContent.Between(StringInterpolationStart, DoubleQuote);
-
     private static readonly Parser<Expression> Term = Alt(
         LiteralBool,
         LiteralFloat,

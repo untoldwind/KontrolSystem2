@@ -26,7 +26,7 @@ import {
 } from "./ast/literal";
 import { UNDERSCORE, identifier } from "./parser-common";
 
-const doubleQuote = tag('"');
+export const doubleQuote = tag('"');
 
 const escapedStringChar = alt(
   charsExcept1('\\"\r\n'),

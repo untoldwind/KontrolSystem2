@@ -1,20 +1,8 @@
 import { isWhiteSpace } from "unicode-properties";
-import {
-  Input,
-  Parser,
-  ParserFailure,
-  ParserResult,
-  ParserSuccess,
-} from "../parser";
+import { Input, ParserFailure, ParserResult, ParserSuccess } from "../parser";
 import { alt } from "../parser/branch";
 import { map, opt, recognizeAs, withPosition } from "../parser/combinator";
-import {
-  NL,
-  spacing0,
-  tag,
-  whitespace0,
-  whitespace1,
-} from "../parser/complete";
+import { spacing0, tag, whitespace0, whitespace1 } from "../parser/complete";
 import {
   chain,
   delimited0,
@@ -68,6 +56,7 @@ import {
   typeSpec,
 } from "./parser-common";
 import {
+  doubleQuote,
   literalBool,
   literalFloat,
   literalInt,
@@ -81,6 +70,7 @@ import {
 } from "./suffix-operation";
 import { ForIn } from "./ast/for-in";
 import { ForInDeconstruct } from "./ast/for-in-deconstruct";
+import { stringInterpolation } from "./parser-stringinterpolation";
 
 const letOrConst = alt(letKeyword, constKeyword);
 
@@ -386,6 +376,7 @@ const term = alt(
   literalBool,
   literalFloat,
   literalInt,
+  stringInterpolation(expression),
   literalString,
   bracketTerm,
   block,
