@@ -51,7 +51,7 @@ pub fn atmo_launch_ascent(vessel: Vessel, target_apoapsis: float, heading: float
             const apoCompensation = if(apoPercent > 0.9) (apoPercent - 0.9) * 10 else 0.0
             1.0 - clamp(apoCompensation, 0, 0.5)
         }
-        CONSOLE.print_at(console_row + 1, 0, "Target throttle: " + throttle.to_string() )
+        CONSOLE.print_at(console_row + 1, 0, $"Target throttle: {throttle,5:N3}" )
 
         throttle
     })
@@ -65,7 +65,7 @@ pub fn atmo_launch_ascent(vessel: Vessel, target_apoapsis: float, heading: float
         const gtPct = clamp((vessel.altitude_sealevel - launch_gt0) / (launch_gt1 - launch_gt0), 0, 1)
         const pitch = acos_deg(gtPct)
 
-        CONSOLE.print_at(console_row, 0, "Target pitch: " + pitch.to_string())
+        CONSOLE.print_at(console_row, 0, $"Target pitch: {pitch,8:N3}")
 
         vessel.autopilot.target_orientation = vessel.heading_direction(heading, pitch, 0).vector
 

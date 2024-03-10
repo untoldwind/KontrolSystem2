@@ -49,7 +49,7 @@ pub fn vac_land(vessel : Vessel, landing_side : GeoCoordinates, land_stage : int
         wait_until(fn() -> first_run.is_completed)
         let last_result = first_run.result
 
-        CONSOLE.print_line("Result: " + last_result.end_latitude.to_string() + " " + last_result.end_longitude.to_string())
+        CONSOLE.print_line($"Result: {last_result.end_latitude,8:N3} {last_result.end_longitude,8:N3}")
         if(vessel.altitude_terrain > 500 && last_result.brake_time > current_time() + 20)
             last_result = vac_land_course_correct(vessel, simulation, last_result, landing_side)?
         if(vessel.altitude_terrain > 500)
@@ -94,13 +94,13 @@ pub fn vac_land_prepare_deorbit(vessel : Vessel, landing_site : GeoCoordinates) 
     const p_dv = vel.magnitude * (cos_deg(inc) - 1)
     
     if(n_dv * n_dv + p_dv * p_dv > 0.1) {
-        CONSOLE.print_line("Deorbit: Burning dV of " + n_dv.to_fixed(1) + " m/s anti-normal " + p_dv.to_fixed(1) + " m/s prograde to change plane.")
+        CONSOLE.print_line($"Deorbit: Burning dV of {n_dv,6:N1} m/s anti-normal {p_dv,6:N1} m/s prograde to change plane.")
         vessel.maneuver.add(current_time() + land_time_to_longitude(vessel, plane_change_longitude + phi_inc_maneuver), 0, -n_dv, p_dv)?        
         exec_next_node(vessel)?
     }
     
     const deorbit_dv = land_deorbit_delta_v(vessel, deorbit_radius - vessel.main_body.radius)
-    CONSOLE.print_line("Deorbit: Burning dV of " + deorbit_dv.to_fixed(1) + " m/s retrograde to deorbit.")    
+    CONSOLE.print_line($"Deorbit: Burning dV of {deorbit_dv,6:N1} m/s retrograde to deorbit.")    
     vessel.maneuver.add(current_time() + land_time_to_longitude(vessel, deorbit_longitude + phi), 0, 0, deorbit_dv)
     exec_next_node(vessel)?
 }
@@ -167,8 +167,8 @@ pub fn vac_land_course_correct(vessel : Vessel, simulation : ReentrySimulation, 
             simulation.reset(vessel, current_time())
             update_run = background::run(fn() -> simulation.run())
         }
-        CONSOLE.print_at(console_row    , 0, "Correction:         " + last_correction.value.magnitude.to_fixed(2))
-        CONSOLE.print_at(console_row + 1, 0, "Predicted distance: " + (last_prediction.value.altitude_position(0) -  landing_site.altitude_position(0)).magnitude.to_fixed(2))
+        CONSOLE.print_at(console_row    , 0, $"Correction:         {last_correction.value.magnitude,8:N2}")
+        CONSOLE.print_at(console_row + 1, 0, $"Predicted distance: {(last_prediction.value.altitude_position(0) -  landing_site.altitude_position(0)).magnitude,8:N1}")
 
         sleep(0.2)
     }
@@ -228,8 +228,8 @@ pub fn vac_deceleration_burn(vessel : Vessel, simulation : ReentrySimulation, in
 
         if(desired_speed.value.is_nan || desired_speed.value < 0) desired_speed.value = 0
         
-        CONSOLE.print_at(console_row    , 0, "Vessel speed:     " + vessel.surface_velocity.magnitude.to_fixed(2))
-        CONSOLE.print_at(console_row + 1, 0, "Target Speed:     " + desired_speed.value.to_fixed(2))
+        CONSOLE.print_at(console_row    , 0, $"Vessel speed:     {vessel.surface_velocity.magnitude,8:N2}")
+        CONSOLE.print_at(console_row + 1, 0, $"Target Speed:     {desired_speed.value,8:N2}")
         
         throttle_pid.update(current_time(), desired_speed.value - vessel.surface_velocity.magnitude)
     })
@@ -241,7 +241,7 @@ pub fn vac_deceleration_burn(vessel : Vessel, simulation : ReentrySimulation, in
                 
         vessel.autopilot.target_orientation = steering_vector
 
-        CONSOLE.print_at(console_row + 2, 0, "Ship height:     " + vessel.altitude_terrain.to_fixed(2))
+        CONSOLE.print_at(console_row + 2, 0, $"Ship height:     {vessel.altitude_terrain,8:N2}")
         
         if(update_run.is_completed) {
             last_result.value = update_run.result

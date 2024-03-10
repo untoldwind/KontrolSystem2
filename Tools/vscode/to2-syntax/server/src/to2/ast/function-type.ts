@@ -1,7 +1,8 @@
 import { BlockContext, ModuleContext } from "./context";
-import { RealizedType, TO2Type } from "./to2-type";
+import { RealizedType, TO2Type, isRealizedType } from "./to2-type";
 import { WithDefinitionRef } from "./definition-ref";
 import { Expression } from ".";
+import { isReadable } from "stream";
 
 export class FunctionType implements RealizedType {
   public readonly kind = "Function";
@@ -34,7 +35,26 @@ export class FunctionType implements RealizedType {
   }
 
   public isAssignableFrom(otherType: RealizedType): boolean {
-    return this.name === otherType.name;
+    if (!isFunctionType(otherType)) return false;
+    if (this.parameterTypes.length != otherType.parameterTypes.length)
+      return false;
+    if (
+      !isRealizedType(this.returnType) ||
+      !isRealizedType(otherType.returnType)
+    )
+      return this.name === otherType.name;
+
+    if (!this.returnType.isAssignableFrom(otherType.returnType)) return false;
+
+    for (let i = 0; i < this.parameterTypes.length; i++) {
+      const thisParam = this.parameterTypes[i][1];
+      const otherParam = otherType.parameterTypes[i][1];
+      if (!isRealizedType(thisParam) || !isRealizedType(otherParam))
+        return this.name === otherType.name;
+      if (!otherParam.isAssignableFrom(thisParam)) return false;
+    }
+
+    return true;
   }
 
   public realizedType(context: ModuleContext): FunctionType {
@@ -148,6 +168,13 @@ export class FunctionType implements RealizedType {
     return this.returnType
       .realizedType(context.module)
       .fillGenerics(context.module, genericMap);
+  }
+
+  public setLookupContext(context: ModuleContext): void {
+    this.returnType.setLookupContext?.(context);
+    this.parameterTypes.forEach((parameter) =>
+      parameter[1].setLookupContext?.(context),
+    );
   }
 }
 

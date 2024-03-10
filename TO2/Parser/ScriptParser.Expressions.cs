@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.AST;
@@ -125,7 +124,7 @@ public static class TO2ParserExpressions {
         LiteralBool,
         LiteralFloat,
         LiteralInt,
-        StringInterpolation,
+        StringInterpolation(Expression),
         LiteralString,
         BracketTerm,
         Block,

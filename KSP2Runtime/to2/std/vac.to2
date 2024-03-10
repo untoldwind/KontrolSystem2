@@ -25,7 +25,7 @@ pub fn exec_next_node(vessel : Vessel) -> Result<Unit, string> = {
     const burn_duration = node.burn_duration 
     
     while(!global_ship_is_facing(vessel, dv0, 5, 0.5)) {
-        CONSOLE.print_at(console_row, 0, "Waiting for ship to align " + vessel.global_facing.vector.normalized.to_fixed(frame, 3) + " " + dv0.normalized.to_fixed(frame, 3))
+        CONSOLE.print_at(console_row, 0, $"Waiting for ship to align {vessel.global_facing.vector.normalized.to_fixed(frame, 3)} {dv0.normalized.to_fixed(frame, 3)}")
         sleep(0.2)
     }
     
@@ -45,7 +45,7 @@ pub fn exec_next_node(vessel : Vessel) -> Result<Unit, string> = {
         const (min, max) = throttle_limit.value
         const dv = math::min(dv_min.value, node.burn_vector.magnitude)
         const throttle = math::clamp(dv * vessel.mass / math::max(1.0, vessel.available_thrust), min, max)
-        CONSOLE.print_at(console_row + 1, 0, "Throttle: " + throttle.to_string())
+        CONSOLE.print_at(console_row + 1, 0, $"Throttle: {throttle,6:N2}")
         throttle
     })
 
@@ -61,7 +61,7 @@ pub fn exec_next_node(vessel : Vessel) -> Result<Unit, string> = {
         if(dv0 * dv < 0) break
 
         dv_min.update(fn(m) -> math::min(m, dv.magnitude))
-        CONSOLE.print_at(console_row    , 0, "DV remaining: " + dv_min.value.to_string())
+        CONSOLE.print_at(console_row    , 0, $"DV remaining: {dv_min.value,10:N1}")
         
         sleep(0.1)
 

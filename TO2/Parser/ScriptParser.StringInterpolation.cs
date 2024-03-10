@@ -6,7 +6,6 @@ using Expression = KontrolSystem.TO2.AST.Expression;
 namespace KontrolSystem.TO2.Parser;
 
 using static Parsers;
-using static TO2ParserExpressions;
 using static TO2ParserLiterals;
 
 public static class TO2ParserStringInterpolation {
@@ -27,13 +26,13 @@ public static class TO2ParserStringInterpolation {
             Opt(Char(',').Then(Opt(Char('-')).Then(Digits1))),
             Opt(Char(':').Then(CharsExcept1("\\\"\r\n{}", "align or format")))));
 
-    private static readonly Parser<Expression> StringInterpolationContent = Many0(Alt<StringInterpolationPart>(
+    private static Parser<StringInterpolation> StringInterpolationContent( Parser<Expression> expression) => Many0(Alt<StringInterpolationPart>(
             Many1(ExtendedEscapedStringChar).Map(chars => new StringInterpolationPart.StringPart(new string(chars.ToArray()))),
-            Seq(Expression, Opt(AlignOrFormat)).Between(Char('{').Then(WhiteSpaces0), WhiteSpaces0.Then(Char('}'))).
+            Seq(expression, Opt(AlignOrFormat)).Between(Char('{').Then(WhiteSpaces0), WhiteSpaces0.Then(Char('}'))).
                 Map(expr => new StringInterpolationPart.ExpressionPart(expr.Item1, expr.Item2.GetOrElse("")))
         )).Map((parts, start, end) => new StringInterpolation(parts, end, start));
 
-    public static readonly Parser<Expression> StringInterpolation =
-        StringInterpolationContent.Between(StringInterpolationStart, DoubleQuote);
+    public static Parser<StringInterpolation> StringInterpolation(Parser<Expression> expression) =>
+        StringInterpolationContent(expression).Between(StringInterpolationStart, DoubleQuote);
 
 }

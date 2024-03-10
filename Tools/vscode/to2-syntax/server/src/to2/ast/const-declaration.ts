@@ -31,7 +31,6 @@ export class ConstDeclaration implements Node, ModuleItem {
   public validateModuleFirstPass(context: ModuleContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
-    this.type.value.setLookupContext?.(context);
     if (context.mappedConstants.has(this.name.value)) {
       errors.push({
         status: "error",
@@ -39,6 +38,7 @@ export class ConstDeclaration implements Node, ModuleItem {
         range: this.range,
       });
     } else {
+      this.type.value.setLookupContext?.(context);
       context.mappedConstants.set(this.name.value, {
         definition: { moduleName: context.moduleName, range: this.name.range },
         value: this.type.value,

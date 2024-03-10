@@ -52,6 +52,12 @@ export class MethodDeclaration implements Node, ModuleItem {
         range: this.name.range,
       });
     } else {
+      this.declaredReturn.setLookupContext?.(context);
+
+      for (const parameter of this.parameters) {
+        parameter.type?.value.setLookupContext?.(context);
+      }
+
       const blockContext = new FunctionContext(context, this.declaredReturn);
 
       context.structType.methods.set(this.name.value, {
@@ -79,7 +85,6 @@ export class MethodDeclaration implements Node, ModuleItem {
 
     const errors: ValidationError[] = [];
 
-    this.declaredReturn.setLookupContext?.(context);
     const blockContext = new FunctionContext(context, this.declaredReturn);
 
     blockContext.localVariables.set("self", {

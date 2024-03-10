@@ -68,6 +68,10 @@ export interface RealizedType extends TO2Type {
   ): void;
 }
 
+export function isRealizedType(type: TO2Type): type is RealizedType {
+  return (type as RealizedType).kind !== undefined;
+}
+
 export class GenericParameter implements RealizedType {
   public readonly kind = "Generic";
   public readonly description = "";
