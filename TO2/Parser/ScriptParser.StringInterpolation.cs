@@ -1,5 +1,4 @@
-﻿using System.Linq.Expressions;
-using KontrolSystem.Parsing;
+﻿using KontrolSystem.Parsing;
 using KontrolSystem.TO2.AST;
 using Expression = KontrolSystem.TO2.AST.Expression;
 
@@ -23,13 +22,14 @@ public static class TO2ParserStringInterpolation {
 
     private static readonly Parser<string> AlignOrFormat =
         Recognize(Seq(
-            Opt(Char(',').Then(WhiteSpaces0).Then(Opt(Char('-')).Then(Digits1).Then(WhiteSpaces0))),
-            Opt(Char(':').Then(CharsExcept1("\\\"\r\n{}", "align or format")))));
+            IfPreceded(Char(','),WhiteSpaces0.Then(Opt(Char('-')).Then(Digits1).Then(WhiteSpaces0))),
+            IfPreceded(Char(':'), CharsExcept1("\\\"\r\n{}", "align or format")))
+        );
 
     private static Parser<StringInterpolation> StringInterpolationContent( Parser<Expression> expression) => Many0(Alt<StringInterpolationPart>(
             Many1(ExtendedEscapedStringChar).Map(chars => new StringInterpolationPart.StringPart(new string(chars.ToArray()))),
-            Seq(expression, Opt(AlignOrFormat)).Between(Char('{').Then(WhiteSpaces0), WhiteSpaces0.Then(Char('}'))).
-                Map(expr => new StringInterpolationPart.ExpressionPart(expr.Item1, expr.Item2.GetOrElse("")))
+            Seq(expression, AlignOrFormat).Between(Char('{').Then(WhiteSpaces0), WhiteSpaces0.Then(Char('}'))).
+                Map(expr => new StringInterpolationPart.ExpressionPart(expr.Item1, expr.Item2))
         )).Map((parts, start, end) => new StringInterpolation(parts, end, start));
 
     public static Parser<StringInterpolation> StringInterpolation(Parser<Expression> expression) =>

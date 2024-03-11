@@ -9,7 +9,13 @@ import {
 } from "../parser/combinator";
 import { charsExcept1, digits1, tag, whitespace0 } from "../parser/complete";
 import { many0, many1 } from "../parser/multi";
-import { between, preceded, seq, terminated } from "../parser/sequence";
+import {
+  between,
+  ifPreceded,
+  preceded,
+  seq,
+  terminated,
+} from "../parser/sequence";
 import { Expression } from "./ast";
 import { StringInterpolation } from "./ast/string-interpolation";
 import { doubleQuote } from "./parser-literals";
@@ -29,13 +35,11 @@ export const extendedEscapedStringChar = alt(
 
 export const alignOrFormat = recognize(
   seq(
-    opt(
-      preceded(
-        tag(","),
-        between(whitespace0, preceded(opt(tag("-")), digits1), whitespace0),
-      ),
+    ifPreceded(
+      tag(","),
+      between(whitespace0, preceded(opt(tag("-")), digits1), whitespace0),
     ),
-    opt(preceded(tag(":"), charsExcept1('\\"\r\n{}'))),
+    ifPreceded(tag(":"), charsExcept1('\\"\r\n{}')),
   ),
 );
 
@@ -51,13 +55,10 @@ function stringInterpolationContent(expression: Parser<Expression>) {
       ),
       between(
         terminated(tag("{"), whitespace0),
-        map(
-          seq(expression, opt(alignOrFormat)),
-          ([expression, alignOrFormat]) => ({
-            expression,
-            alignOrFormat,
-          }),
-        ),
+        map(seq(expression, alignOrFormat), ([expression, alignOrFormat]) => ({
+          expression,
+          alignOrFormat,
+        })),
         preceded(whitespace0, tag("}")),
       ),
     ),

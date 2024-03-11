@@ -16,6 +16,17 @@ export function preceded<T, U>(
   };
 }
 
+export function ifPreceded<T, U>(
+  conditionPrefix: Parser<T>,
+  parser: Parser<U>,
+): Parser<U | undefined> {
+  return (input: Input) => {
+    const prefixResult = conditionPrefix(input);
+    if (!prefixResult.success) return new ParserSuccess(input, undefined);
+    return parser(prefixResult.remaining);
+  };
+}
+
 export function terminated<T, U>(
   parser: Parser<T>,
   suffix: Parser<U>,

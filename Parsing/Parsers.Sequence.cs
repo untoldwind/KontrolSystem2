@@ -34,6 +34,15 @@ public static partial class Parsers {
             prefix(input).Select(p => parser(p.Remaining));
     }
 
+    public static Parser<IOption<T>> IfPreceded<T, P>(Parser<P> conditionPrefix, Parser<T> parser) {
+        return input => {
+            var resultPrefix = conditionPrefix(input);
+            if (!resultPrefix.WasSuccessful) return Result.Success(input, Option.None<T>());
+            var parserResult = parser(resultPrefix.Remaining);
+            return parser(resultPrefix.Remaining).Map(p => Option.Some(p));
+        };
+    }
+    
     public static Parser<T> Terminated<T, S>(Parser<T> parser, Parser<S> suffix) {
         return input =>
             parser(input).Select(t => suffix(t.Remaining).Map(_ => t.Value));

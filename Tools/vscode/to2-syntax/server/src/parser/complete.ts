@@ -89,7 +89,7 @@ export function tag<T extends string>(tag: T): Parser<T> {
       return new ParserFailure<T>(input, tag, undefined);
     const content = input.take(tag.length);
     if (content !== tag)
-      return new ParserFailure<T>(input, `Expected ${tag}`, undefined);
+      return new ParserFailure<T>(input, `'${tag}'`, undefined);
     return new ParserSuccess(input.advance(tag.length), content as T);
   };
 }

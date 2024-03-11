@@ -5,7 +5,7 @@ export function alt<P extends any[]>(
 ): Parser<P[number]> {
   return (input: Input) => {
     let longest = input;
-    let expected: string[] = [];
+    let expected = new Set<string>();
 
     for (const parser of alternatives) {
       const result = parser(input);
@@ -16,12 +16,12 @@ export function alt<P extends any[]>(
       const errorAt = result.remaining.position.offset;
       if (errorAt > longestAt) longest = result.remaining;
 
-      expected.push(result.expected);
+      expected.add(result.expected);
     }
 
     return new ParserFailure<P[keyof P]>(
       longest,
-      expected.join(" or "),
+      [...expected].sort().join(" or "),
       undefined,
     );
   };
