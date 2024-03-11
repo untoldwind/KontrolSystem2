@@ -125,17 +125,19 @@ export class FunctionDeclaration implements Node, ModuleItem {
         range: this.name.range,
       });
     } else {
-      const returnType = this.declaredReturn.value.realizedType(context);
-      const blockContext = new FunctionContext(context, returnType);
+      const blockContext = new FunctionContext(
+        context,
+        this.declaredReturn.value,
+      );
 
       this.functionType = new FunctionType(
         this.isAsync,
         this.parameters.map((param) => [
           param.name.value,
-          param.resultType(blockContext).realizedType(context),
+          param.resultType(blockContext),
           param.defaultValue !== undefined,
         ]),
-        returnType,
+        this.declaredReturn.value,
       );
 
       context.mappedFunctions.set(this.name.value, {

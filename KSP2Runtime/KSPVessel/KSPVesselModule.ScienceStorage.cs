@@ -10,10 +10,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 public partial class KSPVesselModule {
     [KSClass("ScienceStorage",
         Description = "Represents the science storage / research inventory of a vessel.")]
-    public class ScienceStorageAdapter(KSPVesselModule.VesselAdapter vessel, ScienceStorageComponent scienceStorageComponent) {
-        private readonly VesselAdapter vessel = vessel;
-        private readonly ScienceStorageComponent scienceStorageComponent = scienceStorageComponent;
-
+    public class ScienceStorageAdapter(VesselAdapter vessel, ScienceStorageComponent scienceStorageComponent) {
         [KSField] public bool IsActive => scienceStorageComponent.IsActive;
 
         [KSField]

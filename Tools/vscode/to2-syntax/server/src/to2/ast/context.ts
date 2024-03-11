@@ -21,7 +21,7 @@ export interface ModuleContext {
   mappedConstants: Map<string, WithDefinitionRef<TO2Type>>;
   moduleAliases: Map<string, string[]>;
   mappedFunctions: Map<string, WithDefinitionRef<FunctionType>>;
-  typeAliases: Map<string, RealizedType>;
+  typeAliases: Map<string, TO2Type>;
   registry: Registry;
 
   findType(
@@ -218,7 +218,7 @@ export class ImplModuleContext implements ModuleContext {
     WithDefinitionRef<FunctionType>
   > = new Map();
   public readonly moduleAliases: Map<string, string[]> = new Map();
-  public readonly typeAliases: Map<string, RealizedType> = new Map();
+  public readonly typeAliases: Map<string, TO2Type> = new Map();
   public readonly registry: Registry;
 
   constructor(

@@ -105,10 +105,7 @@ export class UseDeclaration implements Node, ModuleItem {
                 range: this.range,
               });
             } else {
-              context.typeAliases.set(
-                name.value,
-                importedType.value.realizedType(context),
-              );
+              context.typeAliases.set(name.value, importedType.value);
             }
           }
         }
@@ -131,10 +128,7 @@ export class UseDeclaration implements Node, ModuleItem {
         }
         for (const [name, importedType] of this.importedModule.allTypes()) {
           if (!context.typeAliases.has(name)) {
-            context.typeAliases.set(
-              name,
-              importedType.value.realizedType(context),
-            );
+            context.typeAliases.set(name, importedType.value);
           }
         }
       }
