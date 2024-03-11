@@ -23,7 +23,7 @@ public static class TO2ParserStringInterpolation {
 
     private static readonly Parser<string> AlignOrFormat =
         Recognize(Seq(
-            Opt(Char(',').Then(Opt(Char('-')).Then(Digits1))),
+            Opt(Char(',').Then(WhiteSpaces0).Then(Opt(Char('-')).Then(Digits1).Then(WhiteSpaces0))),
             Opt(Char(':').Then(CharsExcept1("\\\"\r\n{}", "align or format")))));
 
     private static Parser<StringInterpolation> StringInterpolationContent( Parser<Expression> expression) => Many0(Alt<StringInterpolationPart>(

@@ -143,7 +143,7 @@ public class CoreTesting {
     public static void AssertString(string expected, string actual) {
         if (TestContext != null) TestContext.IncrAssertions();
         else throw new AssertException("assert_string: called without context");
-        if (expected != actual) throw new AssertException($"assert_string: {expected} != {actual}");
+        if (expected != actual) throw new AssertException($"assert_string: \"{expected}\" != \"{actual}\"");
     }
 
     [KSFunction(
