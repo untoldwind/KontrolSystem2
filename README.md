@@ -9,6 +9,7 @@ This is the successor of [KontrolSystem](https://github.com/untoldwind/KontrolSy
 ## Showcases / Projects that use KontrolSystem2
 
 * https://github.com/lefouvert/ToTheMoon
+* https://github.com/PhilouDS/KontrolSystem2_VAB_UI
 
 ## Installation
 
