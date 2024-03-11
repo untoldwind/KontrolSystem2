@@ -23,20 +23,26 @@ public static class TO2ParserLiterals {
         .Between(DoubleQuote, DoubleQuote)
         .Map((chars, start, end) => new LiteralString(chars.ToArray(), start, end)).Named("<string>");
 
-    private static readonly Parser<int> BasePrefix = Alt(
-        Tag("0x").To(16),
-        Tag("0o").To(8),
-        Tag("0b").To(2),
-        Value(10)
+    private static bool IsHexDigit(char ch) => (ch >= '0' && ch <= '9') || (ch >= 'a' && ch <= 'f') || (ch >= 'A' && ch <= 'F');
+
+    private static bool IsOctalDigit(char ch) => ch >= '0' && ch <= '7';
+
+    private static bool IsBinaryDigit(char ch) => ch == '0' || ch == '1';
+
+    private static readonly Parser<(int fromBase, string str)> BasePrefixed = Alt(
+        Preceded(Tag("0x"), Recognize(Chars1(IsHexDigit, "<hexdigit>").Then(Chars0(ch => IsHexDigit(ch) || ch == '_'))).Map(str => (16, str))),
+        Preceded(Tag("0o"), Recognize(Chars1(IsOctalDigit, "<octal>").Then(Chars0(ch => IsOctalDigit(ch) || ch == '_'))).Map(str => (8, str))),
+        Preceded(Tag("0b"), Recognize(Chars1(IsBinaryDigit, "<binary>").Then(Chars0(ch => IsBinaryDigit(ch) || ch == '_'))).Map(str => (2, str))),
+        Recognize(Digits1.Then(Chars0(ch => char.IsDigit(ch) || ch == '_'))).Map(str => (10, str))
     );
 
     public static readonly Parser<LiteralInt> LiteralInt = Seq(
-        Opt(Char('-')), BasePrefix, Recognize(Digits1.Then(Chars0(ch => char.IsDigit(ch) || ch == '_')))
+        Opt(Char('-')), BasePrefixed
     ).Map((items, start, end) =>
         new LiteralInt(
             items.Item1.IsDefined
-                ? -Convert.ToInt64(items.Item3.Replace("_", ""), items.Item2)
-                : Convert.ToInt64(items.Item3.Replace("_", ""), items.Item2), start, end)).Named("<integer>");
+                ? -Convert.ToInt64(items.Item2.str.Replace("_", ""), items.Item2.fromBase)
+                : Convert.ToInt64(items.Item2.str.Replace("_", ""), items.Item2.fromBase), start, end)).Named("<integer>");
 
     private static readonly Parser<string> ExponentSuffix = OneOf("eE").Then(Opt(OneOf("+-"))).Then(Digits1);
 

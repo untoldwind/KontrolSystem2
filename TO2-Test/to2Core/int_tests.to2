@@ -10,6 +10,13 @@ test sync fn test_int_conversion() -> Unit = {
     assert_float(1234.0, 1234.to_float)
 }
 
+test sync fn test_int_literal_sep() -> Unit = {
+    assert_int(1000000, 1_000_000)
+    assert_int(4294967295, 0xffff_ffff)
+    assert_int(42725, 0o123_345)
+    assert_int(122, 0b0111_1010)
+}
+
 test sync fn test_binary_ops() -> Unit = {
     assert_int(1234, 1200 + 34)
     assert_int(1166, 1200 - 34)

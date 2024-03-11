@@ -10,6 +10,7 @@ import {
 } from "../parser/combinator";
 import {
   chars0,
+  chars1,
   charsExcept1,
   digits0,
   digits1,
@@ -42,25 +43,68 @@ export const literalString = map(
   (escaped, start, end) => new LiteralString(escaped.join(""), start, end),
 );
 
-const basePrefix = alt(
-  recognizeAs(tag("0x"), 16),
-  recognizeAs(tag("0o"), 8),
-  recognizeAs(tag("0b"), 2),
-  value(10),
-);
+const isHexDigit = (ch: number) =>
+  (ch >= "0".charCodeAt(0) && ch <= "9".charCodeAt(0)) ||
+  (ch >= "a".charCodeAt(0) && ch <= "f".charCodeAt(0)) ||
+  (ch >= "A".charCodeAt(0) && ch <= "F".charCodeAt(0));
 
-export const literalInt = map(
-  seq(
-    opt(tag("-")),
-    basePrefix,
+const isOctalDigit = (ch: number) =>
+  ch >= "0".charCodeAt(0) && ch <= "7".charCodeAt(0);
+
+const isBinaryDigit = (ch: number) =>
+  ch === "0".charCodeAt(0) || ch === "1".charCodeAt(0);
+
+const basePrefixed = alt(
+  preceded(
+    tag("0x"),
+    map(
+      recognize(
+        terminated(
+          chars1(isHexDigit, "<hexdigit>"),
+          chars0((ch) => isHexDigit(ch) || ch === UNDERSCORE),
+        ),
+      ),
+      (digits) => ({ radix: 16, digits }),
+    ),
+  ),
+  preceded(
+    tag("0o"),
+    map(
+      recognize(
+        terminated(
+          chars1(isOctalDigit, "<octal>"),
+          chars0((ch) => isOctalDigit(ch) || ch === UNDERSCORE),
+        ),
+      ),
+      (digits) => ({ radix: 8, digits }),
+    ),
+  ),
+  preceded(
+    tag("0b"),
+    map(
+      recognize(
+        terminated(
+          chars1(isBinaryDigit, "<binary>"),
+          chars0((ch) => isBinaryDigit(ch) || ch === UNDERSCORE),
+        ),
+      ),
+      (digits) => ({ radix: 2, digits }),
+    ),
+  ),
+  map(
     recognize(
       terminated(
         digits1,
         chars0((ch) => isDigit(ch) || ch === UNDERSCORE),
       ),
     ),
+    (digits) => ({ radix: 10, digits }),
   ),
-  ([negSign, radix, digits], start, end) =>
+);
+
+export const literalInt = map(
+  seq(opt(tag("-")), basePrefixed),
+  ([negSign, { radix, digits }], start, end) =>
     new LiteralInt(
       negSign
         ? -parseInt(digits.replaceAll("_", ""), radix)
