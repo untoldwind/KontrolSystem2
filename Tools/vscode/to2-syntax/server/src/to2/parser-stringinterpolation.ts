@@ -29,7 +29,12 @@ export const extendedEscapedStringChar = alt(
 
 export const alignOrFormat = recognize(
   seq(
-    opt(preceded(tag(","), between(whitespace0, preceded(opt(tag("-")), digits1), whitespace0))),
+    opt(
+      preceded(
+        tag(","),
+        between(whitespace0, preceded(opt(tag("-")), digits1), whitespace0),
+      ),
+    ),
     opt(preceded(tag(":"), charsExcept1('\\"\r\n{}'))),
   ),
 );

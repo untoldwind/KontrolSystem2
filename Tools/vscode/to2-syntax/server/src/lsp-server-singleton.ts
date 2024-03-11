@@ -152,7 +152,11 @@ export class LspServerSingleton {
         break;
       }
     }
-    const moduleResult = module(textDocument.uri, moduleName)(input);
+    const moduleResult = module(
+      textDocument.uri,
+      moduleName,
+      this.registry,
+    )(input);
     if (moduleResult.value) {
       if (override || !this.modulesByUri.has(textDocument.uri))
         this.modulesByUri.set(textDocument.uri, moduleResult.value);

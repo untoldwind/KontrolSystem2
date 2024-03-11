@@ -107,14 +107,9 @@ export class ResultType implements RealizedType {
     return undefined;
   }
 
-  public setModuleName(moduleName: string): void {
-    this.successType.setModuleName?.(moduleName);
-    this.errorType.setModuleName?.(moduleName);
-  }
-
-  public setLookupContext(context: ModuleContext): void {
-    this.successType.setLookupContext?.(context);
-    this.errorType.setLookupContext?.(context);
+  public setModuleName(moduleName: string, context: ModuleContext): void {
+    this.successType.setModuleName?.(moduleName, context);
+    this.errorType.setModuleName?.(moduleName, context);
   }
 }
 

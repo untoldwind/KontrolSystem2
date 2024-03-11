@@ -48,7 +48,10 @@ export class LookupTypeReference implements Node, TO2Type {
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
 
-  public setLookupContext(context: ModuleContext): void {
+  public setModuleName(moduleName: string, context: ModuleContext): void {
     this.lookupContext = context;
+    this.typeArguments.forEach((type) =>
+      type.setModuleName?.(moduleName, context),
+    );
   }
 }

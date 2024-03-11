@@ -43,7 +43,7 @@ export class LineComment implements Node, BlockItem, ModuleItem {
     semanticTokens.push(this.range.semanticToken("comment"));
   }
 
-  public setModuleName(moduleName: string) {}
+  public setModuleName(moduleName: string, context: ModuleContext) {}
 }
 
 export function isLineComment(type: Node): type is LineComment {

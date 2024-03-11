@@ -17,9 +17,7 @@ export interface TO2Type {
 
   realizedType(context: ModuleContext): RealizedType;
 
-  setModuleName?(moduleName: string): void;
-
-  setLookupContext?(context: ModuleContext): void;
+  setModuleName?(moduleName: string, context: ModuleContext): void;
 }
 
 export interface RealizedType extends TO2Type {

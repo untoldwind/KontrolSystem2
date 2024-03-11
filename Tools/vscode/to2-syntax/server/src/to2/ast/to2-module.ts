@@ -42,6 +42,7 @@ export class TO2ModuleNode implements Node, TO2Module {
   private constants: Map<string, ConstDeclaration> = new Map();
   private functions: Map<string, FunctionDeclaration> = new Map();
   private types: Map<string, TypeDeclaration> = new Map();
+  private context: RootModuleContext;
   public readonly range: InputRange;
 
   constructor(
@@ -49,13 +50,15 @@ export class TO2ModuleNode implements Node, TO2Module {
     public readonly name: string,
     public readonly description: string,
     public readonly items: ModuleItem[],
+    registry: Registry,
     start: InputPosition,
     end: InputPosition,
   ) {
+    this.context = new RootModuleContext(this.name, registry);
     this.range = new InputRange(start, end);
 
     for (const item of items) {
-      item.setModuleName(name);
+      item.setModuleName(name, this.context);
       if (isConstDeclaration(item)) this.constants.set(item.name.value, item);
       if (isFunctionDeclaration(item))
         this.functions.set(item.name.value, item);
@@ -162,15 +165,14 @@ export class TO2ModuleNode implements Node, TO2Module {
   }
 
   public validate(registry: Registry): ValidationError[] {
-    const context = new RootModuleContext(this.name, registry);
     const errors: ValidationError[] = [];
 
     for (const item of this.items) {
-      errors.push(...item.validateModuleFirstPass(context));
+      errors.push(...item.validateModuleFirstPass(this.context));
     }
 
     for (const item of this.items) {
-      errors.push(...item.validateModuleSecondPass(context));
+      errors.push(...item.validateModuleSecondPass(this.context));
     }
 
     return errors;

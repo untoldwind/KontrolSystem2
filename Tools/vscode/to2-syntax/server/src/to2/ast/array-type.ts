@@ -342,12 +342,8 @@ export class ArrayType implements RealizedType {
     return this.elementType;
   }
 
-  public setModuleName(moduleName: string): void {
-    this.elementType.setModuleName?.(moduleName);
-  }
-
-  public setLookupContext(context: ModuleContext): void {
-    this.elementType.setLookupContext?.(context);
+  public setModuleName(moduleName: string, context: ModuleContext): void {
+    this.elementType.setModuleName?.(moduleName, context);
   }
 }
 

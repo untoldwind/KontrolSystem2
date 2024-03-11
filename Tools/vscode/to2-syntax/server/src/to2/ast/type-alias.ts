@@ -40,7 +40,6 @@ export class TypeAlias implements Node, TypeDeclaration {
         range: this.alias.range,
       });
     } else {
-      this.type.setLookupContext?.(context);
       context.typeAliases.set(this.name.value, this.type.realizedType(context));
     }
 
@@ -55,5 +54,7 @@ export class TypeAlias implements Node, TypeDeclaration {
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
 
-  public setModuleName(moduleName: string) {}
+  public setModuleName(moduleName: string, context: ModuleContext) {
+    this.type.setModuleName?.(moduleName, context);
+  }
 }

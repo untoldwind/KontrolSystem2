@@ -170,10 +170,10 @@ export class FunctionType implements RealizedType {
       .fillGenerics(context.module, genericMap);
   }
 
-  public setLookupContext(context: ModuleContext): void {
-    this.returnType.setLookupContext?.(context);
+  public setModuleName(moduleName: string, context: ModuleContext): void {
+    this.returnType.setModuleName?.(moduleName, context);
     this.parameterTypes.forEach((parameter) =>
-      parameter[1].setLookupContext?.(context),
+      parameter[1].setModuleName?.(moduleName, context),
     );
   }
 }

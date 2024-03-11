@@ -114,12 +114,8 @@ export class OptionType implements RealizedType {
     return undefined;
   }
 
-  public setModuleName(moduleName: string): void {
-    this.elementType.setModuleName?.(moduleName);
-  }
-
-  public setLookupContext(context: ModuleContext): void {
-    this.elementType.setLookupContext?.(context);
+  public setModuleName(moduleName: string, context: ModuleContext): void {
+    this.elementType.setModuleName?.(moduleName, context);
   }
 }
 

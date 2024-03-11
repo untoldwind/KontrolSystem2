@@ -43,6 +43,7 @@ import {
   functionParameters,
   methodDeclaration,
 } from "./parser-functions";
+import { Registry } from "./ast/registry";
 
 const useKeyword = terminated(withPosition(tag("use")), spacing1);
 
@@ -224,6 +225,7 @@ const moduleItems = preceded(
 export function module(
   documentUri: DocumentUri,
   moduleName: string,
+  registry: Registry,
 ): Parser<TO2ModuleNode> {
   return map(
     seq(preceded(whitespace0, descriptionComment), moduleItems),
@@ -233,6 +235,7 @@ export function module(
         moduleName,
         description,
         items,
+        registry,
         start,
         end,
       ),

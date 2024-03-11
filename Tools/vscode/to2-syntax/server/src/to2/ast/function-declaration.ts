@@ -125,13 +125,8 @@ export class FunctionDeclaration implements Node, ModuleItem {
         range: this.name.range,
       });
     } else {
-      this.declaredReturn.value.setLookupContext?.(context);
       const returnType = this.declaredReturn.value.realizedType(context);
       const blockContext = new FunctionContext(context, returnType);
-
-      for (const parameter of this.parameters) {
-        parameter.type?.value.setLookupContext?.(context);
-      }
 
       this.functionType = new FunctionType(
         this.isAsync,
@@ -142,6 +137,7 @@ export class FunctionDeclaration implements Node, ModuleItem {
         ]),
         returnType,
       );
+
       context.mappedFunctions.set(this.name.value, {
         definition: { moduleName: context.moduleName, range: this.name.range },
         value: this.functionType,
@@ -200,7 +196,12 @@ export class FunctionDeclaration implements Node, ModuleItem {
     this.expression.collectSemanticTokens(semanticTokens);
   }
 
-  public setModuleName(moduleName: string) {}
+  public setModuleName(moduleName: string, context: ModuleContext) {
+    this.declaredReturn.value.setModuleName?.(moduleName, context);
+    for (const parameter of this.parameters) {
+      parameter.type?.value.setModuleName?.(moduleName, context);
+    }
+  }
 }
 
 export function isFunctionDeclaration(

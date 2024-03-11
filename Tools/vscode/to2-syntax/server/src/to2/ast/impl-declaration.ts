@@ -85,9 +85,9 @@ export class ImplDeclaration implements Node {
     return typeAlias && isRecordType(typeAlias) ? typeAlias : undefined;
   }
 
-  public setModuleName(moduleName: string) {
+  public setModuleName(moduleName: string, context: ModuleContext) {
     for (const method of this.methods) {
-      method.setModuleName(moduleName);
+      method.setModuleName(moduleName, context);
     }
   }
 }

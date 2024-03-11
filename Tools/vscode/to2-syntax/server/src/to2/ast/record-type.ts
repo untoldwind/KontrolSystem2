@@ -119,13 +119,12 @@ export class RecordType implements RealizedType {
     return undefined;
   }
 
-  public setModuleName(moduleName: string): void {
+  public setModuleName(moduleName: string, context: ModuleContext): void {
     this.moduleName = moduleName;
-    this.itemTypes.forEach((item) => item[1].setModuleName?.(moduleName));
-  }
-
-  public setLookupContext(context: ModuleContext): void {
-    this.itemTypes.forEach((item) => item[1].setLookupContext?.(context));
+    this.itemTypes.forEach((item) =>
+      item[1].setModuleName?.(moduleName, context),
+    );
+    this.methods?.forEach((f) => f.value.setModuleName?.(moduleName, context));
   }
 }
 

@@ -52,12 +52,6 @@ export class MethodDeclaration implements Node, ModuleItem {
         range: this.name.range,
       });
     } else {
-      this.declaredReturn.setLookupContext?.(context);
-
-      for (const parameter of this.parameters) {
-        parameter.type?.value.setLookupContext?.(context);
-      }
-
       const blockContext = new FunctionContext(context, this.declaredReturn);
 
       context.structType.methods.set(this.name.value, {
@@ -92,7 +86,6 @@ export class MethodDeclaration implements Node, ModuleItem {
       value: context.structType,
     });
     for (const parameter of this.parameters) {
-      parameter.type?.value.setLookupContext?.(context);
       errors.push(...parameter.validateBlock(blockContext));
       if (blockContext.localVariables.has(parameter.name.value)) {
         errors.push({
@@ -128,5 +121,11 @@ export class MethodDeclaration implements Node, ModuleItem {
     this.expression.collectSemanticTokens(semanticTokens);
   }
 
-  public setModuleName(moduleName: string) {}
+  public setModuleName(moduleName: string, context: ModuleContext) {
+    this.declaredReturn.setModuleName?.(moduleName, context);
+
+    for (const parameter of this.parameters) {
+      parameter.type?.value.setModuleName?.(moduleName, context);
+    }
+  }
 }

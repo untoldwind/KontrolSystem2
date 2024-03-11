@@ -93,12 +93,8 @@ export class TupleType implements RealizedType {
     return undefined;
   }
 
-  public setModuleName(moduleName: string): void {
-    this.itemTypes.forEach((item) => item.setModuleName?.(moduleName));
-  }
-
-  public setLookupContext(context: ModuleContext): void {
-    this.itemTypes.forEach((item) => item.setLookupContext?.(context));
+  public setModuleName(moduleName: string, context: ModuleContext): void {
+    this.itemTypes.forEach((item) => item.setModuleName?.(moduleName, context));
   }
 }
 

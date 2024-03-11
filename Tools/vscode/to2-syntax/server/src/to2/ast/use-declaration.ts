@@ -147,7 +147,7 @@ export class UseDeclaration implements Node, ModuleItem {
     return [];
   }
 
-  public setModuleName(moduleName: string) {}
+  public setModuleName() {}
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     semanticTokens.push(this.useKeyword.range.semanticToken("keyword"));

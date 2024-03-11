@@ -38,7 +38,6 @@ export class ConstDeclaration implements Node, ModuleItem {
         range: this.range,
       });
     } else {
-      this.type.value.setLookupContext?.(context);
       context.mappedConstants.set(this.name.value, {
         definition: { moduleName: context.moduleName, range: this.name.range },
         value: this.type.value,
@@ -62,8 +61,8 @@ export class ConstDeclaration implements Node, ModuleItem {
     this.expression.collectSemanticTokens(semanticTokens);
   }
 
-  public setModuleName(moduleName: string) {
-    this.type.value.setModuleName?.(moduleName);
+  public setModuleName(moduleName: string, context: ModuleContext) {
+    this.type.value.setModuleName?.(moduleName, context);
   }
 }
 

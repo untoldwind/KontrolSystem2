@@ -122,8 +122,6 @@ export class StructDeclaration implements Node, TypeDeclaration {
         range: this.structName.range,
       });
     } else {
-      this.type.setLookupContext?.(context);
-
       context.mappedFunctions.set(this.structName.value, {
         definition: {
           moduleName: context.moduleName,
@@ -169,7 +167,7 @@ export class StructDeclaration implements Node, TypeDeclaration {
     );
   }
 
-  public setModuleName(moduleName: string) {
-    this.type.setModuleName?.(moduleName);
+  public setModuleName(moduleName: string, context: ModuleContext) {
+    this.type.setModuleName?.(moduleName, context);
   }
 }
