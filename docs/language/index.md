@@ -15,6 +15,7 @@ Core features:
 ```{toctree}
 :maxdepth: 2
 
+literals
 conditionals
 entrypoint
 function
