@@ -7,10 +7,10 @@ namespace KontrolSystem.Parsing;
 ///     Generic parser.
 ///     In essence a parser is just a function consuming an input with a successful or failure result.
 /// </summary>
-public delegate IResult<T> Parser<out T>(IInput input);
+public delegate Result<T> Parser<T>(IInput input);
 
 public static class ParserExtensions {
-    public static IResult<T> TryParse<T>(this Parser<T> parser, string input, string sourceName = "<inline>") {
+    public static Result<T> TryParse<T>(this Parser<T> parser, string input, string sourceName = "<inline>") {
         return parser(new StringInput(input, sourceName));
     }
 
@@ -22,15 +22,15 @@ public static class ParserExtensions {
     public static T Parse<T>(this Parser<T> parser, string input, string sourceName = "<inline>") {
         var result = parser(new StringInput(input, sourceName));
 
-        if (!result.WasSuccessful) throw new ParseException(result.Position, result.Expected);
+        if (!result.success) throw new ParseException(result.Position, result.expected);
 
-        return result.Value;
+        return result.value;
     }
 
     public static Parser<T> Named<T>(this Parser<T> parser, string expected) {
         return input => {
             var result = parser(input);
-            if (!result.WasSuccessful) return Result.Failure<T>(result.Remaining, expected.Yield());
+            if (!result.success) return Result.Failure<T>(result.remaining, expected.Yield());
             return result;
         };
     }

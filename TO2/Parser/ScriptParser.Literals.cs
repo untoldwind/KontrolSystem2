@@ -19,9 +19,9 @@ public static class TO2ParserLiterals {
         Tag("\\r").To('\r')
     );
 
-    public static readonly Parser<LiteralString> LiteralString = Many0(EscapedStringChar)
+    public static readonly Parser<Expression> LiteralString = Many0(EscapedStringChar)
         .Between(DoubleQuote, DoubleQuote)
-        .Map((chars, start, end) => new LiteralString(chars.ToArray(), start, end)).Named("<string>");
+        .Map((chars, start, end) => new LiteralString(chars.ToArray(), start, end) as Expression).Named("<string>");
 
     private static bool IsHexDigit(char ch) => (ch >= '0' && ch <= '9') || (ch >= 'a' && ch <= 'f') || (ch >= 'A' && ch <= 'F');
 
@@ -36,26 +36,26 @@ public static class TO2ParserLiterals {
         Recognize(Digits1.Then(Chars0(ch => char.IsDigit(ch) || ch == '_'))).Map(str => (10, str))
     );
 
-    public static readonly Parser<LiteralInt> LiteralInt = Seq(
+    public static readonly Parser<Expression> LiteralInt = Seq(
         Opt(Char('-')), BasePrefixed
     ).Map((items, start, end) =>
         new LiteralInt(
             items.Item1.IsDefined
                 ? -Convert.ToInt64(items.Item2.str.Replace("_", ""), items.Item2.fromBase)
-                : Convert.ToInt64(items.Item2.str.Replace("_", ""), items.Item2.fromBase), start, end)).Named("<integer>");
+                : Convert.ToInt64(items.Item2.str.Replace("_", ""), items.Item2.fromBase), start, end) as Expression).Named("<integer>");
 
     private static readonly Parser<string> ExponentSuffix = OneOf("eE").Then(Opt(OneOf("+-"))).Then(Digits1);
 
-    public static readonly Parser<LiteralFloat> LiteralFloat = Recognize(
+    public static readonly Parser<Expression> LiteralFloat = Recognize(
         Opt(OneOf("+-")).Then(Alt(
             Terminated(Digits0.Then(Char('.')).Then(Digits1), Opt(ExponentSuffix)),
             Digits1.Then(ExponentSuffix)
         ))
     ).Map((digits, start, end) =>
-        new LiteralFloat(Convert.ToDouble(digits, CultureInfo.InvariantCulture), start, end)).Named("<float>");
+        new LiteralFloat(Convert.ToDouble(digits, CultureInfo.InvariantCulture), start, end) as Expression).Named("<float>");
 
-    public static readonly Parser<LiteralBool> LiteralBool = Alt(
-        Identifier.Where(str => str == "true", "true").Map((_, start, end) => new LiteralBool(true, start, end)),
-        Identifier.Where(str => str == "false", "false").Map((_, start, end) => new LiteralBool(false, start, end))
+    public static readonly Parser<Expression> LiteralBool = Alt(
+        Identifier.Where(str => str == "true", "true").Map((_, start, end) => new LiteralBool(true, start, end) as Expression),
+        Identifier.Where(str => str == "false", "false").Map((_, start, end) => new LiteralBool(false, start, end) as Expression)
     );
 }

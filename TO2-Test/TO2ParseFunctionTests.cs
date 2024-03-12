@@ -13,56 +13,56 @@ public class TO2ParserFunctionTests {
     public void TestFunctionParameter() {
         var result = TO2ParserFunctions.FunctionParameter.TryParse("");
 
-        Assert.False(result.WasSuccessful);
+        Assert.False(result.success);
 
         result = TO2ParserFunctions.FunctionParameter.TryParse("ab");
 
-        Assert.False(result.WasSuccessful);
+        Assert.False(result.success);
 
         result = TO2ParserFunctions.FunctionParameter.TryParse("ab:bool");
 
-        Assert.True(result.WasSuccessful);
-        Assert.Equal("", result.Remaining.ToString());
-        Helpers.ShouldDeepEqual(new FunctionParameter("ab", BuiltinType.Bool, null), result.Value, IgnorePosition);
+        Assert.True(result.success);
+        Assert.Equal("", result.remaining.ToString());
+        Helpers.ShouldDeepEqual(new FunctionParameter("ab", BuiltinType.Bool, null), result.value, IgnorePosition);
 
         result = TO2ParserFunctions.FunctionParameter.TryParse("_12ab : int");
 
-        Assert.True(result.WasSuccessful);
-        Assert.Equal("", result.Remaining.ToString());
-        Helpers.ShouldDeepEqual(new FunctionParameter("_12ab", BuiltinType.Int, null), result.Value, IgnorePosition);
+        Assert.True(result.success);
+        Assert.Equal("", result.remaining.ToString());
+        Helpers.ShouldDeepEqual(new FunctionParameter("_12ab", BuiltinType.Int, null), result.value, IgnorePosition);
     }
 
     [Fact]
     public void TestFunctionDeclaration() {
         var result = TO2ParserFunctions.FunctionDeclaration.TryParse("");
 
-        Assert.False(result.WasSuccessful);
+        Assert.False(result.success);
 
         result = TO2ParserFunctions.FunctionDeclaration.TryParse("fn demo()->Unit=0");
 
-        Assert.True(result.WasSuccessful);
-        Assert.Equal("", result.Remaining.ToString());
+        Assert.True(result.success);
+        Assert.Equal("", result.remaining.ToString());
         Helpers.ShouldDeepEqual(
             new FunctionDeclaration(FunctionModifier.Private, true, "demo", "", [],
-                BuiltinType.Unit, new LiteralInt(0)), result.Value, IgnorePosition);
+                BuiltinType.Unit, new LiteralInt(0)), result.value, IgnorePosition);
 
         result = TO2ParserFunctions.FunctionDeclaration.TryParse("pub  fn _demo23 ( ab : string ) -> int = { 0 }");
 
-        Assert.True(result.WasSuccessful);
-        Assert.Equal("", result.Remaining.ToString());
+        Assert.True(result.success);
+        Assert.Equal("", result.remaining.ToString());
         Helpers.ShouldDeepEqual(
             new FunctionDeclaration(FunctionModifier.Public, true, "_demo23", "",
                 [new("ab", BuiltinType.String, null)], BuiltinType.Int,
-                new Block(new List<IBlockItem> { new LiteralInt(0) })), result.Value, IgnorePosition);
+                new Block(new List<IBlockItem> { new LiteralInt(0) })), result.value, IgnorePosition);
 
         result = TO2ParserFunctions.FunctionDeclaration.TryParse(
             "pub  fn abc34 ( ab : string, _56 : int ) -> int = { 0 }");
 
-        Assert.True(result.WasSuccessful);
-        Assert.Equal("", result.Remaining.ToString());
+        Assert.True(result.success);
+        Assert.Equal("", result.remaining.ToString());
         Helpers.ShouldDeepEqual(
             new FunctionDeclaration(FunctionModifier.Public, true, "abc34", "",
-                [new("ab", BuiltinType.String, null), new("_56", BuiltinType.Int, null)], BuiltinType.Int, new Block(new List<IBlockItem> { new LiteralInt(0) })), result.Value,
+                [new("ab", BuiltinType.String, null), new("_56", BuiltinType.Int, null)], BuiltinType.Int, new Block(new List<IBlockItem> { new LiteralInt(0) })), result.value,
             IgnorePosition);
     }
 }

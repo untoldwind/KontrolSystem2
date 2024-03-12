@@ -9,47 +9,47 @@ public class TO2ParserCommonTests {
     public void TestIdentifier() {
         var result = TO2ParserCommon.Identifier.TryParse("");
 
-        Assert.False(result.WasSuccessful);
+        Assert.False(result.success);
 
         result = TO2ParserCommon.Identifier.TryParse("12ab");
 
-        Assert.False(result.WasSuccessful);
+        Assert.False(result.success);
 
         result = TO2ParserCommon.Identifier.TryParse("ab12_");
 
-        Assert.True(result.WasSuccessful);
-        Assert.Equal("", result.Remaining.ToString());
-        Assert.Equal("ab12_", result.Value);
+        Assert.True(result.success);
+        Assert.Equal("", result.remaining.ToString());
+        Assert.Equal("ab12_", result.value);
 
         result = TO2ParserCommon.Identifier.TryParse("_12ab");
 
-        Assert.True(result.WasSuccessful);
-        Assert.Equal("", result.Remaining.ToString());
-        Assert.Equal("_12ab", result.Value);
+        Assert.True(result.success);
+        Assert.Equal("", result.remaining.ToString());
+        Assert.Equal("_12ab", result.value);
     }
 
     [Fact]
     public void TestRecordDecl() {
         var result = TO2ParserCommon.RecordType.TryParse("(a: int, b: float)");
 
-        Assert.True(result.WasSuccessful);
+        Assert.True(result.success);
 
         result = TO2ParserCommon.RecordType.TryParse(@"(  // First line comment
                 a: int, b: float)");
 
-        Assert.True(result.WasSuccessful);
+        Assert.True(result.success);
 
         result = TO2ParserCommon.RecordType.TryParse(@"(  // First line comment
                 a: int,  // second line comment 
                 b: float)");
 
-        Assert.True(result.WasSuccessful);
+        Assert.True(result.success);
 
         result = TO2ParserCommon.RecordType.TryParse(@"(  // First line comment
                 a: int,  // second line comment 
                 b: float // last line comment
             )");
 
-        Assert.True(result.WasSuccessful);
+        Assert.True(result.success);
     }
 }

@@ -24,7 +24,7 @@ public static class TO2ParserModule {
 
     private static readonly Parser<List<string>?> UseNames = Alt(
         Char('*').Map(_ => (List<string>?)null),
-        Delimited1(Identifier, CommaDelimiter)
+        Delimited1(Identifier, CommaDelimiter).Map(item => (List<string>?)item)
             .Between(Char('{').Then(WhiteSpaces0), WhiteSpaces0.Then(Char('}')))
     );
 
@@ -70,14 +70,14 @@ public static class TO2ParserModule {
             start, end));
 
     private static readonly Parser<IModuleItem> ModuleItem = Alt<IModuleItem>(
-        UseNamesDeclaration,
-        UseAliasDeclaration,
-        FunctionDeclaration,
-        TypeAlias,
-        StructDeclaration,
-        ImplDeclaration,
-        ConstDeclaration,
-        LineComment
+        UseNamesDeclaration.Map(item => item as IModuleItem),
+        UseAliasDeclaration.Map(item => item as IModuleItem),
+        FunctionDeclaration.Map(item => item as IModuleItem),
+        TypeAlias.Map(item => item as IModuleItem),
+        StructDeclaration.Map(item => item as IModuleItem),
+        ImplDeclaration.Map(item => item as IModuleItem),
+        ConstDeclaration.Map(item => item as IModuleItem),
+        LineComment.Map(item => item as IModuleItem)
     );
 
     private static readonly Parser<List<IModuleItem>> ModuleItems =

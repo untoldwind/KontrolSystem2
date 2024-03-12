@@ -14,11 +14,11 @@ public static partial class Parsers {
             var result = new List<T>();
             var itemResult = itemParser(input);
 
-            while (itemResult.WasSuccessful) {
-                if (remaining.Position == itemResult.Remaining.Position) break;
+            while (itemResult.success) {
+                if (remaining.Position == itemResult.remaining.Position) break;
 
-                result.Add(itemResult.Value);
-                remaining = itemResult.Remaining;
+                result.Add(itemResult.value);
+                remaining = itemResult.remaining;
 
                 itemResult = itemParser(remaining);
             }
@@ -56,16 +56,16 @@ public static partial class Parsers {
             var result = new List<T>();
             var itemResult = itemParser(input);
 
-            while (itemResult.WasSuccessful) {
-                if (remaining.Position == itemResult.Remaining.Position) break;
+            while (itemResult.success) {
+                if (remaining.Position == itemResult.remaining.Position) break;
 
-                result.Add(itemResult.Value);
-                remaining = itemResult.Remaining;
+                result.Add(itemResult.value);
+                remaining = itemResult.remaining;
 
                 var delimiterResult = delimiter(remaining);
-                if (!delimiterResult.WasSuccessful) break;
+                if (!delimiterResult.success) break;
 
-                itemResult = itemParser(delimiterResult.Remaining);
+                itemResult = itemParser(delimiterResult.remaining);
             }
 
             if (minCount.HasValue && result.Count < minCount)
@@ -103,31 +103,31 @@ public static partial class Parsers {
             var result = new List<T>();
             var endResult = end(remaining);
 
-            if (endResult.WasSuccessful) return Result.Success(endResult.Remaining, result);
+            if (endResult.success) return Result.Success(endResult.remaining, result);
 
             while (remaining.Available > 0) {
                 var itemResult = itemParser(remaining);
-                if (!itemResult.WasSuccessful)
-                    return Result.Failure<List<T>>(itemResult.Remaining, itemResult.Expected);
-                if (remaining.Position == itemResult.Remaining.Position)
+                if (!itemResult.success)
+                    return Result.Failure<List<T>>(itemResult.remaining, itemResult.expected);
+                if (remaining.Position == itemResult.remaining.Position)
                     return Result.Failure<List<T>>(remaining, description);
 
-                result.Add(itemResult.Value);
-                remaining = itemResult.Remaining;
+                result.Add(itemResult.value);
+                remaining = itemResult.remaining;
 
                 endResult = end(remaining);
-                if (endResult.WasSuccessful) return Result.Success(endResult.Remaining, result);
+                if (endResult.success) return Result.Success(endResult.remaining, result);
 
                 var delimiterResult = delimiter(remaining);
-                if (!delimiterResult.WasSuccessful) return Result.Failure<List<T>>(remaining, delimiterResult.Expected);
+                if (!delimiterResult.success) return Result.Failure<List<T>>(remaining, delimiterResult.expected);
 
-                remaining = delimiterResult.Remaining;
+                remaining = delimiterResult.remaining;
 
                 endResult = end(remaining);
-                if (endResult.WasSuccessful) return Result.Success(endResult.Remaining, result);
+                if (endResult.success) return Result.Success(endResult.remaining, result);
             }
 
-            return Result.Failure<List<T>>(remaining, endResult.Expected);
+            return Result.Failure<List<T>>(remaining, endResult.expected);
         };
     }
 
@@ -141,20 +141,20 @@ public static partial class Parsers {
         return input => {
             var firstResult = operantParser(input);
 
-            if (!firstResult.WasSuccessful) return firstResult;
+            if (!firstResult.success) return firstResult;
 
-            var remaining = firstResult.Remaining;
-            var result = firstResult.Value;
+            var remaining = firstResult.remaining;
+            var result = firstResult.value;
 
             var restResult = restParser(remaining);
 
-            while (restResult.WasSuccessful) {
-                if (remaining.Position == restResult.Remaining.Position)
+            while (restResult.success) {
+                if (remaining.Position == restResult.remaining.Position)
                     break;
 
-                var (op, operant) = restResult.Value;
+                var (op, operant) = restResult.value;
                 result = apply(result, op, operant, remaining.Position, restResult.Position);
-                remaining = restResult.Remaining;
+                remaining = restResult.remaining;
 
                 restResult = restParser(remaining);
             }
@@ -170,15 +170,15 @@ public static partial class Parsers {
         Func<T, S, Position, Position, T> combine) {
         return input => {
             var result = initial(input);
-            if (!result.WasSuccessful) return result;
+            if (!result.success) return result;
 
-            var suffixResult = suffix(result.Remaining);
-            while (suffixResult.WasSuccessful) {
+            var suffixResult = suffix(result.remaining);
+            while (suffixResult.success) {
                 if (suffixResult.Position == result.Position) break;
 
-                result = Result.Success(suffixResult.Remaining,
-                    combine(result.Value, suffixResult.Value, result.Position, suffixResult.Position));
-                suffixResult = suffix(result.Remaining);
+                result = Result.Success(suffixResult.remaining,
+                    combine(result.value, suffixResult.value, result.Position, suffixResult.Position));
+                suffixResult = suffix(result.remaining);
             }
 
             return result;

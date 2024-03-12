@@ -10,17 +10,17 @@ public class CompleteTests {
         var parser = Char('A');
         var result = parser.TryParse("");
 
-        Assert.False(result.WasSuccessful);
+        Assert.False(result.success);
 
         result = parser.TryParse("abc");
 
-        Assert.False(result.WasSuccessful);
+        Assert.False(result.success);
 
         result = parser.TryParse("ABC");
 
-        Assert.True(result.WasSuccessful);
-        Assert.Equal("BC", result.Remaining.ToString());
-        Assert.Equal('A', result.Value);
+        Assert.True(result.success);
+        Assert.Equal("BC", result.remaining.ToString());
+        Assert.Equal('A', result.value);
     }
 
     [Fact]
@@ -28,23 +28,23 @@ public class CompleteTests {
         var parser = Tag("abc");
         var result = parser.TryParse("");
 
-        Assert.False(result.WasSuccessful);
+        Assert.False(result.success);
 
         result = parser.TryParse("ab");
 
-        Assert.False(result.WasSuccessful);
+        Assert.False(result.success);
 
         result = parser.TryParse("abc");
 
-        Assert.True(result.WasSuccessful);
-        Assert.Equal("", result.Remaining.ToString());
-        Assert.Equal("abc", result.Value);
+        Assert.True(result.success);
+        Assert.Equal("", result.remaining.ToString());
+        Assert.Equal("abc", result.value);
 
         result = parser.TryParse("abcde");
 
-        Assert.True(result.WasSuccessful);
-        Assert.Equal("de", result.Remaining.ToString());
-        Assert.Equal("abc", result.Value);
+        Assert.True(result.success);
+        Assert.Equal("de", result.remaining.ToString());
+        Assert.Equal("abc", result.value);
     }
 
     [Fact]
@@ -52,8 +52,8 @@ public class CompleteTests {
         var parser = WhiteSpaces0;
         var result = parser.TryParse(" \t\r\n");
 
-        Assert.True(result.WasSuccessful);
-        Assert.Equal("", result.Remaining.ToString());
-        Assert.Equal(" \t\r\n", result.Value);
+        Assert.True(result.success);
+        Assert.Equal("", result.remaining.ToString());
+        Assert.Equal(" \t\r\n", result.value);
     }
 }

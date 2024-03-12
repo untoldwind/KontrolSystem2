@@ -48,18 +48,18 @@ public static class TO2ParserCommon {
     private static readonly Parser<TO2Type> FunctionType = Seq(
         Tag("fn").Then(WhiteSpaces0).Then(FunctionTypeParameters),
         WhiteSpaces0.Then(Tag("->")).Then(WhiteSpaces0).Then(TypeRef)
-    ).Map(items => new FunctionType(false, items.Item1, items.Item2));
+    ).Map(items => new FunctionType(false, items.Item1, items.Item2) as TO2Type);
 
     private static readonly Parser<TO2Type> TupleType =
         DelimitedN_M(2, null, Opt(LineComment.Then(WhiteSpaces0)).Then(TypeRef), CommaDelimiter, "<type>")
             .Between(Char('(').Then(WhiteSpaces0), LineComments.Then(WhiteSpaces0).Then(Char(')')))
-            .Map(items => new TupleType(items));
+            .Map(items => new TupleType(items) as TO2Type);
 
     public static readonly Parser<TO2Type> RecordType =
         Delimited1(Opt(LineComment.Then(WhiteSpaces0)).Then(Seq(Identifier, TypeSpec)), CommaDelimiter,
                 "<identifier : type>")
             .Between(Char('(').Then(WhiteSpaces0), LineComments.Then(WhiteSpaces0).Then(Char(')')))
-            .Map(items => new RecordTupleType(items));
+            .Map(items => new RecordTupleType(items) as TO2Type);
 
     private static readonly Parser<TO2Type> TypeReference = Seq(
         IdentifierPath,
@@ -96,25 +96,25 @@ public static class TO2ParserCommon {
         Many0(CharsExcept0("\r\n").Map(s => s.Trim()).Between(WhiteSpaces0.Then(Tag("///")), PeekLineEnd))
             .Map(lines => string.Join("\n", lines));
 
-    private static IResult<TO2Type> TypeRefImpl(IInput input) {
+    private static Result<TO2Type> TypeRefImpl(IInput input) {
         return ToplevelTypeRef(input);
     }
 }
 
 public static class TO2Parser {
-    private static IResult<TO2Module> TryParseModuleFile(string baseDir, string moduleFile) {
+    private static Result<TO2Module> TryParseModuleFile(string baseDir, string moduleFile) {
         var content = File.ReadAllText(Path.Combine(baseDir, moduleFile), Encoding.UTF8);
         var moduleResult =
             TO2ParserModule.Module(TO2Module.BuildName(moduleFile)).TryParse(content, moduleFile);
-        if (!moduleResult.WasSuccessful)
-            return Result.Failure<TO2Module>(moduleResult.Remaining, moduleResult.Expected);
+        if (!moduleResult.success)
+            return Result.Failure<TO2Module>(moduleResult.remaining, moduleResult.expected);
 
-        return Result.Success(moduleResult.Remaining, moduleResult.Value);
+        return Result.Success(moduleResult.remaining, moduleResult.value);
     }
 
     public static TO2Module ParseModuleFile(string baseDir, string moduleFile) {
         var result = TryParseModuleFile(baseDir, moduleFile);
-        if (!result.WasSuccessful) throw new ParseException(result.Position, result.Expected);
-        return result.Value;
+        if (!result.success) throw new ParseException(result.Position, result.expected);
+        return result.value;
     }
 }

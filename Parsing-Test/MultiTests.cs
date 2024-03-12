@@ -11,20 +11,20 @@ public class MultiTests {
         var parser = Many0(Char('B'));
         var result = parser.TryParse("");
 
-        Assert.True(result.WasSuccessful);
-        Assert.Equal(new List<char>(), result.Value);
+        Assert.True(result.success);
+        Assert.Equal(new List<char>(), result.value);
 
         result = parser.TryParse("abcde");
 
-        Assert.True(result.WasSuccessful);
-        Assert.Equal("abcde", result.Remaining.ToString());
-        Assert.Equal(new List<char>(), result.Value);
+        Assert.True(result.success);
+        Assert.Equal("abcde", result.remaining.ToString());
+        Assert.Equal(new List<char>(), result.value);
 
         result = parser.TryParse("BBBde");
 
-        Assert.True(result.WasSuccessful);
-        Assert.Equal("de", result.Remaining.ToString());
-        Assert.Equal(new List<char>(new[] { 'B', 'B', 'B' }), result.Value);
+        Assert.True(result.success);
+        Assert.Equal("de", result.remaining.ToString());
+        Assert.Equal(new List<char>(new[] { 'B', 'B', 'B' }), result.value);
     }
 
     [Fact]
@@ -32,23 +32,23 @@ public class MultiTests {
         var parser = Many1(Char('B'));
         var result = parser.TryParse("");
 
-        Assert.False(result.WasSuccessful);
+        Assert.False(result.success);
 
         result = parser.TryParse("abcde");
 
-        Assert.False(result.WasSuccessful);
+        Assert.False(result.success);
 
         result = parser.TryParse("Bbcde");
 
-        Assert.True(result.WasSuccessful);
-        Assert.Equal("bcde", result.Remaining.ToString());
-        Assert.Equal(new List<char>(new[] { 'B' }), result.Value);
+        Assert.True(result.success);
+        Assert.Equal("bcde", result.remaining.ToString());
+        Assert.Equal(new List<char>(new[] { 'B' }), result.value);
 
         result = parser.TryParse("BBBde");
 
-        Assert.True(result.WasSuccessful);
-        Assert.Equal("de", result.Remaining.ToString());
-        Assert.Equal(new List<char>(new[] { 'B', 'B', 'B' }), result.Value);
+        Assert.True(result.success);
+        Assert.Equal("de", result.remaining.ToString());
+        Assert.Equal(new List<char>(new[] { 'B', 'B', 'B' }), result.value);
     }
 
     [Fact]
@@ -56,25 +56,25 @@ public class MultiTests {
         var parser = Delimited0(OneOf("abAB"), Char(',').Between(WhiteSpaces0, WhiteSpaces0));
         var result = parser.TryParse("");
 
-        Assert.True(result.WasSuccessful);
-        Assert.Empty(result.Value);
+        Assert.True(result.success);
+        Assert.Empty(result.value);
 
         result = parser.TryParse("a, e");
 
-        Assert.True(result.WasSuccessful);
-        Assert.Equal(", e", result.Remaining.ToString());
-        Assert.Equal(new List<char> { 'a' }, result.Value);
+        Assert.True(result.success);
+        Assert.Equal(", e", result.remaining.ToString());
+        Assert.Equal(new List<char> { 'a' }, result.value);
 
         result = parser.TryParse("a,");
 
-        Assert.True(result.WasSuccessful);
-        Assert.Equal(",", result.Remaining.ToString());
-        Assert.Equal(new List<char> { 'a' }, result.Value);
+        Assert.True(result.success);
+        Assert.Equal(",", result.remaining.ToString());
+        Assert.Equal(new List<char> { 'a' }, result.value);
 
         result = parser.TryParse("a , b,a, A ,B");
 
-        Assert.True(result.WasSuccessful);
-        Assert.Equal("", result.Remaining.ToString());
-        Assert.Equal(new List<char> { 'a', 'b', 'a', 'A', 'B' }, result.Value);
+        Assert.True(result.success);
+        Assert.Equal("", result.remaining.ToString());
+        Assert.Equal(new List<char> { 'a', 'b', 'a', 'A', 'B' }, result.value);
     }
 }

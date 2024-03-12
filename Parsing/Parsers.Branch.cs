@@ -15,15 +15,15 @@ public static partial class Parsers {
             foreach (var alternative in alternatives) {
                 var result = alternative(input);
 
-                if (result.WasSuccessful) return result;
+                if (result.success) return result;
 
                 var longestAt = longest.Position.position;
-                var errorAt = result.Remaining.Position.position;
+                var errorAt = result.remaining.Position.position;
                 if (errorAt == longestAt) {
-                    expected = expected.Concat(result.Expected);
+                    expected = expected.Concat(result.expected);
                 } else if (errorAt > longestAt) {
-                    longest = result.Remaining;
-                    expected = result.Expected;
+                    longest = result.remaining;
+                    expected = result.expected;
                 }
             }
 
