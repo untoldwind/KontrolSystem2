@@ -1,5 +1,10 @@
 # Changes
 
+## 0.5.6.0 -> 0.5.6.1
+
+* Improve parser support for string-interpolation
+* Improve language documentation
+
 ## 0.5.5.5 -> 0.5.6.0
 
 * Add `part.part_title` and `part.part_description` to `ksp::vessel` and `ksp::oab`
