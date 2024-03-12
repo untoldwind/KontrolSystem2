@@ -4,81 +4,39 @@ using System.Linq;
 
 namespace KontrolSystem.Parsing;
 
-public interface IResult<out T> {
-    T Value { get; }
+public delegate Result<U> SelectConvert<T, U>(Result<T> result);
 
-    IInput Remaining { get; }
+public readonly ref struct Result<T>( bool success, IInput remaining, T value, List<string> expected) {
+    
+    public readonly T value = value;
 
-    bool WasSuccessful { get; }
+    public readonly IInput remaining = remaining;
 
-    List<string> Expected { get; }
+    public readonly bool success = success;
 
-    Position Position { get; }
+    public readonly List<string> expected = expected;
 
-    IResult<U> Map<U>(Func<T, U> f);
+    public Position Position {
+        get => remaining.Position;
+    }
 
-    IResult<U> Select<U>(Func<IResult<T>, IResult<U>> next);
+    public Result<U> To<U>(U fixedValue) => new(success, remaining, fixedValue, expected);
+    
+    public Result<U> Map<U>(Func<T, U> f) => new(success, remaining, success ? f(value) : default!, expected);
+
+    public Result<U> Select<U>(SelectConvert<T, U> next) => success ? next(this) : new(success, remaining, default!, expected);
 }
 
 public static class Result {
-    public static IResult<T> Success<T>(IInput remaining, T value) {
-        return new SuccessResult<T>(remaining, value);
+    public static Result<T> Success<T>(IInput remaining, T value) {
+        return new Result<T>(true, remaining, value, []);
     }
 
-    public static IResult<T> Failure<T>(IInput input, string expected) {
-        return new FailureResult<T>(input, [expected]);
+    public static Result<T> Failure<T>(IInput input, string expected) {
+        return new Result<T>(false, input,default!, [expected]);
     }
 
-    public static IResult<T> Failure<T>(IInput input, IEnumerable<string> expected) {
-        return new FailureResult<T>(input, expected.ToList());
-    }
-
-    private readonly struct SuccessResult<T> : IResult<T> {
-        public T Value { get; }
-
-        public IInput Remaining { get; }
-
-        internal SuccessResult(IInput remaining, T value) {
-            Remaining = remaining;
-            Value = value;
-        }
-
-        public bool WasSuccessful => true;
-
-        public List<string> Expected => [];
-
-        public Position Position => Remaining.Position;
-
-        public IResult<U> Map<U>(Func<T, U> f) {
-            return new SuccessResult<U>(Remaining, f(Value));
-        }
-
-        public IResult<U> Select<U>(Func<IResult<T>, IResult<U>> next) {
-            return next(this);
-        }
-    }
-
-    private readonly struct FailureResult<T> : IResult<T> {
-        public IInput Remaining { get; }
-        public List<string> Expected { get; }
-
-        internal FailureResult(IInput input, List<string> expected) {
-            Remaining = input;
-            Expected = expected;
-        }
-
-        public T Value => throw new InvalidOperationException("Failure has no value");
-
-        public bool WasSuccessful => false;
-
-        public Position Position => Remaining.Position;
-
-        public IResult<U> Map<U>(Func<T, U> f) {
-            return new FailureResult<U>(Remaining, Expected);
-        }
-
-        public IResult<U> Select<U>(Func<IResult<T>, IResult<U>> next) {
-            return new FailureResult<U>(Remaining, Expected);
-        }
+    public static Result<T> Failure<T>(IInput input, IEnumerable<string> expected) {
+        return new Result<T>(false, input, default!, expected.ToList());
     }
 }

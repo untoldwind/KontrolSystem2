@@ -11,12 +11,12 @@ using static TO2ParserModule;
 
 public static class TO2ParserREPL {
     private static readonly Parser<Node> REPLItem = Opt(LineComment).Then(Alt(
-        UseNamesDeclaration,
-        UseAliasDeclaration,
-        TypeAlias,
-        Expression,
-        WhileExpression,
-        ForInExpression,
+        UseNamesDeclaration.Map(item => item as Node),
+        UseAliasDeclaration.Map(item => item as Node),
+        TypeAlias.Map(item => item as Node),
+        Expression.Map(item => item as Node),
+        WhileExpression.Map(item => item as Node),
+        ForInExpression.Map(item => item as Node),
         VariableDeclaration.Map(item => (item as Node)!)
     ));
 

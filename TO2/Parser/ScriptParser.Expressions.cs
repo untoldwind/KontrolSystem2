@@ -38,7 +38,7 @@ public static class TO2ParserExpressions {
     internal static readonly Parser<Expression> WhileExpression = Seq(
         Tag("while").Then(WhiteSpaces0).Then(Char('(')).Then(WhiteSpaces0).Then(Expression),
         WhiteSpaces0.Then(Char(')')).Then(WhiteSpaces0).Then(Expression)
-    ).Map((items, start, end) => new While(items.Item1, items.Item2, start, end));
+    ).Map((items, start, end) => new While(items.Item1, items.Item2, start, end) as Expression);
 
     internal static readonly Parser<Expression> ForInExpression = Seq(
         Tag("for").Then(WhiteSpaces0).Then(Char('(')).Then(WhiteSpaces0).Then(Alt(
@@ -56,22 +56,22 @@ public static class TO2ParserExpressions {
     });
 
     private static readonly Parser<Expression> BreakExpression =
-        Tag("break").Map((_, start, end) => new Break(start, end));
+        Tag("break").Map((_, start, end) => new Break(start, end) as Expression);
 
     private static readonly Parser<Expression> ContinueExpression =
-        Tag("continue").Map((_, start, end) => new Continue(start, end));
+        Tag("continue").Map((_, start, end) => new Continue(start, end) as Expression);
 
     private static readonly Parser<Expression> Block = Char('{').Then(WhiteSpaces0).Then(DelimitedUntil(
         Alt(
-            Expression,
-            LineComment,
+            Expression.Map(item => item as IBlockItem),
+            LineComment.Map(item => item as IBlockItem),
             VariableDeclaration,
-            ReturnExpression,
-            WhileExpression,
-            ForInExpression,
-            BreakExpression,
-            ContinueExpression
-        ), WhiteSpaces1, Char('}'))).Map(expressions => new Block(expressions));
+            ReturnExpression.Map(item => item as IBlockItem),
+            WhileExpression.Map(item => item as IBlockItem),
+            ForInExpression.Map(item => item as IBlockItem),
+            BreakExpression.Map(item => item as IBlockItem),
+            ContinueExpression.Map(item => item as IBlockItem)
+        ), WhiteSpaces1, Char('}'))).Map(expressions => new Block(expressions) as Expression);
 
     private static readonly Parser<List<Expression>> CallArguments = Char('(').Then(WhiteSpaces0)
         .Then(DelimitedUntil(Expression, CommaDelimiter, WhiteSpaces0.Then(Char(')'))));
@@ -88,7 +88,7 @@ public static class TO2ParserExpressions {
     private static readonly Parser<Expression> TupleCreate =
         DelimitedN_M(2, null, Expression, CommaDelimiter, "<expression>")
             .Between(Char('(').Then(WhiteSpaces0), WhiteSpaces0.Then(Char(')'))).Map((expressions, start, end) =>
-                new TupleCreate(expressions, start, end));
+                new TupleCreate(expressions, start, end) as Expression);
 
     private static readonly Parser<Expression> RecordCreate = Seq(
         Opt(TypeRef.Between(Char('<').Then(WhiteSpaces0), WhiteSpaces0.Then(Char('>')).Then(Spacing0))),
@@ -96,13 +96,13 @@ public static class TO2ParserExpressions {
             Seq(Identifier, Spacing0.Then(Char(':')).Then(Spacing0).Then(Expression)),
             CommaDelimiter, "<expression>").Between(Char('(').Then(WhiteSpaces0), WhiteSpaces0.Then(Char(')')))
     ).Map((items, start, end) =>
-        new RecordCreate(items.Item1.IsDefined ? items.Item1.Value : null, items.Item2, start, end));
+        new RecordCreate(items.Item1.IsDefined ? items.Item1.Value : null, items.Item2, start, end) as Expression);
 
     private static readonly Parser<Expression> ArrayCreate = Seq(
         Opt(TypeRef.Between(Char('<').Then(WhiteSpaces0), WhiteSpaces0.Then(Char('>')).Then(Spacing0))),
         Char('[').Then(WhiteSpaces0).Then(DelimitedUntil(Expression, CommaDelimiter, WhiteSpaces0.Then(Char(']'))))
     ).Map((items, start, end) =>
-        new ArrayCreate(items.Item1.IsDefined ? items.Item1.Value : null, items.Item2, start, end));
+        new ArrayCreate(items.Item1.IsDefined ? items.Item1.Value : null, items.Item2, start, end) as Expression);
 
     private static readonly Parser<FunctionParameter> LambdaParameter = Seq(
         Identifier, Opt(TypeSpec)
@@ -114,11 +114,11 @@ public static class TO2ParserExpressions {
     private static readonly Parser<Expression> Lambda = Seq(
         Tag("fn").Then(Spacing0).Then(LambdaParameters),
         WhiteSpaces0.Then(Tag("->")).Then(WhiteSpaces0).Then(Expression)
-    ).Map((items, start, end) => new Lambda(items.Item1, items.Item2, start, end));
+    ).Map((items, start, end) => new Lambda(items.Item1, items.Item2, start, end) as Expression);
 
     private static readonly Parser<Expression> BracketTerm = Expression
         .Between(Char('(').Then(WhiteSpaces0), WhiteSpaces0.Then(Char(')')))
-        .Map((expression, start, end) => new Bracket(expression, start, end));
+        .Map((expression, start, end) => new Bracket(expression, start, end) as Expression);
 
     private static readonly Parser<Expression> Term = Alt(
         LiteralBool,
@@ -162,7 +162,7 @@ public static class TO2ParserExpressions {
 
     private static readonly Parser<Expression> UnaryPrefixExpr = Alt(
         Seq(UnaryPrefixOp, WhiteSpaces0.Then(LineComments).Then(TermWithSuffixOps)).Map((items, start, end) =>
-            new UnaryPrefix(items.Item1, items.Item2, start, end)),
+            new UnaryPrefix(items.Item1, items.Item2, start, end) as Expression),
         TermWithSuffixOps
     );
 
@@ -214,7 +214,7 @@ public static class TO2ParserExpressions {
             Delimited0(Identifier, CommaDelimiter)
                 .Between(Char('(').Then(WhiteSpaces0), WhiteSpaces0.Then(Char(')')))),
         Spacing0.Then(Char('=')).Then(Spacing0).Then(BITBinaryExpr)
-    ).Map((items, start, end) => new Unapply(items.Item1, items.Item2, items.Item3, start, end));
+    ).Map((items, start, end) => new Unapply(items.Item1, items.Item2, items.Item3, start, end)  as Expression);
 
     private static readonly Parser<Operator> CompareOp = Alt(
         Tag("==").To(Operator.Eq),
@@ -290,7 +290,7 @@ public static class TO2ParserExpressions {
 
     private static readonly Parser<Expression> TupleDeconstructAssignment = Seq(
         SourceTargetList, EqDelimiter.Then(Alt(BooleanExpr, IfExpr))
-    ).Map((items, start, end) => new TupleDeconstructAssign(items.Item1, items.Item2, start, end));
+    ).Map((items, start, end) => (Expression)new TupleDeconstructAssign(items.Item1, items.Item2, start, end) as Expression);
 
     private static readonly Parser<Expression> TopLevelExpression = Alt(
         TupleDeconstructAssignment,
@@ -299,7 +299,7 @@ public static class TO2ParserExpressions {
         BooleanExpr
     );
 
-    private static IResult<Expression> ExpressionImpl(IInput input) {
+    private static Result<Expression> ExpressionImpl(IInput input) {
         return TopLevelExpression(input);
     }
 }

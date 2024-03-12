@@ -20,9 +20,9 @@ public static partial class Parsers {
         return input => {
             var result = parser(input);
 
-            if (!result.WasSuccessful) return Result.Success(input, Option.None<T>());
+            if (!result.success) return Result.Success(input, Option.None<T>());
 
-            return Result.Success(result.Remaining, Option.Some(result.Value));
+            return Result.Success(result.remaining, Option.Some(result.value));
         };
     }
 
@@ -33,15 +33,15 @@ public static partial class Parsers {
         return input => {
             var leftResult = left(input);
 
-            if (leftResult.WasSuccessful)
-                return Result.Success(leftResult.Remaining, Parsing.Either.Left<L, R>(leftResult.Value));
+            if (leftResult.success)
+                return Result.Success(leftResult.remaining, Parsing.Either.Left<L, R>(leftResult.value));
 
             var rightResult = right(input);
 
-            if (rightResult.WasSuccessful)
-                return Result.Success(rightResult.Remaining, Parsing.Either.Right<L, R>(rightResult.Value));
+            if (rightResult.success)
+                return Result.Success(rightResult.remaining, Parsing.Either.Right<L, R>(rightResult.value));
 
-            return Result.Failure<IEither<L, R>>(input, rightResult.Expected);
+            return Result.Failure<IEither<L, R>>(input, rightResult.expected);
         };
     }
 
@@ -51,9 +51,9 @@ public static partial class Parsers {
     public static Parser<string> Recognize<T>(Parser<T> parser) {
         return input => {
             var result = parser(input);
-            if (!result.WasSuccessful) return Result.Failure<string>(result.Remaining, result.Expected);
-            return Result.Success(result.Remaining,
-                input.Take(result.Remaining.Position.position - input.Position.position));
+            if (!result.success) return Result.Failure<string>(result.remaining, result.expected);
+            return Result.Success(result.remaining,
+                input.Take(result.remaining.Position.position - input.Position.position));
         };
     }
 
@@ -61,7 +61,7 @@ public static partial class Parsers {
     ///     Replace the result of a parsing with the given value.
     /// </summary>
     public static Parser<U> To<T, U>(this Parser<T> parser, U value) {
-        return input => parser(input).Select(s => Result.Success(s.Remaining, value));
+        return input => parser(input).Select(s => Result.Success(s.remaining, value));
     }
 
     /// <summary>
@@ -69,7 +69,7 @@ public static partial class Parsers {
     /// </summary>
     public static Parser<U> Map<T, U>(this Parser<T> parser, Func<T, U> convert) {
         return input =>
-            parser(input).Select(s => Result.Success(s.Remaining, convert(s.Value)));
+            parser(input).Select(s => Result.Success(s.remaining, convert(s.value)));
     }
 
     /// <summary>
@@ -77,7 +77,7 @@ public static partial class Parsers {
     /// </summary>
     public static Parser<U> Map<T, U>(this Parser<T> parser, Func<T, Position, Position, U> convert) {
         return input =>
-            parser(input).Select(s => Result.Success(s.Remaining, convert(s.Value, input.Position, s.Position)));
+            parser(input).Select(s => Result.Success(s.remaining, convert(s.value, input.Position, s.Position)));
     }
 
     /// <summary>
@@ -86,8 +86,8 @@ public static partial class Parsers {
     public static Parser<T> Where<T>(this Parser<T> parser, Predicate<T> predicate, string expected) {
         return input => {
             var result = parser(input);
-            if (!result.WasSuccessful) return result;
-            if (!predicate(result.Value)) return Result.Failure<T>(result.Remaining, expected);
+            if (!result.success) return result;
+            if (!predicate(result.value)) return Result.Failure<T>(result.remaining, expected);
             return result;
         };
     }
