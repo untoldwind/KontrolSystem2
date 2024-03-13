@@ -38,13 +38,13 @@ public class CompleteTests {
 
         Assert.True(result.success);
         Assert.Equal("", result.remaining.ToString());
-        Assert.Equal("abc", result.value);
+        Assert.True(result.value);
 
         result = parser.TryParse("abcde");
 
         Assert.True(result.success);
         Assert.Equal("de", result.remaining.ToString());
-        Assert.Equal("abc", result.value);
+        Assert.True(result.value);
     }
 
     [Fact]

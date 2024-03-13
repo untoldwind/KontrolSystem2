@@ -20,6 +20,18 @@ public readonly ref struct StringInput(string source, string sourceName, int pos
         return -1;
     }
 
+    public bool Match(string tag) {
+        var len = tag.Length;
+
+        if (source.Length - position < len) return false;
+
+        for (int i = 0; i < len; i++) {
+            if (tag[i] != source[position + i]) return false;
+        }
+
+        return true;
+    }
+    
     public string Take(int count) {
         if (count == 0) return "";
         if (count + position > source.Length) throw new InvalidOperationException("Advance beyond eof");

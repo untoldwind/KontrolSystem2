@@ -9,7 +9,7 @@ using static Parsers;
 using static TO2ParserLiterals;
 
 public static class TO2ParserStringInterpolation {
-    private static readonly Parser<string> StringInterpolationStart = Tag("$\"");
+    private static readonly Parser<bool> StringInterpolationStart = Tag("$\"");
 
     private static readonly Parser<char> ExtendedEscapedStringChar = Alt(
         CharExcept("\\\"\r\n{}"),

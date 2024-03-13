@@ -15,7 +15,7 @@ public static class TO2ParserFunctions {
 
     private static readonly Parser<string> SyncKeyword = Tag("sync").Then(Spacing1);
 
-    private static readonly Parser<string> SelfKeyword = Tag("self");
+    private static readonly Parser<bool> SelfKeyword = Tag("self");
 
     private static readonly Parser<(FunctionModifier modifier, bool async)> FunctionPrefix = Alt(
         SyncKeyword.Then(PubKeyword).Then(FnKeyword).To((FunctionModifier.Public, false)),
