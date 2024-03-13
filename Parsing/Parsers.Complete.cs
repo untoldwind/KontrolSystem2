@@ -63,7 +63,7 @@ public static partial class Parsers {
     public static readonly Parser<bool> PeekLineEnd = input => {
         if (input.Available == 0) return Result.Success(input, false);
         if (input.Available >= 1 && input.Current == '\n') return Result.Success(input, true);
-        if (input.Take(2) == "\r\n") return Result.Success(input, true);
+        if (input.Match("\r\n")) return Result.Success(input, true);
         return Result.Failure<bool>(input, "<end of line>");
     };
 
@@ -145,12 +145,10 @@ public static partial class Parsers {
     /// <summary>
     ///     Parse an exact tag (i.e. sequence of chars).
     /// </summary>
-    public static Parser<string> Tag(string tag) {
+    public static Parser<bool> Tag(string tag) {
         return input => {
-            if (input.Available < tag.Length) return Result.Failure<string>(input, $"'{tag}'");
-            var content = input.Take(tag.Length);
-            if (content != tag) return Result.Failure<string>(input, $"'{tag}'");
-            return Result.Success(input.Advance(tag.Length), content);
+            if (!input.Match(tag)) return Result.Failure<bool>(input, $"'{tag}'");
+            return Result.Success(input.Advance(tag.Length), true);
         };
     }
 }
