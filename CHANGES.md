@@ -5,6 +5,7 @@
 * Add `body.get_atm_pressure(altitude : float)` method
 * Add `body.get_atm_temperature(altitude : float)` method
 * Add `body.get_atm_density(altitude : float)` method
+* Add `engine.calc_max_thrust_output_atm()` method
 
 ## 0.5.6.0 -> 0.5.6.1
 

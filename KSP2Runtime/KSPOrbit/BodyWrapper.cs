@@ -119,7 +119,7 @@ public class BodyWrapper : KSPOrbitModule.IBody, KSPVesselModule.IKSPTargetable 
     public double GetAtmDensity(double altitude) => body.hasAtmosphere
         ? body.GetDensity(body.GetPressure(altitude), body.GetTemperature(altitude))
         : 0.0;
-    
+
     public Option<KSPOrbitModule.IBody> AsBody => new(this);
 
     public Option<KSPVesselModule.VesselAdapter> AsVessel => new();

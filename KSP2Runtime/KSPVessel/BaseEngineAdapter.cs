@@ -43,7 +43,7 @@ public abstract class BaseEngineAdapter<P, T>(P part, Data_Engine dataEngine) : 
 
     [KSField] public double MaxThrustOutputAtm => dataEngine.MaxThrustOutputAtm();
 
-    [KSField]
+    [KSField(Description = "Current thrust limit value between 0.0 - 1.0")]
     public double ThrustLimiter {
         get => dataEngine.thrustPercentage.GetValue() / 100.0;
         set => dataEngine.thrustPercentage.SetValue((float)(100.0 * value));
@@ -55,13 +55,13 @@ public abstract class BaseEngineAdapter<P, T>(P part, Data_Engine dataEngine) : 
         set => dataEngine.EngineAutoSwitchMode.SetValue(value);
     }
 
-    [KSField]
+    [KSField(Description = "Toggle independent throttle")]
     public bool IndependentThrottleEnabled {
         get => dataEngine.IndependentThrottle.GetValue();
         set => dataEngine.IndependentThrottle.SetValue(value);
     }
 
-    [KSField]
+    [KSField(Description = "Current independent throttle between 0.0 - 1.0")]
     public double IndependentThrottle {
         get => dataEngine.IndependentThrottlePercentage.GetValue() / 100.0;
         set => dataEngine.IndependentThrottlePercentage.SetValue((float)(value * 100.0));
@@ -84,4 +84,10 @@ public abstract class BaseEngineAdapter<P, T>(P part, Data_Engine dataEngine) : 
         dataEngine.PropellantStates
             .Select(state => new KSPResourceModule.ResourceDefinitionAdapter(state.resourceDef)).ToArray();
 
+
+    [KSMethod(Description = "Calculate maximum thrust in atmosphere given atmospheric parameters")]
+    public double CalcMaxThrustOutputAtm(double atmPressurekPa = 101.325, double atmTemp = 310.0,
+        double atmDensity = 1.225000023841858, double machNumber = 0.0) =>
+        dataEngine.MaxThrustOutputAtm(atmPressure: atmPressurekPa * 0.0098692326671601, atmTemp: atmTemp,
+            atmDensity: atmDensity, machNumber: (float)machNumber);
 }
