@@ -2,7 +2,7 @@
 
 ## 0.5.6.1 -> 0.5.6.2
 
-* Add `body.atmosphere_pressure(altitude : float)` method
+* Add `body.atmosphere_pressure_kpa(altitude : float)` method
 * Add `body.atmosphere_temperature(altitude : float)` method
 * Add `body.atmosphere_density(altitude : float)` method
 * Add `engine.calc_max_thrust_output_atm()` method
