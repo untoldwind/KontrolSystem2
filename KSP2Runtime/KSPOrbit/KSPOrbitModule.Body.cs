@@ -98,5 +98,14 @@ public partial class KSPOrbitModule {
         [KSMethod(Description =
             "Create a new orbit around this body starting at a given a coordinate independent `velocity` at universal time `ut`")]
         IOrbit GlobalCreateOrbit(VelocityAtPosition velocity, double ut);
+
+        [KSMethod(Description = "Get atmospheric pressure in kPa at a given `altitude`")]
+        double GetAtmPressureKpa(double altitude);
+
+        [KSMethod(Description = "Get temperature of atmosphere at a given `altitude`")]
+        double GetAtmTemperature(double altitude);
+
+        [KSMethod(Description = "Get atmospheric density at a given `altitude`")]
+        double GetAtmDensity(double altitude);
     }
 }

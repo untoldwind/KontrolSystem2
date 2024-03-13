@@ -166,42 +166,26 @@ public class MockBody : KSPOrbitModule.IBody {
         return new Vector3d(phi * Math.Cos(lon), z, phi * Math.Sin(lon));
     }
 
-    public Vector GlobalSurfaceNormal(double latitude, double longitude) {
-        return new Vector(CelestialFrame, SurfaceNormal(latitude, longitude));
-    }
+    public Vector GlobalSurfaceNormal(double latitude, double longitude) => new(CelestialFrame, SurfaceNormal(latitude, longitude));
 
-    public double TerrainHeight(double lat, double lon) {
-        return 0.0;
-    }
+    public double TerrainHeight(double lat, double lon) => 0.0;
 
-    public Position GlobalSurfacePosition(double latitude, double longitude, double altitude) {
-        return new Position(CelestialFrame, SurfacePosition(latitude, longitude, altitude));
-    }
+    public Position GlobalSurfacePosition(double latitude, double longitude, double altitude) => new(CelestialFrame, SurfacePosition(latitude, longitude, altitude));
 
-    public KSPOrbitModule.GeoCoordinates GeoCoordinates(double latitude, double longitude) {
-        return new KSPOrbitModule.GeoCoordinates(this, latitude, longitude);
-    }
+    public KSPOrbitModule.GeoCoordinates GeoCoordinates(double latitude, double longitude) => new(this, latitude, longitude);
 
-    public Vector3d SurfacePosition(double latitude, double longitude, double altitude) {
-        return SurfaceNormal(latitude, longitude) * (radius + altitude);
-    }
+    public Vector3d SurfacePosition(double latitude, double longitude, double altitude) => SurfaceNormal(latitude, longitude) * (radius + altitude);
 
-    public KSPOrbitModule.IOrbit CreateOrbit(Vector3d relPos, Vector3d vel, double ut) {
-        return new MockOrbit(this, relPos.SwapYAndZ, vel.SwapYAndZ, ut);
-    }
+    public KSPOrbitModule.IOrbit CreateOrbit(Vector3d relPos, Vector3d vel, double ut) => new MockOrbit(this, relPos.SwapYAndZ, vel.SwapYAndZ, ut);
 
     public KSPOrbitModule.IOrbit GlobalCreateOrbit(VelocityAtPosition velocity, double ut) {
         return new MockOrbit(this, CelestialFrame.ToLocalPosition(velocity.position),
             CelestialFrame.motionFrame.ToLocalVelocity(velocity.velocity, velocity.position), ut);
     }
 
-    public Vector3d GetPositionAtUT(double ut) {
-        return orbit?.GetRelativePositionAtUT(ut) ?? Vector3d.zero;
-    }
+    public Vector3d GetPositionAtUT(double ut) => orbit?.GetRelativePositionAtUT(ut) ?? Vector3d.zero;
 
-    public Vector3d GetOrbitalVelocityAtUT(double ut) {
-        return orbit?.GetOrbitalVelocityAtUT(ut) ?? Vector3d.zero;
-    }
+    public Vector3d GetOrbitalVelocityAtUT(double ut) => orbit?.GetOrbitalVelocityAtUT(ut) ?? Vector3d.zero;
 
     public double Latitude(Vector3d position) {
         var normalized = position.normalized.SwapYAndZ;
@@ -213,13 +197,15 @@ public class MockBody : KSPOrbitModule.IBody {
         return Math.Atan2(normalized.y, normalized.x) * 180.0 / Math.PI;
     }
 
-    public Vector3d RelativeVelocity(Vector3d position) {
-        return Vector3d.Cross(angularVelocity, position);
-    }
+    public Vector3d RelativeVelocity(Vector3d position) => Vector3d.Cross(angularVelocity, position);
 
-    public double AltitudeOf(Vector3d position) {
-        return position.magnitude - radius;
-    }
+    public double AltitudeOf(Vector3d position) => position.magnitude - radius;
+
+    public double GetAtmPressureKpa(double altitude) => 0.0;
+
+    public double GetAtmTemperature(double altitude) => 0.0;
+
+    public double GetAtmDensity(double altitude) => 0.0;
 
     public KSPOrbitModule.IOrbit CreateOrbitFromParameters(double inclination, double eccentricity,
         double semiMajorAxis, double lan,
