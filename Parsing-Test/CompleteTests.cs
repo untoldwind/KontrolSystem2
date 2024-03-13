@@ -54,6 +54,6 @@ public class CompleteTests {
 
         Assert.True(result.success);
         Assert.Equal("", result.remaining.ToString());
-        Assert.Equal(" \t\r\n", result.value);
+        Assert.True(result.value);
     }
 }

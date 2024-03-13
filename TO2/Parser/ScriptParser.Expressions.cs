@@ -214,7 +214,7 @@ public static class TO2ParserExpressions {
             Delimited0(Identifier, CommaDelimiter)
                 .Between(Char('(').Then(WhiteSpaces0), WhiteSpaces0.Then(Char(')')))),
         Spacing0.Then(Char('=')).Then(Spacing0).Then(BITBinaryExpr)
-    ).Map((items, start, end) => new Unapply(items.Item1, items.Item2, items.Item3, start, end)  as Expression);
+    ).Map((items, start, end) => new Unapply(items.Item1, items.Item2, items.Item3, start, end) as Expression);
 
     private static readonly Parser<Operator> CompareOp = Alt(
         Tag("==").To(Operator.Eq),

@@ -10,7 +10,7 @@ public readonly ref struct StringInput(string source, string sourceName, int pos
 
     public int Available => source.Length - position;
 
-    public Position Position => new (sourceName, position, line, column);
+    public Position Position => new(sourceName, position, line, column);
 
     public int FindNext(Predicate<char> predicate) {
         for (var p = position; p < source.Length; p++)
@@ -31,7 +31,7 @@ public readonly ref struct StringInput(string source, string sourceName, int pos
 
         return true;
     }
-    
+
     public string Take(int count) {
         if (count == 0) return "";
         if (count + position > source.Length) throw new InvalidOperationException("Advance beyond eof");

@@ -83,7 +83,7 @@ public class BodyWrapper : KSPOrbitModule.IBody, KSPVesselModule.IKSPTargetable 
         var position = new Position(body.transform.celestialFrame,
             body.GetSurfaceNVector(latitude, longitude) * (fromCenter + 1000));
         body.GetAltitudeFromTerrain(position, out var _, out var sceneryOffset);
-        
+
         return fromCenter - body.radius + sceneryOffset;
     }
 
