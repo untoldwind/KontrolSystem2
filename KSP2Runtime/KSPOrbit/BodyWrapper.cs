@@ -78,8 +78,13 @@ public class BodyWrapper : KSPOrbitModule.IBody, KSPVesselModule.IKSPTargetable 
             body.GetSurfaceNVector(latitude, longitude));
     }
 
-    public double TerrainHeight(double lat, double lon) {
-        return body.SurfaceProvider.GetTerrainAltitudeFromCenter(lat, lon) - body.radius;
+    public double TerrainHeight(double latitude, double longitude) {
+        var fromCenter = body.SurfaceProvider.GetTerrainAltitudeFromCenter(latitude, longitude);
+        var position = new Position(body.transform.celestialFrame,
+            body.GetSurfaceNVector(latitude, longitude) * (fromCenter + 1000));
+        body.GetAltitudeFromTerrain(position, out var _, out var sceneryOffset);
+        
+        return fromCenter - body.radius + sceneryOffset;
     }
 
     public Vector3d SurfacePosition(double latitude, double longitude, double altitude) {
