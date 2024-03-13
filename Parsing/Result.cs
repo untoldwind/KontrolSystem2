@@ -6,11 +6,11 @@ namespace KontrolSystem.Parsing;
 
 public delegate Result<U> SelectConvert<T, U>(Result<T> result);
 
-public readonly ref struct Result<T>( bool success, IInput remaining, T value, List<string> expected) {
+public readonly ref struct Result<T>( bool success, StringInput remaining, T value, List<string> expected) {
     
     public readonly T value = value;
 
-    public readonly IInput remaining = remaining;
+    public readonly StringInput remaining = remaining;
 
     public readonly bool success = success;
 
@@ -28,15 +28,15 @@ public readonly ref struct Result<T>( bool success, IInput remaining, T value, L
 }
 
 public static class Result {
-    public static Result<T> Success<T>(IInput remaining, T value) {
+    public static Result<T> Success<T>(StringInput remaining, T value) {
         return new Result<T>(true, remaining, value, []);
     }
 
-    public static Result<T> Failure<T>(IInput input, string expected) {
+    public static Result<T> Failure<T>(StringInput input, string expected) {
         return new Result<T>(false, input,default!, [expected]);
     }
 
-    public static Result<T> Failure<T>(IInput input, IEnumerable<string> expected) {
+    public static Result<T> Failure<T>(StringInput input, IEnumerable<string> expected) {
         return new Result<T>(false, input, default!, expected.ToList());
     }
 }
