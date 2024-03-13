@@ -27,7 +27,7 @@ public class ParserBench {
     public bool ParseFiles() {
         bool success = true;
         foreach (var content in contents) {
-            success = TO2ParserModule.Module(TO2Module.BuildName("bench")).TryParse(content, "<bench>").WasSuccessful && success;
+            success = TO2ParserModule.Module(TO2Module.BuildName("bench")).TryParse(content, "<bench>").success && success;
         }
 
         return success;
