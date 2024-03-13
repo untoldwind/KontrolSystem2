@@ -201,11 +201,11 @@ public class MockBody : KSPOrbitModule.IBody {
 
     public double AltitudeOf(Vector3d position) => position.magnitude - radius;
 
-    public double GetAtmPressureKpa(double altitude) => 0.0;
+    public double AtmospherePressureKpa(double altitude) => 0.0;
 
-    public double GetAtmTemperature(double altitude) => 0.0;
+    public double AtmosphereTemperature(double altitude) => 0.0;
 
-    public double GetAtmDensity(double altitude) => 0.0;
+    public double AtmosphereDensity(double altitude) => 0.0;
 
     public KSPOrbitModule.IOrbit CreateOrbitFromParameters(double inclination, double eccentricity,
         double semiMajorAxis, double lan,

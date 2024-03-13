@@ -37,6 +37,51 @@ up | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Up vector of the bod
 
 #### Methods
 
+##### atmosphere_density
+
+```rust
+body.atmosphere_density ( altitude : float ) -> float
+```
+
+Get atmospheric density at a given `altitude`
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+altitude | float |  | 
+
+##### atmosphere_pressure_kpa
+
+```rust
+body.atmosphere_pressure_kpa ( altitude : float ) -> float
+```
+
+Get atmospheric pressure in kPa at a given `altitude`
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+altitude | float |  | 
+
+##### atmosphere_temperature
+
+```rust
+body.atmosphere_temperature ( altitude : float ) -> float
+```
+
+Get temperature of atmosphere at a given `altitude`
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+altitude | float |  | 
+
 ##### create_orbit
 
 ```rust

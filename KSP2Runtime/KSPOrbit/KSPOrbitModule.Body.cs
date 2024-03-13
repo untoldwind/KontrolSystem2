@@ -100,12 +100,12 @@ public partial class KSPOrbitModule {
         IOrbit GlobalCreateOrbit(VelocityAtPosition velocity, double ut);
 
         [KSMethod(Description = "Get atmospheric pressure in kPa at a given `altitude`")]
-        double GetAtmPressureKpa(double altitude);
+        double AtmospherePressureKpa(double altitude);
 
         [KSMethod(Description = "Get temperature of atmosphere at a given `altitude`")]
-        double GetAtmTemperature(double altitude);
+        double AtmosphereTemperature(double altitude);
 
         [KSMethod(Description = "Get atmospheric density at a given `altitude`")]
-        double GetAtmDensity(double altitude);
+        double AtmosphereDensity(double altitude);
     }
 }

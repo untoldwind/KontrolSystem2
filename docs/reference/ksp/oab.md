@@ -167,8 +167,8 @@ current_throttle | float | R/O |
 current_thrust | float | R/O | 
 engine_modes | [ksp::vessel::EngineMode](/reference/ksp/vessel.md#enginemode)[] | R/O | Get all engine modes 
 has_ignited | bool | R/O | Check if engine has ignited 
-independent_throttle | float | R/W | 
-independent_throttle_enabled | bool | R/W | 
+independent_throttle | float | R/W | Current independent throttle between 0.0 - 1.0 
+independent_throttle_enabled | bool | R/W | Toggle independent throttle 
 is_flameout | bool | R/O | Check if engine had a flame-out 
 is_operational | bool | R/O | Check if engine is operational 
 is_propellant_starved | bool | R/O | 
@@ -184,7 +184,30 @@ propellants | [ksp::resource::ResourceDefinition](/reference/ksp/resource.md#res
 real_isp | float | R/O | 
 throttle_min | float | R/O | 
 thrust_direction | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Direction of thrust 
-thrust_limiter | float | R/W | 
+thrust_limiter | float | R/W | Current thrust limit value between 0.0 - 1.0 
+
+#### Methods
+
+##### calc_max_thrust_output_atm
+
+```rust
+objectassemblyengine.calc_max_thrust_output_atm ( atmPressurekPa : float,
+                                                  atmTemp : float,
+                                                  atmDensity : float,
+                                                  machNumber : float ) -> float
+```
+
+Calculate maximum thrust in atmosphere given atmospheric parameters
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+atmPressurekPa | float | x | 
+atmTemp | float | x | 
+atmDensity | float | x | 
+machNumber | float | x | 
 
 ### ObjectAssemblyEngineDeltaV
 

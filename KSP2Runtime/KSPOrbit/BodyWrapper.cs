@@ -117,11 +117,11 @@ public class BodyWrapper : KSPOrbitModule.IBody, KSPVesselModule.IKSPTargetable 
         return new OrbitWrapper(context, orbit);
     }
 
-    public double GetAtmPressureKpa(double altitude) => body.hasAtmosphere ? body.GetPressure(altitude) : 0.0;
+    public double AtmospherePressureKpa(double altitude) => body.hasAtmosphere ? body.GetPressure(altitude) : 0.0;
 
-    public double GetAtmTemperature(double altitude) => body.hasAtmosphere ? body.GetTemperature(altitude) : 0.0;
+    public double AtmosphereTemperature(double altitude) => body.hasAtmosphere ? body.GetTemperature(altitude) : 0.0;
 
-    public double GetAtmDensity(double altitude) => body.hasAtmosphere
+    public double AtmosphereDensity(double altitude) => body.hasAtmosphere
         ? body.GetDensity(body.GetPressure(altitude), body.GetTemperature(altitude))
         : 0.0;
 

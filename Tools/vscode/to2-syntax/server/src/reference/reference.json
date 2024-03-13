@@ -1482,7 +1482,9 @@
     "ArrayBuilder": {
       "name": "ArrayBuilder",
       "description": "Helper to create an array of initially unknown size",
-      "genericParameters": ["T"],
+      "genericParameters": [
+        "T"
+      ],
       "fields": {
         "length": {
           "name": "length",
@@ -1566,7 +1568,9 @@
     "Cell": {
       "name": "Cell",
       "description": "Holds a single value that can be mutated at any time",
-      "genericParameters": ["T"],
+      "genericParameters": [
+        "T"
+      ],
       "fields": {
         "value": {
           "name": "value",
@@ -1643,7 +1647,9 @@
     "Option": {
       "name": "Option",
       "description": "",
-      "genericParameters": ["T"],
+      "genericParameters": [
+        "T"
+      ],
       "fields": {
         "defined": {
           "name": "defined",
@@ -2754,7 +2760,10 @@
     "Result": {
       "name": "Result",
       "description": "",
-      "genericParameters": ["R", "E"],
+      "genericParameters": [
+        "R",
+        "E"
+      ],
       "fields": {
         "success": {
           "name": "success",
@@ -3763,7 +3772,9 @@
         "Task": {
           "name": "Task",
           "description": "Represents a background task\n",
-          "genericParameters": ["T"],
+          "genericParameters": [
+            "T"
+          ],
           "fields": {
             "is_completed": {
               "name": "is_completed",
@@ -11681,6 +11692,7 @@
             },
             "thrust_limiter": {
               "name": "thrust_limiter",
+              "description": "Current thrust limit value between 0.0 - 1.0\n",
               "readOnly": false,
               "type": {
                 "kind": "Builtin",
@@ -11697,6 +11709,7 @@
             },
             "independent_throttle_enabled": {
               "name": "independent_throttle_enabled",
+              "description": "Toggle independent throttle\n",
               "readOnly": false,
               "type": {
                 "kind": "Builtin",
@@ -11705,6 +11718,7 @@
             },
             "independent_throttle": {
               "name": "independent_throttle",
+              "description": "Current independent throttle between 0.0 - 1.0\n",
               "readOnly": false,
               "type": {
                 "kind": "Builtin",
@@ -11779,7 +11793,55 @@
               }
             }
           },
-          "methods": {},
+          "methods": {
+            "calc_max_thrust_output_atm": {
+              "isAsync": false,
+              "name": "calc_max_thrust_output_atm",
+              "description": "Calculate maximum thrust in atmosphere given atmospheric parameters\n",
+              "parameters": [
+                {
+                  "name": "atmPressurekPa",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": true,
+                  "description": null
+                },
+                {
+                  "name": "atmTemp",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": true,
+                  "description": null
+                },
+                {
+                  "name": "atmDensity",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": true,
+                  "description": null
+                },
+                {
+                  "name": "machNumber",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": true,
+                  "description": null
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            }
+          },
           "assignableFromAny": false,
           "assignableFrom": []
         },
@@ -14689,6 +14751,66 @@
                 "kind": "Standard",
                 "module": "ksp::orbit",
                 "name": "Orbit"
+              }
+            },
+            "atmosphere_pressure_kpa": {
+              "isAsync": false,
+              "name": "atmosphere_pressure_kpa",
+              "description": "Get atmospheric pressure in kPa at a given `altitude`\n",
+              "parameters": [
+                {
+                  "name": "altitude",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false,
+                  "description": null
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "atmosphere_temperature": {
+              "isAsync": false,
+              "name": "atmosphere_temperature",
+              "description": "Get temperature of atmosphere at a given `altitude`\n",
+              "parameters": [
+                {
+                  "name": "altitude",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false,
+                  "description": null
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "atmosphere_density": {
+              "isAsync": false,
+              "name": "atmosphere_density",
+              "description": "Get atmospheric density at a given `altitude`\n",
+              "parameters": [
+                {
+                  "name": "altitude",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false,
+                  "description": null
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "float"
               }
             }
           },
@@ -46195,6 +46317,7 @@
             },
             "thrust_limiter": {
               "name": "thrust_limiter",
+              "description": "Current thrust limit value between 0.0 - 1.0\n",
               "readOnly": false,
               "type": {
                 "kind": "Builtin",
@@ -46211,6 +46334,7 @@
             },
             "independent_throttle_enabled": {
               "name": "independent_throttle_enabled",
+              "description": "Toggle independent throttle\n",
               "readOnly": false,
               "type": {
                 "kind": "Builtin",
@@ -46219,6 +46343,7 @@
             },
             "independent_throttle": {
               "name": "independent_throttle",
+              "description": "Current independent throttle between 0.0 - 1.0\n",
               "readOnly": false,
               "type": {
                 "kind": "Builtin",
@@ -46311,6 +46436,53 @@
               "returnType": {
                 "kind": "Builtin",
                 "name": "bool"
+              }
+            },
+            "calc_max_thrust_output_atm": {
+              "isAsync": false,
+              "name": "calc_max_thrust_output_atm",
+              "description": "Calculate maximum thrust in atmosphere given atmospheric parameters\n",
+              "parameters": [
+                {
+                  "name": "atmPressurekPa",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": true,
+                  "description": null
+                },
+                {
+                  "name": "atmTemp",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": true,
+                  "description": null
+                },
+                {
+                  "name": "atmDensity",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": true,
+                  "description": null
+                },
+                {
+                  "name": "machNumber",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": true,
+                  "description": null
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "float"
               }
             }
           },
@@ -50557,7 +50729,11 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": ["iters", "v1", "v2"],
+            "names": [
+              "iters",
+              "v1",
+              "v2"
+            ],
             "parameters": [
               {
                 "kind": "Builtin",
@@ -50921,7 +51097,10 @@
               ],
               "returnType": {
                 "kind": "Record",
-                "names": ["latitude", "longitude"],
+                "names": [
+                  "latitude",
+                  "longitude"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -52102,7 +52281,10 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["UT", "delta_v"],
+                "names": [
+                  "UT",
+                  "delta_v"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -52143,7 +52325,10 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["UT", "delta_v"],
+                "names": [
+                  "UT",
+                  "delta_v"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -52390,7 +52575,11 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["TT", "UT", "delta_v"],
+                "names": [
+                  "TT",
+                  "UT",
+                  "delta_v"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -52463,7 +52652,11 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["TT", "UT", "delta_v"],
+                "names": [
+                  "TT",
+                  "UT",
+                  "delta_v"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -52536,7 +52729,11 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["TT", "UT", "delta_v"],
+                "names": [
+                  "TT",
+                  "UT",
+                  "delta_v"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -52665,7 +52862,10 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": ["start_velocity", "target_velocity"],
+            "names": [
+              "start_velocity",
+              "target_velocity"
+            ],
             "parameters": [
               {
                 "kind": "Standard",
@@ -52777,7 +52977,10 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": ["UT", "delta_v"],
+            "names": [
+              "UT",
+              "delta_v"
+            ],
             "parameters": [
               {
                 "kind": "Builtin",
@@ -52859,7 +53062,10 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": ["UT", "delta_v"],
+            "names": [
+              "UT",
+              "delta_v"
+            ],
             "parameters": [
               {
                 "kind": "Builtin",
@@ -52901,7 +53107,10 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": ["UT", "delta_v"],
+            "names": [
+              "UT",
+              "delta_v"
+            ],
             "parameters": [
               {
                 "kind": "Builtin",
@@ -52943,7 +53152,10 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": ["UT", "delta_v"],
+            "names": [
+              "UT",
+              "delta_v"
+            ],
             "parameters": [
               {
                 "kind": "Builtin",
@@ -52988,7 +53200,10 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["UT", "delta_v"],
+                "names": [
+                  "UT",
+                  "delta_v"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -53162,7 +53377,11 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["iters", "x", "y"],
+                "names": [
+                  "iters",
+                  "x",
+                  "y"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -53252,7 +53471,11 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["iters", "x", "y"],
+                "names": [
+                  "iters",
+                  "x",
+                  "y"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -53371,11 +53594,18 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": ["best", "points"],
+            "names": [
+              "best",
+              "points"
+            ],
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["f", "x", "y"],
+                "names": [
+                  "f",
+                  "x",
+                  "y"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -53396,7 +53626,11 @@
                 "parameters": [
                   {
                     "kind": "Record",
-                    "names": ["f", "x", "y"],
+                    "names": [
+                      "f",
+                      "x",
+                      "y"
+                    ],
                     "parameters": [
                       {
                         "kind": "Builtin",
@@ -53541,7 +53775,10 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["fx", "x"],
+                "names": [
+                  "fx",
+                  "x"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -53761,7 +53998,11 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["position", "t", "velocity"],
+                "names": [
+                  "position",
+                  "t",
+                  "velocity"
+                ],
                 "parameters": [
                   {
                     "kind": "Standard",
@@ -53862,7 +54103,10 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["target_port", "vessel_port"],
+                "names": [
+                  "target_port",
+                  "vessel_port"
+                ],
                 "parameters": [
                   {
                     "kind": "Standard",
@@ -54467,7 +54711,10 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": ["burn_time", "half_burn_time"],
+            "names": [
+              "burn_time",
+              "half_burn_time"
+            ],
             "parameters": [
               {
                 "kind": "Builtin",
