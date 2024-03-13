@@ -6,8 +6,8 @@ namespace KontrolSystem.Parsing;
 
 public delegate Result<U> SelectConvert<T, U>(Result<T> result);
 
-public readonly ref struct Result<T>( bool success, StringInput remaining, T value, List<string> expected) {
-    
+public readonly ref struct Result<T>(bool success, StringInput remaining, T value, List<string> expected) {
+
     public readonly T value = value;
 
     public readonly StringInput remaining = remaining;
@@ -21,7 +21,7 @@ public readonly ref struct Result<T>( bool success, StringInput remaining, T val
     }
 
     public Result<U> To<U>(U fixedValue) => new(success, remaining, fixedValue, expected);
-    
+
     public Result<U> Map<U>(Func<T, U> f) => new(success, remaining, success ? f(value) : default!, expected);
 
     public Result<U> Select<U>(SelectConvert<T, U> next) => success ? next(this) : new(success, remaining, default!, expected);
@@ -33,7 +33,7 @@ public static class Result {
     }
 
     public static Result<T> Failure<T>(StringInput input, string expected) {
-        return new Result<T>(false, input,default!, [expected]);
+        return new Result<T>(false, input, default!, [expected]);
     }
 
     public static Result<T> Failure<T>(StringInput input, IEnumerable<string> expected) {

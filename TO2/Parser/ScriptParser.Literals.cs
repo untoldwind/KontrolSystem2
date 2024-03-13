@@ -44,7 +44,7 @@ public static class TO2ParserLiterals {
                 ? -Convert.ToInt64(items.Item2.str.Replace("_", ""), items.Item2.fromBase)
                 : Convert.ToInt64(items.Item2.str.Replace("_", ""), items.Item2.fromBase), start, end) as Expression).Named("<integer>");
 
-    private static readonly Parser<string> ExponentSuffix = OneOf("eE").Then(Opt(OneOf("+-"))).Then(Digits1);
+    private static readonly Parser<bool> ExponentSuffix = OneOf("eE").Then(Opt(OneOf("+-"))).Then(Digits1);
 
     public static readonly Parser<Expression> LiteralFloat = Recognize(
         Opt(OneOf("+-")).Then(Alt(

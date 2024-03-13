@@ -10,17 +10,17 @@ using static TO2ParserExpressions;
 using static TO2ParserFunctions;
 
 public static class TO2ParserModule {
-    private static readonly Parser<string> UseKeyword = Tag("use").Then(Spacing1);
+    private static readonly Parser<bool> UseKeyword = Tag("use").Then(Spacing1);
 
-    private static readonly Parser<string> TypeKeyword = Tag("type").Then(Spacing1);
+    private static readonly Parser<bool> TypeKeyword = Tag("type").Then(Spacing1);
 
-    private static readonly Parser<string> StructKeyword = Tag("struct").Then(Spacing1);
+    private static readonly Parser<bool> StructKeyword = Tag("struct").Then(Spacing1);
 
-    private static readonly Parser<string> ImplKeyword = Tag("impl").Then(Spacing1);
+    private static readonly Parser<bool> ImplKeyword = Tag("impl").Then(Spacing1);
 
-    private static readonly Parser<string> FormKeyword = Spacing1.Then(Tag("from")).Then(Spacing1);
+    private static readonly Parser<bool> FormKeyword = Spacing1.Then(Tag("from")).Then(Spacing1);
 
-    private static readonly Parser<string> AsKeyword = Spacing1.Then(Tag("as")).Then(Spacing1);
+    private static readonly Parser<bool> AsKeyword = Spacing1.Then(Tag("as")).Then(Spacing1);
 
     private static readonly Parser<List<string>?> UseNames = Alt(
         Char('*').Map(_ => (List<string>?)null),

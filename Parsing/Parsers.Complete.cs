@@ -13,23 +13,23 @@ public static partial class Parsers {
     /// <summary>
     ///     Parse zero or more whitespace.
     /// </summary>
-    public static readonly Parser<string> WhiteSpaces0 = Chars0(char.IsWhiteSpace);
+    public static readonly Parser<bool> WhiteSpaces0 = Chars0(char.IsWhiteSpace);
 
     /// <summary>
     ///     Parse zero or more SpaceSeparators (including tabs)
     /// </summary>
-    public static readonly Parser<string> Spacing0 = Chars0(ch =>
+    public static readonly Parser<bool> Spacing0 = Chars0(ch =>
         ch == '\t' || char.GetUnicodeCategory(ch) == UnicodeCategory.SpaceSeparator);
 
     /// <summary>
     ///     Parse one or more whitespace.
     /// </summary>
-    public static readonly Parser<string> WhiteSpaces1 = Chars1(char.IsWhiteSpace, "<whitespace>");
+    public static readonly Parser<bool> WhiteSpaces1 = Chars1(char.IsWhiteSpace, "<whitespace>");
 
     /// <summary>
     ///     Parse one or more SpaceSeparators (including tabs)
     /// </summary>
-    public static readonly Parser<string> Spacing1 =
+    public static readonly Parser<bool> Spacing1 =
         Chars1(
             ch => ch == '\t' || char.GetUnicodeCategory(ch) ==
                 UnicodeCategory.SpaceSeparator, "<space>");
@@ -47,12 +47,12 @@ public static partial class Parsers {
     /// <summary>
     ///     Parse zero or more digits.
     /// </summary>
-    public static readonly Parser<string> Digits0 = Chars0(char.IsDigit);
+    public static readonly Parser<bool> Digits0 = Chars0(char.IsDigit);
 
     /// <summary>
     ///     Parse one or more digits.
     /// </summary>
-    public static readonly Parser<string> Digits1 = Chars1(char.IsDigit, "<digit>");
+    public static readonly Parser<bool> Digits1 = Chars1(char.IsDigit, "<digit>");
 
     public static readonly Parser<string> LineEnd = Opt(Char('\r'))
         .Then(r => Char('\n').Map(n => r.Map(char.ToString).GetOrElse("") + n));
@@ -89,24 +89,24 @@ public static partial class Parsers {
     /// <summary>
     ///     Zero or more characters matching 'predicate'
     /// </summary>
-    public static Parser<string> Chars0(Predicate<char> predicate) {
+    public static Parser<bool> Chars0(Predicate<char> predicate) {
         return input => {
             var count = input.FindNext(ch => !predicate(ch));
-            if (count < 0) return Result.Success(input.Advance(input.Available), input.Take(input.Available));
-            return Result.Success(input.Advance(count), input.Take(count));
+            if (count < 0) return Result.Success(input.Advance(input.Available), true);
+            return Result.Success(input.Advance(count), true);
         };
     }
 
     /// <summary>
     ///     One or more characters matching 'predicate'
     /// </summary>
-    public static Parser<string> Chars1(Predicate<char> predicate, string expected) {
+    public static Parser<bool> Chars1(Predicate<char> predicate, string expected) {
         return input => {
-            if (input.Available < 1) return Result.Failure<string>(input, expected);
+            if (input.Available < 1) return Result.Failure<bool>(input, expected);
             var count = input.FindNext(ch => !predicate(ch));
-            if (count < 0) return Result.Success(input.Advance(input.Available), input.Take(input.Available));
-            if (count == 0) return Result.Failure<string>(input, expected);
-            return Result.Success(input.Advance(count), input.Take(count));
+            if (count < 0) return Result.Success(input.Advance(input.Available), true);
+            if (count == 0) return Result.Failure<bool>(input, expected);
+            return Result.Success(input.Advance(count), true);
         };
     }
 
@@ -127,14 +127,14 @@ public static partial class Parsers {
     /// <summary>
     ///     Zero or more characters not in list
     /// </summary>
-    public static Parser<string> CharsExcept0(string c) {
+    public static Parser<bool> CharsExcept0(string c) {
         return Chars0(ch => !c.Contains(ch));
     }
 
     /// <summary>
     ///     One or more characters not in list
     /// </summary>
-    public static Parser<string> CharsExcept1(string c, string expected) {
+    public static Parser<bool> CharsExcept1(string c, string expected) {
         return Chars1(ch => !c.Contains(ch), expected);
     }
 

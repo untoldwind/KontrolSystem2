@@ -14,14 +14,14 @@ public static class TO2ParserCommon {
         "as", "sync", "type", "struct", "impl"
     };
 
-    public static readonly Parser<string> PubKeyword = Tag("pub").Then(Spacing1);
+    public static readonly Parser<bool> PubKeyword = Tag("pub").Then(Spacing1);
 
-    public static readonly Parser<string> LetKeyword = Tag("let").Then(Spacing1);
+    public static readonly Parser<bool> LetKeyword = Tag("let").Then(Spacing1);
 
-    public static readonly Parser<string> ConstKeyword = Tag("const").Then(Spacing1);
+    public static readonly Parser<bool> ConstKeyword = Tag("const").Then(Spacing1);
 
     public static readonly Parser<LineComment> LineComment =
-        CharsExcept0("\r\n").Map((comment, start, end) => new LineComment(comment, start, end))
+        Recognize(CharsExcept0("\r\n")).Map((comment, start, end) => new LineComment(comment, start, end))
             .Between(WhiteSpaces0.Then(Tag("//")), PeekLineEnd);
 
     public static readonly Parser<List<LineComment>> LineComments = Delimited0(LineComment, WhiteSpaces0);
@@ -93,7 +93,7 @@ public static class TO2ParserCommon {
     );
 
     public static readonly Parser<string> DescriptionComment =
-        Many0(CharsExcept0("\r\n").Map(s => s.Trim()).Between(WhiteSpaces0.Then(Tag("///")), PeekLineEnd))
+        Many0(Recognize(CharsExcept0("\r\n")).Map(s => s.Trim()).Between(WhiteSpaces0.Then(Tag("///")), PeekLineEnd))
             .Map(lines => string.Join("\n", lines));
 
     private static Result<TO2Type> TypeRefImpl(StringInput input) {

@@ -27,7 +27,7 @@ public static class TO2ParserStringInterpolation {
             IfPreceded(Char(':'), CharsExcept1("\\\"\r\n{}", "align or format")))
         );
 
-    private static Parser<Expression> StringInterpolationContent( Parser<Expression> expression) => Many0(Alt<StringInterpolationPart>(
+    private static Parser<Expression> StringInterpolationContent(Parser<Expression> expression) => Many0(Alt<StringInterpolationPart>(
             Many1(ExtendedEscapedStringChar).Map(chars => new StringInterpolationPart.StringPart(new string(chars.ToArray())) as StringInterpolationPart),
             Seq(expression, AlignOrFormat).Between(Char('{').Then(WhiteSpaces0), WhiteSpaces0.Then(Char('}'))).
                 Map(expr => new StringInterpolationPart.ExpressionPart(expr.Item1, expr.Item2) as StringInterpolationPart)

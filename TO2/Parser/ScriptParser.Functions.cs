@@ -9,11 +9,11 @@ using static TO2ParserCommon;
 using static TO2ParserExpressions;
 
 public static class TO2ParserFunctions {
-    private static readonly Parser<string> FnKeyword = Tag("fn").Then(Spacing1);
+    private static readonly Parser<bool> FnKeyword = Tag("fn").Then(Spacing1);
 
-    private static readonly Parser<string> TestKeyword = Tag("test").Then(Spacing1);
+    private static readonly Parser<bool> TestKeyword = Tag("test").Then(Spacing1);
 
-    private static readonly Parser<string> SyncKeyword = Tag("sync").Then(Spacing1);
+    private static readonly Parser<bool> SyncKeyword = Tag("sync").Then(Spacing1);
 
     private static readonly Parser<bool> SelfKeyword = Tag("self");
 
