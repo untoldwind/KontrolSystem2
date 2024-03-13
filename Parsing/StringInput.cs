@@ -5,60 +5,47 @@ namespace KontrolSystem.Parsing;
 /// <summary>
 ///     Entire input for parsing is available as string.
 /// </summary>
-public readonly struct StringInput : IInput {
-    private readonly string source;
-    private readonly Position position;
+public readonly ref struct StringInput(string source, string sourceName, int position = 0, int line = 1, int column = 1) {
+    public char Current => source[position];
 
-    public StringInput(string source, string sourceName = "<inline>") {
-        this.source = source;
-        position = new Position(sourceName);
-    }
+    public int Available => source.Length - position;
 
-    private StringInput(string source, Position position) {
-        this.source = source;
-        this.position = position;
-    }
-
-    public char Current => source[position.position];
-
-    public int Available => source.Length - position.position;
-
-    public Position Position => position;
+    public Position Position => new (sourceName, position, line, column);
 
     public int FindNext(Predicate<char> predicate) {
-        for (var p = position.position; p < source.Length; p++)
+        for (var p = position; p < source.Length; p++)
             if (predicate(source[p]))
-                return p - position.position;
+                return p - position;
 
         return -1;
     }
 
     public string Take(int count) {
         if (count == 0) return "";
-        if (count + position.position > source.Length) throw new InvalidOperationException("Advance beyond eof");
+        if (count + position > source.Length) throw new InvalidOperationException("Advance beyond eof");
 
-        return source.Substring(position.position, count);
+        return source.Substring(position, count);
     }
 
-    public IInput Advance(int count) {
+    public StringInput Advance(int count) {
         if (count == 0) return this;
-        if (count + position.position > source.Length) throw new InvalidOperationException("Advance beyond eof");
+        if (count + position > source.Length) throw new InvalidOperationException("Advance beyond eof");
 
-        var line = position.line;
-        var column = position.column;
+        var nextLine = line;
+        var nextColumn = column;
 
-        for (var p = position.position; p < position.position + count; p++) {
-            column++;
+        for (var p = position; p < position + count; p++) {
+            nextColumn++;
             if (source[p] == '\n') {
-                line++;
-                column = 1;
+                nextLine++;
+                nextColumn = 1;
             }
         }
 
-        return new StringInput(source, new Position(position.sourceName, position.position + count, line, column));
+        return new StringInput(source, sourceName, position + count, nextLine, nextColumn);
     }
 
     public override string ToString() {
-        return source.Substring(position.position);
+        return source.Substring(position);
     }
 }

@@ -76,8 +76,10 @@ public static partial class Parsers {
     ///     Take the result of parsing, and project it onto a different domain with positions.
     /// </summary>
     public static Parser<U> Map<T, U>(this Parser<T> parser, Func<T, Position, Position, U> convert) {
-        return input =>
-            parser(input).Select(s => Result.Success(s.remaining, convert(s.value, input.Position, s.Position)));
+        return input => {
+            var start = input.Position;
+            return parser(input).Select(s => Result.Success(s.remaining, convert(s.value, start, s.Position)));
+        };
     }
 
     /// <summary>

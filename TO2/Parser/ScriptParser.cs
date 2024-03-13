@@ -96,7 +96,7 @@ public static class TO2ParserCommon {
         Many0(CharsExcept0("\r\n").Map(s => s.Trim()).Between(WhiteSpaces0.Then(Tag("///")), PeekLineEnd))
             .Map(lines => string.Join("\n", lines));
 
-    private static Result<TO2Type> TypeRefImpl(IInput input) {
+    private static Result<TO2Type> TypeRefImpl(StringInput input) {
         return ToplevelTypeRef(input);
     }
 }

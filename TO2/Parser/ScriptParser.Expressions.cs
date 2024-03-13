@@ -299,7 +299,7 @@ public static class TO2ParserExpressions {
         BooleanExpr
     );
 
-    private static Result<Expression> ExpressionImpl(IInput input) {
+    private static Result<Expression> ExpressionImpl(StringInput input) {
         return TopLevelExpression(input);
     }
 }
