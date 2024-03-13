@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <OutputType>Exe</OutputType>
+        <RootNamespace>KontrolSystem.Benchmarks</RootNamespace>
+        <AssemblyName>Benchmarks</AssemblyName>
+        <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+        <BaseOutputPath>../../bin</BaseOutputPath>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="Assembly-CSharp">
+            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\Assembly-CSharp.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine">
+            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\UnityEngine.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.CoreModule">
+            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\TO2\KontrolSystemTO2.csproj"/>
+        <ProjectReference Include="..\..\KSP2Runtime\KSP2Runtime.csproj"/>
+    </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="BenchmarkDotNet" Version="0.13.12" />
+      <PackageReference Include="BenchmarkDotNet.Annotations" Version="0.13.12" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="to2Bench\**\*.*">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+</Project>

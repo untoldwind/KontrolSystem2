@@ -42,7 +42,7 @@ public static partial class Parsers {
             return parser(resultPrefix.Remaining).Map(p => Option.Some(p));
         };
     }
-    
+
     public static Parser<T> Terminated<T, S>(Parser<T> parser, Parser<S> suffix) {
         return input =>
             parser(input).Select(t => suffix(t.Remaining).Map(_ => t.Value));

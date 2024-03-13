@@ -22,11 +22,11 @@ public static class TO2ParserStringInterpolation {
 
     private static readonly Parser<string> AlignOrFormat =
         Recognize(Seq(
-            IfPreceded(Char(','),WhiteSpaces0.Then(Opt(Char('-')).Then(Digits1).Then(WhiteSpaces0))),
+            IfPreceded(Char(','), WhiteSpaces0.Then(Opt(Char('-')).Then(Digits1).Then(WhiteSpaces0))),
             IfPreceded(Char(':'), CharsExcept1("\\\"\r\n{}", "align or format")))
         );
 
-    private static Parser<StringInterpolation> StringInterpolationContent( Parser<Expression> expression) => Many0(Alt<StringInterpolationPart>(
+    private static Parser<StringInterpolation> StringInterpolationContent(Parser<Expression> expression) => Many0(Alt<StringInterpolationPart>(
             Many1(ExtendedEscapedStringChar).Map(chars => new StringInterpolationPart.StringPart(new string(chars.ToArray()))),
             Seq(expression, AlignOrFormat).Between(Char('{').Then(WhiteSpaces0), WhiteSpaces0.Then(Char('}'))).
                 Map(expr => new StringInterpolationPart.ExpressionPart(expr.Item1, expr.Item2))
