@@ -31,14 +31,14 @@ public static partial class Parsers {
         };
     }
 
-    public static Parser<T> Select<T>(params (char, Parser<T>)[] alternatives) {
+    public static Parser<T> Select<T>(params (char, T)[] alternatives) {
         var expected = alternatives.Select(t => $"'{t.Item1}'");
 
         return input => {
             if (input.Available > 0) {
                 var ch = input.Current;
-                foreach (var (prefix, parser) in alternatives) {
-                    if (prefix == ch) return parser(input.Advance(1));
+                foreach (var (prefix, value) in alternatives) {
+                    if (prefix == ch) return Result.Success(input.Advance(1), value);
                 }
             }
 
@@ -46,14 +46,13 @@ public static partial class Parsers {
         };
     }
 
-    public static Parser<T> PeekSelect<T>(params (char, Parser<T>)[] alternatives) {
+    public static Parser<T> Select<T>(params (string, T)[] alternatives) {
         var expected = alternatives.Select(t => $"'{t.Item1}'");
 
         return input => {
             if (input.Available > 0) {
-                var ch = input.Current;
-                foreach (var (prefix, parser) in alternatives) {
-                    if (prefix == ch) return parser(input);
+                foreach (var (prefix, value) in alternatives) {
+                    if(input.Match(prefix)) return Result.Success(input.Advance(prefix.Length), value);
                 }
             }
 

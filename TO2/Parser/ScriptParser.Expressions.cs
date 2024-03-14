@@ -155,9 +155,9 @@ public static class TO2ParserExpressions {
         (target, suffixOp, start, end) => suffixOp.GetExpression(target, start, end)), LineComments);
 
     private static readonly Parser<Operator> UnaryPrefixOp = Select(
-        ('-', Value(Operator.Neg)),
-        ('!', Value(Operator.Not)),
-        ('~', Value(Operator.BitNot))
+        ('-', Operator.Neg),
+        ('!', Operator.Not),
+        ('~', Operator.BitNot)
     );
 
     private static readonly Parser<Expression> UnaryPrefixExpr = Alt(
@@ -174,26 +174,26 @@ public static class TO2ParserExpressions {
         (left, op, right, start, end) => new Binary(left, op, right, start, end));
 
     private static readonly Parser<Operator> MulDivBinaryOp = Select(
-        ('*', Value(Operator.Mul)),
-        ('/', Value(Operator.Div)),
-        ('%', Value(Operator.Mod))
+        ('*', Operator.Mul),
+        ('/', Operator.Div),
+        ('%', Operator.Mod)
     ).Between(WhiteSpaces0, WhiteSpaces0);
 
     private static readonly Parser<Expression> MulDivBinaryExpr = Chain(PowExpr, MulDivBinaryOp,
         (left, op, right, start, end) => new Binary(left, op, right, start, end));
 
     private static readonly Parser<Operator> AddSubBinaryOp = Select(
-        ('+', Value(Operator.Add)),
-        ('-', Value(Operator.Sub))
+        ('+', Operator.Add),
+        ('-', Operator.Sub)
     ).Between(WhiteSpaces0, WhiteSpaces0);
 
     private static readonly Parser<Expression> AddSubBinaryExpr = Chain(MulDivBinaryExpr, AddSubBinaryOp,
         (left, op, right, start, end) => new Binary(left, op, right, start, end));
 
     private static readonly Parser<Operator> BITOp = Select(
-        ('&', Value(Operator.BitAnd)),
-        ('|', Value(Operator.BitOr)),
-        ('^', Value(Operator.BitXor))
+        ('&', Operator.BitAnd),
+        ('|', Operator.BitOr),
+        ('^', Operator.BitXor)
     ).Between(WhiteSpaces0, WhiteSpaces0);
 
     private static readonly Parser<Expression> BITBinaryExpr = Chain(AddSubBinaryExpr, BITOp,
@@ -216,13 +216,13 @@ public static class TO2ParserExpressions {
         Spacing0.Then(Char('=')).Then(Spacing0).Then(BITBinaryExpr)
     ).Map((items, start, end) => new Unapply(items.Item1, items.Item2, items.Item3, start, end) as Expression);
 
-    private static readonly Parser<Operator> CompareOp = Alt(
-        Tag("==").To(Operator.Eq),
-        Tag("!=").To(Operator.NotEq),
-        Tag("<=").To(Operator.Le),
-        Tag(">=").To(Operator.Ge),
-        Char('<').To(Operator.Lt),
-        Char('>').To(Operator.Gt)
+    private static readonly Parser<Operator> CompareOp = Select(
+        ("==", Operator.Eq),
+        ("!=", Operator.NotEq),
+        ("<=", Operator.Le),
+        (">=", Operator.Ge),
+        ("<", Operator.Lt),
+        (">", Operator.Gt)
     ).Between(WhiteSpaces0, WhiteSpaces0);
 
     private static readonly Parser<Expression> CompareExpr = Chain(Alt(UnapplyExpr, RangeCreate), CompareOp,
@@ -249,17 +249,17 @@ public static class TO2ParserExpressions {
         return new IfThen(items.Item1, items.Item2, start, end) as Expression;
     });
 
-    private static readonly Parser<Operator> AssignOp = Alt(
-        Tag("=").To(Operator.Assign),
-        Tag("+=").To(Operator.AddAssign),
-        Tag("-=").To(Operator.SubAssign),
-        Tag("*=").To(Operator.MulAssign),
-        Tag("/=").To(Operator.DivAssign),
-        Tag("%=").To(Operator.ModAssign),
-        Tag("|=").To(Operator.BitOrAssign),
-        Tag("&=").To(Operator.BitAndAssign),
-        Tag("&=").To(Operator.BitXorAssign),
-        Tag("**=").To(Operator.PowAssign)
+    private static readonly Parser<Operator> AssignOp = Select(
+        ("=", Operator.Assign),
+        ("+=", Operator.AddAssign),
+        ("-=", Operator.SubAssign),
+        ("*=", Operator.MulAssign),
+        ("/=", Operator.DivAssign),
+        ("%=", Operator.ModAssign),
+        ("|=", Operator.BitOrAssign),
+        ("&=", Operator.BitAndAssign),
+        ("&=", Operator.BitXorAssign),
+        ("**=", Operator.PowAssign)
     ).Between(WhiteSpaces0, WhiteSpaces0);
 
     private static readonly Parser<IAssignSuffixOperation> AssignSuffixOps = Alt(
