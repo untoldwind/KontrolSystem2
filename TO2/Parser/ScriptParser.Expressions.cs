@@ -154,10 +154,10 @@ public static class TO2ParserExpressions {
         Terminated(SuffixOps, LineComments),
         (target, suffixOp, start, end) => suffixOp.GetExpression(target, start, end)), LineComments);
 
-    private static readonly Parser<Operator> UnaryPrefixOp = Alt(
-        Char('-').To(Operator.Neg),
-        Char('!').To(Operator.Not),
-        Char('~').To(Operator.BitNot)
+    private static readonly Parser<Operator> UnaryPrefixOp = Select(
+        ('-', Value(Operator.Neg)),
+        ('!', Value(Operator.Not)),
+        ('~', Value(Operator.BitNot))
     );
 
     private static readonly Parser<Expression> UnaryPrefixExpr = Alt(
@@ -173,27 +173,27 @@ public static class TO2ParserExpressions {
     private static readonly Parser<Expression> PowExpr = Chain(UnaryPrefixExpr, PowBinaryOp,
         (left, op, right, start, end) => new Binary(left, op, right, start, end));
 
-    private static readonly Parser<Operator> MulDivBinaryOp = Alt(
-        Char('*').To(Operator.Mul),
-        Char('/').To(Operator.Div),
-        Char('%').To(Operator.Mod)
+    private static readonly Parser<Operator> MulDivBinaryOp = Select(
+        ('*', Value(Operator.Mul)),
+        ('/', Value(Operator.Div)),
+        ('%', Value(Operator.Mod))
     ).Between(WhiteSpaces0, WhiteSpaces0);
 
     private static readonly Parser<Expression> MulDivBinaryExpr = Chain(PowExpr, MulDivBinaryOp,
         (left, op, right, start, end) => new Binary(left, op, right, start, end));
 
-    private static readonly Parser<Operator> AddSubBinaryOp = Alt(
-        Char('+').To(Operator.Add),
-        Char('-').To(Operator.Sub)
+    private static readonly Parser<Operator> AddSubBinaryOp = Select(
+        ('+', Value(Operator.Add)),
+        ('-', Value(Operator.Sub))
     ).Between(WhiteSpaces0, WhiteSpaces0);
 
     private static readonly Parser<Expression> AddSubBinaryExpr = Chain(MulDivBinaryExpr, AddSubBinaryOp,
         (left, op, right, start, end) => new Binary(left, op, right, start, end));
 
-    private static readonly Parser<Operator> BITOp = Alt(
-        Char('&').To(Operator.BitAnd),
-        Char('|').To(Operator.BitOr),
-        Char('^').To(Operator.BitXor)
+    private static readonly Parser<Operator> BITOp = Select(
+        ('&', Value(Operator.BitAnd)),
+        ('|', Value(Operator.BitOr)),
+        ('^', Value(Operator.BitXor))
     ).Between(WhiteSpaces0, WhiteSpaces0);
 
     private static readonly Parser<Expression> BITBinaryExpr = Chain(AddSubBinaryExpr, BITOp,
