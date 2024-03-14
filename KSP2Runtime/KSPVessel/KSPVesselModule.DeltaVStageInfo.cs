@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using KontrolSystem.TO2.Binding;
 using KSP.Sim.DeltaV;
+using KSP.Sim.impl;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
@@ -12,6 +13,10 @@ public partial class KSPVesselModule {
         internal DeltaVStageInfoAdapter(VesselAdapter vesselAdapter, DeltaVStageInfo deltaVStageInfo) : base(deltaVStageInfo) {
             this.vesselAdapter = vesselAdapter;
         }
+
+        [KSField]
+        public PartAdapter[] Parts => deltaVStageInfo.Parts.Select(partInfo =>
+            new PartAdapter(vesselAdapter, (PartComponent)partInfo.PartRef)).ToArray();
 
         [KSField]
         public DeltaVEngineInfoAdapter[] Engines => deltaVStageInfo.EnginesInStage

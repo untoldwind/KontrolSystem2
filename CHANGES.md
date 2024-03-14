@@ -3,6 +3,7 @@
 ## 0.5.6.2 ->
 
 * Add `ObjectAssemblyEngineDeltaV.module_engine` field
+* Add `StageDeltaV.parts` and `ObjectAssemblyStageDeltaV.parts` fields
 
 ## 0.5.6.1 -> 0.5.6.2
 
