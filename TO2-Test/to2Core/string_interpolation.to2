@@ -15,5 +15,5 @@ test sync fn test_string_interpolation() -> Unit = {
     
     assert_string("a fixed point    12.3400", $"a fixed point {c,10  :N4}")
 
-    assert_string("a fixed point 12.3      ", $"a fixed point {c,-10:N1}")
+    assert_string("a fixed point 12.3      }", $"a fixed point {c,-10:N1}}}")
 }

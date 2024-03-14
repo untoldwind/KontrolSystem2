@@ -2,8 +2,10 @@ import "../parser/matchers";
 import { module } from "../../src/to2/parser-module";
 import { StringInput } from "../parser/string-input";
 import { ErrorNode, isErrorNode } from "../../src/to2/ast/error-node";
+import { Registry } from "../../src/to2/ast/registry";
 
 describe("TO2 parser module", () => {
+  const registry = new Registry();
   it("should parse a simple module file", () => {
     const source = `
         use { Vessel } from ksp::vessel
@@ -11,7 +13,7 @@ describe("TO2 parser module", () => {
 
         pub fn test_fun() -> Unit = {}
     `;
-    const moduleParser = module("<test>");
+    const moduleParser = module("", "<test>", registry);
     const moduleResult = moduleParser(new StringInput(source));
 
     expect(moduleResult).toBeSuccess();
@@ -27,7 +29,7 @@ describe("TO2 parser module", () => {
 
         pub fn test_fun() -> Unit = {}
     `;
-    const moduleParser = module("<test>");
+    const moduleParser = module("", "<test>", registry);
     const moduleResult = moduleParser(new StringInput(source));
 
     expect(moduleResult).toBeSuccess();
@@ -54,7 +56,7 @@ describe("TO2 parser module", () => {
           CONSOLE.print_line(">>" + a.to_string())
         }
     `;
-    const moduleParser = module("<test>");
+    const moduleParser = module("", "<test>", registry);
     const moduleResult = moduleParser(new StringInput(source));
 
     expect(moduleResult).toBeSuccess();

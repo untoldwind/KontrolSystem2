@@ -81,10 +81,12 @@
     "compile": "tsc -b",
     "watch": "tsc -b -w",
     "format": "prettier --write .",
-    "postinstall": "cd client && npm install && cd ../server && npm install"
+    "postinstall": "cd client && npm install && cd ../server && npm install",
+    "test": "cd server && npm test"
   },
   "devDependencies": {
-    "@types/node": "20.11.25",
+    "@types/jest": "29.5.12",
+    "@types/node": "20.11.27",
     "@vscode/vsce": "2.24.0",
     "prettier": "3.2.5",
     "typescript": "^5.4.2"

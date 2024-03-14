@@ -1,13 +1,20 @@
-import { InputRange, Parser } from "../parser";
+import { InputRange, Parser, ParserFailure, ParserSuccess } from "../parser";
 import { alt } from "../parser/branch";
 import {
   map,
   opt,
   recognize,
   recognizeAs,
+  recover,
   withPosition,
 } from "../parser/combinator";
-import { charsExcept1, digits1, tag, whitespace0 } from "../parser/complete";
+import {
+  NL,
+  charsExcept1,
+  digits1,
+  tag,
+  whitespace0,
+} from "../parser/complete";
 import { many0, many1 } from "../parser/multi";
 import {
   between,
@@ -17,7 +24,11 @@ import {
   terminated,
 } from "../parser/sequence";
 import { Expression } from "./ast";
-import { StringInterpolation } from "./ast/string-interpolation";
+import { ErrorNode } from "./ast/error-node";
+import {
+  StringInterpolation,
+  StringInterpolationPart,
+} from "./ast/string-interpolation";
 import { doubleQuote } from "./parser-literals";
 
 export const stringInterpolationStart = tag('$"');
@@ -29,8 +40,8 @@ export const extendedEscapedStringChar = alt(
   recognizeAs(tag("\\t"), "\t"),
   recognizeAs(tag("\\r"), "\r"),
   recognizeAs(tag("\\n"), "\n"),
-  recognizeAs(tag("\\{"), "{"),
-  recognizeAs(tag("\\}"), "}"),
+  recognizeAs(tag("{{"), "{{"),
+  recognizeAs(tag("}}"), "}}"),
 );
 
 export const alignOrFormat = recognize(
@@ -53,13 +64,21 @@ function stringInterpolationContent(expression: Parser<Expression>) {
           range: new InputRange(start, end),
         }),
       ),
-      between(
+      preceded(
         terminated(tag("{"), whitespace0),
-        map(seq(expression, alignOrFormat), ([expression, alignOrFormat]) => ({
-          expression,
-          alignOrFormat,
-        })),
-        preceded(whitespace0, tag("}")),
+        recover(
+          terminated(
+            map(
+              seq(expression, alignOrFormat),
+              ([expression, alignOrFormat]) => ({
+                expression,
+                alignOrFormat,
+              }),
+            ),
+            preceded(whitespace0, tag("}")),
+          ),
+          recoverStringInterpolationContent,
+        ),
       ),
     ),
     "string char",
@@ -73,7 +92,28 @@ export function stringInterpolation(expression: Parser<Expression>) {
       stringInterpolationContent(expression),
       withPosition(doubleQuote),
     ),
-    ([start, parts, end]) =>
-      new StringInterpolation(parts, start.range, end.range),
+    ([start, parts, end]) => {
+      console.log("Hub", parts);
+      return new StringInterpolation(parts, start.range, end.range);
+    },
   );
+}
+
+function recoverStringInterpolationContent(
+  failure: ParserFailure<StringInterpolationPart>,
+): ParserSuccess<StringInterpolationPart> {
+  const remaining = failure.remaining;
+  const nextNL = remaining.findNext(
+    (ch) => ch === "}".codePointAt(0) || ch == '"'.codePointAt(0) || ch === NL,
+  );
+  let recoverAt = remaining.advance(nextNL >= 0 ? nextNL : remaining.available);
+  if (recoverAt.take(1) === "}") recoverAt = recoverAt.advance(1);
+
+  return new ParserSuccess(recoverAt, {
+    expression: new ErrorNode(
+      failure.expected,
+      remaining.position,
+      recoverAt.position,
+    ),
+  });
 }
