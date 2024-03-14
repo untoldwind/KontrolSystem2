@@ -11,14 +11,9 @@ using static TO2ParserLiterals;
 public static class TO2ParserStringInterpolation {
     private static readonly Parser<bool> StringInterpolationStart = Tag("$\"");
 
-    private static readonly Parser<char> ExtendedEscapedStringChar = Alt(
-        CharExcept("\\\"\r\n{}"),
-        Tag("\\\"").To('"'),
-        Tag("\\t").To('\t'),
-        Tag("\\n").To('\n'),
-        Tag("\\r").To('\r'),
-        Tag("\\{").To('{'),
-        Tag("\\}").To('}')
+    private static readonly Parser<string> ExtendedEscapedStringChar = Alt(
+        Recognize(CharsExcept1("\\\"\r\n{}", "string char")),
+        Select(("\\\\", "\\"), ("\\\"", "\""), ("\\t", "\t"), ("\\n", "\n"), ("\\r", "\r"), ("{{", "{{"), ("}}", "}}"))
     );
 
     private static readonly Parser<string> AlignOrFormat =
@@ -28,7 +23,7 @@ public static class TO2ParserStringInterpolation {
         );
 
     private static Parser<Expression> StringInterpolationContent(Parser<Expression> expression) => Many0(Alt<StringInterpolationPart>(
-            Many1(ExtendedEscapedStringChar).Map(chars => new StringInterpolationPart.StringPart(new string(chars.ToArray())) as StringInterpolationPart),
+            Many1(ExtendedEscapedStringChar).Map(chunks => new StringInterpolationPart.StringPart(string.Join("", chunks)) as StringInterpolationPart),
             Seq(expression, AlignOrFormat).Between(Char('{').Then(WhiteSpaces0), WhiteSpaces0.Then(Char('}'))).
                 Map(expr => new StringInterpolationPart.ExpressionPart(expr.Item1, expr.Item2) as StringInterpolationPart)
         )).Map((parts, start, end) => new StringInterpolation(parts, end, start) as Expression);

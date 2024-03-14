@@ -13,6 +13,7 @@ public static class TO2ParserLiterals {
 
     private static readonly Parser<char> EscapedStringChar = Alt(
         CharExcept("\\\"\r\n"),
+        Tag("\\\\").To('\\'),
         Tag("\\\"").To('"'),
         Tag("\\t").To('\t'),
         Tag("\\n").To('\n'),
