@@ -2,7 +2,7 @@
   "name": "to2-syntax",
   "displayName": "to2-syntax",
   "description": "",
-  "version": "0.0.38",
+  "version": "0.0.39",
   "license": "MIT",
   "engines": {
     "vscode": "^1.76.0"

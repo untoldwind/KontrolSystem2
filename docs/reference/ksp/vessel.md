@@ -370,7 +370,9 @@ value | string |  | Enum value to lookup
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
+engine | [ksp::vessel::ModuleEngine](/reference/ksp/vessel.md#moduleengine) | R/O | Deprecated: Use `.engine` instead 
 engine_module | [ksp::vessel::ModuleEngine](/reference/ksp/vessel.md#moduleengine) | R/O | 
+part | [ksp::vessel::Part](/reference/ksp/vessel.md#part) | R/O | Deprecated: Use `.engine` instead 
 start_burn_stage | int | R/O | Number of the stage when engine is supposed to start 
 
 #### Methods
@@ -1236,7 +1238,8 @@ decoupler | Option&lt;[ksp::vessel::ModuleDecoupler](/reference/ksp/vessel.md#mo
 deployable | Option&lt;[ksp::vessel::ModuleDeployable](/reference/ksp/vessel.md#moduledeployable)> | R/O | 
 docking_node | Option&lt;[ksp::vessel::ModuleDockingNode](/reference/ksp/vessel.md#moduledockingnode)> | R/O | 
 dry_mass | float | R/O | Dry mass of the part 
-engine_module | Option&lt;[ksp::vessel::ModuleEngine](/reference/ksp/vessel.md#moduleengine)> | R/O | 
+engine | Option&lt;[ksp::vessel::ModuleEngine](/reference/ksp/vessel.md#moduleengine)> | R/O | 
+engine_module | Option&lt;[ksp::vessel::ModuleEngine](/reference/ksp/vessel.md#moduleengine)> | R/O | Deprecated: Use `.engine` instead 
 fairing | Option&lt;[ksp::vessel::ModuleFairing](/reference/ksp/vessel.md#modulefairing)> | R/O | 
 generator | Option&lt;[ksp::vessel::ModuleGenerator](/reference/ksp/vessel.md#modulegenerator)> | R/O | 
 global_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | R/O | Get coordinate independent position of the part. 
@@ -1421,6 +1424,7 @@ dry_mass | float | R/O | Dry mass of the stage.
 end_mass | float | R/O | End mass of the stage. 
 engines | [ksp::vessel::EngineDeltaV](/reference/ksp/vessel.md#enginedeltav)[] | R/O | 
 fuel_mass | float | R/O | Mass of the fuel in the stage. 
+parts | [ksp::vessel::Part](/reference/ksp/vessel.md#part)[] | R/O | 
 stage | int | R/O | The stage number. 
 start_mass | float | R/O | Start mass of the stage. 
 

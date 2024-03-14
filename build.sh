@@ -12,3 +12,8 @@ if [[ ! -z "$KSP2_BASE_DIR" ]]
 then
   cp -r dist/* "$KSP2_BASE_DIR"
 fi
+
+echo
+echo "=========================="
+echo "          Success"
+echo "=========================="

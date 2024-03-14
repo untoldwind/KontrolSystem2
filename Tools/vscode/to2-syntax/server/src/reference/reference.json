@@ -11849,6 +11849,24 @@
           "name": "ObjectAssemblyEngineDeltaV",
           "description": "",
           "fields": {
+            "part": {
+              "name": "part",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::oab",
+                "name": "ObjectAssemblyPart"
+              }
+            },
+            "engine": {
+              "name": "engine",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::oab",
+                "name": "ObjectAssemblyEngine"
+              }
+            },
             "start_burn_stage": {
               "name": "start_burn_stage",
               "description": "Number of the stage when engine is supposed to start\n",
@@ -12844,6 +12862,20 @@
           "name": "ObjectAssemblyStageDeltaV",
           "description": "",
           "fields": {
+            "parts": {
+              "name": "parts",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::oab",
+                    "name": "ObjectAssemblyPart"
+                  }
+                ]
+              }
+            },
             "engines": {
               "name": "engines",
               "readOnly": true,
@@ -45058,8 +45090,28 @@
           "name": "EngineDeltaV",
           "description": "",
           "fields": {
+            "part": {
+              "name": "part",
+              "description": "Deprecated: Use `.engine` instead\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "Part"
+              }
+            },
             "engine_module": {
               "name": "engine_module",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "ModuleEngine"
+              }
+            },
+            "engine": {
+              "name": "engine",
+              "description": "Deprecated: Use `.engine` instead\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
@@ -45172,6 +45224,20 @@
           "name": "StageDeltaV",
           "description": "",
           "fields": {
+            "parts": {
+              "name": "parts",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "Part"
+                  }
+                ]
+              }
+            },
             "engines": {
               "name": "engines",
               "readOnly": true,
@@ -47587,6 +47653,21 @@
             },
             "engine_module": {
               "name": "engine_module",
+              "description": "Deprecated: Use `.engine` instead\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ModuleEngine"
+                  }
+                ]
+              }
+            },
+            "engine": {
+              "name": "engine",
               "readOnly": true,
               "type": {
                 "kind": "Option",

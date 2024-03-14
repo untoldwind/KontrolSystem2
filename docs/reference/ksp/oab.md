@@ -217,6 +217,8 @@ machNumber | float | x |
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
+engine | [ksp::oab::ObjectAssemblyEngine](/reference/ksp/oab.md#objectassemblyengine) | R/O | 
+part | [ksp::oab::ObjectAssemblyPart](/reference/ksp/oab.md#objectassemblypart) | R/O | 
 start_burn_stage | int | R/O | Number of the stage when engine is supposed to start 
 
 #### Methods
@@ -438,6 +440,7 @@ dry_mass | float | R/O | Dry mass of the stage.
 end_mass | float | R/O | End mass of the stage. 
 engines | [ksp::oab::ObjectAssemblyEngineDeltaV](/reference/ksp/oab.md#objectassemblyenginedeltav)[] | R/O | 
 fuel_mass | float | R/O | Mass of the fuel in the stage. 
+parts | [ksp::oab::ObjectAssemblyPart](/reference/ksp/oab.md#objectassemblypart)[] | R/O | 
 stage | int | R/O | The stage number. 
 start_mass | float | R/O | Start mass of the stage. 
 
