@@ -2,8 +2,11 @@
 
 ## 0.5.6.2 ->
 
-* Add `ObjectAssemblyEngineDeltaV.module_engine` field
+* Add `ObjectAssemblyEngineDeltaV.engine` and `ObjectAssemblyEngineDeltaV.part` field
 * Add `StageDeltaV.parts` and `ObjectAssemblyStageDeltaV.parts` fields
+* Add `StageDeltaV.parts` and `ObjectAssemblyStageDeltaV.parts` fields`
+* Add additional `ksp::vessel::Part.engine` field to make naming compatible with OAB (and other modules)
+  * `.module_engine` is now supposed to be deprecated
 
 ## 0.5.6.1 -> 0.5.6.2
 

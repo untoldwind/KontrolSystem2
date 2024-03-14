@@ -9,6 +9,9 @@ public partial class KSPOABModule {
     [KSClass("ObjectAssemblyEngineDeltaV")]
     public class ObjectAssemblyEngineDeltaV(DeltaVEngineInfo deltaVEngineInfo) : BaseDeltaVEngineInfoAdapter(deltaVEngineInfo) {
         [KSField]
-        public ObjectAssemblyEngineAdapter EngineModule => new(new ObjectAssemblyPartAdapter((IObjectAssemblyPart)deltaVEngineInfo.Part), deltaVEngineInfo.Engine);
+        public ObjectAssemblyPartAdapter Part => new((IObjectAssemblyPart)deltaVEngineInfo.Part);
+
+        [KSField]
+        public ObjectAssemblyEngineAdapter Engine => new(new ObjectAssemblyPartAdapter((IObjectAssemblyPart)deltaVEngineInfo.Part), deltaVEngineInfo.Engine);
     }
 }

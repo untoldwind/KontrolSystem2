@@ -70,8 +70,14 @@ public partial class KSPVesselModule {
 
         [KSField] public bool IsEngine => part.IsPartEngine(out _);
 
-        [KSField]
+        [KSField(Description = "Deprecated: Use `.engine` instead")]
         public Option<ModuleEngineAdapter> EngineModule =>
+            part.IsPartEngine(out var data)
+                ? Option.Some(new ModuleEngineAdapter(this, data))
+                : Option.None<ModuleEngineAdapter>();
+
+        [KSField]
+        public Option<ModuleEngineAdapter> Engine =>
             part.IsPartEngine(out var data)
                 ? Option.Some(new ModuleEngineAdapter(this, data))
                 : Option.None<ModuleEngineAdapter>();

@@ -14,8 +14,14 @@ public partial class KSPVesselModule {
             this.vesselAdapter = vesselAdapter;
         }
 
+        [KSField(Description = "Deprecated: Use `.engine` instead")]
+        public PartAdapter Part => new(vesselAdapter, (PartComponent)deltaVEngineInfo.Part);
+
         [KSField]
         public ModuleEngineAdapter EngineModule => new(new PartAdapter(vesselAdapter, (PartComponent)deltaVEngineInfo.Part), deltaVEngineInfo.Engine);
+
+        [KSField(Description = "Deprecated: Use `.engine` instead")]
+        public ModuleEngineAdapter Engine => new(new PartAdapter(vesselAdapter, (PartComponent)deltaVEngineInfo.Part), deltaVEngineInfo.Engine);
 
         [KSMethod(Description = "Estimated thrust vector of the engine in a given `situation`")]
         public Vector3d GetThrustVector(DeltaVSituationOptions situation) =>
