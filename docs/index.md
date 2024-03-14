@@ -10,5 +10,6 @@ quickstart/index
 language/index
 interact/index
 reference/index
+benchmarks/index
 contributing/index
 ```
