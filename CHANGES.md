@@ -1,5 +1,9 @@
 # Changes
 
+## 0.5.6.2 ->
+
+* Add `ObjectAssemblyEngineDeltaV.module_engine` field
+
 ## 0.5.6.1 -> 0.5.6.2
 
 * Add `body.atmosphere_pressure_kpa(altitude : float)` method

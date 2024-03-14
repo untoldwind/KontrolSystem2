@@ -7,9 +7,8 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public partial class KSPVesselModule {
     [KSClass("VesselDeltaV")]
-    public class VesselDeltaVAdapter(KSPVesselModule.VesselAdapter vesselAdapter) {
+    public class VesselDeltaVAdapter(VesselAdapter vesselAdapter) {
         private readonly VesselDeltaVComponent deltaV = vesselAdapter.vessel.VesselDeltaV;
-        private readonly VesselAdapter vesselAdapter = vesselAdapter;
 
         [KSField]
         public DeltaVStageInfoAdapter[] Stages => deltaV.StageInfo
