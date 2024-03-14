@@ -7,7 +7,7 @@ namespace KontrolSystem.Parsing;
 /// </summary>
 public readonly ref struct StringInput(ReadOnlySpan<char> source, string sourceName, int position = 0, int line = 1, int column = 1) {
     private readonly ReadOnlySpan<char> source = source;
-    
+
     public char Current => source[0];
 
     public int Available => source.Length;

@@ -12,7 +12,7 @@ public partial class KSPOABModule {
         [KSField]
         public ObjectAssemblyPartAdapter[] Parts => deltaVStageInfo.Parts.Select(partInfo =>
             new ObjectAssemblyPartAdapter((IObjectAssemblyPart)partInfo.PartRef)).ToArray();
-        
+
         [KSField]
         public ObjectAssemblyEngineDeltaV[] Engines => deltaVStageInfo.EnginesInStage
             .Select(e => new ObjectAssemblyEngineDeltaV(e)).ToArray();

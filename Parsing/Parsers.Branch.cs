@@ -30,4 +30,35 @@ public static partial class Parsers {
             return Result.Failure<T>(longest, expected);
         };
     }
+
+    public static Parser<T> Select<T>(params (char, Parser<T>)[] alternatives) {
+        var expected = alternatives.Select(t => $"'{t.Item1}'");
+
+        return input => {
+            if (input.Available > 0) {
+                var ch = input.Current;
+                foreach (var (prefix, parser) in alternatives) {
+                    if (prefix == ch) return parser(input.Advance(1));
+                }
+            }
+
+            return Result.Failure<T>(input, expected);
+        };
+    }
+
+    public static Parser<T> PeekSelect<T>(params (char, Parser<T>)[] alternatives) {
+        var expected = alternatives.Select(t => $"'{t.Item1}'");
+
+        return input => {
+            if (input.Available > 0) {
+                var ch = input.Current;
+                foreach (var (prefix, parser) in alternatives) {
+                    if (prefix == ch) return parser(input);
+                }
+            }
+
+            return Result.Failure<T>(input, expected);
+        };
+    }
+
 }
