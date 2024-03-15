@@ -52,7 +52,7 @@ public static partial class Parsers {
         return input => {
             if (input.Available > 0) {
                 foreach (var (prefix, value) in alternatives) {
-                    if(input.Match(prefix)) return Result.Success(input.Advance(prefix.Length), value);
+                    if (input.Match(prefix)) return Result.Success(input.Advance(prefix.Length), value);
                 }
             }
 

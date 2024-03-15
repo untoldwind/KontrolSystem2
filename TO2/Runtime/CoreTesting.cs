@@ -40,7 +40,7 @@ public class TestRunnerContext : IContext, ITO2Logger {
         timeStopwatch.Start();
     }
 
-    public void FunctionEnter(string name, object[] arguments) {
+    public void FunctionEnter(string name, object[] arguments, string soureName, int line) {
         Interlocked.Increment(ref stackCallCount);
     }
 
@@ -101,7 +101,7 @@ public class BackgroundTestContext : IContext {
     public void ResetTimeout() {
     }
 
-    public void FunctionEnter(string name, object[] arguments) {
+    public void FunctionEnter(string name, object[] arguments, string sourceName, int line) {
     }
 
     public void FunctionLeave() {

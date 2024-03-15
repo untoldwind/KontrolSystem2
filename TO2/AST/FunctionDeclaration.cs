@@ -111,7 +111,7 @@ public class FunctionDeclaration : Node, IModuleItem, IVariableContainer {
             return;
         }
 
-        ILChunks.GenerateFunctionEnter(context, name, parameters);
+        ILChunks.GenerateFunctionEnter(context, name, parameters, Start.sourceName, Start.line);
 
         if (isAsync) EmitCodeAsync(context);
         else EmitCodeSync(context);

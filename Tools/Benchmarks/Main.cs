@@ -4,7 +4,7 @@ namespace KontrolSystem.Benchmarks;
 
 public class MainClass {
     public static void Main(string[] args) {
-                var summary = BenchmarkRunner.Run<LambertBench>();
-//        var summary = BenchmarkRunner.Run<ParserBench>();
+        var summary = BenchmarkRunner.Run<LambertBench>();
+        //        var summary = BenchmarkRunner.Run<ParserBench>();
     }
 }

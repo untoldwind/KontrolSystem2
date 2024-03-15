@@ -14,7 +14,7 @@ public readonly struct Result<T>(bool success, T? value, Error? error) : IAnyRes
     public readonly bool success = success;
     public readonly T? value = value;
     public readonly Error? error = error;
-    
+
     public bool Success => success;
 
     public object? ValueObject => value;

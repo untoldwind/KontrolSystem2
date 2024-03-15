@@ -106,7 +106,7 @@ public class KSPCoreContext : IKSPContext {
     }
 
 
-    public void FunctionEnter(string name, object[] arguments) {
+    public void FunctionEnter(string name, object[] arguments, string sourceName, int line) {
         if (Interlocked.Increment(ref stackCallCount) > MaxCallStack)
             throw new StackOverflowException($"Exceed stack count: {MaxCallStack}");
     }
@@ -303,7 +303,7 @@ public class BackgroundKSPContext : IContext {
         return childContext;
     }
 
-    public void FunctionEnter(string name, object[] arguments) {
+    public void FunctionEnter(string name, object[] arguments, string sourceName, int line) {
         if (Interlocked.Increment(ref stackCallCount) > KSPCoreContext.MaxCallStack)
             throw new StackOverflowException($"Exceed stack count: {KSPCoreContext.MaxCallStack}");
     }
