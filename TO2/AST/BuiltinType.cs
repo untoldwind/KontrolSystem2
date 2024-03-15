@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
 using KontrolSystem.TO2.Runtime;
 
@@ -17,7 +18,9 @@ public abstract partial class BuiltinType : RealizedType {
     public static readonly RealizedType Float = new TO2Float();
     public static readonly RealizedType String = new TO2SString();
     public static readonly RealizedType Range = new RangeType();
-    public static readonly RealizedType Error = new ErrorType();
+
+    public static readonly TO2Type Error =
+        new LookupTypeReference(["core", "error", "Error"], [], new Position(), new Position());
 
     public static readonly RealizedType ArrayBuilder = new BoundType(null, "ArrayBuilder",
         "Helper to create an array of initially unknown size", typeof(ArrayBuilder<>),

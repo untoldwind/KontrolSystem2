@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading;
 using KontrolSystem.KSP.Runtime.KSPConsole;
 using KontrolSystem.KSP.Runtime.KSPGame;
@@ -70,6 +71,7 @@ public class KSPCoreContext : IKSPContext {
     private object? nextYield;
     private int stackCallCount;
     private readonly List<Action> nextUpdateOnce;
+    private readonly Stack<CoreError.StackEntry> callStack;
 
     public KSPCoreContext(ITO2Logger logger, GameInstance gameInstance, KSPConsoleBuffer consoleBuffer,
         TimeSeriesCollection timeSeriesCollection, OptionalAddons optionalAddons) {
@@ -88,6 +90,7 @@ public class KSPCoreContext : IKSPContext {
         timeStopwatch = Stopwatch.StartNew();
         timeoutMillis = 100;
         nextUpdateOnce = new List<Action>();
+        callStack = new Stack<CoreError.StackEntry>();
     }
 
 
@@ -109,11 +112,15 @@ public class KSPCoreContext : IKSPContext {
     public void FunctionEnter(string name, object[] arguments, string sourceName, int line) {
         if (Interlocked.Increment(ref stackCallCount) > MaxCallStack)
             throw new StackOverflowException($"Exceed stack count: {MaxCallStack}");
+        callStack.Push(new CoreError.StackEntry(name, arguments, sourceName, line));
     }
 
     public void FunctionLeave() {
         Interlocked.Decrement(ref stackCallCount);
+        callStack.TryPop(out _);
     }
+
+    public CoreError.StackEntry[] CurrentStack() => callStack.ToArray();
 
     public IContext CloneBackground(CancellationTokenSource token) {
         var childContext = new BackgroundKSPContext(Logger, ConsoleBuffer, token);
@@ -276,12 +283,14 @@ public class BackgroundKSPContext : IContext {
     private readonly KSPConsoleBuffer consoleBuffer;
     private readonly CancellationTokenSource token;
     private int stackCallCount;
+    private readonly Stack<CoreError.StackEntry> callStack;
 
     public BackgroundKSPContext(ITO2Logger logger, KSPConsoleBuffer consoleBuffer, CancellationTokenSource token) {
         this.Logger = logger;
         this.consoleBuffer = consoleBuffer;
         this.token = token;
         childContexts = new List<BackgroundKSPContext>();
+        callStack = new Stack<CoreError.StackEntry>();
     }
 
     public ITO2Logger Logger { get; }
@@ -306,11 +315,15 @@ public class BackgroundKSPContext : IContext {
     public void FunctionEnter(string name, object[] arguments, string sourceName, int line) {
         if (Interlocked.Increment(ref stackCallCount) > KSPCoreContext.MaxCallStack)
             throw new StackOverflowException($"Exceed stack count: {KSPCoreContext.MaxCallStack}");
+        callStack.Push(new CoreError.StackEntry(name, arguments, sourceName, line));
     }
 
     public void FunctionLeave() {
         Interlocked.Decrement(ref stackCallCount);
+        callStack.TryPop(out _);
     }
+
+    public CoreError.StackEntry[] CurrentStack() => callStack.ToArray();
 
     public void Cleanup() {
         if (token.Token.CanBeCanceled) token.Cancel();

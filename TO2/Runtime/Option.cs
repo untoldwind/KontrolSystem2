@@ -30,7 +30,7 @@ public readonly struct Option<T> : IAnyOption {
     }
 
     public Result<T> OkOr(string error) {
-        return defined ? new Result<T>(true, value, default) : new Result<T>(false, default, new Error(error));
+        return defined ? new Result<T>(true, value, default) : new Result<T>(false, default, new CoreError.Error(error));
     }
 
     public T GetValueOrDefault(T defaultValue) {

@@ -16,6 +16,8 @@ public interface IContext {
 
     void FunctionLeave();
 
+    CoreError.StackEntry[] CurrentStack();
+
     IContext CloneBackground(CancellationTokenSource token);
 }
 
@@ -39,6 +41,8 @@ public class EmptyContext : IContext {
 
     public void FunctionLeave() {
     }
+
+    public CoreError.StackEntry[] CurrentStack() => [];
 
     public bool IsBackground { get; }
 

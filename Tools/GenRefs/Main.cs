@@ -34,7 +34,7 @@ namespace KontrolSystem.GenRefs {
 
             foreach (var type in new List<RealizedType> {
                          BuiltinType.Unit, BuiltinType.Bool, BuiltinType.Int,
-                         BuiltinType.Float, BuiltinType.String, BuiltinType.Range, BuiltinType.Error,
+                         BuiltinType.Float, BuiltinType.String, BuiltinType.Range,
                          BuiltinType.ArrayBuilder, BuiltinType.Cell, new OptionType(new GenericParameter("T")),
                          new ResultType(new GenericParameter("R"))
                      }) {
