@@ -1278,7 +1278,7 @@
       "assignableFrom": [
         {
           "kind": "Standard",
-          "module": "",
+          "module": "core::error",
           "name": "Error"
         }
       ]
@@ -1471,35 +1471,6 @@
             ]
           }
         },
-        "to_string": {
-          "isAsync": false,
-          "name": "to_string",
-          "description": "Get string representation of the range",
-          "parameters": [],
-          "returnType": {
-            "kind": "Builtin",
-            "name": "string"
-          }
-        }
-      },
-      "assignableFromAny": false,
-      "assignableFrom": []
-    },
-    "Error": {
-      "name": "Error",
-      "description": "",
-      "fields": {
-        "message": {
-          "name": "message",
-          "description": "The length of the range",
-          "readOnly": true,
-          "type": {
-            "kind": "Builtin",
-            "name": "int"
-          }
-        }
-      },
-      "methods": {
         "to_string": {
           "isAsync": false,
           "name": "to_string",
@@ -1860,11 +1831,6 @@
         {
           "kind": "Standard",
           "module": "",
-          "name": "Error"
-        },
-        {
-          "kind": "Standard",
-          "module": "",
           "name": "ArrayBuilder",
           "parameters": [
             {
@@ -1903,6 +1869,16 @@
               "name": "T"
             }
           ]
+        },
+        {
+          "kind": "Standard",
+          "module": "core::error",
+          "name": "Error"
+        },
+        {
+          "kind": "Standard",
+          "module": "core::error",
+          "name": "StackEntry"
         },
         {
           "kind": "Standard",
@@ -2821,7 +2797,7 @@
           "readOnly": true,
           "type": {
             "kind": "Standard",
-            "module": "",
+            "module": "core::error",
             "name": "Error"
           }
         }
@@ -2872,11 +2848,6 @@
         {
           "kind": "Standard",
           "module": "",
-          "name": "Error"
-        },
-        {
-          "kind": "Standard",
-          "module": "",
           "name": "ArrayBuilder",
           "parameters": [
             {
@@ -2915,6 +2886,16 @@
               "name": "T"
             }
           ]
+        },
+        {
+          "kind": "Standard",
+          "module": "core::error",
+          "name": "Error"
+        },
+        {
+          "kind": "Standard",
+          "module": "core::error",
+          "name": "StackEntry"
         },
         {
           "kind": "Standard",
@@ -3913,6 +3894,88 @@
           }
         }
       }
+    },
+    "core::error": {
+      "name": "core::error",
+      "description": "Error reporting and error handling.\n",
+      "types": {
+        "Error": {
+          "name": "Error",
+          "description": "Error information of a failed Result.\n",
+          "fields": {
+            "message": {
+              "name": "message",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            }
+          },
+          "methods": {
+            "to_string": {
+              "isAsync": false,
+              "name": "to_string",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "StackEntry": {
+          "name": "StackEntry",
+          "description": "Stacktrace entry.\n",
+          "fields": {
+            "function_name": {
+              "name": "function_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            },
+            "arguments": {
+              "name": "arguments",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "string"
+                  }
+                ]
+              }
+            },
+            "source_name": {
+              "name": "source_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            },
+            "line": {
+              "name": "line",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "int"
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        }
+      },
+      "typeAliases": {},
+      "constants": {},
+      "functions": {}
     },
     "core::logging": {
       "name": "core::logging",
@@ -13409,11 +13472,6 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "Error"
-            },
-            {
-              "kind": "Standard",
-              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -13461,6 +13519,16 @@
                   "name": "T"
                 }
               ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "StackEntry"
             },
             {
               "kind": "Standard",
@@ -16156,11 +16224,6 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "Error"
-            },
-            {
-              "kind": "Standard",
-              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -16208,6 +16271,16 @@
                   "name": "T"
                 }
               ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "StackEntry"
             },
             {
               "kind": "Standard",
@@ -17683,11 +17756,6 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "Error"
-            },
-            {
-              "kind": "Standard",
-              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -17735,6 +17803,16 @@
                   "name": "T"
                 }
               ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "StackEntry"
             },
             {
               "kind": "Standard",
@@ -18848,11 +18926,6 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "Error"
-            },
-            {
-              "kind": "Standard",
-              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -18900,6 +18973,16 @@
                   "name": "T"
                 }
               ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "StackEntry"
             },
             {
               "kind": "Standard",
@@ -19953,11 +20036,6 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "Error"
-            },
-            {
-              "kind": "Standard",
-              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -20005,6 +20083,16 @@
                   "name": "T"
                 }
               ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "StackEntry"
             },
             {
               "kind": "Standard",
@@ -21018,11 +21106,6 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "Error"
-            },
-            {
-              "kind": "Standard",
-              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -21070,6 +21153,16 @@
                   "name": "T"
                 }
               ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "StackEntry"
             },
             {
               "kind": "Standard",
@@ -23148,11 +23241,6 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "Error"
-            },
-            {
-              "kind": "Standard",
-              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -23200,6 +23288,16 @@
                   "name": "T"
                 }
               ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "StackEntry"
             },
             {
               "kind": "Standard",
@@ -28282,11 +28380,6 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "Error"
-            },
-            {
-              "kind": "Standard",
-              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -28334,6 +28427,16 @@
                   "name": "T"
                 }
               ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "StackEntry"
             },
             {
               "kind": "Standard",
@@ -29357,11 +29460,6 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "Error"
-            },
-            {
-              "kind": "Standard",
-              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -29409,6 +29507,16 @@
                   "name": "T"
                 }
               ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "StackEntry"
             },
             {
               "kind": "Standard",
@@ -30452,11 +30560,6 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "Error"
-            },
-            {
-              "kind": "Standard",
-              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -30504,6 +30607,16 @@
                   "name": "T"
                 }
               ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "StackEntry"
             },
             {
               "kind": "Standard",
@@ -31527,11 +31640,6 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "Error"
-            },
-            {
-              "kind": "Standard",
-              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -31579,6 +31687,16 @@
                   "name": "T"
                 }
               ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "StackEntry"
             },
             {
               "kind": "Standard",
@@ -32612,11 +32730,6 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "Error"
-            },
-            {
-              "kind": "Standard",
-              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -32664,6 +32777,16 @@
                   "name": "T"
                 }
               ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "StackEntry"
             },
             {
               "kind": "Standard",
@@ -33787,11 +33910,6 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "Error"
-            },
-            {
-              "kind": "Standard",
-              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -33839,6 +33957,16 @@
                   "name": "T"
                 }
               ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "StackEntry"
             },
             {
               "kind": "Standard",
@@ -34912,11 +35040,6 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "Error"
-            },
-            {
-              "kind": "Standard",
-              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -34964,6 +35087,16 @@
                   "name": "T"
                 }
               ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "StackEntry"
             },
             {
               "kind": "Standard",
@@ -35997,11 +36130,6 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "Error"
-            },
-            {
-              "kind": "Standard",
-              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -36049,6 +36177,16 @@
                   "name": "T"
                 }
               ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "StackEntry"
             },
             {
               "kind": "Standard",
@@ -37102,11 +37240,6 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "Error"
-            },
-            {
-              "kind": "Standard",
-              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -37154,6 +37287,16 @@
                   "name": "T"
                 }
               ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "StackEntry"
             },
             {
               "kind": "Standard",
@@ -38217,11 +38360,6 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "Error"
-            },
-            {
-              "kind": "Standard",
-              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -38269,6 +38407,16 @@
                   "name": "T"
                 }
               ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "StackEntry"
             },
             {
               "kind": "Standard",
@@ -39312,11 +39460,6 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "Error"
-            },
-            {
-              "kind": "Standard",
-              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -39364,6 +39507,16 @@
                   "name": "T"
                 }
               ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "StackEntry"
             },
             {
               "kind": "Standard",
@@ -40567,11 +40720,6 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "Error"
-            },
-            {
-              "kind": "Standard",
-              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -40619,6 +40767,16 @@
                   "name": "T"
                 }
               ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "StackEntry"
             },
             {
               "kind": "Standard",
@@ -41642,11 +41800,6 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "Error"
-            },
-            {
-              "kind": "Standard",
-              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -41694,6 +41847,16 @@
                   "name": "T"
                 }
               ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "StackEntry"
             },
             {
               "kind": "Standard",
@@ -42717,11 +42880,6 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "Error"
-            },
-            {
-              "kind": "Standard",
-              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -42769,6 +42927,16 @@
                   "name": "T"
                 }
               ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "StackEntry"
             },
             {
               "kind": "Standard",
@@ -43802,11 +43970,6 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "Error"
-            },
-            {
-              "kind": "Standard",
-              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -43854,6 +44017,16 @@
                   "name": "T"
                 }
               ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "StackEntry"
             },
             {
               "kind": "Standard",

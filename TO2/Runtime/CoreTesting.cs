@@ -11,6 +11,7 @@ public class TestRunnerContext : IContext, ITO2Logger {
     private readonly ConcurrentQueue<string> messages = new();
     private readonly Stopwatch timeStopwatch = Stopwatch.StartNew();
     private readonly long timeoutMillis = 100;
+    private readonly Stack<CoreError.StackEntry> callStack = new();
 
     protected int assertionsCount;
     private int stackCallCount;
@@ -40,13 +41,17 @@ public class TestRunnerContext : IContext, ITO2Logger {
         timeStopwatch.Start();
     }
 
-    public void FunctionEnter(string name, object[] arguments, string soureName, int line) {
+    public void FunctionEnter(string name, object[] arguments, string sourceName, int line) {
         Interlocked.Increment(ref stackCallCount);
+        callStack.Push(new CoreError.StackEntry(name, arguments, sourceName, line));
     }
 
     public void FunctionLeave() {
         Interlocked.Decrement(ref stackCallCount);
+        callStack.TryPop(out _);
     }
+
+    public CoreError.StackEntry[] CurrentStack() => callStack.ToArray();
 
     public IContext CloneBackground(CancellationTokenSource token) {
         return new BackgroundTestContext(this, token);
@@ -84,6 +89,7 @@ public class TestRunnerContext : IContext, ITO2Logger {
 
 public class BackgroundTestContext : IContext {
     private readonly CancellationTokenSource token;
+    private readonly Stack<CoreError.StackEntry> callStack = new();
 
     public BackgroundTestContext(ITO2Logger logger, CancellationTokenSource token) {
         Logger = logger;
@@ -102,10 +108,14 @@ public class BackgroundTestContext : IContext {
     }
 
     public void FunctionEnter(string name, object[] arguments, string sourceName, int line) {
+        callStack.Push(new CoreError.StackEntry(name, arguments, sourceName, line));
     }
 
     public void FunctionLeave() {
+        callStack.TryPop(out _);
     }
+
+    public CoreError.StackEntry[] CurrentStack() => callStack.ToArray();
 
     public IContext CloneBackground(CancellationTokenSource newToken) {
         return new BackgroundTestContext(Logger, newToken);

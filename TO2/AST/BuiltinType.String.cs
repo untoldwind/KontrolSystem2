@@ -165,11 +165,11 @@ public abstract partial class BuiltinType {
         }
 
         public override bool IsAssignableFrom(ModuleContext context, TO2Type otherType) {
-            return otherType == String || otherType == Error;
+            return otherType == String || otherType.GeneratedType(context) == typeof(CoreError.Error);
         }
 
         public override IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) {
-            return otherType == Error ? errorToStringAssign : DefaultAssignEmitter.Instance;
+            return otherType.GeneratedType(context) == typeof(CoreError.Error) ? errorToStringAssign : DefaultAssignEmitter.Instance;
         }
 
         public override IREPLValue REPLCast(object? value) {
@@ -181,13 +181,13 @@ public abstract partial class BuiltinType {
         public void EmitAssign(IBlockContext context, IBlockVariable variable, Expression expression,
             bool dropResult) {
             expression.EmitCode(context, false);
-            context.IL.Emit(OpCodes.Ldfld, typeof(Error).GetField("message"));
+            context.IL.Emit(OpCodes.Ldfld, typeof(CoreError.Error).GetField("message"));
             if (!dropResult) context.IL.Emit(OpCodes.Dup);
             variable.EmitStore(context);
         }
 
         public void EmitConvert(IBlockContext context) {
-            context.IL.Emit(OpCodes.Ldfld, typeof(Error).GetField("message"));
+            context.IL.Emit(OpCodes.Ldfld, typeof(CoreError.Error).GetField("message"));
         }
 
         public IREPLValue EvalConvert(Node node, IREPLValue value) {

@@ -240,7 +240,7 @@ export const BUILTIN_FLOAT = new ReferencedType(REFERENCE.builtin["float"]);
 export const BUILTIN_STRING = new ReferencedType(REFERENCE.builtin["string"]);
 export const BUILTIN_RANGE = new ReferencedType(REFERENCE.builtin["Range"]);
 export const BUILTIN_CELL = new ReferencedType(REFERENCE.builtin["Cell"]);
-export const BUILTIN_ERROR = new ReferencedType(REFERENCE.builtin["Error"]);
+export const BUILTIN_ERROR = new ReferencedType(REFERENCE.modules["core::error"].types["Error"]);
 export const BUILTIN_ARRAYBUILDER = new ReferencedType(
   REFERENCE.builtin["ArrayBuilder"],
 );

@@ -137,7 +137,7 @@ internal class ResultFieldAccess : IFieldAccessFactory {
             return new BoundFieldAccessEmitter(resultType.successType.UnderlyingType(context), generateType,
                 new List<FieldInfo> { generateType.GetField("value") });
         case ResultField.Error:
-            return new BoundFieldAccessEmitter(BuiltinType.Error, generateType,
+            return new BoundFieldAccessEmitter(BuiltinType.Error.UnderlyingType(context), generateType,
                 new List<FieldInfo> { generateType.GetField("error") });
         default: throw new InvalidOperationException($"Unknown option field: {field}");
         }

@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Generator;
 using KontrolSystem.TO2.Parser;
 using KontrolSystem.TO2.Runtime;
-using KontrolSystem.TO2.Runtime.KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2;
 
@@ -26,6 +24,7 @@ public class KontrolRegistry {
     public static KontrolRegistry CreateCore() {
         var registry = new KontrolRegistry();
 
+        registry.RegisterModule(BindingGenerator.BindModule(typeof(CoreError)));
         registry.RegisterModule(BindingGenerator.BindModule(typeof(CoreStr)));
         registry.RegisterModule(BindingGenerator.BindModule(typeof(CoreLogging)));
         registry.RegisterModule(BindingGenerator.BindModule(typeof(CoreTesting)));
