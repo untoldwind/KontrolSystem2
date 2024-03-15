@@ -14,7 +14,7 @@ public class ErrorType : RealizedType {
                 false, typeof(Error), typeof(Error).GetMethod("ToString"))
         }
     };
-    
+
     public override Dictionary<string, IFieldAccessFactory> DeclaredFields { get; } = new() {
         {
             "message",

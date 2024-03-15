@@ -10,7 +10,7 @@ public class ILChunks {
         context.IL.EmitCall(OpCodes.Call, typeof(ContextHolder).GetMethod("CheckTimeout")!, 0);
     }
 
-    public static void GenerateFunctionEnter(IBlockContext context, string name, List<FunctionParameter> parameters) {
+    public static void GenerateFunctionEnter(IBlockContext context, string name, List<FunctionParameter> parameters, string sourceName, int line) {
         context.IL.Emit(OpCodes.Ldstr, context.ModuleContext.moduleName + "::" + name);
         context.IL.Emit(OpCodes.Ldc_I4, parameters.Count);
         context.IL.Emit(OpCodes.Newarr, typeof(object));
@@ -22,8 +22,10 @@ public class ILChunks {
             if (type.IsValueType) context.IL.Emit(OpCodes.Box, type);
             context.IL.Emit(OpCodes.Stelem, typeof(object));
         }
+        context.IL.Emit(OpCodes.Ldstr, sourceName);
+        context.IL.Emit(OpCodes.Ldc_I4, line);
 
-        context.IL.EmitCall(OpCodes.Call, typeof(ContextHolder).GetMethod("FunctionEnter")!, 2);
+        context.IL.EmitCall(OpCodes.Call, typeof(ContextHolder).GetMethod("FunctionEnter")!, 4);
     }
 
     public static void GenerateFunctionLeave(IBlockContext context) {

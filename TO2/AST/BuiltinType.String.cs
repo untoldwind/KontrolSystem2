@@ -176,7 +176,7 @@ public abstract partial class BuiltinType {
             return new REPLString((string)value!);
         }
     }
-    
+
     private class ErrorToStringAssign : IAssignEmitter {
         public void EmitAssign(IBlockContext context, IBlockVariable variable, Expression expression,
             bool dropResult) {

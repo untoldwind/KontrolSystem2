@@ -84,7 +84,7 @@ public class MethodDeclaration : Node, IVariableContainer {
             new List<FunctionParameter> { new("self", structType!, "Reference to self") };
         effectiveParameters.AddRange(parameters);
 
-        ILChunks.GenerateFunctionEnter(syncBlockContext!, structType!.Name + "." + name, effectiveParameters);
+        ILChunks.GenerateFunctionEnter(syncBlockContext!, structType!.Name + "." + name, effectiveParameters, Start.sourceName, Start.line);
 
         if (isAsync) {
             asyncClass ??= AsyncClass.Create(syncBlockContext!, structType.Name.ToUpper() + "_" + name, declaredReturn,

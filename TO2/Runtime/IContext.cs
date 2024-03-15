@@ -12,7 +12,7 @@ public interface IContext {
 
     void ResetTimeout();
 
-    void FunctionEnter(string name, object[] arguments);
+    void FunctionEnter(string name, object[] arguments, string sourceName, int line);
 
     void FunctionLeave();
 
@@ -34,7 +34,7 @@ public class EmptyContext : IContext {
     public void ResetTimeout() {
     }
 
-    public void FunctionEnter(string name, object[] arguments) {
+    public void FunctionEnter(string name, object[] arguments, string sourceName, int line) {
     }
 
     public void FunctionLeave() {
@@ -56,9 +56,9 @@ public static class ContextHolder {
         else throw new ArgumentException("Running out of context");
     }
 
-    public static void FunctionEnter(string name, object[] arguments) {
+    public static void FunctionEnter(string name, object[] arguments, string sourceName, int line) {
         var context = CurrentContext.Value;
-        if (context != null) context.FunctionEnter(name, arguments);
+        if (context != null) context.FunctionEnter(name, arguments, sourceName, line);
         else throw new ArgumentException("Running out of context");
     }
 

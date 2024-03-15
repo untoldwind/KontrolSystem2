@@ -21,7 +21,7 @@ public static class BuiltinFunctions {
     private static readonly IKontrolFunction Err = new CompiledKontrolFunction("Err",
         "Wrap an error message as failed result", false,
         [new("error", BuiltinType.String, "Error message")],
-        new ResultType(new GenericParameter("T")), typeof(Result).GetMethod("Err", new []{ typeof(string)}));
+        new ResultType(new GenericParameter("T")), typeof(Result).GetMethod("Err", new[] { typeof(string) }));
 
     private static readonly IKontrolFunction Cell = new CompiledKontrolFunction("Cell", "Wrap a value as cell",
         false, [new("value", new GenericParameter("T"), "Initial value of the cell")],
