@@ -17,6 +17,7 @@ public abstract partial class BuiltinType : RealizedType {
     public static readonly RealizedType Float = new TO2Float();
     public static readonly RealizedType String = new TO2SString();
     public static readonly RealizedType Range = new RangeType();
+    public static readonly RealizedType Error = new ErrorType();
 
     public static readonly RealizedType ArrayBuilder = new BoundType(null, "ArrayBuilder",
         "Helper to create an array of initially unknown size", typeof(ArrayBuilder<>),
@@ -90,7 +91,9 @@ public abstract partial class BuiltinType : RealizedType {
         case "string" when typeArguments.Count == 0: return String;
         case "Range" when typeArguments.Count == 0: return Range;
         case "Option" when typeArguments.Count == 1: return new OptionType(typeArguments[0]);
-        case "Result" when typeArguments.Count == 2: return new ResultType(typeArguments[0], typeArguments[1]);
+        case "Result" when typeArguments.Count == 1: return new ResultType(typeArguments[0]);
+        // Deprecated Result type
+        case "Result" when typeArguments.Count == 2: return new ResultType(typeArguments[0]);
         default: return null;
         }
     }

@@ -553,7 +553,7 @@ trajectory | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit)[] | R/O | Get th
 maneuver.add ( ut : float,
                radialOut : float,
                normal : float,
-               prograde : float ) -> Result<ksp::vessel::ManeuverNode, string>
+               prograde : float ) -> Result<ksp::vessel::ManeuverNode>
 ```
 
 
@@ -571,7 +571,7 @@ prograde | float |  |
 
 ```rust
 maneuver.add_burn_vector ( ut : float,
-                           burnVector : ksp::math::Vec3 ) -> Result<ksp::vessel::ManeuverNode, string>
+                           burnVector : ksp::math::Vec3 ) -> Result<ksp::vessel::ManeuverNode>
 ```
 
 Add a maneuver node at a given time `ut` with a given `burnVector`.
@@ -589,7 +589,7 @@ burnVector | ksp::math::Vec3 |  |
 ##### next_node
 
 ```rust
-maneuver.next_node ( ) -> Result<ksp::vessel::ManeuverNode, string>
+maneuver.next_node ( ) -> Result<ksp::vessel::ManeuverNode>
 ```
 
 
@@ -2046,7 +2046,7 @@ VesselSituation | ksp::vessel::VesselSituationConstants | Vessel situation
 ### active_vessel
 
 ```rust
-pub sync fn active_vessel ( ) -> Result<ksp::vessel::Vessel, string>
+pub sync fn active_vessel ( ) -> Result<ksp::vessel::Vessel>
 ```
 
 Try to get the currently active vessel. Will result in an error if there is none.

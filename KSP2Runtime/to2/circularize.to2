@@ -4,7 +4,7 @@ use { circularize_orbit } from std::maneuvers
 use { estimate_burn_time } from std::vac
 use { remove_all_nodes } from std::utils
 
-pub fn main_flight(vessel: Vessel) -> Result<Unit, string> = {
+pub fn main_flight(vessel: Vessel) -> Result<Unit> = {
     CONSOLE.clear()
 
     let (delta_v, UT) = circularize_orbit(vessel.orbit)?

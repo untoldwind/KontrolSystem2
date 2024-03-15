@@ -29,8 +29,8 @@ public readonly struct Option<T> : IAnyOption {
         return defined ? mapper(value) : new Option<U>();
     }
 
-    public Result<T, E> OkOr<E>(E error) {
-        return defined ? new Result<T, E>(true, value, default) : new Result<T, E>(false, default, error);
+    public Result<T> OkOr(string error) {
+        return defined ? new Result<T>(true, value, default) : new Result<T>(false, default, new Error(error));
     }
 
     public T GetValueOrDefault(T defaultValue) {

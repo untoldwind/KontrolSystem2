@@ -7,7 +7,7 @@ use { Orbit } from ksp::orbit
 use { exec_next_node } from std::vac
 use { estimate_burn_time } from std::vac
 
-pub fn rendezvous_with(vessel: Vessel, target: Targetable) -> Result<Unit, string> = {
+pub fn rendezvous_with(vessel: Vessel, target: Targetable) -> Result<Unit> = {
     intercept_target(vessel, target)?
     
     move_to_target(vessel, target)?
@@ -15,7 +15,7 @@ pub fn rendezvous_with(vessel: Vessel, target: Targetable) -> Result<Unit, strin
     // Note depending on the situation there might be some additional maneuvers necessary
 }
 
-pub fn intercept_target(vessel: Vessel, target: Targetable) -> Result<Unit, string> = {
+pub fn intercept_target(vessel: Vessel, target: Targetable) -> Result<Unit> = {
     CONSOLE.print_line("============== intercept target ================")
     
     const (delta_v, UT) = bi_impulsive_transfer(vessel.orbit, target.orbit, current_time() + 60)?
@@ -28,7 +28,7 @@ pub fn intercept_target(vessel: Vessel, target: Targetable) -> Result<Unit, stri
     exec_next_node(vessel)?
 }
 
-pub fn move_to_target(vessel: Vessel, target: Targetable) -> Result<Unit, string> = {
+pub fn move_to_target(vessel: Vessel, target: Targetable) -> Result<Unit> = {
     CONSOLE.print_line("======== match velocities at closest approach ========")
     
     const (delta_v, UT) = match_velocities(vessel.orbit, target.orbit)

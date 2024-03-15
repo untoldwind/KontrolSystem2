@@ -531,7 +531,7 @@ required_resources | [ksp::resource::ResourceSetting](/reference/ksp/resource.md
 ### active_object_assembly_builder
 
 ```rust
-pub sync fn active_object_assembly_builder ( ) -> Result<ksp::oab::ObjectAssemblyBuilder, string>
+pub sync fn active_object_assembly_builder ( ) -> Result<ksp::oab::ObjectAssemblyBuilder>
 ```
 
 Try to get the currently active vessel. Will result in an error if there is none.

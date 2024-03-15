@@ -3,10 +3,10 @@ use { Vec2, vec2 } from ksp::math
 
 const TINY : float = 1e-20
 
-pub sync fn amoeba_optimize_perturbation(func : fn(float, float) -> float, guess : Vec2, perturbation : Vec2, tolerance : float, max_iters : int) -> Result<(x : float, y : float, iters : int), string> = 
+pub sync fn amoeba_optimize_perturbation(func : fn(float, float) -> float, guess : Vec2, perturbation : Vec2, tolerance : float, max_iters : int) -> Result<(x : float, y : float, iters : int)> = 
     amoeba_optimize(func, [guess, guess + vec2(perturbation.x, 0), guess + vec2(0, perturbation.y)], tolerance, max_iters)
 
-pub sync fn amoeba_optimize(func : fn(float, float) -> float, start_points : Vec2[], tolerance : float, max_iters : int) -> Result<(x : float, y : float, iters : int), string> = {
+pub sync fn amoeba_optimize(func : fn(float, float) -> float, start_points : Vec2[], tolerance : float, max_iters : int) -> Result<(x : float, y : float, iters : int)> = {
     let points = start_points
     const n_points = points.length
     let iters = 0

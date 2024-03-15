@@ -890,7 +890,7 @@ PatchTransitionType | ksp::orbit::PatchTransitionTypeConstants | Transition type
 ### find_body
 
 ```rust
-pub sync fn find_body ( name : string ) -> Result<ksp::orbit::Body, string>
+pub sync fn find_body ( name : string ) -> Result<ksp::orbit::Body>
 ```
 
 Find a body by name.

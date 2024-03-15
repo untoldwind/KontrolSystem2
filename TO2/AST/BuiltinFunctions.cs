@@ -16,12 +16,12 @@ public static class BuiltinFunctions {
     private static readonly IKontrolFunction Ok = new CompiledKontrolFunction("Ok",
         "Wrap a value as successful result", false,
         [new("value", new GenericParameter("T"), "Successful value")],
-        new ResultType(new GenericParameter("T"), new GenericParameter("E")), typeof(Result).GetMethod("Ok"));
+        new ResultType(new GenericParameter("T")), typeof(Result).GetMethod("Ok"));
 
     private static readonly IKontrolFunction Err = new CompiledKontrolFunction("Err",
         "Wrap an error message as failed result", false,
-        [new("error", new GenericParameter("E"), "Error message")],
-        new ResultType(new GenericParameter("T"), new GenericParameter("E")), typeof(Result).GetMethod("Err"));
+        [new("error", BuiltinType.String, "Error message")],
+        new ResultType(new GenericParameter("T")), typeof(Result).GetMethod("Err", new []{ typeof(string)}));
 
     private static readonly IKontrolFunction Cell = new CompiledKontrolFunction("Cell", "Wrap a value as cell",
         false, [new("value", new GenericParameter("T"), "Initial value of the cell")],

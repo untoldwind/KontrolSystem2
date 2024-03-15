@@ -12,7 +12,7 @@ pub sync fn brent_optimize ( func : sync fn(float) -> float,
                              start_a : float,
                              start_b : float,
                              tolerance : float,
-                             max_iterations : int ) -> Result<(fx : float, x : float), string>
+                             max_iterations : int ) -> Result<(fx : float, x : float)>
 ```
 
 

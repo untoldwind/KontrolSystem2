@@ -9,7 +9,7 @@
 
 ```rust
 pub sync fn choose_docking_nodes ( vessel : ksp::vessel::Vessel,
-                                   target : ksp::vessel::Targetable ) -> Result<(target_port : ksp::vessel::ModuleDockingNode, vessel_port : ksp::vessel::ModuleDockingNode), string>
+                                   target : ksp::vessel::Targetable ) -> Result<(target_port : ksp::vessel::ModuleDockingNode, vessel_port : ksp::vessel::ModuleDockingNode)>
 ```
 
 
@@ -25,7 +25,7 @@ target | ksp::vessel::Targetable |  |
 
 ```rust
 pub fn dock_approach ( vessel : ksp::vessel::Vessel,
-                       target_port : ksp::vessel::ModuleDockingNode ) -> Result<Unit, string>
+                       target_port : ksp::vessel::ModuleDockingNode ) -> Result<Unit>
 ```
 
 
@@ -41,7 +41,7 @@ target_port | ksp::vessel::ModuleDockingNode |  |
 
 ```rust
 pub fn dock_move_correct_side ( vessel : ksp::vessel::Vessel,
-                                target_port : ksp::vessel::ModuleDockingNode ) -> Result<Unit, string>
+                                target_port : ksp::vessel::ModuleDockingNode ) -> Result<Unit>
 ```
 
 
@@ -57,7 +57,7 @@ target_port | ksp::vessel::ModuleDockingNode |  |
 
 ```rust
 pub fn dock_vessel ( vessel : ksp::vessel::Vessel,
-                     target : ksp::vessel::Targetable ) -> Result<Unit, string>
+                     target : ksp::vessel::Targetable ) -> Result<Unit>
 ```
 
 

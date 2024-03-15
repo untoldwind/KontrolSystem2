@@ -12,7 +12,7 @@ pub fn atmo_launch ( vessel : ksp::vessel::Vessel,
                      target_apoapsis : float,
                      heading : float,
                      low_turn : float,
-                     high_turn : float ) -> Result<Unit, string>
+                     high_turn : float ) -> Result<Unit>
 ```
 
 Automatically launch a rocket from an atmosphere to a circular orbit.

@@ -1,7 +1,7 @@
 use { Vessel } from ksp::vessel
 use { exec_next_node } from std::vac
 
-pub fn main_flight(vessel: Vessel) -> Result<Unit, string> = {
+pub fn main_flight(vessel: Vessel) -> Result<Unit> = {
     exec_next_node(vessel)?
     
 }

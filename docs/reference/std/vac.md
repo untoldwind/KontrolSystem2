@@ -28,7 +28,7 @@ throttle_limit | float |  |
 ### exec_next_node
 
 ```rust
-pub fn exec_next_node ( vessel : ksp::vessel::Vessel ) -> Result<Unit, string>
+pub fn exec_next_node ( vessel : ksp::vessel::Vessel ) -> Result<Unit>
 ```
 
 Execute the next planed maneuver node.

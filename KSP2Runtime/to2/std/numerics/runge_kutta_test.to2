@@ -12,7 +12,7 @@ sync fn freefall(t : float, position : Vec3, velocity : Vec3) -> Vec3 = {
     (-mu / r2) * position.normalized
 }
 
-test sync fn test_rk23() -> Result<Unit, string> = {
+test sync fn test_rk23() -> Result<Unit> = {
     const orbit = rk23(freefall, fn(t, position, velocity) -> t >= 10000, 0, vec3(700000, 0, 0), vec3(0, 2400, 0), 0.1, 1.0)
 
     assert_int(10001, orbit.length)

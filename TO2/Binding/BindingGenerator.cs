@@ -196,15 +196,12 @@ public static class BindingGenerator {
                     return new OptionType(innerType);
                 }
 
-                if (baseType == typeof(Result<,>)) {
+                if (baseType == typeof(Result<>)) {
                     TO2Type successType = typeArgs[0] == typeof(object)
                         ? BuiltinType.Unit
                         : MapNativeType(typeArgs[0]);
-                    TO2Type errorType = typeArgs[1] == typeof(object)
-                        ? BuiltinType.Unit
-                        : MapNativeType(typeArgs[1]);
 
-                    return new ResultType(successType, errorType);
+                    return new ResultType(successType);
                 }
 
                 if (baseType.FullName!.StartsWith("System.Func")) {

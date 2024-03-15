@@ -16,7 +16,7 @@ use { DEBUG } from ksp::debug
 
 const DEBUGGING : bool = false
 
-pub fn vac_land(vessel : Vessel, landing_side : GeoCoordinates, land_stage : int) -> Result<Unit, string> = {
+pub fn vac_land(vessel : Vessel, landing_side : GeoCoordinates, land_stage : int) -> Result<Unit> = {
     CONSOLE.print_line("=== vac_land ===")
 
     if(DEBUGGING) {
@@ -65,7 +65,7 @@ pub fn vac_land(vessel : Vessel, landing_side : GeoCoordinates, land_stage : int
     Ok({})
 }
 
-pub fn vac_land_prepare_deorbit(vessel : Vessel, landing_site : GeoCoordinates) -> Result<Unit, string> = {
+pub fn vac_land_prepare_deorbit(vessel : Vessel, landing_site : GeoCoordinates) -> Result<Unit> = {
     CONSOLE.print_line("=== vac_land_prepare_deorbit ===")
     
     const deorbit_radius = vessel.main_body.radius - 3000
@@ -105,7 +105,7 @@ pub fn vac_land_prepare_deorbit(vessel : Vessel, landing_site : GeoCoordinates) 
     exec_next_node(vessel)?
 }
 
-pub fn vac_land_course_correct(vessel : Vessel, simulation : ReentrySimulation, initial_result : ReentryTrajectory, landing_site : GeoCoordinates) -> Result<ReentryTrajectory, string> = {
+pub fn vac_land_course_correct(vessel : Vessel, simulation : ReentrySimulation, initial_result : ReentryTrajectory, landing_site : GeoCoordinates) -> Result<ReentryTrajectory> = {
     CONSOLE.clear()
     CONSOLE.print_line("=== vac_land_course_correct ===")
     const console_row = CONSOLE.cursor_row
@@ -184,7 +184,7 @@ pub fn vac_land_course_correct(vessel : Vessel, simulation : ReentrySimulation, 
     last_result.value
 }
 
-pub fn vac_deceleration_burn(vessel : Vessel, simulation : ReentrySimulation, initial_result : ReentryTrajectory, landing_site : GeoCoordinates, speed_policy: fn(Vec3, Vec3) -> float) -> Result<Unit, string> = {
+pub fn vac_deceleration_burn(vessel : Vessel, simulation : ReentrySimulation, initial_result : ReentryTrajectory, landing_site : GeoCoordinates, speed_policy: fn(Vec3, Vec3) -> float) -> Result<Unit> = {
     CONSOLE.clear()
     CONSOLE.print_line("=== vac_deceleration_burn ===")
     const console_row = CONSOLE.cursor_row
@@ -325,7 +325,7 @@ pub fn vac_touchdown(vessel : Vessel) -> Unit = {
     vessel.actions.rcs = true
 }
 
-sync fn course_correction(vessel : Vessel, UT : float, prediction : ReentryTrajectory, landing_site : GeoCoordinates, allow_prograde : bool) -> Result<Vec3, string> = {
+sync fn course_correction(vessel : Vessel, UT : float, prediction : ReentryTrajectory, landing_site : GeoCoordinates, allow_prograde : bool) -> Result<Vec3> = {
     const prediction_site = vessel.main_body.geo_coordinates(prediction.end_latitude, prediction.end_longitude)
     const end_radius = vessel.main_body.radius + prediction_site.terrain_height + 500
     const actual_landing_position = prediction_site.altitude_position(end_radius) - vessel.main_body.position

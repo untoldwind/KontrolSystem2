@@ -9,6 +9,7 @@ import {
   BUILTIN_ARRAYBUILDER,
   BUILTIN_CELL,
   BUILTIN_INT,
+  BUILTIN_STRING,
   GenericParameter,
   RealizedType,
   TO2Type,
@@ -154,7 +155,7 @@ export class RootModuleContext implements ModuleContext {
                 value: new FunctionType(
                   false,
                   [["value", args[0], false]],
-                  new ResultType(args[0], new GenericParameter("U")),
+                  new ResultType(args[0]),
                 ),
               };
             }
@@ -164,8 +165,8 @@ export class RootModuleContext implements ModuleContext {
               return {
                 value: new FunctionType(
                   false,
-                  [["value", args[0], false]],
-                  new ResultType(new GenericParameter("U"), args[0]),
+                  [["value", BUILTIN_STRING, false]],
+                  new ResultType(new GenericParameter("U")),
                 ),
               };
             }

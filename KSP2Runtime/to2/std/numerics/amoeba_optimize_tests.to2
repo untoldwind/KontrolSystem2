@@ -5,7 +5,7 @@ use { vec2 } from ksp::math
 
 sync fn test_func(x : float, y : float) -> float = 20 *(math::sin(x) + math::sin(y)) + ((x - 3) * (x - 3) + (y - 3) * (y - 3))
 
-test sync fn test_amoeba() -> Result<Unit, string> = {
+test sync fn test_amoeba() -> Result<Unit> = {
     const (x, y) = amoeba_optimize_perturbation(test_func, vec2(3, 4), vec2(0.5, 0.5), 1e-10, 1000)?
 
     assert_float(4.5561444, x, 1e-5)
@@ -20,7 +20,7 @@ sync fn himmelblau(x : float, y : float) -> float = {
     a*a + b*b
 }
 
-test sync fn test_amoeba2() -> Result<Unit, string> = {
+test sync fn test_amoeba2() -> Result<Unit> = {
     let (x, y) = amoeba_optimize_perturbation(himmelblau, vec2(6, 6), vec2(0.5, 0.5), 1e-5, 1000)?
 
     assert_float(3, x, 1e-5)

@@ -20,7 +20,7 @@ sync fn atmosphere_depth(body: Body) -> float = {
     return if(body.has_atmosphere) body.atmosphere_depth else 0.0
 }
 
-pub fn circularize(vessel: Vessel, way: ApsisModificationConst = ApsisModification.Cheaper) -> Result<Unit, string> = {
+pub fn circularize(vessel: Vessel, way: ApsisModificationConst = ApsisModification.Cheaper) -> Result<Unit> = {
     const body = vessel.main_body
 
     if(vessel.orbit.periapsis < atmosphere_depth(body) && (!vessel.orbit.apoapsis.defined))
@@ -41,7 +41,7 @@ pub fn circularize(vessel: Vessel, way: ApsisModificationConst = ApsisModificati
 }
 
 
-fn foobar(vessel: Vessel, apsis: ApsisConst, altitude:float) -> Result<Unit, string> = {
+fn foobar(vessel: Vessel, apsis: ApsisConst, altitude:float) -> Result<Unit> = {
     //things
     return Ok({})
 }
