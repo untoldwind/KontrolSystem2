@@ -11,9 +11,9 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit;
 [KSModule("ksp::orbit")]
 public partial class KSPOrbitModule {
     [KSFunction(Description = "Find a body by name.")]
-    public static Result<IBody, string> FindBody(string name) {
+    public static Result<IBody> FindBody(string name) {
         var body = KSPContext.CurrentContext.FindBody(name);
-        return body != null ? Result.Ok<IBody, string>(body) : Result.Err<IBody, string>($"No such body '{name}'");
+        return body != null ? Result.Ok(body) : Result.Err<IBody>($"No such body '{name}'");
     }
 
     [KSFunction(Description = "Get the galactic celestial frame.")]

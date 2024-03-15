@@ -6,7 +6,7 @@ const TINY : float = 1e-20
 const CGOLD : float = 0.3819660
 const ZEPS : float = 1e-18
 
-pub sync fn brent_optimize(func : fn(float) -> float, start_a : float, start_b : float, tolerance : float, max_iterations : int) -> Result<(x: float, fx: float), string> = {
+pub sync fn brent_optimize(func : fn(float) -> float, start_a : float, start_b : float, tolerance : float, max_iterations : int) -> Result<(x: float, fx: float)> = {
     let iterations = max_iterations
     let (ax, bx, cx, fa, fb, fc) = bracket(func, start_a, start_b)
 

@@ -1,7 +1,7 @@
 use * from core::testing
 
 test sync fn test_basic_result() -> Unit = {
-    let result_int : Result<int, string> = Ok(123 * 10 + 4)
+    let result_int : Result<int> = Ok(123 * 10 + 4)
 
     assert_true(result_int.success)
     assert_int(1234, result_int.value)
@@ -14,7 +14,7 @@ test sync fn test_basic_result() -> Unit = {
 }
 
 test sync fn test_basic_unit_result() -> Unit = {
-    let result_unit : Result<Unit, string> = Ok({})
+    let result_unit : Result<Unit> = Ok({})
 
     assert_true(result_unit.success)
 
@@ -25,28 +25,28 @@ test sync fn test_basic_unit_result() -> Unit = {
 }
 
 test sync fn test_base_emty_error() -> Unit = {
-    let result_int : Result<int, Unit> = Ok(123 * 10 + 4)
+    let result_int : Result<int> = Ok(123 * 10 + 4)
 
     assert_true(result_int.success)
     assert_int(1234, result_int.value)
 
-    result_int = Err({})
+    result_int = Err("error")
 
     assert_false(result_int.success)
     assert_int(0, result_int.value)
 }
 
 test sync fn test_unit_unit_result() -> Unit = {
-    let result_unit : Result<Unit, Unit> = Ok({})
+    let result_unit : Result<Unit> = Ok({})
 
     assert_true(result_unit.success)
 
-    result_unit = Err({})
+    result_unit = Err("error")
 
     assert_false(result_unit.success)
 }
 
-sync fn lifted_add(a: Result<int, string>, b: Result<int, string>) -> Result<int, string> = Ok(a? + b?)
+sync fn lifted_add(a: Result<int>, b: Result<int>) -> Result<int> = Ok(a? + b?)
 
 test sync fn test_unwrap_result() -> Unit = {
     let result_int = lifted_add(Ok(1200), Ok(34))
@@ -73,7 +73,7 @@ test sync fn test_unwrap_result() -> Unit = {
     assert_string("Error 1a", result_int.error)
 }
 
-sync fn call_lifted(expected: int, a: Result<int, string>, b: Result<int, string>) -> Result<Unit, string> = {
+sync fn call_lifted(expected: int, a: Result<int>, b: Result<int>) -> Result<Unit> = {
     assert_int(expected, lifted_add(a, b)?)
     Ok({})
 }
@@ -99,19 +99,19 @@ test sync fn test_unwrap_unit_result() -> Unit = {
     assert_string("Error 1a", result_unit.error)
 }
 
-sync fn implicit_ok_result() -> Result<string, string> = "This is something"
+sync fn implicit_ok_result() -> Result<string> = "This is something"
 
-sync fn implicit_ok_result_unit() -> Result<Unit, string> = {}
+sync fn implicit_ok_result_unit() -> Result<Unit> = {}
 
-sync fn failure_sync() -> Result<Unit, string> = { Err("something went wrong") }
+sync fn failure_sync() -> Result<Unit> = { Err("something went wrong") }
 
-sync fn sync_chain_success() -> Result<string, string> = {
+sync fn sync_chain_success() -> Result<string> = {
     implicit_ok_result_unit()?
 
     implicit_ok_result()? + " extra"
 }
 
-sync fn sync_chain_failure() -> Result<string, string> = {
+sync fn sync_chain_failure() -> Result<string> = {
     implicit_ok_result_unit()?
 
     failure_sync()?
@@ -130,7 +130,7 @@ test sync fn test_result_implicit_ok() -> Unit = {
     assert_true(result.success)
     assert_string("This is something extra", result.value)
 
-    let other : Result<int, string> = 1234
+    let other : Result<int> = 1234
 
     assert_true(other.success)
     assert_int(1234, other.value)
@@ -150,19 +150,19 @@ test sync fn test_result_implicit_ok() -> Unit = {
     assert_string("something went wrong", chained_failure_result.error)
 }
 
-fn implicit_ok_result_async() -> Result<string, string> = "This is something"
+fn implicit_ok_result_async() -> Result<string> = "This is something"
 
-fn implicit_ok_result_unit_async() -> Result<Unit, string> = {}
+fn implicit_ok_result_unit_async() -> Result<Unit> = {}
 
-fn failure_async() -> Result<Unit, string> = { Err("something went wrong") }
+fn failure_async() -> Result<Unit> = { Err("something went wrong") }
 
-fn async_chain_success() -> Result<string, string> = {
+fn async_chain_success() -> Result<string> = {
     implicit_ok_result_unit_async()?
 
     implicit_ok_result_async()? + " extra"
 }
 
-fn async_chain_failure() -> Result<string, string> = {
+fn async_chain_failure() -> Result<string> = {
     implicit_ok_result_unit_async()?
 
     failure_async()?
@@ -200,7 +200,7 @@ test fn test_not_consume_result() -> Unit = {
     implicit_ok_result_async()
 }
 
-test sync fn test_unwrap_nested() -> Result<Unit, string> = {
+test sync fn test_unwrap_nested() -> Result<Unit> = {
     const a = 5
     const out = if(a < 5) {
         "too small"
@@ -212,8 +212,8 @@ test sync fn test_unwrap_nested() -> Result<Unit, string> = {
 }
 
 test sync fn test_result_if_deconstruct() -> Unit = {
-    const maybe_a1 : Result<int, string> = Ok(2345)
-    const maybe_a2 : Result<int, string> = Err("error1")
+    const maybe_a1 : Result<int> = Ok(2345)
+    const maybe_a2 : Result<int> = Err("error1")
     
     if(Ok(a) = maybe_a1) {
         assert_int(2345, a)
@@ -233,7 +233,7 @@ test sync fn test_result_if_deconstruct() -> Unit = {
 }
 
 test sync fn test_result_while_deconstruct() -> Unit = {
-    let maybe_a : Result<int, string> = Ok(10)
+    let maybe_a : Result<int> = Ok(10)
     let count = 0
     
     while(Ok(a) = maybe_a) {

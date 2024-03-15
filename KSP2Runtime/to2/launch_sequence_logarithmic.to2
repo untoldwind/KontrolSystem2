@@ -26,7 +26,7 @@ use { log_init, log_console_telemetry, log_console_debug, log_console_message} f
 
 
 /// Entry Point
-pub fn main_flight(vessel: Vessel, target_apoapsis: int = 100000, heading: float = 90) -> Result<Unit, string> = {
+pub fn main_flight(vessel: Vessel, target_apoapsis: int = 100000, heading: float = 90) -> Result<Unit> = {
     // Set Lights ON
     vessel.actions.light = true
     

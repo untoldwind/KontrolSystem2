@@ -2,7 +2,7 @@ use * from core::testing
 use { J0, J1 } from std::numerics::bessel
 use { brent_optimize } from std::numerics::brent_optimize
 
-test sync fn test_bessel_min() -> Result<Unit, string> = {
+test sync fn test_bessel_min() -> Result<Unit> = {
     const expected_mins = [
         3.831705, 10.173468, 16.470634, 22.760083, 29.046824, 35.332323, 41.617094, 47.901455, 
         54.185563, 60.469465, 66.753226, 73.036905, 79.320476, 85.604020, 91.887500, 98.170918

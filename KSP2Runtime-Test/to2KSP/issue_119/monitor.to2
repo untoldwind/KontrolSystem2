@@ -1,7 +1,7 @@
 use { yield } from ksp::game
 use { Ship } from issue_119::ship
 
-pub fn main_flight() -> Result<Unit, string> = {
+pub fn main_flight() -> Result<Unit> = {
     monitor(Ship())
 }
 

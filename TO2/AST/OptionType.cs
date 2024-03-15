@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Reflection.Emit;
 using KontrolSystem.TO2.Generator;
 using KontrolSystem.TO2.Runtime;
@@ -476,7 +475,7 @@ internal class OptionOkOrFactory : IMethodInvokeFactory {
         this.optionType = optionType;
     }
 
-    public TypeHint ReturnHint => _ => new ResultType(optionType.elementType, BuiltinType.Unit);
+    public TypeHint ReturnHint => _ => new ResultType(optionType.elementType);
 
     public string Description => "Convert the option to a result, where None is mapped to the `if_none` error";
 
@@ -488,24 +487,20 @@ internal class OptionOkOrFactory : IMethodInvokeFactory {
         return null;
     }
 
-    public TO2Type DeclaredReturn => new ResultType(optionType.elementType, BuiltinType.Unit);
+    public TO2Type DeclaredReturn => new ResultType(optionType.elementType);
 
     public List<FunctionParameter> DeclaredParameters => new()
-        { new("if_none", BuiltinType.Unit, "Get error message if option is undefined") };
+        { new("if_none", BuiltinType.String, "Error message if option is undefined") };
 
     public IMethodInvokeEmitter? Create(IBlockContext context, List<TO2Type> arguments, Node node) {
-        if (arguments.Count != 1) return null;
-        var errorType = arguments[0].UnderlyingType(context.ModuleContext);
-
         var generatedType = optionType.GeneratedType(context.ModuleContext);
-        var methodInfo = generatedType.GetMethod("OkOr")?
-                             .MakeGenericMethod(errorType.GeneratedType(context.ModuleContext)) ??
+        var methodInfo = generatedType.GetMethod("OkOr") ??
                          throw new ArgumentException($"No OkOr method in {generatedType}");
 
 
-        return new BoundMethodInvokeEmitter(new ResultType(optionType.elementType, errorType),
+        return new BoundMethodInvokeEmitter(new ResultType(optionType.elementType),
             new List<RealizedParameter> {
-                new("if_none", errorType, "Get error message if option is undefined")
+                new("if_none", BuiltinType.String, "Get error message if option is undefined")
             }, false, generatedType,
             methodInfo);
     }

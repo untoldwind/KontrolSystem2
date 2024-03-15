@@ -44,15 +44,15 @@ public partial class KSPVesselModule {
         }
 
         [KSMethod]
-        public Result<ManeuverNodeAdapter, string> NextNode() {
+        public Result<ManeuverNodeAdapter> NextNode() {
             var node = maneuverPlan.GetNodes().FirstOrDefault();
 
-            if (node == null) return Result.Err<ManeuverNodeAdapter, string>("No maneuver node present");
-            return Result.Ok<ManeuverNodeAdapter, string>(new ManeuverNodeAdapter(vesselAdapter, node));
+            if (node == null) return Result.Err<ManeuverNodeAdapter>("No maneuver node present");
+            return Result.Ok(new ManeuverNodeAdapter(vesselAdapter, node));
         }
 
         [KSMethod]
-        public Future<Result<ManeuverNodeAdapter, string>>
+        public Future<Result<ManeuverNodeAdapter>>
             Add(double ut, double radialOut, double normal, double prograde) {
             var maneuverPlanSolver = vesselAdapter.vessel.Orbiter.ManeuverPlanSolver;
             IPatchedOrbit patch;
@@ -69,15 +69,15 @@ public partial class KSPVesselModule {
             vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.AddNodeToVessel(maneuverNodeData);
 
             var result =
-                Result.Ok<ManeuverNodeAdapter, string>(new ManeuverNodeAdapter(vesselAdapter, maneuverNodeData));
+                Result.Ok(new ManeuverNodeAdapter(vesselAdapter, maneuverNodeData));
             if (KSPContext.CurrentContext.Game.Map.TryGetMapCore(out var mapCore))
-                return new DelayedAction<Result<ManeuverNodeAdapter, string>>(KSPContext.CurrentContext, 1,
+                return new DelayedAction<Result<ManeuverNodeAdapter>>(KSPContext.CurrentContext, 1,
                     2,
                     () => {
                         mapCore.map3D.ManeuverManager.CreateGizmoForLocation(maneuverNodeData);
                         return result;
                     }, result);
-            return new Future.Success<Result<ManeuverNodeAdapter, string>>(result);
+            return new Future.Success<Result<ManeuverNodeAdapter>>(result);
         }
 
 
@@ -85,7 +85,7 @@ public partial class KSPVesselModule {
             @"Add a maneuver node at a given time `ut` with a given `burnVector`.
               Note: Contrary to `orbit.perturbed_orbit` the maneuver node calculation take the expected
               burn-time of the vessel into account. Especially for greater delta-v this will lead to different results.")]
-        public Future<Result<ManeuverNodeAdapter, string>> AddBurnVector(double ut, Vector3d burnVector) {
+        public Future<Result<ManeuverNodeAdapter>> AddBurnVector(double ut, Vector3d burnVector) {
             var maneuverPlanSolver = vesselAdapter.vessel.Orbiter.ManeuverPlanSolver;
             IPatchedOrbit patch;
             maneuverPlanSolver.FindPatchContainingUt(ut, maneuverPlanSolver.PatchedConicsList, out patch, out var _);
@@ -112,15 +112,15 @@ public partial class KSPVesselModule {
             vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.AddNodeToVessel(maneuverNodeData);
 
             var result =
-                Result.Ok<ManeuverNodeAdapter, string>(new ManeuverNodeAdapter(vesselAdapter, maneuverNodeData));
+                Result.Ok(new ManeuverNodeAdapter(vesselAdapter, maneuverNodeData));
             if (KSPContext.CurrentContext.Game.Map.TryGetMapCore(out var mapCore))
-                return new DelayedAction<Result<ManeuverNodeAdapter, string>>(KSPContext.CurrentContext, 1,
+                return new DelayedAction<Result<ManeuverNodeAdapter>>(KSPContext.CurrentContext, 1,
                     2,
                     () => {
                         mapCore.map3D.ManeuverManager.CreateGizmoForLocation(maneuverNodeData);
                         return result;
                     }, result);
-            return new Future.Success<Result<ManeuverNodeAdapter, string>>(result);
+            return new Future.Success<Result<ManeuverNodeAdapter>>(result);
         }
     }
 }

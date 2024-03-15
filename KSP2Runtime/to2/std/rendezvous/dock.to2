@@ -10,7 +10,7 @@ use { global_ship_is_facing } from std::utils
 use { control_steering } from std::control::steering
 
 
-pub fn dock_vessel(vessel : Vessel, target : Targetable) -> Result<Unit, string> = {
+pub fn dock_vessel(vessel : Vessel, target : Targetable) -> Result<Unit> = {
     CONSOLE.clear()
 
     const (vessel_port, target_port) = choose_docking_nodes(vessel, target)?
@@ -42,7 +42,7 @@ pub fn dock_vessel(vessel : Vessel, target : Targetable) -> Result<Unit, string>
     vessel.actions.rcs = false
 }
 
-pub sync fn choose_docking_nodes(vessel : Vessel, target : Targetable) -> Result<(vessel_port : ModuleDockingNode, target_port : ModuleDockingNode), string> = {
+pub sync fn choose_docking_nodes(vessel : Vessel, target : Targetable) -> Result<(vessel_port : ModuleDockingNode, target_port : ModuleDockingNode)> = {
     const target_ports = if(Some(docking_node) = target.docking_node) {
         [docking_node]
     } else {
@@ -65,7 +65,7 @@ pub sync fn choose_docking_nodes(vessel : Vessel, target : Targetable) -> Result
 sync fn has_matching_types(target_types: string[], source_types: string[]) -> bool = 
     target_types.exists(fn(target_type) -> source_types.exists(fn(source_type) -> target_type == source_type))
 
-pub fn dock_move_correct_side(vessel : Vessel, target_port : ModuleDockingNode) -> Result<Unit, string> = {
+pub fn dock_move_correct_side(vessel : Vessel, target_port : ModuleDockingNode) -> Result<Unit> = {
     CONSOLE.print_line("=== dock_move_correct_side ===")
     const console_row = CONSOLE.cursor_row
     CONSOLE.move_cursor(console_row + 12, 0)
@@ -123,7 +123,7 @@ pub fn dock_move_correct_side(vessel : Vessel, target_port : ModuleDockingNode) 
     rcs_manager.release()
 }
 
-pub fn dock_approach(vessel : Vessel, target_port : ModuleDockingNode) -> Result<Unit, string> = {
+pub fn dock_approach(vessel : Vessel, target_port : ModuleDockingNode) -> Result<Unit> = {
     CONSOLE.print_line("=== dock_approach ===")
     const console_row = CONSOLE.cursor_row
     CONSOLE.move_cursor(console_row + 1, 0)

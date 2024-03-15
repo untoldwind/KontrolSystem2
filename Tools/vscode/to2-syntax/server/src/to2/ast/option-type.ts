@@ -98,7 +98,7 @@ export class OptionType implements RealizedType {
           value: new FunctionType(
             false,
             [["error", BUILTIN_STRING, false]],
-            new ResultType(this.elementType, BUILTIN_STRING),
+            new ResultType(this.elementType),
           ),
         };
       default:

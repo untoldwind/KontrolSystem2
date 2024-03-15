@@ -10,12 +10,10 @@ namespace KontrolSystem.TO2.AST;
 
 public class ResultType : RealizedType {
     private readonly OperatorCollection allowedSuffixOperators;
-    public readonly TO2Type errorType;
     public readonly TO2Type successType;
 
-    public ResultType(TO2Type successType, TO2Type errorType) {
+    public ResultType(TO2Type successType) {
         this.successType = successType;
-        this.errorType = errorType;
         allowedSuffixOperators = new OperatorCollection {
             { Operator.Unwrap, new ResultUnwrapOperator(this) }
         };
@@ -28,16 +26,16 @@ public class ResultType : RealizedType {
 
     public override Dictionary<string, IFieldAccessFactory> DeclaredFields { get; }
 
-    public override string Name => $"Result<{successType}, {errorType}>";
+    public override string Name => $"Result<{successType}>";
 
     public override string LocalName => "Result";
 
     public override bool IsValid(ModuleContext context) {
-        return successType.IsValid(context) && errorType.IsValid(context);
+        return successType.IsValid(context);
     }
 
     public override RealizedType UnderlyingType(ModuleContext context) {
-        return new ResultType(successType.UnderlyingType(context), errorType.UnderlyingType(context));
+        return new ResultType(successType.UnderlyingType(context));
     }
 
     public override Type GeneratedType(ModuleContext context) {
@@ -59,10 +57,8 @@ public class ResultType : RealizedType {
 
     public override bool IsAssignableFrom(ModuleContext context, TO2Type otherType) {
         if (otherType.UnderlyingType(context) is ResultType otherResultType)
-            return (successType == otherResultType.successType ||
-                    successType.IsAssignableFrom(context, otherResultType.successType)) &&
-                   (errorType == otherResultType.errorType ||
-                    errorType.IsAssignableFrom(context, otherResultType.errorType));
+            return successType == otherResultType.successType ||
+                    successType.IsAssignableFrom(context, otherResultType.successType);
 
         return successType == otherType || successType.IsAssignableFrom(context, otherType);
     }
@@ -77,20 +73,18 @@ public class ResultType : RealizedType {
     public override RealizedType
         FillGenerics(ModuleContext context, Dictionary<string, RealizedType>? typeArguments) {
         return new ResultType(
-            successType.UnderlyingType(context).FillGenerics(context, typeArguments),
-            errorType.UnderlyingType(context).FillGenerics(context, typeArguments));
+            successType.UnderlyingType(context).FillGenerics(context, typeArguments));
     }
 
     private Type DeriveType(ModuleContext context) {
-        return typeof(Result<,>).MakeGenericType(successType.GeneratedType(context), errorType.GeneratedType(context));
+        return typeof(Result<>).MakeGenericType(successType.GeneratedType(context));
     }
 
     public override IEnumerable<(string name, RealizedType type)> InferGenericArgument(ModuleContext context,
         RealizedType? concreteType) {
         var concreteResult = concreteType as ResultType;
         if (concreteResult == null) return Enumerable.Empty<(string name, RealizedType type)>();
-        return successType.InferGenericArgument(context, concreteResult.successType.UnderlyingType(context)).Concat(
-            errorType.InferGenericArgument(context, concreteResult.errorType.UnderlyingType(context)));
+        return successType.InferGenericArgument(context, concreteResult.successType.UnderlyingType(context));
     }
 }
 
@@ -114,7 +108,7 @@ internal class ResultFieldAccess : IFieldAccessFactory {
             switch (field) {
             case ResultField.Success: return BuiltinType.Bool;
             case ResultField.Value: return resultType.successType;
-            case ResultField.Error: return resultType.errorType;
+            case ResultField.Error: return BuiltinType.Error;
             default: throw new InvalidOperationException($"Unknown option field: {field}");
             }
         }
@@ -143,7 +137,7 @@ internal class ResultFieldAccess : IFieldAccessFactory {
             return new BoundFieldAccessEmitter(resultType.successType.UnderlyingType(context), generateType,
                 new List<FieldInfo> { generateType.GetField("value") });
         case ResultField.Error:
-            return new BoundFieldAccessEmitter(resultType.errorType.UnderlyingType(context), generateType,
+            return new BoundFieldAccessEmitter(BuiltinType.Error, generateType,
                 new List<FieldInfo> { generateType.GetField("error") });
         default: throw new InvalidOperationException($"Unknown option field: {field}");
         }
@@ -204,7 +198,7 @@ internal class AssignOk : IAssignEmitter {
     public IREPLValue EvalConvert(Node node, IREPLValue value) {
         if (value.Type == resultType) return value;
 
-        return new REPLAny(resultType, Result.Ok<object, object>(resultType.successType.REPLCast(value.Value)));
+        return new REPLAny(resultType, Result.Ok<object>(resultType.successType.REPLCast(value.Value)));
     }
 }
 
@@ -225,11 +219,10 @@ internal class ResultUnwrapOperator : IOperatorEmitter {
 
     public void EmitCode(IBlockContext context, Node target) {
         var expectedReturn = context.ExpectedReturn.UnderlyingType(context.ModuleContext) as ResultType;
-        if (expectedReturn == null ||
-            !expectedReturn.errorType.IsAssignableFrom(context.ModuleContext, resultType.errorType)) {
+        if (expectedReturn == null) {
             context.AddError(new StructuralError(
                 StructuralError.ErrorType.IncompatibleTypes,
-                $"Operator ? is only allowed if function returns a result with error type {resultType.errorType}",
+                $"Operator ? is only allowed if function returns a result",
                 target.Start,
                 target.End
             ));
@@ -247,7 +240,7 @@ internal class ResultUnwrapOperator : IOperatorEmitter {
         // Keep track of stuff that is still on the stack at onSuccess
         var stackAdjust = context.IL.StackCount;
         using (var tempError =
-               context.IL.TempLocal(expectedReturn.errorType.GeneratedType(context.ModuleContext))) {
+               context.IL.TempLocal(BuiltinType.Error.GeneratedType(context.ModuleContext))) {
             var errorResultType = expectedReturn.GeneratedType(context.ModuleContext);
 
             using (var errorResult = context.IL.TempLocal(errorResultType)) {
@@ -295,7 +288,7 @@ internal class ResultUnwrapOperator : IOperatorEmitter {
         if (left.Type is ResultType lrt && left.Value is IAnyResult lr)
             return lr.Success
                 ? lrt.successType.REPLCast(lr.ValueObject)
-                : new REPLReturn(lrt.errorType.REPLCast(lr.ErrorObject));
+                : new REPLReturn(BuiltinType.Error.REPLCast(lr.ErrorObject));
 
         throw new REPLException(node, $"Expected {left.Type} to be a result");
     }
@@ -345,7 +338,7 @@ internal class ResultErrUnapplyEmitter : IUnapplyEmitter {
 
     internal ResultErrUnapplyEmitter(ResultType resultType) {
         this.resultType = resultType;
-        Items = new List<TO2Type> { resultType.errorType };
+        Items = new List<TO2Type> { BuiltinType.Error };
     }
 
     public string Name => "Err";

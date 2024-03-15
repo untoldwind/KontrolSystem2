@@ -2,7 +2,7 @@ import { ModuleContext } from "./context";
 import { WithDefinitionRef } from "./definition-ref";
 import { FunctionType } from "./function-type";
 import { Operator } from "./operator";
-import { BUILTIN_BOOL, RealizedType, TO2Type } from "./to2-type";
+import { BUILTIN_BOOL, BUILTIN_ERROR, RealizedType, TO2Type } from "./to2-type";
 
 export class ResultType implements RealizedType {
   public readonly kind = "Result";
@@ -12,17 +12,15 @@ export class ResultType implements RealizedType {
 
   constructor(
     public readonly successType: TO2Type,
-    public readonly errorType: TO2Type,
   ) {
     this.name =
-      this.localName = `Result<${successType.localName}, ${errorType.localName}>`;
+      this.localName = `Result<${successType.localName}>`;
     this.description = "";
   }
 
   public hasGnerics(context: ModuleContext): boolean {
     return (
-      this.successType.realizedType(context).hasGnerics(context) ||
-      this.errorType.realizedType(context).hasGnerics(context)
+      this.successType.realizedType(context).hasGnerics(context)
     );
   }
 
@@ -33,7 +31,6 @@ export class ResultType implements RealizedType {
   public realizedType(context: ModuleContext): RealizedType {
     return new ResultType(
       this.successType.realizedType(context),
-      this.errorType.realizedType(context),
     );
   }
 
@@ -43,7 +40,6 @@ export class ResultType implements RealizedType {
   ): RealizedType {
     return new ResultType(
       this.successType.realizedType(context).fillGenerics(context, genericMap),
-      this.errorType.realizedType(context).fillGenerics(context, genericMap),
     );
   }
 
@@ -60,18 +56,11 @@ export class ResultType implements RealizedType {
           genericMap,
           realizedType.successType.realizedType(context),
         );
-      this.errorType
-        .realizedType(context)
-        .guessGeneric(
-          context,
-          genericMap,
-          realizedType.errorType.realizedType(context),
-        );
     }
   }
 
   findSuffixOperator(op: Operator): TO2Type | undefined {
-    return op === "?" ? this.successType : this.errorType;
+    return op === "?" ? this.successType : BUILTIN_ERROR;
   }
 
   public findPrefixOperator(): RealizedType | undefined {
@@ -85,7 +74,7 @@ export class ResultType implements RealizedType {
       case "value":
         return { value: this.successType };
       case "error":
-        return { value: this.errorType };
+        return { value: BUILTIN_ERROR };
       default:
         return undefined;
     }
@@ -109,7 +98,6 @@ export class ResultType implements RealizedType {
 
   public setModuleName(moduleName: string, context: ModuleContext): void {
     this.successType.setModuleName?.(moduleName, context);
-    this.errorType.setModuleName?.(moduleName, context);
   }
 }
 

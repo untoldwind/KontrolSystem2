@@ -10,7 +10,6 @@
         <ProjectReference Include="..\Parsing\KontrolSystemParsing.csproj"/>
     </ItemGroup>
     <ItemGroup>
-        <Folder Include="AST\"/>
         <Folder Include="Parser\"/>
         <Folder Include="Generator\"/>
     </ItemGroup>

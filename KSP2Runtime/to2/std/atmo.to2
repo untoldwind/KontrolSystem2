@@ -8,7 +8,7 @@ use { estimate_burn_time, exec_next_node } from std::vac
 use { circularize_orbit } from std::maneuvers
 
 /// Automatically launch a rocket from an atmosphere to a circular orbit.
-pub fn atmo_launch(vessel: Vessel, target_apoapsis: float, heading: float, low_turn: float = 0.007, high_turn: float = 0.7) -> Result<Unit, string> = {
+pub fn atmo_launch(vessel: Vessel, target_apoapsis: float, heading: float, low_turn: float = 0.007, high_turn: float = 0.7) -> Result<Unit> = {
     vessel.actions.light = true
 
     vessel.autopilot.enabled = true

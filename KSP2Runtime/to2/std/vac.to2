@@ -10,7 +10,7 @@ use { trigger_staging } from std::staging
 /// Execute the next planed maneuver node.
 ///
 /// Will result in an error if there are no planed maneuver nodes.
-pub fn exec_next_node(vessel : Vessel) -> Result<Unit, string> = {
+pub fn exec_next_node(vessel : Vessel) -> Result<Unit> = {
     CONSOLE.print_line("=== exec_next_node ===")
     const console_row = CONSOLE.cursor_row
     CONSOLE.move_cursor(console_row + 4, 0)

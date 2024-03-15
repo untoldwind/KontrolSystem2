@@ -34,9 +34,9 @@ namespace KontrolSystem.GenRefs {
 
             foreach (var type in new List<RealizedType> {
                          BuiltinType.Unit, BuiltinType.Bool, BuiltinType.Int,
-                         BuiltinType.Float, BuiltinType.String, BuiltinType.Range, BuiltinType.ArrayBuilder,
-                         BuiltinType.Cell, new OptionType(new GenericParameter("T")),
-                         new ResultType(new GenericParameter("R"), new GenericParameter("E"))
+                         BuiltinType.Float, BuiltinType.String, BuiltinType.Range, BuiltinType.Error,
+                         BuiltinType.ArrayBuilder, BuiltinType.Cell, new OptionType(new GenericParameter("T")),
+                         new ResultType(new GenericParameter("R"))
                      }) {
                 Builtin.Add(type.LocalName, new TypeReference(moduleContext, type, type.LocalName));
             }
@@ -357,7 +357,7 @@ namespace KontrolSystem.GenRefs {
                 Parameters = new List<TypeRef> { new TypeRef(moduleContext, optionType.elementType.UnderlyingType(moduleContext)) };
             } else if (type is ResultType resultType) {
                 Kind = TypeKind.Result;
-                Parameters = new List<TypeRef> { new TypeRef(moduleContext, resultType.successType.UnderlyingType(moduleContext)), new TypeRef(moduleContext, resultType.errorType.UnderlyingType(moduleContext)) };
+                Parameters = new List<TypeRef> { new TypeRef(moduleContext, resultType.successType.UnderlyingType(moduleContext)) };
             } else if (type is TupleType tupleType) {
                 Kind = TypeKind.Tuple;
                 Parameters = tupleType.itemTypes.Select(item => new TypeRef(moduleContext, item.UnderlyingType(moduleContext))).ToList();

@@ -2,7 +2,7 @@ use { Vessel } from ksp::vessel
 use { CONSOLE } from ksp::console
 use { sleep, current_time } from ksp::game
 
-pub fn main_flight(vessel: Vessel) -> Result<Unit, string> = {
+pub fn main_flight(vessel: Vessel) -> Result<Unit> = {
     CONSOLE.clear()
     CONSOLE.print_line("Hello world")
     CONSOLE.print_line("My vessel is: " + vessel.name)

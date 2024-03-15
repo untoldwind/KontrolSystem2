@@ -157,8 +157,7 @@ public abstract partial class BuiltinType {
         public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) {
             return allowedSuffixOperators;
         }
-
-
+        
         public override bool IsAssignableFrom(ModuleContext context, TO2Type otherType) {
             return otherType == Int || otherType == Float;
         }

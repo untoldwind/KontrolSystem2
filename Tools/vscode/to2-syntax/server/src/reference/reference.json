@@ -1275,7 +1275,13 @@
         ]
       },
       "assignableFromAny": false,
-      "assignableFrom": []
+      "assignableFrom": [
+        {
+          "kind": "Standard",
+          "module": "",
+          "name": "Error"
+        }
+      ]
     },
     "Range": {
       "name": "Range",
@@ -1479,10 +1485,41 @@
       "assignableFromAny": false,
       "assignableFrom": []
     },
+    "Error": {
+      "name": "Error",
+      "description": "",
+      "fields": {
+        "message": {
+          "name": "message",
+          "description": "The length of the range",
+          "readOnly": true,
+          "type": {
+            "kind": "Builtin",
+            "name": "int"
+          }
+        }
+      },
+      "methods": {
+        "to_string": {
+          "isAsync": false,
+          "name": "to_string",
+          "description": "Get string representation of the range",
+          "parameters": [],
+          "returnType": {
+            "kind": "Builtin",
+            "name": "string"
+          }
+        }
+      },
+      "assignableFromAny": false,
+      "assignableFrom": []
+    },
     "ArrayBuilder": {
       "name": "ArrayBuilder",
       "description": "Helper to create an array of initially unknown size",
-      "genericParameters": ["T"],
+      "genericParameters": [
+        "T"
+      ],
       "fields": {
         "length": {
           "name": "length",
@@ -1566,7 +1603,9 @@
     "Cell": {
       "name": "Cell",
       "description": "Holds a single value that can be mutated at any time",
-      "genericParameters": ["T"],
+      "genericParameters": [
+        "T"
+      ],
       "fields": {
         "value": {
           "name": "value",
@@ -1643,7 +1682,9 @@
     "Option": {
       "name": "Option",
       "description": "",
-      "genericParameters": ["T"],
+      "genericParameters": [
+        "T"
+      ],
       "fields": {
         "defined": {
           "name": "defined",
@@ -1744,10 +1785,10 @@
               "name": "if_none",
               "type": {
                 "kind": "Builtin",
-                "name": "Unit"
+                "name": "string"
               },
               "hasDefault": false,
-              "description": "Get error message if option is undefined"
+              "description": "Error message if option is undefined"
             }
           ],
           "returnType": {
@@ -1756,10 +1797,6 @@
               {
                 "kind": "Generic",
                 "name": "T"
-              },
-              {
-                "kind": "Builtin",
-                "name": "Unit"
               }
             ]
           }
@@ -1823,6 +1860,11 @@
         {
           "kind": "Standard",
           "module": "",
+          "name": "Error"
+        },
+        {
+          "kind": "Standard",
+          "module": "",
           "name": "ArrayBuilder",
           "parameters": [
             {
@@ -1848,10 +1890,6 @@
             {
               "kind": "Generic",
               "name": "R"
-            },
-            {
-              "kind": "Generic",
-              "name": "E"
             }
           ]
         },
@@ -2754,7 +2792,10 @@
     "Result": {
       "name": "Result",
       "description": "",
-      "genericParameters": ["R", "E"],
+      "genericParameters": [
+        "R",
+        "E"
+      ],
       "fields": {
         "success": {
           "name": "success",
@@ -2779,8 +2820,9 @@
           "description": "Error result of the operation",
           "readOnly": true,
           "type": {
-            "kind": "Generic",
-            "name": "E"
+            "kind": "Standard",
+            "module": "",
+            "name": "Error"
           }
         }
       },
@@ -2826,6 +2868,11 @@
           "kind": "Standard",
           "module": "",
           "name": "Range"
+        },
+        {
+          "kind": "Standard",
+          "module": "",
+          "name": "Error"
         },
         {
           "kind": "Standard",
@@ -3763,7 +3810,9 @@
         "Task": {
           "name": "Task",
           "description": "Represents a background task\n",
-          "genericParameters": ["T"],
+          "genericParameters": [
+            "T"
+          ],
           "fields": {
             "is_completed": {
               "name": "is_completed",
@@ -13149,10 +13198,6 @@
                 "kind": "Standard",
                 "module": "ksp::oab",
                 "name": "ObjectAssemblyBuilder"
-              },
-              {
-                "kind": "Builtin",
-                "name": "string"
               }
             ]
           }
@@ -13364,6 +13409,11 @@
             {
               "kind": "Standard",
               "module": "",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -13398,10 +13448,6 @@
                 {
                   "kind": "Generic",
                   "name": "R"
-                },
-                {
-                  "kind": "Generic",
-                  "name": "E"
                 }
               ]
             },
@@ -15957,10 +16003,6 @@
                 "kind": "Standard",
                 "module": "ksp::orbit",
                 "name": "Body"
-              },
-              {
-                "kind": "Builtin",
-                "name": "string"
               }
             ]
           }
@@ -16114,6 +16156,11 @@
             {
               "kind": "Standard",
               "module": "",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -16148,10 +16195,6 @@
                 {
                   "kind": "Generic",
                   "name": "R"
-                },
-                {
-                  "kind": "Generic",
-                  "name": "E"
                 }
               ]
             },
@@ -17640,6 +17683,11 @@
             {
               "kind": "Standard",
               "module": "",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -17674,10 +17722,6 @@
                 {
                   "kind": "Generic",
                   "name": "R"
-                },
-                {
-                  "kind": "Generic",
-                  "name": "E"
                 }
               ]
             },
@@ -18804,6 +18848,11 @@
             {
               "kind": "Standard",
               "module": "",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -18838,10 +18887,6 @@
                 {
                   "kind": "Generic",
                   "name": "R"
-                },
-                {
-                  "kind": "Generic",
-                  "name": "E"
                 }
               ]
             },
@@ -19908,6 +19953,11 @@
             {
               "kind": "Standard",
               "module": "",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -19942,10 +19992,6 @@
                 {
                   "kind": "Generic",
                   "name": "R"
-                },
-                {
-                  "kind": "Generic",
-                  "name": "E"
                 }
               ]
             },
@@ -20972,6 +21018,11 @@
             {
               "kind": "Standard",
               "module": "",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -21006,10 +21057,6 @@
                 {
                   "kind": "Generic",
                   "name": "R"
-                },
-                {
-                  "kind": "Generic",
-                  "name": "E"
                 }
               ]
             },
@@ -23101,6 +23148,11 @@
             {
               "kind": "Standard",
               "module": "",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -23135,10 +23187,6 @@
                 {
                   "kind": "Generic",
                   "name": "R"
-                },
-                {
-                  "kind": "Generic",
-                  "name": "E"
                 }
               ]
             },
@@ -28234,6 +28282,11 @@
             {
               "kind": "Standard",
               "module": "",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -28268,10 +28321,6 @@
                 {
                   "kind": "Generic",
                   "name": "R"
-                },
-                {
-                  "kind": "Generic",
-                  "name": "E"
                 }
               ]
             },
@@ -29308,6 +29357,11 @@
             {
               "kind": "Standard",
               "module": "",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -29342,10 +29396,6 @@
                 {
                   "kind": "Generic",
                   "name": "R"
-                },
-                {
-                  "kind": "Generic",
-                  "name": "E"
                 }
               ]
             },
@@ -30402,6 +30452,11 @@
             {
               "kind": "Standard",
               "module": "",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -30436,10 +30491,6 @@
                 {
                   "kind": "Generic",
                   "name": "R"
-                },
-                {
-                  "kind": "Generic",
-                  "name": "E"
                 }
               ]
             },
@@ -31476,6 +31527,11 @@
             {
               "kind": "Standard",
               "module": "",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -31510,10 +31566,6 @@
                 {
                   "kind": "Generic",
                   "name": "R"
-                },
-                {
-                  "kind": "Generic",
-                  "name": "E"
                 }
               ]
             },
@@ -32560,6 +32612,11 @@
             {
               "kind": "Standard",
               "module": "",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -32594,10 +32651,6 @@
                 {
                   "kind": "Generic",
                   "name": "R"
-                },
-                {
-                  "kind": "Generic",
-                  "name": "E"
                 }
               ]
             },
@@ -33734,6 +33787,11 @@
             {
               "kind": "Standard",
               "module": "",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -33768,10 +33826,6 @@
                 {
                   "kind": "Generic",
                   "name": "R"
-                },
-                {
-                  "kind": "Generic",
-                  "name": "E"
                 }
               ]
             },
@@ -34858,6 +34912,11 @@
             {
               "kind": "Standard",
               "module": "",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -34892,10 +34951,6 @@
                 {
                   "kind": "Generic",
                   "name": "R"
-                },
-                {
-                  "kind": "Generic",
-                  "name": "E"
                 }
               ]
             },
@@ -35942,6 +35997,11 @@
             {
               "kind": "Standard",
               "module": "",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -35976,10 +36036,6 @@
                 {
                   "kind": "Generic",
                   "name": "R"
-                },
-                {
-                  "kind": "Generic",
-                  "name": "E"
                 }
               ]
             },
@@ -37046,6 +37102,11 @@
             {
               "kind": "Standard",
               "module": "",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -37080,10 +37141,6 @@
                 {
                   "kind": "Generic",
                   "name": "R"
-                },
-                {
-                  "kind": "Generic",
-                  "name": "E"
                 }
               ]
             },
@@ -38160,6 +38217,11 @@
             {
               "kind": "Standard",
               "module": "",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -38194,10 +38256,6 @@
                 {
                   "kind": "Generic",
                   "name": "R"
-                },
-                {
-                  "kind": "Generic",
-                  "name": "E"
                 }
               ]
             },
@@ -39254,6 +39312,11 @@
             {
               "kind": "Standard",
               "module": "",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -39288,10 +39351,6 @@
                 {
                   "kind": "Generic",
                   "name": "R"
-                },
-                {
-                  "kind": "Generic",
-                  "name": "E"
                 }
               ]
             },
@@ -40508,6 +40567,11 @@
             {
               "kind": "Standard",
               "module": "",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -40542,10 +40606,6 @@
                 {
                   "kind": "Generic",
                   "name": "R"
-                },
-                {
-                  "kind": "Generic",
-                  "name": "E"
                 }
               ]
             },
@@ -41582,6 +41642,11 @@
             {
               "kind": "Standard",
               "module": "",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -41616,10 +41681,6 @@
                 {
                   "kind": "Generic",
                   "name": "R"
-                },
-                {
-                  "kind": "Generic",
-                  "name": "E"
                 }
               ]
             },
@@ -42656,6 +42717,11 @@
             {
               "kind": "Standard",
               "module": "",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -42690,10 +42756,6 @@
                 {
                   "kind": "Generic",
                   "name": "R"
-                },
-                {
-                  "kind": "Generic",
-                  "name": "E"
                 }
               ]
             },
@@ -43740,6 +43802,11 @@
             {
               "kind": "Standard",
               "module": "",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
               "name": "ArrayBuilder",
               "parameters": [
                 {
@@ -43774,10 +43841,6 @@
                 {
                   "kind": "Generic",
                   "name": "R"
-                },
-                {
-                  "kind": "Generic",
-                  "name": "E"
                 }
               ]
             },
@@ -45530,10 +45593,6 @@
                     "kind": "Standard",
                     "module": "ksp::vessel",
                     "name": "ManeuverNode"
-                  },
-                  {
-                    "kind": "Builtin",
-                    "name": "string"
                   }
                 ]
               }
@@ -45586,10 +45645,6 @@
                     "kind": "Standard",
                     "module": "ksp::vessel",
                     "name": "ManeuverNode"
-                  },
-                  {
-                    "kind": "Builtin",
-                    "name": "string"
                   }
                 ]
               }
@@ -45626,10 +45681,6 @@
                     "kind": "Standard",
                     "module": "ksp::vessel",
                     "name": "ManeuverNode"
-                  },
-                  {
-                    "kind": "Builtin",
-                    "name": "string"
                   }
                 ]
               }
@@ -49654,10 +49705,6 @@
                 "kind": "Standard",
                 "module": "ksp::vessel",
                 "name": "Vessel"
-              },
-              {
-                "kind": "Builtin",
-                "name": "string"
               }
             ]
           }
@@ -49877,10 +49924,6 @@
               {
                 "kind": "Builtin",
                 "name": "Unit"
-              },
-              {
-                "kind": "Builtin",
-                "name": "string"
               }
             ]
           }
@@ -50799,7 +50842,11 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": ["iters", "v1", "v2"],
+            "names": [
+              "iters",
+              "v1",
+              "v2"
+            ],
             "parameters": [
               {
                 "kind": "Builtin",
@@ -51163,7 +51210,10 @@
               ],
               "returnType": {
                 "kind": "Record",
-                "names": ["latitude", "longitude"],
+                "names": [
+                  "latitude",
+                  "longitude"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -51979,10 +52029,6 @@
               {
                 "kind": "Builtin",
                 "name": "Unit"
-              },
-              {
-                "kind": "Builtin",
-                "name": "string"
               }
             ]
           }
@@ -52019,10 +52065,6 @@
               {
                 "kind": "Builtin",
                 "name": "Unit"
-              },
-              {
-                "kind": "Builtin",
-                "name": "string"
               }
             ]
           }
@@ -52146,10 +52188,6 @@
                     ]
                   }
                 ]
-              },
-              {
-                "kind": "Builtin",
-                "name": "string"
               }
             ]
           }
@@ -52264,10 +52302,6 @@
               {
                 "kind": "Builtin",
                 "name": "Unit"
-              },
-              {
-                "kind": "Builtin",
-                "name": "string"
               }
             ]
           }
@@ -52344,7 +52378,10 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["UT", "delta_v"],
+                "names": [
+                  "UT",
+                  "delta_v"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -52356,10 +52393,6 @@
                     "name": "Vec3"
                   }
                 ]
-              },
-              {
-                "kind": "Builtin",
-                "name": "string"
               }
             ]
           }
@@ -52385,7 +52418,10 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["UT", "delta_v"],
+                "names": [
+                  "UT",
+                  "delta_v"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -52397,10 +52433,6 @@
                     "name": "Vec3"
                   }
                 ]
-              },
-              {
-                "kind": "Builtin",
-                "name": "string"
               }
             ]
           }
@@ -52526,10 +52558,6 @@
                 "kind": "Standard",
                 "module": "ksp::math",
                 "name": "Vec3"
-              },
-              {
-                "kind": "Builtin",
-                "name": "string"
               }
             ]
           }
@@ -52575,10 +52603,6 @@
                 "kind": "Standard",
                 "module": "ksp::math",
                 "name": "Vec3"
-              },
-              {
-                "kind": "Builtin",
-                "name": "string"
               }
             ]
           }
@@ -52632,7 +52656,11 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["TT", "UT", "delta_v"],
+                "names": [
+                  "TT",
+                  "UT",
+                  "delta_v"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -52648,10 +52676,6 @@
                     "name": "Vec3"
                   }
                 ]
-              },
-              {
-                "kind": "Builtin",
-                "name": "string"
               }
             ]
           }
@@ -52705,7 +52729,11 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["TT", "UT", "delta_v"],
+                "names": [
+                  "TT",
+                  "UT",
+                  "delta_v"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -52721,10 +52749,6 @@
                     "name": "Vec3"
                   }
                 ]
-              },
-              {
-                "kind": "Builtin",
-                "name": "string"
               }
             ]
           }
@@ -52778,7 +52802,11 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["TT", "UT", "delta_v"],
+                "names": [
+                  "TT",
+                  "UT",
+                  "delta_v"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -52794,10 +52822,6 @@
                     "name": "Vec3"
                   }
                 ]
-              },
-              {
-                "kind": "Builtin",
-                "name": "string"
               }
             ]
           }
@@ -52907,7 +52931,10 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": ["start_velocity", "target_velocity"],
+            "names": [
+              "start_velocity",
+              "target_velocity"
+            ],
             "parameters": [
               {
                 "kind": "Standard",
@@ -53019,7 +53046,10 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": ["UT", "delta_v"],
+            "names": [
+              "UT",
+              "delta_v"
+            ],
             "parameters": [
               {
                 "kind": "Builtin",
@@ -53101,7 +53131,10 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": ["UT", "delta_v"],
+            "names": [
+              "UT",
+              "delta_v"
+            ],
             "parameters": [
               {
                 "kind": "Builtin",
@@ -53143,7 +53176,10 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": ["UT", "delta_v"],
+            "names": [
+              "UT",
+              "delta_v"
+            ],
             "parameters": [
               {
                 "kind": "Builtin",
@@ -53185,7 +53221,10 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": ["UT", "delta_v"],
+            "names": [
+              "UT",
+              "delta_v"
+            ],
             "parameters": [
               {
                 "kind": "Builtin",
@@ -53230,7 +53269,10 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["UT", "delta_v"],
+                "names": [
+                  "UT",
+                  "delta_v"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -53242,10 +53284,6 @@
                     "name": "Vec3"
                   }
                 ]
-              },
-              {
-                "kind": "Builtin",
-                "name": "string"
               }
             ]
           }
@@ -53404,7 +53442,11 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["iters", "x", "y"],
+                "names": [
+                  "iters",
+                  "x",
+                  "y"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -53419,10 +53461,6 @@
                     "name": "float"
                   }
                 ]
-              },
-              {
-                "kind": "Builtin",
-                "name": "string"
               }
             ]
           }
@@ -53494,7 +53532,11 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["iters", "x", "y"],
+                "names": [
+                  "iters",
+                  "x",
+                  "y"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -53509,10 +53551,6 @@
                     "name": "float"
                   }
                 ]
-              },
-              {
-                "kind": "Builtin",
-                "name": "string"
               }
             ]
           }
@@ -53613,11 +53651,18 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": ["best", "points"],
+            "names": [
+              "best",
+              "points"
+            ],
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["f", "x", "y"],
+                "names": [
+                  "f",
+                  "x",
+                  "y"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -53638,7 +53683,11 @@
                 "parameters": [
                   {
                     "kind": "Record",
-                    "names": ["f", "x", "y"],
+                    "names": [
+                      "f",
+                      "x",
+                      "y"
+                    ],
                     "parameters": [
                       {
                         "kind": "Builtin",
@@ -53783,7 +53832,10 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["fx", "x"],
+                "names": [
+                  "fx",
+                  "x"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -53794,10 +53846,6 @@
                     "name": "float"
                   }
                 ]
-              },
-              {
-                "kind": "Builtin",
-                "name": "string"
               }
             ]
           }
@@ -54003,7 +54051,11 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["position", "t", "velocity"],
+                "names": [
+                  "position",
+                  "t",
+                  "velocity"
+                ],
                 "parameters": [
                   {
                     "kind": "Standard",
@@ -54065,10 +54117,6 @@
               {
                 "kind": "Builtin",
                 "name": "Unit"
-              },
-              {
-                "kind": "Builtin",
-                "name": "string"
               }
             ]
           }
@@ -54104,7 +54152,10 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["target_port", "vessel_port"],
+                "names": [
+                  "target_port",
+                  "vessel_port"
+                ],
                 "parameters": [
                   {
                     "kind": "Standard",
@@ -54117,10 +54168,6 @@
                     "name": "ModuleDockingNode"
                   }
                 ]
-              },
-              {
-                "kind": "Builtin",
-                "name": "string"
               }
             ]
           }
@@ -54157,10 +54204,6 @@
               {
                 "kind": "Builtin",
                 "name": "Unit"
-              },
-              {
-                "kind": "Builtin",
-                "name": "string"
               }
             ]
           }
@@ -54197,10 +54240,6 @@
               {
                 "kind": "Builtin",
                 "name": "Unit"
-              },
-              {
-                "kind": "Builtin",
-                "name": "string"
               }
             ]
           }
@@ -54246,10 +54285,6 @@
               {
                 "kind": "Builtin",
                 "name": "Unit"
-              },
-              {
-                "kind": "Builtin",
-                "name": "string"
               }
             ]
           }
@@ -54286,10 +54321,6 @@
               {
                 "kind": "Builtin",
                 "name": "Unit"
-              },
-              {
-                "kind": "Builtin",
-                "name": "string"
               }
             ]
           }
@@ -54326,10 +54357,6 @@
               {
                 "kind": "Builtin",
                 "name": "Unit"
-              },
-              {
-                "kind": "Builtin",
-                "name": "string"
               }
             ]
           }
@@ -54656,10 +54683,6 @@
               {
                 "kind": "Builtin",
                 "name": "Unit"
-              },
-              {
-                "kind": "Builtin",
-                "name": "string"
               }
             ]
           }
@@ -54709,7 +54732,10 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": ["burn_time", "half_burn_time"],
+            "names": [
+              "burn_time",
+              "half_burn_time"
+            ],
             "parameters": [
               {
                 "kind": "Builtin",

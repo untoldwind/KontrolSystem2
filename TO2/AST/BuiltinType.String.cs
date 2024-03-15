@@ -9,6 +9,7 @@ namespace KontrolSystem.TO2.AST;
 public abstract partial class BuiltinType {
     private class TO2SString : BuiltinType {
         private readonly OperatorCollection allowedOperators;
+        private readonly IAssignEmitter errorToStringAssign;
 
         internal TO2SString() {
             allowedOperators = new OperatorCollection {
@@ -147,6 +148,7 @@ public abstract partial class BuiltinType {
                         typeof(string), typeof(string).GetProperty("Length"), OpCodes.Conv_I8)
                 }
             };
+            errorToStringAssign = new ErrorToStringAssign();
         }
 
         public override Dictionary<string, IMethodInvokeFactory> DeclaredMethods { get; }
@@ -162,8 +164,35 @@ public abstract partial class BuiltinType {
             return allowedOperators;
         }
 
+        public override bool IsAssignableFrom(ModuleContext context, TO2Type otherType) {
+            return otherType == String || otherType == Error;
+        }
+
+        public override IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) {
+            return otherType == Error ? errorToStringAssign : DefaultAssignEmitter.Instance;
+        }
+
         public override IREPLValue REPLCast(object? value) {
             return new REPLString((string)value!);
+        }
+    }
+    
+    private class ErrorToStringAssign : IAssignEmitter {
+        public void EmitAssign(IBlockContext context, IBlockVariable variable, Expression expression,
+            bool dropResult) {
+            expression.EmitCode(context, false);
+            context.IL.Emit(OpCodes.Ldfld, typeof(Error).GetField("message"));
+            if (!dropResult) context.IL.Emit(OpCodes.Dup);
+            variable.EmitStore(context);
+        }
+
+        public void EmitConvert(IBlockContext context) {
+            context.IL.Emit(OpCodes.Ldfld, typeof(Error).GetField("message"));
+        }
+
+        public IREPLValue EvalConvert(Node node, IREPLValue value) {
+            if (value is REPLAny a) return new REPLString(a.ToString());
+            throw new REPLException(node, $"Expected error value: {value.Type.Name}");
         }
     }
 }

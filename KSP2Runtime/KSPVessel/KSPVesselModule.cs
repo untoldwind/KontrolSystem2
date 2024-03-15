@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using KontrolSystem.Parsing;
 using KontrolSystem.TO2;
 using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Binding;
@@ -22,7 +21,7 @@ public partial class KSPVesselModule {
     [KSFunction(
         Description = "Try to get the currently active vessel. Will result in an error if there is none."
     )]
-    public static Result<VesselAdapter, string> ActiveVessel() {
+    public static Result<VesselAdapter> ActiveVessel() {
         var context = KSPContext.CurrentContext;
 
         return VesselAdapter.NullSafe(context, context.ActiveVessel)
@@ -192,6 +191,6 @@ public partial class KSPVesselModule {
         BindingGenerator.RegisterTypeMapping(typeof(FlightCtrlState),
             FlightCtrlStateBinding.FlightCtrlStateType);
 
-        return (enumTypes.Concat(FlightCtrlStateBinding.FlightCtrlStateType.Yield()), enumConstants);
+        return (enumTypes.Append(FlightCtrlStateBinding.FlightCtrlStateType), enumConstants);
     }
 }

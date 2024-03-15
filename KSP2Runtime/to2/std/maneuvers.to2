@@ -11,7 +11,7 @@ use { CONSOLE } from ksp::console
 /// Calculate the required delta-v and time to change the given `orbit`
 /// to a (mostly) circular orbit at the next apoapsis (if `orbit` is elliplic) 
 /// or periapsis (if `orbit` is hyperbolic).
-pub sync fn circularize_orbit(orbit : Orbit) -> Result<(delta_v: Vec3, UT: float), string> = {
+pub sync fn circularize_orbit(orbit : Orbit) -> Result<(delta_v: Vec3, UT: float)> = {
     const UT = if(orbit.eccentricity < 1) orbit.next_apoapsis_time().value else orbit.next_periapsis_time()
 
     (delta_v: circularize_orbit_at(orbit, UT), UT: UT)
@@ -19,7 +19,7 @@ pub sync fn circularize_orbit(orbit : Orbit) -> Result<(delta_v: Vec3, UT: float
 
 /// Calculate the required delta-v and time to change the given `orbit`
 /// to a (mostly) circular orbit at the next periapsis
-pub sync fn circularize_orbit_pe(orbit : Orbit) -> Result<(delta_v: Vec3, UT: float), string> = {
+pub sync fn circularize_orbit_pe(orbit : Orbit) -> Result<(delta_v: Vec3, UT: float)> = {
     const UT = orbit.next_periapsis_time()
 
     (delta_v: circularize_orbit_at(orbit, UT), UT: UT)
@@ -62,7 +62,7 @@ pub sync fn ellipticize(orbit : Orbit, UT : float, periapsis : float, apoapsis :
 
 /// Calculate the required delta-v to change the periapsis of an `orbit` 
 /// to `periapsis_radius` at time `UT`
-pub sync fn change_periapsis(orbit : Orbit, UT : float, periapsis_radius : float) -> Result<Vec3, string> = {
+pub sync fn change_periapsis(orbit : Orbit, UT : float, periapsis_radius : float) -> Result<Vec3> = {
     const radius = orbit.radius(UT)
     const new_periapsis_radius = math::clamp(periapsis_radius, 1, radius - 1)
     const raising = new_periapsis_radius > orbit.periapsis_radius
@@ -79,7 +79,7 @@ pub sync fn change_periapsis(orbit : Orbit, UT : float, periapsis_radius : float
 
 /// Calculate the required delta-v to change the apoapsis of an `orbit` 
 /// to `apoapsis_radius` at time `UT`
-pub sync fn change_apoapsis(orbit : Orbit, UT : float, apoapsis_radius : float) -> Result<Vec3, string> = {
+pub sync fn change_apoapsis(orbit : Orbit, UT : float, apoapsis_radius : float) -> Result<Vec3> = {
     const radius = orbit.radius(UT)
     const new_apoapsis_radius = if(new_apoapsis_radius > 0) math::max(apoapsis_radius, radius + 1) else apoapsis_radius
     const raising = new_apoapsis_radius > orbit.apoapsis_radius.ok_or("Can not change apoapsis of hyperbolic orbit")?
@@ -97,7 +97,7 @@ pub sync fn change_apoapsis(orbit : Orbit, UT : float, apoapsis_radius : float) 
 /// Calculate delta-v to intercept a `target` orbit starting nearly at time `UT` with
 /// a nearly transfer time of `TT`. `UT` and `TT` will be optimized for a minimal delta-v for
 /// acceleration and deacceleration.
-pub sync fn bi_impulsive_transfer_near(start : Orbit, target : Orbit, UT : float, TT : float) -> Result<(delta_v: Vec3, UT: float, TT: float), string> = {
+pub sync fn bi_impulsive_transfer_near(start : Orbit, target : Orbit, UT : float, TT : float) -> Result<(delta_v: Vec3, UT: float, TT: float)> = {
     const (x, y) = amoeba_optimize_perturbation(fn(start_eta : float, tof : float) -> {
         const UT1 = UT + start_eta
         const UT2 = UT1 + tof
@@ -116,7 +116,7 @@ pub sync fn bi_impulsive_transfer_near(start : Orbit, target : Orbit, UT : float
 ///
 /// Will result in an error if maneuver nodes cannot be created 
 /// (e.g. because command or tracking facility has not been sufficiently upgraded)
-pub sync fn bi_impulsive_transfer(start : Orbit, target : Orbit, min_UT : float, max_UT : float = -math::MAX_FLOAT) -> Result<(delta_v: Vec3, UT: float, TT: float), string> = {
+pub sync fn bi_impulsive_transfer(start : Orbit, target : Orbit, min_UT : float, max_UT : float = -math::MAX_FLOAT) -> Result<(delta_v: Vec3, UT: float, TT: float)> = {
     const a = (start.semi_major_axis.abs + target.semi_major_axis.abs) / 2
     const max_start = if(max_UT > min_UT) max_UT - min_UT else 1.5 * start.synodic_period(target)
     const max_tof = math::PI * math::sqrt(a * a * a / start.reference_body.grav_parameter)
@@ -130,7 +130,7 @@ pub sync fn bi_impulsive_transfer(start : Orbit, target : Orbit, min_UT : float,
     bi_impulsive_transfer_near(start, target, min_UT + best.x, best.y)
 }
 
-pub sync fn bi_impulsive_transfer_body(start : Orbit, target : Body, min_UT : float, target_periapsis : float) -> Result<(delta_v: Vec3, UT: float, TT: float), string> = {
+pub sync fn bi_impulsive_transfer_body(start : Orbit, target : Body, min_UT : float, target_periapsis : float) -> Result<(delta_v: Vec3, UT: float, TT: float)> = {
     const (delta_v, UT, TT) = bi_impulsive_transfer(start, target.orbit, min_UT)?
     const target_PeR = if(target_periapsis > 0) target_periapsis + target.radius else target_periapsis - target.radius
 
@@ -338,7 +338,7 @@ pub sync fn match_periapsis(start : Orbit, target : Orbit) -> (delta_v: Vec3, UT
     (delta_v: v2 - v1, UT: UT)
 }
 
-pub sync fn match_apoapsis(start : Orbit, target : Orbit) -> Result<(delta_v: Vec3, UT: float), string> = {
+pub sync fn match_apoapsis(start : Orbit, target : Orbit) -> Result<(delta_v: Vec3, UT: float)> = {
     const ap_pos = target.relative_position(target.next_apoapsis_time().ok_or("Hyperbolic orbit")?)
     const UT = start.time_of_true_anomaly(start.true_anomaly_from_vector(-ap_pos.normalized), current_time() + 2)
     
