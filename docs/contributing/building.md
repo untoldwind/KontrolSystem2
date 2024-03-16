@@ -9,17 +9,17 @@
 
 ## Windows
 
-* Install Visual Studio 2022 Community edition (or bigger)
-  * Add Commandline Tools and support for `.NET 4.7.2` target
+* Install Visual Studio 2022 Community edition (or higher)
+  * Add Commandline Tools and support for `.NET 8.0` target
 
 In the 'VS` commmand line or powershell
 
 ```
-msbuild -t:build,test -restore -Property:Configuration=Release
+dotnet build  -restore -Property:Configuration=Release
 ```
 should build everything to the `dist` folder
 
-There are powershell helper script `build.ps1`  and `clean.ps1` to do this with slightly better control.
+There are powershell helper script `build.ps1` and `clean.ps1` to do this with slightly better control.
 
 ## Linux
 
@@ -31,8 +31,8 @@ If you have installed the game via steam/proton you should set an environment va
 export KSP2_BASE_DIR=$HOME/.local/share/Steam/steamapps/common/Kerbal\ Space\ Program\ 2
 ```
 
-* Install mono and msbuild for mono.
-  * Package names will vary on distribution. For ArchLinux based distributions this would be `mono` and `mono-msbuild`
+* Install dotnet-sdk and dotnet-host for version 8.0
+  * Package names will vary on distribution. For ArchLinux based distributions this would be `dotnet-sdk` and `dotnet-host`
 
 ```
 msbuild -t:build,test -restore -Property:Configuration=Release
@@ -43,4 +43,4 @@ There are some helper scripts `build.sh` and `clean.sh` to do this with slightly
 
 ## IDE
 
-Depending on your IDE you might have to set a global msbuild property `KSP2_BASE_DIR`. Otherwise I had no problem importing the solution to VS Code 2022 or Rider.
+Depending on your IDE you might have to set a global msbuild property `KSP2_BASE_DIR`. Otherwise, I had no problem importing the solution to VS Code 2022 or Rider.
