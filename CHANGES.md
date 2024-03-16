@@ -1,5 +1,25 @@
 # Changes
 
+## 0.5.6.3 ->
+
+### `Result<T, E>` overhaul.
+
+Background:
+* The main use-case of `Result<T, E>` is to serve as return of a function that can either have a successful result of
+  type `T` or an error of type `E`.
+* In pretty much all cases the error is just a `string`, i.e. the common use is `Result<T, string>`
+
+Changes:
+* For simplification the type parameter for the error case is dropped, i.e. a result is just `Result<T>`
+  * The old notation `Result<T, E>` (or rather `Result<T, string>`) will still work, but the second parameter is ignored
+* The `result.error` field is now a newly introduced `core::error::Error`
+  * For compatibility `core::error::Error` will be automatically converted to a string
+  * Just like before an error `Result` can be created using the builtin `Err` function with an error message
+* In addition to the error `message` the `core::error::Error` additional contains a `stack_trace` to help locating
+  where the `Error` was created
+* As an additional helper there this a `core::error::current_stack()` function to obtain the current stack trace for
+  debugging purposes.
+
 ## 0.5.6.2 -> 0.5.6.3
 
 * Add `ObjectAssemblyEngineDeltaV.engine` and `ObjectAssemblyEngineDeltaV.part` field

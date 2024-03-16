@@ -1166,6 +1166,26 @@
               }
             ]
           }
+        },
+        "ellipsis": {
+          "isAsync": false,
+          "name": "ellipsis",
+          "description": "Truncate string with ellipsis if necessary",
+          "parameters": [
+            {
+              "name": "max_length",
+              "type": {
+                "kind": "Builtin",
+                "name": "int"
+              },
+              "hasDefault": false,
+              "description": "Maximum length of result string"
+            }
+          ],
+          "returnType": {
+            "kind": "Builtin",
+            "name": "string"
+          }
         }
       },
       "suffixOperators": {
@@ -3910,6 +3930,20 @@
                 "kind": "Builtin",
                 "name": "string"
               }
+            },
+            "stack_trace": {
+              "name": "stack_trace",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "core::error",
+                    "name": "StackEntry"
+                  }
+                ]
+              }
             }
           },
           "methods": {
@@ -3968,14 +4002,41 @@
               }
             }
           },
-          "methods": {},
+          "methods": {
+            "to_string": {
+              "isAsync": false,
+              "name": "to_string",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            }
+          },
           "assignableFromAny": false,
           "assignableFrom": []
         }
       },
       "typeAliases": {},
       "constants": {},
-      "functions": {}
+      "functions": {
+        "current_stack": {
+          "isAsync": false,
+          "name": "current_stack",
+          "description": "Get current stack.\n",
+          "parameters": [],
+          "returnType": {
+            "kind": "Array",
+            "parameters": [
+              {
+                "kind": "Standard",
+                "module": "core::error",
+                "name": "StackEntry"
+              }
+            ]
+          }
+        }
+      }
     },
     "core::logging": {
       "name": "core::logging",
