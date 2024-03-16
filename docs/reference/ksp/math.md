@@ -825,7 +825,7 @@ pub sync fn angle_delta ( a : float,
                           b : float ) -> float
 ```
 
-Calculate the difference between to angles in degree (-180 .. 180)
+Calculate the difference between two angles in degree (-180 .. 180)
 
 Parameters
 

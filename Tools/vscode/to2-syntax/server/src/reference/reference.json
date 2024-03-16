@@ -10999,7 +10999,7 @@
         "angle_delta": {
           "isAsync": false,
           "name": "angle_delta",
-          "description": "Calculate the difference between to angles in degree (-180 .. 180)",
+          "description": "Calculate the difference between two angles in degree (-180 .. 180)",
           "parameters": [
             {
               "name": "a",

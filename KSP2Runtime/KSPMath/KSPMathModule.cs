@@ -68,7 +68,7 @@ public class KSPMathModule {
                 "Create a Direction from a fore-vector and an up-vector", typeof(Vector), typeof(Vector)),
 
             Direct.BindFunction(typeof(ExtraMath), "AngleDelta",
-                "Calculate the difference between to angles in degree (-180 .. 180)", typeof(double),
+                "Calculate the difference between two angles in degree (-180 .. 180)", typeof(double),
                 typeof(double)),
             Direct.BindFunction(typeof(Matrix2x2Binding), "Matrix2x2", "Create a new 2-dimensional matrix",
                 typeof(double), typeof(double), typeof(double), typeof(double)),
