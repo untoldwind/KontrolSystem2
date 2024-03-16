@@ -18,4 +18,10 @@ public static class StringMethods {
     public static string[] Split(string source, string separator) {
         return source.Split(separator);
     }
+
+    public static string Ellipsis(string source, long maxLength) {
+        if (source.Length <= maxLength) return source;
+
+        return source.Substring(0, (int)maxLength - 3) + "...";
+    }
 }

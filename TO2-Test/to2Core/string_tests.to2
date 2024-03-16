@@ -94,3 +94,11 @@ test sync fn test_string_split() -> Unit = {
     assert_string("[abcdefgh]", "abcdefgh".split(",").to_string())
     assert_string("[a, b, c, de, fgh]", "a,b,c,de,fgh".split(",").to_string())
 }
+
+test sync fn test_string_ellipsis() -> Unit = {
+    assert_string("1234567", "1234567".ellipsis(10))
+    assert_string("1234567890", "1234567890".ellipsis(10))
+    assert_string("1234567...", "12345678901".ellipsis(10))
+    assert_string("1234567...", "123456789012346".ellipsis(10))
+
+}

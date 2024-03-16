@@ -3,6 +3,7 @@ using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.TO2;
 using KontrolSystem.TO2.Runtime;
 using KSP.Sim.impl;
+using UniLinq;
 
 namespace KontrolSystem.KSP.Runtime.Core;
 
@@ -34,11 +35,17 @@ public class KontrolSystemProcess(ITO2Logger logger, IKontrolModule module) {
         return this;
     }
 
-    public void MarkDone(string? message) {
+    public void MarkDone(string? message, CoreError.StackEntry[]? stackTrace) {
         if (!string.IsNullOrEmpty(message)) {
             logger.Info($"Process {id} for module {module.Name} terminated with: {message}");
             context?.ConsoleBuffer.Print(
                 $"\n\n>>>>> ERROR <<<<<<<<<\n\nModule {module.Name} terminated with:\n{message}");
+            if (stackTrace != null) {
+                context?.ConsoleBuffer.Print("\n\nStackTrace:\n");
+                foreach (var stackEntry in stackTrace.Take(10)) {
+                    context?.ConsoleBuffer.Print($"{stackEntry}\n");
+                }
+            }
         }
 
         State = KontrolSystemProcessState.Available;

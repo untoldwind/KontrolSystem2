@@ -7,12 +7,12 @@ namespace KontrolSystem.KSP.Runtime;
 
 public class CorouttineAdapter : IEnumerator {
     private readonly IKSPContext context;
-    private readonly Action<string?> onDone;
+    private readonly Action<string?, CoreError.StackEntry[]?> onDone;
 
     private object? current = new WaitForFixedUpdate();
     private IAnyFuture? process;
 
-    public CorouttineAdapter(IAnyFuture process, IKSPContext context, Action<string?> onDone) {
+    public CorouttineAdapter(IAnyFuture process, IKSPContext context, Action<string?, CoreError.StackEntry[]?> onDone) {
         this.process = process;
         this.context = context;
         this.onDone = onDone;
@@ -29,7 +29,7 @@ public class CorouttineAdapter : IEnumerator {
             var result = process.Poll();
             if (result.IsReady) {
                 process = null;
-                onDone(ExtractMessage(result.ValueObject));
+                onDone(ExtractMessage(result.ValueObject), ExtractStackTrace(result.ValueObject));
                 return false;
             } else {
                 current = context.NextYield;
@@ -40,7 +40,7 @@ public class CorouttineAdapter : IEnumerator {
             context.Logger.LogException(e);
 
             process = null;
-            onDone(ExtractMessage(e));
+            onDone(ExtractMessage(e), ExtractStackTrace(e));
             return false;
         } finally {
             ContextHolder.CurrentContext.Value = null;
@@ -59,6 +59,15 @@ public class CorouttineAdapter : IEnumerator {
         switch (resultValue) {
         case IAnyResult anyResult: return anyResult.ErrorString;
         case Exception exception: return exception.Message;
+        default: return null;
+        }
+    }
+
+    private CoreError.StackEntry[]? ExtractStackTrace(object? resultValue) {
+        if (resultValue == null) return null;
+
+        switch (resultValue) {
+        case IAnyResult anyResult: return anyResult.ErrorObject?.StackTrace;
         default: return null;
         }
     }

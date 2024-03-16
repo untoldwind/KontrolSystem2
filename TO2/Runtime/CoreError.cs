@@ -13,11 +13,13 @@ public class CoreError {
     }
 
     [KSClass("Error", Description = "Error information of a failed Result.")]
-    public class Error(string message) {
+    public class Error(string message, StackEntry[] stackTrace) {
         public string message = message;
 
         [KSField]
         public string Message => message;
+
+        [KSField] public StackEntry[] StackTrace => stackTrace;
 
         [KSMethod]
         public override string ToString() => message;
@@ -38,6 +40,6 @@ public class CoreError {
         public long Line => line;
 
         [KSMethod]
-        public override string ToString() => $"{FunctionName}({string.Join(",", Arguments)}) [{SourceName}:{Line}]";
+        public override string ToString() => $"[{SourceName}:{Line}] {FunctionName}({string.Join(",", arguments.Select(arg => StringMethods.Ellipsis(arg.ToString(), 12)))}) ";
     }
 }
