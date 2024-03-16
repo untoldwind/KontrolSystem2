@@ -256,7 +256,9 @@ pub struct SteeringControl(manager: SteeringManager, controller: SteeringControl
 impl SteeringControl {
     /// Set the desired target direction in coordinate system independent form.  
     sync fn set_global_direction(self, dir: GlobalDirection) -> Unit = {
-        self.controller.target_direction = dir
+        const frame = self.controller.vessel.main_body.celestial_frame
+        // Reframe to celestial frame to ensure direction is stable in space
+        self.controller.target_direction = dir.to_local(frame).to_global(frame) 
     }
 
     /// Set the desired target direction in the coordinate system of the main body of the controlled vessel.
