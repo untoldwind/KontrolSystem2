@@ -28,8 +28,12 @@ public class Break(Position start = new(), Position end = new()) : Expression(st
             return;
         }
 
+        int stackCount = context.IL.StackCount;
+        for (var i = stackCount; i > 0; i--) context.IL.Emit(OpCodes.Pop);
         context.IL.Emit(context.InnerLoop.Value.end.isShort ? OpCodes.Br_S : OpCodes.Br,
             context.InnerLoop.Value.end);
+        context.IL.AdjustStack(stackCount);
+
     }
 
     public override REPLValueFuture Eval(REPLContext context) {
@@ -60,8 +64,11 @@ public class Continue(Position start = new(), Position end = new()) : Expression
             return;
         }
 
+        int stackCount = context.IL.StackCount;
+        for (var i = stackCount; i > 0; i--) context.IL.Emit(OpCodes.Pop);
         context.IL.Emit(context.InnerLoop.Value.start.isShort ? OpCodes.Br_S : OpCodes.Br,
             context.InnerLoop.Value.start);
+        context.IL.AdjustStack(stackCount);
     }
 
     public override REPLValueFuture Eval(REPLContext context) {

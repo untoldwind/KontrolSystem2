@@ -170,3 +170,20 @@ test sync fn test_option_then() -> Unit = {
 test sync fn test_option_autocast() -> Unit = {
     assert_some(1234, 1234)
 }
+
+test sync fn test_option_continue() -> Unit = {
+    const opt_arr = <Option<string>>[Some("123"), None(), Some("456"), None(), Some("789"), Some("last")]
+    let builder : ArrayBuilder<string> = ArrayBuilder(100)
+    
+    for(opt_a in opt_arr) {
+        const a = "a_" + {
+            if(!opt_a.defined) continue
+            opt_a.value
+        }
+        builder.append(a)
+    }
+    
+    const arr = builder.result()
+    
+    assert_string("[a_123, a_456, a_789, a_last]", arr.to_string())
+}

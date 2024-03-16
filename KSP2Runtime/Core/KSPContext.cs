@@ -323,7 +323,7 @@ public class BackgroundKSPContext : IContext {
         callStack.TryPop(out _);
     }
 
-    public CoreError.StackEntry[] CurrentStack() => callStack.Reverse() <.ToArray();
+    public CoreError.StackEntry[] CurrentStack() => callStack.Reverse().ToArray();
 
     public void Cleanup() {
         if (token.Token.CanBeCanceled) token.Cancel();
