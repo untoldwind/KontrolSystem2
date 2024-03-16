@@ -201,7 +201,7 @@ public class Mainframe : KerbalMonoBehaviour {
                 .ToArray();
             var activeVessel = vessel ?? Game.ViewController.GetActiveSimVessel();
             var adapter = new CorouttineAdapter(entrypoint(activeVessel, arguments), context,
-                message => OnProcessDone(process, message));
+                (message, stackTrace) => OnProcessDone(process, message, stackTrace));
             process.MarkRunning(context);
 
             var coroutine = StartCoroutine(adapter);
@@ -235,7 +235,7 @@ public class Mainframe : KerbalMonoBehaviour {
         case KontrolSystemProcessState.Outdated:
             if (coroutines.TryGetValue(process.id, out var coroutine)) {
                 StopCoroutine(coroutine);
-                OnProcessDone(process, "Aborted by pilot");
+                OnProcessDone(process,"Aborted by pilot", process.context?.CurrentStack());
             }
 
             return true;
@@ -249,16 +249,16 @@ public class Mainframe : KerbalMonoBehaviour {
         foreach (var process in processes)
             if (coroutines.TryGetValue(process.id, out var coroutine)) {
                 StopCoroutine(coroutine);
-                OnProcessDone(process, "Aborted by pilot", false);
+                OnProcessDone(process, "Aborted by pilot", process.context?.CurrentStack(), false);
             }
 
         availableProcessesChanged.Invoke();
     }
 
-    private void OnProcessDone(KontrolSystemProcess process, string? message, bool triggerEvent = true) {
+    private void OnProcessDone(KontrolSystemProcess process, string? message, CoreError.StackEntry[]? stackTrace, bool triggerEvent = true) {
         if (process.State == KontrolSystemProcessState.Outdated) processes?.Remove(process);
 
-        process.MarkDone(message);
+        process.MarkDone(message, stackTrace);
         coroutines.Remove(process.id);
 
         if (triggerEvent) availableProcessesChanged.Invoke();

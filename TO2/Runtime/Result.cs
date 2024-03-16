@@ -30,7 +30,7 @@ public static class Result {
     }
 
     public static Result<T> Err<T>(string error) {
-        return new Result<T>(false, default, new CoreError.Error(error));
+        return new Result<T>(false, default, new CoreError.Error(error, ContextHolder.CurrentContext.Value?.CurrentStack() ?? []));
     }
 
     public static Result<T> Err<T>(CoreError.Error error) {

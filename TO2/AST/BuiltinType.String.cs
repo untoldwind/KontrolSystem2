@@ -138,6 +138,13 @@ public abstract partial class BuiltinType {
                         () => new ArrayType(String),
                         () => [new("separator", String, "Search string (separator)")],
                         false, typeof(StringMethods), typeof(StringMethods).GetMethod("Split"))
+                },
+                {
+                    "ellipsis",
+                    new BoundMethodInvokeFactory("Truncate string with ellipsis if necessary", true,
+                        () => String,
+                        () => [new("max_length", Int, "Maximum length of result string")],
+                        false, typeof(StringMethods), typeof(StringMethods).GetMethod("Ellipsis"))
                 }
             };
             DeclaredFields = new Dictionary<string, IFieldAccessFactory> {
