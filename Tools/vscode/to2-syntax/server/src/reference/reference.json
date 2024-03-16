@@ -48997,7 +48997,7 @@
             "heading_direction": {
               "isAsync": false,
               "name": "heading_direction",
-              "description": "Calculate a direction in the celestial frame of the main body based on\nheading, pitch an roll relative to the horizon.\n",
+              "description": "Calculate a direction in the celestial frame of the main body based on\nheading, pitch and roll relative to the horizon.\n",
               "parameters": [
                 {
                   "name": "degreesFromNorth",
@@ -49036,7 +49036,7 @@
             "global_heading_direction": {
               "isAsync": false,
               "name": "global_heading_direction",
-              "description": "Calculate a coordinate system independent direction based on\nheading, pitch an roll relative to the horizon.\n",
+              "description": "Calculate a coordinate system independent direction based on\nheading, pitch and roll relative to the horizon.\n",
               "parameters": [
                 {
                   "name": "degreesFromNorth",

@@ -387,7 +387,7 @@ public partial class KSPVesselModule {
         }
 
         [KSMethod(Description = @"Calculate a direction in the celestial frame of the main body based on
-                heading, pitch an roll relative to the horizon.")]
+                heading, pitch and roll relative to the horizon.")]
         public Direction HeadingDirection(double degreesFromNorth, double pitchAboveHorizon, double roll) {
             var q = vessel.mainBody.transform.celestialFrame.ToLocalRotation(HorizonFrame,
                 QuaternionD.Euler(-pitchAboveHorizon, degreesFromNorth, roll));
@@ -395,7 +395,7 @@ public partial class KSPVesselModule {
         }
 
         [KSMethod(Description = @"Calculate a coordinate system independent direction based on
-                heading, pitch an roll relative to the horizon.")]
+                heading, pitch and roll relative to the horizon.")]
         public RotationWrapper GlobalHeadingDirection(double degreesFromNorth, double pitchAboveHorizon,
             double roll) {
             return new RotationWrapper(new Rotation(HorizonFrame,
