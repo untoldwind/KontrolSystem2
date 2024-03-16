@@ -235,7 +235,7 @@ public class Mainframe : KerbalMonoBehaviour {
         case KontrolSystemProcessState.Outdated:
             if (coroutines.TryGetValue(process.id, out var coroutine)) {
                 StopCoroutine(coroutine);
-                OnProcessDone(process,"Aborted by pilot", process.context?.CurrentStack());
+                OnProcessDone(process, "Aborted by pilot", process.context?.CurrentStack());
             }
 
             return true;
