@@ -11215,7 +11215,7 @@
         },
         "ObjectAssemblyBuilder": {
           "name": "ObjectAssemblyBuilder",
-          "description": "Represents the current object assembly builder/\n",
+          "description": "Represents the current object assembly builder.\n",
           "fields": {
             "main_assembly": {
               "name": "main_assembly",
