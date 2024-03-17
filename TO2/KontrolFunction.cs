@@ -25,8 +25,6 @@ public interface IKontrolFunction {
 
     bool IsAsync { get; }
 
-    bool WantsCallSite { get; }
-
     object Invoke(IContext context, params object[] args);
 }
 
@@ -81,7 +79,6 @@ public class CompiledKontrolFunction : IKontrolFunction {
         Parameters = parameters;
         ReturnType = returnType;
         RuntimeMethod = runtimeMethod ?? throw new ArgumentException($"Method is null for {name} : {returnType}");
-        WantsCallSite = typeof(Result<>).IsAssignableFrom(RuntimeMethod.ReturnType);
     }
 
     public IKontrolModule? Module { get; internal set; }
@@ -94,9 +91,7 @@ public class CompiledKontrolFunction : IKontrolFunction {
     public bool IsAsync { get; }
 
     public bool IsCompiled => true;
-
-    public bool WantsCallSite { get; }
-
+    
     public object Invoke(IContext context, params object[] args) {
         try {
             ContextHolder.CurrentContext.Value = context;
@@ -138,8 +133,6 @@ public class DeclaredKontrolFunction : IKontrolFunction {
 
     public bool IsAsync => to2Function.isAsync;
 
-    public bool WantsCallSite => false;
-
     public object Invoke(IContext context, params object[] args) {
         throw new NotSupportedException($"Function {to2Function.name} not yet compiled");
     }
@@ -173,8 +166,6 @@ public class DeclaredKontrolStructConstructor : IKontrolFunction {
     public bool IsCompiled => false;
 
     public bool IsAsync => false;
-
-    public bool WantsCallSite => false;
 
     public object Invoke(IContext context, params object[] args) {
         throw new NotSupportedException($"Function {to2Struct.name} not yet compiled");

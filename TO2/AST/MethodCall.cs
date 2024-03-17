@@ -185,10 +185,6 @@ public class MethodCall : Expression {
             return;
         }
 
-        if (methodInvoker.WantsCallSite) {
-            ILChunks.GenerateCallSite(context, methodName, Start.sourceName, Start.line);
-        }
-        
         int i;
         for (i = 0; i < arguments.Count; i++) {
             var argumentType = arguments[i].ResultType(context);
@@ -223,6 +219,10 @@ public class MethodCall : Expression {
                 methodInvoker.Parameters[i].defaultValue!.EmitCode(context);
 
         if (context.HasErrors) return;
+
+        if (methodInvoker.ResultType is ResultType) {
+            ILChunks.GenerateCallSite(context, methodName, Start.sourceName, Start.line);
+        }
 
         methodInvoker.EmitCode(context);
         if (methodInvoker.IsAsync) context.RegisterAsyncResume(methodInvoker.ResultType);
@@ -295,6 +295,10 @@ public class MethodCall : Expression {
         var invokeMethod = functionType.GeneratedType(context.ModuleContext).GetMethod("Invoke") ??
                            throw new ArgumentException($"No Invoke method in generated ${functionType}");
 
+        if (functionType.returnType.UnderlyingType(context.ModuleContext) is ResultType) {
+            ILChunks.GenerateCallSite(context, methodName, Start.sourceName, Start.line);
+        }
+        
         context.IL.EmitCall(OpCodes.Callvirt, invokeMethod, arguments.Count + 1);
         if (functionType.isAsync) context.RegisterAsyncResume(functionType.returnType);
         if (dropResult && invokeMethod.ReturnType != typeof(void)) context.IL.Emit(OpCodes.Pop);

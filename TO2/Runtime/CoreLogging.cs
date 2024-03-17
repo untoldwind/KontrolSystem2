@@ -4,7 +4,7 @@ namespace KontrolSystem.TO2.Runtime;
 
 [KSModule("core::logging",
     Description =
-        "Provides basic logging. In KSP all log messages will appear in the debug console as well as the `KSP.log` file."
+        "Provides basic low-level logging. In KSP all log messages will appear in the debug console as well as the `KSP.log` file."
 )]
 public class CoreLogging {
     private static ITO2Logger? Logger => ContextHolder.CurrentContext.Value?.Logger;

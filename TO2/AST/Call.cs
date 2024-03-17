@@ -195,6 +195,10 @@ public class Call : Expression {
         var invokeMethod = functionType.GeneratedType(context.ModuleContext).GetMethod("Invoke") ??
                            throw new ArgumentException($"No Invoke method in generated ${functionType}");
 
+        if (functionType.returnType.UnderlyingType(context.ModuleContext) is ResultType) {
+            ILChunks.GenerateCallSite(context, functionName, Start.sourceName, Start.line);
+        }
+
         context.IL.EmitCall(OpCodes.Callvirt, invokeMethod, arguments.Count + 1);
         if (functionType.isAsync) context.RegisterAsyncResume(functionType.returnType);
         if (dropResult && invokeMethod.ReturnType != typeof(void)) context.IL.Emit(OpCodes.Pop);
@@ -268,11 +272,7 @@ public class Call : Expression {
         foreach (var argument in arguments) argument.Prepare(context);
 
         if (context.HasErrors) return;
-
-        if (function.WantsCallSite) {
-            ILChunks.GenerateCallSite(context, functionName, Start.sourceName, Start.line);
-        }
-
+        
         for (i = 0; i < arguments.Count; i++) {
             arguments[i].EmitCode(context, false);
             if (!context.HasErrors)
@@ -285,6 +285,10 @@ public class Call : Expression {
                 function.Parameters[i].defaultValue!.EmitCode(context);
 
         if (context.HasErrors) return;
+
+        if (function.ReturnType is ResultType) {
+            ILChunks.GenerateCallSite(context, functionName, Start.sourceName, Start.line);
+        }
 
         context.IL.EmitCall(OpCodes.Call, genericMethod, function.Parameters.Count);
         if (function.IsAsync) context.RegisterAsyncResume(genericResult);
