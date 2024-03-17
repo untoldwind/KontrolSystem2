@@ -29252,7 +29252,7 @@
             },
             "Vaccum": {
               "name": "Vaccum",
-              "description": "Calculate delta-v in vacuum.",
+              "description": "Calculate delta-v in vacuum. (Typo is in the game, maybe will get fixed some day)",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
