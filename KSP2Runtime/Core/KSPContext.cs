@@ -120,7 +120,9 @@ public class KSPCoreContext : IKSPContext {
         callStack.TryPop(out _);
     }
 
-    public CoreError.StackEntry[] CurrentStack() => callStack.Reverse().ToArray();
+    public CoreError.StackEntry? CurrentCallSite { get; set; }
+
+    public IEnumerable<CoreError.StackEntry> CurrentStack() => callStack.Reverse();
 
     public IContext CloneBackground(CancellationTokenSource token) {
         var childContext = new BackgroundKSPContext(Logger, ConsoleBuffer, token);
@@ -323,7 +325,9 @@ public class BackgroundKSPContext : IContext {
         callStack.TryPop(out _);
     }
 
-    public CoreError.StackEntry[] CurrentStack() => callStack.Reverse().ToArray();
+    public CoreError.StackEntry? CurrentCallSite { get; set; }
+
+    public IEnumerable<CoreError.StackEntry> CurrentStack() => callStack.Reverse();
 
     public void Cleanup() {
         if (token.Token.CanBeCanceled) token.Cancel();

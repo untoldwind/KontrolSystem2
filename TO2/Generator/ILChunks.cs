@@ -31,4 +31,12 @@ public class ILChunks {
     public static void GenerateFunctionLeave(IBlockContext context) {
         context.IL.EmitCall(OpCodes.Call, typeof(ContextHolder).GetMethod("FunctionLeave")!, 0);
     }
+
+    public static void GenerateCallSite(IBlockContext context, string name, string sourceName, int line) {
+        context.IL.Emit(OpCodes.Ldstr, name);
+        context.IL.Emit(OpCodes.Ldstr, sourceName);
+        context.IL.Emit(OpCodes.Ldc_I4, line);
+
+        context.IL.EmitCall(OpCodes.Call, typeof(ContextHolder).GetMethod("SetCallSite")!, 3);
+    }
 }

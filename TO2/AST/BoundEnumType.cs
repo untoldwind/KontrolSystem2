@@ -258,6 +258,8 @@ internal class EnumFromStringMethodEmitter : IMethodInvokeEmitter {
 
     public bool IsAsync => false;
 
+    public bool WantsCallSite => false;
+
     public void EmitCode(IBlockContext context) {
         context.IL.EmitCall(OpCodes.Call,
             typeof(BoundEnumConstType).GetMethod("FromString")!.MakeGenericMethod(boundEnumType.enumType), 1);

@@ -1,4 +1,7 @@
-﻿namespace KontrolSystem.TO2.Runtime;
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace KontrolSystem.TO2.Runtime;
 
 public interface IAnyResult {
     bool Success { get; }
@@ -30,7 +33,12 @@ public static class Result {
     }
 
     public static Result<T> Err<T>(string error) {
-        return new Result<T>(false, default, new CoreError.Error(error, ContextHolder.CurrentContext.Value?.CurrentStack() ?? []));
+        var context = ContextHolder.CurrentContext.Value;
+        var callSite = context?.CurrentCallSite;
+        var stack = context?.CurrentStack() ?? [];
+        IEnumerable<CoreError.StackEntry> fullStack = callSite != null ? [callSite, .. stack] : stack;
+
+        return new Result<T>(false, default, new CoreError.Error(error, fullStack.ToArray()));
     }
 
     public static Result<T> Err<T>(CoreError.Error error) {

@@ -269,6 +269,10 @@ public class Call : Expression {
 
         if (context.HasErrors) return;
 
+        if (function.WantsCallSite) {
+            ILChunks.GenerateCallSite(context, functionName, Start.sourceName, Start.line);
+        }
+
         for (i = 0; i < arguments.Count; i++) {
             arguments[i].EmitCode(context, false);
             if (!context.HasErrors)

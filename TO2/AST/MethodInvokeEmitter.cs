@@ -17,6 +17,8 @@ public interface IMethodInvokeEmitter {
 
     bool IsAsync { get; }
 
+    bool WantsCallSite { get; }
+
     void EmitCode(IBlockContext context);
 
     REPLValueFuture Eval(Node node, IREPLValue[] targetWithArguments);
@@ -108,6 +110,8 @@ public class InlineMethodInvokeEmitter : IMethodInvokeEmitter {
 
 
     public bool IsAsync => false;
+
+    public bool WantsCallSite => false;
 
     public bool RequiresPtr => false;
 
@@ -221,11 +225,14 @@ public class BoundMethodInvokeEmitter : IMethodInvokeEmitter {
         this.methodTarget = methodTarget;
         IsAsync = isAsync;
         this.constrained = constrained;
+        this.WantsCallSite = typeof(Result<>).IsAssignableFrom(methodInfo.ReturnType);
     }
 
     public RealizedType ResultType { get; }
     public List<RealizedParameter> Parameters { get; }
     public bool IsAsync { get; }
+
+    public bool WantsCallSite { get; }
 
     public bool RequiresPtr =>
         methodTarget.IsValueType && (methodInfo.CallingConvention & CallingConventions.HasThis) != 0;

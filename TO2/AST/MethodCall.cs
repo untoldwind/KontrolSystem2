@@ -185,6 +185,10 @@ public class MethodCall : Expression {
             return;
         }
 
+        if (methodInvoker.WantsCallSite) {
+            ILChunks.GenerateCallSite(context, methodName, Start.sourceName, Start.line);
+        }
+        
         int i;
         for (i = 0; i < arguments.Count; i++) {
             var argumentType = arguments[i].ResultType(context);

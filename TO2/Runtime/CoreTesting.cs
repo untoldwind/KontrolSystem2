@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using KontrolSystem.TO2.Binding;
 
@@ -51,7 +52,9 @@ public class TestRunnerContext : IContext, ITO2Logger {
         callStack.TryPop(out _);
     }
 
-    public CoreError.StackEntry[] CurrentStack() => callStack.ToArray();
+    public CoreError.StackEntry? CurrentCallSite { get; set; }
+
+    public IEnumerable<CoreError.StackEntry> CurrentStack() => callStack.Reverse();
 
     public IContext CloneBackground(CancellationTokenSource token) {
         return new BackgroundTestContext(this, token);
@@ -115,7 +118,9 @@ public class BackgroundTestContext : IContext {
         callStack.TryPop(out _);
     }
 
-    public CoreError.StackEntry[] CurrentStack() => callStack.ToArray();
+    public CoreError.StackEntry? CurrentCallSite { get; set; }
+
+    public IEnumerable<CoreError.StackEntry> CurrentStack() => callStack.Reverse();
 
     public IContext CloneBackground(CancellationTokenSource newToken) {
         return new BackgroundTestContext(Logger, newToken);

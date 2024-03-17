@@ -9,7 +9,7 @@ namespace KontrolSystem.TO2.Runtime;
 public class CoreError {
     [KSFunction(Description = "Get current stack.")]
     public static StackEntry[] CurrentStack() {
-        return ContextHolder.CurrentContext.Value?.CurrentStack() ?? [];
+        return ContextHolder.CurrentContext.Value?.CurrentStack()?.ToArray() ?? [];
     }
 
     [KSClass("Error", Description = "Error information of a failed Result.")]
@@ -26,9 +26,9 @@ public class CoreError {
     }
 
     [KSClass("StackEntry", Description = "Stacktrace entry.")]
-    public class StackEntry(string functionName, object[] arguments, string sourceName, int line) {
+    public class StackEntry(string name, object[] arguments, string sourceName, int line) {
         [KSField]
-        public string FunctionName => functionName;
+        public string Name => name;
 
         [KSField]
         public string[] Arguments => arguments.Select(arg => arg.ToString()).ToArray();
@@ -40,6 +40,6 @@ public class CoreError {
         public long Line => line;
 
         [KSMethod]
-        public override string ToString() => $"[{SourceName}:{Line}] {FunctionName}({string.Join(",", arguments.Select(arg => StringMethods.Ellipsis(arg.ToString(), 12)))}) ";
+        public override string ToString() => $"[{sourceName}:{line}] {name}({string.Join(",", arguments.Select(arg => StringMethods.Ellipsis(arg.ToString(), 12)))}) ";
     }
 }

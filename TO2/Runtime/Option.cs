@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace KontrolSystem.TO2.Runtime;
 
@@ -30,7 +31,7 @@ public readonly struct Option<T> : IAnyOption {
     }
 
     public Result<T> OkOr(string error) {
-        return defined ? new Result<T>(true, value, default) : new Result<T>(false, default, new CoreError.Error(error, ContextHolder.CurrentContext.Value?.CurrentStack() ?? []));
+        return defined ? new Result<T>(true, value, default) : new Result<T>(false, default, new CoreError.Error(error, ContextHolder.CurrentContext.Value?.CurrentStack()?.ToArray() ?? []));
     }
 
     public T GetValueOrDefault(T defaultValue) {

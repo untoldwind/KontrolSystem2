@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace KontrolSystem.TO2.Runtime;
@@ -16,7 +18,9 @@ public interface IContext {
 
     void FunctionLeave();
 
-    CoreError.StackEntry[] CurrentStack();
+    CoreError.StackEntry? CurrentCallSite { get; set; }
+
+    IEnumerable<CoreError.StackEntry> CurrentStack();
 
     IContext CloneBackground(CancellationTokenSource token);
 }
@@ -42,7 +46,9 @@ public class EmptyContext : IContext {
     public void FunctionLeave() {
     }
 
-    public CoreError.StackEntry[] CurrentStack() => [];
+    public CoreError.StackEntry? CurrentCallSite { get; set; }
+
+    public IEnumerable<CoreError.StackEntry> CurrentStack() => Enumerable.Empty<CoreError.StackEntry>();
 
     public bool IsBackground { get; }
 
@@ -62,13 +68,23 @@ public static class ContextHolder {
 
     public static void FunctionEnter(string name, object[] arguments, string sourceName, int line) {
         var context = CurrentContext.Value;
-        if (context != null) context.FunctionEnter(name, arguments, sourceName, line);
-        else throw new ArgumentException("Running out of context");
+        if (context != null) {
+            context.CurrentCallSite = null;
+            context.FunctionEnter(name, arguments, sourceName, line);
+        } else throw new ArgumentException("Running out of context");
     }
 
     public static void FunctionLeave() {
         var context = CurrentContext.Value;
-        if (context != null) context.FunctionLeave();
+        if (context != null) {
+            context.CurrentCallSite = null;
+            context.FunctionLeave();
+        } else throw new ArgumentException("Running out of context");
+    }
+
+    public static void SetCallSite(string name, string sourceName, int line) {
+        var context = CurrentContext.Value;
+        if (context != null) context.CurrentCallSite = new CoreError.StackEntry(name, [], sourceName, line);
         else throw new ArgumentException("Running out of context");
     }
 }
