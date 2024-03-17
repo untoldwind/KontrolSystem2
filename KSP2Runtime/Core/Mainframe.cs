@@ -193,7 +193,7 @@ public class Mainframe : KerbalMonoBehaviour {
     public bool StartProcess(KontrolSystemProcess process, VesselComponent? vessel = null, object[]? arguments = null) {
         switch (process.State) {
         case KontrolSystemProcessState.Available:
-            var context = new KSPCoreContext(process.logger, Game, ConsoleBuffer, TimeSeriesCollection,
+            var context = new KSPCoreContext(process.Name, process.logger, Game, ConsoleBuffer, TimeSeriesCollection,
                 config!.OptionalAddons);
             var entrypoint = process.EntrypointFor(context.GameMode, context);
             if (entrypoint == null) return false;

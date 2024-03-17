@@ -9,4 +9,12 @@ namespace KontrolSystem.KSP.Runtime.KSPDebug;
 public partial class KSPDebugModule {
     [KSConstant("DEBUG", Description = "Collection of debug helper")]
     public static readonly Debug DebugInstance = new();
+
+    [KSConstant("MAIN_LOG", Description = "Main script specific log file")]
+    public static readonly ILogFile MainLog = new DelegateLogFile();
+
+    [KSFunction]
+    public static ILogFile OpenLogFile(string name) {
+        return KSPContext.CurrentContext.AddLogFile(name.Replace('/', '_').Replace('\\', '_').Replace(':', '_') + ".log")!;
+    }
 }

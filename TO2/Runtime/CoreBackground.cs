@@ -55,5 +55,16 @@ public class CoreBackground {
         public void Cancel() {
             tokenSource.Cancel();
         }
+
+        [KSMethod(Description = "Asynchronously wait for background task to complete")]
+        public Future<T> WaitComplete() {
+            return new WaitComplete<T>(task);
+        }
+    }
+
+    public class WaitComplete<T>(Task<T> task) : Future<T> {
+        public override FutureResult<T> PollValue() {
+            return task.IsCompleted ? new FutureResult<T>(task.Result) : new FutureResult<T>();
+        }
     }
 }

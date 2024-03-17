@@ -272,7 +272,7 @@ public class Call : Expression {
         foreach (var argument in arguments) argument.Prepare(context);
 
         if (context.HasErrors) return;
-        
+
         for (i = 0; i < arguments.Count; i++) {
             arguments[i].EmitCode(context, false);
             if (!context.HasErrors)

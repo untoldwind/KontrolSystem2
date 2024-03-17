@@ -298,7 +298,7 @@ public class MethodCall : Expression {
         if (functionType.returnType.UnderlyingType(context.ModuleContext) is ResultType) {
             ILChunks.GenerateCallSite(context, methodName, Start.sourceName, Start.line);
         }
-        
+
         context.IL.EmitCall(OpCodes.Callvirt, invokeMethod, arguments.Count + 1);
         if (functionType.isAsync) context.RegisterAsyncResume(functionType.returnType);
         if (dropResult && invokeMethod.ReturnType != typeof(void)) context.IL.Emit(OpCodes.Pop);

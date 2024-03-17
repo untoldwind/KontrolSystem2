@@ -18,7 +18,7 @@ public static class REPLExpression {
     public static object? Run(string expression) {
         var result = TO2ParserREPL.REPLItems.Parse(expression);
 
-        var kspContext = new KSPCoreContext(Mainframe.Instance!.Logger, Mainframe.Instance.Game,
+        var kspContext = new KSPCoreContext("REPL", Mainframe.Instance!.Logger, Mainframe.Instance.Game,
             Mainframe.Instance.ConsoleBuffer, Mainframe.Instance.TimeSeriesCollection,
             Mainframe.Instance.OptionalAddons);
         var registry = Mainframe.Instance.LastRegistry!;

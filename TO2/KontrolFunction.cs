@@ -91,7 +91,7 @@ public class CompiledKontrolFunction : IKontrolFunction {
     public bool IsAsync { get; }
 
     public bool IsCompiled => true;
-    
+
     public object Invoke(IContext context, params object[] args) {
         try {
             ContextHolder.CurrentContext.Value = context;

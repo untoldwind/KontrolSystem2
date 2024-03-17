@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using KontrolSystem.KSP.Runtime.KSPConsole;
+using KontrolSystem.KSP.Runtime.KSPDebug;
 using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.KSP.Runtime.KSPResource;
@@ -29,6 +30,8 @@ public interface IKSPContext : IContext {
 
     KSPGameMode GameMode { get; }
 
+    string ProcessName { get; }
+
     VesselComponent? ActiveVessel { get; }
 
     KSPConsoleBuffer ConsoleBuffer { get; }
@@ -52,6 +55,8 @@ public interface IKSPContext : IContext {
     void AddResourceTransfer(KSPResourceModule.ResourceTransfer resourceTransfer);
 
     void AddWindow(KSPUIModule.Window window);
+
+    KSPDebugModule.ILogFile? AddLogFile(string fileName);
 
     bool TryFindAutopilot<T>(VesselComponent vessel, [MaybeNullWhen(false)] out T autopilot) where T : IKSPAutopilot;
 

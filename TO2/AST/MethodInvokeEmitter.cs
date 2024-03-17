@@ -108,7 +108,7 @@ public class InlineMethodInvokeEmitter : IMethodInvokeEmitter {
 
 
     public bool IsAsync => false;
-    
+
     public bool RequiresPtr => false;
 
     public void EmitCode(IBlockContext context) {

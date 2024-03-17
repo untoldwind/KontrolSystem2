@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using KontrolSystem.KSP.Runtime.KSPConsole;
+using KontrolSystem.KSP.Runtime.KSPDebug;
 using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.KSP.Runtime.KSPResource;
@@ -72,14 +74,16 @@ public class KSPCoreContext : IKSPContext {
     private int stackCallCount;
     private readonly List<Action> nextUpdateOnce;
     private readonly Stack<CoreError.StackEntry> callStack;
+    private readonly Dictionary<string, DirectLogFile> logFiles;
 
-    public KSPCoreContext(ITO2Logger logger, GameInstance gameInstance, KSPConsoleBuffer consoleBuffer,
+    public KSPCoreContext(string processName, ITO2Logger logger, GameInstance gameInstance, KSPConsoleBuffer consoleBuffer,
         TimeSeriesCollection timeSeriesCollection, OptionalAddons optionalAddons) {
-        this.Logger = logger;
-        this.Game = gameInstance;
-        this.ConsoleBuffer = consoleBuffer;
-        this.TimeSeriesCollection = timeSeriesCollection;
-        this.OptionalAddons = optionalAddons;
+        ProcessName = processName;
+        Logger = logger;
+        Game = gameInstance;
+        ConsoleBuffer = consoleBuffer;
+        TimeSeriesCollection = timeSeriesCollection;
+        OptionalAddons = optionalAddons;
 
         markers = new List<IMarker>();
         resourceTransfers = new List<KSPResourceModule.ResourceTransfer>();
@@ -91,6 +95,7 @@ public class KSPCoreContext : IKSPContext {
         timeoutMillis = 100;
         nextUpdateOnce = new List<Action>();
         callStack = new Stack<CoreError.StackEntry>();
+        logFiles = new Dictionary<string, DirectLogFile>();
     }
 
 
@@ -136,6 +141,8 @@ public class KSPCoreContext : IKSPContext {
 
     public KSPGameMode GameMode => GameModeAdapter.GameModeFromState(Game.GlobalGameState.GetState());
 
+    public string ProcessName { get; }
+
     public double UniversalTime => Game.SpaceSimulation.UniverseModel.UniverseTime;
 
     public VesselComponent ActiveVessel => Game.ViewController.GetActiveSimVessel();
@@ -179,6 +186,16 @@ public class KSPCoreContext : IKSPContext {
 
     public void AddWindow(KSPUIModule.Window window) {
         windows.Add(window);
+    }
+
+    public KSPDebugModule.ILogFile AddLogFile(string fileName) {
+        if (logFiles.TryGetValue(fileName, out var logFile)) {
+            return logFile;
+        }
+
+        var newLogFile = new DirectLogFile(Path.Combine(Mainframe.Instance!.LocalLibPath, "logs"), fileName);
+        logFiles.Add(fileName, newLogFile);
+        return newLogFile;
     }
 
     public bool TryFindAutopilot<T>(VesselComponent vessel, [MaybeNullWhen(false)] out T autopilot) where T : IKSPAutopilot {
@@ -269,6 +286,9 @@ public class KSPCoreContext : IKSPContext {
 
         foreach (var childContext in childContexts.ToArray()) childContext.Cleanup();
 
+        foreach (var logFile in logFiles.Values) logFile.Close();
+
+        logFiles.Clear();
         windows.Clear();
         resourceTransfers.Clear();
         autopilotHooks.Clear();
