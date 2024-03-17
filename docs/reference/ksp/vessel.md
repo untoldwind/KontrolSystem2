@@ -255,7 +255,7 @@ Name | Type | Read-only | Description
 --- | --- | --- | ---
 Altitude | [ksp::vessel::DeltaVSituation](/reference/ksp/vessel.md#deltavsituation) | R/O | Calculate delta-v at the current altitude of the vessel.
 SeaLevel | [ksp::vessel::DeltaVSituation](/reference/ksp/vessel.md#deltavsituation) | R/O | Calculate delta-v at sea level of the current main body.
-Vacuum | [ksp::vessel::DeltaVSituation](/reference/ksp/vessel.md#deltavsituation) | R/O | Calculate delta-v in vacuum.
+Vaccum | [ksp::vessel::DeltaVSituation](/reference/ksp/vessel.md#deltavsituation) | R/O | Calculate delta-v in vacuum.
 
 #### Methods
 

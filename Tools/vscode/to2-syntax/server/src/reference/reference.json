@@ -29250,8 +29250,8 @@
                 "name": "DeltaVSituation"
               }
             },
-            "Vacuum": {
-              "name": "Vacuum",
+            "Vaccum": {
+              "name": "Vaccum",
               "description": "Calculate delta-v in vacuum.",
               "readOnly": true,
               "type": {

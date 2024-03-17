@@ -76,7 +76,7 @@ public partial class KSPVesselModule {
                 [
                     (DeltaVSituationOptions.SeaLevel, "Calculate delta-v at sea level of the current main body."),
                     (DeltaVSituationOptions.Altitude, "Calculate delta-v at the current altitude of the vessel."),
-                    (DeltaVSituationOptions.Vacuum, "Calculate delta-v in vacuum.")
+                    (DeltaVSituationOptions.Vaccum, "Calculate delta-v in vacuum.")
                 ]),
                 ("ParachuteDeployState", "Parachute deploy state", typeof(Data_Parachute.DeploymentStates),
                 [
