@@ -17,20 +17,20 @@ Note: The SAS action group is somewhat wonky, so under the hood both ways do exa
 
 The SAS system can be then set to different modes:
 ```
-vessel.autopilot.mode = MODE_....
+vessel.autopilot.mode = AutopilotMode.$(Mode)
 ```
-with
-* `MODE_STABILITYASSIST`: Default mode that does not any steering, just kills rotation
-* `MODE_PROGRADE`, `MODE_RETROGRADE`, `MODE_NORMAL`, `MODE_ANTINORMAL`, `MODE_RADIALIN`, `MODE_RADIALOUT`: Steer to orbital directions
-* `MODE_TARGET`: Steer towards target (if vessel has a target)
-* `MODE_ANTITARGET`: Steer away from taret (if vessel has a target)
-* `MODE_MANEUVER`: Steer in direction of next maneuvering node (if there is one)
-* `MODE_NAVIGATION`, `MODE_AUTOPILOT`: Not sure what the difference is between those two, but you can provide a target orientation.
+with $(Mode) as
+* `StabilityAssist`: Default mode that does not any steering, just kills rotation
+* `Prograde`, `Retrograde`, `Normal`, `Antinormal`, `RadialIn`, `RadialOut`: Steer to orbital directions
+* `Target`: Steer towards target (if vessel has a target)
+* `AntiTarget`: Steer away from taret (if vessel has a target)
+* `Maneuver`: Steer in direction of next maneuvering node (if there is one)
+* `Navigation`, `MODE_AUTOPILOT`: Not sure what the difference is between those two, but you can provide a target orientation.
 
 So
 ```
 vessel.autopilot.enabled = true
-vessel.autopilot.mode = MODE_AUTOPILOT
+vessel.autopilot.mode = AutopilotMode.Autopilot
 vessel.autopilot.target_orientation = direction
 ```
 tells the SAS to steer the vessel into `direction`.

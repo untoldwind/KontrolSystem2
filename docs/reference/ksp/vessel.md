@@ -255,7 +255,7 @@ Name | Type | Read-only | Description
 --- | --- | --- | ---
 Altitude | [ksp::vessel::DeltaVSituation](/reference/ksp/vessel.md#deltavsituation) | R/O | Calculate delta-v at the current altitude of the vessel.
 SeaLevel | [ksp::vessel::DeltaVSituation](/reference/ksp/vessel.md#deltavsituation) | R/O | Calculate delta-v at sea level of the current main body.
-Vaccum | [ksp::vessel::DeltaVSituation](/reference/ksp/vessel.md#deltavsituation) | R/O | Calculate delta-v in vaccum.
+Vacuum | [ksp::vessel::DeltaVSituation](/reference/ksp/vessel.md#deltavsituation) | R/O | Calculate delta-v in vacuum.
 
 #### Methods
 
@@ -1630,7 +1630,7 @@ vessel.global_heading_direction ( degreesFromNorth : float,
 ```
 
 Calculate a coordinate system independent direction based on
-heading, pitch an roll relative to the horizon.
+heading, pitch and roll relative to the horizon.
 
 
 Parameters
@@ -1650,7 +1650,7 @@ vessel.heading_direction ( degreesFromNorth : float,
 ```
 
 Calculate a direction in the celestial frame of the main body based on
-heading, pitch an roll relative to the horizon.
+heading, pitch and roll relative to the horizon.
 
 
 Parameters

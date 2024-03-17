@@ -8,7 +8,7 @@ using UniLinq;
 namespace KontrolSystem.KSP.Runtime.KSPOAB;
 
 public partial class KSPOABModule {
-    [KSClass("ObjectAssemblyBuilder", Description = "Represents the current object assembly builder/")]
+    [KSClass("ObjectAssemblyBuilder", Description = "Represents the current object assembly builder.")]
     public class ObjectAssemblyBuilderAdapter(ObjectAssemblyBuilder objectAssemblyBuilder) {
         private readonly ObjectAssemblyBuilder objectAssemblyBuilder = objectAssemblyBuilder;
 

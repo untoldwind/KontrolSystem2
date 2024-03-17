@@ -107,8 +107,8 @@ pub sync fn estimate_burn_time(vessel : Vessel, delta_v : float, stage_delay : f
         if(!maybe_stage_info.defined) continue
 
         const stage_info = maybe_stage_info.value
-        const stage_deltav = stage_info.get_deltav(DeltaVSituation.Vaccum)
-        const stage_thrust = stage_info.get_thrust(DeltaVSituation.Vaccum)
+        const stage_deltav = stage_info.get_deltav(DeltaVSituation.Vacuum)
+        const stage_thrust = stage_info.get_thrust(DeltaVSituation.Vacuum)
 
         if(stage_deltav <= 0.0 || stage_thrust <= 0.0) {
             // This stage has to be skipped, i.e. it will be necessary to stage twice

@@ -39,7 +39,7 @@ toogle_intake | bool | R/W |
 
 ### ObjectAssemblyBuilder
 
-Represents the current object assembly builder/
+Represents the current object assembly builder.
 
 
 #### Fields
