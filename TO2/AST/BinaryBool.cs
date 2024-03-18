@@ -121,4 +121,6 @@ public class BinaryBool : Expression {
             throw new REPLException(this, $"Invalid boolean operator {op}");
         }
     }
+
+    public override string ToString() => $"({left} {op.ToPrettyString()} {right})";
 }

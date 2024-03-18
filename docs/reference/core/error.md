@@ -38,8 +38,8 @@ Stacktrace entry.
 Name | Type | Read-only | Description
 --- | --- | --- | ---
 arguments | string[] | R/O | 
-function_name | string | R/O | 
 line | int | R/O | 
+name | string | R/O | 
 source_name | string | R/O | 
 
 #### Methods

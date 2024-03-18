@@ -24,8 +24,8 @@ public enum Operator {
     BitOrAssign, // |=
     BitAnd, // &
     BitAndAssign, // &=
-    BitXor, // **
-    BitXorAssign, // **=
+    BitXor, // ^
+    BitXorAssign, // ^=
     Pow, // **
     PowAssign, // **=
     Eq, // ==
@@ -40,6 +40,43 @@ public enum Operator {
     BoolAnd, // &&
     BoolOr, // ||
     Unwrap // ?
+}
+
+public static class OperatorExtensions {
+    public static string ToPrettyString(this Operator op) => op switch {
+        Operator.Assign => "=",
+        Operator.Add => "+",
+        Operator.AddAssign => "+=",
+        Operator.Sub => "-",
+        Operator.SubAssign => "-=",
+        Operator.Mul => "*",
+        Operator.MulAssign => "*=",
+        Operator.Div => "/",
+        Operator.DivAssign => "/=",
+        Operator.Mod => "%",
+        Operator.ModAssign => "%=",
+        Operator.BitOr => "|",
+        Operator.BitOrAssign => "|=",
+        Operator.BitAnd => "&",
+        Operator.BitAndAssign => "&=",
+        Operator.BitXor => "^",
+        Operator.BitXorAssign => "^=",
+        Operator.Pow => "**",
+        Operator.PowAssign => "**=",
+        Operator.Eq => "==",
+        Operator.NotEq => "!=",
+        Operator.Lt => "<",
+        Operator.Le => "<=",
+        Operator.Gt => ">",
+        Operator.Ge => ">=",
+        Operator.Neg => "-",
+        Operator.Not => "!",
+        Operator.BitNot => "~",
+        Operator.BoolAnd => "&&",
+        Operator.BoolOr => "||",
+        Operator.Unwrap => "?",
+        _ => ""
+    };
 }
 
 public delegate IREPLValue REPLOperator(Node node, IREPLValue left, IREPLValue? right);

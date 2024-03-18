@@ -108,4 +108,6 @@ public class Binary(
         return REPLValueFuture.Chain2(opEmitter.ResultType, leftFuture, rightFuture,
             (leftResult, rightResult) => opEmitter.Eval(this, leftResult, rightResult));
     }
+
+    public override string ToString() => $"({left} {op.ToPrettyString()} {right})";
 }

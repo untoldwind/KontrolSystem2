@@ -70,4 +70,6 @@ public class UnarySuffix : Expression {
         return leftFuture.Then(operatorEmitter.ResultType,
             leftResult => operatorEmitter.Eval(this, leftResult, null));
     }
+
+    public override string ToString() => $"{left} {op.ToPrettyString()}";
 }

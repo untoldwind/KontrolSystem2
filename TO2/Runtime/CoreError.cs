@@ -26,12 +26,12 @@ public class CoreError {
     }
 
     [KSClass("StackEntry", Description = "Stacktrace entry.")]
-    public class StackEntry(string name, object[] arguments, string sourceName, int line) {
+    public class StackEntry(string name, object[]? arguments, string sourceName, int line) {
         [KSField]
         public string Name => name;
 
         [KSField]
-        public string[] Arguments => arguments.Select(arg => arg.ToString()).ToArray();
+        public string[] Arguments => arguments?.Select(arg => arg.ToString()).ToArray() ?? [];
 
         [KSField]
         public string SourceName => sourceName;
@@ -40,6 +40,8 @@ public class CoreError {
         public long Line => line;
 
         [KSMethod]
-        public override string ToString() => $"[{sourceName}:{line}] {name}({string.Join(",", arguments.Select(arg => StringMethods.Ellipsis(arg.ToString(), 12)))}) ";
+        public override string ToString() => arguments != null ? 
+            $"[{sourceName}:{line}] {name}({string.Join(",", arguments.Select(arg => StringMethods.Ellipsis(arg.ToString(), 12)))})" :
+            $"[{sourceName}:{line}] {name}";
     }
 }

@@ -119,4 +119,6 @@ public class TupleCreate(List<Expression> items, Position start, Position end) :
     public override REPLValueFuture Eval(REPLContext context) {
         throw new REPLException(this, "Not supported in REPL mode");
     }
+
+    public override string ToString() => $"({string.Join(", ", items.Select(i => i.ToString()))})";
 }

@@ -196,7 +196,7 @@ public class Call : Expression {
                            throw new ArgumentException($"No Invoke method in generated ${functionType}");
 
         if (functionType.returnType.UnderlyingType(context.ModuleContext) is ResultType) {
-            ILChunks.GenerateCallSite(context, functionName, Start.sourceName, Start.line);
+            ILChunks.GenerateCallSite(context, ToString(), Start.sourceName, Start.line);
         }
 
         context.IL.EmitCall(OpCodes.Callvirt, invokeMethod, arguments.Count + 1);
@@ -287,7 +287,7 @@ public class Call : Expression {
         if (context.HasErrors) return;
 
         if (function.ReturnType is ResultType) {
-            ILChunks.GenerateCallSite(context, functionName, Start.sourceName, Start.line);
+            ILChunks.GenerateCallSite(context, ToString(), Start.sourceName, Start.line);
         }
 
         context.IL.EmitCall(OpCodes.Call, genericMethod, function.Parameters.Count);
@@ -402,4 +402,8 @@ public class Call : Expression {
                     : REPLValueFuture.Success(genericResult.REPLCast(result));
             });
     }
+
+    public override string ToString() => moduleName != null ?
+        $"{moduleName}::{functionName}({string.Join(", ", arguments.Select(a => a.ToString()))})" :
+        $"{functionName}({string.Join(", ", arguments.Select(a => a.ToString()))})";
 }

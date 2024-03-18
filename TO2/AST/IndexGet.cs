@@ -86,4 +86,6 @@ public class IndexGet(
 
         return targetFuture.Then(indexAccess.TargetType, target => indexAccess.EvalGet(this, context, target));
     }
+
+    public override string ToString() => $"{target}[{indexSpec}]";
 }

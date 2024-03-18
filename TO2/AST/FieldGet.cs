@@ -97,4 +97,6 @@ public class FieldGet(
 
         return targetFuture.Then(fieldAccess.FieldType, target => fieldAccess.EvalGet(this, target));
     }
+
+    public override string ToString() => $"{target}.{fieldName}";
 }

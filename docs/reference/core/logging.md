@@ -1,6 +1,6 @@
 # core::logging
 
-Provides basic logging. In KSP all log messages will appear in the debug console as well as the `KSP.log` file.
+Provides basic low-level logging. In KSP all log messages will appear in the debug console as well as the `KSP.log` file.
 
 
 ## Functions

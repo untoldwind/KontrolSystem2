@@ -27,6 +27,8 @@ public class LiteralBool(bool value, Position start = new(), Position end = new(
     public override void EmitCode(IBlockContext context, bool dropResult) {
         if (!dropResult) context.IL.Emit(value ? OpCodes.Ldc_I4_1 : OpCodes.Ldc_I4_0);
     }
+
+    public override string ToString() => $"{value}";
 }
 
 public class LiteralString : Expression {
@@ -60,6 +62,8 @@ public class LiteralString : Expression {
     public override void EmitCode(IBlockContext context, bool dropResult) {
         if (!dropResult) context.IL.Emit(OpCodes.Ldstr, value);
     }
+
+    public override string ToString() => $"\"{value.Replace("\\", "\\\\").Replace("\n", "\\n").Replace("\"", "\\\"")}\"";
 }
 
 public class LiteralInt(long value, Position start = new(), Position end = new()) : Expression(start, end) {
@@ -83,6 +87,8 @@ public class LiteralInt(long value, Position start = new(), Position end = new()
     public override void EmitCode(IBlockContext context, bool dropResult) {
         if (!dropResult) context.IL.Emit(OpCodes.Ldc_I8, value);
     }
+
+    public override string ToString() => $"{value}";
 }
 
 public class LiteralFloat(double value, Position start = new(), Position end = new()) : Expression(start,
@@ -107,4 +113,6 @@ public class LiteralFloat(double value, Position start = new(), Position end = n
     public override void EmitCode(IBlockContext context, bool dropResult) {
         if (!dropResult) context.IL.Emit(OpCodes.Ldc_R8, value);
     }
+
+    public override string ToString() => $"{value}";
 }

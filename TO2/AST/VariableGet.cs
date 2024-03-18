@@ -136,4 +136,6 @@ public class VariableGet : Expression, IAssignContext {
 
         throw new REPLException(this, $"No local variable, constant or function '{name}'");
     }
+
+    public override string ToString() => moduleName != null ? $"{moduleName}::{name}" : $"{name}";
 }

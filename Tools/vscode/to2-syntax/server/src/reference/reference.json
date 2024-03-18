@@ -1978,6 +1978,11 @@
         {
           "kind": "Standard",
           "module": "ksp::debug",
+          "name": "LogFile"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::debug",
           "name": "DebugPath"
         },
         {
@@ -2995,6 +3000,11 @@
         {
           "kind": "Standard",
           "module": "ksp::debug",
+          "name": "LogFile"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::debug",
           "name": "DebugPath"
         },
         {
@@ -3862,6 +3872,16 @@
                 "kind": "Builtin",
                 "name": "Unit"
               }
+            },
+            "wait_complete": {
+              "isAsync": true,
+              "name": "wait_complete",
+              "description": "Asynchronously wait for background task to complete\n",
+              "parameters": [],
+              "returnType": {
+                "kind": "Generic",
+                "name": "T"
+              }
             }
           },
           "assignableFromAny": false,
@@ -3964,8 +3984,8 @@
           "name": "StackEntry",
           "description": "Stacktrace entry.\n",
           "fields": {
-            "function_name": {
-              "name": "function_name",
+            "name": {
+              "name": "name",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -4040,7 +4060,7 @@
     },
     "core::logging": {
       "name": "core::logging",
-      "description": "Provides basic logging. In KSP all log messages will appear in the debug console as well as the `KSP.log` file.\n",
+      "description": "Provides basic low-level logging. In KSP all log messages will appear in the debug console as well as the `KSP.log` file.\n",
       "types": {},
       "typeAliases": {},
       "constants": {},
@@ -7682,6 +7702,45 @@
           "assignableFromAny": false,
           "assignableFrom": []
         },
+        "LogFile": {
+          "name": "LogFile",
+          "description": "Represents a log file.\n",
+          "fields": {},
+          "methods": {
+            "log": {
+              "isAsync": true,
+              "name": "log",
+              "description": "Write a log message to the file.\n",
+              "parameters": [
+                {
+                  "name": "message",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "string"
+                  },
+                  "hasDefault": false,
+                  "description": null
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
+            },
+            "truncate": {
+              "isAsync": false,
+              "name": "truncate",
+              "description": "Truncate/clear the log file.\n",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
         "DebugPath": {
           "name": "DebugPath",
           "description": "Represents a debugging path in the current scene.\n",
@@ -7916,9 +7975,39 @@
             "module": "ksp::debug",
             "name": "Debug"
           }
+        },
+        "MAIN_LOG": {
+          "name": "MAIN_LOG",
+          "description": "Main script specific log file\n",
+          "type": {
+            "kind": "Standard",
+            "module": "ksp::debug",
+            "name": "LogFile"
+          }
         }
       },
-      "functions": {}
+      "functions": {
+        "open_log_file": {
+          "isAsync": false,
+          "name": "open_log_file",
+          "parameters": [
+            {
+              "name": "name",
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              },
+              "hasDefault": false,
+              "description": null
+            }
+          ],
+          "returnType": {
+            "kind": "Standard",
+            "module": "ksp::debug",
+            "name": "LogFile"
+          }
+        }
+      }
     },
     "ksp::game": {
       "name": "ksp::game",
@@ -13669,6 +13758,11 @@
             {
               "kind": "Standard",
               "module": "ksp::debug",
+              "name": "LogFile"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
               "name": "DebugPath"
             },
             {
@@ -16421,6 +16515,11 @@
             {
               "kind": "Standard",
               "module": "ksp::debug",
+              "name": "LogFile"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
               "name": "DebugPath"
             },
             {
@@ -17953,6 +18052,11 @@
             {
               "kind": "Standard",
               "module": "ksp::debug",
+              "name": "LogFile"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
               "name": "DebugPath"
             },
             {
@@ -19123,6 +19227,11 @@
             {
               "kind": "Standard",
               "module": "ksp::debug",
+              "name": "LogFile"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
               "name": "DebugPath"
             },
             {
@@ -20233,6 +20342,11 @@
             {
               "kind": "Standard",
               "module": "ksp::debug",
+              "name": "LogFile"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
               "name": "DebugPath"
             },
             {
@@ -21299,6 +21413,11 @@
               "kind": "Standard",
               "module": "ksp::debug",
               "name": "GroundMarker"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "LogFile"
             },
             {
               "kind": "Standard",
@@ -23434,6 +23553,11 @@
               "kind": "Standard",
               "module": "ksp::debug",
               "name": "GroundMarker"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "LogFile"
             },
             {
               "kind": "Standard",
@@ -28577,6 +28701,11 @@
             {
               "kind": "Standard",
               "module": "ksp::debug",
+              "name": "LogFile"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
               "name": "DebugPath"
             },
             {
@@ -29653,6 +29782,11 @@
               "kind": "Standard",
               "module": "ksp::debug",
               "name": "GroundMarker"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "LogFile"
             },
             {
               "kind": "Standard",
@@ -30757,6 +30891,11 @@
             {
               "kind": "Standard",
               "module": "ksp::debug",
+              "name": "LogFile"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
               "name": "DebugPath"
             },
             {
@@ -31833,6 +31972,11 @@
               "kind": "Standard",
               "module": "ksp::debug",
               "name": "GroundMarker"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "LogFile"
             },
             {
               "kind": "Standard",
@@ -32923,6 +33067,11 @@
               "kind": "Standard",
               "module": "ksp::debug",
               "name": "GroundMarker"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "LogFile"
             },
             {
               "kind": "Standard",
@@ -34107,6 +34256,11 @@
             {
               "kind": "Standard",
               "module": "ksp::debug",
+              "name": "LogFile"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
               "name": "DebugPath"
             },
             {
@@ -35237,6 +35391,11 @@
             {
               "kind": "Standard",
               "module": "ksp::debug",
+              "name": "LogFile"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
               "name": "DebugPath"
             },
             {
@@ -36323,6 +36482,11 @@
               "kind": "Standard",
               "module": "ksp::debug",
               "name": "GroundMarker"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "LogFile"
             },
             {
               "kind": "Standard",
@@ -37433,6 +37597,11 @@
               "kind": "Standard",
               "module": "ksp::debug",
               "name": "GroundMarker"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "LogFile"
             },
             {
               "kind": "Standard",
@@ -38557,6 +38726,11 @@
             {
               "kind": "Standard",
               "module": "ksp::debug",
+              "name": "LogFile"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
               "name": "DebugPath"
             },
             {
@@ -39653,6 +39827,11 @@
               "kind": "Standard",
               "module": "ksp::debug",
               "name": "GroundMarker"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "LogFile"
             },
             {
               "kind": "Standard",
@@ -40917,6 +41096,11 @@
             {
               "kind": "Standard",
               "module": "ksp::debug",
+              "name": "LogFile"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
               "name": "DebugPath"
             },
             {
@@ -41997,6 +42181,11 @@
             {
               "kind": "Standard",
               "module": "ksp::debug",
+              "name": "LogFile"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
               "name": "DebugPath"
             },
             {
@@ -43073,6 +43262,11 @@
               "kind": "Standard",
               "module": "ksp::debug",
               "name": "GroundMarker"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "LogFile"
             },
             {
               "kind": "Standard",
@@ -44163,6 +44357,11 @@
               "kind": "Standard",
               "module": "ksp::debug",
               "name": "GroundMarker"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "LogFile"
             },
             {
               "kind": "Standard",

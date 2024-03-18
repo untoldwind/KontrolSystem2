@@ -31,6 +31,15 @@ task.cancel ( ) -> Unit
 Cancel/abort the task
 
 
+##### wait_complete
+
+```rust
+task.wait_complete ( ) -> T
+```
+
+Asynchronously wait for background task to complete
+
+
 ## Functions
 
 

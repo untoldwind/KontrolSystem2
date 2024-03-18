@@ -70,4 +70,6 @@ public class UnaryPrefix : Expression {
         return rightFuture.Then(operatorEmitter.ResultType,
             rightResult => operatorEmitter.Eval(this, rightResult, null));
     }
+
+    public override string ToString() => $"{op.ToPrettyString()} {right}";
 }

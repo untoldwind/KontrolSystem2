@@ -92,4 +92,6 @@ public class RangeCreate : Expression {
             throw new REPLException(this, "Can create range from non-integers");
         });
     }
+
+    public override string ToString() => inclusive ? $"{from}...{to}" : $"{from}..{to}";
 }

@@ -221,7 +221,7 @@ public class MethodCall : Expression {
         if (context.HasErrors) return;
 
         if (methodInvoker.ResultType is ResultType) {
-            ILChunks.GenerateCallSite(context, methodName, Start.sourceName, Start.line);
+            ILChunks.GenerateCallSite(context, ToString(), Start.sourceName, Start.line);
         }
 
         methodInvoker.EmitCode(context);
@@ -296,7 +296,7 @@ public class MethodCall : Expression {
                            throw new ArgumentException($"No Invoke method in generated ${functionType}");
 
         if (functionType.returnType.UnderlyingType(context.ModuleContext) is ResultType) {
-            ILChunks.GenerateCallSite(context, methodName, Start.sourceName, Start.line);
+            ILChunks.GenerateCallSite(context, ToString(), Start.sourceName, Start.line);
         }
 
         context.IL.EmitCall(OpCodes.Callvirt, invokeMethod, arguments.Count + 1);
@@ -342,4 +342,7 @@ public class MethodCall : Expression {
         throw new REPLException(this,
             $"Type '{targetFuture.Type.Name}' does not have a method or field '{methodName}'");
     }
+
+    public override string ToString() => 
+        $"{target}.{methodName}({string.Join(", ", arguments.Select(a => a.ToString()))})";
 }

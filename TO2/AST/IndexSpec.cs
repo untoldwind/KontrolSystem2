@@ -11,4 +11,6 @@ public class IndexSpec(Expression index) {
     public IVariableContainer? VariableContainer {
         set => start.VariableContainer = value;
     }
+
+    public override string ToString() => $"{indexType}";
 }

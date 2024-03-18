@@ -84,7 +84,7 @@ public static class ContextHolder {
 
     public static void SetCallSite(string name, string sourceName, int line) {
         var context = CurrentContext.Value;
-        if (context != null) context.CurrentCallSite = new CoreError.StackEntry(name, [], sourceName, line);
+        if (context != null) context.CurrentCallSite = new CoreError.StackEntry(name, null, sourceName, line);
         else throw new ArgumentException("Running out of context");
     }
 }

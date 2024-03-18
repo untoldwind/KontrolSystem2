@@ -271,9 +271,58 @@ groundmarker.remove ( ) -> Unit
 
 
 
+### LogFile
+
+Represents a log file.
+
+
+#### Methods
+
+##### log
+
+```rust
+logfile.log ( message : string ) -> Unit
+```
+
+Write a log message to the file.
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+message | string |  | 
+
+##### truncate
+
+```rust
+logfile.truncate ( ) -> Unit
+```
+
+Truncate/clear the log file.
+
+
 ## Constants
 
 Name | Type | Description
 --- | --- | ---
 DEBUG | ksp::debug::Debug | Collection of debug helper 
+MAIN_LOG | ksp::debug::LogFile | Main script specific log file 
 
+
+## Functions
+
+
+### open_log_file
+
+```rust
+pub sync fn open_log_file ( name : string ) -> ksp::debug::LogFile
+```
+
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+name | string |  | 

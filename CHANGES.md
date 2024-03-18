@@ -20,6 +20,10 @@ Changes:
 * As an additional helper there this a `core::error::current_stack()` function to obtain the current stack trace for
   debugging purposes.
 
+Support for script based logs:
+* Add `MAIN_LOG` and `open_log_file(string)` to `ksp::debug`
+  * Log files will be cared ein `logs` sub-folder of `to2Local`
+
 ## 0.5.6.2 -> 0.5.6.3
 
 * Add `ObjectAssemblyEngineDeltaV.engine` and `ObjectAssemblyEngineDeltaV.part` field
