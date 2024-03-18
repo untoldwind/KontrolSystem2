@@ -38,7 +38,6 @@ public static partial class Parsers {
         return input => {
             var resultPrefix = conditionPrefix(input);
             if (!resultPrefix.success) return Result.Success(input, Option.None<T>());
-            var parserResult = parser(resultPrefix.remaining);
             return parser(resultPrefix.remaining).Map(p => Option.Some(p));
         };
     }
