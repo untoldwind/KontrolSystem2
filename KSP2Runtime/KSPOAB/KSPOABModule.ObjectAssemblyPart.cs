@@ -144,7 +144,7 @@ public partial class KSPOABModule {
         [KSField]
         public bool IsDrag =>
             part.TryGetModuleData<PartComponentModule_Drag, Data_Drag>(out _);
-        
+
         [KSField]
         public Option<ObjectAssemblyDragAdapter> Drag =>
             part.TryGetModuleData<PartComponentModule_Drag, Data_Drag>(out var data)

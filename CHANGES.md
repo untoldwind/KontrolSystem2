@@ -24,6 +24,9 @@ Support for script based logs:
 * Add `MAIN_LOG` and `open_log_file(string)` to `ksp::debug`
   * Log files will be cared ein `logs` sub-folder of `to2Local`
 
+General improvements:
+* Add `vessel.has_launched`, `vessel.launch_time` and `vessel.time_since_launch` (the latter should be the mission time)
+
 ## 0.5.6.2 -> 0.5.6.3
 
 * Add `ObjectAssemblyEngineDeltaV.engine` and `ObjectAssemblyEngineDeltaV.part` field

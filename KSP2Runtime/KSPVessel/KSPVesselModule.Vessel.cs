@@ -48,6 +48,15 @@ public partial class KSPVesselModule {
         [KSField(Description = "Check if the vessel is flyging.")]
         public bool IsFlying => vessel.IsFlying;
 
+        [KSField(Description = "Check if the vessel has been launched.")]
+        public bool HasLaunched => vessel.HasLaunched;
+
+        [KSField(Description = "Universal time when vessel has been launched.")]
+        public double LaunchTime => vessel.launchTime;
+
+        [KSField(Description = "Number of seconds since launch.")]
+        public double TimeSinceLaunch => vessel.TimeSinceLaunch;
+
         [KSField(Description = "Current control status of the vessel.")]
         public VesselControlState ControlStatus => vessel.ControlStatus;
 
