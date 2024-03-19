@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using KontrolSystem.KSP.Runtime.KSPConsole;
 using KontrolSystem.KSP.Runtime.KSPDebug;
@@ -189,12 +190,13 @@ public class KSPCoreContext : IKSPContext {
     }
 
     public KSPDebugModule.ILogFile AddLogFile(string fileName) {
-        if (logFiles.TryGetValue(fileName, out var logFile)) {
+        var sanitizedName = Regex.Replace(fileName, "[^0-9a-zA-Z_\\-]+", "_") + ".log";
+        if (logFiles.TryGetValue(sanitizedName, out var logFile)) {
             return logFile;
         }
 
-        var newLogFile = new DirectLogFile(Path.Combine(Mainframe.Instance!.LocalLibPath, "logs"), fileName);
-        logFiles.Add(fileName, newLogFile);
+        var newLogFile = new DirectLogFile(Path.Combine(Mainframe.Instance!.LocalLibPath, "logs"), sanitizedName);
+        logFiles.Add(sanitizedName, newLogFile);
         return newLogFile;
     }
 

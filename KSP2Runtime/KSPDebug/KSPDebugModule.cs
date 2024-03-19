@@ -15,6 +15,6 @@ public partial class KSPDebugModule {
 
     [KSFunction]
     public static ILogFile OpenLogFile(string name) {
-        return KSPContext.CurrentContext.AddLogFile(name.Replace('/', '_').Replace('\\', '_').Replace(':', '_') + ".log")!;
+        return KSPContext.CurrentContext.AddLogFile(name)!;
     }
 }

@@ -53,6 +53,6 @@ public class DelegateLogFile : KSPDebugModule.ILogFile {
     private KSPDebugModule.ILogFile? DelegatedLogFile() {
         var context = KSPContext.CurrentContext;
 
-        return context.AddLogFile(context.ProcessName + ".log");
+        return context.AddLogFile(context.ProcessName);
     }
 }
