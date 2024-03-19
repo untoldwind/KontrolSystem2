@@ -685,11 +685,19 @@ Name | Type | Read-only | Description
 angle_of_attack | float | R/O | 
 authority_limiter | float | R/W | 
 drag | float | R/O | 
+drag_force | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
+drag_position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
 enable_pitch | bool | R/W | 
 enable_roll | bool | R/W | 
 enable_yaw | bool | R/W | 
+global_drag_force | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | 
+global_drag_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | R/O | 
+global_lift_force | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | 
+global_lift_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | R/O | 
 invert_control | bool | R/W | 
 lift | float | R/O | 
+lift_force | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
+lift_position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
 part | [ksp::vessel::Part](/reference/ksp/vessel.md#part) | R/O | 
 part_name | string | R/O | 
 
@@ -771,6 +779,28 @@ moduledockingnode.control_from_here ( ) -> Unit
 ```
 
 
+
+### ModuleDrag
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+body_lift_force | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
+body_lift_position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
+drag_force | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
+drag_position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
+exposed_area | float | R/O | 
+global_body_lift_force | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | 
+global_body_lift_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | R/O | 
+global_drag_force | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | 
+global_drag_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | R/O | 
+part | [ksp::vessel::Part](/reference/ksp/vessel.md#part) | R/O | 
+part_name | string | R/O | 
+reference_area | float | R/O | 
+total_area | float | R/O | 
 
 ### ModuleEngine
 
@@ -941,6 +971,29 @@ modulelaunchclamp.release ( ) -> bool
 ```
 
 
+
+### ModuleLiftingSurface
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+angle_of_attack | float | R/O | 
+drag_force | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
+drag_position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
+drag_scalar | float | R/O | 
+global_drag_force | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | 
+global_drag_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | R/O | 
+global_lift_force | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | 
+global_lift_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | R/O | 
+lift_drag_ratio | float | R/O | 
+lift_force | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
+lift_position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
+lift_scalar | float | R/O | 
+part | [ksp::vessel::Part](/reference/ksp/vessel.md#part) | R/O | 
+part_name | string | R/O | 
 
 ### ModuleLight
 
@@ -1237,6 +1290,7 @@ decouple_stage | int | R/O |
 decoupler | Option&lt;[ksp::vessel::ModuleDecoupler](/reference/ksp/vessel.md#moduledecoupler)> | R/O | 
 deployable | Option&lt;[ksp::vessel::ModuleDeployable](/reference/ksp/vessel.md#moduledeployable)> | R/O | 
 docking_node | Option&lt;[ksp::vessel::ModuleDockingNode](/reference/ksp/vessel.md#moduledockingnode)> | R/O | 
+drag | Option&lt;[ksp::vessel::ModuleDrag](/reference/ksp/vessel.md#moduledrag)> | R/O | 
 dry_mass | float | R/O | Dry mass of the part 
 engine | Option&lt;[ksp::vessel::ModuleEngine](/reference/ksp/vessel.md#moduleengine)> | R/O | 
 engine_module | Option&lt;[ksp::vessel::ModuleEngine](/reference/ksp/vessel.md#moduleengine)> | R/O | Deprecated: Use `.engine` instead 
@@ -1249,11 +1303,13 @@ heatshield | Option&lt;[ksp::vessel::ModuleHeatshield](/reference/ksp/vessel.md#
 is_cargo_bay | bool | R/O | 
 is_decoupler | bool | R/O | 
 is_deployable | bool | R/O | 
+is_drag | bool | R/O | 
 is_engine | bool | R/O | 
 is_fairing | bool | R/O | 
 is_generator | bool | R/O | 
 is_heatshield | bool | R/O | 
 is_launch_clamp | bool | R/O | 
+is_lifting_surface | bool | R/O | 
 is_light | bool | R/O | 
 is_parachute | bool | R/O | 
 is_rcs | bool | R/O | 
@@ -1262,6 +1318,7 @@ is_science_experiment | bool | R/O |
 is_solar_panel | bool | R/O | 
 is_transmitter | bool | R/O | 
 launch_clamp | Option&lt;[ksp::vessel::ModuleLaunchClamp](/reference/ksp/vessel.md#modulelaunchclamp)> | R/O | 
+lifting_surface | Option&lt;[ksp::vessel::ModuleLiftingSurface](/reference/ksp/vessel.md#moduleliftingsurface)> | R/O | 
 light | Option&lt;[ksp::vessel::ModuleLight](/reference/ksp/vessel.md#modulelight)> | R/O | 
 max_temperature | float | R/O | Maximum temperature of the part 
 parachute | Option&lt;[ksp::vessel::ModuleParachute](/reference/ksp/vessel.md#moduleparachute)> | R/O | 
@@ -1585,6 +1642,7 @@ global_north | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | 
 global_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | R/O | Coordinate independent position of the vessel. 
 global_up | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | Get the coordinate system independent horizon up vector. 
 global_velocity | [ksp::math::GlobalVelocity](/reference/ksp/math.md#globalvelocity) | R/O | Get the coordinate independent velocity of the vessel. 
+has_launched | bool | R/O | Check if the vessel has been launched. 
 heading | float | R/O | 
 horizon_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/O | Reference frame for the horizon at the current position of the vessel. 
 horizontal_surface_speed | float | R/O | 
@@ -1592,6 +1650,7 @@ id | string | R/O | Unique vessel id
 is_active | bool | R/O | Check if the vessel is currently active. 
 is_controllable | bool | R/O | Check if the vessel is controllable. 
 is_flying | bool | R/O | Check if the vessel is flyging. 
+launch_time | float | R/O | Universal time when vessel has been launched. 
 mach_number | float | R/O | 
 main_body | [ksp::orbit::Body](/reference/ksp/orbit.md#body) | R/O | The main body of the current SOI the vessel is in. 
 maneuver | [ksp::vessel::Maneuver](/reference/ksp/vessel.md#maneuver) | R/O | Collection of methods to interact with the maneuver plan of the vessel. 
@@ -1613,6 +1672,7 @@ staging | [ksp::vessel::Staging](/reference/ksp/vessel.md#staging) | R/O | Colle
 static_pressure_kpa | float | R/O | 
 surface_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Surface velocity of the vessel relative to the main body. This is equivalent of expressing the `global_velocity` in the body frame of the main body. 
 target | Option&lt;[ksp::vessel::Targetable](/reference/ksp/vessel.md#targetable)> | R/W | Get the currently selected target of the vessel, if there is one. 
+time_since_launch | float | R/O | Number of seconds since launch. 
 total_torque | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get the available torque of relative to its control frame. 
 trajectory | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit)[] | R/O | Get the entire trajectory of the vessel containing all orbit patches. 
 up | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get the horizon up vector in the celestial frame of the main body. 

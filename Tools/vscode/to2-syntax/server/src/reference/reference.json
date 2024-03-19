@@ -2078,6 +2078,11 @@
         {
           "kind": "Standard",
           "module": "ksp::oab",
+          "name": "ObjectAssemblyControlSurface"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
           "name": "ObjectAssemblyDecoupler"
         },
         {
@@ -2098,6 +2103,11 @@
         {
           "kind": "Standard",
           "module": "ksp::oab",
+          "name": "ObjectAssemblyDrag"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
           "name": "ObjectAssemblyEngine"
         },
         {
@@ -2114,6 +2124,11 @@
           "kind": "Standard",
           "module": "ksp::oab",
           "name": "ObjectAssemblyGenerator"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
+          "name": "ObjectAssemblyLiftingSurface"
         },
         {
           "kind": "Standard",
@@ -2638,6 +2653,11 @@
         {
           "kind": "Standard",
           "module": "ksp::vessel",
+          "name": "ModuleDrag"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
           "name": "ModuleEngine"
         },
         {
@@ -2664,6 +2684,11 @@
           "kind": "Standard",
           "module": "ksp::vessel",
           "name": "ModuleLaunchClamp"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleLiftingSurface"
         },
         {
           "kind": "Standard",
@@ -3100,6 +3125,11 @@
         {
           "kind": "Standard",
           "module": "ksp::oab",
+          "name": "ObjectAssemblyControlSurface"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
           "name": "ObjectAssemblyDecoupler"
         },
         {
@@ -3120,6 +3150,11 @@
         {
           "kind": "Standard",
           "module": "ksp::oab",
+          "name": "ObjectAssemblyDrag"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
           "name": "ObjectAssemblyEngine"
         },
         {
@@ -3136,6 +3171,11 @@
           "kind": "Standard",
           "module": "ksp::oab",
           "name": "ObjectAssemblyGenerator"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::oab",
+          "name": "ObjectAssemblyLiftingSurface"
         },
         {
           "kind": "Standard",
@@ -3660,6 +3700,11 @@
         {
           "kind": "Standard",
           "module": "ksp::vessel",
+          "name": "ModuleDrag"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
           "name": "ModuleEngine"
         },
         {
@@ -3686,6 +3731,11 @@
           "kind": "Standard",
           "module": "ksp::vessel",
           "name": "ModuleLaunchClamp"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleLiftingSurface"
         },
         {
           "kind": "Standard",
@@ -11576,6 +11626,96 @@
           "assignableFromAny": false,
           "assignableFrom": []
         },
+        "ObjectAssemblyControlSurface": {
+          "name": "ObjectAssemblyControlSurface",
+          "description": "",
+          "fields": {
+            "invert_control": {
+              "name": "invert_control",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "enable_roll": {
+              "name": "enable_roll",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "enable_yaw": {
+              "name": "enable_yaw",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "enable_pitch": {
+              "name": "enable_pitch",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "authority_limiter": {
+              "name": "authority_limiter",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "lift": {
+              "name": "lift",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "drag": {
+              "name": "drag",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "angle_of_attack": {
+              "name": "angle_of_attack",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "part": {
+              "name": "part",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::oab",
+                "name": "ObjectAssemblyPart"
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
         "ObjectAssemblyDecoupler": {
           "name": "ObjectAssemblyDecoupler",
           "description": "",
@@ -11787,6 +11927,56 @@
                     "name": "string"
                   }
                 ]
+              }
+            },
+            "part": {
+              "name": "part",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::oab",
+                "name": "ObjectAssemblyPart"
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "ObjectAssemblyDrag": {
+          "name": "ObjectAssemblyDrag",
+          "description": "",
+          "fields": {
+            "reference_area": {
+              "name": "reference_area",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "exposed_area": {
+              "name": "exposed_area",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "total_area": {
+              "name": "total_area",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
               }
             },
             "part": {
@@ -12299,6 +12489,64 @@
           "assignableFromAny": false,
           "assignableFrom": []
         },
+        "ObjectAssemblyLiftingSurface": {
+          "name": "ObjectAssemblyLiftingSurface",
+          "description": "",
+          "fields": {
+            "lift_drag_ratio": {
+              "name": "lift_drag_ratio",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "lift_scalar": {
+              "name": "lift_scalar",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "drag_scalar": {
+              "name": "drag_scalar",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "angle_of_attack": {
+              "name": "angle_of_attack",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "part": {
+              "name": "part",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::oab",
+                "name": "ObjectAssemblyPart"
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
         "ObjectAssemblyLight": {
           "name": "ObjectAssemblyLight",
           "description": "",
@@ -12647,6 +12895,20 @@
                 ]
               }
             },
+            "control_surface": {
+              "name": "control_surface",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::oab",
+                    "name": "ObjectAssemblyControlSurface"
+                  }
+                ]
+              }
+            },
             "is_s_science_experiment": {
               "name": "is_s_science_experiment",
               "readOnly": true,
@@ -12709,6 +12971,50 @@
                     "kind": "Standard",
                     "module": "ksp::oab",
                     "name": "ObjectAssemblyReactionWheel"
+                  }
+                ]
+              }
+            },
+            "is_drag": {
+              "name": "is_drag",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "drag": {
+              "name": "drag",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::oab",
+                    "name": "ObjectAssemblyDrag"
+                  }
+                ]
+              }
+            },
+            "is_lifting_surface": {
+              "name": "is_lifting_surface",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "lifting_surface": {
+              "name": "lifting_surface",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::oab",
+                    "name": "ObjectAssemblyLiftingSurface"
                   }
                 ]
               }
@@ -13858,6 +14164,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyControlSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDecoupler"
             },
             {
@@ -13878,6 +14189,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyEngine"
             },
             {
@@ -13894,6 +14210,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -14413,6 +14734,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleEngine"
             },
             {
@@ -14439,6 +14765,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -16615,6 +16946,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyControlSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDecoupler"
             },
             {
@@ -16635,6 +16971,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyEngine"
             },
             {
@@ -16651,6 +16992,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -17170,6 +17516,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleEngine"
             },
             {
@@ -17196,6 +17547,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -18152,6 +18508,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyControlSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDecoupler"
             },
             {
@@ -18172,6 +18533,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyEngine"
             },
             {
@@ -18188,6 +18554,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -18707,6 +19078,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleEngine"
             },
             {
@@ -18733,6 +19109,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -19327,6 +19708,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyControlSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDecoupler"
             },
             {
@@ -19347,6 +19733,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyEngine"
             },
             {
@@ -19363,6 +19754,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -19882,6 +20278,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleEngine"
             },
             {
@@ -19908,6 +20309,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -20442,6 +20848,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyControlSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDecoupler"
             },
             {
@@ -20462,6 +20873,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyEngine"
             },
             {
@@ -20478,6 +20894,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -20997,6 +21418,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleEngine"
             },
             {
@@ -21023,6 +21449,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -21517,6 +21948,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyControlSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDecoupler"
             },
             {
@@ -21537,6 +21973,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyEngine"
             },
             {
@@ -21553,6 +21994,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -22072,6 +22518,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleEngine"
             },
             {
@@ -22098,6 +22549,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -23657,6 +24113,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyControlSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDecoupler"
             },
             {
@@ -23677,6 +24138,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyEngine"
             },
             {
@@ -23693,6 +24159,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -24212,6 +24683,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleEngine"
             },
             {
@@ -24238,6 +24714,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -28801,6 +29282,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyControlSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDecoupler"
             },
             {
@@ -28821,6 +29307,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyEngine"
             },
             {
@@ -28837,6 +29328,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -29356,6 +29852,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleEngine"
             },
             {
@@ -29382,6 +29883,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -29886,6 +30392,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyControlSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDecoupler"
             },
             {
@@ -29906,6 +30417,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyEngine"
             },
             {
@@ -29922,6 +30438,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -30441,6 +30962,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleEngine"
             },
             {
@@ -30467,6 +30993,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -30991,6 +31522,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyControlSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDecoupler"
             },
             {
@@ -31011,6 +31547,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyEngine"
             },
             {
@@ -31027,6 +31568,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -31546,6 +32092,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleEngine"
             },
             {
@@ -31572,6 +32123,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -32076,6 +32632,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyControlSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDecoupler"
             },
             {
@@ -32096,6 +32657,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyEngine"
             },
             {
@@ -32112,6 +32678,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -32631,6 +33202,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleEngine"
             },
             {
@@ -32657,6 +33233,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -33171,6 +33752,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyControlSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDecoupler"
             },
             {
@@ -33191,6 +33777,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyEngine"
             },
             {
@@ -33207,6 +33798,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -33726,6 +34322,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleEngine"
             },
             {
@@ -33752,6 +34353,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -34356,6 +34962,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyControlSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDecoupler"
             },
             {
@@ -34376,6 +34987,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyEngine"
             },
             {
@@ -34392,6 +35008,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -34911,6 +35532,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleEngine"
             },
             {
@@ -34937,6 +35563,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -35491,6 +36122,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyControlSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDecoupler"
             },
             {
@@ -35511,6 +36147,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyEngine"
             },
             {
@@ -35527,6 +36168,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -36046,6 +36692,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleEngine"
             },
             {
@@ -36072,6 +36723,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -36586,6 +37242,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyControlSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDecoupler"
             },
             {
@@ -36606,6 +37267,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyEngine"
             },
             {
@@ -36622,6 +37288,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -37141,6 +37812,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleEngine"
             },
             {
@@ -37167,6 +37843,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -37701,6 +38382,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyControlSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDecoupler"
             },
             {
@@ -37721,6 +38407,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyEngine"
             },
             {
@@ -37737,6 +38428,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -38256,6 +38952,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleEngine"
             },
             {
@@ -38282,6 +38983,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -38826,6 +39532,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyControlSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDecoupler"
             },
             {
@@ -38846,6 +39557,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyEngine"
             },
             {
@@ -38862,6 +39578,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -39381,6 +40102,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleEngine"
             },
             {
@@ -39407,6 +40133,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -39931,6 +40662,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyControlSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDecoupler"
             },
             {
@@ -39951,6 +40687,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyEngine"
             },
             {
@@ -39967,6 +40708,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -40486,6 +41232,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleEngine"
             },
             {
@@ -40512,6 +41263,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -41196,6 +41952,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyControlSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDecoupler"
             },
             {
@@ -41216,6 +41977,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyEngine"
             },
             {
@@ -41232,6 +41998,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -41751,6 +42522,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleEngine"
             },
             {
@@ -41777,6 +42553,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -42281,6 +43062,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyControlSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDecoupler"
             },
             {
@@ -42301,6 +43087,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyEngine"
             },
             {
@@ -42317,6 +43108,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -42836,6 +43632,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleEngine"
             },
             {
@@ -42862,6 +43663,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -43366,6 +44172,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyControlSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDecoupler"
             },
             {
@@ -43386,6 +44197,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyEngine"
             },
             {
@@ -43402,6 +44218,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -43921,6 +44742,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleEngine"
             },
             {
@@ -43947,6 +44773,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -44461,6 +45292,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyControlSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyDecoupler"
             },
             {
@@ -44481,6 +45317,11 @@
             {
               "kind": "Standard",
               "module": "ksp::oab",
+              "name": "ObjectAssemblyDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
               "name": "ObjectAssemblyEngine"
             },
             {
@@ -44497,6 +45338,11 @@
               "kind": "Standard",
               "module": "ksp::oab",
               "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -45016,6 +45862,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleEngine"
             },
             {
@@ -45042,6 +45893,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLiftingSurface"
             },
             {
               "kind": "Standard",
@@ -46379,6 +47235,78 @@
           "name": "ModuleControlSurface",
           "description": "",
           "fields": {
+            "drag_force": {
+              "name": "drag_force",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec3"
+              }
+            },
+            "global_drag_force": {
+              "name": "global_drag_force",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "GlobalVector"
+              }
+            },
+            "drag_position": {
+              "name": "drag_position",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec3"
+              }
+            },
+            "global_drag_position": {
+              "name": "global_drag_position",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "GlobalPosition"
+              }
+            },
+            "lift_force": {
+              "name": "lift_force",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec3"
+              }
+            },
+            "global_lift_force": {
+              "name": "global_lift_force",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "GlobalVector"
+              }
+            },
+            "lift_position": {
+              "name": "lift_position",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec3"
+              }
+            },
+            "global_lift_position": {
+              "name": "global_lift_position",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "GlobalPosition"
+              }
+            },
             "invert_control": {
               "name": "invert_control",
               "readOnly": false,
@@ -46667,6 +47595,128 @@
               }
             }
           },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "ModuleDrag": {
+          "name": "ModuleDrag",
+          "description": "",
+          "fields": {
+            "drag_force": {
+              "name": "drag_force",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec3"
+              }
+            },
+            "global_drag_force": {
+              "name": "global_drag_force",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "GlobalVector"
+              }
+            },
+            "drag_position": {
+              "name": "drag_position",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec3"
+              }
+            },
+            "global_drag_position": {
+              "name": "global_drag_position",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "GlobalPosition"
+              }
+            },
+            "body_lift_force": {
+              "name": "body_lift_force",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec3"
+              }
+            },
+            "global_body_lift_force": {
+              "name": "global_body_lift_force",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "GlobalVector"
+              }
+            },
+            "body_lift_position": {
+              "name": "body_lift_position",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec3"
+              }
+            },
+            "global_body_lift_position": {
+              "name": "global_body_lift_position",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "GlobalPosition"
+              }
+            },
+            "reference_area": {
+              "name": "reference_area",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "exposed_area": {
+              "name": "exposed_area",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "total_area": {
+              "name": "total_area",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "part": {
+              "name": "part",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "Part"
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            }
+          },
+          "methods": {},
           "assignableFromAny": false,
           "assignableFrom": []
         },
@@ -47335,6 +48385,136 @@
               }
             }
           },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "ModuleLiftingSurface": {
+          "name": "ModuleLiftingSurface",
+          "description": "",
+          "fields": {
+            "drag_force": {
+              "name": "drag_force",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec3"
+              }
+            },
+            "global_drag_force": {
+              "name": "global_drag_force",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "GlobalVector"
+              }
+            },
+            "drag_position": {
+              "name": "drag_position",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec3"
+              }
+            },
+            "global_drag_position": {
+              "name": "global_drag_position",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "GlobalPosition"
+              }
+            },
+            "lift_force": {
+              "name": "lift_force",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec3"
+              }
+            },
+            "global_lift_force": {
+              "name": "global_lift_force",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "GlobalVector"
+              }
+            },
+            "lift_position": {
+              "name": "lift_position",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec3"
+              }
+            },
+            "global_lift_position": {
+              "name": "global_lift_position",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "GlobalPosition"
+              }
+            },
+            "lift_drag_ratio": {
+              "name": "lift_drag_ratio",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "lift_scalar": {
+              "name": "lift_scalar",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "drag_scalar": {
+              "name": "drag_scalar",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "angle_of_attack": {
+              "name": "angle_of_attack",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "part": {
+              "name": "part",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "Part"
+              }
+            },
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            }
+          },
+          "methods": {},
           "assignableFromAny": false,
           "assignableFrom": []
         },
@@ -48475,6 +49655,50 @@
                 ]
               }
             },
+            "is_drag": {
+              "name": "is_drag",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "drag": {
+              "name": "drag",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ModuleDrag"
+                  }
+                ]
+              }
+            },
+            "is_lifting_surface": {
+              "name": "is_lifting_surface",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "lifting_surface": {
+              "name": "lifting_surface",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ModuleLiftingSurface"
+                  }
+                ]
+              }
+            },
             "part_name": {
               "name": "part_name",
               "readOnly": true,
@@ -48797,6 +50021,33 @@
               "type": {
                 "kind": "Builtin",
                 "name": "bool"
+              }
+            },
+            "has_launched": {
+              "name": "has_launched",
+              "description": "Check if the vessel has been launched.\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "launch_time": {
+              "name": "launch_time",
+              "description": "Universal time when vessel has been launched.\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "time_since_launch": {
+              "name": "time_since_launch",
+              "description": "Number of seconds since launch.\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
               }
             },
             "control_status": {

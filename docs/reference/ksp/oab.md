@@ -65,6 +65,25 @@ part | [ksp::oab::ObjectAssemblyPart](/reference/ksp/oab.md#objectassemblypart) 
 part_name | string | R/O | 
 required_resources | [ksp::resource::ResourceSetting](/reference/ksp/resource.md#resourcesetting)[] | R/O | 
 
+### ObjectAssemblyControlSurface
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+angle_of_attack | float | R/O | 
+authority_limiter | float | R/W | 
+drag | float | R/O | 
+enable_pitch | bool | R/W | 
+enable_roll | bool | R/W | 
+enable_yaw | bool | R/W | 
+invert_control | bool | R/W | 
+lift | float | R/O | 
+part | [ksp::oab::ObjectAssemblyPart](/reference/ksp/oab.md#objectassemblypart) | R/O | 
+part_name | string | R/O | 
+
 ### ObjectAssemblyDecoupler
 
 
@@ -151,6 +170,20 @@ is_deployable_docking_port | bool | R/O |
 node_types | string[] | R/O | 
 part | [ksp::oab::ObjectAssemblyPart](/reference/ksp/oab.md#objectassemblypart) | R/O | 
 part_name | string | R/O | 
+
+### ObjectAssemblyDrag
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+exposed_area | float | R/O | 
+part | [ksp::oab::ObjectAssemblyPart](/reference/ksp/oab.md#objectassemblypart) | R/O | 
+part_name | string | R/O | 
+reference_area | float | R/O | 
+total_area | float | R/O | 
 
 ### ObjectAssemblyEngine
 
@@ -283,6 +316,21 @@ part | [ksp::oab::ObjectAssemblyPart](/reference/ksp/oab.md#objectassemblypart) 
 part_name | string | R/O | 
 resource_setting | [ksp::resource::ResourceSetting](/reference/ksp/resource.md#resourcesetting) | R/O | 
 
+### ObjectAssemblyLiftingSurface
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+angle_of_attack | float | R/O | 
+drag_scalar | float | R/O | 
+lift_drag_ratio | float | R/O | 
+lift_scalar | float | R/O | 
+part | [ksp::oab::ObjectAssemblyPart](/reference/ksp/oab.md#objectassemblypart) | R/O | 
+part_name | string | R/O | 
+
 ### ObjectAssemblyLight
 
 
@@ -314,10 +362,12 @@ Name | Type | Read-only | Description
 activation_stage | int | R/O | 
 air_intake | Option&lt;[ksp::oab::ObjectAssemblyAirIntake](/reference/ksp/oab.md#objectassemblyairintake)> | R/O | 
 command_module | Option&lt;[ksp::oab::ObjectAssemblyCommand](/reference/ksp/oab.md#objectassemblycommand)> | R/O | 
+control_surface | Option&lt;[ksp::oab::ObjectAssemblyControlSurface](/reference/ksp/oab.md#objectassemblycontrolsurface)> | R/O | 
 decouple_stage | int | R/O | 
 decoupler | Option&lt;[ksp::oab::ObjectAssemblyDecoupler](/reference/ksp/oab.md#objectassemblydecoupler)> | R/O | 
 deployable | Option&lt;[ksp::oab::ObjectAssemblyDeployable](/reference/ksp/oab.md#objectassemblydeployable)> | R/O | 
 docking_node | Option&lt;[ksp::oab::ObjectAssemblyDockingNode](/reference/ksp/oab.md#objectassemblydockingnode)> | R/O | 
+drag | Option&lt;[ksp::oab::ObjectAssemblyDrag](/reference/ksp/oab.md#objectassemblydrag)> | R/O | 
 dry_mass | float | R/O | Dry mass of the part 
 engine | Option&lt;[ksp::oab::ObjectAssemblyEngine](/reference/ksp/oab.md#objectassemblyengine)> | R/O | 
 fuel_cross_feed | bool | R/O | 
@@ -325,14 +375,17 @@ generator | Option&lt;[ksp::oab::ObjectAssemblyGenerator](/reference/ksp/oab.md#
 green_mass | float | R/O | Green mass (Kerbals) of the part 
 is_decoupler | bool | R/O | 
 is_deployable | bool | R/O | 
+is_drag | bool | R/O | 
 is_engine | bool | R/O | 
 is_generator | bool | R/O | 
+is_lifting_surface | bool | R/O | 
 is_light | bool | R/O | 
 is_rcs | bool | R/O | 
 is_reaction_wheel | bool | R/O | 
 is_s_science_experiment | bool | R/O | 
 is_solar_panel | bool | R/O | 
 is_transmitter | bool | R/O | 
+lifting_surface | Option&lt;[ksp::oab::ObjectAssemblyLiftingSurface](/reference/ksp/oab.md#objectassemblyliftingsurface)> | R/O | 
 light | Option&lt;[ksp::oab::ObjectAssemblyLight](/reference/ksp/oab.md#objectassemblylight)> | R/O | 
 part_category | [ksp::vessel::PartCategory](/reference/ksp/vessel.md#partcategory) | R/O | 
 part_description | string | R/O | 
