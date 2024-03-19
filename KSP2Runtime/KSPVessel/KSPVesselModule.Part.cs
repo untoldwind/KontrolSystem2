@@ -213,5 +213,25 @@ public partial class KSPVesselModule {
                 ? Option.Some(new ModuleReactionWheelAdapter(this, data))
                 : Option.None<ModuleReactionWheelAdapter>();
 
+        [KSField]
+        public bool IsDrag =>
+            part.TryGetModuleData<PartComponentModule_Drag, Data_Drag>(out _);
+        
+        [KSField]
+        public Option<ModuleDragAdapter> Drag =>
+            part.TryGetModuleData<PartComponentModule_Drag, Data_Drag>(out var data)
+                ? Option.Some(new ModuleDragAdapter(this, data))
+                : Option.None<ModuleDragAdapter>();
+
+        [KSField]
+        public bool IsLiftingSurface =>
+            part.TryGetModuleData<PartComponentModule_LiftingSurface, Data_LiftingSurface>(out _);
+        
+        [KSField]
+        public Option<ModuleLiftingSurfaceAdapter> LiftingSurface =>
+            part.TryGetModuleData<PartComponentModule_LiftingSurface, Data_LiftingSurface>(out var data)
+                ? Option.Some(new ModuleLiftingSurfaceAdapter(this, data))
+                : Option.None<ModuleLiftingSurfaceAdapter>();
+
     }
 }

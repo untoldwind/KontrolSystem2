@@ -140,5 +140,25 @@ public partial class KSPOABModule {
             part.TryGetModuleData<PartComponentModule_ReactionWheel, Data_ReactionWheel>(out var data)
                 ? Option.Some(new ObjectAssemblyReactionWheelAdapter(this, data))
                 : Option.None<ObjectAssemblyReactionWheelAdapter>();
+
+        [KSField]
+        public bool IsDrag =>
+            part.TryGetModuleData<PartComponentModule_Drag, Data_Drag>(out _);
+        
+        [KSField]
+        public Option<ObjectAssemblyDragAdapter> Drag =>
+            part.TryGetModuleData<PartComponentModule_Drag, Data_Drag>(out var data)
+                ? Option.Some(new ObjectAssemblyDragAdapter(this, data))
+                : Option.None<ObjectAssemblyDragAdapter>();
+
+        [KSField]
+        public bool IsLiftingSurface =>
+            part.TryGetModuleData<PartComponentModule_LiftingSurface, Data_LiftingSurface>(out _);
+
+        [KSField]
+        public Option<ObjectAssemblyLiftingSurfaceAdapter> LiftingSurface =>
+            part.TryGetModuleData<PartComponentModule_LiftingSurface, Data_LiftingSurface>(out var data)
+                ? Option.Some(new ObjectAssemblyLiftingSurfaceAdapter(this, data))
+                : Option.None<ObjectAssemblyLiftingSurfaceAdapter>();
     }
 }

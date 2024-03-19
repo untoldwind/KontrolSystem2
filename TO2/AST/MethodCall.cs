@@ -343,6 +343,6 @@ public class MethodCall : Expression {
             $"Type '{targetFuture.Type.Name}' does not have a method or field '{methodName}'");
     }
 
-    public override string ToString() => 
+    public override string ToString() =>
         $"{target}.{methodName}({string.Join(", ", arguments.Select(a => a.ToString()))})";
 }

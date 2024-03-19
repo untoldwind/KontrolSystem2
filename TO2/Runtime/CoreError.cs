@@ -40,7 +40,7 @@ public class CoreError {
         public long Line => line;
 
         [KSMethod]
-        public override string ToString() => arguments != null ? 
+        public override string ToString() => arguments != null ?
             $"[{sourceName}:{line}] {name}({string.Join(",", arguments.Select(arg => StringMethods.Ellipsis(arg.ToString(), 12)))})" :
             $"[{sourceName}:{line}] {name}";
     }
