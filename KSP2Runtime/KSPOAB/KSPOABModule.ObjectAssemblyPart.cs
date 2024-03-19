@@ -112,6 +112,12 @@ public partial class KSPOABModule {
                 : Option.None<ObjectAssemblyCommandAdapter>();
 
         [KSField]
+        public Option<ObjectAssemblyControlSurfaceAdapter> ControlSurface =>
+            part.TryGetModuleData<PartComponentModule_ControlSurface, Data_ControlSurface>(out var data)
+                ? Option.Some(new ObjectAssemblyControlSurfaceAdapter(this, data))
+                : Option.None<ObjectAssemblyControlSurfaceAdapter>();
+
+        [KSField]
         public bool IsSScienceExperiment =>
             part.TryGetModuleData<PartComponentModule_ScienceExperiment, Data_ScienceExperiment>(out _);
 
