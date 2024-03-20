@@ -223,6 +223,10 @@ public class ArrayType : RealizedType {
         return ElementType.InferGenericArgument(context, concreteArray.ElementType.UnderlyingType(context));
     }
 
+    public override IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) {
+        return ArrayAssignEmitter.Instance;
+    }
+
     private static IREPLValue REPLArrayLength(Node node, IREPLValue target) {
         if (target.Value is Array a) return new REPLInt(a.Length);
 
@@ -235,6 +239,30 @@ public class ArrayType : RealizedType {
 
         throw new REPLException(new Position("Intern"), new Position("Intern"),
             $"{value?.GetType()} can not be cast to REPLArray");
+    }
+}
+
+public class ArrayAssignEmitter : IAssignEmitter {
+    public static readonly IAssignEmitter Instance = new ArrayAssignEmitter();
+
+    public void EmitAssign(IBlockContext context, IBlockVariable variable, Expression expression,
+        bool dropResult) {
+        if (!variable.IsConst) {
+            expression.EmitCode(context, false);
+            context.IL.EmitCall(OpCodes.Call, typeof(ArrayMethods).GetMethod("DeepClone")!, 1);
+            if (!dropResult) context.IL.Emit(OpCodes.Dup);
+
+            variable.EmitStore(context);
+        } else {
+            expression.EmitStore(context, variable, dropResult);
+        }
+    }
+
+    public void EmitConvert(IBlockContext context) {
+    } // Nothing to convert
+
+    public IREPLValue EvalConvert(Node node, IREPLValue value) {
+        return value;
     }
 }
 

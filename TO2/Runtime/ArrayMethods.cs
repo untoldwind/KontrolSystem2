@@ -149,4 +149,19 @@ public static class ArrayMethods {
         builder.Append("]");
         return builder.ToString();
     }
+
+    public static Array DeepClone(Array source) {
+        Array clone = Array.CreateInstance( source.GetType().GetElementType()!, source.Length );
+
+        for (var i = 0; i < source.Length; i++) {
+            var item = source.GetValue(i);
+            if (item is Array subArray) {
+                clone.SetValue(DeepClone(subArray), i);
+            } else {
+                clone.SetValue(item, i);
+            }
+        }
+
+        return clone;
+    }
 }
