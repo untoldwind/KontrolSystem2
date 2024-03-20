@@ -47,7 +47,7 @@ internal readonly struct AsyncClass {
         expression.EmitCode(asyncContext, false);
         if (!asyncContext.HasErrors)
             declaredReturn.AssignFrom(asyncContext.ModuleContext, expression.ResultType(asyncContext))
-                .EmitConvert(asyncContext);
+                .EmitConvert(asyncContext, false);
         else
             // At this point the IL code is most likely messed up beyond repair
             throw new CompilationErrorException(asyncContext.AllErrors);

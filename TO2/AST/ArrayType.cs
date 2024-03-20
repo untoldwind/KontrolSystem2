@@ -258,8 +258,10 @@ public class ArrayAssignEmitter : IAssignEmitter {
         }
     }
 
-    public void EmitConvert(IBlockContext context) {
-    } // Nothing to convert
+    public void EmitConvert(IBlockContext context, bool mutableTarget) {
+        if (mutableTarget)
+            context.IL.EmitCall(OpCodes.Call, typeof(ArrayMethods).GetMethod("DeepClone")!, 1);
+    }
 
     public IREPLValue EvalConvert(Node node, IREPLValue value) {
         return value;

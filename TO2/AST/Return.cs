@@ -89,7 +89,7 @@ public class ReturnValue : Expression {
 
         if (context.HasErrors) return;
 
-        context.ExpectedReturn.AssignFrom(context.ModuleContext, returnType).EmitConvert(context);
+        context.ExpectedReturn.AssignFrom(context.ModuleContext, returnType).EmitConvert(context, false);
         if (context.IsAsync)
             context.IL.EmitNew(OpCodes.Newobj,
                 context.MethodBuilder!.ReturnType.GetConstructor(new[]

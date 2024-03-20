@@ -116,7 +116,7 @@ public class DirectOperatorEmitter(
 
     public void EmitAssign(IBlockContext context, IBlockVariable variable, Node target) {
         EmitCode(context, target);
-        variable.Type.AssignFrom(context.ModuleContext, ResultType).EmitConvert(context);
+        variable.Type.AssignFrom(context.ModuleContext, ResultType).EmitConvert(context, !variable.IsConst);
         variable.EmitStore(context);
     }
 
@@ -168,7 +168,7 @@ public class StaticMethodOperatorEmitter : IOperatorEmitter {
 
     public void EmitAssign(IBlockContext context, IBlockVariable variable, Node target) {
         EmitCode(context, target);
-        variable.Type.AssignFrom(context.ModuleContext, ResultType).EmitConvert(context);
+        variable.Type.AssignFrom(context.ModuleContext, ResultType).EmitConvert(context, !variable.IsConst);
         variable.EmitStore(context);
     }
 

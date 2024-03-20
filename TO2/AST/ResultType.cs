@@ -176,11 +176,11 @@ internal class AssignOk : IAssignEmitter {
         if (!dropResult) variable.EmitLoad(context);
     }
 
-    public void EmitConvert(IBlockContext context) {
+    public void EmitConvert(IBlockContext context, bool mutableTarget) {
         var generatedType = resultType.GeneratedType(context.ModuleContext);
         using var value =
             context.IL.TempLocal(resultType.successType.GeneratedType(context.ModuleContext));
-        resultType.successType.AssignFrom(context.ModuleContext, otherType).EmitConvert(context);
+        resultType.successType.AssignFrom(context.ModuleContext, otherType).EmitConvert(context, mutableTarget);
         value.EmitStore(context);
 
         using var someResult = context.IL.TempLocal(generatedType);
@@ -276,7 +276,7 @@ internal class ResultUnwrapOperator : IOperatorEmitter {
 
     public void EmitAssign(IBlockContext context, IBlockVariable variable, Node target) {
         EmitCode(context, target);
-        variable.Type.AssignFrom(context.ModuleContext, ResultType).EmitConvert(context);
+        variable.Type.AssignFrom(context.ModuleContext, ResultType).EmitConvert(context, !variable.IsConst);
         variable.EmitStore(context);
     }
 

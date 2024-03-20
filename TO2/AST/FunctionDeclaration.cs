@@ -121,7 +121,7 @@ public class FunctionDeclaration : Node, IModuleItem, IVariableContainer {
         expression.EmitCode(context, declaredReturn == BuiltinType.Unit);
 
         if (!context.HasErrors && declaredReturn != BuiltinType.Unit)
-            declaredReturn.AssignFrom(context.ModuleContext, expression.ResultType(context)).EmitConvert(context);
+            declaredReturn.AssignFrom(context.ModuleContext, expression.ResultType(context)).EmitConvert(context, false);
         else if (declaredReturn == BuiltinType.Unit) context.IL.Emit(OpCodes.Ldnull);
 
         ILChunks.GenerateFunctionLeave(context);

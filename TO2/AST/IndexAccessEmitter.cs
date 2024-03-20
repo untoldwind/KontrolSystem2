@@ -48,7 +48,7 @@ public class InlineArrayIndexAccessEmitter : IIndexAccessEmitter {
         }
 
         indexExpression.EmitCode(context, false);
-        BuiltinType.Int.AssignFrom(context.ModuleContext, resultType).EmitConvert(context);
+        BuiltinType.Int.AssignFrom(context.ModuleContext, resultType).EmitConvert(context, false);
 
         context.IL.Emit(OpCodes.Conv_I4);
         if (targetType == BuiltinType.Bool) context.IL.Emit(OpCodes.Ldelem_I4);
@@ -70,7 +70,7 @@ public class InlineArrayIndexAccessEmitter : IIndexAccessEmitter {
         }
 
         indexExpression.EmitCode(context, false);
-        BuiltinType.Int.AssignFrom(context.ModuleContext, resultType).EmitConvert(context);
+        BuiltinType.Int.AssignFrom(context.ModuleContext, resultType).EmitConvert(context, false);
 
         context.IL.Emit(OpCodes.Conv_I4);
         context.IL.Emit(OpCodes.Ldelema, targetType.GeneratedType(context.ModuleContext));
@@ -89,7 +89,7 @@ public class InlineArrayIndexAccessEmitter : IIndexAccessEmitter {
         }
 
         indexExpression.EmitCode(context, false);
-        BuiltinType.Int.AssignFrom(context.ModuleContext, resultType).EmitConvert(context);
+        BuiltinType.Int.AssignFrom(context.ModuleContext, resultType).EmitConvert(context, false);
         context.IL.Emit(OpCodes.Conv_I4);
 
         emitValue(context);

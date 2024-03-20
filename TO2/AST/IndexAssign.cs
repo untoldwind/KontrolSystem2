@@ -81,7 +81,7 @@ public class IndexAssign(
                 indexAccess.EmitStore(context, subContext => {
                     expression.EmitCode(subContext, false);
                     indexAccess.TargetType.AssignFrom(subContext.ModuleContext, valueType)
-                        .EmitConvert(subContext);
+                        .EmitConvert(subContext, true);
 
                     context.IL.Emit(OpCodes.Dup);
                     // ReSharper disable once AccessToDisposedClosure
@@ -92,7 +92,7 @@ public class IndexAssign(
             } else {
                 indexAccess.EmitStore(context, subContext => {
                     expression.EmitCode(subContext, false);
-                    indexAccess.TargetType.AssignFrom(subContext.ModuleContext, valueType).EmitConvert(subContext);
+                    indexAccess.TargetType.AssignFrom(subContext.ModuleContext, valueType).EmitConvert(subContext, true);
                 });
             }
         } else {
@@ -126,7 +126,7 @@ public class IndexAssign(
                     indexAccess.EmitLoad(context);
                     expression.EmitCode(subContext, false);
 
-                    operatorEmitter.OtherType.AssignFrom(context.ModuleContext, valueType).EmitConvert(context);
+                    operatorEmitter.OtherType.AssignFrom(context.ModuleContext, valueType).EmitConvert(context, true);
                     operatorEmitter.EmitCode(context, this);
 
                     context.IL.Emit(OpCodes.Dup);
@@ -143,7 +143,7 @@ public class IndexAssign(
                     indexAccess.EmitLoad(context);
                     expression.EmitCode(subContext, false);
 
-                    operatorEmitter.OtherType.AssignFrom(context.ModuleContext, valueType).EmitConvert(context);
+                    operatorEmitter.OtherType.AssignFrom(context.ModuleContext, valueType).EmitConvert(context, true);
                     operatorEmitter.EmitCode(context, this);
                 });
             }

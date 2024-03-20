@@ -93,7 +93,7 @@ internal abstract class RecordTypeAssignEmitter<T> : IAssignEmitter, IOperatorEm
         if (!dropResult) variable.EmitLoad(context);
     }
 
-    public void EmitConvert(IBlockContext context) {
+    public void EmitConvert(IBlockContext context, bool mutableTarget) {
         using var valueTemp = context.MakeTempVariable(sourceType);
         valueTemp.EmitStore(context);
 

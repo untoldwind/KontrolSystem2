@@ -117,7 +117,7 @@ public class RecordCreate : Expression {
                 context.IL.Emit(OpCodes.Dup);
                 items[kv.Key].EmitCode(context, false);
                 recordType.ItemTypes[kv.Key].AssignFrom(context.ModuleContext, items[kv.Key].ResultType(context))
-                    .EmitConvert(context);
+                    .EmitConvert(context, false);
                 context.IL.Emit(OpCodes.Stfld, kv.Value);
             }
 
@@ -136,7 +136,7 @@ public class RecordCreate : Expression {
                 if (i < items.Count - 1) context.IL.Emit(OpCodes.Dup);
                 items[kv.Key].EmitCode(context, false);
                 recordType.ItemTypes[kv.Key].AssignFrom(context.ModuleContext, items[kv.Key].ResultType(context))
-                    .EmitConvert(context);
+                    .EmitConvert(context, false);
                 context.IL.Emit(OpCodes.Stfld, type.GetField($"Item{i % 7 + 1}"));
                 i++;
             }

@@ -72,9 +72,9 @@ public class Binary(
             right.Prepare(context);
 
             left.EmitCode(context, false);
-            rightEmitter?.OtherType.AssignFrom(context.ModuleContext, leftType).EmitConvert(context);
+            rightEmitter?.OtherType.AssignFrom(context.ModuleContext, leftType).EmitConvert(context, false);
             right.EmitCode(context, false);
-            leftEmitter?.OtherType.AssignFrom(context.ModuleContext, rightType).EmitConvert(context);
+            leftEmitter?.OtherType.AssignFrom(context.ModuleContext, rightType).EmitConvert(context, false);
 
             if (context.HasErrors) return;
 

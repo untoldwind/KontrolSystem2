@@ -94,7 +94,7 @@ public class VariableAssign : Expression {
 
         if (context.HasErrors) return;
 
-        operatorEmitter.OtherType.AssignFrom(context.ModuleContext, valueType).EmitConvert(context);
+        operatorEmitter.OtherType.AssignFrom(context.ModuleContext, valueType).EmitConvert(context, true);
         operatorEmitter.EmitAssign(context, blockVariable, this);
 
         if (!dropResult) blockVariable.EmitLoad(context);

@@ -103,7 +103,7 @@ public class MethodDeclaration : Node, IVariableContainer {
 
         if (!syncBlockContext!.HasErrors && declaredReturn != BuiltinType.Unit)
             declaredReturn.AssignFrom(syncBlockContext.ModuleContext, expression.ResultType(syncBlockContext))
-                .EmitConvert(syncBlockContext);
+                .EmitConvert(syncBlockContext, false);
         else if (declaredReturn == BuiltinType.Unit) syncBlockContext.IL.Emit(OpCodes.Ldnull);
 
         ILChunks.GenerateFunctionLeave(syncBlockContext);

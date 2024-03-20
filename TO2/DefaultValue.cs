@@ -37,7 +37,7 @@ public static class DefaultValue {
             }
 
             parameter.defaultValue.EmitCode(defaultContext, false);
-            parameter.type.AssignFrom(context.ModuleContext, resultType).EmitConvert(context);
+            parameter.type.AssignFrom(context.ModuleContext, resultType).EmitConvert(context, false);
             defaultContext.IL.EmitReturn(parameter.type.GeneratedType(context.ModuleContext));
 
             foreach (var error in defaultContext.AllErrors) context.AddError(error);

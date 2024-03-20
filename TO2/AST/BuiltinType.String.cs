@@ -193,7 +193,7 @@ public abstract partial class BuiltinType {
             variable.EmitStore(context);
         }
 
-        public void EmitConvert(IBlockContext context) {
+        public void EmitConvert(IBlockContext context, bool mutableTarget) {
             context.IL.Emit(OpCodes.Ldfld, typeof(CoreError.Error).GetField("message"));
         }
 

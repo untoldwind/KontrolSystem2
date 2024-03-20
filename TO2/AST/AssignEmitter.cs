@@ -6,7 +6,7 @@ namespace KontrolSystem.TO2.AST;
 public interface IAssignEmitter {
     void EmitAssign(IBlockContext context, IBlockVariable variable, Expression expression, bool dropResult);
 
-    void EmitConvert(IBlockContext context);
+    void EmitConvert(IBlockContext context, bool mutableTarget);
 
     IREPLValue EvalConvert(Node node, IREPLValue value);
 }
@@ -19,7 +19,7 @@ public class DefaultAssignEmitter : IAssignEmitter {
         expression.EmitStore(context, variable, dropResult);
     }
 
-    public void EmitConvert(IBlockContext context) {
+    public void EmitConvert(IBlockContext context, bool mutableTarget) {
     } // Nothing to convert
 
     public IREPLValue EvalConvert(Node node, IREPLValue value) {

@@ -175,11 +175,11 @@ internal class AssignSome : IAssignEmitter {
         if (!dropResult) variable.EmitLoad(context);
     }
 
-    public void EmitConvert(IBlockContext context) {
+    public void EmitConvert(IBlockContext context, bool mutableTarget) {
         var generatedType = optionType.GeneratedType(context.ModuleContext);
         using var value =
             context.IL.TempLocal(optionType.elementType.GeneratedType(context.ModuleContext));
-        optionType.elementType.AssignFrom(context.ModuleContext, otherType).EmitConvert(context);
+        optionType.elementType.AssignFrom(context.ModuleContext, otherType).EmitConvert(context, mutableTarget);
         value.EmitStore(context);
         using var someResult = context.IL.TempLocal(generatedType);
         someResult.EmitLoadPtr(context);
@@ -239,7 +239,7 @@ internal class OptionBitOrOperator : IOperatorEmitter {
     }
 
     public void EmitAssign(IBlockContext context, IBlockVariable variable, Node target) {
-        variable.Type.AssignFrom(context.ModuleContext, ResultType).EmitConvert(context);
+        variable.Type.AssignFrom(context.ModuleContext, ResultType).EmitConvert(context, !variable.IsConst);
         variable.EmitStore(context);
 
         var generatedType = optionType.GeneratedType(context.ModuleContext);
@@ -251,7 +251,7 @@ internal class OptionBitOrOperator : IOperatorEmitter {
         context.IL.Emit(OpCodes.Brfalse_S, onUndefined);
         context.IL.Emit(OpCodes.Ldfld, generatedType.GetField("value"));
         context.IL.Emit(OpCodes.Ldfld, generatedType.GetField("value"));
-        variable.Type.AssignFrom(context.ModuleContext, ResultType).EmitConvert(context);
+        variable.Type.AssignFrom(context.ModuleContext, ResultType).EmitConvert(context, !variable.IsConst);
         variable.EmitStore(context);
         context.IL.Emit(OpCodes.Br_S, end);
 
@@ -334,7 +334,7 @@ internal class OptionUnwrapOperator : IOperatorEmitter {
 
     public void EmitAssign(IBlockContext context, IBlockVariable variable, Node target) {
         EmitCode(context, target);
-        variable.Type.AssignFrom(context.ModuleContext, ResultType).EmitConvert(context);
+        variable.Type.AssignFrom(context.ModuleContext, ResultType).EmitConvert(context, !variable.IsConst);
         variable.EmitStore(context);
     }
 

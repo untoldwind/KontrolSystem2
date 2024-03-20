@@ -75,7 +75,7 @@ internal class AssignRecordTuple : RecordTypeAssignEmitter<RecordTupleType> {
                 else tempSource.EmitLoad(context);
                 sourceField.EmitLoad(context);
                 targetType.ItemTypes[kv.Key].AssignFrom(context.ModuleContext, sourceType.ItemTypes[kv.Key])
-                    .EmitConvert(context);
+                    .EmitConvert(context, !tempSource.IsConst);
                 context.IL.Emit(OpCodes.Stfld, type.GetField($"Item{i % 7 + 1}"));
             }
 

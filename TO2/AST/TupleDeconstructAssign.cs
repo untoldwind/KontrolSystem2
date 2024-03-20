@@ -95,7 +95,7 @@ public class TupleDeconstructAssign : Expression {
             context.IL.Emit(OpCodes.Dup);
             itemAccess.EmitLoad(context);
 
-            kv.variable.Type.AssignFrom(context.ModuleContext, itemAccess.FieldType).EmitConvert(context);
+            kv.variable.Type.AssignFrom(context.ModuleContext, itemAccess.FieldType).EmitConvert(context, true);
             kv.variable.EmitStore(context);
         }
 
@@ -149,7 +149,7 @@ public class TupleDeconstructAssign : Expression {
             context.IL.Emit(OpCodes.Dup);
             itemAccess.EmitLoad(context);
 
-            kv.variable.Type.AssignFrom(context.ModuleContext, itemAccess.FieldType).EmitConvert(context);
+            kv.variable.Type.AssignFrom(context.ModuleContext, itemAccess.FieldType).EmitConvert(context, true);
             kv.variable.EmitStore(context);
         }
 

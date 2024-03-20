@@ -340,7 +340,7 @@ public class IfThenElse(
         context.IL.MarkLabel(thenEnd);
         if (!dropResult) context.IL.AdjustStack(-1); // Then leave its result on the stack, so is else supposed to
         elseExpression.EmitCode(elseContext, dropResult);
-        if (!dropResult) thenType.AssignFrom(context.ModuleContext, elseType).EmitConvert(context);
+        if (!dropResult) thenType.AssignFrom(context.ModuleContext, elseType).EmitConvert(context, false);
         context.IL.MarkLabel(elseEnd);
     }
 

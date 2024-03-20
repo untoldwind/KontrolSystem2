@@ -211,7 +211,7 @@ public class MethodCall : Expression {
             arguments[i].EmitCode(context, false);
             if (!context.HasErrors)
                 methodInvoker.Parameters[i].type.AssignFrom(context.ModuleContext, arguments[i].ResultType(context))
-                    .EmitConvert(context);
+                    .EmitConvert(context, false);
         }
 
         if (!context.HasErrors)
@@ -274,7 +274,7 @@ public class MethodCall : Expression {
             arguments[i].EmitCode(context, false);
             if (!context.HasErrors)
                 functionType.parameterTypes[i].AssignFrom(context.ModuleContext, arguments[i].ResultType(context))
-                    .EmitConvert(context);
+                    .EmitConvert(context, false);
         }
 
         if (context.HasErrors) return;

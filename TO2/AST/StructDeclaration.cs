@@ -119,7 +119,7 @@ public class StructDeclaration : Node, IModuleItem, IVariableContainer {
             context.IL.Emit(OpCodes.Dup);
             field.initializer.EmitCode(context, false);
             field.type.AssignFrom(context.ModuleContext, field.initializer.ResultType(context))
-                .EmitConvert(context);
+                .EmitConvert(context, false);
             context.IL.Emit(OpCodes.Stfld, type.GetField(field.name));
         }
 

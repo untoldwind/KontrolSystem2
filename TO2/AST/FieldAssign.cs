@@ -127,7 +127,7 @@ public class FieldAssign(
             if (context.HasErrors) return;
 
             expression.EmitCode(context, false);
-            fieldAccess.FieldType.AssignFrom(context.ModuleContext, valueType).EmitConvert(context);
+            fieldAccess.FieldType.AssignFrom(context.ModuleContext, valueType).EmitConvert(context, true);
 
             if (!dropResult) {
                 using var tmpResult = context.MakeTempVariable(fieldAccess.FieldType);
@@ -182,7 +182,7 @@ public class FieldAssign(
 
             fieldAccess.EmitLoad(context);
             expression.EmitCode(context, false);
-            operatorEmitter.OtherType.AssignFrom(context.ModuleContext, valueType).EmitConvert(context);
+            operatorEmitter.OtherType.AssignFrom(context.ModuleContext, valueType).EmitConvert(context, true);
             operatorEmitter.EmitCode(context, this);
 
             if (!dropResult) {

@@ -126,7 +126,7 @@ internal class AssignRecordStruct : RecordTypeAssignEmitter<RecordStructType> {
             else tempSource.EmitLoad(context);
             sourceField.EmitLoad(context);
             targetType.ItemTypes[kv.Key].AssignFrom(context.ModuleContext, sourceType.ItemTypes[kv.Key])
-                .EmitConvert(context);
+                .EmitConvert(context, !tempSource.IsConst);
             context.IL.Emit(OpCodes.Stfld, kv.Value);
         }
 

@@ -37,7 +37,7 @@ public abstract partial class BuiltinType {
             variable.EmitStore(context);
         }
 
-        public void EmitConvert(IBlockContext context) {
+        public void EmitConvert(IBlockContext context, bool mutableTarget) {
             if (context.IL.StackCount > 0)
                 context.IL.Emit(OpCodes.Pop);
             context.IL.Emit(OpCodes.Ldnull);

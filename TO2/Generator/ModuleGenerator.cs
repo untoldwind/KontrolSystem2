@@ -173,7 +173,7 @@ public static class ModuleGenerator {
 
             constant.to2Constant.expression.EmitCode(constructorContext, false);
             constant.Type.AssignFrom(constructorContext.ModuleContext, expressionType)
-                .EmitConvert(constructorContext);
+                .EmitConvert(constructorContext, false);
             if (constructorContext.HasErrors)
                 errors.AddRange(constructorContext.AllErrors);
             else
