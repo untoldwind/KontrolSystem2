@@ -42,7 +42,10 @@ public partial class KSPVesselModule {
         [KSField(Description = "Check if the vessel is currently active.")]
         public bool IsActive => vessel.SimulationObject.IsActiveVessel;
 
-        [KSField(Description = "Check if the vessel is controllable.")]
+        [KSField(Description = @"Check if the vessel is generally controllable, in the sense that it has a command module
+            (i.e. it is not just space-debris).
+            It still might not be possible to control the vessel due to a lack of crew, power of connection to the comm-net.
+            Use `control_status` for this purpose instead.")]
         public bool IsControllable => vessel.IsControllable;
 
         [KSField(Description = "Check if the vessel is flyging.")]
