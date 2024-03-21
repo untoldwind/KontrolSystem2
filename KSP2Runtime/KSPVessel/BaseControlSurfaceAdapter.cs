@@ -41,6 +41,10 @@ public class BaseControlSurfaceAdapter<P, T> : BaseModuleAdapter<P, T> where P :
         set => dataControlSurface.AuthorityLimiter.SetValue((float)value);
     }
 
+
+    [KSField]
+    public double LiftDragRatio => dataControlSurface.LiftDragRatioParent.GetValue();
+
     [KSField] public double Lift => dataControlSurface.LiftScalar.GetValue();
 
     [KSField] public double Drag => dataControlSurface.DragScalar.GetValue();

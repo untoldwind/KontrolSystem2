@@ -62,7 +62,7 @@ public partial class KSPVesselModule {
         [KSField(Description = "Current control status of the vessel.")]
         public VesselControlState ControlStatus => vessel.ControlStatus;
 
-        [KSField]
+        [KSField(Description = "Current connection status to the comm-net.")]
         public ConnectionNodeStatus ConnectionStatus => vessel.SimulationObject.Telemetry.CommNetConnectionStatus;
 
         [KSField(Description = "Collection of methods to interact with the maneuver plan of the vessel.")]
@@ -284,7 +284,7 @@ public partial class KSPVesselModule {
 
         [KSField(Description = "Get a list of all air intake parts of the vessel.")]
         public ModuleAirIntakeAdapter[] AirIntakes => vessel.SimulationObject.PartOwner.Parts.SelectMany(part => {
-            if (part.IsPartAirIntake(out var data)) 
+            if (part.IsPartAirIntake(out var data))
                 return [new ModuleAirIntakeAdapter(new PartAdapter(this, part), data)];
 
             return Enumerable.Empty<ModuleAirIntakeAdapter>();
@@ -292,7 +292,7 @@ public partial class KSPVesselModule {
 
         [KSField(Description = "Get a list of all engine parts of the vessel.")]
         public ModuleEngineAdapter[] Engines => vessel.SimulationObject.PartOwner.Parts.SelectMany(part => {
-            if (part.IsPartEngine(out var data)) 
+            if (part.IsPartEngine(out var data))
                 return [new ModuleEngineAdapter(new PartAdapter(this, part), data)];
 
             return Enumerable.Empty<ModuleEngineAdapter>();
@@ -301,7 +301,7 @@ public partial class KSPVesselModule {
         [KSField(Description = "Get a list of all control service parts of the vessel.")]
         public ModuleControlSurfaceAdapter[] ControlSurfaces => vessel.SimulationObject.PartOwner.Parts.SelectMany(part => {
             if (part.TryGetModuleData<PartComponentModule_ControlSurface, Data_ControlSurface>(
-                    out var dataControlSurface)) 
+                    out var dataControlSurface))
                 return [new ModuleControlSurfaceAdapter(new PartAdapter(this, part), dataControlSurface)];
 
             return Enumerable.Empty<ModuleControlSurfaceAdapter>();
@@ -317,7 +317,7 @@ public partial class KSPVesselModule {
 
         [KSField(Description = "Get a list of all docking node parts of the vessel.")]
         public ModuleDockingNodeAdapter[] DockingNodes => vessel.SimulationObject.PartOwner.Parts.SelectMany(part => {
-            if (part.IsPartDockingPort(out var data)) 
+            if (part.IsPartDockingPort(out var data))
                 return [new ModuleDockingNodeAdapter(new PartAdapter(this, part), data)];
 
             return Enumerable.Empty<ModuleDockingNodeAdapter>();
@@ -325,7 +325,7 @@ public partial class KSPVesselModule {
 
         [KSField(Description = "Get a list of all solar panel parts of the vessel.")]
         public ModuleSolarPanelAdapter[] SolarPanels => vessel.SimulationObject.PartOwner.Parts.SelectMany(part => {
-            if (part.IsPartSolarPanel(out var data)) 
+            if (part.IsPartSolarPanel(out var data))
                 return [new ModuleSolarPanelAdapter(new PartAdapter(this, part), data)];
 
             return Enumerable.Empty<ModuleSolarPanelAdapter>();
@@ -530,7 +530,7 @@ public partial class KSPVesselModule {
             return new KSPControlModule.WheelThrottleManager(context, vessel, wheelThrottleProvider);
         }
 
-        [KSMethod]
+        [KSMethod(Description = "Unhook all autopilots from the vessel.")]
         public void ReleaseControl() {
             context.UnhookAllAutopilots(vessel);
         }
@@ -540,32 +540,38 @@ public partial class KSPVesselModule {
             return KSPContext.CurrentContext.Game.ViewController.SetActiveVehicle(vessel);
         }
 
-        [KSMethod]
+        [KSMethod(Description = @"One time override for the pitch control.
+            Note: This has to be refreshed regularly to have an impact.")]
         public void OverrideInputPitch(double value) {
             FlightInputHandler.OverrideInputPitch((float)value);
         }
 
-        [KSMethod]
+        [KSMethod(Description = @"One time override for the roll control.
+            Note: This has to be refreshed regularly to have an impact.")]
         public void OverrideInputRoll(double value) {
             FlightInputHandler.OverrideInputRoll((float)value);
         }
 
-        [KSMethod]
+        [KSMethod(Description = @"One time override for the yaw control.
+            Note: This has to be refreshed regularly to have an impact.")]
         public void OverrideInputYaw(double value) {
             FlightInputHandler.OverrideInputYaw((float)value);
         }
 
-        [KSMethod]
+        [KSMethod(Description = @"One time override for the translate x control.
+            Note: This has to be refreshed regularly to have an impact.")]
         public void OverrideInputTranslateX(double value) {
             FlightInputHandler.OverrideInputTranslateX((float)value);
         }
 
-        [KSMethod]
+        [KSMethod(Description = @"One time override for the translate y control.
+            Note: This has to be refreshed regularly to have an impact.")]
         public void OverrideInputTranslateY(double value) {
             FlightInputHandler.OverrideInputTranslateY((float)value);
         }
 
-        [KSMethod]
+        [KSMethod(Description = @"One time override for the translate z control.
+            Note: This has to be refreshed regularly to have an impact.")]
         public void OverrideInputTranslateZ(double value) {
             FlightInputHandler.OverrideInputTranslateZ((float)value);
         }
