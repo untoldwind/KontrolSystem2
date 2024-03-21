@@ -4,7 +4,6 @@ using KontrolSystem.KSP.Runtime.KSPControl;
 using KontrolSystem.KSP.Runtime.KSPMath;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.KSP.Runtime.KSPScience;
-using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
 using KSP.Modules;
@@ -98,6 +97,16 @@ public partial class KSPVesselModule {
 
         [KSField(Description = "Reference frame for the current control position.")]
         public ITransformFrame ControlFrame => vessel.ControlTransform.bodyFrame;
+
+        [KSField(Description = "Get the part (command module) that is currently controlling the vessel.")]
+        public Option<PartAdapter> CurrentControlPart {
+            get {
+                var controlPart = vessel.GetControlOwner();
+                return controlPart != null
+                    ? Option.Some(new PartAdapter(this, vessel.GetControlOwner()))
+                    : Option.None<PartAdapter>();
+            }
+        }
 
         [KSField(Description = "Reference frame for the horizon at the current position of the vessel.")]
         public ITransformFrame HorizonFrame => vessel.SimulationObject.Telemetry.HorizonFrame;
@@ -275,14 +284,16 @@ public partial class KSPVesselModule {
 
         [KSField(Description = "Get a list of all air intake parts of the vessel.")]
         public ModuleAirIntakeAdapter[] AirIntakes => vessel.SimulationObject.PartOwner.Parts.SelectMany(part => {
-            if (part.IsPartAirIntake(out var data)) return new ModuleAirIntakeAdapter(new PartAdapter(this, part), data).Yield();
+            if (part.IsPartAirIntake(out var data)) 
+                return [new ModuleAirIntakeAdapter(new PartAdapter(this, part), data)];
 
             return Enumerable.Empty<ModuleAirIntakeAdapter>();
         }).ToArray();
 
         [KSField(Description = "Get a list of all engine parts of the vessel.")]
         public ModuleEngineAdapter[] Engines => vessel.SimulationObject.PartOwner.Parts.SelectMany(part => {
-            if (part.IsPartEngine(out var data)) return new ModuleEngineAdapter(new PartAdapter(this, part), data).Yield();
+            if (part.IsPartEngine(out var data)) 
+                return [new ModuleEngineAdapter(new PartAdapter(this, part), data)];
 
             return Enumerable.Empty<ModuleEngineAdapter>();
         }).ToArray();
@@ -290,7 +301,8 @@ public partial class KSPVesselModule {
         [KSField(Description = "Get a list of all control service parts of the vessel.")]
         public ModuleControlSurfaceAdapter[] ControlSurfaces => vessel.SimulationObject.PartOwner.Parts.SelectMany(part => {
             if (part.TryGetModuleData<PartComponentModule_ControlSurface, Data_ControlSurface>(
-                    out var dataControlSurface)) return new ModuleControlSurfaceAdapter(new PartAdapter(this, part), dataControlSurface).Yield();
+                    out var dataControlSurface)) 
+                return [new ModuleControlSurfaceAdapter(new PartAdapter(this, part), dataControlSurface)];
 
             return Enumerable.Empty<ModuleControlSurfaceAdapter>();
         }).ToArray();
@@ -298,21 +310,23 @@ public partial class KSPVesselModule {
         [KSField(Description = "Get a list of all command module parts of the vessel.")]
         public ModuleCommandAdapter[] CommandModules => vessel.SimulationObject.PartOwner.Parts.SelectMany(part => {
             if (part.TryGetModuleData<PartComponentModule_Command, Data_Command>(out var dataCommand))
-                return new ModuleCommandAdapter(new PartAdapter(this, part), dataCommand).Yield();
+                return [new ModuleCommandAdapter(new PartAdapter(this, part), dataCommand)];
 
             return Enumerable.Empty<ModuleCommandAdapter>();
         }).Where(engine => engine != null).ToArray();
 
         [KSField(Description = "Get a list of all docking node parts of the vessel.")]
         public ModuleDockingNodeAdapter[] DockingNodes => vessel.SimulationObject.PartOwner.Parts.SelectMany(part => {
-            if (part.IsPartDockingPort(out var data)) return new ModuleDockingNodeAdapter(new PartAdapter(this, part), data).Yield();
+            if (part.IsPartDockingPort(out var data)) 
+                return [new ModuleDockingNodeAdapter(new PartAdapter(this, part), data)];
 
             return Enumerable.Empty<ModuleDockingNodeAdapter>();
         }).Where(node => node != null).ToArray();
 
         [KSField(Description = "Get a list of all solar panel parts of the vessel.")]
         public ModuleSolarPanelAdapter[] SolarPanels => vessel.SimulationObject.PartOwner.Parts.SelectMany(part => {
-            if (part.IsPartSolarPanel(out var data)) return new ModuleSolarPanelAdapter(new PartAdapter(this, part), data).Yield();
+            if (part.IsPartSolarPanel(out var data)) 
+                return [new ModuleSolarPanelAdapter(new PartAdapter(this, part), data)];
 
             return Enumerable.Empty<ModuleSolarPanelAdapter>();
         }).Where(panel => panel != null).ToArray();
