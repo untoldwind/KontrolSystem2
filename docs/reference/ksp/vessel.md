@@ -696,6 +696,7 @@ global_lift_force | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvecto
 global_lift_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | R/O | 
 invert_control | bool | R/W | 
 lift | float | R/O | 
+lift_drag_ratio | float | R/O | 
 lift_force | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
 lift_position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
 part | [ksp::vessel::Part](/reference/ksp/vessel.md#part) | R/O | 
@@ -1621,10 +1622,11 @@ available_thrust | float | R/O | Returns the maximum thrust of all engines in th
 body_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/O | The body/rotating reference frame of the vessel. 
 celestial_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/O | The celestial/non-rotating reference frame of the vessel. 
 command_modules | [ksp::vessel::ModuleCommand](/reference/ksp/vessel.md#modulecommand)[] | R/O | Get a list of all command module parts of the vessel. 
-connection_status | [ksp::vessel::ConnectionNodeStatus](/reference/ksp/vessel.md#connectionnodestatus) | R/O | 
+connection_status | [ksp::vessel::ConnectionNodeStatus](/reference/ksp/vessel.md#connectionnodestatus) | R/O | Current connection status to the comm-net. 
 control_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/O | Reference frame for the current control position. 
 control_status | [ksp::vessel::VesselControlState](/reference/ksp/vessel.md#vesselcontrolstate) | R/O | Current control status of the vessel. 
 control_surfaces | [ksp::vessel::ModuleControlSurface](/reference/ksp/vessel.md#modulecontrolsurface)[] | R/O | Get a list of all control service parts of the vessel. 
+current_control_part | Option&lt;[ksp::vessel::Part](/reference/ksp/vessel.md#part)> | R/O | Get the part (command module) that is currently controlling the vessel. 
 delta_v | [ksp::vessel::VesselDeltaV](/reference/ksp/vessel.md#vesseldeltav) | R/O | Collection of methods to obtain delta-v information of the vessel. 
 docking_nodes | [ksp::vessel::ModuleDockingNode](/reference/ksp/vessel.md#moduledockingnode)[] | R/O | Get a list of all docking node parts of the vessel. 
 dynamic_pressure_kpa | float | R/O | 
@@ -1648,7 +1650,7 @@ horizon_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformfram
 horizontal_surface_speed | float | R/O | 
 id | string | R/O | Unique vessel id 
 is_active | bool | R/O | Check if the vessel is currently active. 
-is_controllable | bool | R/O | Check if the vessel is controllable. 
+is_controllable | bool | R/O | Check if the vessel is generally controllable, in the sense that it has a command module (i.e. it is not just space-debris). It still might not be possible to control the vessel due to a lack of crew, power of connection to the comm-net. Use `control_status` for this purpose instead. 
 is_flying | bool | R/O | Check if the vessel is flyging. 
 launch_time | float | R/O | Universal time when vessel has been launched. 
 mach_number | float | R/O | 
@@ -1806,6 +1808,8 @@ wheelThrottleProvider | sync fn(float) -> float |  |
 vessel.override_input_pitch ( value : float ) -> Unit
 ```
 
+One time override for the pitch control.
+Note: This has to be refreshed regularly to have an impact.
 
 
 Parameters
@@ -1820,6 +1824,8 @@ value | float |  |
 vessel.override_input_roll ( value : float ) -> Unit
 ```
 
+One time override for the roll control.
+Note: This has to be refreshed regularly to have an impact.
 
 
 Parameters
@@ -1834,6 +1840,8 @@ value | float |  |
 vessel.override_input_translate_x ( value : float ) -> Unit
 ```
 
+One time override for the translate x control.
+Note: This has to be refreshed regularly to have an impact.
 
 
 Parameters
@@ -1848,6 +1856,8 @@ value | float |  |
 vessel.override_input_translate_y ( value : float ) -> Unit
 ```
 
+One time override for the translate y control.
+Note: This has to be refreshed regularly to have an impact.
 
 
 Parameters
@@ -1862,6 +1872,8 @@ value | float |  |
 vessel.override_input_translate_z ( value : float ) -> Unit
 ```
 
+One time override for the translate z control.
+Note: This has to be refreshed regularly to have an impact.
 
 
 Parameters
@@ -1876,6 +1888,8 @@ value | float |  |
 vessel.override_input_yaw ( value : float ) -> Unit
 ```
 
+One time override for the yaw control.
+Note: This has to be refreshed regularly to have an impact.
 
 
 Parameters
@@ -1890,6 +1904,7 @@ value | float |  |
 vessel.release_control ( ) -> Unit
 ```
 
+Unhook all autopilots from the vessel.
 
 
 ##### set_rcs_translate

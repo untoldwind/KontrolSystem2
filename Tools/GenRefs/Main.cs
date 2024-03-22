@@ -18,9 +18,13 @@ namespace KontrolSystem.GenRefs {
 
             var reference = GenerateReference(context.CreateModuleContext("reference"), registry);
 
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "Tools", "vscode", "to2-syntax", "server", "src", "reference", "reference.json");
+            var vsCodePath = Path.Combine(Directory.GetCurrentDirectory(), "Tools", "vscode", "to2-syntax", "server", "src", "reference", "reference.json");
 
-            File.WriteAllText(path, JsonConvert.SerializeObject(reference, Formatting.Indented));
+            File.WriteAllText(vsCodePath, JsonConvert.SerializeObject(reference, Formatting.Indented));
+            
+            var modPath = Path.Combine(Directory.GetCurrentDirectory(), "SpaceWarpMod", "reference.json");
+
+            File.WriteAllText(modPath, JsonConvert.SerializeObject(reference, Formatting.Indented));
         }
 
         public static Reference GenerateReference(ModuleContext moduleContext, KontrolRegistry registry) =>

@@ -81,6 +81,7 @@ enable_roll | bool | R/W |
 enable_yaw | bool | R/W | 
 invert_control | bool | R/W | 
 lift | float | R/O | 
+lift_drag_ratio | float | R/O | 
 part | [ksp::oab::ObjectAssemblyPart](/reference/ksp/oab.md#objectassemblypart) | R/O | 
 part_name | string | R/O | 
 

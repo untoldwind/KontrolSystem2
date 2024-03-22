@@ -73,6 +73,7 @@
         <Copy SourceFiles="../bin/$(Configuration)/KontrolSystemSpaceWarpMod.dll" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2"/>
         <Copy SourceFiles="icon.png" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2/assets/images"/>
         <Copy SourceFiles="swinfo.json" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2"/>
+        <Copy SourceFiles="reference.json" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2"/>
         <Copy SourceFiles="@(AssetFiles)" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2/assets/bundles"/>
         <Copy SourceFiles="@(GFXFiles)" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2/assets/images"/>
     </Target>
