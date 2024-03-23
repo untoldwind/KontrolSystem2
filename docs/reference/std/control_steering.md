@@ -96,6 +96,7 @@ adjust_torque | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/W |
 angular_acceleration | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/W | 
 center_of_mass | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/W | 
 control_torque | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/W | 
+current_rot | [ksp::math::Direction](/reference/ksp/math.md#direction) | R/W | 
 enable_torque_adjust | bool | R/W | 
 max_pitch_omega | float | R/W | 
 max_roll_omega | float | R/W | 
@@ -121,10 +122,7 @@ roll_torque_adjust | float | R/W |
 roll_torque_calc | [ksp::control::MovingAverage](/reference/ksp/control.md#movingaverage) | R/W | 
 roll_torque_factor | float | R/W | 
 target_direction | [ksp::math::GlobalDirection](/reference/ksp/math.md#globaldirection) | R/W | 
-target_forward | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/W | 
 target_rot | [ksp::math::Direction](/reference/ksp/math.md#direction) | R/W | 
-target_starboard | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/W | 
-target_top | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/W | 
 tgt_pitch_omega | float | R/W | 
 tgt_pitch_torque | float | R/W | 
 tgt_roll_omega | float | R/W | 

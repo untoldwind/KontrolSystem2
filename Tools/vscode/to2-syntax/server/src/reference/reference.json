@@ -1508,7 +1508,9 @@
     "ArrayBuilder": {
       "name": "ArrayBuilder",
       "description": "Helper to create an array of initially unknown size",
-      "genericParameters": ["T"],
+      "genericParameters": [
+        "T"
+      ],
       "fields": {
         "length": {
           "name": "length",
@@ -1592,7 +1594,9 @@
     "Cell": {
       "name": "Cell",
       "description": "Holds a single value that can be mutated at any time",
-      "genericParameters": ["T"],
+      "genericParameters": [
+        "T"
+      ],
       "fields": {
         "value": {
           "name": "value",
@@ -1669,7 +1673,9 @@
     "Option": {
       "name": "Option",
       "description": "",
-      "genericParameters": ["T"],
+      "genericParameters": [
+        "T"
+      ],
       "fields": {
         "defined": {
           "name": "defined",
@@ -2812,7 +2818,10 @@
     "Result": {
       "name": "Result",
       "description": "",
-      "genericParameters": ["R", "E"],
+      "genericParameters": [
+        "R",
+        "E"
+      ],
       "fields": {
         "success": {
           "name": "success",
@@ -3862,7 +3871,9 @@
         "Task": {
           "name": "Task",
           "description": "Represents a background task\n",
-          "genericParameters": ["T"],
+          "genericParameters": [
+            "T"
+          ],
           "fields": {
             "is_completed": {
               "name": "is_completed",
@@ -51753,8 +51764,8 @@
                 "name": "float"
               }
             },
-            "yaw_torque_adjust": {
-              "name": "yaw_torque_adjust",
+            "roll_torque_adjust": {
+              "name": "roll_torque_adjust",
               "description": "",
               "readOnly": false,
               "type": {
@@ -51762,8 +51773,8 @@
                 "name": "float"
               }
             },
-            "roll_torque_adjust": {
-              "name": "roll_torque_adjust",
+            "yaw_torque_adjust": {
+              "name": "yaw_torque_adjust",
               "description": "",
               "readOnly": false,
               "type": {
@@ -51780,8 +51791,8 @@
                 "name": "float"
               }
             },
-            "yaw_torque_factor": {
-              "name": "yaw_torque_factor",
+            "roll_torque_factor": {
+              "name": "roll_torque_factor",
               "description": "",
               "readOnly": false,
               "type": {
@@ -51789,8 +51800,8 @@
                 "name": "float"
               }
             },
-            "roll_torque_factor": {
-              "name": "roll_torque_factor",
+            "yaw_torque_factor": {
+              "name": "yaw_torque_factor",
               "description": "",
               "readOnly": false,
               "type": {
@@ -51848,8 +51859,8 @@
                 "name": "TorquePI"
               }
             },
-            "yaw_pi": {
-              "name": "yaw_pi",
+            "roll_pi": {
+              "name": "roll_pi",
               "description": "",
               "readOnly": false,
               "type": {
@@ -51858,8 +51869,8 @@
                 "name": "TorquePI"
               }
             },
-            "roll_pi": {
-              "name": "roll_pi",
+            "yaw_pi": {
+              "name": "yaw_pi",
               "description": "",
               "readOnly": false,
               "type": {
@@ -51878,8 +51889,8 @@
                 "name": "PIDLoop"
               }
             },
-            "yaw_rate_pi": {
-              "name": "yaw_rate_pi",
+            "roll_rate_pi": {
+              "name": "roll_rate_pi",
               "description": "",
               "readOnly": false,
               "type": {
@@ -51888,8 +51899,8 @@
                 "name": "PIDLoop"
               }
             },
-            "roll_rate_pi": {
-              "name": "roll_rate_pi",
+            "yaw_rate_pi": {
+              "name": "yaw_rate_pi",
               "description": "",
               "readOnly": false,
               "type": {
@@ -51908,38 +51919,18 @@
                 "name": "Direction"
               }
             },
+            "current_rot": {
+              "name": "current_rot",
+              "description": "",
+              "readOnly": false,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Direction"
+              }
+            },
             "center_of_mass": {
               "name": "center_of_mass",
-              "description": "",
-              "readOnly": false,
-              "type": {
-                "kind": "Standard",
-                "module": "ksp::math",
-                "name": "Vec3"
-              }
-            },
-            "target_forward": {
-              "name": "target_forward",
-              "description": "",
-              "readOnly": false,
-              "type": {
-                "kind": "Standard",
-                "module": "ksp::math",
-                "name": "Vec3"
-              }
-            },
-            "target_top": {
-              "name": "target_top",
-              "description": "",
-              "readOnly": false,
-              "type": {
-                "kind": "Standard",
-                "module": "ksp::math",
-                "name": "Vec3"
-              }
-            },
-            "target_starboard": {
-              "name": "target_starboard",
               "description": "",
               "readOnly": false,
               "type": {
@@ -52117,8 +52108,8 @@
                 "name": "float"
               }
             },
-            "tgt_yaw_omega": {
-              "name": "tgt_yaw_omega",
+            "tgt_roll_omega": {
+              "name": "tgt_roll_omega",
               "description": "",
               "readOnly": false,
               "type": {
@@ -52126,8 +52117,8 @@
                 "name": "float"
               }
             },
-            "tgt_roll_omega": {
-              "name": "tgt_roll_omega",
+            "tgt_yaw_omega": {
+              "name": "tgt_yaw_omega",
               "description": "",
               "readOnly": false,
               "type": {
@@ -52144,8 +52135,8 @@
                 "name": "float"
               }
             },
-            "tgt_yaw_torque": {
-              "name": "tgt_yaw_torque",
+            "tgt_roll_torque": {
+              "name": "tgt_roll_torque",
               "description": "",
               "readOnly": false,
               "type": {
@@ -52153,8 +52144,8 @@
                 "name": "float"
               }
             },
-            "tgt_roll_torque": {
-              "name": "tgt_roll_torque",
+            "tgt_yaw_torque": {
+              "name": "tgt_yaw_torque",
               "description": "",
               "readOnly": false,
               "type": {
@@ -52554,7 +52545,11 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": ["iters", "v1", "v2"],
+            "names": [
+              "iters",
+              "v1",
+              "v2"
+            ],
             "parameters": [
               {
                 "kind": "Builtin",
@@ -52918,7 +52913,10 @@
               ],
               "returnType": {
                 "kind": "Record",
-                "names": ["latitude", "longitude"],
+                "names": [
+                  "latitude",
+                  "longitude"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -54083,7 +54081,10 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["UT", "delta_v"],
+                "names": [
+                  "UT",
+                  "delta_v"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -54120,7 +54121,10 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["UT", "delta_v"],
+                "names": [
+                  "UT",
+                  "delta_v"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -54355,7 +54359,11 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["TT", "UT", "delta_v"],
+                "names": [
+                  "TT",
+                  "UT",
+                  "delta_v"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -54424,7 +54432,11 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["TT", "UT", "delta_v"],
+                "names": [
+                  "TT",
+                  "UT",
+                  "delta_v"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -54493,7 +54505,11 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["TT", "UT", "delta_v"],
+                "names": [
+                  "TT",
+                  "UT",
+                  "delta_v"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -54618,7 +54634,10 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": ["start_velocity", "target_velocity"],
+            "names": [
+              "start_velocity",
+              "target_velocity"
+            ],
             "parameters": [
               {
                 "kind": "Standard",
@@ -54730,7 +54749,10 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": ["UT", "delta_v"],
+            "names": [
+              "UT",
+              "delta_v"
+            ],
             "parameters": [
               {
                 "kind": "Builtin",
@@ -54812,7 +54834,10 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": ["UT", "delta_v"],
+            "names": [
+              "UT",
+              "delta_v"
+            ],
             "parameters": [
               {
                 "kind": "Builtin",
@@ -54854,7 +54879,10 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": ["UT", "delta_v"],
+            "names": [
+              "UT",
+              "delta_v"
+            ],
             "parameters": [
               {
                 "kind": "Builtin",
@@ -54896,7 +54924,10 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": ["UT", "delta_v"],
+            "names": [
+              "UT",
+              "delta_v"
+            ],
             "parameters": [
               {
                 "kind": "Builtin",
@@ -54941,7 +54972,10 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["UT", "delta_v"],
+                "names": [
+                  "UT",
+                  "delta_v"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -55111,7 +55145,11 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["iters", "x", "y"],
+                "names": [
+                  "iters",
+                  "x",
+                  "y"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -55197,7 +55235,11 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["iters", "x", "y"],
+                "names": [
+                  "iters",
+                  "x",
+                  "y"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -55312,11 +55354,18 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": ["best", "points"],
+            "names": [
+              "best",
+              "points"
+            ],
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["f", "x", "y"],
+                "names": [
+                  "f",
+                  "x",
+                  "y"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -55337,7 +55386,11 @@
                 "parameters": [
                   {
                     "kind": "Record",
-                    "names": ["f", "x", "y"],
+                    "names": [
+                      "f",
+                      "x",
+                      "y"
+                    ],
                     "parameters": [
                       {
                         "kind": "Builtin",
@@ -55482,7 +55535,10 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["fx", "x"],
+                "names": [
+                  "fx",
+                  "x"
+                ],
                 "parameters": [
                   {
                     "kind": "Builtin",
@@ -55698,7 +55754,11 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["position", "t", "velocity"],
+                "names": [
+                  "position",
+                  "t",
+                  "velocity"
+                ],
                 "parameters": [
                   {
                     "kind": "Standard",
@@ -55795,7 +55855,10 @@
             "parameters": [
               {
                 "kind": "Record",
-                "names": ["target_port", "vessel_port"],
+                "names": [
+                  "target_port",
+                  "vessel_port"
+                ],
                 "parameters": [
                   {
                     "kind": "Standard",
@@ -56372,7 +56435,10 @@
           ],
           "returnType": {
             "kind": "Record",
-            "names": ["burn_time", "half_burn_time"],
+            "names": [
+              "burn_time",
+              "half_burn_time"
+            ],
             "parameters": [
               {
                 "kind": "Builtin",
