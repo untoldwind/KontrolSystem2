@@ -57,3 +57,12 @@ export async function isDirectory(fsPath: string): Promise<boolean> {
     return false;
   }
 }
+
+export async function isFile(fsPath: string): Promise<boolean> {
+  try {
+    const stat = await fs.stat(fsPath);
+    return stat.isFile();
+  } catch {
+    return false;
+  }
+}

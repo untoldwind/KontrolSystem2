@@ -1,5 +1,5 @@
 import { Expression, Node, ValidationError } from ".";
-import { BUILTIN_BOOL, RealizedType, TO2Type } from "./to2-type";
+import { RealizedType, TO2Type } from "./to2-type";
 import { Operator } from "./operator";
 import { InputPosition, InputRange, WithPosition } from "../../parser";
 import { BlockContext } from "./context";

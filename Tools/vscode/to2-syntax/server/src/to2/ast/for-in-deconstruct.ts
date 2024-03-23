@@ -1,5 +1,5 @@
 import { Expression, Node, ValidationError } from ".";
-import { BUILTIN_UNIT, TO2Type } from "./to2-type";
+import { TO2Type, currentTypeResolver } from "./to2-type";
 import { InputPosition, WithPosition } from "../../parser";
 import { DeclarationParameterOrPlaceholder } from "./variable-declaration";
 import { BlockContext } from "./context";
@@ -19,7 +19,7 @@ export class ForInDeconstruct extends Expression {
   }
 
   public resultType(): TO2Type {
-    return BUILTIN_UNIT;
+    return currentTypeResolver().BUILTIN_UNIT;
   }
 
   public reduceNode<T>(

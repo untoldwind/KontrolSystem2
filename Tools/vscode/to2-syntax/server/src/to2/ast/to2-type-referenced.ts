@@ -4,11 +4,10 @@ import { WithDefinitionRef } from "./definition-ref";
 import { FunctionType } from "./function-type";
 import { Operator } from "./operator";
 import {
-  BUILTIN_INT,
   RealizedType,
   TO2Type,
   UNKNOWN_TYPE,
-  resolveTypeRef,
+  currentTypeResolver,
 } from "./to2-type";
 
 export class ReferencedType implements RealizedType {
@@ -42,7 +41,10 @@ export class ReferencedType implements RealizedType {
     if (this.name === otherType.name || this.typeReference.assignableFromAny)
       return true;
     for (const typeRef of this.typeReference.assignableFrom) {
-      if (otherType.name === resolveTypeRef(typeRef, this.genericMap)?.name)
+      if (
+        otherType.name ===
+        currentTypeResolver().resolveTypeRef(typeRef, this.genericMap)?.name
+      )
         return true;
     }
     return false;
@@ -57,13 +59,13 @@ export class ReferencedType implements RealizedType {
     rightType: RealizedType,
   ): TO2Type | undefined {
     const opRef = this.typeReference.suffixOperators?.[op]?.find((opRef) =>
-      resolveTypeRef(opRef.otherType, this.genericMap)?.isAssignableFrom(
-        rightType,
-      ),
+      currentTypeResolver()
+        .resolveTypeRef(opRef.otherType, this.genericMap)
+        ?.isAssignableFrom(rightType),
     );
 
     return opRef
-      ? resolveTypeRef(opRef.resultType, this.genericMap)
+      ? currentTypeResolver().resolveTypeRef(opRef.resultType, this.genericMap)
       : undefined;
   }
 
@@ -72,13 +74,13 @@ export class ReferencedType implements RealizedType {
     leftType: RealizedType,
   ): TO2Type | undefined {
     const opRef = this.typeReference.prefixOperators?.[op]?.find((opRef) =>
-      resolveTypeRef(opRef.otherType, this.genericMap)?.isAssignableFrom(
-        leftType,
-      ),
+      currentTypeResolver()
+        .resolveTypeRef(opRef.otherType, this.genericMap)
+        ?.isAssignableFrom(leftType),
     );
 
     return opRef
-      ? resolveTypeRef(opRef.resultType, this.genericMap)
+      ? currentTypeResolver().resolveTypeRef(opRef.resultType, this.genericMap)
       : undefined;
   }
 
@@ -86,7 +88,10 @@ export class ReferencedType implements RealizedType {
     const fieldReference = this.typeReference.fields[name];
     if (!fieldReference) return undefined;
 
-    const resolved = resolveTypeRef(fieldReference.type, this.genericMap);
+    const resolved = currentTypeResolver().resolveTypeRef(
+      fieldReference.type,
+      this.genericMap,
+    );
     return resolved
       ? { description: fieldReference.description, value: resolved }
       : undefined;
@@ -105,12 +110,17 @@ export class ReferencedType implements RealizedType {
         methodReference.isAsync,
         methodReference.parameters.map((paramRef) => [
           paramRef.name,
-          resolveTypeRef(paramRef.type, this.genericMap) ?? UNKNOWN_TYPE,
+          currentTypeResolver().resolveTypeRef(
+            paramRef.type,
+            this.genericMap,
+          ) ?? UNKNOWN_TYPE,
           paramRef.hasDefault,
         ]),
-        resolveTypeRef(methodReference.returnType, this.genericMap) ??
-          UNKNOWN_TYPE,
-        methodReference.description,
+        currentTypeResolver().resolveTypeRef(
+          methodReference.returnType,
+          this.genericMap,
+        ) ?? UNKNOWN_TYPE,
+        methodReference.description ?? "",
       ),
     };
   }
@@ -120,7 +130,9 @@ export class ReferencedType implements RealizedType {
   }
 
   public forInSource(): TO2Type | undefined {
-    return this.name === "Range" ? BUILTIN_INT : undefined;
+    return this.name === "Range"
+      ? currentTypeResolver().BUILTIN_INT
+      : undefined;
   }
 
   public fillGenerics(

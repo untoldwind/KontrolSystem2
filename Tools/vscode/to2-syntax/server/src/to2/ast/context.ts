@@ -6,14 +6,10 @@ import { Registry } from "./registry";
 import { ResultType } from "./result-type";
 import { TO2Module } from "./to2-module";
 import {
-  BUILTIN_ARRAYBUILDER,
-  BUILTIN_CELL,
-  BUILTIN_INT,
-  BUILTIN_STRING,
   GenericParameter,
   RealizedType,
   TO2Type,
-  findLibraryTypeOrAlias,
+  currentTypeResolver,
 } from "./to2-type";
 
 export interface ModuleContext {
@@ -63,13 +59,16 @@ export class RootModuleContext implements ModuleContext {
     if (namePath.length === 2) {
       const mappedModule = this.moduleAliases.get(namePath[0]);
       if (mappedModule) {
-        return findLibraryTypeOrAlias(
+        return currentTypeResolver().findLibraryTypeOrAlias(
           [...mappedModule, namePath[1]],
           typeArguments,
         );
       }
     }
-    return findLibraryTypeOrAlias(namePath, typeArguments);
+    return currentTypeResolver().findLibraryTypeOrAlias(
+      namePath,
+      typeArguments,
+    );
   }
 
   findConstant(namePath: string[]): WithDefinitionRef<TO2Type> | undefined {
@@ -141,7 +140,7 @@ export class RootModuleContext implements ModuleContext {
                 value: new FunctionType(
                   false,
                   [["value", args[0], false]],
-                  BUILTIN_CELL.fillGenericArguments([
+                  currentTypeResolver().BUILTIN_CELL.fillGenericArguments([
                     args[0].realizedType(this),
                   ]),
                 ),
@@ -164,7 +163,7 @@ export class RootModuleContext implements ModuleContext {
               return {
                 value: new FunctionType(
                   false,
-                  [["value", BUILTIN_STRING, false]],
+                  [["value", currentTypeResolver().BUILTIN_STRING, false]],
                   new ResultType(new GenericParameter("U")),
                 ),
               };
@@ -175,8 +174,8 @@ export class RootModuleContext implements ModuleContext {
               return {
                 value: new FunctionType(
                   false,
-                  [["value", BUILTIN_INT, false]],
-                  BUILTIN_ARRAYBUILDER,
+                  [["value", currentTypeResolver().BUILTIN_INT, false]],
+                  currentTypeResolver().BUILTIN_ARRAYBUILDER,
                 ),
               };
             }

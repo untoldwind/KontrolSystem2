@@ -1,5 +1,5 @@
 import { Expression, Node, ValidationError } from ".";
-import { BUILTIN_UNIT, TO2Type } from "./to2-type";
+import { TO2Type, currentTypeResolver } from "./to2-type";
 import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
@@ -14,7 +14,7 @@ export class ReturnEmpty extends Expression {
   }
 
   public resultType(context: BlockContext): TO2Type {
-    return BUILTIN_UNIT;
+    return currentTypeResolver().BUILTIN_UNIT;
   }
 
   public reduceNode<T>(
@@ -45,7 +45,7 @@ export class ReturnValue extends Expression {
     super(start, end);
   }
   public resultType(context: BlockContext): TO2Type {
-    return BUILTIN_UNIT;
+    return currentTypeResolver().BUILTIN_UNIT;
   }
 
   public reduceNode<T>(

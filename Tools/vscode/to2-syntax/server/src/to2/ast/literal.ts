@@ -1,11 +1,5 @@
 import { BlockItem, Expression, Node, ValidationError } from ".";
-import {
-  BUILTIN_BOOL,
-  BUILTIN_FLOAT,
-  BUILTIN_INT,
-  BUILTIN_STRING,
-  TO2Type,
-} from "./to2-type";
+import { TO2Type, currentTypeResolver } from "./to2-type";
 import { InputPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
@@ -20,7 +14,7 @@ export class LiteralBool extends Expression {
   }
 
   resultType(): TO2Type {
-    return BUILTIN_BOOL;
+    return currentTypeResolver().BUILTIN_BOOL;
   }
 
   public reduceNode<T>(
@@ -49,7 +43,7 @@ export class LiteralInt extends Expression {
   }
 
   resultType(): TO2Type {
-    return BUILTIN_INT;
+    return currentTypeResolver().BUILTIN_INT;
   }
 
   public reduceNode<T>(
@@ -78,7 +72,7 @@ export class LiteralFloat extends Expression {
   }
 
   resultType(): TO2Type {
-    return BUILTIN_FLOAT;
+    return currentTypeResolver().BUILTIN_FLOAT;
   }
 
   public reduceNode<T>(
@@ -107,7 +101,7 @@ export class LiteralString extends Expression {
   }
 
   resultType(): TO2Type {
-    return BUILTIN_STRING;
+    return currentTypeResolver().BUILTIN_STRING;
   }
 
   public reduceNode<T>(

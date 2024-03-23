@@ -2,7 +2,7 @@ import { ModuleContext } from "./context";
 import { WithDefinitionRef } from "./definition-ref";
 import { FunctionType } from "./function-type";
 import { Operator } from "./operator";
-import { BUILTIN_BOOL, BUILTIN_ERROR, RealizedType, TO2Type } from "./to2-type";
+import { RealizedType, TO2Type, currentTypeResolver } from "./to2-type";
 
 export class ResultType implements RealizedType {
   public readonly kind = "Result";
@@ -53,7 +53,7 @@ export class ResultType implements RealizedType {
   }
 
   findSuffixOperator(op: Operator): TO2Type | undefined {
-    return op === "?" ? this.successType : BUILTIN_ERROR;
+    return op === "?" ? this.successType : currentTypeResolver().BUILTIN_ERROR;
   }
 
   public findPrefixOperator(): RealizedType | undefined {
@@ -63,11 +63,11 @@ export class ResultType implements RealizedType {
   public findField(name: string): WithDefinitionRef<TO2Type> | undefined {
     switch (name) {
       case "success":
-        return { value: BUILTIN_BOOL };
+        return { value: currentTypeResolver().BUILTIN_BOOL };
       case "value":
         return { value: this.successType };
       case "error":
-        return { value: BUILTIN_ERROR };
+        return { value: currentTypeResolver().BUILTIN_ERROR };
       default:
         return undefined;
     }

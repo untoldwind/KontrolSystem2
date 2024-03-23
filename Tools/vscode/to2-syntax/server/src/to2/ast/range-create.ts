@@ -2,7 +2,7 @@ import { Expression, Node, ValidationError } from ".";
 import { InputPosition } from "../../parser";
 import { SemanticToken } from "../../syntax-token";
 import { BlockContext } from "./context";
-import { BUILTIN_RANGE, TO2Type } from "./to2-type";
+import { TO2Type, currentTypeResolver } from "./to2-type";
 
 export class RangeCreate extends Expression {
   constructor(
@@ -16,7 +16,7 @@ export class RangeCreate extends Expression {
   }
 
   resultType(): TO2Type {
-    return BUILTIN_RANGE;
+    return currentTypeResolver().BUILTIN_RANGE;
   }
 
   public reduceNode<T>(

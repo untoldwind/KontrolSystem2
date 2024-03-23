@@ -1,6 +1,6 @@
 import { Expression, Node, ValidationError } from ".";
 import { IndexSpec } from "./index-spec";
-import { BUILTIN_UNIT, TO2Type } from "./to2-type";
+import { TO2Type } from "./to2-type";
 import { Operator } from "./operator";
 import { InputPosition } from "../../parser";
 import { BlockContext } from "./context";

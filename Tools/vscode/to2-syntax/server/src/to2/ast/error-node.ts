@@ -2,7 +2,7 @@ import { BlockItem, ModuleItem, Node, ValidationError } from ".";
 import { InputPosition, InputRange } from "../../parser";
 import { SemanticToken } from "../../syntax-token";
 import { BlockContext, ModuleContext } from "./context";
-import { BUILTIN_UNIT, TO2Type } from "./to2-type";
+import { TO2Type, currentTypeResolver } from "./to2-type";
 
 export class ErrorNode implements Node, ModuleItem, BlockItem {
   public readonly isError: boolean = true;
@@ -18,7 +18,7 @@ export class ErrorNode implements Node, ModuleItem, BlockItem {
   }
 
   resultType(): TO2Type {
-    return BUILTIN_UNIT;
+    return currentTypeResolver().BUILTIN_UNIT;
   }
 
   public reduceNode<T>(

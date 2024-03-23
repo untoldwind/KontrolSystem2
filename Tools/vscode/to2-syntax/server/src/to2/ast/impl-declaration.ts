@@ -1,5 +1,5 @@
 import { Node, ValidationError } from ".";
-import { LineComment, isLineComment } from "./line-comment";
+import { LineComment } from "./line-comment";
 import { MethodDeclaration } from "./method-declaration";
 import { InputPosition, InputRange, WithPosition } from "../../parser";
 import { ImplModuleContext, ModuleContext } from "./context";

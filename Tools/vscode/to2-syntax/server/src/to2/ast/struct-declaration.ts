@@ -1,12 +1,6 @@
 import { Position } from "vscode-languageserver-textdocument";
-import {
-  Expression,
-  ModuleItem,
-  Node,
-  TypeDeclaration,
-  ValidationError,
-} from ".";
-import { BUILTIN_UNIT, RealizedType, TO2Type, UNKNOWN_TYPE } from "./to2-type";
+import { Expression, Node, TypeDeclaration, ValidationError } from ".";
+import { TO2Type, UNKNOWN_TYPE, currentTypeResolver } from "./to2-type";
 import { FunctionParameter } from "./function-declaration";
 import { LineComment, isLineComment } from "./line-comment";
 import { InputPosition, InputRange, WithPosition } from "../../parser";
@@ -137,7 +131,10 @@ export class StructDeclaration implements Node, TypeDeclaration {
   public validateModuleSecondPass(context: ModuleContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
-    const blockContext = new FunctionContext(context, BUILTIN_UNIT);
+    const blockContext = new FunctionContext(
+      context,
+      currentTypeResolver().BUILTIN_UNIT,
+    );
 
     for (const parameter of this.constructorParameters) {
       errors.push(...parameter.validateBlock(blockContext));

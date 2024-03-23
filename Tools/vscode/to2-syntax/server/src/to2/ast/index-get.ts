@@ -1,6 +1,6 @@
 import { Expression, Node, ValidationError } from ".";
 import { IndexSpec } from "./index-spec";
-import { BUILTIN_UNIT, TO2Type, UNKNOWN_TYPE } from "./to2-type";
+import { TO2Type, UNKNOWN_TYPE } from "./to2-type";
 import { InputPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";

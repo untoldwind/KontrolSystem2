@@ -1,13 +1,11 @@
 import { ModuleContext } from "./context";
 import { FunctionType } from "./function-type";
 import {
-  BUILTIN_BOOL,
-  BUILTIN_INT,
-  BUILTIN_STRING,
   GenericParameter,
   RealizedType,
   TO2Type,
   UNKNOWN_TYPE,
+  currentTypeResolver,
 } from "./to2-type";
 import { OptionType } from "./option-type";
 import { WithDefinitionRef } from "./definition-ref";
@@ -87,7 +85,7 @@ export class ArrayType implements RealizedType {
   public findField(name: string): WithDefinitionRef<TO2Type> | undefined {
     switch (name) {
       case "length":
-        return { value: BUILTIN_INT };
+        return { value: currentTypeResolver().BUILTIN_INT };
       default:
         return undefined;
     }
@@ -109,7 +107,7 @@ export class ArrayType implements RealizedType {
                 new FunctionType(
                   false,
                   [["item", this.elementType, false]],
-                  BUILTIN_BOOL,
+                  currentTypeResolver().BUILTIN_BOOL,
                 ),
                 false,
               ],
@@ -128,7 +126,7 @@ export class ArrayType implements RealizedType {
                 new FunctionType(
                   false,
                   [["item", this.elementType, false]],
-                  BUILTIN_BOOL,
+                  currentTypeResolver().BUILTIN_BOOL,
                 ),
                 false,
               ],
@@ -147,12 +145,12 @@ export class ArrayType implements RealizedType {
                 new FunctionType(
                   false,
                   [["item", this.elementType, false]],
-                  BUILTIN_BOOL,
+                  currentTypeResolver().BUILTIN_BOOL,
                 ),
                 false,
               ],
             ],
-            BUILTIN_BOOL,
+            currentTypeResolver().BUILTIN_BOOL,
             "Check if an item satisfying a predicate exists",
           ),
         };
@@ -218,8 +216,8 @@ export class ArrayType implements RealizedType {
           value: new FunctionType(
             false,
             [
-              ["start", BUILTIN_INT, false],
-              ["end", BUILTIN_INT, true],
+              ["start", currentTypeResolver().BUILTIN_INT, false],
+              ["end", currentTypeResolver().BUILTIN_INT, true],
             ],
             new ArrayType(this.elementType),
             "Get a slice of the array",
@@ -298,7 +296,7 @@ export class ArrayType implements RealizedType {
                     ["item1", this.elementType, false],
                     ["item2", this.elementType, false],
                   ],
-                  BUILTIN_INT,
+                  currentTypeResolver().BUILTIN_INT,
                 ),
                 false,
               ],
@@ -312,7 +310,7 @@ export class ArrayType implements RealizedType {
           value: new FunctionType(
             false,
             [],
-            BUILTIN_STRING,
+            currentTypeResolver().BUILTIN_STRING,
             "Get string representation of the array",
           ),
         };

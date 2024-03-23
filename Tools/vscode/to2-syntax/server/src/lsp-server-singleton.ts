@@ -36,7 +36,9 @@ import {
 import { Registry } from "./to2/ast/registry";
 import { TO2ModuleNode, isTO2ModuleNode } from "./to2/ast/to2-module";
 import { module } from "./to2/parser-module";
-import { isDirectory, pathToUri, uriToPath } from "./utils";
+import { isDirectory, isFile, pathToUri, uriToPath } from "./utils";
+import { initTypeResolver, typeResolverInitialized } from "./to2/ast/to2-type";
+import { Reference } from "./reference";
 
 export class LspServerSingleton {
   private readonly registry = new Registry();
@@ -239,12 +241,36 @@ export class LspServerSingleton {
     progress?.done();
   }
 
+  async updateTypeResolver(workspacePath: string) {
+    if (typeResolverInitialized()) return;
+
+    const candidates = [
+      path.resolve(workspacePath, "reference.json"),
+      path.resolve(workspacePath, "..", "reference.json"),
+    ];
+
+    for (const candidate of candidates) {
+      
+      if (await isFile(candidate)) {
+        try {
+          const content = JSON.parse( await fs.readFile(candidate, "utf-8"));
+
+          initTypeResolver(content as Reference);
+        }
+        catch(e) {
+          // ignore
+        }
+      }
+    }
+  }
+
   async updateConfig(config: To2LspSettings) {
     this.globalSettings = config;
 
     for (const libraryPath of [config.libraryPath, config.localLibraryPath]) {
       if (libraryPath.length === 0 || !(await isDirectory(libraryPath)))
         continue;
+      await this.updateTypeResolver(libraryPath);
       const libraryUri = pathToUri(libraryPath, this.documents);
       if (!this.workspaceFolders.has(libraryUri)) {
         await this.indexWorkspace(libraryUri);
@@ -305,7 +331,11 @@ export class LspServerSingleton {
     return result;
   }
 
-  onInitialized() {
+  async onInitialized() {
+    for (const folder of this.workspaceFolders) {
+      const folderPath = uriToPath(folder);
+      folderPath && (await this.updateTypeResolver(folderPath));
+    }
     if (this.hasConfigurationCapability) {
       // Register for all configuration changes.
       this.connection.client.register(

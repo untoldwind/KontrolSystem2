@@ -1,5 +1,5 @@
 import { UNKNOWN_RANGE } from "../../parser";
-import { REFERENCE, TypeRef } from "../../reference";
+import { REFERENCE, Reference, TypeRef } from "../../reference";
 import { ArrayType } from "./array-type";
 import { ModuleContext } from "./context";
 import { WithDefinitionRef } from "./definition-ref";
@@ -148,38 +148,6 @@ export function isGenericParameter(
   return node !== undefined && node.kind === "Generic";
 }
 
-const referencedTypes: Record<string, ReferencedType> = [
-  ...Object.values(REFERENCE.builtin).map(
-    (typeReference) => new ReferencedType(typeReference),
-  ),
-  ...Object.values(REFERENCE.modules).flatMap((module) =>
-    Object.values(module.types).map(
-      (typeReference) => new ReferencedType(typeReference, module.name),
-    ),
-  ),
-].reduce(
-  (acc, referencedType) => {
-    acc[referencedType.name] = referencedType;
-    return acc;
-  },
-  {} as Record<string, ReferencedType>,
-);
-
-const referencedTypeAliases = Object.values(REFERENCE.modules)
-  .flatMap((module) =>
-    Object.entries(module.typeAliases).map(([name, typeRef]) => ({
-      name: `${module.name}::${name}`,
-      typeRef,
-    })),
-  )
-  .reduce(
-    (acc, { name, typeRef }) => {
-      acc[name] = typeRef;
-      return acc;
-    },
-    {} as Record<string, TypeRef>,
-  );
-
 export const UNKNOWN_TYPE: RealizedType = {
   kind: "Unknown",
   name: "<unknown>",
@@ -233,92 +201,158 @@ export const UNKNOWN_TYPE: RealizedType = {
   guessGeneric() {},
 };
 
-export const BUILTIN_UNIT = new ReferencedType(REFERENCE.builtin["Unit"]);
-export const BUILTIN_BOOL = new ReferencedType(REFERENCE.builtin["bool"]);
-export const BUILTIN_INT = new ReferencedType(REFERENCE.builtin["int"]);
-export const BUILTIN_FLOAT = new ReferencedType(REFERENCE.builtin["float"]);
-export const BUILTIN_STRING = new ReferencedType(REFERENCE.builtin["string"]);
-export const BUILTIN_RANGE = new ReferencedType(REFERENCE.builtin["Range"]);
-export const BUILTIN_CELL = new ReferencedType(REFERENCE.builtin["Cell"]);
-export const BUILTIN_ERROR = new ReferencedType(
-  REFERENCE.modules["core::error"].types["Error"],
-);
-export const BUILTIN_ARRAYBUILDER = new ReferencedType(
-  REFERENCE.builtin["ArrayBuilder"],
-);
+export class TypeResolver {
+  private referencedTypes: Record<string, ReferencedType>;
+  private referencedTypeAliases: Record<string, TypeRef>;
+  public BUILTIN_UNIT: ReferencedType;
+  public BUILTIN_BOOL: ReferencedType;
+  public BUILTIN_INT: ReferencedType;
+  public BUILTIN_FLOAT: ReferencedType;
+  public BUILTIN_STRING: ReferencedType;
+  public BUILTIN_RANGE: ReferencedType;
+  public BUILTIN_CELL: ReferencedType;
+  public BUILTIN_ERROR: ReferencedType;
+  public BUILTIN_ARRAYBUILDER: ReferencedType;
 
-export function findLibraryTypeOrAlias(
-  namePath: string[],
-  typeArguments: RealizedType[],
-): RealizedType | undefined {
-  const aliased = referencedTypeAliases[namePath.join("::")];
-  if (aliased) return resolveTypeRef(aliased);
-  return findLibraryType(namePath, typeArguments);
-}
-
-export function findLibraryType(
-  namePath: string[],
-  typeArguments: RealizedType[],
-): RealizedType | undefined {
-  const fullName = namePath.join("::");
-  switch (fullName) {
-    case "Option":
-      if (typeArguments.length === 1) return new OptionType(typeArguments[0]);
-      break;
-    case "Result":
-      if (typeArguments.length === 1 || typeArguments.length === 2)
-        return new ResultType(typeArguments[0]);
-      break;
-  }
-
-  return referencedTypes[fullName]?.fillGenericArguments(typeArguments);
-}
-
-export function resolveTypeRef(
-  typeRef: TypeRef,
-  genericMap?: Record<string, RealizedType>,
-): RealizedType | undefined {
-  switch (typeRef.kind) {
-    case "Builtin":
-      return findLibraryType([typeRef.name], []);
-    case "Generic":
-      return genericMap?.[typeRef.name] ?? new GenericParameter(typeRef.name);
-    case "Standard":
-      return findLibraryType([typeRef.module, typeRef.name], []);
-    case "Array":
-      return new ArrayType(
-        resolveTypeRef(typeRef.parameters[0]) ?? UNKNOWN_TYPE,
-      );
-    case "Option":
-      return new OptionType(
-        resolveTypeRef(typeRef.parameters[0]) ?? UNKNOWN_TYPE,
-      );
-    case "Result":
-      return new ResultType(
-        resolveTypeRef(typeRef.parameters[0]) ?? UNKNOWN_TYPE,
-      );
-    case "Tuple":
-      return new TupleType(
-        typeRef.parameters.map(
-          (param) => resolveTypeRef(param) ?? UNKNOWN_TYPE,
+  constructor(private reference: Reference) {
+    this.referencedTypes = [
+      ...Object.values(REFERENCE.builtin).map(
+        (typeReference) => new ReferencedType(typeReference),
+      ),
+      ...Object.values(REFERENCE.modules).flatMap((module) =>
+        Object.values(module.types).map(
+          (typeReference) => new ReferencedType(typeReference, module.name),
         ),
+      ),
+    ].reduce(
+      (acc, referencedType) => {
+        acc[referencedType.name] = referencedType;
+        return acc;
+      },
+      {} as Record<string, ReferencedType>,
+    );
+
+    this.referencedTypeAliases = Object.values(REFERENCE.modules)
+      .flatMap((module) =>
+        Object.entries(module.typeAliases).map(([name, typeRef]) => ({
+          name: `${module.name}::${name}`,
+          typeRef,
+        })),
+      )
+      .reduce(
+        (acc, { name, typeRef }) => {
+          acc[name] = typeRef;
+          return acc;
+        },
+        {} as Record<string, TypeRef>,
       );
-    case "Record":
-      return new RecordType(
-        typeRef.parameters.map((param, idx) => [
-          { range: UNKNOWN_RANGE, value: typeRef.names[idx] },
-          resolveTypeRef(param) ?? UNKNOWN_TYPE,
-        ]),
-      );
-    case "Function":
-      return new FunctionType(
-        typeRef.isAsync,
-        typeRef.parameters.map((param, idx) => [
-          `param${idx}`,
-          resolveTypeRef(param) ?? UNKNOWN_TYPE,
-          false,
-        ]),
-        resolveTypeRef(typeRef.returnType) ?? UNKNOWN_TYPE,
-      );
+
+    this.BUILTIN_UNIT = new ReferencedType(reference.builtin["Unit"]);
+    this.BUILTIN_BOOL = new ReferencedType(reference.builtin["bool"]);
+    this.BUILTIN_INT = new ReferencedType(reference.builtin["int"]);
+    this.BUILTIN_FLOAT = new ReferencedType(reference.builtin["float"]);
+    this.BUILTIN_STRING = new ReferencedType(reference.builtin["string"]);
+    this.BUILTIN_RANGE = new ReferencedType(reference.builtin["Range"]);
+    this.BUILTIN_CELL = new ReferencedType(reference.builtin["Cell"]);
+    this.BUILTIN_ERROR = new ReferencedType(
+      reference.modules["core::error"].types["Error"],
+    );
+    this.BUILTIN_ARRAYBUILDER = new ReferencedType(
+      reference.builtin["ArrayBuilder"],
+    );
   }
+
+  public findLibraryTypeOrAlias(
+    namePath: string[],
+    typeArguments: RealizedType[],
+  ): RealizedType | undefined {
+    const aliased = this.referencedTypeAliases[namePath.join("::")];
+    if (aliased) return this.resolveTypeRef(aliased);
+    return this.findLibraryType(namePath, typeArguments);
+  }
+
+  public findLibraryType(
+    namePath: string[],
+    typeArguments: RealizedType[],
+  ): RealizedType | undefined {
+    const fullName = namePath.join("::");
+    switch (fullName) {
+      case "Option":
+        if (typeArguments.length === 1) return new OptionType(typeArguments[0]);
+        break;
+      case "Result":
+        if (typeArguments.length === 1 || typeArguments.length === 2)
+          return new ResultType(typeArguments[0]);
+        break;
+    }
+
+    return this.referencedTypes[fullName]?.fillGenericArguments(typeArguments);
+  }
+
+  public resolveTypeRef(
+    typeRef: TypeRef,
+    genericMap?: Record<string, RealizedType>,
+  ): RealizedType | undefined {
+    switch (typeRef.kind) {
+      case "Builtin":
+        return this.findLibraryType([typeRef.name], []);
+      case "Generic":
+        return genericMap?.[typeRef.name] ?? new GenericParameter(typeRef.name);
+      case "Standard":
+        return this.findLibraryType([typeRef.module, typeRef.name], []);
+      case "Array":
+        return new ArrayType(
+          this.resolveTypeRef(typeRef.parameters[0]) ?? UNKNOWN_TYPE,
+        );
+      case "Option":
+        return new OptionType(
+          this.resolveTypeRef(typeRef.parameters[0]) ?? UNKNOWN_TYPE,
+        );
+      case "Result":
+        return new ResultType(
+          this.resolveTypeRef(typeRef.parameters[0]) ?? UNKNOWN_TYPE,
+        );
+      case "Tuple":
+        return new TupleType(
+          typeRef.parameters.map(
+            (param) => this.resolveTypeRef(param) ?? UNKNOWN_TYPE,
+          ),
+        );
+      case "Record":
+        return new RecordType(
+          typeRef.parameters.map((param, idx) => [
+            { range: UNKNOWN_RANGE, value: typeRef.names[idx] },
+            this.resolveTypeRef(param) ?? UNKNOWN_TYPE,
+          ]),
+        );
+      case "Function":
+        return new FunctionType(
+          typeRef.isAsync,
+          typeRef.parameters.map((param, idx) => [
+            `param${idx}`,
+            this.resolveTypeRef(param) ?? UNKNOWN_TYPE,
+            false,
+          ]),
+          this.resolveTypeRef(typeRef.returnType) ?? UNKNOWN_TYPE,
+        );
+    }
+  }
+}
+
+var typeResolverInstance: TypeResolver | undefined = undefined;
+
+export function currentTypeResolver(): TypeResolver {
+  if(typeResolverInstance === undefined)
+    console.log("Init type resolver from default")
+  typeResolverInstance ??= new TypeResolver(REFERENCE);
+  return typeResolverInstance;
+}
+
+export function typeResolverInitialized(): boolean {
+  return typeResolverInstance !== undefined;
+}
+
+export function initTypeResolver(reference: Reference) {
+  console.log("Init type resolver from mod")
+  typeResolverInstance = new TypeResolver(reference);
 }

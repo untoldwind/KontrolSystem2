@@ -1,5 +1,5 @@
 import { BlockItem, Expression, Node, ValidationError } from ".";
-import { BUILTIN_UNIT, TO2Type } from "./to2-type";
+import { TO2Type, currentTypeResolver } from "./to2-type";
 import { InputPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
@@ -44,7 +44,7 @@ export class Block extends Expression {
 
     const errors: ValidationError[] = [];
     const blockContext = new BlockContext(context.module, context);
-    let resultType: TO2Type = BUILTIN_UNIT;
+    let resultType: TO2Type = currentTypeResolver().BUILTIN_UNIT;
 
     for (const item of this.items) {
       errors.push(...item.validateBlock(blockContext));

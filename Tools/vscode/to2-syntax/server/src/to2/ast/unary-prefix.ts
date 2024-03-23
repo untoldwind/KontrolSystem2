@@ -1,6 +1,6 @@
 import { Expression, Node, ValidationError } from ".";
 import { Operator } from "./operator";
-import { BUILTIN_UNIT, TO2Type, UNKNOWN_TYPE } from "./to2-type";
+import { TO2Type, UNKNOWN_TYPE, currentTypeResolver } from "./to2-type";
 import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
@@ -52,6 +52,9 @@ export class UnaryPrefix extends Expression {
       .resultType(context)
       .realizedType(context.module);
 
-    return rightType.findPrefixOperator(this.op.value, BUILTIN_UNIT);
+    return rightType.findPrefixOperator(
+      this.op.value,
+      currentTypeResolver().BUILTIN_UNIT,
+    );
   }
 }

@@ -1,8 +1,8 @@
 import { Expression, Node, ValidationError } from ".";
-import { InputPosition, InputRange } from "../../parser";
+import { InputRange } from "../../parser";
 import { SemanticToken } from "../../syntax-token";
 import { BlockContext } from "./context";
-import { BUILTIN_STRING, TO2Type } from "./to2-type";
+import { TO2Type, currentTypeResolver } from "./to2-type";
 
 interface StringInterpolationPartString {
   value: string;
@@ -40,7 +40,7 @@ export class StringInterpolation extends Expression {
   }
 
   public resultType(): TO2Type {
-    return BUILTIN_STRING;
+    return currentTypeResolver().BUILTIN_STRING;
   }
 
   public reduceNode<T>(
@@ -59,7 +59,10 @@ export class StringInterpolation extends Expression {
   public validateBlock(context: BlockContext): ValidationError[] {
     return this.parts.flatMap((part) =>
       isStringInterpolationPartExpression(part)
-        ? part.expression.validateBlock(context, BUILTIN_STRING)
+        ? part.expression.validateBlock(
+            context,
+            currentTypeResolver().BUILTIN_STRING,
+          )
         : [],
     );
   }

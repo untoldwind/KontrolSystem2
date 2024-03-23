@@ -93,7 +93,6 @@ export function stringInterpolation(expression: Parser<Expression>) {
       withPosition(doubleQuote),
     ),
     ([start, parts, end]) => {
-      console.log("Hub", parts);
       return new StringInterpolation(parts, start.range, end.range);
     },
   );

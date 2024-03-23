@@ -3,12 +3,7 @@ import { WithDefinitionRef } from "./definition-ref";
 import { FunctionType } from "./function-type";
 import { Operator } from "./operator";
 import { ResultType } from "./result-type";
-import {
-  BUILTIN_BOOL,
-  BUILTIN_STRING,
-  RealizedType,
-  TO2Type,
-} from "./to2-type";
+import { RealizedType, TO2Type, currentTypeResolver } from "./to2-type";
 
 export class OptionType implements RealizedType {
   public readonly kind = "Option";
@@ -79,7 +74,7 @@ export class OptionType implements RealizedType {
   public findField(name: string): WithDefinitionRef<TO2Type> | undefined {
     switch (name) {
       case "defined":
-        return { value: BUILTIN_BOOL };
+        return { value: currentTypeResolver().BUILTIN_BOOL };
       case "value":
         return { value: this.elementType };
       default:
@@ -97,7 +92,7 @@ export class OptionType implements RealizedType {
         return {
           value: new FunctionType(
             false,
-            [["error", BUILTIN_STRING, false]],
+            [["error", currentTypeResolver().BUILTIN_STRING, false]],
             new ResultType(this.elementType),
           ),
         };

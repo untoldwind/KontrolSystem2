@@ -17,7 +17,7 @@ import {
 } from "./function-declaration";
 import { FunctionType } from "./function-type";
 import { Registry } from "./registry";
-import { TO2Type, UNKNOWN_TYPE, resolveTypeRef } from "./to2-type";
+import { TO2Type, UNKNOWN_TYPE, currentTypeResolver } from "./to2-type";
 import { ReferencedType } from "./to2-type-referenced";
 import { WithDefinitionRef } from "./definition-ref";
 
@@ -201,7 +201,7 @@ export class ReferencedModule implements TO2Module {
   findConstant(name: string): WithDefinitionRef<TO2Type> | undefined {
     const constantReference = this.moduleReference.constants[name];
     const type = constantReference
-      ? resolveTypeRef(constantReference.type)
+      ? currentTypeResolver().resolveTypeRef(constantReference.type)
       : undefined;
     return type ? { value: type } : undefined;
   }
@@ -210,7 +210,11 @@ export class ReferencedModule implements TO2Module {
     return Object.entries(this.moduleReference.constants).map(
       ([name, constantReference]) => [
         name,
-        { value: resolveTypeRef(constantReference.type) ?? UNKNOWN_TYPE },
+        {
+          value:
+            currentTypeResolver().resolveTypeRef(constantReference.type) ??
+            UNKNOWN_TYPE,
+        },
       ],
     );
   }
@@ -218,7 +222,7 @@ export class ReferencedModule implements TO2Module {
   findType(name: string): WithDefinitionRef<TO2Type> | undefined {
     const aliased = this.moduleReference.typeAliases[name];
     if (aliased) {
-      const value = resolveTypeRef(aliased);
+      const value = currentTypeResolver().resolveTypeRef(aliased);
 
       return value ? { value } : undefined;
     }
@@ -235,7 +239,9 @@ export class ReferencedModule implements TO2Module {
         [string, WithDefinitionRef<TO2Type>]
       >(([name, aliased]) => [
         name,
-        { value: resolveTypeRef(aliased) ?? UNKNOWN_TYPE },
+        {
+          value: currentTypeResolver().resolveTypeRef(aliased) ?? UNKNOWN_TYPE,
+        },
       ]),
       ...Object.entries(this.moduleReference.types).map<
         [string, WithDefinitionRef<TO2Type>]
@@ -254,11 +260,13 @@ export class ReferencedModule implements TO2Module {
             functionReference.isAsync,
             functionReference.parameters.map((param) => [
               param.name,
-              resolveTypeRef(param.type) ?? UNKNOWN_TYPE,
+              currentTypeResolver().resolveTypeRef(param.type) ?? UNKNOWN_TYPE,
               param.hasDefault,
             ]),
-            resolveTypeRef(functionReference.returnType) ?? UNKNOWN_TYPE,
-            functionReference.description,
+            currentTypeResolver().resolveTypeRef(
+              functionReference.returnType,
+            ) ?? UNKNOWN_TYPE,
+            functionReference.description ?? "",
           ),
         }
       : undefined;
@@ -273,11 +281,13 @@ export class ReferencedModule implements TO2Module {
             functionReference.isAsync,
             functionReference.parameters.map((param) => [
               param.name,
-              resolveTypeRef(param.type) ?? UNKNOWN_TYPE,
+              currentTypeResolver().resolveTypeRef(param.type) ?? UNKNOWN_TYPE,
               param.hasDefault,
             ]),
-            resolveTypeRef(functionReference.returnType) ?? UNKNOWN_TYPE,
-            functionReference.description,
+            currentTypeResolver().resolveTypeRef(
+              functionReference.returnType,
+            ) ?? UNKNOWN_TYPE,
+            functionReference.description ?? "",
           ),
         },
       ],
