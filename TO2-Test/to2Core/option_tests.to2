@@ -187,3 +187,39 @@ test sync fn test_option_continue() -> Unit = {
     
     assert_string("[a_123, a_456, a_789, a_last]", arr.to_string())
 }
+
+sync fn sync_none_unwrap(opt_int: Option<int>) -> Result<int> = {
+    const value = opt_int?
+    
+    Ok(value)
+}
+
+test sync fn test_sync_none_unwrap() -> Unit = {
+    const ok_result = sync_none_unwrap(Some(1234))
+    
+    assert_true(ok_result.success)
+    assert_int(1234, ok_result.value)
+    
+    const err_result = sync_none_unwrap(None())
+    
+    assert_false(err_result.success)
+    assert_string("'opt_int ?' is not defined", err_result.error.message)
+}
+
+fn async_none_unwrap(opt_int: Option<int>) -> Result<int> = {
+    const value = opt_int?
+    
+    Ok(value)
+}
+
+test fn test_async_none_unwrap() -> Unit = {
+    const ok_result = async_none_unwrap(Some(1234))
+    
+    assert_true(ok_result.success)
+    assert_int(1234, ok_result.value)
+    
+    const err_result = async_none_unwrap(None())
+    
+    assert_false(err_result.success)
+    assert_string("'opt_int ?' is not defined", err_result.error.message)
+}

@@ -289,11 +289,12 @@ internal class OptionUnwrapOperator : IOperatorEmitter {
     public TO2Type ResultType => optionType.elementType;
 
     public void EmitCode(IBlockContext context, Node target) {
-        var expectedReturn = context.ExpectedReturn.UnderlyingType(context.ModuleContext) as OptionType;
-        if (expectedReturn == null) {
+        var expectedOptionReturn = context.ExpectedReturn.UnderlyingType(context.ModuleContext) as OptionType;
+        var expectedResultReturn = context.ExpectedReturn.UnderlyingType(context.ModuleContext) as ResultType;
+        if (expectedOptionReturn == null && expectedResultReturn == null) {
             context.AddError(new StructuralError(
                 StructuralError.ErrorType.IncompatibleTypes,
-                "Operator ? is only allowed if function returns an option",
+                "Operator ? is only allowed if function returns an option or result",
                 target.Start,
                 target.End
             ));
@@ -310,26 +311,41 @@ internal class OptionUnwrapOperator : IOperatorEmitter {
         context.IL.Emit(OpCodes.Brtrue_S, onSuccess);
         // Keep track of stuff that is still on the stack at onSuccess
         var stackAdjust = context.IL.StackCount;
-        var noneType = expectedReturn.GeneratedType(context.ModuleContext);
-        using (var noneResult = context.IL.TempLocal(noneType)) {
-            // Clean stack entirely to make room for error result to return
-            for (var i = context.IL.StackCount; i > 0; i--) context.IL.Emit(OpCodes.Pop);
-            noneResult.EmitLoadPtr(context);
-            context.IL.Emit(OpCodes.Initobj, generatedType, 1, 0);
-            noneResult.EmitLoad(context);
+
+        // Clean stack entirely to make room for error result to return
+        for (var i = context.IL.StackCount; i > 0; i--) context.IL.Emit(OpCodes.Pop);
+
+        if (expectedOptionReturn != null) {
+            var noneType = expectedOptionReturn.GeneratedType(context.ModuleContext);
+            using (var noneResult = context.IL.TempLocal(noneType)) {
+                noneResult.EmitLoadPtr(context);
+                context.IL.Emit(OpCodes.Initobj, generatedType, 1, 0);
+                noneResult.EmitLoad(context);
+                if (context.IsAsync)
+                    context.IL.EmitNew(OpCodes.Newobj,
+                        context.MethodBuilder!.ReturnType.GetConstructor(new[] { noneType })!);
+            }
+        } else if (expectedResultReturn != null) {
+            var errorResultType = expectedResultReturn.GeneratedType(context.ModuleContext);
+            var errMethod = typeof(Result).GetMethod("Err", new[] { typeof(string) })!.MakeGenericMethod([
+                expectedResultReturn.successType.GeneratedType(context.ModuleContext)
+            ]);
+
+            context.IL.Emit(OpCodes.Ldstr, $"'{target}' is not defined");
+            context.IL.EmitCall(OpCodes.Call, errMethod, 1);
             if (context.IsAsync)
                 context.IL.EmitNew(OpCodes.Newobj,
-                    context.MethodBuilder!.ReturnType.GetConstructor(new[] { noneType })!);
-
-            ILChunks.GenerateFunctionLeave(context);
-            context.IL.EmitReturn(context.MethodBuilder!.ReturnType);
-
-            context.IL.MarkLabel(onSuccess);
-
-            // Readjust the stack counter
-            context.IL.AdjustStack(stackAdjust);
-            context.IL.Emit(OpCodes.Ldfld, generatedType.GetField("value"));
+                    context.MethodBuilder!.ReturnType.GetConstructor(new[] { errorResultType })!);
         }
+
+        ILChunks.GenerateFunctionLeave(context);
+        context.IL.EmitReturn(context.MethodBuilder!.ReturnType);
+
+        context.IL.MarkLabel(onSuccess);
+
+        // Readjust the stack counter
+        context.IL.AdjustStack(stackAdjust);
+        context.IL.Emit(OpCodes.Ldfld, generatedType.GetField("value"));
     }
 
     public void EmitAssign(IBlockContext context, IBlockVariable variable, Node target) {
