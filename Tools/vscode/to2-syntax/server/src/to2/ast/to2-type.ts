@@ -240,7 +240,9 @@ export const BUILTIN_FLOAT = new ReferencedType(REFERENCE.builtin["float"]);
 export const BUILTIN_STRING = new ReferencedType(REFERENCE.builtin["string"]);
 export const BUILTIN_RANGE = new ReferencedType(REFERENCE.builtin["Range"]);
 export const BUILTIN_CELL = new ReferencedType(REFERENCE.builtin["Cell"]);
-export const BUILTIN_ERROR = new ReferencedType(REFERENCE.modules["core::error"].types["Error"]);
+export const BUILTIN_ERROR = new ReferencedType(
+  REFERENCE.modules["core::error"].types["Error"],
+);
 export const BUILTIN_ARRAYBUILDER = new ReferencedType(
   REFERENCE.builtin["ArrayBuilder"],
 );
@@ -262,9 +264,11 @@ export function findLibraryType(
   switch (fullName) {
     case "Option":
       if (typeArguments.length === 1) return new OptionType(typeArguments[0]);
+      break;
     case "Result":
       if (typeArguments.length === 1 || typeArguments.length === 2)
         return new ResultType(typeArguments[0]);
+      break;
   }
 
   return referencedTypes[fullName]?.fillGenericArguments(typeArguments);

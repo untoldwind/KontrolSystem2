@@ -23,8 +23,9 @@
     "prettier": "3.2.5",
     "ts-jest": "29.1.2",
     "unicode-properties": "1.4.1",
-    "esbuild": "0.20.1",
-    "rimraf": "5.0.5"
+    "esbuild": "0.20.2",
+    "rimraf": "5.0.5",
+    "zod": "3.22.4"
   },
   "scripts": {
     "clean": "rimraf out",

@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 export const OPERATORS = [
   "=",
   "+",
@@ -31,4 +33,6 @@ export const OPERATORS = [
   "~",
 ] as const;
 
-export type Operator = (typeof OPERATORS)[number];
+export const Operator = z.enum(OPERATORS);
+
+export type Operator = z.infer<typeof Operator>;

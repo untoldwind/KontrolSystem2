@@ -15,9 +15,9 @@
     "vscode-languageclient": "^9.0.1"
   },
   "devDependencies": {
-    "@types/vscode": "^1.85.0",
-    "@vscode/test-electron": "^2.3.8",
-    "esbuild": "0.19.10",
+    "@types/vscode": "^1.87.0",
+    "@vscode/test-electron": "^2.3.9",
+    "esbuild": "0.20.2",
     "rimraf": "5.0.5"
   },
   "scripts": {

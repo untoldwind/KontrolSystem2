@@ -26,6 +26,10 @@ Support for script based logs:
 
 General improvements:
 * Add `vessel.has_launched`, `vessel.launch_time` and `vessel.time_since_launch` (the latter should be the mission time)
+* Fix issue in `std::control::sterring` not working for "poorly" oriented command modules
+* Basic support for aerodynamic drag and lift-forces:
+  * Add `part.lifting_surface` and `part.dard`
+  * Add drag, lift and body lift properties to `ModuleLiftingSurface`, `ModuleDrag` and `ModuleControlSurface`
 
 ## 0.5.6.2 -> 0.5.6.3
 

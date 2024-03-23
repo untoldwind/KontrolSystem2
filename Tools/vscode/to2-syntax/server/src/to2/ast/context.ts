@@ -13,7 +13,6 @@ import {
   GenericParameter,
   RealizedType,
   TO2Type,
-  UNKNOWN_TYPE,
   findLibraryTypeOrAlias,
 } from "./to2-type";
 

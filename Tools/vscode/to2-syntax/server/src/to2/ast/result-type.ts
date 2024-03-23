@@ -10,18 +10,13 @@ export class ResultType implements RealizedType {
   public readonly localName: string;
   public readonly description: string;
 
-  constructor(
-    public readonly successType: TO2Type,
-  ) {
-    this.name =
-      this.localName = `Result<${successType.localName}>`;
+  constructor(public readonly successType: TO2Type) {
+    this.name = this.localName = `Result<${successType.localName}>`;
     this.description = "";
   }
 
   public hasGnerics(context: ModuleContext): boolean {
-    return (
-      this.successType.realizedType(context).hasGnerics(context)
-    );
+    return this.successType.realizedType(context).hasGnerics(context);
   }
 
   public isAssignableFrom(otherType: RealizedType): boolean {
@@ -29,9 +24,7 @@ export class ResultType implements RealizedType {
   }
 
   public realizedType(context: ModuleContext): RealizedType {
-    return new ResultType(
-      this.successType.realizedType(context),
-    );
+    return new ResultType(this.successType.realizedType(context));
   }
 
   public fillGenerics(

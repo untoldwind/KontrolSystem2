@@ -1,67 +1,8 @@
 import { Operator } from "../to2/ast/operator";
 import referenceJson from "./reference.json";
+import { z } from "zod";
 
 export const REFERENCE: Reference = referenceJson as unknown as Reference;
-
-export interface Reference {
-  builtin: Record<string, TypeReference>;
-  modules: Record<string, ModuleReference>;
-}
-
-export interface ModuleReference {
-  name: string;
-  description?: string;
-  types: Record<string, TypeReference>;
-  typeAliases: Record<string, TypeRef>;
-  constants: Record<string, ConstantReference>;
-  functions: Record<string, FunctionReference>;
-}
-
-export interface TypeReference {
-  name: string;
-  description?: string;
-  genericParameters?: string[];
-  fields: Record<string, FieldReference>;
-  methods: Record<string, FunctionReference>;
-  prefixOperators?: Record<Operator, OperatorReference[]>;
-  suffixOperators?: Record<Operator, OperatorReference[]>;
-  assignableFromAny: boolean;
-  assignableFrom: TypeRef[];
-}
-
-export interface FieldReference {
-  name: string;
-  description?: string;
-  readOnly: boolean;
-  type: TypeRef;
-}
-
-export interface OperatorReference {
-  op: Operator;
-  otherType: TypeRef;
-  resultType: TypeRef;
-}
-
-export interface FunctionReference {
-  isAsync: boolean;
-  name: string;
-  description?: string;
-  parameters: FunctionParameterReference[];
-  returnType: TypeRef;
-}
-
-export interface FunctionParameterReference {
-  name: string;
-  type: TypeRef;
-  hasDefault: boolean;
-  description: string;
-}
-
-export interface ConstantReference {
-  name: string;
-  description?: string;
-  type: TypeRef;
-}
 
 export type TypeRef =
   | {
@@ -104,3 +45,126 @@ export type TypeRef =
       module: string;
       name: string;
     };
+
+export const TypeRef: z.ZodSchema<TypeRef> = z.lazy(() =>
+  z.union([
+    z.object({
+      kind: z.literal("Builtin"),
+      name: z.string(),
+    }),
+    z.object({
+      kind: z.literal("Array"),
+      parameters: z.tuple([TypeRef]),
+    }),
+    z.object({
+      kind: z.literal("Option"),
+      parameters: z.tuple([TypeRef]),
+    }),
+    z.object({
+      kind: z.literal("Result"),
+      parameters: z.tuple([TypeRef, TypeRef]),
+    }),
+    z.object({
+      kind: z.literal("Tuple"),
+      parameters: z.array(TypeRef),
+    }),
+    z.object({
+      kind: z.literal("Record"),
+      names: z.array(z.string()),
+      parameters: z.array(TypeRef),
+    }),
+    z.object({
+      kind: z.literal("Function"),
+      parameters: z.array(TypeRef),
+      returnType: TypeRef,
+      isAsync: z.boolean(),
+    }),
+    z.object({
+      kind: z.literal("Generic"),
+      name: z.string(),
+    }),
+    z.object({
+      kind: z.literal("Standard"),
+      module: z.string(),
+      name: z.string(),
+    }),
+  ]),
+);
+
+export const ConstantReference = z.object({
+  name: z.string(),
+  description: z.string().optional(),
+  type: TypeRef,
+});
+
+export type ConstantReference = z.infer<typeof ConstantReference>;
+
+export const FunctionParameterReference = z.object({
+  name: z.string(),
+  type: TypeRef,
+  hasDefault: z.boolean(),
+  description: z.string(),
+});
+
+export type FunctionParameterReference = z.infer<
+  typeof FunctionParameterReference
+>;
+
+export const FunctionReference = z.object({
+  isAsync: z.boolean(),
+  name: z.string(),
+  description: z.string().optional(),
+  parameters: z.array(FunctionParameterReference),
+  returnType: TypeRef,
+});
+
+export type FunctionReference = z.infer<typeof FunctionReference>;
+
+export const OperatorReference = z.object({
+  op: Operator,
+  otherType: TypeRef,
+  resultType: TypeRef,
+});
+
+export type OperatorReference = z.infer<typeof Operator>;
+
+export const FieldReference = z.object({
+  name: z.string(),
+  description: z.string().optional(),
+  readOnly: z.boolean(),
+  type: TypeRef,
+});
+
+export type FieldReference = z.infer<typeof FieldReference>;
+
+export const TypeReference = z.object({
+  name: z.string(),
+  description: z.string().optional(),
+  genericParameters: z.array(z.string()).optional(),
+  fields: z.record(FieldReference),
+  methods: z.record(FunctionReference),
+  prefixOperators: z.record(Operator, z.array(OperatorReference)).optional(),
+  suffixOperators: z.record(Operator, z.array(OperatorReference)).optional(),
+  assignableFromAny: z.boolean(),
+  assignableFrom: z.array(TypeRef),
+});
+
+export type TypeReference = z.infer<typeof TypeReference>;
+
+export const ModuleReference = z.object({
+  name: z.string(),
+  description: z.string().optional(),
+  types: z.record(TypeReference),
+  typeAliases: z.record(TypeRef),
+  constants: z.record(ConstantReference),
+  functions: z.record(FunctionReference),
+});
+
+export type ModuleReference = z.infer<typeof ModuleReference>;
+
+export const Reference = z.object({
+  builtin: z.record(TypeReference),
+  modules: z.record(ModuleReference),
+});
+
+export type Reference = z.infer<typeof Reference>;
