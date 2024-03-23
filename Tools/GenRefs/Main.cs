@@ -21,7 +21,7 @@ namespace KontrolSystem.GenRefs {
             var vsCodePath = Path.Combine(Directory.GetCurrentDirectory(), "Tools", "vscode", "to2-syntax", "server", "src", "reference", "reference.json");
 
             File.WriteAllText(vsCodePath, JsonConvert.SerializeObject(reference, Formatting.Indented));
-            
+
             var modPath = Path.Combine(Directory.GetCurrentDirectory(), "SpaceWarpMod", "reference.json");
 
             File.WriteAllText(modPath, JsonConvert.SerializeObject(reference, Formatting.Indented));

@@ -21,7 +21,8 @@ public partial class KSPVesselModule {
             KSPContext.CurrentContext.Game.UniverseView.PhysicsSpace.PhysicsToVector(
                 dataEngine.ThrustDirRelativePartWorldSpace);
 
-        [KSField] public bool IsGimbal => part.part.TryGetModuleData<PartComponentModule_Gimbal, Data_Gimbal>(out var _);
+        [KSField(Description = "Check if engine has gimbal")]
+        public bool IsGimbal => part.part.TryGetModuleData<PartComponentModule_Gimbal, Data_Gimbal>(out var _);
 
         [KSField]
         public Option<ModuleGimbalAdapter> Gimbal =>
@@ -29,7 +30,8 @@ public partial class KSPVesselModule {
                 ? Option.Some(new ModuleGimbalAdapter(part, data))
                 : Option.None<ModuleGimbalAdapter>();
 
-        [KSField] public bool HasFairing => part.part.TryGetModuleData<PartComponentModule_Fairing, Data_Fairing>(out _);
+        [KSField(Description = "Check if engine has fairing")]
+        public bool HasFairing => part.part.TryGetModuleData<PartComponentModule_Fairing, Data_Fairing>(out _);
 
         [KSField]
         public Option<ModuleFairingAdapter> Fairing =>

@@ -17,7 +17,7 @@ public partial class KSPVesselModule {
         [KSField(Description = "Deprecated: Use `.engine` instead")]
         public PartAdapter Part => new(vesselAdapter, (PartComponent)deltaVEngineInfo.Part);
 
-        [KSField]
+        [KSField(Description = "Corresponding engine module of the vessel")]
         public ModuleEngineAdapter EngineModule => new(new PartAdapter(vesselAdapter, (PartComponent)deltaVEngineInfo.Part), deltaVEngineInfo.Engine);
 
         [KSField(Description = "Deprecated: Use `.engine` instead")]

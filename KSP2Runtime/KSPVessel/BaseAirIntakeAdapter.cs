@@ -16,13 +16,15 @@ public abstract class BaseAirIntakeAdapter<P, T>(P part, Data_ResourceIntake dat
 
     [KSField] public double ResourceUnits => dataResourceIntake.ResourceUnits;
 
-    [KSField] public bool Enabled => dataResourceIntake.ModuleEnabled;
+    [KSField(Description = "Enable/disable module")]
+    public bool Enabled => dataResourceIntake.ModuleEnabled;
 
-    [KSField]
+    [KSField(Description = "Toggle air intake.")]
     public bool ToogleIntake {
         get => dataResourceIntake.toggleResourceIntake.GetValue();
         set => dataResourceIntake.toggleResourceIntake.SetValue(value);
     }
 
-    [KSField] public double FlowRate => dataResourceIntake.flowRate.GetValue();
+    [KSField(Description = "Resource flow rate")]
+    public double FlowRate => dataResourceIntake.flowRate.GetValue();
 }

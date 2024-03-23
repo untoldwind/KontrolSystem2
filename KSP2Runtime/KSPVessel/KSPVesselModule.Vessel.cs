@@ -145,15 +145,20 @@ public partial class KSPVesselModule {
 
         [KSField] public double AtmosphereDensity => vessel.AtmDensity;
 
-        [KSField] public double Heading => vessel.Heading;
+        [KSField(Description = "Heading of the vessel relative to current main body.")]
+        public double Heading => vessel.Heading;
 
-        [KSField] public double HorizontalSurfaceSpeed => vessel.HorizontalSrfSpeed;
+        [KSField(Description = "Horizontal surface speed relative to current main body.")]
+        public double HorizontalSurfaceSpeed => vessel.HorizontalSrfSpeed;
 
-        [KSField] public double VerticalSurfaceSpeed => vessel.VerticalSrfSpeed;
+        [KSField(Description = "Vertical surface seed relative to current main body.")]
+        public double VerticalSurfaceSpeed => vessel.VerticalSrfSpeed;
 
-        [KSField] public double AltitudeTerrain => vessel.AltitudeFromTerrain;
+        [KSField(Description = "Altitude from terrain.")]
+        public double AltitudeTerrain => vessel.AltitudeFromTerrain;
 
-        [KSField] public double AltitudeSealevel => vessel.AltitudeFromSeaLevel;
+        [KSField(Description = "Altitude from sea level.")]
+        public double AltitudeSealevel => vessel.AltitudeFromSeaLevel;
 
         [KSField] public double AltitudeScenery => vessel.AltitudeFromScenery;
 
@@ -249,13 +254,17 @@ public partial class KSPVesselModule {
             }
         }
 
-        [KSField] public double StaticPressureKpa => vessel.StaticPressure_kPa;
+        [KSField(Description = "Current static atmospheric pressure in kPa.")]
+        public double StaticPressureKpa => vessel.StaticPressure_kPa;
 
-        [KSField] public double DynamicPressureKpa => vessel.DynamicPressure_kPa;
+        [KSField(Description = "Current dynamic atmospheric pressure in kPa.")]
+        public double DynamicPressureKpa => vessel.DynamicPressure_kPa;
 
-        [KSField] public double SoundSpeed => vessel.SoundSpeed;
+        [KSField(Description = "Current speed of sound.")]
+        public double SoundSpeed => vessel.SoundSpeed;
 
-        [KSField] public double MachNumber => vessel.MachNumber;
+        [KSField(Description = "Current mach number")]
+        public double MachNumber => vessel.MachNumber;
 
         [KSField(Description =
             "Get the current facing direction of the vessel in the celestial frame of its main body.")]

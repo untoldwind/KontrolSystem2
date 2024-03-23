@@ -9,17 +9,20 @@ public partial class KSPOABModule {
     public class ObjectAssemblyAdapter(IObjectAssembly objectAssembly) {
         private readonly IObjectAssembly objectAssembly = objectAssembly;
 
-        [KSField]
+        [KSField(Description = "Get a list of all parts of assembly.")]
         public ObjectAssemblyPartAdapter[] Parts =>
             objectAssembly.Parts.Select(part => new ObjectAssemblyPartAdapter(part)).ToArray();
 
-        [KSField] public double DryMass => objectAssembly.GetDryMass();
+        [KSField(Description = "Total dry mass of assembly.")]
+        public double DryMass => objectAssembly.GetDryMass();
 
-        [KSField] public double WetMass => objectAssembly.GetWetMass();
+        [KSField(Description = "Total wet mass of assembly.")]
+        public double WetMass => objectAssembly.GetWetMass();
 
-        [KSField] public double TotalMass => objectAssembly.GetTotalMass();
+        [KSField(Description = "Total mass of assembly.")]
+        public double TotalMass => objectAssembly.GetTotalMass();
 
-        [KSField]
+        [KSField(Description = "Collection of methods to obtain delta-v information of the assembly.")]
         public ObjectAssemblyDeltaVAdapter DeltaV => new(objectAssembly.VesselDeltaV);
     }
 }
