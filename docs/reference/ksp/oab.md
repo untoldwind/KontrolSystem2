@@ -15,11 +15,11 @@ Represents an object assembly, i.e. a potential vessel.
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
-delta_v | [ksp::oab::ObjectAssemblyDeltaV](/reference/ksp/oab.md#objectassemblydeltav) | R/O | 
-dry_mass | float | R/O | 
-parts | [ksp::oab::ObjectAssemblyPart](/reference/ksp/oab.md#objectassemblypart)[] | R/O | 
-total_mass | float | R/O | 
-wet_mass | float | R/O | 
+delta_v | [ksp::oab::ObjectAssemblyDeltaV](/reference/ksp/oab.md#objectassemblydeltav) | R/O | Collection of methods to obtain delta-v information of the assembly. 
+dry_mass | float | R/O | Total dry mass of assembly. 
+parts | [ksp::oab::ObjectAssemblyPart](/reference/ksp/oab.md#objectassemblypart)[] | R/O | Get a list of all parts of assembly. 
+total_mass | float | R/O | Total mass of assembly. 
+wet_mass | float | R/O | Total wet mass of assembly. 
 
 ### ObjectAssemblyAirIntake
 
@@ -29,13 +29,13 @@ wet_mass | float | R/O |
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
-enabled | bool | R/O | 
-flow_rate | float | R/O | 
+enabled | bool | R/O | Enable/disable module 
+flow_rate | float | R/O | Resource flow rate 
 part | [ksp::oab::ObjectAssemblyPart](/reference/ksp/oab.md#objectassemblypart) | R/O | 
 part_name | string | R/O | 
 resource | [ksp::resource::ResourceDefinition](/reference/ksp/resource.md#resourcedefinition) | R/O | 
 resource_units | float | R/O | 
-toogle_intake | bool | R/W | 
+toogle_intake | bool | R/W | Toggle air intake. 
 
 ### ObjectAssemblyBuilder
 

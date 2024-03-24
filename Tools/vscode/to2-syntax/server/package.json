@@ -29,8 +29,8 @@
   },
   "scripts": {
     "clean": "rimraf out",
-    "bundle": "tsc --noEmit && rimraf out && esbuild src/lsp-server.ts --bundle --sourcemap --outdir=out --platform=node",
-    "test": "jest",
+    "bundle": "tsc --noEmit && jest && rimraf out && esbuild src/lsp-server.ts --bundle --sourcemap --outdir=out --platform=node",
+    "test": "tsc --noEmit && jest",
     "format": "prettier --write ."
   }
 }

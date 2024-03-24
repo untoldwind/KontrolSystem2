@@ -330,7 +330,7 @@ namespace KontrolSystem.GenRefs {
 
         [JsonProperty("hasDefault")] public bool HasDefault { get; }
 
-        [JsonProperty("description")] public string? Description { get; }
+        [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)] public string? Description { get; }
     }
 
     public class TypeRef {

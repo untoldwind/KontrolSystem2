@@ -371,7 +371,7 @@ value | string |  | Enum value to lookup
 Name | Type | Read-only | Description
 --- | --- | --- | ---
 engine | [ksp::vessel::ModuleEngine](/reference/ksp/vessel.md#moduleengine) | R/O | Deprecated: Use `.engine` instead 
-engine_module | [ksp::vessel::ModuleEngine](/reference/ksp/vessel.md#moduleengine) | R/O | 
+engine_module | [ksp::vessel::ModuleEngine](/reference/ksp/vessel.md#moduleengine) | R/O | Corresponding engine module of the vessel 
 part | [ksp::vessel::Part](/reference/ksp/vessel.md#part) | R/O | Deprecated: Use `.engine` instead 
 start_burn_stage | int | R/O | Number of the stage when engine is supposed to start 
 
@@ -640,13 +640,13 @@ maneuvernode.remove ( ) -> Unit
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
-enabled | bool | R/O | 
-flow_rate | float | R/O | 
+enabled | bool | R/O | Enable/disable module 
+flow_rate | float | R/O | Resource flow rate 
 part | [ksp::vessel::Part](/reference/ksp/vessel.md#part) | R/O | 
 part_name | string | R/O | 
 resource | [ksp::resource::ResourceDefinition](/reference/ksp/resource.md#resourcedefinition) | R/O | 
 resource_units | float | R/O | 
-toogle_intake | bool | R/W | 
+toogle_intake | bool | R/W | Toggle air intake. 
 
 ### ModuleCommand
 
@@ -820,12 +820,12 @@ engine_modes | [ksp::vessel::EngineMode](/reference/ksp/vessel.md#enginemode)[] 
 fairing | Option&lt;[ksp::vessel::ModuleFairing](/reference/ksp/vessel.md#modulefairing)> | R/O | 
 gimbal | Option&lt;[ksp::vessel::ModuleGimbal](/reference/ksp/vessel.md#modulegimbal)> | R/O | 
 global_thrust_direction | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | Coordinate independent direction of thrust. 
-has_fairing | bool | R/O | 
+has_fairing | bool | R/O | Check if engine has fairing 
 has_ignited | bool | R/O | Check if engine has ignited 
 independent_throttle | float | R/W | Current independent throttle between 0.0 - 1.0 
 independent_throttle_enabled | bool | R/W | Toggle independent throttle 
 is_flameout | bool | R/O | Check if engine had a flame-out 
-is_gimbal | bool | R/O | 
+is_gimbal | bool | R/O | Check if engine has gimbal 
 is_operational | bool | R/O | Check if engine is operational 
 is_propellant_starved | bool | R/O | 
 is_shutdown | bool | R/O | Check if engine is shutdown 
@@ -901,6 +901,7 @@ part_name | string | R/O |
 modulefairing.jettison ( ) -> bool
 ```
 
+Jettison the fairing
 
 
 ### ModuleGenerator
@@ -1612,8 +1613,8 @@ CoM | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Position of the cen
 actions | [ksp::vessel::ActionGroups](/reference/ksp/vessel.md#actiongroups) | R/O | Collection of methods to trigger action groups. 
 air_intakes | [ksp::vessel::ModuleAirIntake](/reference/ksp/vessel.md#moduleairintake)[] | R/O | Get a list of all air intake parts of the vessel. 
 altitude_scenery | float | R/O | 
-altitude_sealevel | float | R/O | 
-altitude_terrain | float | R/O | 
+altitude_sealevel | float | R/O | Altitude from sea level. 
+altitude_terrain | float | R/O | Altitude from terrain. 
 angular_momentum | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get the angular momentum of the vessel in the celestial frame of its main body. 
 angular_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get the coordinate angular velocity in the celestial frame of its main body. 
 atmosphere_density | float | R/O | 
@@ -1629,7 +1630,7 @@ control_surfaces | [ksp::vessel::ModuleControlSurface](/reference/ksp/vessel.md#
 current_control_part | Option&lt;[ksp::vessel::Part](/reference/ksp/vessel.md#part)> | R/O | Get the part (command module) that is currently controlling the vessel. 
 delta_v | [ksp::vessel::VesselDeltaV](/reference/ksp/vessel.md#vesseldeltav) | R/O | Collection of methods to obtain delta-v information of the vessel. 
 docking_nodes | [ksp::vessel::ModuleDockingNode](/reference/ksp/vessel.md#moduledockingnode)[] | R/O | Get a list of all docking node parts of the vessel. 
-dynamic_pressure_kpa | float | R/O | 
+dynamic_pressure_kpa | float | R/O | Current dynamic atmospheric pressure in kPa. 
 east | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get the horizon east vector in the celestial frame of the main body. 
 engines | [ksp::vessel::ModuleEngine](/reference/ksp/vessel.md#moduleengine)[] | R/O | Get a list of all engine parts of the vessel. 
 facing | [ksp::math::Direction](/reference/ksp/math.md#direction) | R/O | Get the current facing direction of the vessel in the celestial frame of its main body. 
@@ -1645,15 +1646,15 @@ global_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposit
 global_up | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | Get the coordinate system independent horizon up vector. 
 global_velocity | [ksp::math::GlobalVelocity](/reference/ksp/math.md#globalvelocity) | R/O | Get the coordinate independent velocity of the vessel. 
 has_launched | bool | R/O | Check if the vessel has been launched. 
-heading | float | R/O | 
+heading | float | R/O | Heading of the vessel relative to current main body. 
 horizon_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/O | Reference frame for the horizon at the current position of the vessel. 
-horizontal_surface_speed | float | R/O | 
+horizontal_surface_speed | float | R/O | Horizontal surface speed relative to current main body. 
 id | string | R/O | Unique vessel id 
 is_active | bool | R/O | Check if the vessel is currently active. 
 is_controllable | bool | R/O | Check if the vessel is generally controllable, in the sense that it has a command module (i.e. it is not just space-debris). It still might not be possible to control the vessel due to a lack of crew, power of connection to the comm-net. Use `control_status` for this purpose instead. 
 is_flying | bool | R/O | Check if the vessel is flyging. 
 launch_time | float | R/O | Universal time when vessel has been launched. 
-mach_number | float | R/O | 
+mach_number | float | R/O | Current mach number 
 main_body | [ksp::orbit::Body](/reference/ksp/orbit.md#body) | R/O | The main body of the current SOI the vessel is in. 
 maneuver | [ksp::vessel::Maneuver](/reference/ksp/vessel.md#maneuver) | R/O | Collection of methods to interact with the maneuver plan of the vessel. 
 mass | float | R/O | Total mass of the vessel. 
@@ -1669,9 +1670,9 @@ research_location | Option&lt;[ksp::science::ResearchLocation](/reference/ksp/sc
 science_storage | Option&lt;[ksp::vessel::ScienceStorage](/reference/ksp/vessel.md#sciencestorage)> | R/O | Access the science storage/research inventory of the vessel. 
 situation | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | Get the current situation of the vessel. 
 solar_panels | [ksp::vessel::ModuleSolarPanel](/reference/ksp/vessel.md#modulesolarpanel)[] | R/O | Get a list of all solar panel parts of the vessel. 
-sound_speed | float | R/O | 
+sound_speed | float | R/O | Current speed of sound. 
 staging | [ksp::vessel::Staging](/reference/ksp/vessel.md#staging) | R/O | Collection of methods to obtain information about stages and trigger staging. 
-static_pressure_kpa | float | R/O | 
+static_pressure_kpa | float | R/O | Current static atmospheric pressure in kPa. 
 surface_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Surface velocity of the vessel relative to the main body. This is equivalent of expressing the `global_velocity` in the body frame of the main body. 
 target | Option&lt;[ksp::vessel::Targetable](/reference/ksp/vessel.md#targetable)> | R/W | Get the currently selected target of the vessel, if there is one. 
 time_since_launch | float | R/O | Number of seconds since launch. 
@@ -1679,7 +1680,7 @@ total_torque | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get the av
 trajectory | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit)[] | R/O | Get the entire trajectory of the vessel containing all orbit patches. 
 up | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get the horizon up vector in the celestial frame of the main body. 
 vertical_speed | float | R/O | Get the vertical speed of the vessel. 
-vertical_surface_speed | float | R/O | 
+vertical_surface_speed | float | R/O | Vertical surface seed relative to current main body. 
 
 #### Methods
 

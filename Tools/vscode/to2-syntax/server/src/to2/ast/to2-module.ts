@@ -266,7 +266,7 @@ export class ReferencedModule implements TO2Module {
             currentTypeResolver().resolveTypeRef(
               functionReference.returnType,
             ) ?? UNKNOWN_TYPE,
-            functionReference.description ?? "",
+            functionReference.description,
           ),
         }
       : undefined;
@@ -287,7 +287,7 @@ export class ReferencedModule implements TO2Module {
             currentTypeResolver().resolveTypeRef(
               functionReference.returnType,
             ) ?? UNKNOWN_TYPE,
-            functionReference.description ?? "",
+            functionReference.description,
           ),
         },
       ],

@@ -93,7 +93,7 @@ export const TypeRef: z.ZodSchema<TypeRef> = z.lazy(() =>
 
 export const ConstantReference = z.object({
   name: z.string(),
-  description: z.string().nullish(),
+  description: z.string().optional(),
   type: TypeRef,
 });
 
@@ -103,7 +103,7 @@ export const FunctionParameterReference = z.object({
   name: z.string(),
   type: TypeRef,
   hasDefault: z.boolean(),
-  description: z.string().nullish(),
+  description: z.string().optional(),
 });
 
 export type FunctionParameterReference = z.infer<
@@ -113,7 +113,7 @@ export type FunctionParameterReference = z.infer<
 export const FunctionReference = z.object({
   isAsync: z.boolean(),
   name: z.string(),
-  description: z.string().nullish(),
+  description: z.string().optional(),
   parameters: z.array(FunctionParameterReference),
   returnType: TypeRef,
 });
@@ -130,7 +130,7 @@ export type OperatorReference = z.infer<typeof Operator>;
 
 export const FieldReference = z.object({
   name: z.string(),
-  description: z.string().nullish(),
+  description: z.string().optional(),
   readOnly: z.boolean(),
   type: TypeRef,
 });
@@ -139,7 +139,7 @@ export type FieldReference = z.infer<typeof FieldReference>;
 
 export const TypeReference = z.object({
   name: z.string(),
-  description: z.string().nullish(),
+  description: z.string().optional(),
   genericParameters: z.array(z.string()).optional(),
   fields: z.record(FieldReference),
   methods: z.record(FunctionReference),
@@ -153,7 +153,7 @@ export type TypeReference = z.infer<typeof TypeReference>;
 
 export const ModuleReference = z.object({
   name: z.string(),
-  description: z.string().nullish(),
+  description: z.string().optional(),
   types: z.record(TypeReference),
   typeAliases: z.record(TypeRef),
   constants: z.record(ConstantReference),

@@ -120,7 +120,7 @@ export class ReferencedType implements RealizedType {
           methodReference.returnType,
           this.genericMap,
         ) ?? UNKNOWN_TYPE,
-        methodReference.description ?? "",
+        methodReference.description,
       ),
     };
   }
