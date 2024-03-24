@@ -11,16 +11,10 @@ namespace KontrolSystem.KSP.Runtime;
 
 public delegate IAnyFuture Entrypoint(VesselComponent vessel, object[]? args = null);
 
-public class EntrypointArgumentDescriptor {
-    public EntrypointArgumentDescriptor(string name, RealizedType type, object defaultValue) {
-        Name = name;
-        Type = type;
-        DefaultValue = defaultValue;
-    }
-
-    public string Name { get; }
-    public RealizedType Type { get; }
-    public object DefaultValue { get; }
+public class EntrypointArgumentDescriptor(string name, RealizedType type, object defaultValue) {
+    public string Name { get; } = name;
+    public RealizedType Type { get; } = type;
+    public object DefaultValue { get; } = defaultValue;
 }
 
 public static class KontrolModuleExtensions {
@@ -97,7 +91,7 @@ public static class KontrolModuleExtensions {
             logger?.Error($"GetEntrypointParameterDescriptors failed: {e}");
         }
 
-        return Array.Empty<EntrypointArgumentDescriptor>();
+        return [];
     }
 
     public static int GetEntrypointArgumentCount(this IKontrolModule module, KSPGameMode gameMode) {

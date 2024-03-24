@@ -8,7 +8,7 @@ public class FlightCtrlStateBinding {
     public static readonly RecordStructType FlightCtrlStateType = new("ksp::vessel",
         "FlightCtrlState",
         "Current state of the (pilots) flight controls.", typeof(FlightCtrlState),
-        new[] {
+        [
             new RecordStructField("main_throttle", "Setting for the main throttle (0 - 1)", BuiltinType.Float,
                 typeof(FlightCtrlState).GetField("mainThrottle")),
             new RecordStructField("x", "Setting for x-translation (-1 - 1)", BuiltinType.Float,
@@ -47,9 +47,9 @@ public class FlightCtrlStateBinding {
                 typeof(FlightCtrlState).GetField("brakes")),
             new RecordStructField("stage", "Stage", BuiltinType.Bool,
                 typeof(FlightCtrlState).GetField("stage"))
-        },
+        ],
         BuiltinType.NoOperators,
         BuiltinType.NoOperators,
-        new Dictionary<string, IMethodInvokeFactory>(),
-        new Dictionary<string, IFieldAccessFactory>());
+        [],
+        []);
 }

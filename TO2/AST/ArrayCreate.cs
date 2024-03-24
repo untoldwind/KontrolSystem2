@@ -52,9 +52,7 @@ public class ArrayCreate(TO2Type? elementType, List<Expression> elements, Positi
     public override void EmitCode(IBlockContext context, bool dropResult) {
         if (dropResult) return;
 
-        var arrayType = ResultType(context) as ArrayType;
-
-        if (arrayType == null) {
+        if (ResultType(context) is not ArrayType arrayType) {
             context.AddError(new StructuralError(
                 StructuralError.ErrorType.InvalidType,
                 "Unable to infer type of array. Please add some type hint",

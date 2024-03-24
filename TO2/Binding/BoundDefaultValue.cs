@@ -9,23 +9,19 @@ public static class BoundDefaultValue {
     public static IDefaultValue? DefaultValueFor(ParameterInfo parameter) {
         if (!parameter.HasDefaultValue) return null;
         if (parameter.DefaultValue == null) return new NullDefaultValue(parameter.ParameterType);
-        switch (parameter.DefaultValue) {
-        case bool b: return new BoolDefaultValue(b);
-        case long l: return new IntDefaultValue(l);
-        case double d: return new FloatDefaultValue(d);
-        case string s: return new StringDefaultValue(s);
-        case Enum e: return new EnumDefaultValue(e);
-        default: throw new ArgumentException($"Unable to handle default value with type {parameter.ParameterType}");
-        }
+        return parameter.DefaultValue switch {
+            bool b => new BoolDefaultValue(b),
+            long l => new IntDefaultValue(l),
+            double d => new FloatDefaultValue(d),
+            string s => new StringDefaultValue(s),
+            Enum e => new EnumDefaultValue(e),
+            _ => throw new ArgumentException($"Unable to handle default value with type {parameter.ParameterType}"),
+        };
     }
 }
 
-public class NullDefaultValue : IDefaultValue {
-    private readonly Type type;
-
-    public NullDefaultValue(Type type) {
-        this.type = type;
-    }
+public class NullDefaultValue(Type type) : IDefaultValue {
+    private readonly Type type = type;
 
     public void EmitCode(IBlockContext context) {
         if (type.IsValueType) {

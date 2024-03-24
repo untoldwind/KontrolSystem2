@@ -10,10 +10,10 @@ namespace KontrolSystem.KSP.Runtime.KSPMath;
 public static class Vector2Binding {
     public static readonly RecordStructType Vector2Type = new("ksp::math", "Vec2",
         "A 2-dimensional vector.", typeof(Vector2d),
-        new[] {
+        [
             new RecordStructField("x", "x-coordinate", BuiltinType.Float, typeof(Vector2d).GetField("x")),
             new RecordStructField("y", "y-coordinate", BuiltinType.Float, typeof(Vector2d).GetField("y"))
-        },
+        ],
         new OperatorCollection {
             {
                 Operator.Neg,
@@ -80,7 +80,7 @@ public static class Vector2Binding {
                 "to_string",
                 new BoundMethodInvokeFactory("Convert the vector to string", true, () => BuiltinType.String,
                     () => [], false, typeof(Vector2Binding),
-                    typeof(Vector2Binding).GetMethod("ToString", new[] { typeof(Vector2d) }))
+                    typeof(Vector2Binding).GetMethod("ToString", [typeof(Vector2d)]))
             }, {
                 "to_fixed",
                 new BoundMethodInvokeFactory("Convert the vector to string with fixed number of `decimals`.",

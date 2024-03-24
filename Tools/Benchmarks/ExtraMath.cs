@@ -25,7 +25,7 @@ public class ExtraMath {
 
     //keeps angles in the range 0 to 360
     public static double ClampDegrees360(double angle) {
-        angle = angle % 360.0;
+        angle %= 360.0;
         if (angle < 0) return angle + 360.0;
         else return angle;
     }
@@ -38,7 +38,7 @@ public class ExtraMath {
     }
 
     public static double ClampRadiansTwoPi(double angle) {
-        angle = angle % (2 * Math.PI);
+        angle %= (2 * Math.PI);
         if (angle < 0) return angle + 2 * Math.PI;
         else return angle;
     }

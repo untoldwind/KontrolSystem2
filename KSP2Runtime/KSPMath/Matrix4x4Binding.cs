@@ -7,27 +7,27 @@ namespace KontrolSystem.KSP.Runtime.KSPMath;
 public class Matrix4x4Binding {
     public static readonly BoundType Matrix4x4Type = Direct.BindType("ksp::math", "Matrix4x4",
         "A 4-dimensional matrix.", typeof(Matrix4x4D),
-        new OperatorCollection(),
+        [],
         new OperatorCollection {
             {
                 Operator.Add,
                 new StaticMethodOperatorEmitter(LazyMatrix4x4Type, LazyMatrix4x4Type,
-                    typeof(Matrix4x4D).GetMethod("op_Addition", new[] { typeof(Matrix4x4D), typeof(Matrix4x4D) }))
+                    typeof(Matrix4x4D).GetMethod("op_Addition", [typeof(Matrix4x4D), typeof(Matrix4x4D)]))
             }, {
                 Operator.AddAssign,
                 new StaticMethodOperatorEmitter(LazyMatrix4x4Type, LazyMatrix4x4Type,
-                    typeof(Matrix4x4D).GetMethod("op_Addition", new[] { typeof(Matrix4x4D), typeof(Matrix4x4D) }))
+                    typeof(Matrix4x4D).GetMethod("op_Addition", [typeof(Matrix4x4D), typeof(Matrix4x4D)]))
             }, {
                 Operator.Sub,
                 new StaticMethodOperatorEmitter(LazyMatrix4x4Type, LazyMatrix4x4Type,
-                    typeof(Matrix4x4D).GetMethod("op_Subtraction", new[] { typeof(Matrix4x4D), typeof(Matrix4x4D) }))
+                    typeof(Matrix4x4D).GetMethod("op_Subtraction", [typeof(Matrix4x4D), typeof(Matrix4x4D)]))
             }, {
                 Operator.SubAssign,
                 new StaticMethodOperatorEmitter(LazyMatrix4x4Type, LazyMatrix4x4Type,
-                    typeof(Matrix4x4D).GetMethod("op_Subtraction", new[] { typeof(Matrix4x4D), typeof(Matrix4x4D) }))
+                    typeof(Matrix4x4D).GetMethod("op_Subtraction", [typeof(Matrix4x4D), typeof(Matrix4x4D)]))
             }
         },
-        new Dictionary<string, IMethodInvokeFactory>(),
+        [],
         new Dictionary<string, IFieldAccessFactory> {
             {
                 "m00",

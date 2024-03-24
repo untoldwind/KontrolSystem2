@@ -31,7 +31,7 @@ namespace KontrolSystem.SpaceWarpMod {
         internal ConfigEntry<MonospaceFont> uiFont;
         internal ConfigEntry<float> uiFontSize;
 
-        internal OptionalAddons optionalAddons = new OptionalAddons();
+        internal OptionalAddons optionalAddons = new();
 
         internal LoggerAdapter loggerAdapter;
 
@@ -72,12 +72,10 @@ namespace KontrolSystem.SpaceWarpMod {
 
         public Font ConsoleFont {
             get {
-                switch (consoleFont.Value) {
-                case MonospaceFont.Unifont:
-                    return AssetManager.GetAsset<Font>("kontrolsystem2/kontrolsystem2/fonts/unifont.ttf");
-                default:
-                    return AssetManager.GetAsset<Font>("kontrolsystem2/kontrolsystem2/fonts/jetbrainsmono-regular.ttf");
-                }
+                return consoleFont.Value switch {
+                    MonospaceFont.Unifont => AssetManager.GetAsset<Font>("kontrolsystem2/kontrolsystem2/fonts/unifont.ttf"),
+                    _ => AssetManager.GetAsset<Font>("kontrolsystem2/kontrolsystem2/fonts/jetbrainsmono-regular.ttf"),
+                };
             }
         }
 
@@ -112,23 +110,19 @@ namespace KontrolSystem.SpaceWarpMod {
 
         public Font GraphFont {
             get {
-                switch (graphFont.Value) {
-                case MonospaceFont.Unifont:
-                    return AssetManager.GetAsset<Font>("kontrolsystem2/kontrolsystem2/fonts/unifont.ttf");
-                default:
-                    return AssetManager.GetAsset<Font>("kontrolsystem2/kontrolsystem2/fonts/jetbrainsmono-regular.ttf");
-                }
+                return graphFont.Value switch {
+                    MonospaceFont.Unifont => AssetManager.GetAsset<Font>("kontrolsystem2/kontrolsystem2/fonts/unifont.ttf"),
+                    _ => AssetManager.GetAsset<Font>("kontrolsystem2/kontrolsystem2/fonts/jetbrainsmono-regular.ttf"),
+                };
             }
         }
 
         public Font UIFont {
             get {
-                switch (uiFont.Value) {
-                case MonospaceFont.Unifont:
-                    return AssetManager.GetAsset<Font>("kontrolsystem2/kontrolsystem2/fonts/unifont.ttf");
-                default:
-                    return AssetManager.GetAsset<Font>("kontrolsystem2/kontrolsystem2/fonts/jetbrainsmono-regular.ttf");
-                }
+                return uiFont.Value switch {
+                    MonospaceFont.Unifont => AssetManager.GetAsset<Font>("kontrolsystem2/kontrolsystem2/fonts/unifont.ttf"),
+                    _ => AssetManager.GetAsset<Font>("kontrolsystem2/kontrolsystem2/fonts/jetbrainsmono-regular.ttf"),
+                };
             }
         }
 

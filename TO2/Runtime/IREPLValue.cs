@@ -85,7 +85,7 @@ public abstract class REPLValueFuture(TO2Type to2Type) : Future<IREPLValue?> {
                         return new FutureResult<IREPLValue?>();
                 }
 
-            if (mapFuture == null) mapFuture = map.Invoke(results!);
+            mapFuture ??= map.Invoke(results!);
 
             if (mapResult == null) {
                 var result = mapFuture.PollValue();

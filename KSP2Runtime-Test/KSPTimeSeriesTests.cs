@@ -51,7 +51,7 @@ public class KSPTimeSeriesTests {
         timeSeries2.AddData(2000, 0.9);
         var buckets = timeSeries2.Values;
 
-        Assert.True(buckets.Length == 4);
+        Assert.Equal(4, buckets.Length);
         Assert.Equal(0.0, buckets[0].Item1);
         Assert.Equal(0.6, buckets[0].Item2.avg, 6);
         Assert.Equal(0.5, buckets[0].Item2.min, 6);

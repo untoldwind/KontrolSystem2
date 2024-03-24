@@ -4,19 +4,12 @@ namespace KontrolSystem.KSP.Runtime.KSPMath;
 
 //  [a    b]
 //  [c    d]
-public struct Matrix2x2 {
-    public readonly double a, b, c, d;
+public readonly struct Matrix2x2(double a, double b, double c, double d) {
+    public readonly double a = a, b = b, c = c, d = d;
 
-    public Matrix2x2(double a, double b, double c, double d) {
-        this.a = a;
-        this.b = b;
-        this.c = c;
-        this.d = d;
-    }
+    public readonly double Determinant => a * d - b * c;
 
-    public double Determinant => a * d - b * c;
-
-    public Matrix2x2 Inverse {
+    public readonly Matrix2x2 Inverse {
         get {
             var det = a * d - b * c;
             return new Matrix2x2(d / det, -b / det, -c / det, a / det);

@@ -12,7 +12,7 @@ public partial class KSPUIModule {
         private IDisposable? bindSubscription;
         private readonly double max;
         private readonly double min;
-        private AbstractContainer parent;
+        private readonly AbstractContainer parent;
         private readonly UGUISlider slider;
         private readonly UGUILayout.ILayoutEntry entry;
 

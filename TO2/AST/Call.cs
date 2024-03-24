@@ -96,7 +96,7 @@ public class Call : Expression {
         var constant = ReferencedConstant(context.ModuleContext);
 
         if (constant != null) {
-            if (!(constant.Type is FunctionType)) {
+            if (constant.Type is not FunctionType) {
                 context.AddError(
                     new StructuralError(
                         StructuralError.ErrorType.InvalidType,
@@ -117,7 +117,7 @@ public class Call : Expression {
         TO2Type? variable = ReferencedVariable(context)?.UnderlyingType(context.ModuleContext);
 
         if (variable != null) {
-            if (!(variable is FunctionType)) {
+            if (variable is not FunctionType) {
                 context.AddError(
                     new StructuralError(
                         StructuralError.ErrorType.InvalidType,
@@ -318,8 +318,7 @@ public class Call : Expression {
             List<RealizedType> parameterTypes;
             var variable = ReferencedVariable(context.CloneCountingContext());
             if (variable != null) {
-                var functionVariable = variable as FunctionType;
-                if (functionVariable == null) return null;
+                if (variable is not FunctionType functionVariable) return null;
 
                 returnType = functionVariable.returnType.UnderlyingType(context.ModuleContext);
                 parameterTypes = functionVariable.parameterTypes

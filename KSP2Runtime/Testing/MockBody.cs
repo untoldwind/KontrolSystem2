@@ -113,7 +113,7 @@ public class MockBody : KSPOrbitModule.IBody {
 
     public Option<KSPOrbitModule.IBody> ParentBody => Option.OfNullable<KSPOrbitModule.IBody>(parent);
 
-    public KSPOrbitModule.IBody[] OrbitingBodies => Array.Empty<KSPOrbitModule.IBody>();
+    public KSPOrbitModule.IBody[] OrbitingBodies => [];
 
     public double GravParameter => mu;
 

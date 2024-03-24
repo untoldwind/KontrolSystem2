@@ -47,7 +47,7 @@ public class FunctionTypeTests {
                 BuiltinType.Float).GeneratedType(moduleContext));
         Assert.Equal(typeof(Func<long, string, bool, double, long>),
             new FunctionType(false,
-                new List<TO2Type> { BuiltinType.Int, BuiltinType.String, BuiltinType.Bool, BuiltinType.Float },
+                [BuiltinType.Int, BuiltinType.String, BuiltinType.Bool, BuiltinType.Float],
                 BuiltinType.Int).GeneratedType(moduleContext));
     }
 }

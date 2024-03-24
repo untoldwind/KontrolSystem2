@@ -6,64 +6,26 @@ namespace KontrolSystem.TO2.Generator;
 public static class InstructionSize {
     public static int Get(OpCode op, int labelCount = 0) {
         var baseSize = op.Size;
-        int operandSize;
-
-        switch (op.OperandType) {
-        case OperandType.InlineBrTarget:
-            operandSize = 4;
-            break;
-        case OperandType.InlineField:
-            operandSize = 4;
-            break;
-        case OperandType.InlineI:
-            operandSize = 4;
-            break;
-        case OperandType.InlineI8:
-            operandSize = 8;
-            break;
-        case OperandType.InlineMethod:
-            operandSize = 4;
-            break;
-        case OperandType.InlineNone:
-            operandSize = 0;
-            break;
-        case OperandType.InlineR:
-            operandSize = 8;
-            break;
-        case OperandType.InlineSig:
-            operandSize = 4;
-            break;
-        case OperandType.InlineString:
-            operandSize = 4;
-            break;
-        case OperandType.InlineSwitch:
-            operandSize = 4 + labelCount * 4;
-            break;
-        case OperandType.InlineTok:
-            operandSize = 4;
-            break;
-        case OperandType.InlineType:
-            operandSize = 4;
-            break;
-        case OperandType.InlineVar:
-            operandSize = 2;
-            break;
-        case OperandType.ShortInlineBrTarget:
-            operandSize = 1;
-            break;
-        case OperandType.ShortInlineI:
-            operandSize = 1;
-            break;
-        case OperandType.ShortInlineR:
-            operandSize = 4;
-            break;
-        case OperandType.ShortInlineVar:
-            operandSize = 1;
-            break;
-        default:
-            throw new InvalidOperationException($"Unexpected operand type {op.OperandType}");
-        }
-
+        var operandSize = op.OperandType switch {
+            OperandType.InlineBrTarget => 4,
+            OperandType.InlineField => 4,
+            OperandType.InlineI => 4,
+            OperandType.InlineI8 => 8,
+            OperandType.InlineMethod => 4,
+            OperandType.InlineNone => 0,
+            OperandType.InlineR => 8,
+            OperandType.InlineSig => 4,
+            OperandType.InlineString => 4,
+            OperandType.InlineSwitch => 4 + labelCount * 4,
+            OperandType.InlineTok => 4,
+            OperandType.InlineType => 4,
+            OperandType.InlineVar => 2,
+            OperandType.ShortInlineBrTarget => 1,
+            OperandType.ShortInlineI => 1,
+            OperandType.ShortInlineR => 4,
+            OperandType.ShortInlineVar => 1,
+            _ => throw new InvalidOperationException($"Unexpected operand type {op.OperandType}"),
+        };
         return baseSize + operandSize;
     }
 

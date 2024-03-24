@@ -61,7 +61,7 @@ public class TO2Module {
 
     public static string BuildName(string fileName) {
         fileName = fileName.ToLower();
-        if (fileName.EndsWith(".to2")) fileName = fileName.Substring(0, fileName.Length - 4);
+        if (fileName.EndsWith(".to2")) fileName = fileName[..^4];
         return Regex.Replace(Regex.Replace(fileName, "[^A-Za-z0-9_\\\\/]", "_"), "[\\\\/]", "::");
     }
 }

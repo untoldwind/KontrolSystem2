@@ -77,8 +77,7 @@ public class OptionalAddons {
 public class KSPContext {
     public static IKSPContext CurrentContext {
         get {
-            var context = ContextHolder.CurrentContext.Value as IKSPContext;
-            if (context == null) throw new ArgumentException("No current IKSPContext");
+            if (ContextHolder.CurrentContext.Value is not IKSPContext context) throw new ArgumentException("No current IKSPContext");
             return context;
         }
     }

@@ -5,18 +5,12 @@ using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime;
 
-public class CorouttineAdapter : IEnumerator {
-    private readonly IKSPContext context;
-    private readonly Action<string?, CoreError.StackEntry[]?> onDone;
+public class CorouttineAdapter(IAnyFuture process, IKSPContext context, Action<string?, CoreError.StackEntry[]?> onDone) : IEnumerator {
+    private readonly IKSPContext context = context;
+    private readonly Action<string?, CoreError.StackEntry[]?> onDone = onDone;
 
     private object? current = new WaitForFixedUpdate();
-    private IAnyFuture? process;
-
-    public CorouttineAdapter(IAnyFuture process, IKSPContext context, Action<string?, CoreError.StackEntry[]?> onDone) {
-        this.process = process;
-        this.context = context;
-        this.onDone = onDone;
-    }
+    private IAnyFuture? process = process;
 
     object? IEnumerator.Current => current;
 
@@ -56,19 +50,19 @@ public class CorouttineAdapter : IEnumerator {
     private string? ExtractMessage(object? resultValue) {
         if (resultValue == null) return null;
 
-        switch (resultValue) {
-        case IAnyResult anyResult: return anyResult.ErrorString;
-        case Exception exception: return exception.Message;
-        default: return null;
-        }
+        return resultValue switch {
+            IAnyResult anyResult => anyResult.ErrorString,
+            Exception exception => exception.Message,
+            _ => null,
+        };
     }
 
     private CoreError.StackEntry[]? ExtractStackTrace(object? resultValue) {
         if (resultValue == null) return null;
 
-        switch (resultValue) {
-        case IAnyResult anyResult: return anyResult.ErrorObject?.StackTrace;
-        default: return null;
-        }
+        return resultValue switch {
+            IAnyResult anyResult => anyResult.ErrorObject?.StackTrace,
+            _ => null,
+        };
     }
 }

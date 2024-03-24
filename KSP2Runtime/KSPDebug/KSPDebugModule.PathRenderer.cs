@@ -12,26 +12,20 @@ public partial class KSPDebugModule {
     [KSClass("DebugPath",
         Description = "Represents a debugging path in the current scene."
     )]
-    public class PathRenderer : IMarker {
+    public class PathRenderer(Position[] path, KSPConsoleModule.RgbaColor color, double width) : IMarker {
         private bool enable;
 
         private LineRenderer? line;
 
         private GameObject? lineObj;
 
-        public PathRenderer(Position[] path, KSPConsoleModule.RgbaColor color, double width) {
-            Path = path;
-            Color = color;
-            Width = width;
-        }
-
         [KSField(Description = "The color of the debugging path")]
-        public KSPConsoleModule.RgbaColor Color { get; set; }
+        public KSPConsoleModule.RgbaColor Color { get; set; } = color;
 
         [KSField(Description = "The width of the debugging path")]
-        public double Width { get; set; }
+        public double Width { get; set; } = width;
 
-        [KSField] public Position[] Path { get; set; }
+        [KSField] public Position[] Path { get; set; } = path;
 
         [KSField(Description = "Controls if the debug path is currently visible (initially `true`)")]
         public bool Visible {
@@ -118,7 +112,7 @@ public partial class KSPDebugModule {
         public void RenderColor() {
             var c1 = Color.Color;
             var c2 = Color.Color;
-            c1.a = c1.a * (float)0.25;
+            c1.a *= (float)0.25;
             var lCol =
                 UnityEngine.Color.Lerp(c2, UnityEngine.Color.white, 0.7f); // "whiten" the label color a lot.
 

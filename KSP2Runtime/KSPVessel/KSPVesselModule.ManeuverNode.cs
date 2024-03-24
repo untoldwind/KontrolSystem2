@@ -12,14 +12,9 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public partial class KSPVesselModule {
     [KSClass("ManeuverNode")]
-    public class ManeuverNodeAdapter {
-        private readonly ManeuverNodeData maneuverNode;
-        private readonly VesselAdapter vesselAdapter;
-
-        public ManeuverNodeAdapter(VesselAdapter vesselAdapter, ManeuverNodeData maneuverNode) {
-            this.vesselAdapter = vesselAdapter;
-            this.maneuverNode = maneuverNode;
-        }
+    public class ManeuverNodeAdapter(KSPVesselModule.VesselAdapter vesselAdapter, ManeuverNodeData maneuverNode) {
+        private readonly ManeuverNodeData maneuverNode = maneuverNode;
+        private readonly VesselAdapter vesselAdapter = vesselAdapter;
 
         [KSField(IsAsyncStore = true)]
         public double Time {
@@ -128,7 +123,7 @@ public partial class KSPVesselModule {
         [KSMethod]
         public void Remove() {
             vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.RemoveNodesFromVessel(vesselAdapter.vessel.GlobalId,
-                new List<ManeuverNodeData> { maneuverNode });
+                [maneuverNode]);
             //                vesselAdapter.vessel.SimulationObject.ManeuverPlan.RemoveNode(maneuverNode, false);
         }
 

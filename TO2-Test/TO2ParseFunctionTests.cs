@@ -7,7 +7,7 @@ using Xunit;
 namespace KontrolSystem.TO2.Test;
 
 public class TO2ParserFunctionTests {
-    private static readonly string[]? IgnorePosition = { "start", "end", "parentContainer" };
+    private static readonly string[]? IgnorePosition = ["start", "end", "parentContainer"];
 
     [Fact]
     public void TestFunctionParameter() {

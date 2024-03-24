@@ -25,7 +25,7 @@ public class GenericParameter(string name) : RealizedType {
     public override IEnumerable<(string name, RealizedType type)> InferGenericArgument(ModuleContext context,
         RealizedType? concreteType) {
         return concreteType != null
-            ? (name: name, concreteType).Yield()
+            ? (name, concreteType).Yield()
             : [];
     }
 }

@@ -54,10 +54,10 @@ public class OptionType : RealizedType {
 
     public override IUnapplyEmitter?
         AllowedUnapplyPatterns(ModuleContext context, string unapplyName, int itemCount) {
-        switch (unapplyName) {
-        case "Some" when itemCount == 1: return new OptionSomeUnapplyEmitter(this);
-        default: return null;
-        }
+        return unapplyName switch {
+            "Some" when itemCount == 1 => new OptionSomeUnapplyEmitter(this),
+            _ => null,
+        };
     }
 
     public override bool IsAssignableFrom(ModuleContext context, TO2Type otherType) {
@@ -71,7 +71,7 @@ public class OptionType : RealizedType {
     public override IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) {
         var underlyingOther = otherType.UnderlyingType(context);
 
-        return !(underlyingOther is OptionType) && elementType.IsAssignableFrom(context, underlyingOther)
+        return underlyingOther is not OptionType && elementType.IsAssignableFrom(context, underlyingOther)
             ? new AssignSome(this, otherType)
             : DefaultAssignEmitter.Instance;
     }
@@ -87,8 +87,7 @@ public class OptionType : RealizedType {
 
     public override IEnumerable<(string name, RealizedType type)> InferGenericArgument(ModuleContext context,
         RealizedType? concreteType) {
-        var concreteOption = concreteType as OptionType;
-        if (concreteOption == null) return [];
+        if (concreteType is not OptionType concreteOption) return [];
         return elementType.InferGenericArgument(context, concreteOption.elementType.UnderlyingType(context));
     }
 }
@@ -109,21 +108,21 @@ internal class OptionFieldAccess : IFieldAccessFactory {
 
     public TO2Type DeclaredType {
         get {
-            switch (field) {
-            case OptionField.Defined: return BuiltinType.Bool;
-            case OptionField.Value: return optionType.elementType;
-            default: throw new InvalidOperationException($"Unknown option field: {field}");
-            }
+            return field switch {
+                OptionField.Defined => BuiltinType.Bool,
+                OptionField.Value => optionType.elementType,
+                _ => throw new InvalidOperationException($"Unknown option field: {field}"),
+            };
         }
     }
 
     public string Description {
         get {
-            switch (field) {
-            case OptionField.Defined: return "`true` if the option is defined, i.e. contains a value";
-            case OptionField.Value: return "Value of the option if defined";
-            default: throw new InvalidOperationException($"Unknown option field: {field}");
-            }
+            return field switch {
+                OptionField.Defined => "`true` if the option is defined, i.e. contains a value",
+                OptionField.Value => "Value of the option if defined",
+                _ => throw new InvalidOperationException($"Unknown option field: {field}"),
+            };
         }
     }
 
@@ -131,15 +130,13 @@ internal class OptionFieldAccess : IFieldAccessFactory {
 
     public IFieldAccessEmitter Create(ModuleContext context) {
         var generateType = optionType.GeneratedType(context);
-        switch (field) {
-        case OptionField.Defined:
-            return new BoundFieldAccessEmitter(BuiltinType.Bool, generateType,
-                [generateType.GetField("defined")]);
-        case OptionField.Value:
-            return new BoundFieldAccessEmitter(optionType.elementType.UnderlyingType(context), generateType,
-                [generateType.GetField("value")]);
-        default: throw new InvalidOperationException($"Unknown option field: {field}");
-        }
+        return field switch {
+            OptionField.Defined => new BoundFieldAccessEmitter(BuiltinType.Bool, generateType,
+                            [generateType.GetField("defined")]),
+            OptionField.Value => new BoundFieldAccessEmitter(optionType.elementType.UnderlyingType(context), generateType,
+                            [generateType.GetField("value")]),
+            _ => throw new InvalidOperationException($"Unknown option field: {field}"),
+        };
     }
 
     public IFieldAccessFactory
@@ -317,14 +314,13 @@ internal class OptionUnwrapOperator : IOperatorEmitter {
 
         if (expectedOptionReturn != null) {
             var noneType = expectedOptionReturn.GeneratedType(context.ModuleContext);
-            using (var noneResult = context.IL.TempLocal(noneType)) {
-                noneResult.EmitLoadPtr(context);
-                context.IL.Emit(OpCodes.Initobj, generatedType, 1, 0);
-                noneResult.EmitLoad(context);
-                if (context.IsAsync)
-                    context.IL.EmitNew(OpCodes.Newobj,
-                        context.MethodBuilder!.ReturnType.GetConstructor(new[] { noneType })!);
-            }
+            using var noneResult = context.IL.TempLocal(noneType);
+            noneResult.EmitLoadPtr(context);
+            context.IL.Emit(OpCodes.Initobj, generatedType, 1, 0);
+            noneResult.EmitLoad(context);
+            if (context.IsAsync)
+                context.IL.EmitNew(OpCodes.Newobj,
+                    context.MethodBuilder!.ReturnType.GetConstructor([noneType])!);
         } else if (expectedResultReturn != null) {
             var errorResultType = expectedResultReturn.GeneratedType(context.ModuleContext);
             var errMethod = typeof(Result).GetMethod("Err", [typeof(string)])!.MakeGenericMethod([
@@ -400,8 +396,7 @@ internal class OptionMapFactory : IMethodInvokeFactory {
 
     public IMethodInvokeEmitter? Create(IBlockContext context, List<TO2Type> arguments, Node node) {
         if (arguments.Count != 1) return null;
-        var mapper = arguments[0].UnderlyingType(context.ModuleContext) as FunctionType;
-        if (mapper == null) return null;
+        if (arguments[0].UnderlyingType(context.ModuleContext) is not FunctionType mapper) return null;
 
         var generatedType = optionType.GeneratedType(context.ModuleContext);
         var methodInfo =
@@ -447,16 +442,15 @@ internal class OptionThenFactory : IMethodInvokeFactory {
 
     public TO2Type DeclaredReturn => new OptionType(BuiltinType.Unit);
 
-    public List<FunctionParameter> DeclaredParameters => new() {
+    public List<FunctionParameter> DeclaredParameters => [
         new("mapper",
             new FunctionType(false, [optionType.elementType], BuiltinType.Unit),
             "Function to be applied on the optional value if defined")
-    };
+    ];
 
     public IMethodInvokeEmitter? Create(IBlockContext context, List<TO2Type> arguments, Node node) {
         if (arguments.Count != 1) return null;
-        var mapper = arguments[0].UnderlyingType(context.ModuleContext) as FunctionType;
-        if (mapper == null) return null;
+        if (arguments[0].UnderlyingType(context.ModuleContext) is not FunctionType mapper) return null;
 
         var generatedType = optionType.GeneratedType(context.ModuleContext);
         var mapperReturnType = mapper.returnType.GeneratedType(context.ModuleContext);
@@ -472,9 +466,9 @@ internal class OptionThenFactory : IMethodInvokeFactory {
             throw new ArgumentException($"No Then method in {generatedType}");
 
         return new BoundMethodInvokeEmitter(mapper.returnType.UnderlyingType(context.ModuleContext),
-            new List<RealizedParameter> {
+            [
                 new("mapper", mapper, "Function to be applied on the optional value if defined")
-            }, false, generatedType,
+            ], false, generatedType,
             methodInfo);
     }
 
@@ -531,7 +525,7 @@ internal class OptionSomeUnapplyEmitter : IUnapplyEmitter {
 
     internal OptionSomeUnapplyEmitter(OptionType optionType) {
         this.optionType = optionType;
-        Items = new List<TO2Type> { optionType.elementType };
+        Items = [optionType.elementType];
     }
 
     public string Name => "Some";

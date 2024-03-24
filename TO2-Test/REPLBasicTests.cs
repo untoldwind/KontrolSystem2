@@ -149,13 +149,13 @@ public class REPLBasicTests {
             "), 5);
     }
 
-    private T RunExpression<T>(TO2Type to2Type, string expression) {
+    private static T RunExpression<T>(TO2Type to2Type, string expression) {
         var result = TO2ParserREPL.REPLItems.Parse(expression);
         var registry = KontrolRegistry.CreateCore();
         var context = new REPLContext(registry, new TestRunnerContext());
         var pollCount = 0;
 
-        foreach (var item in result.Where(i => !(i is IBlockItem))) {
+        foreach (var item in result.Where(i => i is not IBlockItem)) {
             var future = item.Eval(context);
             var futureResult = future.PollValue();
 

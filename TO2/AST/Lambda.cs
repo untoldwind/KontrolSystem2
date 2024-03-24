@@ -83,9 +83,7 @@ public class Lambda : Expression, IVariableContainer {
     }
 
     public override void EmitCode(IBlockContext context, bool dropResult) {
-        var lambdaType = ResultType(context) as FunctionType;
-
-        if (lambdaType == null) {
+        if (ResultType(context) is not FunctionType lambdaType) {
             context.AddError(new StructuralError(
                 StructuralError.ErrorType.InvalidType,
                 "Unable to infer type of lambda. Please add some type hint",
@@ -130,7 +128,7 @@ public class Lambda : Expression, IVariableContainer {
         context.IL.EmitPtr(OpCodes.Ldftn, lambdaClass.Value.lambdaImpl);
         context.IL.EmitNew(OpCodes.Newobj,
             lambdaType.GeneratedType(context.ModuleContext)
-                .GetConstructor(new[] { typeof(object), typeof(IntPtr) })!);
+                .GetConstructor([typeof(object), typeof(IntPtr)])!);
     }
 
     private LambdaClass CreateLambdaClass(IBlockContext parent, FunctionType lambdaType) {

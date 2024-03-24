@@ -45,7 +45,7 @@ public struct ConsoleLine {
 }
 
 public class KSPConsoleBuffer {
-    private static readonly string[] LineSeparators = { "\r\n", "\n" };
+    private static readonly string[] LineSeparators = ["\r\n", "\n"];
 
     private readonly LinkedList<ConsoleLine> bufferLines;
 

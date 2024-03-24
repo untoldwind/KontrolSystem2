@@ -16,7 +16,7 @@ public class UGUICanvasDrawer : MonoBehaviour {
     public int Height => drawer?.Texture.height ?? -1;
 
     private void Awake() {
-        elements = new List<GLUIDrawer.IGLUIDrawable>();
+        elements = [];
     }
 
     private void Start() {
@@ -32,9 +32,8 @@ public class UGUICanvasDrawer : MonoBehaviour {
 
         drawer!.Resize((int)size.x, (int)size.y);
 
-        using (var draw = drawer.Draw()) {
-            foreach (var element in elements!) draw.Draw(element);
-        }
+        using var draw = drawer.Draw();
+        foreach (var element in elements!) draw.Draw(element);
     }
 
     public void Add(GLUIDrawer.IGLUIDrawable element) {

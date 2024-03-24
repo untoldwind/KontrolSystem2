@@ -67,7 +67,7 @@ public partial class KSPUIModule {
             triangleStrip = new Vector2d[2 * points.Length + (closed ? 2 : 0)];
 
             if (points.Length < 2) {
-                triangleStrip = Array.Empty<Vector2d>();
+                triangleStrip = [];
                 return;
             }
 
@@ -91,13 +91,13 @@ public partial class KSPUIModule {
             if (closed && points.Length > 2) {
                 Vector2d offset1;
                 Vector2d offset2;
-                if (MakeOffset(points[points.Length - 2], points[points.Length - 1], points[0], out offset1,
+                if (MakeOffset(points[^2], points[^1], points[0], out offset1,
                         out offset2)) {
                     triangleStrip[2 * points.Length - 2] = offset1;
                     triangleStrip[2 * points.Length - 1] = offset2;
                 }
 
-                if (MakeOffset(points[points.Length - 1], points[0], points[1], out offset1, out offset2)) {
+                if (MakeOffset(points[^1], points[0], points[1], out offset1, out offset2)) {
                     triangleStrip[0] = offset1;
                     triangleStrip[1] = offset2;
                 }

@@ -41,7 +41,7 @@ public partial class KSPVesselModule {
                 return staging.GetPartsInStage((int)stage).Select(part => new PartAdapter(vesselAdapter, part))
                     .ToArray();
 
-            return Array.Empty<PartAdapter>();
+            return [];
         }
     }
 }

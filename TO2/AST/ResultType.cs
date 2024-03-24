@@ -48,11 +48,11 @@ public class ResultType : RealizedType {
 
     public override IUnapplyEmitter?
         AllowedUnapplyPatterns(ModuleContext context, string unapplyName, int itemCount) {
-        switch (unapplyName) {
-        case "Ok" when itemCount == 1: return new ResultOkUnapplyEmitter(this);
-        case "Err" when itemCount == 1: return new ResultErrUnapplyEmitter(this);
-        default: return null;
-        }
+        return unapplyName switch {
+            "Ok" when itemCount == 1 => new ResultOkUnapplyEmitter(this),
+            "Err" when itemCount == 1 => new ResultErrUnapplyEmitter(this),
+            _ => null,
+        };
     }
 
     public override bool IsAssignableFrom(ModuleContext context, TO2Type otherType) {
@@ -65,7 +65,7 @@ public class ResultType : RealizedType {
 
     public override IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) {
         var underlyingOther = otherType.UnderlyingType(context);
-        return !(underlyingOther is ResultType) && successType.IsAssignableFrom(context, underlyingOther)
+        return underlyingOther is not ResultType && successType.IsAssignableFrom(context, underlyingOther)
             ? new AssignOk(this, otherType)
             : DefaultAssignEmitter.Instance;
     }
@@ -82,8 +82,7 @@ public class ResultType : RealizedType {
 
     public override IEnumerable<(string name, RealizedType type)> InferGenericArgument(ModuleContext context,
         RealizedType? concreteType) {
-        var concreteResult = concreteType as ResultType;
-        if (concreteResult == null) return [];
+        if (concreteType is not ResultType concreteResult) return [];
         return successType.InferGenericArgument(context, concreteResult.successType.UnderlyingType(context));
     }
 }
@@ -105,23 +104,23 @@ internal class ResultFieldAccess : IFieldAccessFactory {
 
     public TO2Type DeclaredType {
         get {
-            switch (field) {
-            case ResultField.Success: return BuiltinType.Bool;
-            case ResultField.Value: return resultType.successType;
-            case ResultField.Error: return BuiltinType.Error;
-            default: throw new InvalidOperationException($"Unknown option field: {field}");
-            }
+            return field switch {
+                ResultField.Success => BuiltinType.Bool,
+                ResultField.Value => resultType.successType,
+                ResultField.Error => BuiltinType.Error,
+                _ => throw new InvalidOperationException($"Unknown option field: {field}"),
+            };
         }
     }
 
     public string Description {
         get {
-            switch (field) {
-            case ResultField.Success: return "`true` if the operation was successful";
-            case ResultField.Value: return "Successful result of the operation";
-            case ResultField.Error: return "Error result of the operation";
-            default: throw new InvalidOperationException($"Unknown option field: {field}");
-            }
+            return field switch {
+                ResultField.Success => "`true` if the operation was successful",
+                ResultField.Value => "Successful result of the operation",
+                ResultField.Error => "Error result of the operation",
+                _ => throw new InvalidOperationException($"Unknown option field: {field}"),
+            };
         }
     }
 
@@ -129,18 +128,15 @@ internal class ResultFieldAccess : IFieldAccessFactory {
 
     public IFieldAccessEmitter Create(ModuleContext context) {
         var generateType = resultType.GeneratedType(context);
-        switch (field) {
-        case ResultField.Success:
-            return new BoundFieldAccessEmitter(BuiltinType.Bool, generateType,
-                [generateType.GetField("success")]);
-        case ResultField.Value:
-            return new BoundFieldAccessEmitter(resultType.successType.UnderlyingType(context), generateType,
-                [generateType.GetField("value")]);
-        case ResultField.Error:
-            return new BoundFieldAccessEmitter(BuiltinType.Error.UnderlyingType(context), generateType,
-                [generateType.GetField("error")]);
-        default: throw new InvalidOperationException($"Unknown option field: {field}");
-        }
+        return field switch {
+            ResultField.Success => new BoundFieldAccessEmitter(BuiltinType.Bool, generateType,
+                            [generateType.GetField("success")]),
+            ResultField.Value => new BoundFieldAccessEmitter(resultType.successType.UnderlyingType(context), generateType,
+                            [generateType.GetField("value")]),
+            ResultField.Error => new BoundFieldAccessEmitter(BuiltinType.Error.UnderlyingType(context), generateType,
+                            [generateType.GetField("error")]),
+            _ => throw new InvalidOperationException($"Unknown option field: {field}"),
+        };
     }
 
     public IFieldAccessFactory
@@ -218,8 +214,7 @@ internal class ResultUnwrapOperator : IOperatorEmitter {
     }
 
     public void EmitCode(IBlockContext context, Node target) {
-        var expectedReturn = context.ExpectedReturn.UnderlyingType(context.ModuleContext) as ResultType;
-        if (expectedReturn == null) {
+        if (context.ExpectedReturn.UnderlyingType(context.ModuleContext) is not ResultType expectedReturn) {
             context.AddError(new StructuralError(
                 StructuralError.ErrorType.IncompatibleTypes,
                 $"Operator ? is only allowed if function returns a result",
@@ -243,27 +238,26 @@ internal class ResultUnwrapOperator : IOperatorEmitter {
                context.IL.TempLocal(BuiltinType.Error.GeneratedType(context.ModuleContext))) {
             var errorResultType = expectedReturn.GeneratedType(context.ModuleContext);
 
-            using (var errorResult = context.IL.TempLocal(errorResultType)) {
-                context.IL.Emit(OpCodes.Ldfld, generatedType.GetField("error"));
-                tempError.EmitStore(context);
-                // Clean stack entirely to make room for error result to return
-                for (var i = context.IL.StackCount; i > 0; i--) context.IL.Emit(OpCodes.Pop);
-                errorResult.EmitLoadPtr(context);
-                context.IL.Emit(OpCodes.Dup);
-                context.IL.Emit(OpCodes.Initobj, errorResultType, 1, 0);
-                context.IL.Emit(OpCodes.Dup);
-                context.IL.Emit(OpCodes.Ldc_I4_0);
-                context.IL.Emit(OpCodes.Stfld, errorResultType.GetField("success"));
-                tempError.EmitLoad(context);
-                context.IL.Emit(OpCodes.Stfld, errorResultType.GetField("error"));
-                errorResult.EmitLoad(context);
-                if (context.IsAsync)
-                    context.IL.EmitNew(OpCodes.Newobj,
-                        context.MethodBuilder!.ReturnType.GetConstructor([errorResultType])!);
+            using var errorResult = context.IL.TempLocal(errorResultType);
+            context.IL.Emit(OpCodes.Ldfld, generatedType.GetField("error"));
+            tempError.EmitStore(context);
+            // Clean stack entirely to make room for error result to return
+            for (var i = context.IL.StackCount; i > 0; i--) context.IL.Emit(OpCodes.Pop);
+            errorResult.EmitLoadPtr(context);
+            context.IL.Emit(OpCodes.Dup);
+            context.IL.Emit(OpCodes.Initobj, errorResultType, 1, 0);
+            context.IL.Emit(OpCodes.Dup);
+            context.IL.Emit(OpCodes.Ldc_I4_0);
+            context.IL.Emit(OpCodes.Stfld, errorResultType.GetField("success"));
+            tempError.EmitLoad(context);
+            context.IL.Emit(OpCodes.Stfld, errorResultType.GetField("error"));
+            errorResult.EmitLoad(context);
+            if (context.IsAsync)
+                context.IL.EmitNew(OpCodes.Newobj,
+                    context.MethodBuilder!.ReturnType.GetConstructor([errorResultType])!);
 
-                ILChunks.GenerateFunctionLeave(context);
-                context.IL.EmitReturn(context.MethodBuilder!.ReturnType);
-            }
+            ILChunks.GenerateFunctionLeave(context);
+            context.IL.EmitReturn(context.MethodBuilder!.ReturnType);
         }
 
         context.IL.MarkLabel(onSuccess);

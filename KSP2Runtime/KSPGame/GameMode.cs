@@ -12,16 +12,12 @@ public enum KSPGameMode {
 
 public static class GameModeAdapter {
     public static KSPGameMode GameModeFromState(GameState state) {
-        switch (state) {
-        case GameState.KerbalSpaceCenter: return KSPGameMode.KSC;
-        case GameState.TrackingStation: return KSPGameMode.Tracking;
-        case GameState.VehicleAssemblyBuilder: return KSPGameMode.VAB;
-        case GameState.Launchpad:
-        case GameState.Runway:
-        case GameState.FlightView:
-        case GameState.Map3DView: return KSPGameMode.Flight;
-        default:
-            return KSPGameMode.Unknown;
-        }
+        return state switch {
+            GameState.KerbalSpaceCenter => KSPGameMode.KSC,
+            GameState.TrackingStation => KSPGameMode.Tracking,
+            GameState.VehicleAssemblyBuilder => KSPGameMode.VAB,
+            GameState.Launchpad or GameState.Runway or GameState.FlightView or GameState.Map3DView => KSPGameMode.Flight,
+            _ => KSPGameMode.Unknown,
+        };
     }
 }

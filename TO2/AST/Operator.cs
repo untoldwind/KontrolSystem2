@@ -190,7 +190,7 @@ public class StaticMethodOperatorEmitter : IOperatorEmitter {
     }
 
     public IREPLValue Eval(Node node, IREPLValue left, IREPLValue? right) {
-        var result = methodInfo.Invoke(null, new[] { left.Value, right?.Value });
+        var result = methodInfo.Invoke(null, [left.Value, right?.Value]);
 
         return ResultType.REPLCast(result);
     }

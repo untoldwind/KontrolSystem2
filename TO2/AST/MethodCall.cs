@@ -61,9 +61,8 @@ public class MethodCall : Expression {
 
         if (field != null) {
             var fieldAccess = field.Create(context.ModuleContext);
-            var functionType = fieldAccess.FieldType as FunctionType;
 
-            if (functionType == null) {
+            if (fieldAccess.FieldType is not FunctionType functionType) {
                 context.AddError(new StructuralError(
                     StructuralError.ErrorType.NoSuchMethod,
                     $"Field '{methodName}' of type '{targetType.Name}' is neither a method or a function",
@@ -232,9 +231,8 @@ public class MethodCall : Expression {
     private void EmitCodeDelegateCall(IBlockContext context, TO2Type targetType, IFieldAccessFactory field,
         bool dropResult) {
         var fieldAccess = field.Create(context.ModuleContext);
-        var functionType = fieldAccess.FieldType as FunctionType;
 
-        if (functionType == null) {
+        if (fieldAccess.FieldType is not FunctionType functionType) {
             context.AddError(new StructuralError(
                 StructuralError.ErrorType.NoSuchMethod,
                 $"Field '{methodName}' of type '{targetType.Name}' is neither a method or a function",
@@ -335,7 +333,7 @@ public class MethodCall : Expression {
 
             argumentFutures.Insert(0, targetFuture);
 
-            return REPLValueFuture.ChainN(methodInvoker.ResultType, argumentFutures.ToArray(),
+            return REPLValueFuture.ChainN(methodInvoker.ResultType, [.. argumentFutures],
                 targetWithArguments => methodInvoker.Eval(this, targetWithArguments));
         }
 

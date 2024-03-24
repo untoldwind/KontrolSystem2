@@ -7,9 +7,9 @@ using UnityEngine;
 
 namespace KontrolSystem.SpaceWarpMod {
     public class LoggerAdapter : MonoBehaviour, ITO2Logger {
-        private ManualLogSource backend = new ManualLogSource("KontrolSystem");
+        private ManualLogSource backend = new("KontrolSystem");
 
-        private static readonly ConcurrentQueue<LocAction> _executionQueue = new ConcurrentQueue<LocAction>();
+        private static readonly ConcurrentQueue<LocAction> _executionQueue = new();
 
 
         public static bool debugEnabled = true;

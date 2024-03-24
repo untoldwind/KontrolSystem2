@@ -207,7 +207,7 @@ public static class BindingGenerator {
                 if (baseType.FullName!.StartsWith("System.Func")) {
                     var parameterTypes = typeArgs.Take(typeArgs.Length - 1)
                         .Select(t => MapNativeType(t) as TO2Type).ToList();
-                    TO2Type returnType = MapNativeType(typeArgs[typeArgs.Length - 1]);
+                    TO2Type returnType = MapNativeType(typeArgs[^1]);
                     return new FunctionType(false, parameterTypes, returnType);
                 }
 

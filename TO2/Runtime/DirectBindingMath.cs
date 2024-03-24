@@ -192,7 +192,7 @@ public static class DirectBindingMath {
 
     //keeps angles in the range 0 to 360
     public static double ClampDegrees360(double angle) {
-        angle = angle % 360.0;
+        angle %= 360.0;
         if (angle < 0) return angle + 360.0;
         return angle;
     }
@@ -205,7 +205,7 @@ public static class DirectBindingMath {
     }
 
     public static double ClampRadians2Pi(double angle) {
-        angle = angle % (2 * Math.PI);
+        angle %= (2 * Math.PI);
         if (angle < 0) return angle + 2 * Math.PI;
         return angle;
     }

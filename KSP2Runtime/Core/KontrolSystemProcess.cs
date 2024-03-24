@@ -54,16 +54,13 @@ public class KontrolSystemProcess(ITO2Logger logger, IKontrolModule module) {
     }
 
     public Entrypoint? EntrypointFor(KSPGameMode gameMode, IKSPContext newContext) {
-        switch (gameMode) {
-        case KSPGameMode.KSC: return module.GetKSCEntrypoint(newContext);
-        case KSPGameMode.VAB:
-            return module.GetEditorEntrypoint(newContext);
-        case KSPGameMode.Tracking: return module.GetTrackingEntrypoint(newContext);
-        case KSPGameMode.Flight:
-            return module.GetFlightEntrypoint(newContext);
-        default:
-            return null;
-        }
+        return gameMode switch {
+            KSPGameMode.KSC => module.GetKSCEntrypoint(newContext),
+            KSPGameMode.VAB => module.GetEditorEntrypoint(newContext),
+            KSPGameMode.Tracking => module.GetTrackingEntrypoint(newContext),
+            KSPGameMode.Flight => module.GetFlightEntrypoint(newContext),
+            _ => null,
+        };
     }
 
     public int EntrypointArgumentCount(KSPGameMode gameMode) {
@@ -75,22 +72,20 @@ public class KontrolSystemProcess(ITO2Logger logger, IKontrolModule module) {
     }
 
     public bool AvailableFor(KSPGameMode gameMode, VesselComponent vessel) {
-        switch (gameMode) {
-        case KSPGameMode.KSC: return module.HasKSCEntrypoint();
-        case KSPGameMode.VAB: return module.HasEditorEntrypoint();
-        case KSPGameMode.Tracking: return module.HasTrackingEntrypoint();
-        case KSPGameMode.Flight:
-            return (!module.Name.StartsWith("boot::") && module.HasFlightEntrypoint()) ||
-                   module.IsBootFlightEntrypointFor(vessel);
-        default:
-            return false;
-        }
+        return gameMode switch {
+            KSPGameMode.KSC => module.HasKSCEntrypoint(),
+            KSPGameMode.VAB => module.HasEditorEntrypoint(),
+            KSPGameMode.Tracking => module.HasTrackingEntrypoint(),
+            KSPGameMode.Flight => (!module.Name.StartsWith("boot::") && module.HasFlightEntrypoint()) ||
+                               module.IsBootFlightEntrypointFor(vessel),
+            _ => false,
+        };
     }
 
     public bool IsBootFor(KSPGameMode gameMode, VesselComponent vessel) {
-        switch (gameMode) {
-        case KSPGameMode.Flight: return module.IsBootFlightEntrypointFor(vessel);
-        default: return false;
-        }
+        return gameMode switch {
+            KSPGameMode.Flight => module.IsBootFlightEntrypointFor(vessel),
+            _ => false,
+        };
     }
 }

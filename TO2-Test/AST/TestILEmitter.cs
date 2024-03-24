@@ -23,7 +23,7 @@ public struct DeclareLocal : IILCommand {
     public int localIdx;
     public Type type;
 
-    public override string ToString() {
+    public override readonly string ToString() {
         return $"<declare local> {localIdx} = {type}";
     }
 }

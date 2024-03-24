@@ -6,42 +6,27 @@ using System.Reflection.Emit;
 
 namespace KontrolSystem.TO2.Generator;
 
-public class LocalBuilderRef : ILocalRef {
-    internal readonly LocalBuilder localBuilder;
-
-    public LocalBuilderRef(LocalBuilder localBuilder) {
-        this.localBuilder = localBuilder;
-    }
+public class LocalBuilderRef(LocalBuilder localBuilder) : ILocalRef {
+    internal readonly LocalBuilder localBuilder = localBuilder;
 
     public int LocalIndex => localBuilder.LocalIndex;
 
     public Type LocalType => localBuilder.LocalType;
 }
 
-public class TempLocalBuilderRef : LocalBuilderRef, ITempLocalRef {
-    private readonly Action<TempLocalBuilderRef> onDispose;
-
-    public TempLocalBuilderRef(LocalBuilder localBuilder, Action<TempLocalBuilderRef> onDispose) : base(
-        localBuilder) {
-        this.onDispose = onDispose;
-    }
+public class TempLocalBuilderRef(LocalBuilder localBuilder, Action<TempLocalBuilderRef> onDispose) : LocalBuilderRef(
+    localBuilder), ITempLocalRef {
+    private readonly Action<TempLocalBuilderRef> onDispose = onDispose;
 
     public void Dispose() {
         onDispose(this);
     }
 }
 
-public class GeneratorILEmitter : IILEmitter {
-    private readonly ILGenerator generator;
-    private readonly Dictionary<Type, Queue<ITempLocalRef>> tempLocals;
-    private int scopeCount;
-
-    public GeneratorILEmitter(ILGenerator generator) {
-        this.generator = generator;
-        StackCount = 0;
-        scopeCount = 0;
-        tempLocals = new Dictionary<Type, Queue<ITempLocalRef>>();
-    }
+public class GeneratorILEmitter(ILGenerator generator) : IILEmitter {
+    private readonly ILGenerator generator = generator;
+    private readonly Dictionary<Type, Queue<ITempLocalRef>> tempLocals = [];
+    private int scopeCount = 0;
 
     public void Emit(OpCode opCode) {
         generator.Emit(opCode);
@@ -174,7 +159,7 @@ public class GeneratorILEmitter : IILEmitter {
 
     public int ILSize => generator.ILOffset;
 
-    public int StackCount { get; private set; }
+    public int StackCount { get; private set; } = 0;
 
     public void AdjustStack(int diff) {
         StackCount += diff;

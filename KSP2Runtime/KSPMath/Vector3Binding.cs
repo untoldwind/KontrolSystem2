@@ -123,7 +123,7 @@ public static class Vector3Binding {
                 "to_string",
                 new BoundMethodInvokeFactory("Convert vector to string.", true, () => BuiltinType.String,
                     () => [], false, typeof(Vector3Binding),
-                    typeof(Vector3Binding).GetMethod("ToString", new[] { typeof(Vector3d) }))
+                    typeof(Vector3Binding).GetMethod("ToString", [typeof(Vector3d)]))
             }, {
                 "to_fixed",
                 new BoundMethodInvokeFactory("Convert the vector to string with fixed number of `decimals`.",

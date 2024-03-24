@@ -22,6 +22,6 @@ public static class StringMethods {
     public static string Ellipsis(string source, long maxLength) {
         if (source.Length <= maxLength) return source;
 
-        return source.Substring(0, (int)maxLength - 3) + "...";
+        return source[..((int)maxLength - 3)] + "...";
     }
 }

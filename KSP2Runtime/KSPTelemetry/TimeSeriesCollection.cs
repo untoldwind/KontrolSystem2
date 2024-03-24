@@ -76,56 +76,54 @@ public class TimeSeriesCollection {
         var allTimeSeries = AllTimeSeries;
         var serializer = JsonSerializer.CreateDefault();
 
-        using (var outputFile = new StreamWriter(filename, false, Encoding.UTF8, 65536)) {
-            using (JsonWriter writer = new JsonTextWriter(outputFile)) {
-                writer.Formatting = Formatting.Indented;
+        using var outputFile = new StreamWriter(filename, false, Encoding.UTF8, 65536);
+        using JsonWriter writer = new JsonTextWriter(outputFile);
+        writer.Formatting = Formatting.Indented;
 
-                await writer.WriteStartArrayAsync();
-                foreach (var timeSeries in allTimeSeries) {
-                    await writer.WriteStartObjectAsync();
+        await writer.WriteStartArrayAsync();
+        foreach (var timeSeries in allTimeSeries) {
+            await writer.WriteStartObjectAsync();
 
-                    await writer.WritePropertyNameAsync("name");
-                    await writer.WriteValueAsync(timeSeries.Name);
+            await writer.WritePropertyNameAsync("name");
+            await writer.WriteValueAsync(timeSeries.Name);
 
-                    await writer.WritePropertyNameAsync("startUT");
-                    await writer.WriteValueAsync(timeSeries.StartUt);
+            await writer.WritePropertyNameAsync("startUT");
+            await writer.WriteValueAsync(timeSeries.StartUt);
 
-                    await writer.WritePropertyNameAsync("endUT");
-                    await writer.WriteValueAsync(timeSeries.EndUt);
+            await writer.WritePropertyNameAsync("endUT");
+            await writer.WriteValueAsync(timeSeries.EndUt);
 
-                    await writer.WritePropertyNameAsync("resolution");
-                    await writer.WriteValueAsync(timeSeries.Resolution);
+            await writer.WritePropertyNameAsync("resolution");
+            await writer.WriteValueAsync(timeSeries.Resolution);
 
-                    await writer.WritePropertyNameAsync("values");
-                    await writer.WriteStartArrayAsync();
+            await writer.WritePropertyNameAsync("values");
+            await writer.WriteStartArrayAsync();
 
-                    foreach (var value in timeSeries.Values) {
-                        await writer.WriteStartObjectAsync();
+            foreach (var value in timeSeries.Values) {
+                await writer.WriteStartObjectAsync();
 
-                        await writer.WritePropertyNameAsync("ut");
-                        await writer.WriteValueAsync(value.Item1);
+                await writer.WritePropertyNameAsync("ut");
+                await writer.WriteValueAsync(value.Item1);
 
-                        await writer.WritePropertyNameAsync("count");
-                        await writer.WriteValueAsync(value.Item2.count);
+                await writer.WritePropertyNameAsync("count");
+                await writer.WriteValueAsync(value.Item2.count);
 
-                        await writer.WritePropertyNameAsync("min");
-                        await writer.WriteValueAsync(value.Item2.min);
+                await writer.WritePropertyNameAsync("min");
+                await writer.WriteValueAsync(value.Item2.min);
 
-                        await writer.WritePropertyNameAsync("avg");
-                        await writer.WriteValueAsync(value.Item2.avg);
+                await writer.WritePropertyNameAsync("avg");
+                await writer.WriteValueAsync(value.Item2.avg);
 
-                        await writer.WritePropertyNameAsync("max");
-                        await writer.WriteValueAsync(value.Item2.max);
+                await writer.WritePropertyNameAsync("max");
+                await writer.WriteValueAsync(value.Item2.max);
 
-                        await writer.WriteEndObjectAsync();
-                    }
-
-                    await writer.WriteEndArrayAsync();
-                    await writer.WriteEndObjectAsync();
-                }
-
-                await writer.WriteEndArrayAsync();
+                await writer.WriteEndObjectAsync();
             }
+
+            await writer.WriteEndArrayAsync();
+            await writer.WriteEndObjectAsync();
         }
+
+        await writer.WriteEndArrayAsync();
     }
 }

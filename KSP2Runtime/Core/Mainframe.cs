@@ -25,7 +25,7 @@ public readonly struct MainframeError(Position position, string errorType, strin
 }
 
 public class Mainframe : KerbalMonoBehaviour {
-    private static readonly char[] PathSeparator = { '\\', '/' };
+    private static readonly char[] PathSeparator = ['\\', '/'];
 
     public UnityEvent availableProcessesChanged = new();
 

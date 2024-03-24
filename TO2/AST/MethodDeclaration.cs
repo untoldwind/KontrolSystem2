@@ -96,7 +96,7 @@ public class MethodDeclaration : Node, IVariableContainer {
             syncBlockContext!.IL.EmitNew(OpCodes.Newobj, asyncClass.Value.constructor, effectiveParameters.Count);
             syncBlockContext.IL.EmitReturn(asyncClass.Value.type);
 
-            return Enumerable.Empty<StructuralError>();
+            return [];
         }
 
         expression.EmitCode(syncBlockContext!, declaredReturn == BuiltinType.Unit);

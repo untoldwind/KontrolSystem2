@@ -25,10 +25,9 @@ namespace KontrolSystem.GenDocs {
                 var path = Path.Combine(Directory.GetCurrentDirectory(), "docs", "reference", split.First());
                 Directory.CreateDirectory(path);
                 var fileName = Path.Combine(path, String.Join("_", split.Skip(1)) + ".md");
-                using (StreamWriter fs = File.CreateText(fileName)) {
-                    GenerateDocs(moduleContext, module, fs);
-                    Console.Out.WriteLine($"Generated: {module.Name}");
-                }
+                using StreamWriter fs = File.CreateText(fileName);
+                GenerateDocs(moduleContext, module, fs);
+                Console.Out.WriteLine($"Generated: {module.Name}");
             }
         }
 
@@ -153,19 +152,19 @@ namespace KontrolSystem.GenDocs {
         public static string LinkType(string typeName) {
             var idx = typeName.IndexOf('[');
             if (idx > 0) {
-                return $"{LinkTypeInner(typeName.Substring(0, idx))}[]";
+                return $"{LinkTypeInner(typeName[..idx])}[]";
             }
 
             if (typeName.StartsWith("Record<")) {
-                idx = typeName.IndexOf(",", StringComparison.InvariantCulture);
+                idx = typeName.IndexOf(',');
                 if (idx > 0) {
-                    return $"Record&lt;{LinkType(typeName.Substring(7, idx - 7))}{typeName.Substring(idx)}";
+                    return $"Record&lt;{LinkType(typeName[7..idx])}{typeName[idx..]}";
                 }
             }
             if (typeName.StartsWith("Option<")) {
-                idx = typeName.IndexOf(">", StringComparison.InvariantCulture);
+                idx = typeName.IndexOf('>');
                 if (idx > 0) {
-                    return $"Option&lt;{LinkType(typeName.Substring(7, idx - 7))}{typeName.Substring(idx)}";
+                    return $"Option&lt;{LinkType(typeName[7..idx])}{typeName[idx..]}";
                 }
             }
 
@@ -176,8 +175,8 @@ namespace KontrolSystem.GenDocs {
             var idx = typeName.LastIndexOf("::", StringComparison.InvariantCulture);
 
             if (idx > 0) {
-                var moduleName = typeName.Substring(0, idx);
-                var localName = typeName.Substring(idx + 2);
+                var moduleName = typeName[..idx];
+                var localName = typeName[(idx + 2)..];
 
                 var split = moduleName.Split(new string[] { "::" }, StringSplitOptions.None);
                 if (split.Length > 0) {
@@ -234,7 +233,7 @@ namespace KontrolSystem.GenDocs {
             StringBuilder sb = new();
 
             sb.Append(type.ToLowerInvariant());
-            sb.Append(".");
+            sb.Append('.');
             sb.Append(name);
 
             if (method.DeclaredParameters.Count == 0) {

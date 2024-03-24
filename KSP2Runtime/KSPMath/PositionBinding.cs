@@ -10,24 +10,24 @@ public class PositionBinding {
     public static readonly BoundType PositionType = Direct.BindType("ksp::math", "GlobalPosition",
         "A position in space that can be projected to a 3-dimensional vector in a specific coordinate system",
         typeof(Position),
-        new OperatorCollection(),
+        [],
         new OperatorCollection {
             {
                 Operator.Add,
                 new StaticMethodOperatorEmitter(() => VectorBinding.VectorType, LazyPositionType,
-                    typeof(Position).GetMethod("op_Addition", new[] { typeof(Position), typeof(Vector) }))
+                    typeof(Position).GetMethod("op_Addition", [typeof(Position), typeof(Vector)]))
             }, {
                 Operator.AddAssign,
                 new StaticMethodOperatorEmitter(() => VectorBinding.VectorType, LazyPositionType,
-                    typeof(Position).GetMethod("op_Addition", new[] { typeof(Position), typeof(Vector) }))
+                    typeof(Position).GetMethod("op_Addition", [typeof(Position), typeof(Vector)]))
             }, {
                 Operator.Sub,
                 new StaticMethodOperatorEmitter(LazyPositionType, () => VectorBinding.VectorType,
-                    typeof(Position).GetMethod("op_Subtraction", new[] { typeof(Position), typeof(Position) }))
+                    typeof(Position).GetMethod("op_Subtraction", [typeof(Position), typeof(Position)]))
             }, {
                 Operator.SubAssign,
                 new StaticMethodOperatorEmitter(LazyPositionType, () => VectorBinding.VectorType,
-                    typeof(Position).GetMethod("op_Subtraction", new[] { typeof(Position), typeof(Position) }))
+                    typeof(Position).GetMethod("op_Subtraction", [typeof(Position), typeof(Position)]))
             }
         },
         new Dictionary<string, IMethodInvokeFactory> {
@@ -42,7 +42,7 @@ public class PositionBinding {
                 new BoundMethodInvokeFactory("Convert vector to string in a given coordinate system.", true,
                     () => BuiltinType.String,
                     () => [new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")], false, typeof(PositionBinding),
-                    typeof(PositionBinding).GetMethod("ToString", new[] { typeof(Position), typeof(ITransformFrame) }))
+                    typeof(PositionBinding).GetMethod("ToString", [typeof(Position), typeof(ITransformFrame)]))
             }, {
                 "to_fixed",
                 new BoundMethodInvokeFactory(
@@ -78,7 +78,7 @@ public class PositionBinding {
                     ], false, typeof(Position), typeof(Position).GetMethod("Lerp"))
             }
         },
-        new Dictionary<string, IFieldAccessFactory>());
+        []);
 
     private static BoundType LazyPositionType() => PositionType;
 

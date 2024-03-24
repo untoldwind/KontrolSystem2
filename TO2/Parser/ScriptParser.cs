@@ -10,8 +10,24 @@ using static Parsers;
 
 public static class TO2ParserCommon {
     private static readonly HashSet<string> ReservedKeywords = [
-        "pub", "fn", "let", "const", "if", "else", "return", "break", "continue", "while", "_", "for", "in",
-        "as", "sync", "type", "struct", "impl"
+        "pub",
+        "fn",
+        "let",
+        "const",
+        "if",
+        "else",
+        "return",
+        "break",
+        "continue",
+        "while",
+        "_",
+        "for",
+        "in",
+        "as",
+        "sync",
+        "type",
+        "struct",
+        "impl"
     ];
 
     public static readonly Parser<bool> PubKeyword = Tag("pub").Then(Spacing1);

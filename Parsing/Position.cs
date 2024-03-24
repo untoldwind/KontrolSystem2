@@ -28,11 +28,7 @@ public readonly struct Position(string sourceName, int position = 0, int line = 
     }
 
     public override int GetHashCode() {
-        var h = 31;
-        h = h * 13 + position;
-        h = h * 13 + line;
-        h = h * 13 + column;
-        return h;
+        return HashCode.Combine(position, line, column);
     }
 
     public override string ToString() {

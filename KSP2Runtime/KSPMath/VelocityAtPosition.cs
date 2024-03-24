@@ -2,14 +2,9 @@
 
 namespace KontrolSystem.KSP.Runtime.KSPMath;
 
-public struct VelocityAtPosition {
-    public Position position;
-    public Velocity velocity;
-
-    public VelocityAtPosition(Velocity velocity, Position position) {
-        this.position = position;
-        this.velocity = velocity;
-    }
+public struct VelocityAtPosition(Velocity velocity, Position position) {
+    public Position position = position;
+    public Velocity velocity = velocity;
 
     public Vector Vector {
         get => velocity.relativeVelocity;

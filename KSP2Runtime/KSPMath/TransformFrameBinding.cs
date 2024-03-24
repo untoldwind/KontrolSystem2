@@ -11,34 +11,34 @@ namespace KontrolSystem.KSP.Runtime.KSPMath;
 public class TransformFrameBinding {
     public static readonly BoundType TransformFrameType = Direct.BindType("ksp::math", "TransformFrame",
         "Representation of a coordinate frame of reference", typeof(ITransformFrame),
-        new OperatorCollection(),
-        new OperatorCollection(),
+        [],
+        [],
         new Dictionary<string, IMethodInvokeFactory> {
             {
                 "to_local_position",
                 new BoundMethodInvokeFactory("Get local coordinates of a position", true,
                     () => Vector3Binding.Vector3Type,
-                    () => new List<RealizedParameter> {
+                    () => [
                         new("position", PositionBinding.PositionType, "Position to transform")
-                    }, false, typeof(ITransformFrame),
-                    typeof(ICoordinateSystem).GetMethod("ToLocalPosition", new[] { typeof(Position) }))
+                    ], false, typeof(ITransformFrame),
+                    typeof(ICoordinateSystem).GetMethod("ToLocalPosition", [typeof(Position)]))
             }, {
                 "to_local_vector",
                 new BoundMethodInvokeFactory("Get local coordinates of a vector", true,
                     () => Vector3Binding.Vector3Type,
-                    () => new List<RealizedParameter> {
+                    () => [
                         new("vector", VectorBinding.VectorType, "Vector to transform")
-                    }, false, typeof(ITransformFrame),
-                    typeof(ICoordinateSystem).GetMethod("ToLocalVector", new[] { typeof(Vector) }))
+                    ], false, typeof(ITransformFrame),
+                    typeof(ICoordinateSystem).GetMethod("ToLocalVector", [typeof(Vector)]))
             }, {
                 "to_local_velocity",
                 new BoundMethodInvokeFactory("Get local coordinates of a velocity", true,
                     () => Vector3Binding.Vector3Type,
-                    () => new List<RealizedParameter> {
+                    () => [
                         new("velocity", VelocityBinding.VelocityType, "Velocity to transform")
-                    }, false, typeof(TransformFrameBinding),
+                    ], false, typeof(TransformFrameBinding),
                     typeof(TransformFrameBinding).GetMethod("ToLocalVelocity",
-                        new[] { typeof(ITransformFrame), typeof(VelocityAtPosition) }))
+                        [typeof(ITransformFrame), typeof(VelocityAtPosition)]))
             }
         },
         new Dictionary<string, IFieldAccessFactory> {
@@ -81,12 +81,8 @@ public class TransformFrameBinding {
     }
 }
 
-public class TransformFrameProvider : ITransformFrame {
-    private readonly Func<ITransformFrame> provider;
-
-    public TransformFrameProvider(Func<ITransformFrame> provider) {
-        this.provider = provider;
-    }
+public class TransformFrameProvider(Func<ITransformFrame> provider) : ITransformFrame {
+    private readonly Func<ITransformFrame> provider = provider;
 
     public Vector3d ToLocalPosition(Position position) {
         return provider().ToLocalPosition(position);

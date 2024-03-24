@@ -13,7 +13,7 @@ using UnityEngine.UI;
 namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin;
 
 public class TelemetryWindow : UGUIResizableWindow {
-    private static readonly Color[] colors = {
+    private static readonly Color[] colors = [
         Color.yellow,
         Color.green,
         Color.red,
@@ -21,7 +21,7 @@ public class TelemetryWindow : UGUIResizableWindow {
         Color.cyan,
         Color.magenta,
         Color.white
-    };
+    ];
 
     internal int colorCounter;
     private GLUIDrawer? drawer;
@@ -32,66 +32,65 @@ public class TelemetryWindow : UGUIResizableWindow {
     private TimeSeriesCollection? timeSeriesCollection;
 
     public void Update() {
-        using (var draw = drawer!.Draw()) {
-            var selectedTimeSeries =
-                timeSeriesCollection!.AllTimeSeries.Where(t => selectedTimeSeriesNames.ContainsKey(t.Name) && t.HasData).ToArray();
-            if (selectedTimeSeries.Length == 0) {
-                draw.DrawText(new Vector2(draw.Width / 2, draw.Height / 2), "No data", 50, new Vector2(0.5f, 0.5f), 0,
-                    Color.yellow);
-            } else {
-                var offsetTop = 2;
-                var offsetBottom = 20;
-                var offsetLeft = 20;
-                var offsetRight = 2;
+        using var draw = drawer!.Draw();
+        var selectedTimeSeries =
+            timeSeriesCollection!.AllTimeSeries.Where(t => selectedTimeSeriesNames.ContainsKey(t.Name) && t.HasData).ToArray();
+        if (selectedTimeSeries.Length == 0) {
+            draw.DrawText(new Vector2(draw.Width / 2, draw.Height / 2), "No data", 50, new Vector2(0.5f, 0.5f), 0,
+                Color.yellow);
+        } else {
+            var offsetTop = 2;
+            var offsetBottom = 20;
+            var offsetLeft = 20;
+            var offsetRight = 2;
 
-                var startUT = selectedTimeSeries.Min(t => t.StartUt);
-                var startUTStr = startUT.ToString("F2", CultureInfo.InvariantCulture);
-                var endUT = selectedTimeSeries.Max(t => t.EndUt);
-                var endUTStr = endUT.ToString("F2", CultureInfo.InvariantCulture);
+            var startUT = selectedTimeSeries.Min(t => t.StartUt);
+            var startUTStr = startUT.ToString("F2", CultureInfo.InvariantCulture);
+            var endUT = selectedTimeSeries.Max(t => t.EndUt);
+            var endUTStr = endUT.ToString("F2", CultureInfo.InvariantCulture);
 
-                draw.DrawText(new Vector2(offsetLeft, 1), startUTStr, 18, new Vector2(0, 0), 0, Color.white);
-                draw.DrawText(new Vector2(draw.Width - offsetRight, 1), endUTStr, 18, new Vector2(1, 0), 0,
-                    Color.white);
+            draw.DrawText(new Vector2(offsetLeft, 1), startUTStr, 18, new Vector2(0, 0), 0, Color.white);
+            draw.DrawText(new Vector2(draw.Width - offsetRight, 1), endUTStr, 18, new Vector2(1, 0), 0,
+                Color.white);
 
-                var allValues = selectedTimeSeries.Select(t => (selectedTimeSeriesNames[t.Name], t.Values)).ToArray();
-                var min = allValues.SelectMany(value => value.Item2).Min(v => v.Item2.min);
-                var minStr = min.ToString("F3", CultureInfo.InvariantCulture);
-                var max = allValues.SelectMany(value => value.Item2).Max(v => v.Item2.max);
-                var maxStr = max.ToString("F3", CultureInfo.InvariantCulture);
+            var allValues = selectedTimeSeries.Select(t => (selectedTimeSeriesNames[t.Name], t.Values)).ToArray();
+            var min = allValues.SelectMany(value => value.Item2).Min(v => v.Item2.min);
+            var minStr = min.ToString("F3", CultureInfo.InvariantCulture);
+            var max = allValues.SelectMany(value => value.Item2).Max(v => v.Item2.max);
+            var maxStr = max.ToString("F3", CultureInfo.InvariantCulture);
 
-                draw.DrawText(new Vector2(offsetLeft - 2, offsetBottom), minStr, 18, new Vector2(0, 0), 90,
-                    Color.white);
-                draw.DrawText(new Vector2(offsetLeft - 2, draw.Height - offsetTop), maxStr, 18, new Vector2(1, 0), 90,
-                    Color.white);
+            draw.DrawText(new Vector2(offsetLeft - 2, offsetBottom), minStr, 18, new Vector2(0, 0), 90,
+                Color.white);
+            draw.DrawText(new Vector2(offsetLeft - 2, draw.Height - offsetTop), maxStr, 18, new Vector2(1, 0), 90,
+                Color.white);
 
-                var xScale = (endUT - startUT) / (draw.Width - offsetLeft - offsetRight);
-                var yScale = (max - min) / (draw.Height - offsetBottom - offsetTop);
+            var xScale = (endUT - startUT) / (draw.Width - offsetLeft - offsetRight);
+            var yScale = (max - min) / (draw.Height - offsetBottom - offsetTop);
 
-                if (min < 0 && max > 0)
-                    draw.Polyline([
-                        new(offsetLeft, (float)((0 - min) / yScale) + offsetBottom),
-                        new(draw.Width - offsetRight, (float)((0 - min) / yScale) + offsetBottom)
-                    ], Color.gray);
-
-                foreach (var (color, values) in allValues) {
-                    draw.LineTube(values.Select(i =>
-                            new Vector3((float)((i.Item1 - startUT) / xScale) + offsetLeft,
-                                (float)((i.Item2.min - min) / yScale) + offsetBottom,
-                                (float)((i.Item2.max - min) / yScale) + offsetBottom)).ToArray(),
-                        new Color(color.r, color.g, color.b, 0.5f));
-
-                    draw.Polyline(values.Select(i =>
-                        new Vector2((float)((i.Item1 - startUT) / xScale) + offsetLeft,
-                            (float)((i.Item2.avg - min) / yScale) + offsetBottom)).ToArray(), color);
-                }
-
+            if (min < 0 && max > 0)
                 draw.Polyline([
-                    new(offsetLeft, offsetBottom),
-                    new(offsetLeft, draw.Height - offsetTop),
-                    new(draw.Width - offsetRight, draw.Height - offsetTop),
-                    new(draw.Width - offsetRight, offsetBottom)
-                ], Color.white, true);
+                    new(offsetLeft, (float)((0 - min) / yScale) + offsetBottom),
+                    new(draw.Width - offsetRight, (float)((0 - min) / yScale) + offsetBottom)
+                ], Color.gray);
+
+            foreach (var (color, values) in allValues) {
+                draw.LineTube(values.Select(i =>
+                        new Vector3((float)((i.Item1 - startUT) / xScale) + offsetLeft,
+                            (float)((i.Item2.min - min) / yScale) + offsetBottom,
+                            (float)((i.Item2.max - min) / yScale) + offsetBottom)).ToArray(),
+                    new Color(color.r, color.g, color.b, 0.5f));
+
+                draw.Polyline(values.Select(i =>
+                    new Vector2((float)((i.Item1 - startUT) / xScale) + offsetLeft,
+                        (float)((i.Item2.avg - min) / yScale) + offsetBottom)).ToArray(), color);
             }
+
+            draw.Polyline([
+                new(offsetLeft, offsetBottom),
+                new(offsetLeft, draw.Height - offsetTop),
+                new(draw.Width - offsetRight, draw.Height - offsetTop),
+                new(draw.Width - offsetRight, offsetBottom)
+            ], Color.white, true);
         }
     }
 

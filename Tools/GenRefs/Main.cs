@@ -146,10 +146,10 @@ namespace KontrolSystem.GenRefs {
                 Methods.Add(methodReference.Name, methodReference);
             }
 
-            foreach (var prefixOperator in type.AllowedPrefixOperators(moduleContext)) {
+            foreach (var (op, emitters) in type.AllowedPrefixOperators(moduleContext)) {
                 PrefixOperators ??= [];
-                foreach (var emitter in prefixOperator.emitters) {
-                    var reference = new OperatorReference(moduleContext, prefixOperator.op, emitter);
+                foreach (var emitter in emitters) {
+                    var reference = new OperatorReference(moduleContext, op, emitter);
 
                     if (PrefixOperators.TryGetValue(reference.Op, out var value))
                         value.Add(reference);
@@ -158,10 +158,10 @@ namespace KontrolSystem.GenRefs {
                 }
             }
 
-            foreach (var suffixOperator in type.AllowedSuffixOperators(moduleContext)) {
+            foreach (var (op, emitters) in type.AllowedSuffixOperators(moduleContext)) {
                 SuffixOperators ??= [];
-                foreach (var emitter in suffixOperator.emitters) {
-                    var reference = new OperatorReference(moduleContext, suffixOperator.op, emitter);
+                foreach (var emitter in emitters) {
+                    var reference = new OperatorReference(moduleContext, op, emitter);
 
                     if (SuffixOperators.TryGetValue(reference.Op, out var value))
                         value.Add(reference);
@@ -211,39 +211,39 @@ namespace KontrolSystem.GenRefs {
     public class OperatorReference(ModuleContext moduleContext, Operator op, IOperatorEmitter operatorEmitter) {
         [JsonProperty("op")]
         public string Op { get; } = op switch {
-                Operator.Assign => "=",
-                Operator.Add => "+",
-                Operator.AddAssign => "+=",
-                Operator.Sub => "-",
-                Operator.SubAssign => "-=",
-                Operator.Mul => "*",
-                Operator.MulAssign => "*=",
-                Operator.Div => "/",
-                Operator.DivAssign => "/=",
-                Operator.Mod => "%",
-                Operator.ModAssign => "%=",
-                Operator.BitOr => "|",
-                Operator.BitOrAssign => "|=",
-                Operator.BitAnd => "&",
-                Operator.BitAndAssign => "&=",
-                Operator.BitXor => "^",
-                Operator.BitXorAssign => "^=",
-                Operator.Pow => "**",
-                Operator.PowAssign => "**=",
-                Operator.Eq => "==",
-                Operator.NotEq => "!=",
-                Operator.Lt => "<",
-                Operator.Le => "<=",
-                Operator.Gt => ">",
-                Operator.Ge => ">=",
-                Operator.Neg => "-",
-                Operator.Not => "!",
-                Operator.BitNot => "~",
-                Operator.BoolAnd => "&&",
-                Operator.BoolOr => "||",
-                Operator.Unwrap => "?",
-                _ => throw new ArgumentOutOfRangeException(nameof(op), op, null)
-            };
+            Operator.Assign => "=",
+            Operator.Add => "+",
+            Operator.AddAssign => "+=",
+            Operator.Sub => "-",
+            Operator.SubAssign => "-=",
+            Operator.Mul => "*",
+            Operator.MulAssign => "*=",
+            Operator.Div => "/",
+            Operator.DivAssign => "/=",
+            Operator.Mod => "%",
+            Operator.ModAssign => "%=",
+            Operator.BitOr => "|",
+            Operator.BitOrAssign => "|=",
+            Operator.BitAnd => "&",
+            Operator.BitAndAssign => "&=",
+            Operator.BitXor => "^",
+            Operator.BitXorAssign => "^=",
+            Operator.Pow => "**",
+            Operator.PowAssign => "**=",
+            Operator.Eq => "==",
+            Operator.NotEq => "!=",
+            Operator.Lt => "<",
+            Operator.Le => "<=",
+            Operator.Gt => ">",
+            Operator.Ge => ">=",
+            Operator.Neg => "-",
+            Operator.Not => "!",
+            Operator.BitNot => "~",
+            Operator.BoolAnd => "&&",
+            Operator.BoolOr => "||",
+            Operator.Unwrap => "?",
+            _ => throw new ArgumentOutOfRangeException(nameof(op), op, null)
+        };
 
         [JsonProperty("otherType", NullValueHandling = NullValueHandling.Ignore)]
         public TypeRef? OtherType { get; } = operatorEmitter.OtherType != null
@@ -288,7 +288,7 @@ namespace KontrolSystem.GenRefs {
 
         [JsonProperty("parameters")] public FunctionParameterReference[] Parameters { get; }
 
-        [JsonProperty("returnType")] private TypeRef ReturnType { get; }
+        [JsonProperty("returnType")] public TypeRef ReturnType { get; }
     }
 
     public class FunctionParameterReference {
@@ -308,7 +308,7 @@ namespace KontrolSystem.GenRefs {
 
         [JsonProperty("name")] public string Name { get; }
 
-        [JsonProperty("type")] private TypeRef Type { get; }
+        [JsonProperty("type")] public TypeRef Type { get; }
 
         [JsonProperty("hasDefault")] public bool HasDefault { get; }
 
@@ -364,13 +364,13 @@ namespace KontrolSystem.GenRefs {
                     Module = "";
                     Name = type.Name;
                 } else {
-                    Module = type.Name.Substring(0, idx);
-                    Name = type.Name.Substring(idx + 2);
+                    Module = type.Name[..idx];
+                    Name = type.Name[(idx + 2)..];
                 }
 
                 if (type.GenericParameters.Length > 0) {
                     idx = Name.IndexOf('<');
-                    if (idx > 0) Name = Name.Substring(0, idx);
+                    if (idx > 0) Name = Name[..idx];
                     Parameters = type.GenericParameters
                         .Select(t => new TypeRef(moduleContext, t.UnderlyingType(moduleContext))).ToList();
                 }
