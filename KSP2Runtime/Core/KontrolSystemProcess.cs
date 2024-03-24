@@ -17,7 +17,6 @@ public enum KontrolSystemProcessState {
 public class KontrolSystemProcess(ITO2Logger logger, IKontrolModule module) {
     public readonly Guid id = Guid.NewGuid();
     internal readonly ITO2Logger logger = logger;
-    private readonly IKontrolModule module = module;
     internal KSPCoreContext? context;
 
     public string Name => module.Name;

@@ -183,7 +183,7 @@ public static class LambertIzzoSolver {
             err = Math.Abs(Cj1);
             Sj = Sj1;
             Cj = Cj1;
-            j = j + 1;
+            j += 1;
         }
 
         return Sj;

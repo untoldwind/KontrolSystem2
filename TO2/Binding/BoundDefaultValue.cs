@@ -21,8 +21,6 @@ public static class BoundDefaultValue {
 }
 
 public class NullDefaultValue(Type type) : IDefaultValue {
-    private readonly Type type = type;
-
     public void EmitCode(IBlockContext context) {
         if (type.IsValueType) {
             using var temp = context.IL.TempLocal(type);

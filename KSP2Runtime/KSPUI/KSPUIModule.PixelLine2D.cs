@@ -9,8 +9,6 @@ public partial class KSPUIModule {
     [KSClass]
     public class PixelLine2D(KSPConsoleModule.RgbaColor strokeColor, bool closed, Vector2d[] points) : GLUIDrawer.IGLUIDrawable {
         private Vector2[] drawPoints = points.Select(p => new Vector2((float)p.x, (float)p.y)).ToArray();
-        private Vector2d[] points = points;
-
         [KSField] public KSPConsoleModule.RgbaColor StrokeColor { get; set; } = strokeColor;
 
         [KSField]

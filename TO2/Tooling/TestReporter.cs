@@ -13,8 +13,6 @@ public interface ITestReporter {
 public delegate void LineWriter(string message);
 
 public class ConsoleTestReporter(LineWriter output) : ITestReporter {
-    private readonly LineWriter output = output;
-
     public bool WasSuccessful => Failures.Count == 0 && Errors.Count == 0;
 
     public List<TestResult> Failures { get; } = [];

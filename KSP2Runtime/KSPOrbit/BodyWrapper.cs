@@ -9,9 +9,6 @@ using UniLinq;
 namespace KontrolSystem.KSP.Runtime.KSPOrbit;
 
 public class BodyWrapper(IKSPContext context, CelestialBodyComponent body) : KSPOrbitModule.IBody, KSPVesselModule.IKSPTargetable {
-    private readonly CelestialBodyComponent body = body;
-    private readonly IKSPContext context = context;
-
     public string Name => body.Name;
 
     public Option<KSPOrbitModule.IBody> ParentBody => Option.OfNullable(body.referenceBody).Map<KSPOrbitModule.IBody>(

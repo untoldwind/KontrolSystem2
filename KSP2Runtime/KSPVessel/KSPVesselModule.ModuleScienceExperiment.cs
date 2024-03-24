@@ -8,7 +8,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public partial class KSPVesselModule {
     [KSClass("ModuleScienceExperiment")]
-    public class ModuleScienceExperimentAdapter(KSPVesselModule.PartAdapter part, Data_ScienceExperiment dataScienceExperiment) : BaseScienceExperimentAdapter<KSPVesselModule.PartAdapter, PartComponent>(part, dataScienceExperiment) {
+    public class ModuleScienceExperimentAdapter(PartAdapter part, Data_ScienceExperiment dataScienceExperiment) : BaseScienceExperimentAdapter<PartAdapter, PartComponent>(part, dataScienceExperiment) {
         [KSField]
         public KSPScienceModule.ExperimentAdapter[] Experiments =>
             dataScienceExperiment.ExperimentStandings.Zip(dataScienceExperiment.Experiments,

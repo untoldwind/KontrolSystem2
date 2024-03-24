@@ -11,8 +11,6 @@ public partial class KSPScienceModule {
         Description = "Represents an in-game science experiment.")]
     public class ExperimentAdapter(SimulationObjectModel simulationObject, ExperimentStanding experimentStanding,
         ExperimentConfiguration experimentConfiguration) : BaseExperimentAdapter(experimentConfiguration) {
-        private readonly ExperimentStanding experimentStanding = experimentStanding;
-        private readonly SimulationObjectModel simulationObject = simulationObject;
 
         [KSField] public bool HasEnoughResources => experimentStanding.HasEnoughResources;
 

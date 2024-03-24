@@ -1,5 +1,4 @@
-﻿using System.IO;
-using KontrolSystem.TO2;
+﻿using KontrolSystem.TO2;
 using Xunit;
 using Xunit.Abstractions;
 using Xunit.Sdk;
@@ -7,8 +6,6 @@ using Xunit.Sdk;
 namespace KontrolSystem.KSP.Runtime.Test;
 
 public class PluginBootTests(ITestOutputHelper output) {
-    private readonly ITestOutputHelper output = output;
-
     [Fact]
     public void RunSuite() {
         try {

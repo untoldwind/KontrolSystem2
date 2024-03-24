@@ -9,8 +9,6 @@ namespace KontrolSystem.TO2.Test;
 
 [Collection("KontrolRegistry")]
 public class TO2TestSuite(ITestOutputHelper output) {
-    private readonly ITestOutputHelper output = output;
-
     [Fact]
     public void RunSuite() {
         var reporter = new ConsoleTestReporter(output.WriteLine);

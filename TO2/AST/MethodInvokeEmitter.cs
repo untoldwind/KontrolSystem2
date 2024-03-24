@@ -50,11 +50,8 @@ public interface IMethodInvokeFactory {
 
 public delegate REPLValueFuture REPLMethodCall(Node node, IREPLValue[] targetWithArguments);
 
-public class InlineMethodInvokeFactory(string description, Func<RealizedType> returnType, bool isConst,
+public class InlineMethodInvokeFactory(string description, Func<RealizedType> resultType, bool isConst,
     REPLMethodCall methodCall, params OpCode[] opCodes) : IMethodInvokeFactory {
-    private readonly REPLMethodCall methodCall = methodCall;
-    private readonly OpCode[] opCodes = opCodes;
-    private readonly Func<RealizedType> resultType = returnType;
 
     public bool IsConst { get; } = isConst;
     public string Description { get; } = description;
@@ -84,8 +81,6 @@ public class InlineMethodInvokeFactory(string description, Func<RealizedType> re
 public class InlineMethodInvokeEmitter(RealizedType returnType, List<RealizedParameter> parameters,
     REPLMethodCall methodCall,
     params OpCode[] opCodes) : IMethodInvokeEmitter {
-    private readonly REPLMethodCall methodCall = methodCall;
-    private readonly OpCode[] opCodes = opCodes;
 
     public RealizedType ResultType { get; } = returnType;
 
@@ -109,14 +104,9 @@ public class BoundMethodInvokeFactory(string? description, bool isConst, Func<Re
     Func<List<RealizedParameter>> parameters, bool isAsync, Type methodTarget, MethodInfo? methodInfo,
     Func<ModuleContext, IEnumerable<(string name, RealizedType type)>>? targetTypeArguments = null,
     bool constrained = false) : IMethodInvokeFactory {
-    private readonly bool constrained = constrained;
     private readonly MethodInfo methodInfo = methodInfo ??
                           throw new ArgumentException(
                               $"MethodInfo is null for {description} in type {methodTarget}");
-    private readonly Type methodTarget = methodTarget;
-    private readonly Func<List<RealizedParameter>> parameters = parameters;
-    private readonly Func<RealizedType> resultType = resultType;
-    private readonly Func<ModuleContext, IEnumerable<(string name, RealizedType type)>>? targetTypeArguments = targetTypeArguments;
 
     public bool IsConst { get; } = isConst;
     public string? Description { get; } = description;
@@ -183,9 +173,6 @@ public class BoundMethodInvokeFactory(string? description, bool isConst, Func<Re
 
 public class BoundMethodInvokeEmitter(RealizedType resultType, List<RealizedParameter> parameters, bool isAsync,
     Type methodTarget, MethodInfo methodInfo, bool constrained = false) : IMethodInvokeEmitter {
-    private readonly bool constrained = constrained;
-    private readonly MethodInfo methodInfo = methodInfo;
-    private readonly Type methodTarget = methodTarget;
 
     public RealizedType ResultType { get; } = resultType;
     public List<RealizedParameter> Parameters { get; } = parameters;

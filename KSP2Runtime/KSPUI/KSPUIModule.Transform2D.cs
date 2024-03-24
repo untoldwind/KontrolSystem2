@@ -34,7 +34,6 @@ public partial class KSPUIModule {
     [KSClass]
     public class Translate2D(Vector2d translate) : Transform2D(
         Matrix4x4.Translate(new Vector3((float)translate.x, (float)translate.y))) {
-        private Vector2d translate = translate;
 
         [KSField]
         public Vector2d Translate {
@@ -49,7 +48,6 @@ public partial class KSPUIModule {
     [KSClass]
     public class Scale2D(Vector2d scale, Vector2d pivot = default) : Transform2D(MakeTransform(scale, pivot)) {
         private Vector2d pivot;
-        private Vector2d scale = scale;
 
         [KSField]
         public Vector2d Scale {
@@ -78,9 +76,6 @@ public partial class KSPUIModule {
 
     [KSClass]
     public class Rotate2D(double degrees, Vector2d pivot = default) : Transform2D(MakeTransform(degrees, pivot)) {
-        private double degrees = degrees;
-        private Vector2d pivot = pivot;
-
         [KSField]
         public double Degrees {
             get => degrees;

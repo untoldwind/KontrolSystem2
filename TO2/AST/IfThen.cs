@@ -152,9 +152,6 @@ public class IfThen : Expression, IVariableContainer {
     }
 
     private class REPLIfThenFuture(TO2Type to2Type, REPLContext context, Expression condition, Expression thenExpression) : REPLValueFuture(new OptionType(to2Type)) {
-        private readonly Expression condition = condition;
-        private readonly REPLContext context = context;
-        private readonly Expression thenExpression = thenExpression;
         private REPLValueFuture? conditionFuture;
         private IREPLValue? conditionResult;
         private REPLValueFuture? thenFuture;

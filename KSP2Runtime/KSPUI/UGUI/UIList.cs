@@ -14,8 +14,6 @@ public interface UIListElement<T> {
 }
 
 public class UIList<T, U>(float elementHeight, Func<T, U> createElement) : UGUIElement(new GameObject("List", typeof(RectTransform)), new Vector2(50, elementHeight * 3)) where U : UIListElement<T> {
-    private readonly Func<T, U> createElement = createElement;
-    private readonly float elementHeight = elementHeight;
     private U[] uiElements = [];
 
     public T[] Elements {

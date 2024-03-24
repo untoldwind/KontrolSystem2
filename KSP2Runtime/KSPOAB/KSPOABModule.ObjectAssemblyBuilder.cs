@@ -1,8 +1,6 @@
-﻿using KontrolSystem.KSP.Runtime.KSPVessel;
-using KontrolSystem.TO2.Binding;
+﻿using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
 using KSP.OAB;
-using KSP.Sim.impl;
 using UniLinq;
 
 namespace KontrolSystem.KSP.Runtime.KSPOAB;
@@ -10,8 +8,6 @@ namespace KontrolSystem.KSP.Runtime.KSPOAB;
 public partial class KSPOABModule {
     [KSClass("ObjectAssemblyBuilder", Description = "Represents the current object assembly builder.")]
     public class ObjectAssemblyBuilderAdapter(ObjectAssemblyBuilder objectAssemblyBuilder) {
-        private readonly ObjectAssemblyBuilder objectAssemblyBuilder = objectAssemblyBuilder;
-
         [KSField(Description = "Get the current main assembly if there is one.")]
         public Option<ObjectAssemblyAdapter> MainAssembly {
             get {

@@ -9,8 +9,6 @@ using Xunit.Sdk;
 namespace KontrolSystem.KSP.Runtime.Test;
 
 public class TO2StdTestSuite(ITestOutputHelper output) {
-    private readonly ITestOutputHelper output = output;
-
     [Fact]
     public void RunSuite() {
         var reporter = new ConsoleTestReporter(output.WriteLine);

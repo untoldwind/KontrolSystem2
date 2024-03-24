@@ -24,7 +24,6 @@ public class TempLocalBuilderRef(LocalBuilder localBuilder, Action<TempLocalBuil
 }
 
 public class GeneratorILEmitter(ILGenerator generator) : IILEmitter {
-    private readonly ILGenerator generator = generator;
     private readonly Dictionary<Type, Queue<ITempLocalRef>> tempLocals = [];
     private int scopeCount = 0;
 

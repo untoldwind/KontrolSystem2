@@ -6,9 +6,6 @@ using UnityEngine;
 namespace KontrolSystem.KSP.Runtime;
 
 public class CorouttineAdapter(IAnyFuture process, IKSPContext context, Action<string?, CoreError.StackEntry[]?> onDone) : IEnumerator {
-    private readonly IKSPContext context = context;
-    private readonly Action<string?, CoreError.StackEntry[]?> onDone = onDone;
-
     private object? current = new WaitForFixedUpdate();
     private IAnyFuture? process = process;
 

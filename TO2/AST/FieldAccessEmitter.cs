@@ -44,9 +44,6 @@ public delegate IREPLValue REPLFieldAccess(Node node, IREPLValue target);
 
 public class InlineFieldAccessFactory(string description, Func<RealizedType> fieldType, REPLFieldAccess replFieldAccess,
     params OpCode[] opCodes) : IFieldAccessFactory {
-    private readonly Func<RealizedType> fieldType = fieldType;
-    private readonly OpCode[] opCodes = opCodes;
-    private readonly REPLFieldAccess replFieldAccess = replFieldAccess;
 
     public string Description { get; } = description;
 

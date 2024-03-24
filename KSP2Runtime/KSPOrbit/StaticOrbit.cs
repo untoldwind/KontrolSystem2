@@ -7,9 +7,6 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit;
 
 // Not a real orbit, just something to return if there is no reference body.
 public class StaticOrbit(IKSPContext context, CelestialBodyComponent body) : KSPOrbitModule.IOrbit {
-    private readonly CelestialBodyComponent body = body;
-    private readonly IKSPContext context = context;
-
     public KSPOrbitModule.IBody ReferenceBody => new BodyWrapper(context, body);
 
     public double StartUt => 0;

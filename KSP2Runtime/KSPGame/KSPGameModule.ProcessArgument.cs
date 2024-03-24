@@ -4,13 +4,7 @@ namespace KontrolSystem.KSP.Runtime.KSPGame;
 
 public partial class KSPGameModule {
     [KSClass("ProcessArgument")]
-    public class ProcessArgumentAdapter {
-        private readonly EntrypointArgumentDescriptor entrypointArgument;
-
-        public ProcessArgumentAdapter(EntrypointArgumentDescriptor entrypointArgument) {
-            this.entrypointArgument = entrypointArgument;
-        }
-
+    public class ProcessArgumentAdapter(EntrypointArgumentDescriptor entrypointArgument) {
         [KSField] public string Name => entrypointArgument.Name;
 
         [KSField] public string Type => entrypointArgument.Type.Name;

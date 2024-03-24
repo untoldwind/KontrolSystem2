@@ -14,7 +14,7 @@ public struct ILCommand : IILCommand {
     public OpCode opCode;
     public string args;
 
-    public override readonly string? ToString() {
+    public readonly override string? ToString() {
         return string.IsNullOrEmpty(args) ? opCode.ToString() : $"{opCode} {args}";
     }
 }
@@ -23,7 +23,7 @@ public struct DeclareLocal : IILCommand {
     public int localIdx;
     public Type type;
 
-    public override readonly string ToString() {
+    public readonly override string ToString() {
         return $"<declare local> {localIdx} = {type}";
     }
 }

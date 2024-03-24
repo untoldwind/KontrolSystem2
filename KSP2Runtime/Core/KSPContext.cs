@@ -282,8 +282,6 @@ public class KSPCoreContext(string processName, ITO2Logger logger, GameInstance 
 
 public class BackgroundKSPContext(ITO2Logger logger, KSPConsoleBuffer consoleBuffer, CancellationTokenSource token) : IContext {
     private readonly List<BackgroundKSPContext> childContexts = [];
-    private readonly KSPConsoleBuffer consoleBuffer = consoleBuffer;
-    private readonly CancellationTokenSource token = token;
     private int stackCallCount;
     private readonly Stack<CoreError.StackEntry> callStack = new();
 

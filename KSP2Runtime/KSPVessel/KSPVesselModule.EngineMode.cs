@@ -6,13 +6,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public partial class KSPVesselModule {
     [KSClass("EngineMode")]
-    public class EngineModeAdapter {
-        private readonly Data_Engine.EngineMode engineMode;
-
-        public EngineModeAdapter(Data_Engine.EngineMode engineMode) {
-            this.engineMode = engineMode;
-        }
-
+    public class EngineModeAdapter(Data_Engine.EngineMode engineMode) {
         [KSField] public string Name => engineMode.engineID;
 
         [KSField] public bool AllowRestart => engineMode.allowRestart;

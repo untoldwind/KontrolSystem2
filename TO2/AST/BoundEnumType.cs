@@ -207,8 +207,6 @@ internal class EnumConstantFieldAccessEmitter : IFieldAccessEmitter {
 }
 
 internal class EnumFromStringMethodFactory(BoundEnumType boundEnumType) : IMethodInvokeFactory {
-    private readonly BoundEnumType boundEnumType = boundEnumType;
-
     public bool IsAsync => false;
 
     public bool IsConst => true;
@@ -238,8 +236,6 @@ internal class EnumFromStringMethodFactory(BoundEnumType boundEnumType) : IMetho
 }
 
 internal class EnumFromStringMethodEmitter(BoundEnumType boundEnumType) : IMethodInvokeEmitter {
-    private readonly BoundEnumType boundEnumType = boundEnumType;
-
     public RealizedType ResultType => new OptionType(boundEnumType);
 
     public List<RealizedParameter> Parameters => [

@@ -8,25 +8,20 @@ public partial class KSPDebugModule {
     [KSClass("GroundMarker",
         Description = "Represents a ground marker on a given celestial body."
     )]
-    public class GroundMarker : IMarker {
-        public GroundMarker(KSPOrbitModule.GeoCoordinates geoCoordinates, KSPConsoleModule.RgbaColor color,
-            double rotation) {
-            Color = color;
-            GeoCoordinates = geoCoordinates;
-            Rotation = rotation;
-            Visible = true;
-        }
+    public class GroundMarker(
+        KSPOrbitModule.GeoCoordinates geoCoordinates,
+        KSPConsoleModule.RgbaColor color,
+        double rotation)
+        : IMarker {
+        [KSField] public double Rotation { get; set; } = rotation;
 
-        [KSField] public double Rotation { get; set; }
-
-
-        [KSField] public KSPOrbitModule.GeoCoordinates GeoCoordinates { get; set; }
+        [KSField] public KSPOrbitModule.GeoCoordinates GeoCoordinates { get; set; } = geoCoordinates;
 
         [KSField(Description = "The color of the ground marker vector")]
-        public KSPConsoleModule.RgbaColor Color { get; set; }
+        public KSPConsoleModule.RgbaColor Color { get; set; } = color;
 
         [KSField(Description = "Controls if the ground marker is currently visible (initially `true`)")]
-        public bool Visible { get; set; }
+        public bool Visible { get; set; } = true;
 
         public void OnUpdate() {
         }

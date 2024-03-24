@@ -7,8 +7,6 @@ public partial class KSPScienceModule {
     [KSClass("ExperimentDefinition",
         Description = "Represents definition of an in-game science experiment.")]
     public class ExperimentDefinitionAdapter(ExperimentDefinition experimentDefinition) {
-        private readonly ExperimentDefinition experimentDefinition = experimentDefinition;
-
         [KSField] public string Id => experimentDefinition.ExperimentID;
 
         [KSField] public string DisplayName => experimentDefinition.DisplayName;

@@ -6,6 +6,6 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public partial class KSPVesselModule {
     [KSClass("ModuleReactionWheel")]
-    public class ModuleReactionWheelAdapter(KSPVesselModule.PartAdapter part, Data_ReactionWheel reactionWheel) : BaseReactionWheelAdapter<PartAdapter, PartComponent>(part, reactionWheel) {
+    public class ModuleReactionWheelAdapter(PartAdapter part, Data_ReactionWheel reactionWheel) : BaseReactionWheelAdapter<PartAdapter, PartComponent>(part, reactionWheel) {
     }
 }

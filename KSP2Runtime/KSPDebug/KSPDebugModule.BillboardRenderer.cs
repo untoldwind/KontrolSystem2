@@ -12,28 +12,22 @@ public partial class KSPDebugModule {
     [KSClass("DebugBillboard",
         Description = "Represents a ground marker on a given celestial body."
     )]
-    public class BillboardRenderer : IMarker {
+    public class BillboardRenderer(
+        Func<Position> positionProvider,
+        Func<string> textProvider,
+        KSPConsoleModule.RgbaColor color,
+        long fontSize)
+        : IMarker {
         private TextMeshPro? billboard;
 
         private GameObject? billboardObj;
 
         private bool enable;
 
-        private readonly Func<Position> positionProvider;
-        private readonly Func<string> textProvider;
-
-        public BillboardRenderer(Func<Position> positionProvider, Func<string> textProvider,
-            KSPConsoleModule.RgbaColor color, long fontSize) {
-            this.positionProvider = positionProvider;
-            this.textProvider = textProvider;
-            Color = color;
-            FontSize = fontSize;
-        }
-
         [KSField(Description = "The color of the billboard text")]
-        public KSPConsoleModule.RgbaColor Color { get; set; }
+        public KSPConsoleModule.RgbaColor Color { get; set; } = color;
 
-        [KSField] public long FontSize { get; set; }
+        [KSField] public long FontSize { get; set; } = fontSize;
 
 
         [KSField(Description = "Controls if the billboard is currently visible (initially `true`)")]

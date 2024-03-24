@@ -24,7 +24,7 @@ public class MultiTests {
 
         Assert.True(result.success);
         Assert.Equal("de", result.remaining.ToString());
-        Assert.Equal(new List<char>(['B', 'B', 'B']), result.value);
+        Assert.Equal(['B', 'B', 'B'], result.value);
     }
 
     [Fact]
@@ -42,13 +42,13 @@ public class MultiTests {
 
         Assert.True(result.success);
         Assert.Equal("bcde", result.remaining.ToString());
-        Assert.Equal(new List<char>(['B']), result.value);
+        Assert.Equal(['B'], result.value);
 
         result = parser.TryParse("BBBde");
 
         Assert.True(result.success);
         Assert.Equal("de", result.remaining.ToString());
-        Assert.Equal(new List<char>(['B', 'B', 'B']), result.value);
+        Assert.Equal(['B', 'B', 'B'], result.value);
     }
 
     [Fact]

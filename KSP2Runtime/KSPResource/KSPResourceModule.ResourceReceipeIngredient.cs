@@ -6,8 +6,6 @@ namespace KontrolSystem.KSP.Runtime.KSPResource;
 public partial class KSPResourceModule {
     [KSClass("ResourceReceipeIngredient")]
     public class ResourceReceipeIngredientAdapter(ResourceUnitsPair pair) {
-        private readonly ResourceUnitsPair pair = pair;
-
         [KSField] public double Units => pair.units;
 
         [KSField]

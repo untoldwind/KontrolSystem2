@@ -13,9 +13,6 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 public partial class KSPVesselModule {
     [KSClass("ManeuverNode")]
     public class ManeuverNodeAdapter(KSPVesselModule.VesselAdapter vesselAdapter, ManeuverNodeData maneuverNode) {
-        private readonly ManeuverNodeData maneuverNode = maneuverNode;
-        private readonly VesselAdapter vesselAdapter = vesselAdapter;
-
         [KSField(IsAsyncStore = true)]
         public double Time {
             get => maneuverNode.Time;

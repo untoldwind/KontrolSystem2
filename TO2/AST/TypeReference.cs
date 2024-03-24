@@ -131,9 +131,6 @@ public class LookupTypeReference : TO2Type {
 }
 
 public class DirectTypeReference(RealizedType referencedType, List<TO2Type> declaredTypeArguments) : RealizedType {
-    private readonly List<TO2Type> declaredTypeArguments = declaredTypeArguments;
-    private readonly RealizedType referencedType = referencedType;
-
     public override string Name => referencedType.Name;
 
     public override Dictionary<string, IMethodInvokeFactory> DeclaredMethods => referencedType.DeclaredMethods;

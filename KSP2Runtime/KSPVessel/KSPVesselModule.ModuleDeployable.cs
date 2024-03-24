@@ -6,8 +6,6 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public partial class KSPVesselModule {
     [KSClass("ModuleDeployable")]
-    public class ModuleDeployableAdapter : BaseDeployableAdapter<PartAdapter, PartComponent> {
-        public ModuleDeployableAdapter(PartAdapter part, Data_Deployable dataDeployable) : base(part, dataDeployable) {
-        }
-    }
+    public class ModuleDeployableAdapter(PartAdapter part, Data_Deployable dataDeployable)
+        : BaseDeployableAdapter<PartAdapter, PartComponent>(part, dataDeployable);
 }

@@ -6,6 +6,6 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public partial class KSPVesselModule {
     [KSClass("ModuleLight")]
-    public class ModuleLightAdapter(KSPVesselModule.PartAdapter part, Data_Light dataLight) : BaseLightAdapter<PartAdapter, PartComponent>(part, dataLight) {
+    public class ModuleLightAdapter(PartAdapter part, Data_Light dataLight) : BaseLightAdapter<PartAdapter, PartComponent>(part, dataLight) {
     }
 }

@@ -8,9 +8,6 @@ public partial class KSPScienceModule {
     [KSClass("ResearchReport",
         Description = "Represents the stored report of a science experiment")]
     public class ResearchReportAdapter(ScienceStorageComponent scienceStorageComponent, ResearchReport researchReport) {
-        private readonly ResearchReport researchReport = researchReport;
-        private readonly ScienceStorageComponent scienceStorageComponent = scienceStorageComponent;
-
         [KSField(Description = "Get the research location the experiment was performed at.")]
         public ResearchLocationAdapter ResearchLocation => new(researchReport.Location);
 

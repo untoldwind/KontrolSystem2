@@ -6,8 +6,6 @@ namespace KontrolSystem.KSP.Runtime.KSPResource;
 public partial class KSPResourceModule {
     [KSClass("ResourceSetting")]
     public class ResourceSettingAdapter(PartModuleResourceSetting resourceSetting) {
-        private readonly PartModuleResourceSetting resourceSetting = resourceSetting;
-
         [KSField]
         public ResourceDefinitionAdapter Resource {
             get {

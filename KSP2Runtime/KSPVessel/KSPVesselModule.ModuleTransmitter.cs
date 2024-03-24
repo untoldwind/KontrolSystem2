@@ -6,6 +6,6 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public partial class KSPVesselModule {
     [KSClass("ModuleTransmitter")]
-    public class ModuleTransmitterAdapter(KSPVesselModule.PartAdapter part, Data_Transmitter dataTransmitter) : BaseTransmitterAdapter<PartAdapter, PartComponent>(part, dataTransmitter) {
+    public class ModuleTransmitterAdapter(PartAdapter part, Data_Transmitter dataTransmitter) : BaseTransmitterAdapter<PartAdapter, PartComponent>(part, dataTransmitter) {
     }
 }

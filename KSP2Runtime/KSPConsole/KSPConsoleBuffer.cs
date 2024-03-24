@@ -39,7 +39,7 @@ public struct ConsoleLine {
         return new string(line, 0, endIdx + 1);
     }
 
-    public override readonly string ToString() {
+    public readonly override string ToString() {
         return new string(line);
     }
 }

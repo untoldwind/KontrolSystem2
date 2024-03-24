@@ -6,7 +6,6 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI;
 
 public class UGUIVerticalLayout(RectTransform containerTransform, float gap = 10, UGUILayout.Padding padding = default) : UGUILayout(
     containerTransform, padding) {
-    private readonly float gap = gap;
 
     public override Vector2 MinSize {
         get {

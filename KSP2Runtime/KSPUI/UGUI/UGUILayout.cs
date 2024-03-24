@@ -53,8 +53,6 @@ public abstract class UGUILayout(RectTransform containerTransform, UGUILayout.Pa
     }
 
     private struct LayoutSpace(UGUILayout layout, float minSize, float stretch) : ILayoutEntry {
-        private readonly UGUILayout layout = layout;
-
         public readonly RectTransform? Transform => null;
         public Vector2 MinSize { get; } = new Vector2(minSize, minSize);
         public float Stretch { get; } = stretch;
@@ -69,9 +67,6 @@ public abstract class UGUILayout(RectTransform containerTransform, UGUILayout.Pa
     }
 
     private readonly struct LayoutElement(UGUILayout layout, UGUIElement element, UGUILayout.Align align, float stretch) : ILayoutEntry {
-        private readonly UGUILayout layout = layout;
-        private readonly UGUIElement element = element;
-
         public RectTransform Transform => element.Transform;
         public Vector2 MinSize => element.MinSize;
         public float Stretch { get; } = stretch;

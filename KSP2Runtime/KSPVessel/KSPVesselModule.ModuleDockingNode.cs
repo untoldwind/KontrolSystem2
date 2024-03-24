@@ -8,10 +8,8 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public partial class KSPVesselModule {
     [KSClass("ModuleDockingNode")]
-    public class ModuleDockingNodeAdapter : BaseDockingNodeAdapter<PartAdapter, PartComponent>, IKSPTargetable {
-        public ModuleDockingNodeAdapter(PartAdapter part, Data_DockingNode dataDockingNode) : base(part, dataDockingNode) {
-        }
-
+    public class ModuleDockingNodeAdapter(PartAdapter part, Data_DockingNode dataDockingNode)
+        : BaseDockingNodeAdapter<PartAdapter, PartComponent>(part, dataDockingNode), IKSPTargetable {
         public string Name => part.PartName;
 
         public KSPOrbitModule.IOrbit Orbit => part.vesselAdapter.Orbit;

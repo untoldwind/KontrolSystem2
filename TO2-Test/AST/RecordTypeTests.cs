@@ -4,8 +4,6 @@ using Xunit.Abstractions;
 namespace KontrolSystem.TO2.Test.AST;
 
 public class RecordTypeTests(ITestOutputHelper output) {
-    private readonly ITestOutputHelper output = output;
-
     [Fact]
     public void TestRecordUpdate() {
         var block = TestHelper.CompileExpression(

@@ -7,10 +7,6 @@ namespace KontrolSystem.KSP.Runtime.KSPUI;
 public partial class KSPUIModule {
     [KSClass]
     public class Canvas(KSPUIModule.AbstractContainer parent, UGUICanvas canvas, UGUILayout.ILayoutEntry entry) : AbstractContainer2D {
-        private readonly UGUICanvas canvas = canvas;
-        private readonly AbstractContainer parent = parent;
-        private readonly UGUILayout.ILayoutEntry entry = entry;
-
         [KSField(Description = "Minimum size of the canvas.")]
         public Vector2d MinSize {
             get => new(canvas.MinSize.x, canvas.MinSize.y);

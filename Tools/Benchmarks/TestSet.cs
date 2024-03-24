@@ -9,7 +9,7 @@ public struct TestSet {
     public Vector3d V2;
     public bool shortway;
 
-    public override readonly string ToString() {
+    public readonly override string ToString() {
         return
             $"new TestSet {{ R1=new Vector3d({R1.x},{R1.y},{R1.z}), R2=new Vector3d({R2.x},{R2.y},{R2.z}), dt={dt}, mu={mu}, shortway={shortway.ToString().ToLower()}, V1=new Vector3d({V1.x},{V1.y},{V1.z}), V2=new Vector3d({V2.x},{V2.y},{V2.z}) }},";
     }
@@ -17,7 +17,7 @@ public struct TestSet {
 
 
 public static class TestSetsDefault {
-    public static TestSet[] testSets = [
+    public static readonly TestSet[] testSets = [
         new TestSet {
             R1 = new Vector3d(648504.023102542, 0.66820020588641, -263336.566579579),
             R2 = new Vector3d(-46751083.6470467, 4495973.54963698, -1767031.31488983),

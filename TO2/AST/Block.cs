@@ -147,7 +147,6 @@ public class Block : Expression, IVariableContainer {
     }
 
     internal class REPLBlockEval(TO2Type to2Type, REPLContext context, List<IBlockItem> items) : REPLValueFuture(to2Type) {
-        private readonly REPLContext context = context;
         private readonly IEnumerator<IBlockItem> items = items.Where(item => !item.IsComment).GetEnumerator();
         private REPLValueFuture? lastFuture;
         private IREPLValue? lastResult = REPLUnit.INSTANCE;

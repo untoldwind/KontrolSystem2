@@ -3,9 +3,8 @@ using System.Collections.Generic;
 
 namespace KontrolSystem.TO2.Runtime;
 
-public class Cell<T>(T value) : IObservable<T> {
+public class Cell<T>(T element) : IObservable<T> {
     private readonly object cellLock = new();
-    private T element = value;
     private List<IObserver<T>>? observers;
 
     public T Value {

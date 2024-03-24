@@ -5,8 +5,6 @@ using KontrolSystem.TO2.Runtime;
 namespace KontrolSystem.KSP.Runtime.KSPDebug;
 
 public class DirectLogFile(string logDirectory, string fileName) : KSPDebugModule.ILogFile {
-    private readonly string logDirectory = logDirectory;
-    private readonly string fileName = fileName;
     private StreamWriter? streamWriter;
 
     public Future<object?> Log(string message) {

@@ -10,13 +10,7 @@ public partial class KSPUIModule {
     public class ValueRaster2D(double[] values, int width, int height, KSPUIModule.GradientWrapper gradientWrapper, Vector2d point1,
         Vector2d point2) : GLUIDrawer.IGLUIDrawable {
         private bool dirty = true;
-        private GradientWrapper gradientWrapper = gradientWrapper;
-        private readonly int height = height;
-        private Vector2d point1 = point1;
-        private Vector2d point2 = point2;
         private readonly Texture2D texture = new(width, height, TextureFormat.ARGB32, false);
-        private double[] values = values;
-        private readonly int width = width;
 
         [KSField] public long RasterWidth => width;
 

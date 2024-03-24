@@ -5,7 +5,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit;
 
 public partial class KSPOrbitModule {
     [KSClass(Description = "Represents a geo coordinate (longitude, latitude) of a specific celestial body.")]
-    public class GeoCoordinates(KSPOrbitModule.IBody body, double latitude, double longitude) {
+    public class GeoCoordinates(IBody body, double latitude, double longitude) {
         [KSField(Description = "The celestial body the geo coordinate is based on.")]
         public IBody Body { get; } = body;
 

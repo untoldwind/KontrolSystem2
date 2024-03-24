@@ -235,7 +235,7 @@ public partial class KSPDebugModule {
         public void RenderColor() {
             var c1 = Color.Color;
             var c2 = Color.Color;
-            c1.a = c1.a * (float)0.25;
+            c1.a *= (float)0.25;
             var lCol =
                 UnityEngine.Color.Lerp(c2, UnityEngine.Color.white, 0.7f); // "whiten" the label color a lot.
 

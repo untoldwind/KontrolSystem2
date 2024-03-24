@@ -147,7 +147,7 @@ public partial class KSPVesselModule {
                     (Data_Deployable.DeployState.Extending, "Part is currently extending"),
                     (Data_Deployable.DeployState.Broken, "Part is broken")
                 ]),
-                ("PartCategory", "Vessel part category", typeof(PartCategories), new (Enum value, string description)[] {
+                ("PartCategory", "Vessel part category", typeof(PartCategories), [
                     (PartCategories.none, "No category"),
                     (PartCategories.Production, "Production"),
                     (PartCategories.Control, "Production"),
@@ -168,18 +168,18 @@ public partial class KSPVesselModule {
                     (PartCategories.Favorites, "Favorites"),
                     (PartCategories.SubAssemblies, "SubAssemblies"),
                     (PartCategories.Amenities, "Amenities"),
-                    (PartCategories.Storage, "Storage"),
-                }),
-                ("ActuatorMode", "Actuator mode of a reaction wheel", typeof(Data_ReactionWheel.ActuatorModes), new (Enum value, string description)[] {
+                    (PartCategories.Storage, "Storage")
+                ]),
+                ("ActuatorMode", "Actuator mode of a reaction wheel", typeof(Data_ReactionWheel.ActuatorModes), [
                     (Data_ReactionWheel.ActuatorModes.All, "Always on"),
                     (Data_ReactionWheel.ActuatorModes.ManualOnly, "Only active in manual control"),
-                    (Data_ReactionWheel.ActuatorModes.SASOnly, "Only active with SAS"),
-                }),
-                ("ReactionWheelState", "State of a reaction wheel", typeof(Data_ReactionWheel.ReactionWheelState), new (Enum value, string description)[] {
+                    (Data_ReactionWheel.ActuatorModes.SASOnly, "Only active with SAS")
+                ]),
+                ("ReactionWheelState", "State of a reaction wheel", typeof(Data_ReactionWheel.ReactionWheelState), [
                     (Data_ReactionWheel.ReactionWheelState.Active, "Wheel active"),
                     (Data_ReactionWheel.ReactionWheelState.Disabled, "Wheel disabled"),
-                    (Data_ReactionWheel.ReactionWheelState.Broken, "Wheel broken"),
-                    }),
+                    (Data_ReactionWheel.ReactionWheelState.Broken, "Wheel broken")
+                ]),
                 ("ConnectionNodeStatus", "State of the comm-net connection", typeof(ConnectionNodeStatus), new (Enum value, string description)[] {
                     (ConnectionNodeStatus.Connected, "Connected"),
                     (ConnectionNodeStatus.Disconnected, "Disconnected"),

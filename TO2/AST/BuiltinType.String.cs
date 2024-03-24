@@ -17,39 +17,39 @@ public abstract partial class BuiltinType {
                 {
                     Operator.Add,
                     new StaticMethodOperatorEmitter(() => String, () => String,
-                        typeof(string).GetMethod("Concat", new[] { typeof(string), typeof(string) }))
+                        typeof(string).GetMethod("Concat", [typeof(string), typeof(string)]))
                 }, {
                     Operator.AddAssign,
                     new StaticMethodOperatorEmitter(() => String, () => String,
-                        typeof(string).GetMethod("Concat", new[] { typeof(string), typeof(string) }))
+                        typeof(string).GetMethod("Concat", [typeof(string), typeof(string)]))
                 }, {
                     Operator.Eq,
                     new StaticMethodOperatorEmitter(() => String, () => Bool,
-                        typeof(string).GetMethod("Equals", new[] { typeof(string), typeof(string) }))
+                        typeof(string).GetMethod("Equals", [typeof(string), typeof(string)]))
                 }, {
                     Operator.NotEq,
                     new StaticMethodOperatorEmitter(() => String, () => Bool,
-                        typeof(string).GetMethod("Equals", new[] { typeof(string), typeof(string) }),
+                        typeof(string).GetMethod("Equals", [typeof(string), typeof(string)]),
                         null, OpCodes.Ldc_I4_0, OpCodes.Ceq)
                 }, {
                     Operator.Gt,
                     new StaticMethodOperatorEmitter(() => String, () => Bool,
-                        typeof(string).GetMethod("Compare", new[] { typeof(string), typeof(string) }),
+                        typeof(string).GetMethod("Compare", [typeof(string), typeof(string)]),
                         null, OpCodes.Ldc_I4_0, OpCodes.Cgt)
                 }, {
                     Operator.Ge,
                     new StaticMethodOperatorEmitter(() => String, () => Bool,
-                        typeof(string).GetMethod("Compare", new[] { typeof(string), typeof(string) }),
+                        typeof(string).GetMethod("Compare", [typeof(string), typeof(string)]),
                         null, OpCodes.Ldc_I4_M1, OpCodes.Cgt)
                 }, {
                     Operator.Lt,
                     new StaticMethodOperatorEmitter(() => String, () => Bool,
-                        typeof(string).GetMethod("Compare", new[] { typeof(string), typeof(string) }),
+                        typeof(string).GetMethod("Compare", [typeof(string), typeof(string)]),
                         null, OpCodes.Ldc_I4_0, OpCodes.Clt)
                 }, {
                     Operator.Le,
                     new StaticMethodOperatorEmitter(() => String, () => Bool,
-                        typeof(string).GetMethod("Compare", new[] { typeof(string), typeof(string) }),
+                        typeof(string).GetMethod("Compare", [typeof(string), typeof(string)]),
                         null, OpCodes.Ldc_I4_1, OpCodes.Clt)
                 }
             };

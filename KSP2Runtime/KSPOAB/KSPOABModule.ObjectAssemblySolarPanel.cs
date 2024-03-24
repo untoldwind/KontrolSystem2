@@ -2,7 +2,6 @@
 using KontrolSystem.TO2.Binding;
 using KSP.Modules;
 using KSP.OAB;
-using KSP.Sim.DeltaV;
 
 namespace KontrolSystem.KSP.Runtime.KSPOAB;
 

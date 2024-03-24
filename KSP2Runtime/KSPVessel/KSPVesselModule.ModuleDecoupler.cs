@@ -6,10 +6,8 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public partial class KSPVesselModule {
     [KSClass("ModuleDecoupler")]
-    public class ModuleDecouplerAdapter : BaseDecouplerAdapter<PartAdapter, PartComponent> {
-        public ModuleDecouplerAdapter(PartAdapter part, Data_Decouple dataDecouple) : base(part, dataDecouple) {
-        }
-
+    public class ModuleDecouplerAdapter(PartAdapter part, Data_Decouple dataDecouple)
+        : BaseDecouplerAdapter<PartAdapter, PartComponent>(part, dataDecouple) {
         [KSMethod]
         public bool Decouple() {
             if (!KSPContext.CurrentContext.Game.SpaceSimulation.TryGetViewObject(part.part.SimulationObject,

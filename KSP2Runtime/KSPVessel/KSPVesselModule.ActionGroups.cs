@@ -7,13 +7,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public partial class KSPVesselModule {
     [KSClass("ActionGroups")]
-    public class ActionGroupsAdapter {
-        private readonly VesselComponent vessel;
-
-        public ActionGroupsAdapter(VesselComponent vessel) {
-            this.vessel = vessel;
-        }
-
+    public class ActionGroupsAdapter(VesselComponent vessel) {
         [KSField]
         public bool Sas {
             get => vessel.AutopilotStatus.IsEnabled;

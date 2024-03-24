@@ -1,7 +1,6 @@
 ﻿using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
 using KSP.Modules;
-using KSP.Sim;
 using KSP.Sim.impl;
 using UniLinq;
 

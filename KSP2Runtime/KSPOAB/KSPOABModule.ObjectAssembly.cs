@@ -7,8 +7,6 @@ namespace KontrolSystem.KSP.Runtime.KSPOAB;
 public partial class KSPOABModule {
     [KSClass("ObjectAssembly", Description = "Represents an object assembly, i.e. a potential vessel.")]
     public class ObjectAssemblyAdapter(IObjectAssembly objectAssembly) {
-        private readonly IObjectAssembly objectAssembly = objectAssembly;
-
         [KSField(Description = "Get a list of all parts of assembly.")]
         public ObjectAssemblyPartAdapter[] Parts =>
             objectAssembly.Parts.Select(part => new ObjectAssemblyPartAdapter(part)).ToArray();

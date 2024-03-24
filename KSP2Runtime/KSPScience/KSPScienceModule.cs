@@ -23,8 +23,8 @@ public partial class KSPScienceModule {
                         (ScienceExperimentType.Both, "Science experiment producing both sample and data")
                     }),
                 ("ExperimentState", "Science experiment state", typeof(ExperimentState),
-                    new (Enum value, string description)[] {
-                        (ExperimentState.NONE, "Unknown state"),
+                [
+                    (ExperimentState.NONE, "Unknown state"),
                         (ExperimentState.INVALIDLOCATION, "Location not valid"),
                         (ExperimentState.READY, "Experiment is ready to run"),
                         (ExperimentState.RUNNING, "Experiment is running"),
@@ -36,21 +36,21 @@ public partial class KSPScienceModule {
                         (ExperimentState.INSUFFICIENTSTORAGE, "Not enough storage capacity for experiment"),
                         (ExperimentState.ALREADYSTORED, "Experiment has already stored results"),
                         (ExperimentState.BLOCKED, "Experiment is blocked")
-                    }),
+                ]),
                 ("ScienceSituation", "Situation of a science experiment", typeof(ScienceSitutation),
-                    new (Enum value, string description)[] {
-                        (ScienceSitutation.None, "No specific situation required"),
+                [
+                    (ScienceSitutation.None, "No specific situation required"),
                         (ScienceSitutation.HighOrbit, "Experiment in high orbit"),
                         (ScienceSitutation.LowOrbit, "Experiment in low orbit"),
                         (ScienceSitutation.Atmosphere, "Experiment inside an atmosphere"),
                         (ScienceSitutation.Splashed, "Experiment while splashed"),
                         (ScienceSitutation.Landed, "Experiment while landed")
-                    }),
+                ]),
                 ("ScienceReportType", "Type of science report", typeof(ScienceReportType),
-                    new (Enum value, string description)[] {
-                        (ScienceReportType.DataType, "Science data"),
-                        (ScienceReportType.SampleType, "Science sample for experiments"),
-                    })
+                [
+                    (ScienceReportType.DataType, "Science data"),
+                        (ScienceReportType.SampleType, "Science sample for experiments")
+                ])
             });
 
         return (enumTypes, enumConstants);

@@ -5,12 +5,6 @@ using UnityEngine;
 namespace KontrolSystem.KSP.Runtime.Core;
 
 public class DelayedAction<T>(IKSPContext context, int delay, int retries, Func<T> action, T defaultResult) : Future<T> {
-    private readonly Func<T> action = action;
-    private readonly IKSPContext context = context;
-    private int delay = delay;
-    private int retries = retries;
-    private readonly T defaultResult = defaultResult;
-
     public override FutureResult<T> PollValue() {
         if (delay > 0) {
             delay--;

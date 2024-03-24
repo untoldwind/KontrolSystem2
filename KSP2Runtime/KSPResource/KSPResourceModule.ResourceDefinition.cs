@@ -9,8 +9,6 @@ public partial class KSPResourceModule {
     [KSClass("ResourceDefinition",
         Description = "Represents an in-game resource.")]
     public class ResourceDefinitionAdapter(ResourceDefinitionData resourceDefinition) {
-        private readonly ResourceDefinitionData resourceDefinition = resourceDefinition;
-
         [KSField(Description = "Resource identifier")]
         public long Id => resourceDefinition.resourceDatabaseID.Value;
 

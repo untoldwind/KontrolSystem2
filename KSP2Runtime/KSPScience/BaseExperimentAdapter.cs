@@ -5,12 +5,8 @@ using UniLinq;
 
 namespace KontrolSystem.KSP.Runtime.KSPScience;
 
-public abstract class BaseExperimentAdapter {
-    protected readonly ExperimentConfiguration experimentConfiguration;
-
-    protected BaseExperimentAdapter(ExperimentConfiguration experimentConfiguration) {
-        this.experimentConfiguration = experimentConfiguration;
-    }
+public abstract class BaseExperimentAdapter(ExperimentConfiguration experimentConfiguration) {
+    protected readonly ExperimentConfiguration experimentConfiguration = experimentConfiguration;
 
     [KSField] public string ExperimentId => experimentConfiguration.ExperimentDefinitionID;
 
