@@ -1,5 +1,18 @@
 # Changes
 
+## 0.5.7.3 ->
+
+* The `?` operator can now also be used on `Option<T>` in functions that return a `Result<T>`
+  * Example: 
+    ```
+    pub fn main_flight(vessel: Vessel) -> Result<Unit> = {
+        const target = vessel.target? // <-- Will fail with error if vessel has no target
+    }
+    ```
+* VSCode extension now tries to read `reference.json` from the currently installed version of `KontrolSystem2`
+  * It will no longer be necessary to update the extension with every release to make a (small) API change visible in
+    VSCode
+
 ## 0.5.6.3 -> 0.5.7.3
 
 ### `Result<T, E>` overhaul.
