@@ -24,23 +24,23 @@ public class ConstDeclaration : Node, IModuleItem {
     }
 
     public IEnumerable<StructuralError> TryDeclareTypes(ModuleContext context) {
-        return Enumerable.Empty<StructuralError>();
+        return [];
     }
 
     public IEnumerable<StructuralError> TryImportConstants(ModuleContext context) {
-        return Enumerable.Empty<StructuralError>();
+        return [];
     }
 
     public IEnumerable<StructuralError> TryImportFunctions(ModuleContext context) {
-        return Enumerable.Empty<StructuralError>();
+        return [];
     }
 
     public IEnumerable<StructuralError> TryImportTypes(ModuleContext context) {
-        return Enumerable.Empty<StructuralError>();
+        return [];
     }
 
     public IEnumerable<StructuralError> TryVerifyFunctions(ModuleContext context) {
-        return Enumerable.Empty<StructuralError>();
+        return [];
     }
 
     public override REPLValueFuture Eval(REPLContext context) {

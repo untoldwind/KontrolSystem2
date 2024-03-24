@@ -28,7 +28,7 @@ public readonly struct Range(long from, long to) {
             foreach (var item in mapper(i))
                 result.Add(item);
 
-        return result.ToArray();
+        return [.. result];
     }
 
     public T[] FilterMap<T>(Func<long, Option<T>> mapper) {
@@ -42,7 +42,7 @@ public readonly struct Range(long from, long to) {
             if (item.defined) result.Add(item.value);
         }
 
-        return result.ToArray();
+        return [.. result];
     }
 
     public long[] Reverse() {

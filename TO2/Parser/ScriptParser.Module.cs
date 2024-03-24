@@ -55,7 +55,7 @@ public static class TO2ParserModule {
             .Between(WhiteSpaces0.Then(Char('{')), WhiteSpaces0.Then(Char('}')))
     ).Map((items, start, end) =>
         new StructDeclaration(items.Item2.IsDefined, items.Item3, items.Item1,
-            items.Item4.IsDefined ? items.Item4.Value : new List<FunctionParameter>(), items.Item5, start, end));
+            items.Item4.IsDefined ? items.Item4.Value : [], items.Item5, start, end));
 
     private static readonly Parser<ImplDeclaration> ImplDeclaration = Seq(
         ImplKeyword.Then(Identifier), Delimited0(Either(LineComment, MethodDeclaration), WhiteSpaces1, "methods")

@@ -4,13 +4,9 @@ using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI;
 
-public class UGUIHorizontalLayout : UGUILayout {
-    private readonly float gap;
-
-    public UGUIHorizontalLayout(RectTransform containerTransform, float gap = 10, Padding padding = default) : base(
-        containerTransform, padding) {
-        this.gap = gap;
-    }
+public class UGUIHorizontalLayout(RectTransform containerTransform, float gap = 10, UGUILayout.Padding padding = default) : UGUILayout(
+    containerTransform, padding) {
+    private readonly float gap = gap;
 
     public override Vector2 MinSize {
         get {

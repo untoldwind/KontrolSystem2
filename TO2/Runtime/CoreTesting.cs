@@ -90,16 +90,11 @@ public class TestRunnerContext : IContext, ITO2Logger {
     }
 }
 
-public class BackgroundTestContext : IContext {
-    private readonly CancellationTokenSource token;
+public class BackgroundTestContext(ITO2Logger logger, CancellationTokenSource token) : IContext {
+    private readonly CancellationTokenSource token = token;
     private readonly Stack<CoreError.StackEntry> callStack = new();
 
-    public BackgroundTestContext(ITO2Logger logger, CancellationTokenSource token) {
-        Logger = logger;
-        this.token = token;
-    }
-
-    public ITO2Logger Logger { get; }
+    public ITO2Logger Logger { get; } = logger;
 
     public bool IsBackground => true;
 
@@ -230,7 +225,5 @@ public class CoreTesting {
     }
 }
 
-public class AssertException : Exception {
-    public AssertException(string message) : base(message) {
-    }
+public class AssertException(string message) : Exception(message) {
 }

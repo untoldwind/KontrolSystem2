@@ -2,12 +2,8 @@
 
 namespace KontrolSystem.KSP.Runtime.KSPUI;
 
-public class CallbackObserver<T> : IObserver<T> {
-    private readonly Action<T> callback;
-
-    public CallbackObserver(Action<T> callback) {
-        this.callback = callback;
-    }
+public class CallbackObserver<T>(Action<T> callback) : IObserver<T> {
+    private readonly Action<T> callback = callback;
 
     public void OnNext(T value) {
         callback(value);

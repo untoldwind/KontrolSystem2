@@ -11,7 +11,7 @@ using UnityEngine.UI;
 namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin;
 
 public class ConsoleWindow : UGUIResizableWindow {
-    public List<string> commandHistory = new();
+    public List<string> commandHistory = [];
 
     public int
         commandHistoryIndex; // a value of commandHistory.Count indicates that we're not reading from the command history

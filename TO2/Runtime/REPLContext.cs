@@ -10,7 +10,7 @@ public class REPLContext {
     public delegate REPLVariable? VariableResolver(string? name);
 
     private readonly VariableResolver? externalVariables;
-    private readonly Dictionary<string, REPLVariable> localVariables = new();
+    private readonly Dictionary<string, REPLVariable> localVariables = [];
     public readonly REPLBlockContext replBlockContext;
     public readonly REPLModuleContext replModuleContext;
     private readonly IContext runtimeContext;
@@ -126,5 +126,5 @@ public class REPLBlockContext(
         throw new REPLException("No async resume");
     }
 
-    public Dictionary<string, RealizedType> InferredGenerics { get; } = new();
+    public Dictionary<string, RealizedType> InferredGenerics { get; } = [];
 }

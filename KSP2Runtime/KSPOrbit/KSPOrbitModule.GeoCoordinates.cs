@@ -5,21 +5,15 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit;
 
 public partial class KSPOrbitModule {
     [KSClass(Description = "Represents a geo coordinate (longitude, latitude) of a specific celestial body.")]
-    public class GeoCoordinates {
-        public GeoCoordinates(IBody body, double latitude, double longitude) {
-            this.Body = body;
-            Latitude = latitude;
-            Longitude = longitude;
-        }
-
+    public class GeoCoordinates(KSPOrbitModule.IBody body, double latitude, double longitude) {
         [KSField(Description = "The celestial body the geo coordinate is based on.")]
-        public IBody Body { get; }
+        public IBody Body { get; } = body;
 
         [KSField(Description = "Latitude in degrees")]
-        public double Latitude { get; set; }
+        public double Latitude { get; set; } = latitude;
 
         [KSField(Description = "Longitude in degrees")]
-        public double Longitude { get; set; }
+        public double Longitude { get; set; } = longitude;
 
         [KSField(Description = "The surface normal (i.e. up vector) in the celestial frame of the body")]
         public Vector3d SurfaceNormal => Body.SurfaceNormal(Latitude, Longitude);

@@ -88,7 +88,7 @@ public class OptionType : RealizedType {
     public override IEnumerable<(string name, RealizedType type)> InferGenericArgument(ModuleContext context,
         RealizedType? concreteType) {
         var concreteOption = concreteType as OptionType;
-        if (concreteOption == null) return Enumerable.Empty<(string name, RealizedType type)>();
+        if (concreteOption == null) return [];
         return elementType.InferGenericArgument(context, concreteOption.elementType.UnderlyingType(context));
     }
 }
@@ -327,7 +327,7 @@ internal class OptionUnwrapOperator : IOperatorEmitter {
             }
         } else if (expectedResultReturn != null) {
             var errorResultType = expectedResultReturn.GeneratedType(context.ModuleContext);
-            var errMethod = typeof(Result).GetMethod("Err", new[] { typeof(string) })!.MakeGenericMethod([
+            var errMethod = typeof(Result).GetMethod("Err", [typeof(string)])!.MakeGenericMethod([
                 expectedResultReturn.successType.GeneratedType(context.ModuleContext)
             ]);
 
@@ -335,7 +335,7 @@ internal class OptionUnwrapOperator : IOperatorEmitter {
             context.IL.EmitCall(OpCodes.Call, errMethod, 1);
             if (context.IsAsync)
                 context.IL.EmitNew(OpCodes.Newobj,
-                    context.MethodBuilder!.ReturnType.GetConstructor(new[] { errorResultType })!);
+                    context.MethodBuilder!.ReturnType.GetConstructor([errorResultType])!);
         }
 
         ILChunks.GenerateFunctionLeave(context);
@@ -380,7 +380,7 @@ internal class OptionMapFactory : IMethodInvokeFactory {
     public TypeHint ArgumentHint(int argumentIdx) {
         return _ =>
             argumentIdx == 0
-                ? new FunctionType(false, new List<TO2Type> { optionType.elementType }, BuiltinType.Unit)
+                ? new FunctionType(false, [optionType.elementType], BuiltinType.Unit)
                 : null;
     }
 
@@ -392,11 +392,11 @@ internal class OptionMapFactory : IMethodInvokeFactory {
 
     public TO2Type DeclaredReturn => new OptionType(BuiltinType.Unit);
 
-    public List<FunctionParameter> DeclaredParameters => new() {
+    public List<FunctionParameter> DeclaredParameters => [
         new("mapper",
-            new FunctionType(false, new List<TO2Type> { optionType.elementType }, BuiltinType.Unit),
+            new FunctionType(false, [optionType.elementType], BuiltinType.Unit),
             "Function to be applied on the optional value if defined")
-    };
+    ];
 
     public IMethodInvokeEmitter? Create(IBlockContext context, List<TO2Type> arguments, Node node) {
         if (arguments.Count != 1) return null;
@@ -410,9 +410,9 @@ internal class OptionMapFactory : IMethodInvokeFactory {
             throw new ArgumentException($"No Map method in {generatedType}");
 
         return new BoundMethodInvokeEmitter(new OptionType(mapper.returnType),
-            new List<RealizedParameter> {
+            [
                 new("mapper", mapper, "Function to be applied on the optional value if defined")
-            }, false, generatedType,
+            ], false, generatedType,
             methodInfo);
     }
 
@@ -434,7 +434,7 @@ internal class OptionThenFactory : IMethodInvokeFactory {
     public TypeHint ArgumentHint(int argumentIdx) {
         return _ =>
             argumentIdx == 0
-                ? new FunctionType(false, new List<TO2Type> { optionType.elementType }, BuiltinType.Unit)
+                ? new FunctionType(false, [optionType.elementType], BuiltinType.Unit)
                 : null;
     }
 
@@ -449,7 +449,7 @@ internal class OptionThenFactory : IMethodInvokeFactory {
 
     public List<FunctionParameter> DeclaredParameters => new() {
         new("mapper",
-            new FunctionType(false, new List<TO2Type> { optionType.elementType }, BuiltinType.Unit),
+            new FunctionType(false, [optionType.elementType], BuiltinType.Unit),
             "Function to be applied on the optional value if defined")
     };
 
@@ -505,8 +505,7 @@ internal class OptionOkOrFactory : IMethodInvokeFactory {
 
     public TO2Type DeclaredReturn => new ResultType(optionType.elementType);
 
-    public List<FunctionParameter> DeclaredParameters => new()
-        { new("if_none", BuiltinType.String, "Error message if option is undefined") };
+    public List<FunctionParameter> DeclaredParameters => [new("if_none", BuiltinType.String, "Error message if option is undefined")];
 
     public IMethodInvokeEmitter? Create(IBlockContext context, List<TO2Type> arguments, Node node) {
         var generatedType = optionType.GeneratedType(context.ModuleContext);
@@ -515,9 +514,9 @@ internal class OptionOkOrFactory : IMethodInvokeFactory {
 
 
         return new BoundMethodInvokeEmitter(new ResultType(optionType.elementType),
-            new List<RealizedParameter> {
+            [
                 new("if_none", BuiltinType.String, "Get error message if option is undefined")
-            }, false, generatedType,
+            ], false, generatedType,
             methodInfo);
     }
 

@@ -27,7 +27,7 @@ public class TelemetryWindow : UGUIResizableWindow {
     private GLUIDrawer? drawer;
     private RawImage? graphImage;
     private UGUILayoutContainer? savePopup;
-    private readonly Dictionary<string, Color> selectedTimeSeriesNames = new();
+    private readonly Dictionary<string, Color> selectedTimeSeriesNames = [];
     private UIList<KSPTelemetryModule.TimeSeries, UITimeSeriesElement>? timeSeries;
     private TimeSeriesCollection? timeSeriesCollection;
 
@@ -68,10 +68,10 @@ public class TelemetryWindow : UGUIResizableWindow {
                 var yScale = (max - min) / (draw.Height - offsetBottom - offsetTop);
 
                 if (min < 0 && max > 0)
-                    draw.Polyline(new Vector2[] {
+                    draw.Polyline([
                         new(offsetLeft, (float)((0 - min) / yScale) + offsetBottom),
                         new(draw.Width - offsetRight, (float)((0 - min) / yScale) + offsetBottom)
-                    }, Color.gray);
+                    ], Color.gray);
 
                 foreach (var (color, values) in allValues) {
                     draw.LineTube(values.Select(i =>
@@ -85,12 +85,12 @@ public class TelemetryWindow : UGUIResizableWindow {
                             (float)((i.Item2.avg - min) / yScale) + offsetBottom)).ToArray(), color);
                 }
 
-                draw.Polyline(new Vector2[] {
+                draw.Polyline([
                     new(offsetLeft, offsetBottom),
                     new(offsetLeft, draw.Height - offsetTop),
                     new(draw.Width - offsetRight, draw.Height - offsetTop),
                     new(draw.Width - offsetRight, offsetBottom)
-                }, Color.white, true);
+                ], Color.white, true);
             }
         }
     }

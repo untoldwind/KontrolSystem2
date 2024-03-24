@@ -27,25 +27,17 @@ public partial class KSPTelemetryModule {
     }
 
     [KSClass("TimeSeries")]
-    public class TimeSeries {
-        private readonly TimeSeriesBucket[] buckets;
+    public class TimeSeries(string name, double start, double initialResolution) {
+        private readonly TimeSeriesBucket[] buckets = new TimeSeriesBucket[NUM_BUCKETS];
         private readonly object seriesLock = new();
-        private int lastBucketIdx;
-        private double resolution;
-
-        public TimeSeries(string name, double start, double initialResolution) {
-            buckets = new TimeSeriesBucket[NUM_BUCKETS];
-            resolution = initialResolution;
-            lastBucketIdx = -1;
-            this.Name = name;
-            this.StartUt = start;
-        }
+        private int lastBucketIdx = -1;
+        private double resolution = initialResolution;
 
         [KSField(Description = "Name of the time series. Has to be unique.")]
-        public string Name { get; }
+        public string Name { get; } = name;
 
         [KSField(Description = "Start time of the time series.")]
-        public double StartUt { get; }
+        public double StartUt { get; } = start;
 
         [KSField(Description = "End time of the time series. This will increase when data is added.")]
         public double EndUt {

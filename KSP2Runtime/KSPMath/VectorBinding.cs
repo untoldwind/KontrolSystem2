@@ -14,30 +14,30 @@ public class VectorBinding {
             {
                 Operator.Neg,
                 new StaticMethodOperatorEmitter(() => BuiltinType.Unit, LazyVectorType,
-                    typeof(Vector).GetMethod("negate", new[] { typeof(Vector) }))
+                    typeof(Vector).GetMethod("negate", [typeof(Vector)]))
             }, {
                 Operator.Mul,
                 new StaticMethodOperatorEmitter(() => BuiltinType.Float, LazyVectorType,
-                    typeof(VectorBinding).GetMethod("Multiply", new[] { typeof(double), typeof(Vector) }))
+                    typeof(VectorBinding).GetMethod("Multiply", [typeof(double), typeof(Vector)]))
             }
         },
         new OperatorCollection {
             {
                 Operator.Add,
                 new StaticMethodOperatorEmitter(() => VectorType!, LazyVectorType,
-                    typeof(Vector).GetMethod("op_Addition", new[] { typeof(Vector), typeof(Vector) }))
+                    typeof(Vector).GetMethod("op_Addition", [typeof(Vector), typeof(Vector)]))
             }, {
                 Operator.AddAssign,
                 new StaticMethodOperatorEmitter(() => VectorType!, LazyVectorType,
-                    typeof(Vector).GetMethod("op_Addition", new[] { typeof(Vector), typeof(Vector) }))
+                    typeof(Vector).GetMethod("op_Addition", [typeof(Vector), typeof(Vector)]))
             }, {
                 Operator.Sub,
                 new StaticMethodOperatorEmitter(() => VectorType!, LazyVectorType,
-                    typeof(Vector).GetMethod("op_Subtraction", new[] { typeof(Vector), typeof(Vector) }))
+                    typeof(Vector).GetMethod("op_Subtraction", [typeof(Vector), typeof(Vector)]))
             }, {
                 Operator.SubAssign,
                 new StaticMethodOperatorEmitter(() => VectorType!, LazyVectorType,
-                    typeof(Vector).GetMethod("op_Subtraction", new[] { typeof(Vector), typeof(Vector) }))
+                    typeof(Vector).GetMethod("op_Subtraction", [typeof(Vector), typeof(Vector)]))
             }, {
                 Operator.Mul,
                 new StaticMethodOperatorEmitter(() => VectorType!, () => BuiltinType.Float,
@@ -45,11 +45,11 @@ public class VectorBinding {
             }, {
                 Operator.Mul,
                 new StaticMethodOperatorEmitter(() => BuiltinType.Float, LazyVectorType,
-                    typeof(Vector).GetMethod("op_Multiply", new[] { typeof(Vector), typeof(double) }))
+                    typeof(Vector).GetMethod("op_Multiply", [typeof(Vector), typeof(double)]))
             }, {
                 Operator.MulAssign,
                 new StaticMethodOperatorEmitter(() => BuiltinType.Float, LazyVectorType,
-                    typeof(Vector).GetMethod("op_Multiply", new[] { typeof(Vector), typeof(double) }))
+                    typeof(Vector).GetMethod("op_Multiply", [typeof(Vector), typeof(double)]))
             }
         },
         new Dictionary<string, IMethodInvokeFactory> {
@@ -64,7 +64,7 @@ public class VectorBinding {
                 new BoundMethodInvokeFactory("Convert vector to string in a given coordinate system.", true,
                     () => BuiltinType.String,
                     () => [new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")], false, typeof(VectorBinding),
-                    typeof(VectorBinding).GetMethod("ToString", new[] { typeof(Vector), typeof(ITransformFrame) }))
+                    typeof(VectorBinding).GetMethod("ToString", [typeof(Vector), typeof(ITransformFrame)]))
             }, {
                 "to_fixed",
                 new BoundMethodInvokeFactory(

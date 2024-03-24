@@ -26,8 +26,7 @@ public class ModuleManagerWindow : UGUIResizableWindow {
         mainframeStateIcon = mainframeState.GetComponent<RawImage>();
         mainframeStateIcon.texture = UIFactory.Instance.stateActive;
 
-        var tabbedPanels = new UITabbedPanels(new UITab[]
-            { new EntrypointsUITab(), new StateUITab(), new ModulesUITab() }, new Vector2(300, 300));
+        var tabbedPanels = new UITabbedPanels([new EntrypointsUITab(), new StateUITab(), new ModulesUITab()], new Vector2(300, 300));
         root.Add(tabbedPanels, UGUILayout.Align.Stretch, 1);
 
         MinSize = root.Layout();
@@ -293,7 +292,7 @@ public class ModuleManagerWindow : UGUIResizableWindow {
 
         internal void OnProcessesChanged() {
             var modules = Mainframe.Instance!.LastRegistry?.modules.Values.ToArray() ??
-                          Array.Empty<IKontrolModule>();
+                          [];
 
             moduleList!.Elements = modules.Select(module => new ModuleListElement(module, module == selectedModule))
                 .ToArray();
@@ -401,14 +400,9 @@ public class ModuleManagerWindow : UGUIResizableWindow {
         }
     }
 
-    internal struct ModuleListElement {
-        internal IKontrolModule kontrolModule;
-        internal bool selected;
-
-        public ModuleListElement(IKontrolModule kontrolModule, bool selected) {
-            this.kontrolModule = kontrolModule;
-            this.selected = selected;
-        }
+    internal struct ModuleListElement(IKontrolModule kontrolModule, bool selected) {
+        internal IKontrolModule kontrolModule = kontrolModule;
+        internal bool selected = selected;
     }
 
     internal class UIModuleElement : UIListElement<ModuleListElement> {

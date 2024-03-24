@@ -192,7 +192,7 @@ namespace KontrolSystem.GenDocs {
         }
 
         public static string FunctionSignature(IKontrolFunction function) {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
 
             sb.Append("pub ");
             if (!function.IsAsync) sb.Append("sync ");
@@ -204,7 +204,7 @@ namespace KontrolSystem.GenDocs {
             } else {
                 sb.Append(" ( ");
 
-                string offset = new String(' ', sb.Length);
+                string offset = new(' ', sb.Length);
 
                 sb.Append(FunctionParameterSignature(function.Parameters.First()));
                 foreach (RealizedParameter parameter in function.Parameters.Skip(1)) {
@@ -221,7 +221,7 @@ namespace KontrolSystem.GenDocs {
         }
 
         public static string FunctionParameterSignature(RealizedParameter parameter) {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
 
             sb.Append(parameter.name);
             sb.Append(" : ");
@@ -231,7 +231,7 @@ namespace KontrolSystem.GenDocs {
         }
 
         public static string MethodSignature(string type, string name, IMethodInvokeFactory method) {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
 
             sb.Append(type.ToLowerInvariant());
             sb.Append(".");
@@ -242,7 +242,7 @@ namespace KontrolSystem.GenDocs {
             } else {
                 sb.Append(" ( ");
 
-                string offset = new String(' ', sb.Length);
+                string offset = new(' ', sb.Length);
 
                 sb.Append(MethodParameterSignature(method.DeclaredParameters.First()));
                 foreach (FunctionParameter parameter in method.DeclaredParameters.Skip(1)) {
@@ -259,7 +259,7 @@ namespace KontrolSystem.GenDocs {
         }
 
         public static string MethodParameterSignature(FunctionParameter parameter) {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
 
             sb.Append(parameter.name);
             sb.Append(" : ");

@@ -8,13 +8,9 @@ using Xunit.Sdk;
 
 namespace KontrolSystem.TO2.Test;
 
-public class YieldTimeoutTests {
+public class YieldTimeoutTests(ITestOutputHelper output) {
     private static readonly string TO2BaseDir = Path.Combine(".", "to2SelfTest");
-    private readonly ITestOutputHelper output;
-
-    public YieldTimeoutTests(ITestOutputHelper output) {
-        this.output = output;
-    }
+    private readonly ITestOutputHelper output = output;
 
     [Fact]
     public void SyncInfiniteLoop() {

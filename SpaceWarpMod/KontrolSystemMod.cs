@@ -26,8 +26,7 @@ namespace KontrolSystem.SpaceWarpMod {
 
         public static KontrolSystemMod? Instance { get; set; }
 
-        private static GameState[] InvalidStates = new GameState[]
-            { GameState.Invalid, GameState.Flag, GameState.Loading, GameState.PhotoMode, GameState.WarmUpLoading, GameState.MainMenu, GameState.TrainingCenter };
+        private static readonly GameState[] InvalidStates = [GameState.Invalid, GameState.Flag, GameState.Loading, GameState.PhotoMode, GameState.WarmUpLoading, GameState.MainMenu, GameState.TrainingCenter];
 
         public void Awake() {
             ConfigAdapter.Init(Info, Config, gameObject.AddComponent<LoggerAdapter>());

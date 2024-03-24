@@ -13,17 +13,10 @@ public interface UIListElement<T> {
     void Update(T element);
 }
 
-public class UIList<T, U> : UGUIElement where U : UIListElement<T> {
-    private readonly Func<T, U> createElement;
-    private readonly float elementHeight;
-    private U[] uiElements;
-
-
-    public UIList(float elementHeight, Func<T, U> createElement) : base(new GameObject("List", typeof(RectTransform)), new Vector2(50, elementHeight * 3)) {
-        uiElements = Array.Empty<U>();
-        this.elementHeight = elementHeight;
-        this.createElement = createElement;
-    }
+public class UIList<T, U>(float elementHeight, Func<T, U> createElement) : UGUIElement(new GameObject("List", typeof(RectTransform)), new Vector2(50, elementHeight * 3)) where U : UIListElement<T> {
+    private readonly Func<T, U> createElement = createElement;
+    private readonly float elementHeight = elementHeight;
+    private U[] uiElements = [];
 
     public T[] Elements {
         get => uiElements.Select(ui => ui.Element).ToArray();

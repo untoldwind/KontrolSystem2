@@ -8,13 +8,9 @@ using Xunit.Sdk;
 namespace KontrolSystem.TO2.Test;
 
 [Collection("KontrolRegistry")]
-public class TO2SelfTests {
+public class TO2SelfTests(ITestOutputHelper output) {
     private static readonly string TO2BaseDir = Path.Combine(".", "to2SelfTest");
-    private readonly ITestOutputHelper output;
-
-    public TO2SelfTests(ITestOutputHelper output) {
-        this.output = output;
-    }
+    private readonly ITestOutputHelper output = output;
 
     private static string demo_target(long a) {
         return $"Called with {a}";

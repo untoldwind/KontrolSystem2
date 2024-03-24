@@ -14,7 +14,7 @@ public class ExpressionEmitCodeTests {
         var context = new Context(KontrolRegistry.CreateCore());
         var moduleContext = context.CreateModuleContext("DynamicExpression");
         var methodContext = moduleContext.CreateMethodContext(FunctionModifier.Public, false, "Exec",
-            returnType, Enumerable.Empty<FunctionParameter>());
+            returnType, []);
 
         expression.EmitCode(methodContext, false);
         Assert.False(methodContext.HasErrors);
@@ -28,22 +28,22 @@ public class ExpressionEmitCodeTests {
     [Fact]
     public void TestLiteral() {
         var method = GenerateMethod(new LiteralInt(1234), BuiltinType.Int);
-        var result = method.Invoke(null, Array.Empty<object>());
+        var result = method.Invoke(null, []);
 
         Assert.Equal(1234L, result);
 
         method = GenerateMethod(new LiteralFloat(1234.56), BuiltinType.Float);
-        result = method.Invoke(null, Array.Empty<object>());
+        result = method.Invoke(null, []);
 
         Assert.Equal(1234.56, result);
 
         method = GenerateMethod(new LiteralBool(true), BuiltinType.Bool);
-        result = method.Invoke(null, Array.Empty<object>());
+        result = method.Invoke(null, []);
 
         Assert.Equal(true, result);
 
         method = GenerateMethod(new LiteralString("abcded"), BuiltinType.String);
-        result = method.Invoke(null, Array.Empty<object>());
+        result = method.Invoke(null, []);
 
         Assert.Equal("abcded", result);
     }
@@ -51,7 +51,7 @@ public class ExpressionEmitCodeTests {
     [Fact]
     public void TestSimpleCalc() {
         var method = GenerateMethod(TO2ParserExpressions.Expression.Parse("1234 + 4321"), BuiltinType.Int);
-        var result = method.Invoke(null, Array.Empty<object>());
+        var result = method.Invoke(null, []);
 
         Assert.Equal(5555L, result);
     }

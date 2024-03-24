@@ -12,19 +12,19 @@ public class MultiTests {
         var result = parser.TryParse("");
 
         Assert.True(result.success);
-        Assert.Equal(new List<char>(), result.value);
+        Assert.Equal([], result.value);
 
         result = parser.TryParse("abcde");
 
         Assert.True(result.success);
         Assert.Equal("abcde", result.remaining.ToString());
-        Assert.Equal(new List<char>(), result.value);
+        Assert.Equal([], result.value);
 
         result = parser.TryParse("BBBde");
 
         Assert.True(result.success);
         Assert.Equal("de", result.remaining.ToString());
-        Assert.Equal(new List<char>(new[] { 'B', 'B', 'B' }), result.value);
+        Assert.Equal(new List<char>(['B', 'B', 'B']), result.value);
     }
 
     [Fact]
@@ -42,13 +42,13 @@ public class MultiTests {
 
         Assert.True(result.success);
         Assert.Equal("bcde", result.remaining.ToString());
-        Assert.Equal(new List<char>(new[] { 'B' }), result.value);
+        Assert.Equal(new List<char>(['B']), result.value);
 
         result = parser.TryParse("BBBde");
 
         Assert.True(result.success);
         Assert.Equal("de", result.remaining.ToString());
-        Assert.Equal(new List<char>(new[] { 'B', 'B', 'B' }), result.value);
+        Assert.Equal(new List<char>(['B', 'B', 'B']), result.value);
     }
 
     [Fact]
@@ -63,18 +63,18 @@ public class MultiTests {
 
         Assert.True(result.success);
         Assert.Equal(", e", result.remaining.ToString());
-        Assert.Equal(new List<char> { 'a' }, result.value);
+        Assert.Equal(['a'], result.value);
 
         result = parser.TryParse("a,");
 
         Assert.True(result.success);
         Assert.Equal(",", result.remaining.ToString());
-        Assert.Equal(new List<char> { 'a' }, result.value);
+        Assert.Equal(['a'], result.value);
 
         result = parser.TryParse("a , b,a, A ,B");
 
         Assert.True(result.success);
         Assert.Equal("", result.remaining.ToString());
-        Assert.Equal(new List<char> { 'a', 'b', 'a', 'A', 'B' }, result.value);
+        Assert.Equal(['a', 'b', 'a', 'A', 'B'], result.value);
     }
 }

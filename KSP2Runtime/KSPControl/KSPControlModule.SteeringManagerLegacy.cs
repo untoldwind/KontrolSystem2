@@ -30,7 +30,7 @@ public partial class KSPControlModule {
         private readonly PidLoop rollRatePI = new(1, 0.1, 0, extraUnwind: true);
         private readonly MovingAverage rollTorqueCalc = new() { SampleLimit = 15 };
 
-        private readonly Dictionary<PartComponentModule, ITorqueProvider> torqueProviders = new();
+        private readonly Dictionary<PartComponentModule, ITorqueProvider> torqueProviders = [];
 
         private readonly KSPVesselModule.VesselAdapter vessel;
         private readonly TorquePI yawPI = new();

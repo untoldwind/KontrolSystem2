@@ -15,24 +15,24 @@ public static class RandomBinding {
                 "next_int",
                 new BoundMethodInvokeFactory("Get next random number between `min` and `max`", true,
                     () => BuiltinType.Int,
-                    () => new List<RealizedParameter> {
+                    () => [
                         new("min", BuiltinType.Int, "Minimum value (inclusive)"),
                         new("max", BuiltinType.Int, "Maximum value (inclusive)")
-                    }, false, typeof(RandomBinding), typeof(RandomBinding).GetMethod("NextInt"))
+                    ], false, typeof(RandomBinding), typeof(RandomBinding).GetMethod("NextInt"))
             }, {
                 "next_float",
                 new BoundMethodInvokeFactory("Get next random number between 0.0 and 1.0", true,
                     () => BuiltinType.Float,
-                    () => new List<RealizedParameter>(), false, typeof(Random),
+                    () => [], false, typeof(Random),
                     typeof(Random).GetMethod("NextDouble"))
             }, {
                 "next_gaussian",
                 new BoundMethodInvokeFactory("Get next gaussian distributed random number", true,
                     () => BuiltinType.Float,
-                    () => new List<RealizedParameter> {
+                    () => [
                         new("mu", BuiltinType.Float, "Mean value", new FloatDefaultValue(0.0)),
                         new("sigma", BuiltinType.Float, "Standard deviation", new FloatDefaultValue(1.0))
-                    }, false, typeof(RandomBinding), typeof(RandomBinding).GetMethod("NextGaussian"))
+                    ], false, typeof(RandomBinding), typeof(RandomBinding).GetMethod("NextGaussian"))
             }
         },
         BuiltinType.NoFields);

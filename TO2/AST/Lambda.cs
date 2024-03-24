@@ -183,7 +183,7 @@ public class Lambda : Expression, IVariableContainer {
 
         lambdaType.GeneratedType(parent.ModuleContext);
 
-        return new LambdaClass(clonedVariables.Values.ToList(), constructorBuilder, lambdaContext.MethodBuilder);
+        return new LambdaClass([.. clonedVariables.Values], constructorBuilder, lambdaContext.MethodBuilder);
     }
 
     private List<FunctionParameter> FixedParameters(FunctionType lambdaType) {

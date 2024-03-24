@@ -31,7 +31,7 @@ public static class ArrayMethods {
             foreach (var item in mapper(source[i]))
                 result.Add(item);
 
-        return result.ToArray();
+        return [.. result];
     }
 
     public static U[] FilterMap<T, U>(T[] source, Func<T, Option<U>> mapper) {
@@ -43,7 +43,7 @@ public static class ArrayMethods {
             if (item.defined) result.Add(item.value);
         }
 
-        return result.ToArray();
+        return [.. result];
     }
 
     public static Option<T> Find<T>(T[] source, Func<T, bool> predicate) {
@@ -98,7 +98,7 @@ public static class ArrayMethods {
 
     public static T[] SortBy<T, U>(T[] array, Func<T, U> value) {
         try {
-            return array.OrderBy(value).ToArray();
+            return [.. array.OrderBy(value)];
         } catch (InvalidOperationException) {
             return array;
         }
@@ -123,7 +123,7 @@ public static class ArrayMethods {
         start = start < 0 ? 0 : start;
         end = end < 0 || end > source.Length ? source.Length : end;
         if (start >= end)
-            return new T[0];
+            return [];
         var result = new T[end - start];
         Array.Copy(source, start, result, 0, end - start);
         return result;

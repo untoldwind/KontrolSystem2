@@ -112,7 +112,7 @@ public class TO2ParserExpressionTests {
         Assert.Equal("", result.remaining.ToString());
         Helpers.ShouldDeepEqual(
             new Binary(new VariableGet(["ab"]), Operator.Add,
-                new Binary(new LiteralInt(12), Operator.Mul, new VariableGet(new List<string> { "_be13" }))),
+                new Binary(new LiteralInt(12), Operator.Mul, new VariableGet(["_be13"]))),
             result.value, IgnorePosition);
     }
 
@@ -123,7 +123,7 @@ public class TO2ParserExpressionTests {
         Assert.True(result.success);
         Assert.Equal(" ", result.remaining.ToString());
         Helpers.ShouldDeepEqual(
-            new MethodCall(new VariableGet(["ab"]), "to_int", new List<Expression>()),
+            new MethodCall(new VariableGet(["ab"]), "to_int", []),
             result.value, IgnorePosition);
 
         result = TO2ParserExpressions.Expression.TryParse("de.amethod(1, 2) ");
@@ -132,7 +132,7 @@ public class TO2ParserExpressionTests {
         Assert.Equal(" ", result.remaining.ToString());
         Helpers.ShouldDeepEqual(
             new MethodCall(new VariableGet(["de"]), "amethod",
-                new List<Expression> { new LiteralInt(1), new LiteralInt(2) }), result.value, IgnorePosition);
+                [new LiteralInt(1), new LiteralInt(2)]), result.value, IgnorePosition);
 
         result = TO2ParserExpressions.Expression.TryParse("(12 + 56).to_float() ");
 
@@ -140,7 +140,7 @@ public class TO2ParserExpressionTests {
         Assert.Equal(" ", result.remaining.ToString());
         Helpers.ShouldDeepEqual(
             new MethodCall(new Bracket(new Binary(new LiteralInt(12), Operator.Add, new LiteralInt(56))),
-                "to_float", new List<Expression>()), result.value, IgnorePosition);
+                "to_float", []), result.value, IgnorePosition);
 
         result = TO2ParserExpressions.Expression.TryParse("de.amethod(1, 2).to_something() ");
 
@@ -149,8 +149,8 @@ public class TO2ParserExpressionTests {
         Helpers.ShouldDeepEqual(
             new MethodCall(
                 new MethodCall(new VariableGet(["de"]), "amethod",
-                    new List<Expression> { new LiteralInt(1), new LiteralInt(2) }), "to_something",
-                new List<Expression>()), result.value, IgnorePosition);
+                    [new LiteralInt(1), new LiteralInt(2)]), "to_something",
+                []), result.value, IgnorePosition);
     }
 
     [Fact]
@@ -159,7 +159,7 @@ public class TO2ParserExpressionTests {
 
         Assert.True(result.success);
         Assert.Equal("", result.remaining.ToString());
-        Helpers.ShouldDeepEqual(new UnaryPrefix(Operator.Not, new VariableGet(new List<string> { "ab" })),
+        Helpers.ShouldDeepEqual(new UnaryPrefix(Operator.Not, new VariableGet(["ab"])),
             result.value, IgnorePosition);
     }
 

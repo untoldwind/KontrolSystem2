@@ -13,9 +13,10 @@ public partial class KSPUIModule {
         private readonly Gradient gradient;
 
         public GradientWrapper(KSPConsoleModule.RgbaColor start, KSPConsoleModule.RgbaColor end) {
-            colors = new SortedList<double, KSPConsoleModule.RgbaColor>();
-            colors.Add(0, start);
-            colors.Add(1, end);
+            colors = new SortedList<double, KSPConsoleModule.RgbaColor> {
+                { 0, start },
+                { 1, end }
+            };
             gradient = new Gradient();
             dirty = true;
         }

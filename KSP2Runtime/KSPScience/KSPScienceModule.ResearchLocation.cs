@@ -6,12 +6,8 @@ namespace KontrolSystem.KSP.Runtime.KSPScience;
 public partial class KSPScienceModule {
     [KSClass("ResearchLocation",
         Description = "Represents a research location of a science experiment.")]
-    public class ResearchLocationAdapter {
-        private readonly ResearchLocation researchLocation;
-
-        public ResearchLocationAdapter(ResearchLocation researchLocation) {
-            this.researchLocation = researchLocation;
-        }
+    public class ResearchLocationAdapter(ResearchLocation researchLocation) {
+        private readonly ResearchLocation researchLocation = researchLocation;
 
         [KSField] public string Id => researchLocation.ResearchLocationId;
 

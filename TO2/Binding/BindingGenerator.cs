@@ -18,7 +18,7 @@ public static class BindingGenerator {
         { typeof(Cell<>), BuiltinType.Cell }
     };
 
-    private static readonly Dictionary<Type, CompiledKontrolModule> BoundModules = new();
+    private static readonly Dictionary<Type, CompiledKontrolModule> BoundModules = [];
 
     public static CompiledKontrolModule BindModule(Type moduleType, IEnumerable<RealizedType>? additionalTypes = null,
         IEnumerable<IKontrolConstant>? additionConstants = null) {
@@ -31,7 +31,7 @@ public static class BindingGenerator {
 
             var runtimeType = moduleType;
             var functions = new List<CompiledKontrolFunction>();
-            var types = new List<RealizedType>(additionalTypes ?? Enumerable.Empty<RealizedType>());
+            var types = new List<RealizedType>(additionalTypes ?? []);
             var constants =
                 new List<IKontrolConstant>(additionConstants ?? Enumerable.Empty<CompiledKontrolConstant>());
 
@@ -83,7 +83,7 @@ public static class BindingGenerator {
 
             var module = new CompiledKontrolModule(ksModule.Name,
                 NormalizeDescription(ksModule.Description), true, null, types.Select(t => (t.LocalName, t)),
-                constants, functions, new List<CompiledKontrolFunction>());
+                constants, functions, []);
             BoundModules.Add(moduleType, module);
             return module;
         }
@@ -97,8 +97,8 @@ public static class BindingGenerator {
         var boundType = new BoundType(modulePrefix, ksClass.Name ?? type.Name,
             NormalizeDescription(ksClass.Description), type,
             BuiltinType.NoOperators, BuiltinType.NoOperators,
-            Enumerable.Empty<(string name, IMethodInvokeFactory invoker)>(),
-            Enumerable.Empty<(string name, IFieldAccessFactory access)>()
+            [],
+            []
         );
         RegisterTypeMapping(type, boundType);
         return boundType;
@@ -226,7 +226,7 @@ public static class BindingGenerator {
 
                 return new ArrayType(elementType);
             } else if (type == typeof(Action)) {
-                return new FunctionType(false, new List<TO2Type>(), BuiltinType.Unit);
+                return new FunctionType(false, [], BuiltinType.Unit);
             }
 
             var t = TypeMappings.Get(type);

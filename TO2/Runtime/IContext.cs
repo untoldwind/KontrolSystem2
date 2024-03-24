@@ -25,12 +25,8 @@ public interface IContext {
     IContext CloneBackground(CancellationTokenSource token);
 }
 
-public class EmptyContext : IContext {
+public class EmptyContext(bool background) : IContext {
     private readonly ConsoleLogger logger = new();
-
-    public EmptyContext(bool background) {
-        IsBackground = background;
-    }
 
     public ITO2Logger Logger => logger;
 
@@ -48,9 +44,9 @@ public class EmptyContext : IContext {
 
     public CoreError.StackEntry? CurrentCallSite { get; set; }
 
-    public IEnumerable<CoreError.StackEntry> CurrentStack() => Enumerable.Empty<CoreError.StackEntry>();
+    public IEnumerable<CoreError.StackEntry> CurrentStack() => [];
 
-    public bool IsBackground { get; }
+    public bool IsBackground { get; } = background;
 
     public IContext CloneBackground(CancellationTokenSource token) {
         return new EmptyContext(true);

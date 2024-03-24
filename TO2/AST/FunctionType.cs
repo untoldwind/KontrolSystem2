@@ -79,7 +79,7 @@ public class FunctionType(bool isAsync, List<TO2Type> parameterTypes, TO2Type re
     public override IEnumerable<(string name, RealizedType type)> InferGenericArgument(ModuleContext context,
         RealizedType? concreteType) {
         var concreteFunction = concreteType as FunctionType;
-        if (concreteFunction == null) return Enumerable.Empty<(string name, RealizedType type)>();
+        if (concreteFunction == null) return [];
         return returnType.InferGenericArgument(context, concreteFunction.returnType.UnderlyingType(context)).Concat(
             parameterTypes.Zip(concreteFunction.parameterTypes,
                     (p, concreteP) => p.InferGenericArgument(context, concreteP.UnderlyingType(context)))

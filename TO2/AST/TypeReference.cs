@@ -140,7 +140,7 @@ public class DirectTypeReference(RealizedType referencedType, List<TO2Type> decl
 
     public override Dictionary<string, IFieldAccessFactory> DeclaredFields => referencedType.DeclaredFields;
 
-    public override TO2Type[] GenericParameters => declaredTypeArguments.ToArray();
+    public override TO2Type[] GenericParameters => [.. declaredTypeArguments];
 
     public override Type GeneratedType(ModuleContext context) {
         return UnderlyingType(context).GeneratedType(context);

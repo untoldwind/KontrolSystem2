@@ -26,6 +26,6 @@ public class GenericParameter(string name) : RealizedType {
         RealizedType? concreteType) {
         return concreteType != null
             ? (name: name, concreteType).Yield()
-            : Enumerable.Empty<(string name, RealizedType concreteType)>();
+            : [];
     }
 }

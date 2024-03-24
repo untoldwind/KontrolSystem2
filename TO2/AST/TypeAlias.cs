@@ -16,16 +16,16 @@ public class TypeAlias(
     Position end = new())
     : Node(start, end), IModuleItem {
     public IEnumerable<StructuralError> TryImportConstants(ModuleContext context) {
-        return Enumerable.Empty<StructuralError>();
+        return [];
     }
 
     public IEnumerable<StructuralError> TryImportFunctions(ModuleContext context) {
-        return Enumerable.Empty<StructuralError>();
+        return [];
     }
 
     public IEnumerable<StructuralError> TryDeclareTypes(ModuleContext context) {
         if (exported) context.exportedTypes!.Add((name, new TypeAliasDelegate(context, type, description, this)));
-        return Enumerable.Empty<StructuralError>();
+        return [];
     }
 
     public IEnumerable<StructuralError> TryImportTypes(ModuleContext context) {
@@ -37,11 +37,11 @@ public class TypeAlias(
                 End
             ).Yield();
         context.mappedTypes.Add(name, type);
-        return Enumerable.Empty<StructuralError>();
+        return [];
     }
 
     public IEnumerable<StructuralError> TryVerifyFunctions(ModuleContext context) {
-        return Enumerable.Empty<StructuralError>();
+        return [];
     }
 
     public override REPLValueFuture Eval(REPLContext context) {
@@ -102,14 +102,14 @@ public class TypeAliasDelegate : TO2Type {
 
     public override RealizedType UnderlyingType(ModuleContext context) {
         if (lookingUp)
-            throw new CompilationErrorException(new List<StructuralError> {
+            throw new CompilationErrorException([
                 new(
                     StructuralError.ErrorType.InvalidType,
                     $"Cyclic dependency to {aliasedType.Name}",
                     target.Start,
                     target.End
                 )
-            });
+            ]);
         lookingUp = true;
         var realized = aliasedType.UnderlyingType(declaredModule);
         lookingUp = false;

@@ -6,14 +6,9 @@ public interface IAnyFutureResult {
     object? ValueObject { get; }
 }
 
-public readonly struct FutureResult<T> : IAnyFutureResult {
-    public readonly bool ready;
-    public readonly T value;
-
-    public FutureResult(T value) {
-        ready = true;
-        this.value = value;
-    }
+public readonly struct FutureResult<T>(T value) : IAnyFutureResult {
+    public readonly bool ready = true;
+    public readonly T value = value;
 
     public bool IsReady => ready;
 
@@ -33,12 +28,8 @@ public abstract class Future<T> : IAnyFuture {
 }
 
 public static class Future {
-    public class Success<T> : Future<T> {
-        private readonly T value;
-
-        public Success(T value) {
-            this.value = value;
-        }
+    public class Success<T>(T value) : Future<T> {
+        private readonly T value = value;
 
         public override FutureResult<T> PollValue() {
             return new FutureResult<T>(value);

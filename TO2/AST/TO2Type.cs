@@ -106,7 +106,7 @@ public abstract class TO2Type {
 
     public virtual IEnumerable<(string name, RealizedType type)> InferGenericArgument(ModuleContext context,
         RealizedType? concreteType) {
-        return Enumerable.Empty<(string name, RealizedType type)>();
+        return [];
     }
 
     public virtual IREPLValue REPLCast(object? value) {
@@ -126,7 +126,7 @@ public abstract class RealizedType : TO2Type {
 
     public virtual Dictionary<string, IFieldAccessFactory> DeclaredFields => BuiltinType.NoFields;
 
-    public virtual TO2Type[] GenericParameters => Array.Empty<TO2Type>();
+    public virtual TO2Type[] GenericParameters => [];
 
     public override IMethodInvokeFactory? FindMethod(ModuleContext context, string methodName) {
         return DeclaredMethods.Get(methodName);

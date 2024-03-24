@@ -5,13 +5,9 @@ using UnityEngine;
 namespace KontrolSystem.KSP.Runtime.KSPUI;
 
 public partial class KSPUIModule {
-    public abstract class Transform2D : AbstractContainer2D, GLUIDrawer.IGLUIDrawable {
-        protected List<GLUIDrawer.IGLUIDrawable> elements = new();
-        protected Matrix4x4 transform;
-
-        protected Transform2D(Matrix4x4 transform) {
-            this.transform = transform;
-        }
+    public abstract class Transform2D(Matrix4x4 transform) : AbstractContainer2D, GLUIDrawer.IGLUIDrawable {
+        protected List<GLUIDrawer.IGLUIDrawable> elements = [];
+        protected Matrix4x4 transform = transform;
 
         public void OnDraw(GLUIDrawer.GLUIDraw draw) {
             var currentTransform = draw.CurrentTransform;
@@ -36,13 +32,9 @@ public partial class KSPUIModule {
     }
 
     [KSClass]
-    public class Translate2D : Transform2D {
-        private Vector2d translate;
-
-        public Translate2D(Vector2d translate) : base(
-            Matrix4x4.Translate(new Vector3((float)translate.x, (float)translate.y))) {
-            this.translate = translate;
-        }
+    public class Translate2D(Vector2d translate) : Transform2D(
+        Matrix4x4.Translate(new Vector3((float)translate.x, (float)translate.y))) {
+        private Vector2d translate = translate;
 
         [KSField]
         public Vector2d Translate {
@@ -55,13 +47,9 @@ public partial class KSPUIModule {
     }
 
     [KSClass]
-    public class Scale2D : Transform2D {
+    public class Scale2D(Vector2d scale, Vector2d pivot = default) : Transform2D(MakeTransform(scale, pivot)) {
         private Vector2d pivot;
-        private Vector2d scale;
-
-        public Scale2D(Vector2d scale, Vector2d pivot = default) : base(MakeTransform(scale, pivot)) {
-            this.scale = scale;
-        }
+        private Vector2d scale = scale;
 
         [KSField]
         public Vector2d Scale {
@@ -89,14 +77,9 @@ public partial class KSPUIModule {
     }
 
     [KSClass]
-    public class Rotate2D : Transform2D {
-        private double degrees;
-        private Vector2d pivot;
-
-        public Rotate2D(double degrees, Vector2d pivot = default) : base(MakeTransform(degrees, pivot)) {
-            this.degrees = degrees;
-            this.pivot = pivot;
-        }
+    public class Rotate2D(double degrees, Vector2d pivot = default) : Transform2D(MakeTransform(degrees, pivot)) {
+        private double degrees = degrees;
+        private Vector2d pivot = pivot;
 
         [KSField]
         public double Degrees {

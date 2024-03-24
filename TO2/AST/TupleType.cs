@@ -47,7 +47,7 @@ public class TupleType : RealizedType {
             return Type.GetType("System.ValueTuple`8")!.MakeGenericType(itemTypes.Take(7).Concat(rest.Yield()).ToArray());
         }
 
-        return Type.GetType($"System.ValueTuple`{itemTypes.Count}")!.MakeGenericType(itemTypes.ToArray());
+        return Type.GetType($"System.ValueTuple`{itemTypes.Count}")!.MakeGenericType([.. itemTypes]);
     }
 }
 

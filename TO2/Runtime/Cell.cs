@@ -3,15 +3,10 @@ using System.Collections.Generic;
 
 namespace KontrolSystem.TO2.Runtime;
 
-public class Cell<T> : IObservable<T> {
-    private readonly object cellLock;
-    private T element;
+public class Cell<T>(T value) : IObservable<T> {
+    private readonly object cellLock = new();
+    private T element = value;
     private List<IObserver<T>>? observers;
-
-    public Cell(T value) {
-        element = value;
-        cellLock = new object();
-    }
 
     public T Value {
         get {
@@ -29,7 +24,7 @@ public class Cell<T> : IObservable<T> {
     }
 
     public IDisposable Subscribe(IObserver<T> observer) {
-        observers ??= new List<IObserver<T>>();
+        observers ??= [];
         observers.Add(observer);
         return new Unsubscriber(observers, observer);
     }
@@ -49,14 +44,9 @@ public class Cell<T> : IObservable<T> {
         foreach (var observer in observers) observer.OnNext(value);
     }
 
-    private class Unsubscriber : IDisposable {
-        private readonly IObserver<T>? observer;
-        private readonly List<IObserver<T>> observers;
-
-        public Unsubscriber(List<IObserver<T>> observers, IObserver<T> observer) {
-            this.observers = observers;
-            this.observer = observer;
-        }
+    private class Unsubscriber(List<IObserver<T>> observers, IObserver<T> observer) : IDisposable {
+        private readonly IObserver<T>? observer = observer;
+        private readonly List<IObserver<T>> observers = observers;
 
         public void Dispose() {
             if (observer != null && observers.Contains(observer))

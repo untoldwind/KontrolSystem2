@@ -2,12 +2,8 @@
 
 namespace KontrolSystem.TO2.Runtime;
 
-public class ArrayBuilder<T> {
-    private readonly List<T> elements;
-
-    public ArrayBuilder(long capacity) {
-        elements = new List<T>((int)capacity);
-    }
+public class ArrayBuilder<T>(long capacity) {
+    private readonly List<T> elements = new((int)capacity);
 
     public long Length => elements.Count;
 
@@ -17,7 +13,7 @@ public class ArrayBuilder<T> {
     }
 
     public T[] Result() {
-        return elements.ToArray();
+        return [.. elements];
     }
 }
 

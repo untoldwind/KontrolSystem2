@@ -23,7 +23,7 @@ public static class DefaultValue {
         default:
             IBlockContext defaultContext = new SyncBlockContext(context.ModuleContext, FunctionModifier.Public,
                 false, $"default_{context.MethodBuilder!.Name}_{parameter.name}", parameter.type!,
-                new List<FunctionParameter>());
+                []);
             var resultType = parameter.defaultValue.ResultType(defaultContext);
 
             if (!parameter.type!.IsAssignableFrom(context.ModuleContext, resultType)) {
@@ -87,12 +87,8 @@ public class StringDefaultValue(string value) : IDefaultValue {
     }
 }
 
-public class DefaultValueFactoryFunction : IDefaultValue {
-    private readonly MethodInfo method;
-
-    public DefaultValueFactoryFunction(MethodInfo method) {
-        this.method = method;
-    }
+public class DefaultValueFactoryFunction(MethodInfo method) : IDefaultValue {
+    private readonly MethodInfo method = method;
 
     public void EmitCode(IBlockContext context) {
         context.IL.EmitCall(OpCodes.Call, method, 0);

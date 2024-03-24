@@ -6,14 +6,9 @@ using KSP.Sim.impl;
 
 namespace KontrolSystem.KSP.Runtime.KSPOrbit;
 
-public class OrbitWrapper : KSPOrbitModule.IOrbit {
-    private readonly IKSPContext context;
-    private readonly PatchedConicsOrbit orbit;
-
-    public OrbitWrapper(IKSPContext context, PatchedConicsOrbit orbit) {
-        this.context = context;
-        this.orbit = orbit;
-    }
+public class OrbitWrapper(IKSPContext context, PatchedConicsOrbit orbit) : KSPOrbitModule.IOrbit {
+    private readonly IKSPContext context = context;
+    private readonly PatchedConicsOrbit orbit = orbit;
 
     public KSPOrbitModule.IBody ReferenceBody => new BodyWrapper(context, orbit.referenceBody);
 

@@ -53,6 +53,6 @@ public static class Direct {
         List<CompiledKontrolConstant> constants,
         List<CompiledKontrolFunction> functions) {
         return new CompiledKontrolModule(name, description, true, null, types.Select(t => (t.LocalName, t)), constants,
-            functions, new List<CompiledKontrolFunction>());
+            functions, []);
     }
 }

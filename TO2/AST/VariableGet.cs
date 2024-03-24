@@ -78,7 +78,7 @@ public class VariableGet : Expression, IAssignContext {
             context.IL.EmitPtr(OpCodes.Ldftn, function.RuntimeMethod!);
             context.IL.EmitNew(OpCodes.Newobj,
                 function.DelegateType().GeneratedType(context.ModuleContext)
-                    .GetConstructor(new[] { typeof(object), typeof(IntPtr) })!);
+                    .GetConstructor([typeof(object), typeof(IntPtr)])!);
             return;
         }
 

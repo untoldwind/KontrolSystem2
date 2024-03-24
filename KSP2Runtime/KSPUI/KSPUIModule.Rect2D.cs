@@ -43,12 +43,12 @@ public partial class KSPUIModule {
         }
 
         private void UpdateDrawPoints() {
-            drawPoints = new[] {
+            drawPoints = [
                 new Vector2((float)point1.x, (float)point1.y),
                 new Vector2((float)point2.x, (float)point1.y),
                 new Vector2((float)point2.x, (float)point2.y),
                 new Vector2((float)point1.x, (float)point2.y)
-            };
+            ];
         }
     }
 }

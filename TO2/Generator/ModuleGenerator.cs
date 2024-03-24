@@ -39,14 +39,14 @@ public static class ModuleGenerator {
                 new DeclaredKontrolConstant(declaredModule, constant, runtimeField);
 
             if (moduleContext.mappedConstants.ContainsKey(declaredConstant.Name))
-                throw new CompilationErrorException(new List<StructuralError> {
+                throw new CompilationErrorException([
                     new(
                         StructuralError.ErrorType.DuplicateConstantName,
                         $"Module {declaredModule.Name} already defines a constant {declaredConstant.Name}",
                         constant.Start,
                         constant.End
                     )
-                });
+                ]);
 
             moduleContext.mappedConstants.Add(declaredConstant.Name, declaredConstant);
             declaredModule.declaredConstants.Add(declaredConstant.Name, declaredConstant);
@@ -73,14 +73,14 @@ public static class ModuleGenerator {
                 new DeclaredKontrolFunction(declaredModule, methodContext, function);
 
             if (moduleContext.mappedFunctions.ContainsKey(declaredFunction.Name))
-                throw new CompilationErrorException(new List<StructuralError> {
+                throw new CompilationErrorException([
                     new(
                         StructuralError.ErrorType.DuplicateFunctionName,
                         $"Module {declaredModule.Name} already defines a function {declaredFunction.Name}",
                         function.Start,
                         function.End
                     )
-                });
+                ]);
 
             if (moduleContext.mappedFunctions.TryGetValue(declaredFunction.Name, out var contextExisting)) {
                 moduleContext.mappedFunctions[declaredFunction.Name] = contextExisting + declaredFunction;

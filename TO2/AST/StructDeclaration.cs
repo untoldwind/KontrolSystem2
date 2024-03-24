@@ -9,23 +9,14 @@ using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST;
 
-public readonly struct StructField {
-    public readonly string name;
-    public readonly TO2Type type;
-    public readonly string description;
-    public readonly Expression initializer;
-    public readonly Position start;
-    public readonly Position end;
-
-    public StructField(string name, TO2Type type, string description, Expression initializer,
-        Position start = new(), Position end = new()) {
-        this.name = name;
-        this.type = type;
-        this.description = description;
-        this.initializer = initializer;
-        this.start = start;
-        this.end = end;
-    }
+public readonly struct StructField(string name, TO2Type type, string description, Expression initializer,
+    Position start = new(), Position end = new()) {
+    public readonly string name = name;
+    public readonly TO2Type type = type;
+    public readonly string description = description;
+    public readonly Expression initializer = initializer;
+    public readonly Position start = start;
+    public readonly Position end = end;
 }
 
 public class StructDeclaration : Node, IModuleItem, IVariableContainer {
@@ -54,7 +45,7 @@ public class StructDeclaration : Node, IModuleItem, IVariableContainer {
         typeDelegate = new StructTypeAliasDelegate(context, name, description,
             fields.Where(e => e.IsRight).Select(e => e.Right).ToList());
         if (exported) context.exportedTypes!.Add((name, typeDelegate));
-        return Enumerable.Empty<StructuralError>();
+        return [];
     }
 
     public IEnumerable<StructuralError> TryImportTypes(ModuleContext context) {
@@ -66,20 +57,20 @@ public class StructDeclaration : Node, IModuleItem, IVariableContainer {
                 End
             ).Yield();
         context.mappedTypes.Add(name, typeDelegate!);
-        return Enumerable.Empty<StructuralError>();
+        return [];
     }
 
     public IEnumerable<StructuralError> TryImportConstants(ModuleContext context) {
         typeDelegate!.EnsureFields();
-        return Enumerable.Empty<StructuralError>();
+        return [];
     }
 
     public IEnumerable<StructuralError> TryVerifyFunctions(ModuleContext context) {
-        return Enumerable.Empty<StructuralError>();
+        return [];
     }
 
     public IEnumerable<StructuralError> TryImportFunctions(ModuleContext context) {
-        return Enumerable.Empty<StructuralError>();
+        return [];
     }
 
     public IVariableContainer? ParentContainer => null;
@@ -150,11 +141,11 @@ public class StructTypeAliasDelegate : TO2Type {
         var constructorBuilder = structContext.typeBuilder.DefineDefaultConstructor(MethodAttributes.Public);
 
         realizedType = new RecordStructType(declaredModule.moduleName, name, description, structContext.typeBuilder,
-            Enumerable.Empty<RecordStructField>(),
-            new OperatorCollection(),
-            new OperatorCollection(),
-            new Dictionary<string, IMethodInvokeFactory>(),
-            new Dictionary<string, IFieldAccessFactory>(),
+            [],
+            [],
+            [],
+            [],
+            [],
             constructorBuilder, GeneratedType);
     }
 

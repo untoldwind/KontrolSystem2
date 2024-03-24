@@ -15,12 +15,12 @@ public struct ConsoleLine {
         this.line = line;
     }
 
-    internal void Clear() {
+    internal readonly void Clear() {
         if (line == null) return;
         for (var i = 0; i < line.Length; i++) line[i] = ' ';
     }
 
-    internal bool IsEmpty() {
+    internal readonly bool IsEmpty() {
         if (line != null)
             for (var i = 0; i < line.Length; i++)
                 if (line[i] != ' ' && line[i] != 0)
@@ -29,7 +29,7 @@ public struct ConsoleLine {
         return true;
     }
 
-    public string ContentAsString() {
+    public readonly string ContentAsString() {
         if (line.Length == 0) return "";
 
         var endIdx = line.Length - 1;
@@ -39,7 +39,7 @@ public struct ConsoleLine {
         return new string(line, 0, endIdx + 1);
     }
 
-    public override string ToString() {
+    public override readonly string ToString() {
         return new string(line);
     }
 }

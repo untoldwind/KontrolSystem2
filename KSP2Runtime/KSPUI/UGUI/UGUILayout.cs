@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime.KSPUI.UGUI;
 
-public abstract class UGUILayout {
+public abstract class UGUILayout(RectTransform containerTransform, UGUILayout.Padding padding = default) {
     public enum Align {
         Start,
         Center,
@@ -12,15 +12,9 @@ public abstract class UGUILayout {
         Stretch
     }
 
-    protected readonly RectTransform containerTransform;
-    protected readonly List<ILayoutEntry> layoutEntries;
-    protected readonly Padding padding;
-
-    protected UGUILayout(RectTransform containerTransform, Padding padding = default) {
-        this.containerTransform = containerTransform;
-        this.padding = padding;
-        layoutEntries = new List<ILayoutEntry>();
-    }
+    protected readonly RectTransform containerTransform = containerTransform;
+    protected readonly List<ILayoutEntry> layoutEntries = [];
+    protected readonly Padding padding = padding;
 
     public abstract Vector2 MinSize { get; }
 
@@ -58,43 +52,31 @@ public abstract class UGUILayout {
         void Remove();
     }
 
-    private struct LayoutSpace : ILayoutEntry {
-        private readonly UGUILayout layout;
-        public LayoutSpace(UGUILayout layout, float minSize, float stretch) {
-            this.layout = layout;
-            Stretch = stretch;
-            MinSize = new Vector2(minSize, minSize);
+    private struct LayoutSpace(UGUILayout layout, float minSize, float stretch) : ILayoutEntry {
+        private readonly UGUILayout layout = layout;
+
+        public readonly RectTransform? Transform => null;
+        public Vector2 MinSize { get; } = new Vector2(minSize, minSize);
+        public float Stretch { get; } = stretch;
+        public readonly Align Align => Align.Stretch;
+
+        public readonly void Layout() {
         }
 
-        public RectTransform? Transform => null;
-        public Vector2 MinSize { get; }
-        public float Stretch { get; }
-        public Align Align => Align.Stretch;
-
-        public void Layout() {
-        }
-
-        public void Remove() {
+        public readonly void Remove() {
             layout.layoutEntries.Remove(this);
         }
     }
 
-    private readonly struct LayoutElement : ILayoutEntry {
-        private readonly UGUILayout layout;
-        private readonly UGUIElement element;
-
-        public LayoutElement(UGUILayout layout, UGUIElement element, Align align, float stretch) {
-            this.layout = layout;
-            this.element = element;
-            Align = align;
-            Stretch = stretch;
-        }
+    private readonly struct LayoutElement(UGUILayout layout, UGUIElement element, UGUILayout.Align align, float stretch) : ILayoutEntry {
+        private readonly UGUILayout layout = layout;
+        private readonly UGUIElement element = element;
 
         public RectTransform Transform => element.Transform;
         public Vector2 MinSize => element.MinSize;
-        public float Stretch { get; }
+        public float Stretch { get; } = stretch;
 
-        public Align Align { get; }
+        public Align Align { get; } = align;
 
         public void Layout() {
             element.Layout();
@@ -106,22 +88,14 @@ public abstract class UGUILayout {
         }
     }
 
-    private readonly struct LayoutEntry : ILayoutEntry {
-        private readonly UGUILayout layout;
-        private readonly GameObject child;
-
-        public LayoutEntry(UGUILayout layout, GameObject child, Align align, Vector2 minSize, float stretch) {
-            this.layout = layout;
-            this.child = child;
-            Align = align;
-            MinSize = minSize;
-            Stretch = stretch;
-        }
+    private readonly struct LayoutEntry(UGUILayout layout, GameObject child, UGUILayout.Align align, Vector2 minSize, float stretch) : ILayoutEntry {
+        private readonly UGUILayout layout = layout;
+        private readonly GameObject child = child;
 
         public RectTransform Transform => child.GetComponent<RectTransform>();
-        public Vector2 MinSize { get; }
-        public float Stretch { get; }
-        public Align Align { get; }
+        public Vector2 MinSize { get; } = minSize;
+        public float Stretch { get; } = stretch;
+        public Align Align { get; } = align;
 
         public void Layout() {
         }
@@ -132,18 +106,11 @@ public abstract class UGUILayout {
         }
     }
 
-    public readonly struct Padding {
-        public readonly float top;
-        public readonly float bottom;
-        public readonly float left;
-        public readonly float right;
-
-        public Padding(float top, float bottom, float left, float right) {
-            this.top = top;
-            this.bottom = bottom;
-            this.left = left;
-            this.right = right;
-        }
+    public readonly struct Padding(float top, float bottom, float left, float right) {
+        public readonly float top = top;
+        public readonly float bottom = bottom;
+        public readonly float left = left;
+        public readonly float right = right;
 
         public Padding Max(Padding other) {
             return new Padding(Math.Max(top, other.top), Math.Max(bottom, other.bottom), Math.Max(left, other.left),

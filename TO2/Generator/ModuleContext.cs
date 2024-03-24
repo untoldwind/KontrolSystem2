@@ -25,15 +25,15 @@ public class ModuleContext {
         // This is only needed for testing
         root = null!;
         typeBuilder = null!;
-        moduleAliases = new Dictionary<string, string>();
+        moduleAliases = [];
         mappedTypes = new Dictionary<string, TO2Type> {
             { "ArrayBuilder", BuiltinType.ArrayBuilder },
             { "Cell", BuiltinType.Cell }
         };
-        exportedTypes = new List<(string alias, TO2Type type)>();
-        mappedConstants = new Dictionary<string, IKontrolConstant>();
-        mappedFunctions = new Dictionary<string, KontrolFunctionSelector>();
-        subTypes = new Dictionary<string, TypeBuilder>();
+        exportedTypes = [];
+        mappedConstants = [];
+        mappedFunctions = [];
+        subTypes = [];
     }
 
     internal ModuleContext(Context root, string moduleName) {
@@ -41,15 +41,15 @@ public class ModuleContext {
         this.moduleName = moduleName;
         typeBuilder = this.root.moduleBuilder.DefineType(this.moduleName.ToUpperInvariant().Replace(':', '_'),
             TypeAttributes.Public);
-        moduleAliases = new Dictionary<string, string>();
+        moduleAliases = [];
         mappedTypes = new Dictionary<string, TO2Type> {
             { "ArrayBuilder", BuiltinType.ArrayBuilder },
             { "Cell", BuiltinType.Cell }
         };
-        exportedTypes = new List<(string alias, TO2Type type)>();
-        mappedConstants = new Dictionary<string, IKontrolConstant>();
-        mappedFunctions = new Dictionary<string, KontrolFunctionSelector>();
-        subTypes = new Dictionary<string, TypeBuilder>();
+        exportedTypes = [];
+        mappedConstants = [];
+        mappedFunctions = [];
+        subTypes = [];
 
         constructorBuilder = typeBuilder.DefineTypeInitializer();
         constructorEmitter = new GeneratorILEmitter(constructorBuilder.GetILGenerator());

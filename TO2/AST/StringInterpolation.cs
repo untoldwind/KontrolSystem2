@@ -27,7 +27,7 @@ public class StringInterpolation : Expression {
     public StringInterpolation(List<StringInterpolationPart> parts, Position start, Position end) : base(start, end) {
         var format = new StringBuilder();
 
-        placeholders = new List<Expression>();
+        placeholders = [];
 
         foreach (var part in parts) {
             switch (part) {

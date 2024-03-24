@@ -131,9 +131,9 @@ public static class DirectBindingMath {
 
 
             return Direct.BindModule(ModuleName, "Collection of basic mathematical functions.",
-                new List<RealizedType> {
+                [
                     RandomBinding.RandomType
-                },
+                ],
                 constants,
                 functions);
         }

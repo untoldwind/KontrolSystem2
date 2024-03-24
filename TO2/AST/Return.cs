@@ -6,10 +6,7 @@ using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST;
 
-public class ReturnEmpty : Expression {
-    public ReturnEmpty(Position start = new(), Position end = new()) : base(start, end) {
-    }
-
+public class ReturnEmpty(Position start = new(), Position end = new()) : Expression(start, end) {
     public override IVariableContainer? VariableContainer {
         set { }
     }
@@ -35,7 +32,7 @@ public class ReturnEmpty : Expression {
         context.IL.Emit(OpCodes.Ldnull);
         if (context.IsAsync)
             context.IL.EmitNew(OpCodes.Newobj,
-                context.MethodBuilder!.ReturnType.GetConstructor(new[] { typeof(object) })!);
+                context.MethodBuilder!.ReturnType.GetConstructor([typeof(object)])!);
 
         ILChunks.GenerateFunctionLeave(context);
         context.IL.EmitReturn(context.MethodBuilder!.ReturnType);
@@ -44,7 +41,7 @@ public class ReturnEmpty : Expression {
     }
 
     internal override Expression CollapseFinalReturn() {
-        return new Block(new List<IBlockItem>(), Start, End);
+        return new Block([], Start, End);
     }
 
     public override REPLValueFuture Eval(REPLContext context) {
@@ -92,8 +89,7 @@ public class ReturnValue : Expression {
         context.ExpectedReturn.AssignFrom(context.ModuleContext, returnType).EmitConvert(context, false);
         if (context.IsAsync)
             context.IL.EmitNew(OpCodes.Newobj,
-                context.MethodBuilder!.ReturnType.GetConstructor(new[]
-                    { returnType.GeneratedType(context.ModuleContext) })!);
+                context.MethodBuilder!.ReturnType.GetConstructor([returnType.GeneratedType(context.ModuleContext)])!);
 
         ILChunks.GenerateFunctionLeave(context);
         context.IL.EmitReturn(context.MethodBuilder!.ReturnType);

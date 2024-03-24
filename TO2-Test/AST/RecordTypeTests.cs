@@ -3,12 +3,8 @@ using Xunit.Abstractions;
 
 namespace KontrolSystem.TO2.Test.AST;
 
-public class RecordTypeTests {
-    private readonly ITestOutputHelper output;
-
-    public RecordTypeTests(ITestOutputHelper output) {
-        this.output = output;
-    }
+public class RecordTypeTests(ITestOutputHelper output) {
+    private readonly ITestOutputHelper output = output;
 
     [Fact]
     public void TestRecordUpdate() {

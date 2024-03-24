@@ -9,9 +9,9 @@ namespace KontrolSystem.Benchmarks;
 public class LambertBench {
     delegate Vector3d LambertSolve(Vector3d r1, Vector3d r2, double tof, double mu, bool clockwise);
 
-    LambertSolve csharpSolver;
+    readonly LambertSolve csharpSolver;
 
-    LambertSolve to2Solver;
+    readonly LambertSolve to2Solver;
 
     public IEnumerable<TestSet> TestSets => TestSetsDefault.testSets.Take(10);
 

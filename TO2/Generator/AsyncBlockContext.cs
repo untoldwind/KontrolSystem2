@@ -99,7 +99,7 @@ public class AsyncBlockContext : IBlockContext {
         storeState = parent.storeState;
         notReady = parent.notReady;
         resume = parent.resume;
-        InferredGenerics = new Dictionary<string, RealizedType>();
+        InferredGenerics = [];
     }
 
     public AsyncBlockContext(ModuleContext moduleContext, FunctionModifier modifier, string methodName,

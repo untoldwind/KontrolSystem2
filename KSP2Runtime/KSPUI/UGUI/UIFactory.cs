@@ -581,15 +581,9 @@ public class UIFactory {
         return transform;
     }
 
-    internal struct LayoutAlign {
-        internal float min;
-        internal float max;
-        internal float pivot;
-
-        public LayoutAlign(float min, float max, float pivot) {
-            this.min = min;
-            this.max = max;
-            this.pivot = pivot;
-        }
+    internal struct LayoutAlign(float min, float max, float pivot) {
+        internal float min = min;
+        internal float max = max;
+        internal float pivot = pivot;
     }
 }

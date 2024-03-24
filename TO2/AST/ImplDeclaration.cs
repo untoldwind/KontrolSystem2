@@ -14,11 +14,11 @@ public class ImplDeclaration(
     Position end = new())
     : Node(start, end), IModuleItem {
     public IEnumerable<StructuralError> TryDeclareTypes(ModuleContext context) {
-        return Enumerable.Empty<StructuralError>();
+        return [];
     }
 
     public IEnumerable<StructuralError> TryImportTypes(ModuleContext context) {
-        return Enumerable.Empty<StructuralError>();
+        return [];
     }
 
     public IEnumerable<StructuralError> TryImportConstants(ModuleContext context) {
@@ -37,7 +37,7 @@ public class ImplDeclaration(
                 structDelegate.AddMethod(method.Right.name, method.Right.CreateInvokeFactory());
             }
 
-        return Enumerable.Empty<StructuralError>();
+        return [];
     }
 
     public IEnumerable<StructuralError> TryVerifyFunctions(ModuleContext context) {
@@ -51,7 +51,7 @@ public class ImplDeclaration(
     }
 
     public IEnumerable<StructuralError> TryImportFunctions(ModuleContext context) {
-        return Enumerable.Empty<StructuralError>();
+        return [];
     }
 
     public override REPLValueFuture Eval(REPLContext context) {

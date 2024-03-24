@@ -53,7 +53,7 @@ public class TO2ParserFunctionTests {
         Helpers.ShouldDeepEqual(
             new FunctionDeclaration(FunctionModifier.Public, true, "_demo23", "",
                 [new("ab", BuiltinType.String, null)], BuiltinType.Int,
-                new Block(new List<IBlockItem> { new LiteralInt(0) })), result.value, IgnorePosition);
+                new Block([new LiteralInt(0)])), result.value, IgnorePosition);
 
         result = TO2ParserFunctions.FunctionDeclaration.TryParse(
             "pub  fn abc34 ( ab : string, _56 : int ) -> int = { 0 }");
@@ -62,7 +62,7 @@ public class TO2ParserFunctionTests {
         Assert.Equal("", result.remaining.ToString());
         Helpers.ShouldDeepEqual(
             new FunctionDeclaration(FunctionModifier.Public, true, "abc34", "",
-                [new("ab", BuiltinType.String, null), new("_56", BuiltinType.Int, null)], BuiltinType.Int, new Block(new List<IBlockItem> { new LiteralInt(0) })), result.value,
+                [new("ab", BuiltinType.String, null), new("_56", BuiltinType.Int, null)], BuiltinType.Int, new Block([new LiteralInt(0)])), result.value,
             IgnorePosition);
     }
 }

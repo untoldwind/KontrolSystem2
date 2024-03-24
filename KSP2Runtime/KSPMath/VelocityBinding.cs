@@ -10,8 +10,8 @@ public class VelocityBinding {
     public static readonly BoundType VelocityType = Direct.BindType("ksp::math", "GlobalVelocity",
         "A velocity in space, that can be projected to a 3-dimensional vector in a specific frame of reference",
         typeof(VelocityAtPosition),
-        new OperatorCollection(),
-        new OperatorCollection(),
+        [],
+        [],
         new Dictionary<string, IMethodInvokeFactory> {
             {
                 "to_relative",
@@ -31,7 +31,7 @@ public class VelocityBinding {
                     () => BuiltinType.String,
                     () => [new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")], false, typeof(VelocityBinding),
                     typeof(VelocityBinding).GetMethod("ToString",
-                        new[] { typeof(VelocityAtPosition), typeof(ITransformFrame) }))
+                        [typeof(VelocityAtPosition), typeof(ITransformFrame)]))
             }, {
                 "to_fixed",
                 new BoundMethodInvokeFactory(

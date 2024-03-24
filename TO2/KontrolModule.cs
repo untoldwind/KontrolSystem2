@@ -94,39 +94,24 @@ public class CompiledKontrolModule : IKontrolModule {
     }
 }
 
-public class DeclaredKontrolModule : IKontrolModule {
-    public readonly Dictionary<string, DeclaredKontrolConstant> declaredConstants;
-    public readonly List<DeclaredKontrolFunction> declaredFunctions;
-    public readonly List<DeclaredKontrolStructConstructor> declaredStructConstructors;
-    public readonly ModuleContext moduleContext;
-    public readonly Dictionary<string, DeclaredKontrolConstant> publicConstants;
-    public readonly Dictionary<string, KontrolFunctionSelector> publicFunctions;
-    private readonly Dictionary<string, TO2Type> publicTypes;
-    public readonly TO2Module to2Module;
+public class DeclaredKontrolModule(string name, string description,
+    bool builtin,
+    string sourceFile,
+    ModuleContext moduleContext, TO2Module to2Module,
+    IEnumerable<(string alias, TO2Type type)> types) : IKontrolModule {
+    public readonly Dictionary<string, DeclaredKontrolConstant> declaredConstants = [];
+    public readonly List<DeclaredKontrolFunction> declaredFunctions = [];
+    public readonly List<DeclaredKontrolStructConstructor> declaredStructConstructors = [];
+    public readonly ModuleContext moduleContext = moduleContext;
+    public readonly Dictionary<string, DeclaredKontrolConstant> publicConstants = [];
+    public readonly Dictionary<string, KontrolFunctionSelector> publicFunctions = [];
+    private readonly Dictionary<string, TO2Type> publicTypes = types.ToDictionary(t => t.alias, t => t.type);
+    public readonly TO2Module to2Module = to2Module;
 
-    public DeclaredKontrolModule(string name, string description,
-        bool builtin,
-        string sourceFile,
-        ModuleContext moduleContext, TO2Module to2Module,
-        IEnumerable<(string alias, TO2Type type)> types) {
-        Name = name;
-        Description = description;
-        IsBuiltin = builtin;
-        SourceFile = sourceFile;
-        this.moduleContext = moduleContext;
-        this.to2Module = to2Module;
-        publicTypes = types.ToDictionary(t => t.alias, t => t.type);
-        publicFunctions = [];
-        declaredFunctions = [];
-        declaredStructConstructors = [];
-        declaredConstants = [];
-        publicConstants = [];
-    }
-
-    public string Name { get; }
-    public string Description { get; }
-    public bool IsBuiltin { get; }
-    public string SourceFile { get; }
+    public string Name { get; } = name;
+    public string Description { get; } = description;
+    public bool IsBuiltin { get; } = builtin;
+    public string SourceFile { get; } = sourceFile;
 
     public bool IsCompiled => true;
 

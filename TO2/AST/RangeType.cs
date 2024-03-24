@@ -13,11 +13,11 @@ public class RangeType : RealizedType {
             "map", new BoundMethodInvokeFactory("Map the elements of the range, i.e. convert it into an array.",
                 true,
                 () => new ArrayType(new GenericParameter("T")),
-                () => new List<RealizedParameter> {
+                () => [
                     new("mapper",
                         new FunctionType(false, [BuiltinType.Int], new GenericParameter("T")),
                         "Function to be applied on each element of the range")
-                },
+                ],
                 false, typeof(Range), typeof(Range).GetMethod("Map"))
         }, {
             "flat_map", new BoundMethodInvokeFactory("Map the content of the array", true,
@@ -38,14 +38,14 @@ public class RangeType : RealizedType {
         }, {
             "reduce",
             new BoundMethodInvokeFactory("Reduce range by an operation", true, () => new GenericParameter("U"),
-                () => new List<RealizedParameter> {
+                () => [
                     new("initial", new GenericParameter("U"), "Initial value of the accumulator"),
                     new("reducer", new FunctionType(false, [
                             new GenericParameter("U"),
                             BuiltinType.Int
                         ], new GenericParameter("U")),
                         "Combines accumulator with each element of the array and returns new accumulator value")
-                }, false, typeof(Range),
+                ], false, typeof(Range),
                 typeof(Range).GetMethod("Reduce"))
         }, {
             "reverse", new BoundMethodInvokeFactory("Reverse order", true,

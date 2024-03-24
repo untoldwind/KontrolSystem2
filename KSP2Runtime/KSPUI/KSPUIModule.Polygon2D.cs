@@ -45,7 +45,7 @@ public partial class KSPUIModule {
             var n = points.Length;
 
             if (n < 3) {
-                triangles = Array.Empty<Vector2d>();
+                triangles = [];
                 return;
             }
 
@@ -78,7 +78,7 @@ public partial class KSPUIModule {
                 if (!found) break;
             }
 
-            triangles = newTriangles.ToArray();
+            triangles = [.. newTriangles];
         }
 
         private double Area() {

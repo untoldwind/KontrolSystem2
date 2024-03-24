@@ -8,14 +8,9 @@ using UniLinq;
 
 namespace KontrolSystem.KSP.Runtime.KSPOrbit;
 
-public class BodyWrapper : KSPOrbitModule.IBody, KSPVesselModule.IKSPTargetable {
-    private readonly CelestialBodyComponent body;
-    private readonly IKSPContext context;
-
-    public BodyWrapper(IKSPContext context, CelestialBodyComponent body) {
-        this.context = context;
-        this.body = body;
-    }
+public class BodyWrapper(IKSPContext context, CelestialBodyComponent body) : KSPOrbitModule.IBody, KSPVesselModule.IKSPTargetable {
+    private readonly CelestialBodyComponent body = body;
+    private readonly IKSPContext context = context;
 
     public string Name => body.Name;
 

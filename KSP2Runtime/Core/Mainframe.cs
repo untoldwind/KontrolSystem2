@@ -18,16 +18,10 @@ using UnityEngine.Events;
 
 namespace KontrolSystem.KSP.Runtime.Core;
 
-public readonly struct MainframeError {
-    public readonly Position position;
-    public readonly string errorType;
-    public readonly string message;
-
-    public MainframeError(Position position, string errorType, string message) {
-        this.position = position;
-        this.errorType = errorType;
-        this.message = message;
-    }
+public readonly struct MainframeError(Position position, string errorType, string message) {
+    public readonly Position position = position;
+    public readonly string errorType = errorType;
+    public readonly string message = message;
 }
 
 public class Mainframe : KerbalMonoBehaviour {
@@ -35,7 +29,7 @@ public class Mainframe : KerbalMonoBehaviour {
 
     public UnityEvent availableProcessesChanged = new();
 
-    private readonly Dictionary<Guid, Coroutine> coroutines = new();
+    private readonly Dictionary<Guid, Coroutine> coroutines = [];
 
     private KontrolSystemConfig? config;
 
@@ -142,7 +136,7 @@ public class Mainframe : KerbalMonoBehaviour {
 
                 stopwatch.Stop();
 
-                return new State(nextRegistry, stopwatch.Elapsed, new List<MainframeError>());
+                return new State(nextRegistry, stopwatch.Elapsed, []);
             } catch (CompilationErrorException e) {
                 config.Logger.Debug(e.ToString());
 
@@ -157,15 +151,15 @@ public class Mainframe : KerbalMonoBehaviour {
                 config.Logger.Debug(e.ToString());
                 config.Logger.Info(e.Message);
 
-                return new State(state?.registry, stopwatch.Elapsed, new List<MainframeError> {
+                return new State(state?.registry, stopwatch.Elapsed, [
                     new(e.position, "Parsing", e.Message)
-                });
+                ]);
             } catch (Exception e) {
                 config.Logger.Error("Mainframe initialization error: " + e);
 
-                return new State(state?.registry, stopwatch.Elapsed, new List<MainframeError> {
+                return new State(state?.registry, stopwatch.Elapsed, [
                     new(new Position(), "Unknown error", e.Message)
-                });
+                ]);
             }
         });
         if (nextState.errors.Count == 0 && nextState.registry != null)
@@ -187,7 +181,7 @@ public class Mainframe : KerbalMonoBehaviour {
     public IEnumerable<KontrolSystemProcess> ListProcesses(KSPGameMode gameMode, VesselComponent vessel) {
         return processes != null
             ? processes.Where(p => p.AvailableFor(gameMode, vessel))
-            : Enumerable.Empty<KontrolSystemProcess>();
+            : [];
     }
 
     public bool StartProcess(KontrolSystemProcess process, VesselComponent? vessel = null, object[]? arguments = null) {

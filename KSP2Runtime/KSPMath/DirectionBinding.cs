@@ -16,50 +16,50 @@ public static class DirectionBinding {
             {
                 Operator.Neg,
                 new StaticMethodOperatorEmitter(() => BuiltinType.Unit, LazyDirectionType,
-                    typeof(Direction).GetMethod("op_UnaryNegation", new[] { typeof(Direction) }))
+                    typeof(Direction).GetMethod("op_UnaryNegation", [typeof(Direction)]))
             }, {
                 Operator.Mul,
                 new StaticMethodOperatorEmitter(() => Vector3Binding.Vector3Type, () => Vector3Binding.Vector3Type,
-                    typeof(Direction).GetMethod("op_Multiply", new[] { typeof(Vector3d), typeof(Direction) }))
+                    typeof(Direction).GetMethod("op_Multiply", [typeof(Vector3d), typeof(Direction)]))
             }
         },
         new OperatorCollection {
             {
                 Operator.Add,
                 new StaticMethodOperatorEmitter(LazyDirectionType, LazyDirectionType,
-                    typeof(Direction).GetMethod("op_Addition", new[] { typeof(Direction), typeof(Direction) }))
+                    typeof(Direction).GetMethod("op_Addition", [typeof(Direction), typeof(Direction)]))
             }, {
                 Operator.AddAssign,
                 new StaticMethodOperatorEmitter(LazyDirectionType, LazyDirectionType,
-                    typeof(Direction).GetMethod("op_Addition", new[] { typeof(Direction), typeof(Direction) }))
+                    typeof(Direction).GetMethod("op_Addition", [typeof(Direction), typeof(Direction)]))
             }, {
                 Operator.Sub,
                 new StaticMethodOperatorEmitter(LazyDirectionType, LazyDirectionType,
-                    typeof(Direction).GetMethod("op_Subtraction", new[] { typeof(Direction), typeof(Direction) }))
+                    typeof(Direction).GetMethod("op_Subtraction", [typeof(Direction), typeof(Direction)]))
             }, {
                 Operator.SubAssign,
                 new StaticMethodOperatorEmitter(LazyDirectionType, LazyDirectionType,
-                    typeof(Direction).GetMethod("op_Subtraction", new[] { typeof(Direction), typeof(Direction) }))
+                    typeof(Direction).GetMethod("op_Subtraction", [typeof(Direction), typeof(Direction)]))
             }, {
                 Operator.Mul,
                 new StaticMethodOperatorEmitter(LazyDirectionType, LazyDirectionType,
-                    typeof(Direction).GetMethod("op_Multiply", new[] { typeof(Direction), typeof(Direction) }))
+                    typeof(Direction).GetMethod("op_Multiply", [typeof(Direction), typeof(Direction)]))
             }, {
                 Operator.MulAssign,
                 new StaticMethodOperatorEmitter(LazyDirectionType, LazyDirectionType,
-                    typeof(Direction).GetMethod("op_Multiply", new[] { typeof(Direction), typeof(Direction) }))
+                    typeof(Direction).GetMethod("op_Multiply", [typeof(Direction), typeof(Direction)]))
             }, {
                 Operator.Mul,
                 new StaticMethodOperatorEmitter(() => Vector3Binding.Vector3Type, () => Vector3Binding.Vector3Type,
-                    typeof(Direction).GetMethod("op_Multiply", new[] { typeof(Direction), typeof(Vector3d) }))
+                    typeof(Direction).GetMethod("op_Multiply", [typeof(Direction), typeof(Vector3d)]))
             }, {
                 Operator.Eq,
                 new StaticMethodOperatorEmitter(LazyDirectionType, () => BuiltinType.Bool,
-                    typeof(Direction).GetMethod("op_Equality", new[] { typeof(Direction), typeof(Direction) }))
+                    typeof(Direction).GetMethod("op_Equality", [typeof(Direction), typeof(Direction)]))
             }, {
                 Operator.NotEq,
                 new StaticMethodOperatorEmitter(LazyDirectionType, () => BuiltinType.Bool,
-                    typeof(Direction).GetMethod("op_Equality", new[] { typeof(Direction), typeof(Direction) }),
+                    typeof(Direction).GetMethod("op_Equality", [typeof(Direction), typeof(Direction)]),
                     null, OpCodes.Ldc_I4_0, OpCodes.Ceq)
             }
         },
@@ -67,7 +67,7 @@ public static class DirectionBinding {
             {
                 "to_string",
                 new BoundMethodInvokeFactory("Convert the direction to string", true, () => BuiltinType.String,
-                    () => new List<RealizedParameter>(), false, typeof(Direction),
+                    () => [], false, typeof(Direction),
                     typeof(Direction).GetMethod("ToString"))
             }, {
                 "to_global",

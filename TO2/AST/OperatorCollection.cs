@@ -13,7 +13,7 @@ public class OperatorCollection : IOperatorCollection {
     private readonly Dictionary<Operator, List<IOperatorEmitter>> collection;
 
     public OperatorCollection() {
-        collection = new Dictionary<Operator, List<IOperatorEmitter>>();
+        collection = [];
     }
 
     private OperatorCollection(IEnumerable<(Operator op, IOperatorEmitter emitter)> collection) {
@@ -38,7 +38,7 @@ public class OperatorCollection : IOperatorCollection {
         if (collection.TryGetValue(op, out var value))
             value.Add(operatorEmitter);
         else
-            collection.Add(op, new List<IOperatorEmitter> { operatorEmitter });
+            collection.Add(op, [operatorEmitter]);
     }
 
     public OperatorCollection FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) {

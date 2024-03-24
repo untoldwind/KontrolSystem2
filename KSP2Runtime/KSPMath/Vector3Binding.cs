@@ -10,43 +10,43 @@ namespace KontrolSystem.KSP.Runtime.KSPMath;
 public static class Vector3Binding {
     public static readonly RecordStructType Vector3Type = new("ksp::math", "Vec3",
         "A 3-dimensional vector.", typeof(Vector3d),
-        new[] {
+        [
             new RecordStructField("x", "x-coordinate", BuiltinType.Float, typeof(Vector3d).GetField("x")),
             new RecordStructField("y", "y-coordinate", BuiltinType.Float, typeof(Vector3d).GetField("y")),
             new RecordStructField("z", "z-coordinate", BuiltinType.Float, typeof(Vector3d).GetField("z"))
-        },
+        ],
         new OperatorCollection {
             {
                 Operator.Neg,
                 new StaticMethodOperatorEmitter(() => BuiltinType.Unit, LazyVector3Type,
-                    typeof(Vector3d).GetMethod("op_UnaryNegation", new[] { typeof(Vector3d) }))
+                    typeof(Vector3d).GetMethod("op_UnaryNegation", [typeof(Vector3d)]))
             }, {
                 Operator.Mul,
                 new StaticMethodOperatorEmitter(() => BuiltinType.Float, LazyVector3Type,
-                    typeof(Vector3d).GetMethod("op_Multiply", new[] { typeof(double), typeof(Vector3d) }))
+                    typeof(Vector3d).GetMethod("op_Multiply", [typeof(double), typeof(Vector3d)]))
             }
         },
         new OperatorCollection {
             {
                 Operator.Add,
                 new StaticMethodOperatorEmitter(LazyVector3Type, LazyVector3Type,
-                    typeof(Vector3d).GetMethod("op_Addition", new[] { typeof(Vector3d), typeof(Vector3d) }))
+                    typeof(Vector3d).GetMethod("op_Addition", [typeof(Vector3d), typeof(Vector3d)]))
             }, {
                 Operator.AddAssign,
                 new StaticMethodOperatorEmitter(LazyVector3Type, LazyVector3Type,
-                    typeof(Vector3d).GetMethod("op_Addition", new[] { typeof(Vector3d), typeof(Vector3d) }))
+                    typeof(Vector3d).GetMethod("op_Addition", [typeof(Vector3d), typeof(Vector3d)]))
             }, {
                 Operator.Sub,
                 new StaticMethodOperatorEmitter(LazyVector3Type, LazyVector3Type,
-                    typeof(Vector3d).GetMethod("op_Subtraction", new[] { typeof(Vector3d), typeof(Vector3d) }))
+                    typeof(Vector3d).GetMethod("op_Subtraction", [typeof(Vector3d), typeof(Vector3d)]))
             }, {
                 Operator.SubAssign,
                 new StaticMethodOperatorEmitter(LazyVector3Type, LazyVector3Type,
-                    typeof(Vector3d).GetMethod("op_Subtraction", new[] { typeof(Vector3d), typeof(Vector3d) }))
+                    typeof(Vector3d).GetMethod("op_Subtraction", [typeof(Vector3d), typeof(Vector3d)]))
             }, {
                 Operator.Mul,
                 new StaticMethodOperatorEmitter(() => BuiltinType.Float, LazyVector3Type,
-                    typeof(Vector3d).GetMethod("op_Multiply", new[] { typeof(Vector3d), typeof(double) }))
+                    typeof(Vector3d).GetMethod("op_Multiply", [typeof(Vector3d), typeof(double)]))
             }, {
                 Operator.Mul,
                 new StaticMethodOperatorEmitter(LazyVector3Type, () => BuiltinType.Float,
@@ -54,23 +54,23 @@ public static class Vector3Binding {
             }, {
                 Operator.MulAssign,
                 new StaticMethodOperatorEmitter(() => BuiltinType.Float, LazyVector3Type,
-                    typeof(Vector3d).GetMethod("op_Multiply", new[] { typeof(Vector3d), typeof(double) }))
+                    typeof(Vector3d).GetMethod("op_Multiply", [typeof(Vector3d), typeof(double)]))
             }, {
                 Operator.Div,
                 new StaticMethodOperatorEmitter(() => BuiltinType.Float, LazyVector3Type,
-                    typeof(Vector3d).GetMethod("op_Division", new[] { typeof(Vector3d), typeof(double) }))
+                    typeof(Vector3d).GetMethod("op_Division", [typeof(Vector3d), typeof(double)]))
             }, {
                 Operator.DivAssign,
                 new StaticMethodOperatorEmitter(() => BuiltinType.Float, LazyVector3Type,
-                    typeof(Vector3d).GetMethod("op_Division", new[] { typeof(Vector3d), typeof(double) }))
+                    typeof(Vector3d).GetMethod("op_Division", [typeof(Vector3d), typeof(double)]))
             }, {
                 Operator.Eq,
                 new StaticMethodOperatorEmitter(LazyVector3Type, () => BuiltinType.Bool,
-                    typeof(Vector3d).GetMethod("op_Equality", new[] { typeof(Vector3d), typeof(Vector3d) }))
+                    typeof(Vector3d).GetMethod("op_Equality", [typeof(Vector3d), typeof(Vector3d)]))
             }, {
                 Operator.NotEq,
                 new StaticMethodOperatorEmitter(LazyVector3Type, () => BuiltinType.Bool,
-                    typeof(Vector3d).GetMethod("op_Equality", new[] { typeof(Vector3d), typeof(Vector3d) }),
+                    typeof(Vector3d).GetMethod("op_Equality", [typeof(Vector3d), typeof(Vector3d)]),
                     null, OpCodes.Ldc_I4_0, OpCodes.Ceq)
             }
         },

@@ -8,12 +8,8 @@ using Xunit.Sdk;
 
 namespace KontrolSystem.KSP.Runtime.Test;
 
-public class TO2TestSuite {
-    private readonly ITestOutputHelper output;
-
-    public TO2TestSuite(ITestOutputHelper output) {
-        this.output = output;
-    }
+public class TO2TestSuite(ITestOutputHelper output) {
+    private readonly ITestOutputHelper output = output;
 
     [Fact]
     public void RunSuite() {

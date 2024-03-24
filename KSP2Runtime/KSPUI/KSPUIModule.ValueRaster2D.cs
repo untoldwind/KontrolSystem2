@@ -7,27 +7,16 @@ namespace KontrolSystem.KSP.Runtime.KSPUI;
 
 public partial class KSPUIModule {
     [KSClass]
-    public class ValueRaster2D : GLUIDrawer.IGLUIDrawable {
-        private bool dirty;
-        private GradientWrapper gradientWrapper;
-        private readonly int height;
-        private Vector2d point1;
-        private Vector2d point2;
-        private readonly Texture2D texture;
-        private double[] values;
-        private readonly int width;
-
-        public ValueRaster2D(double[] values, int width, int height, GradientWrapper gradientWrapper, Vector2d point1,
-            Vector2d point2) {
-            this.values = values;
-            this.width = width;
-            this.height = height;
-            this.gradientWrapper = gradientWrapper;
-            this.point1 = point1;
-            this.point2 = point2;
-            texture = new Texture2D(width, height, TextureFormat.ARGB32, false);
-            dirty = true;
-        }
+    public class ValueRaster2D(double[] values, int width, int height, KSPUIModule.GradientWrapper gradientWrapper, Vector2d point1,
+        Vector2d point2) : GLUIDrawer.IGLUIDrawable {
+        private bool dirty = true;
+        private GradientWrapper gradientWrapper = gradientWrapper;
+        private readonly int height = height;
+        private Vector2d point1 = point1;
+        private Vector2d point2 = point2;
+        private readonly Texture2D texture = new(width, height, TextureFormat.ARGB32, false);
+        private double[] values = values;
+        private readonly int width = width;
 
         [KSField] public long RasterWidth => width;
 

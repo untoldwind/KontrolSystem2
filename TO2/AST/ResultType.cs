@@ -83,7 +83,7 @@ public class ResultType : RealizedType {
     public override IEnumerable<(string name, RealizedType type)> InferGenericArgument(ModuleContext context,
         RealizedType? concreteType) {
         var concreteResult = concreteType as ResultType;
-        if (concreteResult == null) return Enumerable.Empty<(string name, RealizedType type)>();
+        if (concreteResult == null) return [];
         return successType.InferGenericArgument(context, concreteResult.successType.UnderlyingType(context));
     }
 }
@@ -132,13 +132,13 @@ internal class ResultFieldAccess : IFieldAccessFactory {
         switch (field) {
         case ResultField.Success:
             return new BoundFieldAccessEmitter(BuiltinType.Bool, generateType,
-                new List<FieldInfo> { generateType.GetField("success") });
+                [generateType.GetField("success")]);
         case ResultField.Value:
             return new BoundFieldAccessEmitter(resultType.successType.UnderlyingType(context), generateType,
-                new List<FieldInfo> { generateType.GetField("value") });
+                [generateType.GetField("value")]);
         case ResultField.Error:
             return new BoundFieldAccessEmitter(BuiltinType.Error.UnderlyingType(context), generateType,
-                new List<FieldInfo> { generateType.GetField("error") });
+                [generateType.GetField("error")]);
         default: throw new InvalidOperationException($"Unknown option field: {field}");
         }
     }
@@ -259,7 +259,7 @@ internal class ResultUnwrapOperator : IOperatorEmitter {
                 errorResult.EmitLoad(context);
                 if (context.IsAsync)
                     context.IL.EmitNew(OpCodes.Newobj,
-                        context.MethodBuilder!.ReturnType.GetConstructor(new[] { errorResultType })!);
+                        context.MethodBuilder!.ReturnType.GetConstructor([errorResultType])!);
 
                 ILChunks.GenerateFunctionLeave(context);
                 context.IL.EmitReturn(context.MethodBuilder!.ReturnType);
@@ -299,7 +299,7 @@ internal class ResultOkUnapplyEmitter : IUnapplyEmitter {
 
     internal ResultOkUnapplyEmitter(ResultType resultType) {
         this.resultType = resultType;
-        Items = new List<TO2Type> { resultType.successType };
+        Items = [resultType.successType];
     }
 
     public string Name => "Ok";
@@ -338,7 +338,7 @@ internal class ResultErrUnapplyEmitter : IUnapplyEmitter {
 
     internal ResultErrUnapplyEmitter(ResultType resultType) {
         this.resultType = resultType;
-        Items = new List<TO2Type> { BuiltinType.Error };
+        Items = [BuiltinType.Error];
     }
 
     public string Name => "Err";

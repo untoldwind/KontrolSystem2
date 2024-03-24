@@ -14,7 +14,7 @@ public struct ILCommand : IILCommand {
     public OpCode opCode;
     public string args;
 
-    public override string? ToString() {
+    public override readonly string? ToString() {
         return string.IsNullOrEmpty(args) ? opCode.ToString() : $"{opCode} {args}";
     }
 }
@@ -33,7 +33,7 @@ public struct ScopeBegin : IILCommand;
 public struct ScopeEnd : IILCommand;
 
 public class TestILEmitter : IILEmitter {
-    public List<IILCommand> commands = new();
+    public List<IILCommand> commands = [];
 
     public void Emit(OpCode opCode) {
         ILSize += InstructionSize.Get(opCode);

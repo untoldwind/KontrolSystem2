@@ -14,14 +14,9 @@ public interface ILocalRef {
 public interface ITempLocalRef : ILocalRef, IDisposable {
 }
 
-public readonly struct LabelRef {
-    public readonly Label label;
-    public readonly bool isShort;
-
-    public LabelRef(Label label, bool isShort) {
-        this.label = label;
-        this.isShort = isShort;
-    }
+public readonly struct LabelRef(Label label, bool isShort) {
+    public readonly Label label = label;
+    public readonly bool isShort = isShort;
 }
 
 public interface IILEmitter {
@@ -77,7 +72,5 @@ public interface IILEmitter {
     void AdjustStack(int diff);
 }
 
-public class CodeGenerationException : Exception {
-    public CodeGenerationException(string message) : base(message) {
-    }
+public class CodeGenerationException(string message) : Exception(message) {
 }

@@ -24,7 +24,7 @@ public class UseDeclaration : Node, IModuleItem {
     }
 
     public IEnumerable<StructuralError> TryDeclareTypes(ModuleContext context) {
-        return Enumerable.Empty<StructuralError>();
+        return [];
     }
 
     public IEnumerable<StructuralError> TryImportTypes(ModuleContext context) {
@@ -46,11 +46,11 @@ public class UseDeclaration : Node, IModuleItem {
                 if (type != null) context.mappedTypes.Add(name, type);
             }
 
-        return Enumerable.Empty<StructuralError>();
+        return [];
     }
 
     public IEnumerable<StructuralError> TryImportConstants(ModuleContext context) {
-        if (alias != null) return Enumerable.Empty<StructuralError>();
+        if (alias != null) return [];
         var module = context.FindModule(fromModule);
 
         if (module == null)
@@ -66,15 +66,15 @@ public class UseDeclaration : Node, IModuleItem {
             if (constant != null) context.mappedConstants.Add(name, constant);
         }
 
-        return Enumerable.Empty<StructuralError>();
+        return [];
     }
 
     public IEnumerable<StructuralError> TryVerifyFunctions(ModuleContext context) {
-        return Enumerable.Empty<StructuralError>();
+        return [];
     }
 
     public IEnumerable<StructuralError> TryImportFunctions(ModuleContext context) {
-        if (alias != null) return Enumerable.Empty<StructuralError>();
+        if (alias != null) return [];
         var module = context.FindModule(fromModule);
 
         if (module == null)

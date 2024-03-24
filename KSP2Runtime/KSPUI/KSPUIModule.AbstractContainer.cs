@@ -5,12 +5,8 @@ using UnityEngine;
 namespace KontrolSystem.KSP.Runtime.KSPUI;
 
 public partial class KSPUIModule {
-    public abstract class AbstractContainer {
-        protected UGUILayout layout;
-
-        protected AbstractContainer(UGUILayout layout) {
-            this.layout = layout;
-        }
+    public abstract class AbstractContainer(UGUILayout layout) {
+        protected UGUILayout layout = layout;
 
         internal abstract Window Root { get; }
 

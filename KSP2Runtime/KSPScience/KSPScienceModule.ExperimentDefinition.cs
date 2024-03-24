@@ -6,12 +6,8 @@ namespace KontrolSystem.KSP.Runtime.KSPScience;
 public partial class KSPScienceModule {
     [KSClass("ExperimentDefinition",
         Description = "Represents definition of an in-game science experiment.")]
-    public class ExperimentDefinitionAdapter {
-        private readonly ExperimentDefinition experimentDefinition;
-
-        public ExperimentDefinitionAdapter(ExperimentDefinition experimentDefinition) {
-            this.experimentDefinition = experimentDefinition;
-        }
+    public class ExperimentDefinitionAdapter(ExperimentDefinition experimentDefinition) {
+        private readonly ExperimentDefinition experimentDefinition = experimentDefinition;
 
         [KSField] public string Id => experimentDefinition.ExperimentID;
 
