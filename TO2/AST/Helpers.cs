@@ -25,22 +25,22 @@ public static class Helpers {
             var inferred =
                 (declaredResult != null
                     ? declaredResult.InferGenericArgument(context.ModuleContext, desiredResult)
-                    : Enumerable.Empty<(string name, RealizedType type)>()).Concat(targetTypeArguments.Concat(
+                    : []).Concat(targetTypeArguments.Concat(
                     parameters.Zip(arguments,
                         (parameter, argument) => parameter.type.InferGenericArgument(context.ModuleContext,
                             argument.UnderlyingType(context.ModuleContext))).SelectMany(t => t)));
 
-            foreach (var kv in inferred)
-                if (inferredDict.ContainsKey(kv.name)) {
-                    if (!inferredDict[kv.name].IsAssignableFrom(context.ModuleContext, kv.type))
+            foreach (var (name, type) in inferred)
+                if (inferredDict.ContainsKey(name)) {
+                    if (!inferredDict[name].IsAssignableFrom(context.ModuleContext, type))
                         context.AddError(new StructuralError(
                             StructuralError.ErrorType.InvalidType,
-                            $"Conflicting types for parameter {kv.name}, found {inferredDict[kv.name]} != {kv.type}",
+                            $"Conflicting types for parameter {name}, found {inferredDict[name]} != {type}",
                             node.Start,
                             node.End
                         ));
                 } else {
-                    inferredDict.Add(kv.name, kv.type);
+                    inferredDict.Add(name, type);
                 }
         }
 

@@ -4,15 +4,10 @@ using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.KSP.Runtime.KSPDebug;
 
-public class DirectLogFile : KSPDebugModule.ILogFile {
-    private readonly string logDirectory;
-    private readonly string fileName;
+public class DirectLogFile(string logDirectory, string fileName) : KSPDebugModule.ILogFile {
+    private readonly string logDirectory = logDirectory;
+    private readonly string fileName = fileName;
     private StreamWriter? streamWriter;
-
-    public DirectLogFile(string logDirectory, string fileName) {
-        this.logDirectory = logDirectory;
-        this.fileName = fileName;
-    }
 
     public Future<object?> Log(string message) {
         return new CoreBackground.WaitComplete<object?>(EnsureWriter(true).WriteLineAsync(message).ContinueWith(_ => (object?)null));
@@ -34,8 +29,9 @@ public class DirectLogFile : KSPDebugModule.ILogFile {
         if (streamWriter == null) {
             if (!Directory.Exists(logDirectory))
                 Directory.CreateDirectory(logDirectory);
-            streamWriter = new StreamWriter(Path.Combine(logDirectory, fileName), append, Encoding.UTF8);
-            streamWriter.AutoFlush = true;
+            streamWriter = new StreamWriter(Path.Combine(logDirectory, fileName), append, Encoding.UTF8) {
+                AutoFlush = true
+            };
         }
         return streamWriter;
     }

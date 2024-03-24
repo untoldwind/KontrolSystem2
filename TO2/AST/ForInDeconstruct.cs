@@ -149,12 +149,12 @@ public class ForInDeconstruct(
         loopContext.IL.Emit(start.isShort ? OpCodes.Br_S : OpCodes.Br, start);
         loopContext.IL.MarkLabel(loop);
         source.EmitNext(loopContext);
-        foreach (var kv in variables) {
+        foreach (var (index, variable) in variables) {
             loopContext.IL.Emit(OpCodes.Dup);
-            tupleType.FindField(loopContext.ModuleContext, $"_{kv.index + 1}")!.Create(loopContext.ModuleContext)
+            tupleType.FindField(loopContext.ModuleContext, $"_{index + 1}")!.Create(loopContext.ModuleContext)
                 .EmitLoad(loopContext);
 
-            kv.variable.EmitStore(loopContext);
+            variable.EmitStore(loopContext);
         }
 
         loopContext.IL.Emit(OpCodes.Pop);
@@ -178,12 +178,12 @@ public class ForInDeconstruct(
         var loop = countingContext.IL.DefineLabel(false);
 
         source.EmitNext(countingContext);
-        foreach (var kv in variables) {
+        foreach (var (index, variable) in variables) {
             countingContext.IL.Emit(OpCodes.Dup);
-            tupleType.FindField(context.ModuleContext, $"_{kv.index + 1}")!.Create(countingContext.ModuleContext)
+            tupleType.FindField(context.ModuleContext, $"_{index + 1}")!.Create(countingContext.ModuleContext)
                 .EmitLoad(countingContext);
 
-            kv.variable.EmitStore(countingContext);
+            variable.EmitStore(countingContext);
         }
 
         countingContext.IL.Emit(OpCodes.Pop);
@@ -273,12 +273,12 @@ public class ForInDeconstruct(
         loopContext.IL.Emit(start.isShort ? OpCodes.Br_S : OpCodes.Br, start);
         loopContext.IL.MarkLabel(loop);
         source.EmitNext(loopContext);
-        foreach (var kv in variables) {
+        foreach (var (name, variable) in variables) {
             loopContext.IL.Emit(OpCodes.Dup);
-            recordType.FindField(loopContext.ModuleContext, kv.name)!.Create(loopContext.ModuleContext)
+            recordType.FindField(loopContext.ModuleContext, name)!.Create(loopContext.ModuleContext)
                 .EmitLoad(loopContext);
 
-            kv.variable.EmitStore(loopContext);
+            variable.EmitStore(loopContext);
         }
 
         loopContext.IL.Emit(OpCodes.Pop);
@@ -302,12 +302,12 @@ public class ForInDeconstruct(
         var loop = countingContext.IL.DefineLabel(false);
 
         source.EmitNext(countingContext);
-        foreach (var kv in variables) {
+        foreach (var (name, variable) in variables) {
             countingContext.IL.Emit(OpCodes.Dup);
-            recordType.FindField(countingContext.ModuleContext, kv.name)!.Create(countingContext.ModuleContext)
+            recordType.FindField(countingContext.ModuleContext, name)!.Create(countingContext.ModuleContext)
                 .EmitLoad(countingContext);
 
-            kv.variable.EmitStore(countingContext);
+            variable.EmitStore(countingContext);
         }
 
         countingContext.IL.Emit(OpCodes.Pop);

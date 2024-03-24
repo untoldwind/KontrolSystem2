@@ -28,7 +28,7 @@ public readonly ref struct StringInput(ReadOnlySpan<char> source, string sourceN
         if (count == 0) return "";
         if (count > source.Length) throw new InvalidOperationException("Advance beyond eof");
 
-        return source.Slice(0, count).ToString();
+        return source[..count].ToString();
     }
 
     public StringInput Advance(int count) {
@@ -46,7 +46,7 @@ public readonly ref struct StringInput(ReadOnlySpan<char> source, string sourceN
             }
         }
 
-        return new StringInput(source.Slice(count), sourceName, position + count, nextLine, nextColumn);
+        return new StringInput(source[count..], sourceName, position + count, nextLine, nextColumn);
     }
 
     public override string ToString() {

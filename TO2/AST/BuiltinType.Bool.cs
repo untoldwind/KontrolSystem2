@@ -39,7 +39,7 @@ public abstract partial class BuiltinType {
                 {
                     "to_string",
                     new BoundMethodInvokeFactory("Convert boolean to string", true, () => String,
-                        () => new List<RealizedParameter>(), false, typeof(FormatUtils),
+                        () => [], false, typeof(FormatUtils),
                         typeof(FormatUtils).GetMethod("BoolToString"))
                 }
             };

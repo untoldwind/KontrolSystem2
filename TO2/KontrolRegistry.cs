@@ -9,7 +9,7 @@ using KontrolSystem.TO2.Runtime;
 namespace KontrolSystem.TO2;
 
 public class KontrolRegistry {
-    public readonly SortedDictionary<string, IKontrolModule> modules = new();
+    public readonly SortedDictionary<string, IKontrolModule> modules = [];
 
     public void RegisterModule(IKontrolModule kontrolModule) {
         if (modules.ContainsKey(kontrolModule.Name)) {

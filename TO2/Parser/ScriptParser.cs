@@ -9,10 +9,10 @@ namespace KontrolSystem.TO2.Parser;
 using static Parsers;
 
 public static class TO2ParserCommon {
-    private static readonly HashSet<string> ReservedKeywords = new() {
+    private static readonly HashSet<string> ReservedKeywords = [
         "pub", "fn", "let", "const", "if", "else", "return", "break", "continue", "while", "_", "for", "in",
         "as", "sync", "type", "struct", "impl"
-    };
+    ];
 
     public static readonly Parser<bool> PubKeyword = Tag("pub").Then(Spacing1);
 
@@ -65,7 +65,7 @@ public static class TO2ParserCommon {
         IdentifierPath,
         Opt(Delimited0(TypeRef, CommaDelimiter)
                 .Between(WhiteSpaces0.Then(Char('<')).Then(WhiteSpaces0), WhiteSpaces0.Then(Char('>'))))
-            .Map(o => o.IsDefined ? o.Value : new List<TO2Type>())
+            .Map(o => o.IsDefined ? o.Value : [])
     ).Map((items, start, end) => BuiltinType.GetBuiltinType(items.Item1, items.Item2) ??
                                  new LookupTypeReference(items.Item1, items.Item2, start, end));
 

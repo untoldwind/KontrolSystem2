@@ -41,9 +41,9 @@ public class UGUIInputField : UGUIElement {
 
     public static UGUIInputField Create(string value, float minWidth, UnityAction<string>? onChange = null) {
         var element = new UGUIInputField(UIFactory.Instance!.CreateInputField(),
-            new Vector2(minWidth, UIFactory.Instance.uiFontSize + 10), onChange);
-
-        element.Value = value;
+            new Vector2(minWidth, UIFactory.Instance.uiFontSize + 10), onChange) {
+            Value = value
+        };
 
         return element;
     }

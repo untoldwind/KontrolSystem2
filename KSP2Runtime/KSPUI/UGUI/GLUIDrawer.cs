@@ -4,22 +4,19 @@ using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime.KSPUI;
 
-public class GLUIDrawer {
+public class GLUIDrawer(int initialWidth, int initialHeight) {
     private static Material? colored;
     private static TMP_FontAsset? textFont;
 
-    private readonly RenderTexture renderTexture;
-
-    public GLUIDrawer(int initialWidth, int initialHeight) {
-        renderTexture = new RenderTexture(initialWidth, initialHeight, 0);
-    }
+    private readonly RenderTexture renderTexture = new(initialWidth, initialHeight, 0);
 
     public Texture Texture => renderTexture;
 
     public static void Initialize(TMP_FontAsset font) {
         textFont = font;
-        colored = new Material(Shader.Find("Hidden/Internal-Colored"));
-        colored.hideFlags = HideFlags.HideAndDontSave;
+        colored = new Material(Shader.Find("Hidden/Internal-Colored")) {
+            hideFlags = HideFlags.HideAndDontSave
+        };
     }
 
     public void Resize(int width, int height) {

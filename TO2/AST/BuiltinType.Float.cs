@@ -95,7 +95,7 @@ public abstract partial class BuiltinType {
                 {
                     "to_string",
                     new BoundMethodInvokeFactory("Convert the float to string.", true, () => String,
-                        () => new List<RealizedParameter>(), false, typeof(FormatUtils),
+                        () => [], false, typeof(FormatUtils),
                         typeof(FormatUtils).GetMethod("FloatToString"))
                 }, {
                     "to_fixed",
@@ -114,28 +114,28 @@ public abstract partial class BuiltinType {
                 }, {
                     "abs",
                     new BoundPropertyLikeFieldAccessFactory("Absolute value", () => Float, typeof(Math),
-                        typeof(Math).GetMethod("Abs", new[] { typeof(double) }), null)
+                        typeof(Math).GetMethod("Abs", [typeof(double)]), null)
                 }, {
                     "sign",
                     new BoundPropertyLikeFieldAccessFactory("Sign of the value (< 0 -> -1, 0 -> 0, > 0 -> 1)",
                         () => Int, typeof(Math),
-                        typeof(Math).GetMethod("Sign", new[] { typeof(double) }), null, OpCodes.Conv_I8)
+                        typeof(Math).GetMethod("Sign", [typeof(double)]), null, OpCodes.Conv_I8)
                 }, {
                     "is_nan",
                     new BoundPropertyLikeFieldAccessFactory("Check if float is not a number", () => Bool,
                         typeof(double),
-                        typeof(double).GetMethod("IsNaN", new[] { typeof(double) }), null)
+                        typeof(double).GetMethod("IsNaN", [typeof(double)]), null)
                 }, {
                     "is_infinity",
                     new BoundPropertyLikeFieldAccessFactory("Check if float is infinity", () => Bool,
                         typeof(double),
-                        typeof(double).GetMethod("IsInfinity", new[] { typeof(double) }), null)
+                        typeof(double).GetMethod("IsInfinity", [typeof(double)]), null)
                 }, {
                     "is_finite",
                     new BoundPropertyLikeFieldAccessFactory("Check if float is finite", () => Bool,
                         typeof(double),
-                        typeof(double).GetMethod("IsFinite", new[] { typeof(double) }) ??
-                        typeof(TO2Float).GetMethod("IsFiniteWrapper", new[] { typeof(double) }), null)
+                        typeof(double).GetMethod("IsFinite", [typeof(double)]) ??
+                        typeof(TO2Float).GetMethod("IsFiniteWrapper", [typeof(double)]), null)
                 }
             };
             intToFloatAssign = new IntToFloatAssign();

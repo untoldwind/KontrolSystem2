@@ -89,14 +89,14 @@ public class TupleDeconstructAssign : Expression {
 
         if (context.HasErrors) return;
 
-        foreach (var kv in variables) {
-            var itemAccess = tupleType.FindField(context.ModuleContext, $"_{kv.index + 1}")!
+        foreach (var (index, variable) in variables) {
+            var itemAccess = tupleType.FindField(context.ModuleContext, $"_{index + 1}")!
                 .Create(context.ModuleContext);
             context.IL.Emit(OpCodes.Dup);
             itemAccess.EmitLoad(context);
 
-            kv.variable.Type.AssignFrom(context.ModuleContext, itemAccess.FieldType).EmitConvert(context, true);
-            kv.variable.EmitStore(context);
+            variable.Type.AssignFrom(context.ModuleContext, itemAccess.FieldType).EmitConvert(context, true);
+            variable.EmitStore(context);
         }
 
         context.IL.Emit(OpCodes.Pop);
@@ -143,14 +143,14 @@ public class TupleDeconstructAssign : Expression {
 
         if (context.HasErrors) return;
 
-        foreach (var kv in variables) {
+        foreach (var (field, variable) in variables) {
             var itemAccess =
-                recordType.FindField(context.ModuleContext, kv.field)!.Create(context.ModuleContext);
+                recordType.FindField(context.ModuleContext, field)!.Create(context.ModuleContext);
             context.IL.Emit(OpCodes.Dup);
             itemAccess.EmitLoad(context);
 
-            kv.variable.Type.AssignFrom(context.ModuleContext, itemAccess.FieldType).EmitConvert(context, true);
-            kv.variable.EmitStore(context);
+            variable.Type.AssignFrom(context.ModuleContext, itemAccess.FieldType).EmitConvert(context, true);
+            variable.EmitStore(context);
         }
 
         context.IL.Emit(OpCodes.Pop);

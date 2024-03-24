@@ -277,7 +277,7 @@ public static class TO2ParserExpressions {
             return new VariableAssign(items.Item1, items.Item3, items.Item4, start, end);
         var last = items.Item2[suffixCount - 1];
         var target = items.Item2.Take(suffixCount - 1)
-            .Aggregate(new VariableGet(new List<string> { items.Item1 }, start, end) as Expression,
+            .Aggregate(new VariableGet([items.Item1], start, end) as Expression,
                 (result, op) => op.GetExpression(result, start, end));
         return last.AssignExpression(target, items.Item3, items.Item4, start, end);
     });

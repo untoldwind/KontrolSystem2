@@ -41,8 +41,8 @@ public class RecordStructType : RecordType {
         this.allowedFields = allowedFields;
         this.constructor = constructor;
         this.typeCreator = typeCreator;
-        itemTypes = new SortedDictionary<string, TO2Type>();
-        this.fields = new SortedDictionary<string, FieldInfo>();
+        itemTypes = [];
+        this.fields = [];
         foreach (var f in fields) {
             itemTypes.Add(f.name, f.type);
             this.fields.Add(f.name, f.field);

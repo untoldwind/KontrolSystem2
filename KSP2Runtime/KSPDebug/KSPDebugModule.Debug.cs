@@ -18,9 +18,9 @@ public partial class KSPDebugModule {
             KSPConsoleModule.RgbaColor color,
             string label, double width) {
             var renderer =
-                new VectorRenderer(startProvider, endProvider, color, label, width, false);
-
-            renderer.Visible = true;
+                new VectorRenderer(startProvider, endProvider, color, label, width, false) {
+                    Visible = true
+                };
             KSPContext.CurrentContext.AddMarker(renderer);
 
             return renderer;
@@ -34,9 +34,9 @@ public partial class KSPDebugModule {
         public VectorRenderer AddVector(Func<Position> startProvider, Func<Vector> vectorProvider,
             KSPConsoleModule.RgbaColor color, string label, double width) {
             var renderer =
-                new VectorRenderer(startProvider, vectorProvider, color, label, width, true);
-
-            renderer.Visible = true;
+                new VectorRenderer(startProvider, vectorProvider, color, label, width, true) {
+                    Visible = true
+                };
             KSPContext.CurrentContext.AddMarker(renderer);
 
             return renderer;
@@ -55,8 +55,9 @@ public partial class KSPDebugModule {
         [KSMethod]
         public BillboardRenderer AddBillboard(Func<Position> positionProvider, Func<string> textProvider,
             KSPConsoleModule.RgbaColor color, long fontSize) {
-            var marker = new BillboardRenderer(positionProvider, textProvider, color, fontSize);
-            marker.Visible = true;
+            var marker = new BillboardRenderer(positionProvider, textProvider, color, fontSize) {
+                Visible = true
+            };
 
             KSPContext.CurrentContext.AddMarker(marker);
 
@@ -65,8 +66,9 @@ public partial class KSPDebugModule {
 
         [KSMethod]
         public PathRenderer AddPath(Position[] path, KSPConsoleModule.RgbaColor color, double width) {
-            var pathMarker = new PathRenderer(path, color, width);
-            pathMarker.Visible = true;
+            var pathMarker = new PathRenderer(path, color, width) {
+                Visible = true
+            };
 
             KSPContext.CurrentContext.AddMarker(pathMarker);
 

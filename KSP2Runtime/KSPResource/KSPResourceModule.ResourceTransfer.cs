@@ -9,10 +9,10 @@ namespace KontrolSystem.KSP.Runtime.KSPResource;
 public partial class KSPResourceModule {
     [KSClass("ResourceTransfer", Description = "Represents a resource transfer")]
     public class ResourceTransfer {
-        private readonly List<ResourceTransferEntry> entries = new();
+        private readonly List<ResourceTransferEntry> entries = [];
 
         [KSField(Description = "Get currently registers resource transfer entries.")]
-        public ResourceTransferEntry[] Entries => entries.ToArray();
+        public ResourceTransferEntry[] Entries => [.. entries];
 
         [KSField(Description = "Check if a resource transfer is in progress.")]
         public bool IsRunning => entries.Any(e => e.IsRunning);
@@ -57,9 +57,9 @@ public partial class KSPResourceModule {
                 return true;
             }
 
-            entries.Add(new ResourceTransferEntry(flowDirection, resource.resourceContainer, new List<ResourceLimit> {
+            entries.Add(new ResourceTransferEntry(flowDirection, resource.resourceContainer, [
                 new(resource.resourceData.ResourceID, maxUnits)
-            }));
+            ]));
             return true;
         }
 
@@ -112,7 +112,7 @@ public partial class KSPResourceModule {
         List<KSPResourceModule.ResourceLimit> resourceLimits) {
         private readonly ResourceFlowRequestBroker broker = resourceContainer.partComponent.PartResourceFlowRequestBroker;
         internal readonly List<ResourceLimit> resourceLimits = resourceLimits;
-        private readonly List<ResourceFlowRequestCommandConfig> commands = new List<ResourceFlowRequestCommandConfig>();
+        private readonly List<ResourceFlowRequestCommandConfig> commands = [];
         private ResourceFlowRequestHandle resourceFlowRequestHandle;
 
         [KSField] public FlowDirection FlowDirection { get; } = flowDirection;
@@ -180,7 +180,7 @@ public partial class KSPResourceModule {
                     out var wrapper))
                 wrapper.RequestResolutionState = default;
 
-            broker.SetCommands(resourceFlowRequestHandle, 1.0, commands.ToArray());
+            broker.SetCommands(resourceFlowRequestHandle, 1.0, [.. commands]);
             broker.SetRequestActive(resourceFlowRequestHandle);
         }
 

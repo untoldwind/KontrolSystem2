@@ -16,16 +16,16 @@ public class ArrayType : RealizedType {
         allowedSuffixOperators = new OperatorCollection {
             {
                 Operator.Add, new StaticMethodOperatorEmitter(() => this, () => this,
-                    typeof(ArrayMethods).GetMethod("Concat"), context => new[] { elementType.UnderlyingType(context) })
+                    typeof(ArrayMethods).GetMethod("Concat"), context => [elementType.UnderlyingType(context)])
             }, {
                 Operator.Add, new StaticMethodOperatorEmitter(() => elementType, () => this,
-                    typeof(ArrayMethods).GetMethod("Append"), context => new[] { elementType.UnderlyingType(context) })
+                    typeof(ArrayMethods).GetMethod("Append"), context => [elementType.UnderlyingType(context)])
             }, {
                 Operator.AddAssign, new StaticMethodOperatorEmitter(() => this, () => this,
-                    typeof(ArrayMethods).GetMethod("Concat"), context => new[] { elementType.UnderlyingType(context) })
+                    typeof(ArrayMethods).GetMethod("Concat"), context => [elementType.UnderlyingType(context)])
             }, {
                 Operator.AddAssign, new StaticMethodOperatorEmitter(() => elementType, () => this,
-                    typeof(ArrayMethods).GetMethod("Append"), context => new[] { elementType.UnderlyingType(context) })
+                    typeof(ArrayMethods).GetMethod("Append"), context => [elementType.UnderlyingType(context)])
             }
         };
         DeclaredMethods = new Dictionary<string, IMethodInvokeFactory> {
@@ -152,13 +152,13 @@ public class ArrayType : RealizedType {
             }, {
                 "reverse",
                 new BoundMethodInvokeFactory("Reverse the order of the array", true, () => new ArrayType(ElementType),
-                    () => new List<RealizedParameter>(), false, typeof(ArrayMethods),
+                    () => [], false, typeof(ArrayMethods),
                     typeof(ArrayMethods).GetMethod("Reverse"),
                     context => ("T", ElementType.UnderlyingType(context)).Yield())
             }, {
                 "to_string", new BoundMethodInvokeFactory("Get string representation of the array", true,
                     () => BuiltinType.String,
-                    () => new List<RealizedParameter>(),
+                    () => [],
                     false, typeof(ArrayMethods), typeof(ArrayMethods).GetMethod("ArrayToString"),
                     context => ("T", ElementType.UnderlyingType(context)).Yield())
             }
@@ -219,7 +219,7 @@ public class ArrayType : RealizedType {
     public override IEnumerable<(string name, RealizedType type)> InferGenericArgument(ModuleContext context,
         RealizedType? concreteType) {
         var concreteArray = concreteType as ArrayType;
-        if (concreteArray == null) return Enumerable.Empty<(string name, RealizedType type)>();
+        if (concreteArray == null) return [];
         return ElementType.InferGenericArgument(context, concreteArray.ElementType.UnderlyingType(context));
     }
 

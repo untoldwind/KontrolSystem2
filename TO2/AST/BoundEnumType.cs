@@ -24,7 +24,7 @@ public class BoundEnumType : RealizedType {
         DeclaredMethods = new Dictionary<string, IMethodInvokeFactory> {
             {
                 "to_string", new BoundMethodInvokeFactory("String representation of the number",
-                    true, () => BuiltinType.String, () => new List<RealizedParameter>(), false,
+                    true, () => BuiltinType.String, () => [], false,
                     enumType, enumType.GetMethod("ToString", Type.EmptyTypes), null, true)
             }
         };
@@ -206,12 +206,8 @@ internal class EnumConstantFieldAccessEmitter : IFieldAccessEmitter {
     }
 }
 
-internal class EnumFromStringMethodFactory : IMethodInvokeFactory {
-    private readonly BoundEnumType boundEnumType;
-
-    public EnumFromStringMethodFactory(BoundEnumType boundEnumType) {
-        this.boundEnumType = boundEnumType;
-    }
+internal class EnumFromStringMethodFactory(BoundEnumType boundEnumType) : IMethodInvokeFactory {
+    private readonly BoundEnumType boundEnumType = boundEnumType;
 
     public bool IsAsync => false;
 
@@ -227,9 +223,9 @@ internal class EnumFromStringMethodFactory : IMethodInvokeFactory {
 
     public TO2Type DeclaredReturn => new OptionType(boundEnumType);
 
-    public List<FunctionParameter> DeclaredParameters => new() {
+    public List<FunctionParameter> DeclaredParameters => [
         new FunctionParameter("value", BuiltinType.String, "Enum value to lookup")
-    };
+    ];
 
     public IMethodInvokeEmitter Create(IBlockContext context, List<TO2Type> arguments, Node node) {
         return new EnumFromStringMethodEmitter(boundEnumType);
@@ -241,18 +237,14 @@ internal class EnumFromStringMethodFactory : IMethodInvokeFactory {
     }
 }
 
-internal class EnumFromStringMethodEmitter : IMethodInvokeEmitter {
-    private readonly BoundEnumType boundEnumType;
-
-    public EnumFromStringMethodEmitter(BoundEnumType boundEnumType) {
-        this.boundEnumType = boundEnumType;
-    }
+internal class EnumFromStringMethodEmitter(BoundEnumType boundEnumType) : IMethodInvokeEmitter {
+    private readonly BoundEnumType boundEnumType = boundEnumType;
 
     public RealizedType ResultType => new OptionType(boundEnumType);
 
-    public List<RealizedParameter> Parameters => new() {
+    public List<RealizedParameter> Parameters => [
         new RealizedParameter("value", BuiltinType.String, "Enum value to lookup")
-    };
+    ];
 
     public bool RequiresPtr => false;
 

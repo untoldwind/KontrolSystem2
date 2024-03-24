@@ -53,7 +53,7 @@ internal readonly struct AsyncClass {
             throw new CompilationErrorException(asyncContext.AllErrors);
 
         asyncContext.IL.EmitNew(OpCodes.Newobj,
-            asyncContext.MethodBuilder.ReturnType.GetConstructor(new[] { typeParameter })!);
+            asyncContext.MethodBuilder.ReturnType.GetConstructor([typeParameter])!);
         ILChunks.GenerateFunctionLeave(asyncContext);
         asyncContext.IL.EmitReturn(asyncContext.MethodBuilder.ReturnType);
 
@@ -66,7 +66,7 @@ internal readonly struct AsyncClass {
         asyncContext.IL.Emit(OpCodes.Ldarg_0);
         asyncContext.IL.Emit(OpCodes.Ldfld, asyncContext.stateField);
         asyncContext.IL.EmitNew(OpCodes.Newobj,
-            typeof(InvalidAsyncStateException).GetConstructor(new[] { typeof(int) })!, 1);
+            typeof(InvalidAsyncStateException).GetConstructor([typeof(int)])!, 1);
         asyncContext.IL.Emit(OpCodes.Throw);
 
         foreach (var asyncResume in asyncContext.asyncResumes!) asyncResume.EmitPoll(asyncContext);
@@ -81,7 +81,7 @@ internal readonly struct AsyncClass {
         asyncContext.IL.Emit(OpCodes.Ldarg_0);
         asyncContext.IL.Emit(OpCodes.Ldfld, asyncContext.stateField);
         asyncContext.IL.EmitNew(OpCodes.Newobj,
-            typeof(InvalidAsyncStateException).GetConstructor(new[] { typeof(int) })!, 1);
+            typeof(InvalidAsyncStateException).GetConstructor([typeof(int)])!, 1);
         asyncContext.IL.Emit(OpCodes.Throw);
 
         // Store state

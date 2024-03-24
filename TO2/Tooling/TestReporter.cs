@@ -12,18 +12,14 @@ public interface ITestReporter {
 
 public delegate void LineWriter(string message);
 
-public class ConsoleTestReporter : ITestReporter {
-    private readonly LineWriter output;
-
-    public ConsoleTestReporter(LineWriter output) {
-        this.output = output;
-    }
+public class ConsoleTestReporter(LineWriter output) : ITestReporter {
+    private readonly LineWriter output = output;
 
     public bool WasSuccessful => Failures.Count == 0 && Errors.Count == 0;
 
-    public List<TestResult> Failures { get; } = new();
+    public List<TestResult> Failures { get; } = [];
 
-    public List<TestResult> Errors { get; } = new();
+    public List<TestResult> Errors { get; } = [];
 
     public void BeginModule(string moduleName) {
         output($"Module {moduleName}");

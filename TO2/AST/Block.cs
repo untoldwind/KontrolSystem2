@@ -42,7 +42,7 @@ public class Block : Expression, IVariableContainer {
     public Block(List<IBlockItem> items, Position start = new(), Position end = new()) :
         base(start, end) {
         this.items = items;
-        variables = new Dictionary<string, IVariableRef>();
+        variables = [];
         foreach (var item in this.items) {
             item.VariableContainer = this;
             switch (item) {
@@ -146,16 +146,11 @@ public class Block : Expression, IVariableContainer {
         return new REPLBlockEval(ResultType(context.replBlockContext), effectiveContext, items);
     }
 
-    internal class REPLBlockEval : REPLValueFuture {
-        private readonly REPLContext context;
-        private readonly IEnumerator<IBlockItem> items;
+    internal class REPLBlockEval(TO2Type to2Type, REPLContext context, List<IBlockItem> items) : REPLValueFuture(to2Type) {
+        private readonly REPLContext context = context;
+        private readonly IEnumerator<IBlockItem> items = items.Where(item => !item.IsComment).GetEnumerator();
         private REPLValueFuture? lastFuture;
         private IREPLValue? lastResult = REPLUnit.INSTANCE;
-
-        public REPLBlockEval(TO2Type to2Type, REPLContext context, List<IBlockItem> items) : base(to2Type) {
-            this.context = context;
-            this.items = items.Where(item => !item.IsComment).GetEnumerator();
-        }
 
         public override FutureResult<IREPLValue?> PollValue() {
             if (lastFuture == null) {

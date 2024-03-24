@@ -6,11 +6,11 @@ using KontrolSystem.TO2.Runtime;
 namespace KontrolSystem.TO2.AST;
 
 public abstract partial class BuiltinType : RealizedType {
-    public static readonly OperatorCollection NoOperators = new();
+    public static readonly OperatorCollection NoOperators = [];
 
-    public static readonly Dictionary<string, IMethodInvokeFactory> NoMethods = new();
+    public static readonly Dictionary<string, IMethodInvokeFactory> NoMethods = [];
 
-    public static readonly Dictionary<string, IFieldAccessFactory> NoFields = new();
+    public static readonly Dictionary<string, IFieldAccessFactory> NoFields = [];
 
     public static readonly RealizedType Unit = new TO2Unit();
     public static readonly RealizedType Bool = new TO2Bool();
@@ -32,7 +32,7 @@ public abstract partial class BuiltinType : RealizedType {
                     typeof(ArrayBuilderOps).GetMethod("AddTo"))
             }
         },
-        new List<(string name, IMethodInvokeFactory invoker)> {
+        [
             ("append",
                 new BoundMethodInvokeFactory("Append an element to the array", true, LazyArrayBuilder,
                     () => [new("element", new GenericParameter("T"), "Value ot append")],
@@ -41,12 +41,12 @@ public abstract partial class BuiltinType : RealizedType {
                 new BoundMethodInvokeFactory("Build the resulting array", true,
                     () => new ArrayType(new GenericParameter("T")), () => [], false,
                     typeof(ArrayBuilder<>), typeof(ArrayBuilder<>).GetMethod("Result")))
-        },
-        new List<(string name, IFieldAccessFactory access)> {
+        ],
+        [
             ("length",
                 new BoundPropertyLikeFieldAccessFactory("", () => Int, typeof(ArrayBuilder<>),
                     typeof(ArrayBuilder<>).GetProperty("Length")))
-        }
+        ]
     );
 
     private static RealizedType LazyArrayBuilder() => ArrayBuilder;
@@ -55,7 +55,7 @@ public abstract partial class BuiltinType : RealizedType {
         "Holds a single value that can be mutated at any time", typeof(Cell<>),
         NoOperators,
         NoOperators,
-        new List<(string name, IMethodInvokeFactory invoker)> {
+        [
             ("set_value",
                 new BoundMethodInvokeFactory("Set the value of the cell", true, () => Unit,
                     () => [new("value", new GenericParameter("T"), "New value of the cell")],
@@ -69,12 +69,12 @@ public abstract partial class BuiltinType : RealizedType {
                                 new GenericParameter("T")),
                             "Function to be applied on current value of the cell returning the new value of the cell")
                     ], false, typeof(Cell<>), typeof(Cell<>).GetMethod("Update")))
-        },
-        new List<(string name, IFieldAccessFactory access)> {
+        ],
+        [
             ("value",
                 new BoundPropertyLikeFieldAccessFactory("", () => new GenericParameter("T"), typeof(Cell<>),
                     typeof(Cell<>).GetProperty("Value")))
-        }
+        ]
     );
 
     private static RealizedType LazyCell() => Cell;

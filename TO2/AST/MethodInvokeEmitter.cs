@@ -50,22 +50,14 @@ public interface IMethodInvokeFactory {
 
 public delegate REPLValueFuture REPLMethodCall(Node node, IREPLValue[] targetWithArguments);
 
-public class InlineMethodInvokeFactory : IMethodInvokeFactory {
-    private readonly REPLMethodCall methodCall;
-    private readonly OpCode[] opCodes;
-    private readonly Func<RealizedType> resultType;
+public class InlineMethodInvokeFactory(string description, Func<RealizedType> returnType, bool isConst,
+    REPLMethodCall methodCall, params OpCode[] opCodes) : IMethodInvokeFactory {
+    private readonly REPLMethodCall methodCall = methodCall;
+    private readonly OpCode[] opCodes = opCodes;
+    private readonly Func<RealizedType> resultType = returnType;
 
-    public InlineMethodInvokeFactory(string description, Func<RealizedType> returnType, bool isConst,
-        REPLMethodCall methodCall, params OpCode[] opCodes) {
-        Description = description;
-        resultType = returnType;
-        IsConst = isConst;
-        this.methodCall = methodCall;
-        this.opCodes = opCodes;
-    }
-
-    public bool IsConst { get; }
-    public string Description { get; }
+    public bool IsConst { get; } = isConst;
+    public string Description { get; } = description;
 
     public bool IsAsync => false;
 
@@ -77,10 +69,10 @@ public class InlineMethodInvokeFactory : IMethodInvokeFactory {
 
     public TO2Type DeclaredReturn => resultType();
 
-    public List<FunctionParameter> DeclaredParameters => new();
+    public List<FunctionParameter> DeclaredParameters => [];
 
     public IMethodInvokeEmitter Create(IBlockContext context, List<TO2Type> arguments, Node node) {
-        return new InlineMethodInvokeEmitter(resultType(), new List<RealizedParameter>(), methodCall, opCodes);
+        return new InlineMethodInvokeEmitter(resultType(), [], methodCall, opCodes);
     }
 
     public IMethodInvokeFactory
@@ -89,22 +81,15 @@ public class InlineMethodInvokeFactory : IMethodInvokeFactory {
     }
 }
 
-public class InlineMethodInvokeEmitter : IMethodInvokeEmitter {
-    private readonly REPLMethodCall methodCall;
-    private readonly OpCode[] opCodes;
+public class InlineMethodInvokeEmitter(RealizedType returnType, List<RealizedParameter> parameters,
+    REPLMethodCall methodCall,
+    params OpCode[] opCodes) : IMethodInvokeEmitter {
+    private readonly REPLMethodCall methodCall = methodCall;
+    private readonly OpCode[] opCodes = opCodes;
 
-    public InlineMethodInvokeEmitter(RealizedType returnType, List<RealizedParameter> parameters,
-        REPLMethodCall methodCall,
-        params OpCode[] opCodes) {
-        ResultType = returnType;
-        Parameters = parameters;
-        this.methodCall = methodCall;
-        this.opCodes = opCodes;
-    }
+    public RealizedType ResultType { get; } = returnType;
 
-    public RealizedType ResultType { get; }
-
-    public List<RealizedParameter> Parameters { get; }
+    public List<RealizedParameter> Parameters { get; } = parameters;
 
 
     public bool IsAsync => false;
@@ -120,35 +105,23 @@ public class InlineMethodInvokeEmitter : IMethodInvokeEmitter {
     }
 }
 
-public class BoundMethodInvokeFactory : IMethodInvokeFactory {
-    private readonly bool constrained;
-    private readonly MethodInfo methodInfo;
-    private readonly Type methodTarget;
-    private readonly Func<List<RealizedParameter>> parameters;
-    private readonly Func<RealizedType> resultType;
-    private readonly Func<ModuleContext, IEnumerable<(string name, RealizedType type)>>? targetTypeArguments;
-
-    public BoundMethodInvokeFactory(string? description, bool isConst, Func<RealizedType> resultType,
-        Func<List<RealizedParameter>> parameters, bool isAsync, Type methodTarget, MethodInfo? methodInfo,
-        Func<ModuleContext, IEnumerable<(string name, RealizedType type)>>? targetTypeArguments = null,
-        bool constrained = false) {
-        Description = description;
-        IsConst = isConst;
-        this.resultType = resultType;
-        this.parameters = parameters;
-        this.methodInfo = methodInfo ??
+public class BoundMethodInvokeFactory(string? description, bool isConst, Func<RealizedType> resultType,
+    Func<List<RealizedParameter>> parameters, bool isAsync, Type methodTarget, MethodInfo? methodInfo,
+    Func<ModuleContext, IEnumerable<(string name, RealizedType type)>>? targetTypeArguments = null,
+    bool constrained = false) : IMethodInvokeFactory {
+    private readonly bool constrained = constrained;
+    private readonly MethodInfo methodInfo = methodInfo ??
                           throw new ArgumentException(
                               $"MethodInfo is null for {description} in type {methodTarget}");
-        this.methodTarget = methodTarget;
-        IsAsync = isAsync;
-        this.targetTypeArguments = targetTypeArguments;
-        this.constrained = constrained;
-    }
+    private readonly Type methodTarget = methodTarget;
+    private readonly Func<List<RealizedParameter>> parameters = parameters;
+    private readonly Func<RealizedType> resultType = resultType;
+    private readonly Func<ModuleContext, IEnumerable<(string name, RealizedType type)>>? targetTypeArguments = targetTypeArguments;
 
-    public bool IsConst { get; }
-    public string? Description { get; }
+    public bool IsConst { get; } = isConst;
+    public string? Description { get; } = description;
 
-    public bool IsAsync { get; }
+    public bool IsAsync { get; } = isAsync;
 
     public TypeHint ReturnHint => _ => resultType();
 
@@ -172,7 +145,7 @@ public class BoundMethodInvokeFactory : IMethodInvokeFactory {
                 resultType(), parameters(), methodInfo,
                 null, arguments,
                 targetTypeArguments?.Invoke(context.ModuleContext) ??
-                Enumerable.Empty<(string name, RealizedType type)>(),
+                [],
                 node);
 
         if (context.HasErrors) return null;
@@ -208,24 +181,15 @@ public class BoundMethodInvokeFactory : IMethodInvokeFactory {
     }
 }
 
-public class BoundMethodInvokeEmitter : IMethodInvokeEmitter {
-    private readonly bool constrained;
-    private readonly MethodInfo methodInfo;
-    private readonly Type methodTarget;
+public class BoundMethodInvokeEmitter(RealizedType resultType, List<RealizedParameter> parameters, bool isAsync,
+    Type methodTarget, MethodInfo methodInfo, bool constrained = false) : IMethodInvokeEmitter {
+    private readonly bool constrained = constrained;
+    private readonly MethodInfo methodInfo = methodInfo;
+    private readonly Type methodTarget = methodTarget;
 
-    public BoundMethodInvokeEmitter(RealizedType resultType, List<RealizedParameter> parameters, bool isAsync,
-        Type methodTarget, MethodInfo methodInfo, bool constrained = false) {
-        ResultType = resultType;
-        Parameters = parameters;
-        this.methodInfo = methodInfo;
-        this.methodTarget = methodTarget;
-        IsAsync = isAsync;
-        this.constrained = constrained;
-    }
-
-    public RealizedType ResultType { get; }
-    public List<RealizedParameter> Parameters { get; }
-    public bool IsAsync { get; }
+    public RealizedType ResultType { get; } = resultType;
+    public List<RealizedParameter> Parameters { get; } = parameters;
+    public bool IsAsync { get; } = isAsync;
 
     public bool RequiresPtr =>
         methodTarget.IsValueType && (methodInfo.CallingConvention & CallingConventions.HasThis) != 0;

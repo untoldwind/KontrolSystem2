@@ -116,11 +116,11 @@ public class DeclaredKontrolModule : IKontrolModule {
         this.moduleContext = moduleContext;
         this.to2Module = to2Module;
         publicTypes = types.ToDictionary(t => t.alias, t => t.type);
-        publicFunctions = new Dictionary<string, KontrolFunctionSelector>();
-        declaredFunctions = new List<DeclaredKontrolFunction>();
-        declaredStructConstructors = new List<DeclaredKontrolStructConstructor>();
-        declaredConstants = new Dictionary<string, DeclaredKontrolConstant>();
-        publicConstants = new Dictionary<string, DeclaredKontrolConstant>();
+        publicFunctions = [];
+        declaredFunctions = [];
+        declaredStructConstructors = [];
+        declaredConstants = [];
+        publicConstants = [];
     }
 
     public string Name { get; }
@@ -130,7 +130,7 @@ public class DeclaredKontrolModule : IKontrolModule {
 
     public bool IsCompiled => true;
 
-    public IEnumerable<string> AllTypeNames => Enumerable.Empty<string>();
+    public IEnumerable<string> AllTypeNames => [];
 
     public TO2Type? FindType(string name) {
         return publicTypes.Get(name);

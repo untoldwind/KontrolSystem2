@@ -22,7 +22,7 @@ using UnityEngine;
 namespace KontrolSystem.KSP.Runtime.Core;
 
 internal class AutopilotHooks {
-    internal readonly List<IKSPAutopilot> autopilots = new();
+    internal readonly List<IKSPAutopilot> autopilots = [];
     private readonly IKSPContext context;
 
     internal AutopilotHooks(IKSPContext context) {
@@ -61,47 +61,25 @@ internal class AutopilotHooks {
     }
 }
 
-public class KSPCoreContext : IKSPContext {
+public class KSPCoreContext(string processName, ITO2Logger logger, GameInstance gameInstance, KSPConsoleBuffer consoleBuffer,
+    TimeSeriesCollection timeSeriesCollection, OptionalAddons optionalAddons) : IKSPContext {
     internal const int MaxCallStack = 100;
-    private readonly Dictionary<VesselComponent, AutopilotHooks> autopilotHooks;
-    private readonly List<BackgroundKSPContext> childContexts;
+    private readonly Dictionary<VesselComponent, AutopilotHooks> autopilotHooks = [];
+    private readonly List<BackgroundKSPContext> childContexts = [];
 
-    private readonly List<IMarker> markers;
-    private readonly List<KSPResourceModule.ResourceTransfer> resourceTransfers;
-    private readonly Stopwatch timeStopwatch;
-    private readonly long timeoutMillis;
-    private readonly List<KSPUIModule.Window> windows;
-    private object? nextYield;
+    private readonly List<IMarker> markers = [];
+    private readonly List<KSPResourceModule.ResourceTransfer> resourceTransfers = [];
+    private readonly Stopwatch timeStopwatch = Stopwatch.StartNew();
+    private readonly long timeoutMillis = 100;
+    private readonly List<KSPUIModule.Window> windows = [];
+    private object? nextYield = new WaitForFixedUpdate();
     private int stackCallCount;
-    private readonly List<Action> nextUpdateOnce;
-    private readonly Stack<CoreError.StackEntry> callStack;
-    private readonly Dictionary<string, DirectLogFile> logFiles;
-
-    public KSPCoreContext(string processName, ITO2Logger logger, GameInstance gameInstance, KSPConsoleBuffer consoleBuffer,
-        TimeSeriesCollection timeSeriesCollection, OptionalAddons optionalAddons) {
-        ProcessName = processName;
-        Logger = logger;
-        Game = gameInstance;
-        ConsoleBuffer = consoleBuffer;
-        TimeSeriesCollection = timeSeriesCollection;
-        OptionalAddons = optionalAddons;
-
-        markers = new List<IMarker>();
-        resourceTransfers = new List<KSPResourceModule.ResourceTransfer>();
-        windows = new List<KSPUIModule.Window>();
-        autopilotHooks = new Dictionary<VesselComponent, AutopilotHooks>();
-        nextYield = new WaitForFixedUpdate();
-        childContexts = new List<BackgroundKSPContext>();
-        timeStopwatch = Stopwatch.StartNew();
-        timeoutMillis = 100;
-        nextUpdateOnce = new List<Action>();
-        callStack = new Stack<CoreError.StackEntry>();
-        logFiles = new Dictionary<string, DirectLogFile>();
-    }
-
+    private readonly List<Action> nextUpdateOnce = [];
+    private readonly Stack<CoreError.StackEntry> callStack = new();
+    private readonly Dictionary<string, DirectLogFile> logFiles = [];
 
     public bool IsBackground => false;
-    public ITO2Logger Logger { get; }
+    public ITO2Logger Logger { get; } = logger;
 
     public void CheckTimeout() {
         var elapsed = timeStopwatch.ElapsedMilliseconds;
@@ -138,19 +116,19 @@ public class KSPCoreContext : IKSPContext {
         return childContext;
     }
 
-    public GameInstance Game { get; }
+    public GameInstance Game { get; } = gameInstance;
 
     public KSPGameMode GameMode => GameModeAdapter.GameModeFromState(Game.GlobalGameState.GetState());
 
-    public string ProcessName { get; }
+    public string ProcessName { get; } = processName;
 
     public double UniversalTime => Game.SpaceSimulation.UniverseModel.UniverseTime;
 
     public VesselComponent ActiveVessel => Game.ViewController.GetActiveSimVessel();
 
-    public KSPConsoleBuffer ConsoleBuffer { get; }
+    public KSPConsoleBuffer ConsoleBuffer { get; } = consoleBuffer;
 
-    public TimeSeriesCollection TimeSeriesCollection { get; }
+    public TimeSeriesCollection TimeSeriesCollection { get; } = timeSeriesCollection;
 
     public KSPOrbitModule.IBody? FindBody(string name) {
         var body = Game.ViewController.GetBodyByName(name);
@@ -248,7 +226,7 @@ public class KSPCoreContext : IKSPContext {
         vessel.SimulationObject.objVesselBehavior.OnPreAutopilotUpdate -= autopilots.RunAutopilots;
     }
 
-    public OptionalAddons OptionalAddons { get; }
+    public OptionalAddons OptionalAddons { get; } = optionalAddons;
 
     public void TriggerMarkerUpdate() {
         try {
@@ -302,22 +280,14 @@ public class KSPCoreContext : IKSPContext {
     }
 }
 
-public class BackgroundKSPContext : IContext {
-    private readonly List<BackgroundKSPContext> childContexts;
-    private readonly KSPConsoleBuffer consoleBuffer;
-    private readonly CancellationTokenSource token;
+public class BackgroundKSPContext(ITO2Logger logger, KSPConsoleBuffer consoleBuffer, CancellationTokenSource token) : IContext {
+    private readonly List<BackgroundKSPContext> childContexts = [];
+    private readonly KSPConsoleBuffer consoleBuffer = consoleBuffer;
+    private readonly CancellationTokenSource token = token;
     private int stackCallCount;
-    private readonly Stack<CoreError.StackEntry> callStack;
+    private readonly Stack<CoreError.StackEntry> callStack = new();
 
-    public BackgroundKSPContext(ITO2Logger logger, KSPConsoleBuffer consoleBuffer, CancellationTokenSource token) {
-        this.Logger = logger;
-        this.consoleBuffer = consoleBuffer;
-        this.token = token;
-        childContexts = new List<BackgroundKSPContext>();
-        callStack = new Stack<CoreError.StackEntry>();
-    }
-
-    public ITO2Logger Logger { get; }
+    public ITO2Logger Logger { get; } = logger;
 
     public bool IsBackground => true;
 

@@ -25,8 +25,9 @@ public partial class KSPControlModule {
         "torque_pi",
         Description = "Create a new TorquePI with given parameters.")]
     public static TorquePI CreateTorquePI(double ts) {
-        var torquePi = new TorquePI();
-        torquePi.Ts = ts;
+        var torquePi = new TorquePI {
+            Ts = ts
+        };
         return torquePi;
     }
 }

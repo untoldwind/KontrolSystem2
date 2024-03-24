@@ -64,7 +64,7 @@ public class Call : Expression {
         var (_, genericResult, _) = Helpers.MakeGeneric(context,
             function.ReturnType, function.Parameters, function.RuntimeMethod!,
             typeHint?.Invoke(context), arguments.Select(e => e.ResultType(context)),
-            Enumerable.Empty<(string name, RealizedType type)>(),
+            [],
             this);
 
         return genericResult;
@@ -252,7 +252,7 @@ public class Call : Expression {
             Helpers.MakeGeneric(context,
                 function.ReturnType, function.Parameters, function.RuntimeMethod!,
                 typeHint?.Invoke(context), arguments.Select(e => e.ResultType(context)),
-                Enumerable.Empty<(string name, RealizedType type)>(),
+                [],
                 this);
 
         int i;
@@ -383,7 +383,7 @@ public class Call : Expression {
                 function.ReturnType, function.Parameters, function.RuntimeMethod!,
                 typeHint?.Invoke(context.replBlockContext),
                 arguments.Select(e => e.ResultType(context.replBlockContext)),
-                Enumerable.Empty<(string name, RealizedType type)>(),
+                [],
                 this);
 
         for (var i = 0; i < arguments.Count; i++) {
@@ -393,7 +393,7 @@ public class Call : Expression {
                     $"Argument {function.Parameters[i].name} of '{FullName}' has to be a {genericParameters[i].type}, but {argumentType} was given");
         }
 
-        return REPLValueFuture.ChainN(genericResult, argumentFutures.ToArray(),
+        return REPLValueFuture.ChainN(genericResult, [.. argumentFutures],
             arguments => {
                 var result = genericMethod.Invoke(null, arguments.Select(a => a.Value).ToArray());
 

@@ -9,14 +9,9 @@ public interface IAnyOption {
     object? ValueObject { get; }
 }
 
-public readonly struct Option<T> : IAnyOption {
-    public readonly bool defined;
-    public readonly T value;
-
-    public Option(T value) {
-        defined = true;
-        this.value = value;
-    }
+public readonly struct Option<T>(T value) : IAnyOption {
+    public readonly bool defined = true;
+    public readonly T value = value;
 
     public bool Defined => defined;
 

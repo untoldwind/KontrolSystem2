@@ -12,10 +12,10 @@ public class RecordTupleType : RecordType {
 
     public RecordTupleType(IEnumerable<(string name, TO2Type type)> itemTypes) : base(BuiltinType.NoOperators) {
         this.itemTypes = [];
-        foreach (var kv in itemTypes) this.itemTypes.Add(kv.name, kv.type);
+        foreach (var (name, type) in itemTypes) this.itemTypes.Add(name, type);
         DeclaredFields = this.itemTypes.Keys
             .Select((name, idx) => (name,
-                new TupleFieldAccessFactory(this, this.itemTypes.Values.ToList(), idx) as IFieldAccessFactory))
+                new TupleFieldAccessFactory(this, [.. this.itemTypes.Values], idx) as IFieldAccessFactory))
             .ToDictionary(item => item.name, item => item.Item2);
     }
 

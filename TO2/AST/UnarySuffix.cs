@@ -5,15 +5,10 @@ using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST;
 
-public class UnarySuffix : Expression {
-    private readonly Expression left;
-    private readonly Operator op;
-
-    public UnarySuffix(Expression left, Operator op, Position start = new(),
-        Position end = new()) : base(start, end) {
-        this.left = left;
-        this.op = op;
-    }
+public class UnarySuffix(Expression left, Operator op, Position start = new(),
+    Position end = new()) : Expression(start, end) {
+    private readonly Expression left = left;
+    private readonly Operator op = op;
 
     public override IVariableContainer? VariableContainer {
         set => left.VariableContainer = value;

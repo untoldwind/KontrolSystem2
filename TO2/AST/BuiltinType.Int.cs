@@ -101,7 +101,7 @@ public abstract partial class BuiltinType {
                 {
                     "to_string",
                     new BoundMethodInvokeFactory("Convert integer to string", true, () => String,
-                        () => new List<RealizedParameter>(), false, typeof(FormatUtils),
+                        () => [], false, typeof(FormatUtils),
                         typeof(FormatUtils).GetMethod("IntToString"))
                 }
             };
@@ -117,12 +117,12 @@ public abstract partial class BuiltinType {
                 }, {
                     "abs",
                     new BoundPropertyLikeFieldAccessFactory("Absolute value", () => Int, typeof(Math),
-                        typeof(Math).GetMethod("Abs", new[] { typeof(long) }), null)
+                        typeof(Math).GetMethod("Abs", [typeof(long)]), null)
                 }, {
                     "sign",
                     new BoundPropertyLikeFieldAccessFactory("Sign of the value (< 0 -> -1, 0 -> 0, > 0 -> 1)",
                         () => Int, typeof(Math),
-                        typeof(Math).GetMethod("Sign", new[] { typeof(long) }), null, OpCodes.Conv_I8)
+                        typeof(Math).GetMethod("Sign", [typeof(long)]), null, OpCodes.Conv_I8)
                 }
             };
         }

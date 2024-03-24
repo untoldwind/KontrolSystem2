@@ -16,7 +16,7 @@ public static class RotationBinding {
             {
                 Operator.Neg,
                 new StaticMethodOperatorEmitter(() => BuiltinType.Unit, LazyRotationType,
-                    typeof(RotationWrapper).GetMethod("op_UnaryNegation", new[] { typeof(RotationWrapper) }))
+                    typeof(RotationWrapper).GetMethod("op_UnaryNegation", [typeof(RotationWrapper)]))
             }
         },
         new OperatorCollection {
@@ -24,46 +24,46 @@ public static class RotationBinding {
                 Operator.Add,
                 new StaticMethodOperatorEmitter(LazyRotationType, LazyRotationType,
                     typeof(RotationWrapper).GetMethod("op_Addition",
-                        new[] { typeof(RotationWrapper), typeof(RotationWrapper) }))
+                        [typeof(RotationWrapper), typeof(RotationWrapper)]))
             }, {
                 Operator.AddAssign,
                 new StaticMethodOperatorEmitter(LazyRotationType, LazyRotationType,
                     typeof(RotationWrapper).GetMethod("op_Addition",
-                        new[] { typeof(RotationWrapper), typeof(RotationWrapper) }))
+                        [typeof(RotationWrapper), typeof(RotationWrapper)]))
             }, {
                 Operator.Sub,
                 new StaticMethodOperatorEmitter(LazyRotationType, LazyRotationType,
                     typeof(RotationWrapper).GetMethod("op_Subtraction",
-                        new[] { typeof(RotationWrapper), typeof(RotationWrapper) }))
+                        [typeof(RotationWrapper), typeof(RotationWrapper)]))
             }, {
                 Operator.SubAssign,
                 new StaticMethodOperatorEmitter(LazyRotationType, LazyRotationType,
                     typeof(RotationWrapper).GetMethod("op_Subtraction",
-                        new[] { typeof(RotationWrapper), typeof(RotationWrapper) }))
+                        [typeof(RotationWrapper), typeof(RotationWrapper)]))
             }, {
                 Operator.Mul,
                 new StaticMethodOperatorEmitter(LazyRotationType, LazyRotationType,
                     typeof(RotationWrapper).GetMethod("op_Multiply",
-                        new[] { typeof(RotationWrapper), typeof(RotationWrapper) }))
+                        [typeof(RotationWrapper), typeof(RotationWrapper)]))
             }, {
                 Operator.MulAssign,
                 new StaticMethodOperatorEmitter(LazyRotationType, LazyRotationType,
                     typeof(RotationWrapper).GetMethod("op_Multiply",
-                        new[] { typeof(RotationWrapper), typeof(RotationWrapper) }))
+                        [typeof(RotationWrapper), typeof(RotationWrapper)]))
             }, {
                 Operator.Mul,
                 new StaticMethodOperatorEmitter(() => VectorBinding.VectorType, () => VectorBinding.VectorType,
-                    typeof(RotationWrapper).GetMethod("op_Multiply", new[] { typeof(RotationWrapper), typeof(Vector) }))
+                    typeof(RotationWrapper).GetMethod("op_Multiply", [typeof(RotationWrapper), typeof(Vector)]))
             }, {
                 Operator.Eq,
                 new StaticMethodOperatorEmitter(LazyRotationType, () => BuiltinType.Bool,
                     typeof(RotationWrapper).GetMethod("op_Equality",
-                        new[] { typeof(RotationWrapper), typeof(RotationWrapper) }))
+                        [typeof(RotationWrapper), typeof(RotationWrapper)]))
             }, {
                 Operator.NotEq,
                 new StaticMethodOperatorEmitter(LazyRotationType, () => BuiltinType.Bool,
                     typeof(RotationWrapper).GetMethod("op_Equality",
-                        new[] { typeof(RotationWrapper), typeof(RotationWrapper) }),
+                        [typeof(RotationWrapper), typeof(RotationWrapper)]),
                     null, OpCodes.Ldc_I4_0, OpCodes.Ceq)
             }
         },
@@ -102,7 +102,7 @@ public static class RotationBinding {
                 "to_string",
                 new BoundMethodInvokeFactory("Convert the direction to string", true, () => BuiltinType.String,
                     () => [new("frame", TransformFrameBinding.TransformFrameType, "Frame of reference")], false, typeof(RotationWrapper),
-                    typeof(RotationWrapper).GetMethod("ToString", new[] { typeof(ITransformFrame) }))
+                    typeof(RotationWrapper).GetMethod("ToString", [typeof(ITransformFrame)]))
             }
         },
         new Dictionary<string, IFieldAccessFactory> {

@@ -140,7 +140,7 @@ public class FieldAssign(
                 if (fieldAccess.IsAsyncStore) {
                     context.IL.Emit(OpCodes.Ldnull);
                     context.IL.EmitNew(OpCodes.Newobj,
-                        typeof(Future.Success<object>).GetConstructor(new[] { typeof(object) })!);
+                        typeof(Future.Success<object>).GetConstructor([typeof(object)])!);
                     context.RegisterAsyncResume(BuiltinType.Unit);
                     context.IL.Emit(OpCodes.Pop);
                 }
@@ -151,7 +151,7 @@ public class FieldAssign(
                 if (fieldAccess.IsAsyncStore) {
                     context.IL.Emit(OpCodes.Ldnull);
                     context.IL.EmitNew(OpCodes.Newobj,
-                        typeof(Future.Success<object>).GetConstructor(new[] { typeof(object) })!);
+                        typeof(Future.Success<object>).GetConstructor([typeof(object)])!);
                     context.RegisterAsyncResume(BuiltinType.Unit);
                     context.IL.Emit(OpCodes.Pop);
                 }
@@ -196,7 +196,7 @@ public class FieldAssign(
                 if (fieldAccess.IsAsyncStore) {
                     context.IL.Emit(OpCodes.Ldnull);
                     context.IL.EmitNew(OpCodes.Newobj,
-                        typeof(Future.Success<object>).GetConstructor(new[] { typeof(object) })!);
+                        typeof(Future.Success<object>).GetConstructor([typeof(object)])!);
                     context.RegisterAsyncResume(BuiltinType.Unit);
                     context.IL.Emit(OpCodes.Pop);
                 }
@@ -208,7 +208,7 @@ public class FieldAssign(
                 if (fieldAccess.IsAsyncStore) {
                     context.IL.Emit(OpCodes.Ldnull);
                     context.IL.EmitNew(OpCodes.Newobj,
-                        typeof(Future.Success<object>).GetConstructor(new[] { typeof(object) })!);
+                        typeof(Future.Success<object>).GetConstructor([typeof(object)])!);
                     context.RegisterAsyncResume(BuiltinType.Unit);
                     context.IL.Emit(OpCodes.Pop);
                 }

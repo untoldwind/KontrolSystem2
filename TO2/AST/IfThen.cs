@@ -151,20 +151,13 @@ public class IfThen : Expression, IVariableContainer {
         return new REPLIfThenFuture(thenResultType, context, condition, thenExpression);
     }
 
-    private class REPLIfThenFuture : REPLValueFuture {
-        private readonly Expression condition;
-        private readonly REPLContext context;
-        private readonly Expression thenExpression;
+    private class REPLIfThenFuture(TO2Type to2Type, REPLContext context, Expression condition, Expression thenExpression) : REPLValueFuture(new OptionType(to2Type)) {
+        private readonly Expression condition = condition;
+        private readonly REPLContext context = context;
+        private readonly Expression thenExpression = thenExpression;
         private REPLValueFuture? conditionFuture;
         private IREPLValue? conditionResult;
         private REPLValueFuture? thenFuture;
-
-        public REPLIfThenFuture(TO2Type to2Type, REPLContext context, Expression condition, Expression thenExpression) :
-            base(new OptionType(to2Type)) {
-            this.context = context;
-            this.condition = condition;
-            this.thenExpression = thenExpression;
-        }
 
         public override FutureResult<IREPLValue?> PollValue() {
             conditionFuture ??= condition.Eval(context);

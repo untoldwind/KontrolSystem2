@@ -20,7 +20,7 @@ public class SyncBlockContext : IBlockContext {
         variables = parent.variables.ToDictionary(entry => entry.Key, entry => entry.Value);
         AllErrors = parent.AllErrors;
         this.InnerLoop = innerLoop;
-        InferredGenerics = new Dictionary<string, RealizedType>();
+        InferredGenerics = [];
     }
 
     public SyncBlockContext(ModuleContext moduleContext) {
@@ -28,10 +28,10 @@ public class SyncBlockContext : IBlockContext {
         MethodBuilder = null;
         ExpectedReturn = BuiltinType.Unit;
         IL = moduleContext.constructorEmitter!;
-        variables = new Dictionary<string, IBlockVariable>();
-        AllErrors = new List<StructuralError>();
+        variables = [];
+        AllErrors = [];
         InnerLoop = null;
-        InferredGenerics = new Dictionary<string, RealizedType>();
+        InferredGenerics = [];
     }
 
     protected SyncBlockContext(ModuleContext moduleContext, IILEmitter il) {
@@ -39,10 +39,10 @@ public class SyncBlockContext : IBlockContext {
         MethodBuilder = null;
         ExpectedReturn = BuiltinType.Unit;
         this.IL = il;
-        variables = new Dictionary<string, IBlockVariable>();
-        AllErrors = new List<StructuralError>();
+        variables = [];
+        AllErrors = [];
         InnerLoop = null;
-        InferredGenerics = new Dictionary<string, RealizedType>();
+        InferredGenerics = [];
     }
 
     public SyncBlockContext(ModuleContext moduleContext, FunctionModifier modifier, bool isAsync, string methodName,
@@ -60,7 +60,7 @@ public class SyncBlockContext : IBlockContext {
         IL = new GeneratorILEmitter(MethodBuilder.GetILGenerator());
         variables = parameters.Select<FunctionParameter, IBlockVariable>((p, idx) =>
             new MethodParameter(p.name, p.type!.UnderlyingType(this.ModuleContext), idx)).ToDictionary(p => p.Name);
-        AllErrors = new List<StructuralError>();
+        AllErrors = [];
         InnerLoop = null;
     }
 
@@ -79,7 +79,7 @@ public class SyncBlockContext : IBlockContext {
         variables = parameters.Select<FunctionParameter, IBlockVariable>((p, idx) =>
                 new MethodParameter(p.name, p.type!.UnderlyingType(this.ModuleContext), idx + 1))
             .ToDictionary(p => p.Name);
-        AllErrors = new List<StructuralError>();
+        AllErrors = [];
         InnerLoop = null;
     }
 

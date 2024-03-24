@@ -10,18 +10,14 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public partial class KSPVesselModule {
     [KSClass("ModuleControlSurface")]
-    public class ModuleControlSurfaceAdapter : BaseControlSurfaceAdapter<PartAdapter, PartComponent> {
-
-        public ModuleControlSurfaceAdapter(PartAdapter part, Data_ControlSurface dataControlSurface) : base(part, dataControlSurface) {
-        }
-
+    public class ModuleControlSurfaceAdapter(KSPVesselModule.PartAdapter part, Data_ControlSurface dataControlSurface) : BaseControlSurfaceAdapter<PartAdapter, PartComponent>(part, dataControlSurface) {
         [KSField]
         public Vector3d DragForce => part.vesselAdapter.vessel.mainBody.transform.celestialFrame.ToLocalVector(
             new Vector(part.part.SimulationObject.transform.bodyFrame,
                 GetForceType(PhysicsForceDisplaySystem.MODULE_LIFTINGSURFACE_DRAG_TYPE)));
 
         [KSField]
-        public Vector GlobalDragForce => new Vector(part.part.SimulationObject.transform.bodyFrame,
+        public Vector GlobalDragForce => new(part.part.SimulationObject.transform.bodyFrame,
             GetForceType(PhysicsForceDisplaySystem.MODULE_LIFTINGSURFACE_DRAG_TYPE));
 
         [KSField]
@@ -30,7 +26,7 @@ public partial class KSPVesselModule {
                 GetForcePositionType(PhysicsForceDisplaySystem.MODULE_LIFTINGSURFACE_DRAG_TYPE)));
 
         [KSField]
-        public Position GlobalDragPosition => new Position(part.part.SimulationObject.transform.bodyFrame,
+        public Position GlobalDragPosition => new(part.part.SimulationObject.transform.bodyFrame,
             GetForcePositionType(PhysicsForceDisplaySystem.MODULE_LIFTINGSURFACE_DRAG_TYPE));
 
         [KSField]
@@ -39,7 +35,7 @@ public partial class KSPVesselModule {
                 GetForceType(PhysicsForceDisplaySystem.MODULE_LIFTINGSURFACE_LIFT_TYPE)));
 
         [KSField]
-        public Vector GlobalLiftForce => new Vector(part.part.SimulationObject.transform.bodyFrame,
+        public Vector GlobalLiftForce => new(part.part.SimulationObject.transform.bodyFrame,
             GetForceType(PhysicsForceDisplaySystem.MODULE_LIFTINGSURFACE_LIFT_TYPE));
 
         [KSField]
@@ -48,7 +44,7 @@ public partial class KSPVesselModule {
                 GetForcePositionType(PhysicsForceDisplaySystem.MODULE_LIFTINGSURFACE_LIFT_TYPE)));
 
         [KSField]
-        public Position GlobalLiftPosition => new Position(part.part.SimulationObject.transform.bodyFrame,
+        public Position GlobalLiftPosition => new(part.part.SimulationObject.transform.bodyFrame,
             GetForcePositionType(PhysicsForceDisplaySystem.MODULE_LIFTINGSURFACE_LIFT_TYPE));
 
 

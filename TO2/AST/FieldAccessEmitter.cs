@@ -42,20 +42,13 @@ public interface IFieldAccessFactory {
 
 public delegate IREPLValue REPLFieldAccess(Node node, IREPLValue target);
 
-public class InlineFieldAccessFactory : IFieldAccessFactory {
-    private readonly Func<RealizedType> fieldType;
-    private readonly OpCode[] opCodes;
-    private readonly REPLFieldAccess replFieldAccess;
+public class InlineFieldAccessFactory(string description, Func<RealizedType> fieldType, REPLFieldAccess replFieldAccess,
+    params OpCode[] opCodes) : IFieldAccessFactory {
+    private readonly Func<RealizedType> fieldType = fieldType;
+    private readonly OpCode[] opCodes = opCodes;
+    private readonly REPLFieldAccess replFieldAccess = replFieldAccess;
 
-    public InlineFieldAccessFactory(string description, Func<RealizedType> fieldType, REPLFieldAccess replFieldAccess,
-        params OpCode[] opCodes) {
-        Description = description;
-        this.fieldType = fieldType;
-        this.replFieldAccess = replFieldAccess;
-        this.opCodes = opCodes;
-    }
-
-    public string Description { get; }
+    public string Description { get; } = description;
 
     public TO2Type DeclaredType => fieldType();
 
@@ -115,7 +108,7 @@ public class BoundFieldAccessFactory : IFieldAccessFactory {
         this.Description = description;
         this.fieldType = fieldType;
         this.fieldTarget = fieldTarget;
-        fieldInfos = new List<FieldInfo> { fieldInfo };
+        fieldInfos = [fieldInfo];
     }
 
     private BoundFieldAccessFactory(string description, Func<RealizedType> fieldType, Type fieldTarget,
@@ -295,7 +288,7 @@ public class BoundPropertyLikeFieldAccessFactory : IFieldAccessFactory {
             MethodInfo? genericSetterMethod = null;
 
             if (setter != null) {
-                genericSetterMethod = genericTarget.GetMethod(setter.Name, new[] { genericGetterMethod.ReturnType });
+                genericSetterMethod = genericTarget.GetMethod(setter.Name, [genericGetterMethod.ReturnType]);
 
                 if (genericSetterMethod == null)
                     throw new ArgumentException(
@@ -347,8 +340,8 @@ public class BoundPropertyLikeFieldAccessEmitter(
 
     public IREPLValue EvalGet(Node node, IREPLValue target) {
         var result = getter.IsStatic
-            ? getter.Invoke(null, new[] { target.Value })
-            : getter.Invoke(target.Value, Array.Empty<object>());
+            ? getter.Invoke(null, [target.Value])
+            : getter.Invoke(target.Value, []);
 
         return FieldType.REPLCast(result);
     }
@@ -358,9 +351,9 @@ public class BoundPropertyLikeFieldAccessEmitter(
             throw new REPLException(node, "Field assign not supported");
 
         if (setter.IsStatic)
-            setter.Invoke(null, new[] { target.Value, value.Value });
+            setter.Invoke(null, [target.Value, value.Value]);
         else
-            setter.Invoke(target.Value, new[] { value.Value });
+            setter.Invoke(target.Value, [value.Value]);
 
         return FieldType.REPLCast(value.Value);
     }

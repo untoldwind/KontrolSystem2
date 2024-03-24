@@ -63,20 +63,20 @@ public class FunctionDeclaration : Node, IModuleItem, IVariableContainer {
     }
 
     public IEnumerable<StructuralError> TryDeclareTypes(ModuleContext context) {
-        return Enumerable.Empty<StructuralError>();
+        return [];
     }
 
     public IEnumerable<StructuralError> TryImportTypes(ModuleContext context) {
-        return Enumerable.Empty<StructuralError>();
+        return [];
     }
 
     public IEnumerable<StructuralError> TryImportConstants(ModuleContext context) {
-        return Enumerable.Empty<StructuralError>();
+        return [];
     }
 
     public IEnumerable<StructuralError> TryVerifyFunctions(ModuleContext context) {
         var errors =
-            parameters.Select(p => p.type).Concat(new[] { declaredReturn })
+            parameters.Select(p => p.type).Concat([declaredReturn])
                 .Where(type => !type!.IsValid(context)).Select(
                     type => new StructuralError(
                         StructuralError.ErrorType.InvalidType,
@@ -89,7 +89,7 @@ public class FunctionDeclaration : Node, IModuleItem, IVariableContainer {
     }
 
     public IEnumerable<StructuralError> TryImportFunctions(ModuleContext context) {
-        return Enumerable.Empty<StructuralError>();
+        return [];
     }
 
     public IVariableContainer? ParentContainer => null;

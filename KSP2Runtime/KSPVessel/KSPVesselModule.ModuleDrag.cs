@@ -17,7 +17,7 @@ public partial class KSPVesselModule {
                 GetForceType(PhysicsForceDisplaySystem.MODULE_DRAG_DRAG_TYPE)));
 
         [KSField]
-        public Vector GlobalDragForce => new Vector(part.part.SimulationObject.transform.bodyFrame,
+        public Vector GlobalDragForce => new(part.part.SimulationObject.transform.bodyFrame,
             GetForceType(PhysicsForceDisplaySystem.MODULE_DRAG_DRAG_TYPE));
 
         [KSField]
@@ -26,7 +26,7 @@ public partial class KSPVesselModule {
                 GetForcePositionType(PhysicsForceDisplaySystem.MODULE_DRAG_DRAG_TYPE)));
 
         [KSField]
-        public Position GlobalDragPosition => new Position(part.part.SimulationObject.transform.bodyFrame,
+        public Position GlobalDragPosition => new(part.part.SimulationObject.transform.bodyFrame,
             GetForcePositionType(PhysicsForceDisplaySystem.MODULE_DRAG_DRAG_TYPE));
 
         [KSField]
@@ -35,7 +35,7 @@ public partial class KSPVesselModule {
                 GetForceType(PhysicsForceDisplaySystem.MODULE_DRAG_BODY_LIFT_TYPE)));
 
         [KSField]
-        public Vector GlobalBodyLiftForce => new Vector(part.part.SimulationObject.transform.bodyFrame,
+        public Vector GlobalBodyLiftForce => new(part.part.SimulationObject.transform.bodyFrame,
             GetForceType(PhysicsForceDisplaySystem.MODULE_DRAG_BODY_LIFT_TYPE));
 
 
@@ -45,7 +45,7 @@ public partial class KSPVesselModule {
                 GetForcePositionType(PhysicsForceDisplaySystem.MODULE_DRAG_BODY_LIFT_TYPE)));
 
         [KSField]
-        public Position GlobalBodyLiftPosition => new Position(part.part.SimulationObject.transform.bodyFrame,
+        public Position GlobalBodyLiftPosition => new(part.part.SimulationObject.transform.bodyFrame,
             GetForcePositionType(PhysicsForceDisplaySystem.MODULE_DRAG_BODY_LIFT_TYPE));
 
         private Vector3d GetForceType(Type type) => part.part.SimulationObject.Rigidbody.Forces

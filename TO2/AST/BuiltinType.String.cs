@@ -12,6 +12,7 @@ public abstract partial class BuiltinType {
         private readonly IAssignEmitter errorToStringAssign;
 
         internal TO2SString() {
+#pragma warning disable IDE0300 // Simplify collection initialization
             allowedOperators = new OperatorCollection {
                 {
                     Operator.Add,
@@ -52,6 +53,7 @@ public abstract partial class BuiltinType {
                         null, OpCodes.Ldc_I4_1, OpCodes.Clt)
                 }
             };
+#pragma warning restore IDE0300 // Simplify collection initialization
             DeclaredMethods = new Dictionary<string, IMethodInvokeFactory> {
                 {
                     "repeat",
@@ -78,19 +80,19 @@ public abstract partial class BuiltinType {
                     new BoundMethodInvokeFactory("Check if the string contains a sub string `other`", true,
                         () => Bool,
                         () => [new("other", String, "Search string")],
-                        false, typeof(string), typeof(string).GetMethod("Contains", new[] { typeof(string) }))
+                        false, typeof(string), typeof(string).GetMethod("Contains", [typeof(string)]))
                 }, {
                     "starts_with",
                     new BoundMethodInvokeFactory("Check if the string starts with `other`", true,
                         () => Bool,
                         () => [new("other", String, "Search string")],
-                        false, typeof(string), typeof(string).GetMethod("StartsWith", new[] { typeof(string) }))
+                        false, typeof(string), typeof(string).GetMethod("StartsWith", [typeof(string)]))
                 }, {
                     "ends_with",
                     new BoundMethodInvokeFactory("Check if the string ends with `other`", true,
                         () => Bool,
                         () => [new("other", String, "Search string")],
-                        false, typeof(string), typeof(string).GetMethod("EndsWith", new[] { typeof(string) }))
+                        false, typeof(string), typeof(string).GetMethod("EndsWith", [typeof(string)]))
                 }, {
                     "to_lower",
                     new BoundMethodInvokeFactory("Convert string to lower case", true,
@@ -131,7 +133,7 @@ public abstract partial class BuiltinType {
                             new("newString", String, "Replacement")
                         ],
                         false, typeof(string),
-                        typeof(string).GetMethod("Replace", new[] { typeof(string), typeof(string) }))
+                        typeof(string).GetMethod("Replace", [typeof(string), typeof(string)]))
                 }, {
                     "split",
                     new BoundMethodInvokeFactory("Split string into substrings by separator", true,
