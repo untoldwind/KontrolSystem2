@@ -168,6 +168,16 @@ public class ArrayType : RealizedType {
                 "length",
                 new InlineFieldAccessFactory("Length of the array, i.e. number of elements in the array.",
                     () => BuiltinType.Int, REPLArrayLength, OpCodes.Ldlen, OpCodes.Conv_I8)
+            },
+            {
+                "is_empty",
+                new InlineFieldAccessFactory("Check if the array is empty, i.e. there are no elements in the array.",
+                    () => BuiltinType.Bool, REPLArrayIsEmpty, OpCodes.Ldlen, OpCodes.Ldc_I4_0, OpCodes.Ceq)
+            },
+            {
+                "is_not_empty",
+                new InlineFieldAccessFactory("Check if the array is not empty, i.e. there are elements in the array.",
+                    () => BuiltinType.Bool, REPLArrayIsNotEmpty, OpCodes.Ldlen, OpCodes.Ldc_I4_0, OpCodes.Cgt_Un)
             }
         };
     }
@@ -231,6 +241,18 @@ public class ArrayType : RealizedType {
         if (target.Value is Array a) return new REPLInt(a.Length);
 
         throw new REPLException(node, $"Get array length from a non-array: {target.Type.Name}");
+    }
+
+    private static IREPLValue REPLArrayIsEmpty(Node node, IREPLValue target) {
+        if (target.Value is Array a) return new REPLBool(a.Length == 0);
+
+        throw new REPLException(node, $"Get array is_empty from a non-array: {target.Type.Name}");
+    }
+
+    private static IREPLValue REPLArrayIsNotEmpty(Node node, IREPLValue target) {
+        if (target.Value is Array a) return new REPLBool(a.Length > 0);
+
+        throw new REPLException(node, $"Get array is_not_empty from a non-array: {target.Type.Name}");
     }
 
     public override IREPLValue REPLCast(object? value) {

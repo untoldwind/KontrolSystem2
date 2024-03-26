@@ -316,3 +316,14 @@ test sync fn test_small_matrix_init() -> Unit = {
         }
     }
 }
+
+test sync fn test_is_empty() -> Unit = {
+    const int_arr = [ 0, 11, 22, 33, 44 ]
+    const empty_int_arr : int[] = []
+    
+    assert_true(empty_int_arr.is_empty)
+    assert_false(int_arr.is_empty)
+    assert_false(empty_int_arr.is_not_empty)
+    assert_true(int_arr.is_not_empty)
+}
+

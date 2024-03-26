@@ -12,6 +12,7 @@
 * VSCode extension now tries to read `reference.json` from the currently installed version of `KontrolSystem2`
   * It will no longer be necessary to update the extension with every release to make a (small) API change visible in
     VSCode
+* Add `.is_empty` and `.is_not_empty` to arrays
 
 ## 0.5.6.3 -> 0.5.7.3
 
