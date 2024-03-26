@@ -2202,6 +2202,11 @@
         },
         {
           "kind": "Standard",
+          "module": "ksp::orbit",
+          "name": "Waypoint"
+        },
+        {
+          "kind": "Standard",
           "module": "ksp::resource",
           "name": "FlowDirection"
         },
@@ -3246,6 +3251,11 @@
           "kind": "Standard",
           "module": "ksp::orbit",
           "name": "Orbit"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::orbit",
+          "name": "Waypoint"
         },
         {
           "kind": "Standard",
@@ -14073,6 +14083,11 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Waypoint"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::resource",
               "name": "FlowDirection"
             },
@@ -14891,6 +14906,21 @@
                 "kind": "Standard",
                 "module": "ksp::math",
                 "name": "GlobalVector"
+              }
+            },
+            "waypoints": {
+              "name": "waypoints",
+              "description": "List of all waypoints defined on the body\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::orbit",
+                    "name": "Waypoint"
+                  }
+                ]
               }
             }
           },
@@ -16266,6 +16296,63 @@
           },
           "assignableFromAny": false,
           "assignableFrom": []
+        },
+        "Waypoint": {
+          "name": "Waypoint",
+          "description": "",
+          "fields": {
+            "name": {
+              "name": "name",
+              "description": "Name/label of the waypoint\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            },
+            "body": {
+              "name": "body",
+              "description": "Celestial body the waypoint is based on\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::orbit",
+                "name": "Body"
+              }
+            },
+            "global_position": {
+              "name": "global_position",
+              "description": "Coordinate system independent position of the waypoint\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "GlobalPosition"
+              }
+            },
+            "geo_coordinates": {
+              "name": "geo_coordinates",
+              "description": "Get `GeoCoordinates` of the waypoint\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::orbit",
+                "name": "GeoCoordinates"
+              }
+            },
+            "altitude": {
+              "name": "altitude",
+              "description": "Get altitude above sea-level of waypoint\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
         }
       },
       "typeAliases": {},
@@ -16302,6 +16389,31 @@
                 "kind": "Standard",
                 "module": "ksp::orbit",
                 "name": "Body"
+              }
+            ]
+          }
+        },
+        "find_waypoint": {
+          "isAsync": false,
+          "name": "find_waypoint",
+          "description": "Find waypoint by name/label.\n",
+          "parameters": [
+            {
+              "name": "name",
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              },
+              "hasDefault": false
+            }
+          ],
+          "returnType": {
+            "kind": "Result",
+            "parameters": [
+              {
+                "kind": "Standard",
+                "module": "ksp::orbit",
+                "name": "Waypoint"
               }
             ]
           }
@@ -16812,6 +16924,11 @@
               "kind": "Standard",
               "module": "ksp::orbit",
               "name": "Orbit"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Waypoint"
             },
             {
               "kind": "Standard",
@@ -18371,6 +18488,11 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Waypoint"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::resource",
               "name": "FlowDirection"
             },
@@ -19571,6 +19693,11 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Waypoint"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::resource",
               "name": "FlowDirection"
             },
@@ -20711,6 +20838,11 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Waypoint"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::resource",
               "name": "FlowDirection"
             },
@@ -21808,6 +21940,11 @@
               "kind": "Standard",
               "module": "ksp::orbit",
               "name": "Orbit"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Waypoint"
             },
             {
               "kind": "Standard",
@@ -23944,6 +24081,11 @@
               "kind": "Standard",
               "module": "ksp::orbit",
               "name": "Orbit"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Waypoint"
             },
             {
               "kind": "Standard",
@@ -28975,6 +29117,11 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Waypoint"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::resource",
               "name": "FlowDirection"
             },
@@ -30082,6 +30229,11 @@
               "kind": "Standard",
               "module": "ksp::orbit",
               "name": "Orbit"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Waypoint"
             },
             {
               "kind": "Standard",
@@ -31215,6 +31367,11 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Waypoint"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::resource",
               "name": "FlowDirection"
             },
@@ -32322,6 +32479,11 @@
               "kind": "Standard",
               "module": "ksp::orbit",
               "name": "Orbit"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Waypoint"
             },
             {
               "kind": "Standard",
@@ -33442,6 +33604,11 @@
               "kind": "Standard",
               "module": "ksp::orbit",
               "name": "Orbit"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Waypoint"
             },
             {
               "kind": "Standard",
@@ -34655,6 +34822,11 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Waypoint"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::resource",
               "name": "FlowDirection"
             },
@@ -35815,6 +35987,11 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Waypoint"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::resource",
               "name": "FlowDirection"
             },
@@ -36932,6 +37109,11 @@
               "kind": "Standard",
               "module": "ksp::orbit",
               "name": "Orbit"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Waypoint"
             },
             {
               "kind": "Standard",
@@ -38072,6 +38254,11 @@
               "kind": "Standard",
               "module": "ksp::orbit",
               "name": "Orbit"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Waypoint"
             },
             {
               "kind": "Standard",
@@ -39225,6 +39412,11 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Waypoint"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::resource",
               "name": "FlowDirection"
             },
@@ -40352,6 +40544,11 @@
               "kind": "Standard",
               "module": "ksp::orbit",
               "name": "Orbit"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Waypoint"
             },
             {
               "kind": "Standard",
@@ -41645,6 +41842,11 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Waypoint"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::resource",
               "name": "FlowDirection"
             },
@@ -42755,6 +42957,11 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Waypoint"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::resource",
               "name": "FlowDirection"
             },
@@ -43862,6 +44069,11 @@
               "kind": "Standard",
               "module": "ksp::orbit",
               "name": "Orbit"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Waypoint"
             },
             {
               "kind": "Standard",
@@ -44982,6 +45194,11 @@
               "kind": "Standard",
               "module": "ksp::orbit",
               "name": "Orbit"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Waypoint"
             },
             {
               "kind": "Standard",

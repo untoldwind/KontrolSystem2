@@ -34,6 +34,7 @@ radius | float | R/O | Radius of the body at sea level
 right | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Right vector of the body in its celestial frame 
 rotation_period | float | R/O | Rotation period of the planet. 
 up | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Up vector of the body in its celestial frame 
+waypoints | [ksp::orbit::Waypoint](/reference/ksp/orbit.md#waypoint)[] | R/O | List of all waypoints defined on the body 
 
 #### Methods
 
@@ -877,6 +878,20 @@ Name | Type | Optional | Description
 --- | --- | --- | ---
 value | string |  | Enum value to lookup
 
+### Waypoint
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+altitude | float | R/O | Get altitude above sea-level of waypoint 
+body | [ksp::orbit::Body](/reference/ksp/orbit.md#body) | R/O | Celestial body the waypoint is based on 
+geo_coordinates | [ksp::orbit::GeoCoordinates](/reference/ksp/orbit.md#geocoordinates) | R/O | Get `GeoCoordinates` of the waypoint 
+global_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | R/O | Coordinate system independent position of the waypoint 
+name | string | R/O | Name/label of the waypoint 
+
 ## Constants
 
 Name | Type | Description
@@ -894,6 +909,21 @@ pub sync fn find_body ( name : string ) -> Result<ksp::orbit::Body>
 ```
 
 Find a body by name.
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+name | string |  | 
+
+### find_waypoint
+
+```rust
+pub sync fn find_waypoint ( name : string ) -> Result<ksp::orbit::Waypoint>
+```
+
+Find waypoint by name/label.
 
 
 Parameters
