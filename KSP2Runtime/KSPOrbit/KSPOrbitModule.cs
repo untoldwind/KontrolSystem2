@@ -5,6 +5,7 @@ using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
 using KSP.Sim;
+using UniLinq;
 
 namespace KontrolSystem.KSP.Runtime.KSPOrbit;
 
@@ -14,6 +15,17 @@ public partial class KSPOrbitModule {
     public static Result<IBody> FindBody(string name) {
         var body = KSPContext.CurrentContext.FindBody(name);
         return body != null ? Result.Ok(body) : Result.Err<IBody>($"No such body '{name}'");
+    }
+
+    [KSFunction(Description = "Find waypoint by name/label.")]
+    public static Result<WaypointAdapter> FindWaypoint(string name) {
+        var context = KSPContext.CurrentContext;
+        var waypoint = context.Game.UniverseModel
+            .GetAllWaypoints().FirstOrDefault(waypoint => waypoint.DisplayName == name);
+
+        return waypoint != null
+            ? Result.Ok(new WaypointAdapter(context, waypoint))
+            : Result.Err<WaypointAdapter>($"No such waypoint '{name}'");
     }
 
     [KSFunction(Description = "Get the galactic celestial frame.")]

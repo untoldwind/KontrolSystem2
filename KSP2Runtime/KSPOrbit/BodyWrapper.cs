@@ -117,6 +117,10 @@ public class BodyWrapper(IKSPContext context, CelestialBodyComponent body) : KSP
         ? body.GetDensity(body.GetPressure(altitude), body.GetTemperature(altitude))
         : 0.0;
 
+    public KSPOrbitModule.WaypointAdapter[] Waypoints => context.Game.UniverseModel.GetAllWaypoints()
+        .Where(waypoint => waypoint.MainBody == body)
+        .Select(waypoint => new KSPOrbitModule.WaypointAdapter(context, waypoint)).ToArray();
+
     public Option<KSPOrbitModule.IBody> AsBody => new(this);
 
     public Option<KSPVesselModule.VesselAdapter> AsVessel => new();

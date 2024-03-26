@@ -207,6 +207,8 @@ public class MockBody : KSPOrbitModule.IBody {
 
     public double AtmosphereDensity(double altitude) => 0.0;
 
+    public KSPOrbitModule.WaypointAdapter[] Waypoints => [];
+
     public KSPOrbitModule.IOrbit CreateOrbitFromParameters(double inclination, double eccentricity,
         double semiMajorAxis, double lan,
         double argumentOfPeriapsis, double meanAnomalyAtEpoch, double epoch) {

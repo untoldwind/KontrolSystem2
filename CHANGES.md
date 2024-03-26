@@ -13,6 +13,9 @@
   * It will no longer be necessary to update the extension with every release to make a (small) API change visible in
     VSCode
 * Add `.is_empty` and `.is_not_empty` to arrays
+* Basic bindings for waypoints
+  * Add `body.waypoints`
+  * Add `ksp::orbit::find_waypoint(name: string)`
 
 ## 0.5.6.3 -> 0.5.7.3
 

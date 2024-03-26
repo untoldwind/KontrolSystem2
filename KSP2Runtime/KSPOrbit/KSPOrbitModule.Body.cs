@@ -107,5 +107,8 @@ public partial class KSPOrbitModule {
 
         [KSMethod(Description = "Get atmospheric density at a given `altitude`")]
         double AtmosphereDensity(double altitude);
+
+        [KSField(Description = "List of all waypoints defined on the body")]
+        WaypointAdapter[] Waypoints { get; }
     }
 }
