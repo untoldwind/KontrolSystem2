@@ -29,9 +29,9 @@ public partial class KSPControlModule {
 
         public override void UpdateAutopilot(ref FlightCtrlState c, float deltaT) {
             if (suspended)
-                c.mainThrottle = 0;
+                c.wheelThrottle = 0;
             else
-                c.mainThrottle = (float)DirectBindingMath.Clamp(wheelThrottleProvider(deltaT), -1, 1);
+                c.wheelThrottle = (float)DirectBindingMath.Clamp(wheelThrottleProvider(deltaT), -1, 1);
         }
     }
 }
