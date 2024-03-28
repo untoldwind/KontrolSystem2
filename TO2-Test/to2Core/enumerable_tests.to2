@@ -1,5 +1,5 @@
 use * from core::testing
-use { create_test_enumerable } from test::module
+use { create_test_enumerable, create_test_array_like } from test::module
 
 test sync fn test_simple_enumerable() -> Unit = {
     let builder : ArrayBuilder<string> = ArrayBuilder(10)
@@ -15,4 +15,29 @@ test sync fn test_simple_enumerable() -> Unit = {
     assert_string("Copied first", result[0])
     assert_string("Copied second", result[1])
     assert_string("Copied third", result[2])
+}
+
+test sync fn test_simple_array_like() -> Unit = {
+    const array_like = create_test_array_like()
+    
+    assert_int(4, array_like.length)
+    
+    assert_string("first", array_like[0])
+    assert_string("second", array_like[1])
+    assert_string("third", array_like[2])
+    assert_string("fourth", array_like[3])
+
+    let builder : ArrayBuilder<string> = ArrayBuilder(10)
+
+    for(item in array_like) {
+        builder += "Copied " + item
+    }
+    
+    const result = builder.result()
+
+    assert_int(4, result.length)
+    assert_string("Copied first", result[0])
+    assert_string("Copied second", result[1])
+    assert_string("Copied third", result[2])
+    assert_string("Copied fourth", result[3])
 }

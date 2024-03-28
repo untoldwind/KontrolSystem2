@@ -96,12 +96,18 @@ public static class BindingGenerator {
         if (ksClass == null) throw new ArgumentException($"Type {type} must have a kSClass attribute");
 
         var isEnumerable = typeof(IEnumerable).IsAssignableFrom(type);
+        var isArrayLike = typeof(IArrayLike).IsAssignableFrom(type);
         var boundType = new BoundType(modulePrefix, ksClass.Name ?? type.Name,
             NormalizeDescription(ksClass.Description), type,
-            allowedPrefixOperators: BuiltinType.NoOperators, 
+            allowedPrefixOperators: BuiltinType.NoOperators,
             allowedSuffixOperators: BuiltinType.NoOperators,
             allowedMethods: [],
-            allowedFields: [],
+            allowedFields: isArrayLike ? [
+                (name: "length", access: new BoundPropertyLikeFieldAccessFactory("length", () => BuiltinType.Int, type, type.GetProperty("Length")))] : [],
+            indexAccessEmitterFactory: isArrayLike ? indexSpec => indexSpec.indexType switch {
+                IndexSpecType.Single => new BoundArrayLikeIndexAccess(type, indexSpec.start),
+                _ => null,
+            } : null,
             forInSource: isEnumerable ? new BoundEnumerableForInSource(type) : null
         );
         RegisterTypeMapping(type, boundType);

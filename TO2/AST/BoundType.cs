@@ -12,7 +12,7 @@ public class BoundType(string? modulePrefix, string localName, string? descripti
     IEnumerable<(string name, IMethodInvokeFactory invoker)> allowedMethods,
     IEnumerable<(string name, IFieldAccessFactory access)> allowedFields,
     IEnumerable<RealizedType>? typeParameters = null,
-    IIndexAccessEmitter? indexAccessEmitter = null,
+    Func<IndexSpec, IIndexAccessEmitter?>? indexAccessEmitterFactory = null,
     IForInSource? forInSource = null) : RealizedType {
     public readonly Dictionary<string, IFieldAccessFactory> allowedFields = allowedFields.ToDictionary(m => m.name, m => m.access);
     public readonly Dictionary<string, IMethodInvokeFactory> allowedMethods = allowedMethods.ToDictionary(m => m.name, m => m.invoker);
@@ -61,7 +61,8 @@ public class BoundType(string? modulePrefix, string localName, string? descripti
 
     public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) => allowedSuffixOperators;
 
-    public override IIndexAccessEmitter? AllowedIndexAccess(ModuleContext context, IndexSpec indexSpec) => indexAccessEmitter;
+    public override IIndexAccessEmitter? AllowedIndexAccess(ModuleContext context, IndexSpec indexSpec) =>
+        indexAccessEmitterFactory?.Invoke(indexSpec);
 
     public override IForInSource? ForInSource(ModuleContext context, TO2Type? typeHint) => forInSource;
 
