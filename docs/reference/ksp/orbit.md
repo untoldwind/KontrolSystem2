@@ -287,25 +287,19 @@ apoapsis | Option&lt;float> | R/O | Apoapsis of the orbit above sealevel of the 
 apoapsis_radius | Option&lt;float> | R/O | Radius of apoapsis of the orbit (i.e. from the center of the `reference_body'). Is not defined for a hyperbolic orbit 
 argument_of_periapsis | float | R/O | Argument of periapsis of the orbit. 
 eccentricity | float | R/O | Eccentricity of the orbit. 
-end_transition | [ksp::orbit::PatchTransitionType](/reference/ksp/orbit.md#patchtransitiontype) | R/O | Get transition type at the end of the orbit patch 
-end_ut | float | R/O | Universal time of the start of the orbit, in case it is an orbit-patch 
 epoch | float | R/O | Orbit epoch. 
 inclination | float | R/O | Inclination of the orbit in degree. 
 mean_anomaly_at_epoch | float | R/O | Mean anomaly of the orbit at `epoch` 
 mean_motion | float | R/O | Mean motion of the orbit. 
-next_patch | Option&lt;[ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit)> | R/O | Get the next orbit patch of the trajectory (if available) 
 orbit_normal | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Normal vector perpendicular to orbital plane. 
 periapsis | float | R/O | Periapsis of the orbit above sealevel of the `reference_body` 
 periapsis_radius | float | R/O | Radius of periapsis of the orbit (i.e. from the center of the `reference_body') 
 period | float | R/O | Orbital period. 
-previous_patch | Option&lt;[ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit)> | R/O | Get the previous orbit patch of the trajectory (if available) 
 reference_body | [ksp::orbit::Body](/reference/ksp/orbit.md#body) | R/O | The celestial body the orbit is referenced on. 
 reference_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/O | Internal reference frame of the orbit. This might be useful to compare numbers. Note: All relative vectors are in the celestial frame of the `reference_body` which might be different! 
 relative_ascending_node | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get the relative position of the ascending node. 
 relative_eccentricity_vector | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get the relative eccentricity vector. 
 semi_major_axis | float | R/O | Semi major axis of the orbit. 
-start_transition | [ksp::orbit::PatchTransitionType](/reference/ksp/orbit.md#patchtransitiontype) | R/O | Get transition type at the beginning of the orbit patch 
-start_ut | float | R/O | Universal time of the start of the orbit, in case it is an orbit-patch 
 
 #### Methods
 
@@ -830,6 +824,563 @@ Name | Type | Optional | Description
 meanAnomaly | float |  | 
 ut | float |  | 
 
+### OrbitPatch
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+LAN | float | R/O | Longitude of ascending node of the orbit in degree 
+apoapsis | Option&lt;float> | R/O | Apoapsis of the orbit above sealevel of the `reference_body`. Is not defined for a hyperbolic orbit 
+apoapsis_radius | Option&lt;float> | R/O | Radius of apoapsis of the orbit (i.e. from the center of the `reference_body'). Is not defined for a hyperbolic orbit 
+argument_of_periapsis | float | R/O | Argument of periapsis of the orbit. 
+eccentricity | float | R/O | Eccentricity of the orbit. 
+end_transition | [ksp::orbit::PatchTransitionType](/reference/ksp/orbit.md#patchtransitiontype) | R/O | Get transition type at the end of the orbit patch 
+end_ut | float | R/O | Universal time of the start of the orbit patch, in case it is an orbit-patch 
+epoch | float | R/O | Orbit epoch. 
+inclination | float | R/O | Inclination of the orbit in degree. 
+mean_anomaly_at_epoch | float | R/O | Mean anomaly of the orbit at `epoch` 
+mean_motion | float | R/O | Mean motion of the orbit. 
+next_patch | Option&lt;[ksp::orbit::OrbitPatch](/reference/ksp/orbit.md#orbitpatch)> | R/O | Get the next orbit patch of the trajectory (if available) 
+orbit_normal | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Normal vector perpendicular to orbital plane. 
+periapsis | float | R/O | Periapsis of the orbit above sealevel of the `reference_body` 
+periapsis_radius | float | R/O | Radius of periapsis of the orbit (i.e. from the center of the `reference_body') 
+period | float | R/O | Orbital period. 
+previous_patch | Option&lt;[ksp::orbit::OrbitPatch](/reference/ksp/orbit.md#orbitpatch)> | R/O | Get the previous orbit patch of the trajectory (if available) 
+reference_body | [ksp::orbit::Body](/reference/ksp/orbit.md#body) | R/O | The celestial body the orbit is referenced on. 
+reference_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/O | Internal reference frame of the orbit. This might be useful to compare numbers. Note: All relative vectors are in the celestial frame of the `reference_body` which might be different! 
+relative_ascending_node | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get the relative position of the ascending node. 
+relative_eccentricity_vector | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get the relative eccentricity vector. 
+semi_major_axis | float | R/O | Semi major axis of the orbit. 
+start_transition | [ksp::orbit::PatchTransitionType](/reference/ksp/orbit.md#patchtransitiontype) | R/O | Get transition type at the beginning of the orbit patch 
+start_ut | float | R/O | Universal time of the start of the orbit patch, in case it is an orbit-patch 
+trajectory | [ksp::orbit::Trajectory](/reference/ksp/orbit.md#trajectory) | R/O | The trajectory this orbit patch belongs to 
+
+#### Methods
+
+##### ascending_node_true_anomaly
+
+```rust
+orbitpatch.ascending_node_true_anomaly ( b : ksp::orbit::Orbit ) -> float
+```
+
+Gives the true anomaly (in a's orbit) at which a crosses its ascending node with b's orbit.
+The returned value is always between 0 and 360.
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+b | ksp::orbit::Orbit |  | 
+
+##### descending_node_true_anomaly
+
+```rust
+orbitpatch.descending_node_true_anomaly ( b : ksp::orbit::Orbit ) -> float
+```
+
+Gives the true anomaly (in a's orbit) at which a crosses its descending node with b's orbit.
+The returned value is always between 0 and 360.
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+b | ksp::orbit::Orbit |  | 
+
+##### get_eccentric_anomaly_at_true_anomaly
+
+```rust
+orbitpatch.get_eccentric_anomaly_at_true_anomaly ( trueAnomaly : float ) -> float
+```
+
+Converts a true anomaly into an eccentric anomaly.
+For elliptical orbits this returns a value between 0 and 2pi.
+For hyperbolic orbits the returned value can be any number.
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+trueAnomaly | float |  | 
+
+##### get_mean_anomaly_at_eccentric_anomaly
+
+```rust
+orbitpatch.get_mean_anomaly_at_eccentric_anomaly ( ecc : float ) -> float
+```
+
+Converts an eccentric anomaly into a mean anomaly.
+For an elliptical orbit, the returned value is between 0 and 2pi.
+For a hyperbolic orbit, the returned value is any number.
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+ecc | float |  | 
+
+##### global_position
+
+```rust
+orbitpatch.global_position ( ut : float ) -> ksp::math::GlobalPosition
+```
+
+Get the coordinate independent position at a given universal time `ut`.
+Note: This takes the motion of the parent body into account.
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+ut | float |  | 
+
+##### global_position_for_true_anomaly
+
+```rust
+orbitpatch.global_position_for_true_anomaly ( trueAnomaly : float ) -> ksp::math::GlobalPosition
+```
+
+Get the coordinate independent position for a given `trueAnomaly`
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+trueAnomaly | float |  | 
+
+##### global_relative_position
+
+```rust
+orbitpatch.global_relative_position ( ut : float ) -> ksp::math::GlobalVector
+```
+
+Shorthand for `orbit.global_position(ut) - orbit.reference_body.orbit.global_position(ut)`
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+ut | float |  | 
+
+##### global_velocity
+
+```rust
+orbitpatch.global_velocity ( ut : float ) -> ksp::math::GlobalVelocity
+```
+
+Get the coordinate independent velocity at a given universal time `ut`.
+Note: This takes the motion of the parent body into account.
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+ut | float |  | 
+
+##### horizontal
+
+```rust
+orbitpatch.horizontal ( ut : float ) -> ksp::math::Vec3
+```
+
+Relative horizontal vector at a given universal time `ut`
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+ut | float |  | 
+
+##### mean_anomaly_at_ut
+
+```rust
+orbitpatch.mean_anomaly_at_ut ( ut : float ) -> float
+```
+
+The mean anomaly of the orbit.
+For elliptical orbits, the value return is always between 0 and 2pi.
+For hyperbolic orbits, the value can be any number.
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+ut | float |  | 
+
+##### next_apoapsis_time
+
+```rust
+orbitpatch.next_apoapsis_time ( maybeUt : Option<float> ) -> Option<float>
+```
+
+Returns the next time at which the orbiting object will be at apoapsis after a given universal time `ut`.
+If `ut` is omitted the current time will be used.
+For elliptical orbits, this will be between `ut` and `ut` + Period.
+For hyperbolic orbits, this is undefined.
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+maybeUt | Option<float> | x | 
+
+##### next_periapsis_time
+
+```rust
+orbitpatch.next_periapsis_time ( maybeUt : Option<float> ) -> float
+```
+
+The next time at which the orbiting object will be at periapsis after a given universal time `ut`.
+If `ut` is omitted the current time will be used.
+For elliptical orbits, this will be between `ut` and `ut` + Period.
+For hyperbolic orbits, this can be any time, including a time in the past, if the periapsis is in the past.
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+maybeUt | Option<float> | x | 
+
+##### next_time_of_radius
+
+```rust
+orbitpatch.next_time_of_radius ( ut : float,
+                                 radius : float ) -> Option<float>
+```
+
+Finds the next time at which the orbiting object will achieve a given `radius` from center of the body
+after a given universal time `ut`.
+This will be undefined if the specified `radius` is impossible for this orbit, otherwise:
+For elliptical orbits this will be a time between `ut` and `ut` + period.
+For hyperbolic orbits this can be any time. If the given radius will be achieved
+in the future then the next time at which that radius will be achieved will be returned.
+If the given radius was only achieved in the past, then there are no guarantees
+about which of the two times in the past will be returned.
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+ut | float |  | 
+radius | float |  | 
+
+##### normal_plus
+
+```rust
+orbitpatch.normal_plus ( ut : float ) -> ksp::math::Vec3
+```
+
+The relative normal-plus vector at a given universal time `ut`
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+ut | float |  | 
+
+##### orbital_velocity
+
+```rust
+orbitpatch.orbital_velocity ( ut : float ) -> ksp::math::Vec3
+```
+
+Get the relative orbital velocity at a given universal time `ut`
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+ut | float |  | 
+
+##### perturbed_orbit
+
+```rust
+orbitpatch.perturbed_orbit ( ut : float,
+                             dV : ksp::math::Vec3 ) -> ksp::orbit::Orbit
+```
+
+Returns a new Orbit object that represents the result of applying a given relative `deltaV` to o at `ut`.
+Note: The resulting orbit is calculated as if the velocity change happens instantaneously, which might lead
+to unrealistic results for larger `deltaV`. The main use-case of this method is to be used as part of
+an orbit-optimization algorithm as it is quiet fast.
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+ut | float |  | 
+dV | ksp::math::Vec3 |  | 
+
+##### prograde
+
+```rust
+orbitpatch.prograde ( ut : float ) -> ksp::math::Vec3
+```
+
+The relative prograde vector at a given universal time `ut`
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+ut | float |  | 
+
+##### radial_plus
+
+```rust
+orbitpatch.radial_plus ( ut : float ) -> ksp::math::Vec3
+```
+
+The relative radial-plus vector at a given universal time `ut`
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+ut | float |  | 
+
+##### radius
+
+```rust
+orbitpatch.radius ( ut : float ) -> float
+```
+
+Get the orbital radius (distance from center of body) at a given universal time `ut`
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+ut | float |  | 
+
+##### relative_position
+
+```rust
+orbitpatch.relative_position ( ut : float ) -> ksp::math::Vec3
+```
+
+Get relative position at a given universal time `ut`
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+ut | float |  | 
+
+##### relative_position_for_true_anomaly
+
+```rust
+orbitpatch.relative_position_for_true_anomaly ( trueAnomaly : float ) -> ksp::math::Vec3
+```
+
+Get relative position for a given `trueAnomaly`
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+trueAnomaly | float |  | 
+
+##### synodic_period
+
+```rust
+orbitpatch.synodic_period ( other : ksp::orbit::Orbit ) -> float
+```
+
+Computes the period of the phase angle between orbiting objects of this orbit and and `other` orbit.
+For noncircular orbits the time variation of the phase angle is only quasiperiodic
+and for high eccentricities and/or large relative inclinations, the relative motion is
+not really periodic at all.
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+other | ksp::orbit::Orbit |  | 
+
+##### time_of_ascending_node
+
+```rust
+orbitpatch.time_of_ascending_node ( b : ksp::orbit::Orbit,
+                                    maybeUt : Option<float> ) -> float
+```
+
+Returns the next time at which a will cross its ascending node with b.
+For elliptical orbits this is a time between UT and UT + a.period.
+For hyperbolic orbits this can be any time, including a time in the past if
+the ascending node is in the past.
+NOTE: this function will throw an ArgumentException if a is a hyperbolic orbit and the ascending node
+occurs at a true anomaly that a does not actually ever attain.
+If `ut` is omitted the current time will be used.
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+b | ksp::orbit::Orbit |  | 
+maybeUt | Option<float> | x | 
+
+##### time_of_descending_node
+
+```rust
+orbitpatch.time_of_descending_node ( b : ksp::orbit::Orbit,
+                                     maybeUt : Option<float> ) -> float
+```
+
+Returns the next time at which a will cross its descending node with b.
+For elliptical orbits this is a time between UT and UT + a.period.
+For hyperbolic orbits this can be any time, including a time in the past if
+the descending node is in the past.
+NOTE: this function will throw an ArgumentException if a is a hyperbolic orbit and the descending node
+occurs at a true anomaly that a does not actually ever attain.
+If `ut` is omitted the current time will be used
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+b | ksp::orbit::Orbit |  | 
+maybeUt | Option<float> | x | 
+
+##### time_of_true_anomaly
+
+```rust
+orbitpatch.time_of_true_anomaly ( trueAnomaly : float,
+                                  maybeUt : Option<float> ) -> float
+```
+
+Next time of a certain true anomaly after a given universal time `ut`.
+If `ut` is omitted the current time will be used
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+trueAnomaly | float |  | 
+maybeUt | Option<float> | x | 
+
+##### to_fixed
+
+```rust
+orbitpatch.to_fixed ( decimals : int ) -> string
+```
+
+Convert orbital parameter to string using specified number of `decimals`
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+decimals | int |  | 
+
+##### to_string
+
+```rust
+orbitpatch.to_string ( ) -> string
+```
+
+Convert orbital parameters to string.
+
+
+##### true_anomaly_at_radius
+
+```rust
+orbitpatch.true_anomaly_at_radius ( radius : float ) -> float
+```
+
+Get the true anomaly of a radius.
+If the radius is below the periapsis the true anomaly of the periapsis will be returned.
+If it is above the apoapsis the true anomaly of the apoapsis is returned.
+The returned value is always between 0 and 2pi.
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+radius | float |  | 
+
+##### true_anomaly_from_vector
+
+```rust
+orbitpatch.true_anomaly_from_vector ( vec : ksp::math::Vec3 ) -> float
+```
+
+Converts a relative direction, into a true anomaly.
+The vector is projected into the orbital plane and then the true anomaly is
+computed as the angle this vector makes with the vector pointing to the periapsis.
+The returned value is always between 0 and 2pi.
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+vec | ksp::math::Vec3 |  | 
+
+##### up
+
+```rust
+orbitpatch.up ( ut : float ) -> ksp::math::Vec3
+```
+
+Relative up vector of the orbit at a given universal time `ut`
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+ut | float |  | 
+
+##### ut_at_mean_anomaly
+
+```rust
+orbitpatch.ut_at_mean_anomaly ( meanAnomaly : float,
+                                ut : float ) -> float
+```
+
+The next time at which the orbiting object will reach the given mean anomaly.
+For elliptical orbits, this will be a time between UT and UT + o.period.
+For hyperbolic orbits, this can be any time, including a time in the past, if the given mean anomaly occurred in the past
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+meanAnomaly | float |  | 
+ut | float |  | 
+
 ### PatchTransitionType
 
 Transition type at the beginning or end of an orbit patch
@@ -877,6 +1428,140 @@ Parameters
 Name | Type | Optional | Description
 --- | --- | --- | ---
 value | string |  | Enum value to lookup
+
+### Trajectory
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+length | int | R/O | length
+
+#### Methods
+
+##### exists
+
+```rust
+trajectory.exists ( predicate : sync fn(ksp::orbit::OrbitPatch) -> bool ) -> bool
+```
+
+Check if an item of the array matches `predicate`
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+predicate | sync fn(ksp::orbit::OrbitPatch) -> bool |  | Predicate function/check to be applied on each element of the array until element is found.
+
+##### filter
+
+```rust
+trajectory.filter ( predicate : sync fn(ksp::orbit::OrbitPatch) -> bool ) -> T[]
+```
+
+Filter the content of the array by a `predicate
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+predicate | sync fn(ksp::orbit::OrbitPatch) -> bool |  | Predicate function/check to be applied on each element of the array
+
+##### filter_map
+
+```rust
+trajectory.filter_map ( mapper : sync fn(ksp::orbit::OrbitPatch) -> Option<U> ) -> U[]
+```
+
+Map the content of the array
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+mapper | sync fn(ksp::orbit::OrbitPatch) -> Option<U> |  | Function to be applied on each element of the array
+
+##### find
+
+```rust
+trajectory.find ( predicate : sync fn(ksp::orbit::OrbitPatch) -> bool ) -> Option<T>
+```
+
+Find first item of the array matching `predicate`
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+predicate | sync fn(ksp::orbit::OrbitPatch) -> bool |  | Predicate function/check to be applied on each element of the array until element is found.
+
+##### flat_map
+
+```rust
+trajectory.flat_map ( mapper : sync fn(ksp::orbit::OrbitPatch) -> U[] ) -> U[]
+```
+
+Map the content of the array
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+mapper | sync fn(ksp::orbit::OrbitPatch) -> U[] |  | Function to be applied on each element of the array
+
+##### map
+
+```rust
+trajectory.map ( mapper : sync fn(ksp::orbit::OrbitPatch) -> U ) -> U[]
+```
+
+Map the content of the array
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+mapper | sync fn(ksp::orbit::OrbitPatch) -> U |  | Function to be applied on each element of the array
+
+##### map_with_index
+
+```rust
+trajectory.map_with_index ( mapper : sync fn(ksp::orbit::OrbitPatch, int) -> U ) -> U[]
+```
+
+Map the content of the array
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+mapper | sync fn(ksp::orbit::OrbitPatch, int) -> U |  | Function to be applied on each element of the array including index of the element
+
+##### reduce
+
+```rust
+trajectory.reduce ( initial : U,
+                    reducer : sync fn(U, ksp::orbit::OrbitPatch) -> U ) -> U
+```
+
+Reduce array by an operation
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+initial | U |  | Initial value of the accumulator
+reducer | sync fn(U, ksp::orbit::OrbitPatch) -> U |  | Combines accumulator with each element of the array and returns new accumulator value
+
+##### reverse
+
+```rust
+trajectory.reverse ( ) -> ksp::orbit::OrbitPatch[]
+```
+
+Reverse the order of the array
 
 ### Waypoint
 

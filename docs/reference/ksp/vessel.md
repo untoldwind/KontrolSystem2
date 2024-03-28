@@ -1677,7 +1677,7 @@ surface_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Surfac
 target | Option&lt;[ksp::vessel::Targetable](/reference/ksp/vessel.md#targetable)> | R/W | Get the currently selected target of the vessel, if there is one. 
 time_since_launch | float | R/O | Number of seconds since launch. 
 total_torque | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get the available torque of relative to its control frame. 
-trajectory | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit)[] | R/O | Get the entire trajectory of the vessel containing all orbit patches. 
+trajectory | [ksp::orbit::Trajectory](/reference/ksp/orbit.md#trajectory) | R/O | Get the entire trajectory of the vessel containing all orbit patches. 
 up | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get the horizon up vector in the celestial frame of the main body. 
 vertical_speed | float | R/O | Get the vertical speed of the vessel. 
 vertical_surface_speed | float | R/O | Vertical surface seed relative to current main body. 

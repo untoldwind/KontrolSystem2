@@ -7,35 +7,10 @@ using KSP.Sim.impl;
 namespace KontrolSystem.KSP.Runtime.KSPOrbit;
 
 public class OrbitWrapper(IKSPContext context, PatchedConicsOrbit orbit) : KSPOrbitModule.IOrbit {
+    protected readonly IKSPContext context = context;
+    protected readonly PatchedConicsOrbit orbit = orbit;
+    
     public KSPOrbitModule.IBody ReferenceBody => new BodyWrapper(context, orbit.referenceBody);
-
-    public double StartUt => orbit.StartUT;
-
-    public double EndUt => orbit.EndUT;
-
-    public PatchTransitionType StartTransition => orbit.PatchStartTransition;
-
-    public PatchTransitionType EndTransition => orbit.PatchEndTransition;
-
-    public Option<KSPOrbitModule.IOrbit> PreviousPatch {
-        get {
-            var previous = orbit.PreviousPatch;
-
-            return previous is { ActivePatch: true } && previous is PatchedConicsOrbit prevOrbit
-                ? new Option<KSPOrbitModule.IOrbit>(new OrbitWrapper(context, prevOrbit))
-                : new Option<KSPOrbitModule.IOrbit>();
-        }
-    }
-
-    public Option<KSPOrbitModule.IOrbit> NextPatch {
-        get {
-            var next = orbit.NextPatch;
-
-            return next is { ActivePatch: true } && next is PatchedConicsOrbit nextOrbit
-                ? new Option<KSPOrbitModule.IOrbit>(new OrbitWrapper(context, nextOrbit))
-                : new Option<KSPOrbitModule.IOrbit>();
-        }
-    }
 
     public Option<double> Apoapsis => orbit.eccentricity < 1 ? Option.Some(orbit.ApoapsisArl) : Option.None<double>();
 

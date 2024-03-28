@@ -14,6 +14,8 @@ public class KSClass(string? name = null) : Attribute {
     public string? Name { get; } = name;
 
     public string? Description { get; set; }
+
+    public Type[]? ScanInterfaces { get; set; }
 }
 
 [AttributeUsage(AttributeTargets.Field)]

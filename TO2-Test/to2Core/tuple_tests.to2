@@ -196,7 +196,7 @@ test sync fn test_tuple32() -> Unit = {
     assert_false(t24)
 }
 
-test sync fn test_tupple_deconstruct_to_vars() -> Unit = {
+test sync fn test_tuple_deconstruct_to_vars() -> Unit = {
     let a : int = 34
     let b : float = 12.34
 

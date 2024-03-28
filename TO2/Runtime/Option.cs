@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace KontrolSystem.TO2.Runtime;
@@ -32,6 +33,8 @@ public readonly struct Option<T>(T value) : IAnyOption {
     public T GetValueOrDefault(T defaultValue) {
         return defined ? value : defaultValue;
     }
+
+    public IEnumerable<T> AsEnumerable() => defined ? [value] : [];
 }
 
 public static class Option {

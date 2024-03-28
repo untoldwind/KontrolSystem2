@@ -84,10 +84,8 @@ public partial class KSPVesselModule {
         public KSPOrbitModule.IBody MainBody => new BodyWrapper(context, vessel.mainBody);
 
         [KSField(Description = "Get the entire trajectory of the vessel containing all orbit patches.")]
-        public KSPOrbitModule.IOrbit[] Trajectory => vessel.Orbiter.PatchedConicSolver.CurrentTrajectory
-            .Where(patch => patch.ActivePatch)
-            .Select(patch => (KSPOrbitModule.IOrbit)new OrbitWrapper(context, patch))
-            .ToArray();
+        public KSPOrbitModule.Trajectory Trajectory => new(context, vessel.Orbiter.PatchedConicSolver.CurrentTrajectory
+            .Where(patch => patch.ActivePatch));
 
         [KSField(Description = "The celestial/non-rotating reference frame of the vessel.")]
         public ITransformFrame CelestialFrame => vessel.transform.celestialFrame;

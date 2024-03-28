@@ -25,24 +25,6 @@ public partial class KSPOrbitModule {
         [KSField(Description = "The celestial body the orbit is referenced on.")]
         IBody ReferenceBody { get; }
 
-        [KSField(Description = "Universal time of the start of the orbit, in case it is an orbit-patch")]
-        public double StartUt { get; }
-
-        [KSField(Description = "Universal time of the start of the orbit, in case it is an orbit-patch")]
-        public double EndUt { get; }
-
-        [KSField(Description = "Get transition type at the beginning of the orbit patch")]
-        public PatchTransitionType StartTransition { get; }
-
-        [KSField(Description = "Get transition type at the end of the orbit patch")]
-        public PatchTransitionType EndTransition { get; }
-
-        [KSField(Description = "Get the previous orbit patch of the trajectory (if available)")]
-        public Option<IOrbit> PreviousPatch { get; }
-
-        [KSField(Description = "Get the next orbit patch of the trajectory (if available)")]
-        public Option<IOrbit> NextPatch { get; }
-
         [KSField(Description =
             "Apoapsis of the orbit above sealevel of the `reference_body`. Is not defined for a hyperbolic orbit")]
         Option<double> Apoapsis { get; }

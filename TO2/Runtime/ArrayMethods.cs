@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using KontrolSystem.TO2.AST;
 
 namespace KontrolSystem.TO2.Runtime;
 
@@ -164,4 +165,156 @@ public static class ArrayMethods {
 
         return clone;
     }
+
+    private static readonly Type ArrayMethodsType = typeof(ArrayMethods);
+
+    public static IEnumerable<(string name, IMethodInvokeFactory invoker)> MethodInvokers(TO2Type elementType) => [
+        (
+            "map", new BoundMethodInvokeFactory("Map the content of the array", true,
+                () => new ArrayType(new GenericParameter("U")),
+                () => [
+                    new("mapper", new FunctionType(false, [elementType], new GenericParameter("U")),
+                        "Function to be applied on each element of the array")
+                ],
+                false, ArrayMethodsType, ArrayMethodsType.GetMethod("Map"),
+                context => [("T", elementType.UnderlyingType(context))])
+        ),
+        (
+            "map_with_index", new BoundMethodInvokeFactory("Map the content of the array", true,
+                () => new ArrayType(new GenericParameter("U")),
+                () => [
+                    new("mapper",
+                        new FunctionType(false, [elementType, BuiltinType.Int],
+                            new GenericParameter("U")),
+                        "Function to be applied on each element of the array including index of the element")
+                ],
+                false, ArrayMethodsType, ArrayMethodsType.GetMethod("MapWithIndex"),
+                context => [("T", elementType.UnderlyingType(context))])
+        ),
+        (
+            "flat_map", new BoundMethodInvokeFactory("Map the content of the array", true,
+                () => new ArrayType(new GenericParameter("U")),
+                () => [
+                    new("mapper", new FunctionType(false, [elementType], new ArrayType(new GenericParameter("U"))),
+                        "Function to be applied on each element of the array")
+                ],
+                false, ArrayMethodsType, ArrayMethodsType.GetMethod("FlatMap"),
+                context => [("T", elementType.UnderlyingType(context))])
+        ),
+        (
+            "filter", new BoundMethodInvokeFactory("Filter the content of the array by a `predicate", true,
+                () => new ArrayType(new GenericParameter("T")),
+                () => [
+                    new("predicate",
+                        new FunctionType(false, [elementType], BuiltinType.Bool),
+                        "Predicate function/check to be applied on each element of the array")
+                ],
+                false, ArrayMethodsType, ArrayMethodsType.GetMethod("Filter"),
+                context => [("T", elementType.UnderlyingType(context))])
+        ),
+        (
+            "filter_map", new BoundMethodInvokeFactory("Map the content of the array", true,
+                () => new ArrayType(new GenericParameter("U")),
+                () => [
+                    new("mapper", new FunctionType(false, [elementType], new OptionType(new GenericParameter("U"))),
+                        "Function to be applied on each element of the array")
+                ],
+                false, ArrayMethodsType, ArrayMethodsType.GetMethod("FilterMap"),
+                context => [("T", elementType.UnderlyingType(context))])
+        ),
+        (
+            "find", new BoundMethodInvokeFactory("Find first item of the array matching `predicate`", true,
+                () => new OptionType(new GenericParameter("T")),
+                () => [
+                    new("predicate",
+                        new FunctionType(false, [elementType], BuiltinType.Bool),
+                        "Predicate function/check to be applied on each element of the array until element is found.")
+                ],
+                false, ArrayMethodsType, ArrayMethodsType.GetMethod("Find"),
+                context => [("T", elementType.UnderlyingType(context))])
+        ),
+        (
+            "exists", new BoundMethodInvokeFactory("Check if an item of the array matches `predicate`", true,
+                () => BuiltinType.Bool,
+                () => [
+                    new("predicate",
+                        new FunctionType(false, [elementType], BuiltinType.Bool),
+                        "Predicate function/check to be applied on each element of the array until element is found.")
+                ],
+                false, ArrayMethodsType, ArrayMethodsType.GetMethod("Exists"),
+                context => [("T", elementType.UnderlyingType(context))])
+        ),
+        (
+            "slice",
+            new BoundMethodInvokeFactory("Get a slice of the array", true, () => new ArrayType(elementType),
+                () => [
+                    new("start", BuiltinType.Int, "Start index of the slice (inclusive)"),
+                    new("end", BuiltinType.Int, "End index of the slice (exclusive)", new IntDefaultValue(-1))
+                ], false, ArrayMethodsType,
+                ArrayMethodsType.GetMethod("Slice"),
+                context => [("T", elementType.UnderlyingType(context))])
+        ),
+        (
+            "sort",
+            new BoundMethodInvokeFactory("Sort the array (if possible) and returns new sorted array", true,
+                () => new ArrayType(elementType),
+                () => [], false, ArrayMethodsType,
+                ArrayMethodsType.GetMethod("Sort"),
+                context => [("T", elementType.UnderlyingType(context))])
+        ),
+        (
+            "sort_by",
+            new BoundMethodInvokeFactory(
+                "Sort the array by value extracted from items. Sort value can be other number or string",
+                true, () => new ArrayType(elementType),
+                () => [
+                    new("value",
+                        new FunctionType(false, [elementType], new GenericParameter("U")),
+                        "Function to be applied on each element, array will be sorted by result of this function")
+                ], false, ArrayMethodsType,
+                ArrayMethodsType.GetMethod("SortBy"),
+                context => [("T", elementType.UnderlyingType(context))])
+        ),
+        (
+            "sort_with",
+            new BoundMethodInvokeFactory(
+                "Sort the array with explicit comparator. Comparator should return -1 for less, 0 for equal and 1 for greater",
+                true, () => new ArrayType(elementType),
+                () => [
+                    new("comparator",
+                        new FunctionType(false, [elementType, elementType], BuiltinType.Int),
+                        "Compare two elements of the array to each other, `-1` less then, `0` equal, `1` greater than")
+                ], false, ArrayMethodsType,
+                ArrayMethodsType.GetMethod("SortWith"),
+                context => [("T", elementType.UnderlyingType(context))])
+        ),
+        (
+            "reduce",
+            new BoundMethodInvokeFactory("Reduce array by an operation", true, () => new GenericParameter("U"),
+                () => [
+                    new("initial", new GenericParameter("U"), "Initial value of the accumulator"),
+                    new("reducer", new FunctionType(false, [
+                            new GenericParameter("U"),
+                        elementType
+                        ], new GenericParameter("U")),
+                        "Combines accumulator with each element of the array and returns new accumulator value")
+                ], false, ArrayMethodsType,
+                ArrayMethodsType.GetMethod("Reduce"),
+                context => [("T", elementType.UnderlyingType(context))])
+        ),
+        (
+            "reverse",
+            new BoundMethodInvokeFactory("Reverse the order of the array", true, () => new ArrayType(elementType),
+                () => [], false, ArrayMethodsType,
+                ArrayMethodsType.GetMethod("Reverse"),
+                context => [("T", elementType.UnderlyingType(context))])
+        ),
+        (
+            "to_string", new BoundMethodInvokeFactory("Get string representation of the array", true,
+                () => BuiltinType.String,
+                () => [],
+                false, ArrayMethodsType, ArrayMethodsType.GetMethod("ArrayToString"),
+                context => [("T", elementType.UnderlyingType(context))])
+        )
+    ];
 }

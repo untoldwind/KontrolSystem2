@@ -36,7 +36,7 @@ public class TestModule {
         public long Length => data.Count;
 
         public string GetElement(long index) => data[(int)index];
-        
+
         public IEnumerator<string> GetEnumerator() => data.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

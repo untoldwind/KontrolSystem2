@@ -101,7 +101,7 @@ public static class BindingGenerator {
             NormalizeDescription(ksClass.Description), type,
             allowedPrefixOperators: BuiltinType.NoOperators,
             allowedSuffixOperators: BuiltinType.NoOperators,
-            allowedMethods: [],
+            allowedMethods: isEnumerable ? EnumerableMethods.MethodInvokers(type) : [],
             allowedFields: isArrayLike ? [
                 (name: "length", access: new BoundPropertyLikeFieldAccessFactory("length", () => BuiltinType.Int, type, type.GetProperty("Length")))] : [],
             indexAccessEmitterFactory: isArrayLike ? indexSpec => indexSpec.indexType switch {
@@ -115,17 +115,16 @@ public static class BindingGenerator {
     }
 
     private static void LinkType(BoundType boundType) {
-        foreach (var method in boundType.runtimeType.GetMethods(BindingFlags.Public | BindingFlags.Instance)
-                ) {
-            var ksMethod = method.GetCustomAttribute<KSMethod>();
+        var interfaces = boundType.runtimeType.GetCustomAttribute<KSClass>().ScanInterfaces ?? [];
+        foreach (var method in boundType.runtimeType.GetMethods(BindingFlags.Public | BindingFlags.Instance)) {
+            var ksMethod = method.GetCustomAttribute<KSMethod>() ?? interfaces.Select(i => i.GetMethod(method.Name)?.GetCustomAttribute<KSMethod>()).FirstOrDefault(attr => attr != null);
             if (ksMethod == null) continue;
             boundType.allowedMethods.Add(ksMethod.Name ?? ToSnakeCase(method.Name),
                 BindMethod(NormalizeDescription(ksMethod.Description), boundType.runtimeType, method));
         }
 
-        foreach (var property in boundType.runtimeType.GetProperties(BindingFlags.Public |
-                                                                     BindingFlags.Instance)) {
-            var ksField = property.GetCustomAttribute<KSField>();
+        foreach (var property in boundType.runtimeType.GetProperties(BindingFlags.Public | BindingFlags.Instance)) {
+            var ksField = property.GetCustomAttribute<KSField>() ?? interfaces.Select(i => i.GetProperty(property.Name)?.GetCustomAttribute<KSField>()).FirstOrDefault(attr => attr != null); ;
             if (ksField == null) continue;
 
             boundType.allowedFields.Add(ksField.Name ?? ToSnakeCase(property.Name),

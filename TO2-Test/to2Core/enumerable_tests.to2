@@ -15,6 +15,14 @@ test sync fn test_simple_enumerable() -> Unit = {
     assert_string("Copied first", result[0])
     assert_string("Copied second", result[1])
     assert_string("Copied third", result[2])
+    
+    const by_map = enumerable.map(fn(item) -> $"Mapped {item}")
+    
+    assert_int(3, by_map.length)
+    assert_string("Mapped first", by_map[0])
+    assert_string("Mapped second", by_map[1])
+    assert_string("Mapped third", by_map[2])
+    
 }
 
 test sync fn test_simple_array_like() -> Unit = {
