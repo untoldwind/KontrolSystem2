@@ -73,13 +73,9 @@ public class Block : Expression, IVariableContainer {
 
     public IVariableContainer? ParentContainer => parentContainer;
 
-    public TO2Type? FindVariableLocal(IBlockContext context, string name) {
-        return variables.Get(name)?.VariableType(context);
-    }
+    public TO2Type? FindVariableLocal(IBlockContext context, string name) => variables.Get(name)?.VariableType(context);
 
-    public override TO2Type ResultType(IBlockContext context) {
-        return items.LastOrDefault(item => !item.IsComment)?.ResultType(context) ?? BuiltinType.Unit;
-    }
+    public override TO2Type ResultType(IBlockContext context) => items.LastOrDefault(item => !item.IsComment)?.ResultType(context) ?? BuiltinType.Unit;
 
     public override void Prepare(IBlockContext context) {
         if (preparedResult != null || !context.IsAsync) return;

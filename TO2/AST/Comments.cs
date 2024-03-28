@@ -21,9 +21,7 @@ public class LineComment(string comment, Position start, Position end) : IBlockI
         set { }
     }
 
-    public TO2Type ResultType(IBlockContext context) {
-        return BuiltinType.Unit;
-    }
+    public TO2Type ResultType(IBlockContext context) => BuiltinType.Unit;
 
     public void Prepare(IBlockContext context) {
     }
@@ -31,27 +29,15 @@ public class LineComment(string comment, Position start, Position end) : IBlockI
     public void EmitCode(IBlockContext context, bool dropResult) {
     }
 
-    public REPLValueFuture Eval(REPLContext context) {
-        return REPLValueFuture.Success(REPLUnit.INSTANCE);
-    }
+    public REPLValueFuture Eval(REPLContext context) => REPLValueFuture.Success(REPLUnit.INSTANCE);
 
-    public IEnumerable<StructuralError> TryDeclareTypes(ModuleContext context) {
-        return [];
-    }
+    public IEnumerable<StructuralError> TryDeclareTypes(ModuleContext context) => [];
 
-    public IEnumerable<StructuralError> TryImportTypes(ModuleContext context) {
-        return [];
-    }
+    public IEnumerable<StructuralError> TryImportTypes(ModuleContext context) => [];
 
-    public IEnumerable<StructuralError> TryImportConstants(ModuleContext context) {
-        return [];
-    }
+    public IEnumerable<StructuralError> TryImportConstants(ModuleContext context) => [];
 
-    public IEnumerable<StructuralError> TryVerifyFunctions(ModuleContext context) {
-        return [];
-    }
+    public IEnumerable<StructuralError> TryVerifyFunctions(ModuleContext context) => [];
 
-    public IEnumerable<StructuralError> TryImportFunctions(ModuleContext context) {
-        return [];
-    }
+    public IEnumerable<StructuralError> TryImportFunctions(ModuleContext context) => [];
 }

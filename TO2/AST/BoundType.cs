@@ -11,7 +11,9 @@ public class BoundType(string? modulePrefix, string localName, string? descripti
     OperatorCollection allowedSuffixOperators,
     IEnumerable<(string name, IMethodInvokeFactory invoker)> allowedMethods,
     IEnumerable<(string name, IFieldAccessFactory access)> allowedFields,
-    IEnumerable<RealizedType>? typeParameters = null) : RealizedType {
+    IEnumerable<RealizedType>? typeParameters = null,
+    IIndexAccessEmitter? indexAccessEmitter = null,
+    IForInSource? forInSource = null) : RealizedType {
     public readonly Dictionary<string, IFieldAccessFactory> allowedFields = allowedFields.ToDictionary(m => m.name, m => m.access);
     public readonly Dictionary<string, IMethodInvokeFactory> allowedMethods = allowedMethods.ToDictionary(m => m.name, m => m.invoker);
     public readonly string localName = localName;
@@ -49,25 +51,19 @@ public class BoundType(string? modulePrefix, string localName, string? descripti
 
     public override TO2Type[] GenericParameters => typeParameters.ToArray<TO2Type>();
 
-    public override bool IsValid(ModuleContext context) {
-        return !runtimeType.IsGenericTypeDefinition;
-    }
+    public override bool IsValid(ModuleContext context) => !runtimeType.IsGenericTypeDefinition;
 
-    public override RealizedType UnderlyingType(ModuleContext context) {
-        return this;
-    }
+    public override RealizedType UnderlyingType(ModuleContext context) => this;
 
-    public override Type GeneratedType(ModuleContext context) {
-        return runtimeType;
-    }
+    public override Type GeneratedType(ModuleContext context) => runtimeType;
 
-    public override IOperatorCollection AllowedPrefixOperators(ModuleContext context) {
-        return allowedPrefixOperators;
-    }
+    public override IOperatorCollection AllowedPrefixOperators(ModuleContext context) => allowedPrefixOperators;
 
-    public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) {
-        return allowedSuffixOperators;
-    }
+    public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) => allowedSuffixOperators;
+
+    public override IIndexAccessEmitter? AllowedIndexAccess(ModuleContext context, IndexSpec indexSpec) => indexAccessEmitter;
+
+    public override IForInSource? ForInSource(ModuleContext context, TO2Type? typeHint) => forInSource;
 
     public override RealizedType
         FillGenerics(ModuleContext context, Dictionary<string, RealizedType>? typeArguments) {

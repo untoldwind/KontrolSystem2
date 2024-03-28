@@ -16,6 +16,7 @@
 * Basic bindings for waypoints
   * Add `body.waypoints`
   * Add `ksp::orbit::find_waypoint(name: string)`
+* Fix: `WheelThrottleManager` is now doing what its name suggests
 
 ## 0.5.6.3 -> 0.5.7.3
 

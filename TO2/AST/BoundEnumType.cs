@@ -61,17 +61,11 @@ public class BoundEnumType : RealizedType {
 
     public override string LocalName => localName;
 
-    public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) {
-        return allowedSuffixOperators;
-    }
+    public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) => allowedSuffixOperators;
 
-    public override RealizedType UnderlyingType(ModuleContext context) {
-        return this;
-    }
+    public override RealizedType UnderlyingType(ModuleContext context) => this;
 
-    public override Type GeneratedType(ModuleContext context) {
-        return enumType;
-    }
+    public override Type GeneratedType(ModuleContext context) => enumType;
 }
 
 public class BoundEnumConstType : RealizedType {
@@ -126,13 +120,9 @@ public class BoundEnumConstType : RealizedType {
 
     public override string LocalName => boundEnumType.localName + "Constants";
 
-    public override RealizedType UnderlyingType(ModuleContext context) {
-        return this;
-    }
+    public override RealizedType UnderlyingType(ModuleContext context) => this;
 
-    public override Type GeneratedType(ModuleContext context) {
-        return typeof(object);
-    }
+    public override Type GeneratedType(ModuleContext context) => typeof(object);
 
     public static Option<T> FromString<T>(string value) where T : struct {
         if (Enum.TryParse<T>(value, true, out var e)) return Option.Some(e);
@@ -213,26 +203,21 @@ internal class EnumFromStringMethodFactory(BoundEnumType boundEnumType) : IMetho
 
     public TypeHint ReturnHint => context => new OptionType(boundEnumType);
 
-    public TypeHint ArgumentHint(int argumentIdx) {
-        return context => BuiltinType.String;
-    }
+    public TypeHint ArgumentHint(int argumentIdx) => context => BuiltinType.String;
 
     public string Description => "Parse from string";
 
     public TO2Type DeclaredReturn => new OptionType(boundEnumType);
 
     public List<FunctionParameter> DeclaredParameters => [
-        new FunctionParameter("value", BuiltinType.String, "Enum value to lookup")
+        new("value", BuiltinType.String, "Enum value to lookup")
     ];
 
-    public IMethodInvokeEmitter Create(IBlockContext context, List<TO2Type> arguments, Node node) {
-        return new EnumFromStringMethodEmitter(boundEnumType);
-    }
+    public IMethodInvokeEmitter Create(IBlockContext context, List<TO2Type> arguments, Node node) => new EnumFromStringMethodEmitter(boundEnumType);
 
     public IMethodInvokeFactory
-        FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) {
-        return this;
-    }
+        FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) =>
+        this;
 }
 
 internal class EnumFromStringMethodEmitter(BoundEnumType boundEnumType) : IMethodInvokeEmitter {

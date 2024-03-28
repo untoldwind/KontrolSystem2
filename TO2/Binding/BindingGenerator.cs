@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -23,7 +24,7 @@ public static class BindingGenerator {
     public static CompiledKontrolModule BindModule(Type moduleType, IEnumerable<RealizedType>? additionalTypes = null,
         IEnumerable<IKontrolConstant>? additionConstants = null) {
         lock (BoundModules) {
-            if (BoundModules.ContainsKey(moduleType)) return BoundModules[moduleType];
+            if (BoundModules.TryGetValue(moduleType, out var bindModule)) return bindModule;
 
             var ksModule = moduleType.GetCustomAttribute<KSModule>();
 
@@ -94,11 +95,14 @@ public static class BindingGenerator {
 
         if (ksClass == null) throw new ArgumentException($"Type {type} must have a kSClass attribute");
 
+        var isEnumerable = typeof(IEnumerable).IsAssignableFrom(type);
         var boundType = new BoundType(modulePrefix, ksClass.Name ?? type.Name,
             NormalizeDescription(ksClass.Description), type,
-            BuiltinType.NoOperators, BuiltinType.NoOperators,
-            [],
-            []
+            allowedPrefixOperators: BuiltinType.NoOperators, 
+            allowedSuffixOperators: BuiltinType.NoOperators,
+            allowedMethods: [],
+            allowedFields: [],
+            forInSource: isEnumerable ? new BoundEnumerableForInSource(type) : null
         );
         RegisterTypeMapping(type, boundType);
         return boundType;

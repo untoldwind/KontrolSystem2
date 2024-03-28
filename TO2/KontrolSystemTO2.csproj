@@ -13,6 +13,11 @@
         <Folder Include="Parser\"/>
         <Folder Include="Generator\"/>
     </ItemGroup>
+    <ItemGroup>
+      <Reference Include="Assembly-CSharp">
+        <HintPath>..\..\..\..\.local\share\Steam\steamapps\common\Kerbal Space Program 2\KSP2_x64_Data\Managed\Assembly-CSharp.dll</HintPath>
+      </Reference>
+    </ItemGroup>
     <Target Name="CopyFiles" AfterTargets="Build">
         <Copy SourceFiles="../bin/$(Configuration)/KontrolSystemTO2.dll" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2"/>
     </Target>

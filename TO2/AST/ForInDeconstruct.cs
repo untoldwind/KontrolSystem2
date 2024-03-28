@@ -44,9 +44,7 @@ public class ForInDeconstruct(
         return null;
     }
 
-    public override TO2Type ResultType(IBlockContext context) {
-        return BuiltinType.Unit;
-    }
+    public override TO2Type ResultType(IBlockContext context) => BuiltinType.Unit;
 
     public override void Prepare(IBlockContext context) {
     }

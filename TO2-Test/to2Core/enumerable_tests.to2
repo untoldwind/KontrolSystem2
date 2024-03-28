@@ -1,0 +1,18 @@
+use * from core::testing
+use { create_test_enumerable } from test::module
+
+test sync fn test_simple_enumerable() -> Unit = {
+    let builder : ArrayBuilder<string> = ArrayBuilder(10)
+    const enumerable = create_test_enumerable()
+    
+    for(item in enumerable) {
+        builder += "Copied " + item
+    }
+    
+    const result = builder.result()
+    
+    assert_int(3, result.length)
+    assert_string("Copied first", result[0])
+    assert_string("Copied second", result[1])
+    assert_string("Copied third", result[2])
+}

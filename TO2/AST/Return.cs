@@ -11,9 +11,7 @@ public class ReturnEmpty(Position start = new(), Position end = new()) : Express
         set { }
     }
 
-    public override TO2Type ResultType(IBlockContext context) {
-        return BuiltinType.Unit;
-    }
+    public override TO2Type ResultType(IBlockContext context) => BuiltinType.Unit;
 
     public override void Prepare(IBlockContext context) {
     }
@@ -40,13 +38,9 @@ public class ReturnEmpty(Position start = new(), Position end = new()) : Express
             context.IL.Emit(OpCodes.Ldnull);
     }
 
-    internal override Expression CollapseFinalReturn() {
-        return new Block([], Start, End);
-    }
+    internal override Expression CollapseFinalReturn() => new Block([], Start, End);
 
-    public override REPLValueFuture Eval(REPLContext context) {
-        return REPLValueFuture.Success(new REPLReturn(REPLUnit.INSTANCE));
-    }
+    public override REPLValueFuture Eval(REPLContext context) => REPLValueFuture.Success(new REPLReturn(REPLUnit.INSTANCE));
 }
 
 public class ReturnValue : Expression {
@@ -62,9 +56,7 @@ public class ReturnValue : Expression {
         set => returnValue.VariableContainer = value;
     }
 
-    public override TO2Type ResultType(IBlockContext context) {
-        return BuiltinType.Unit;
-    }
+    public override TO2Type ResultType(IBlockContext context) => BuiltinType.Unit;
 
     public override void Prepare(IBlockContext context) {
     }
@@ -97,11 +89,7 @@ public class ReturnValue : Expression {
             context.IL.Emit(OpCodes.Ldnull);
     }
 
-    internal override Expression CollapseFinalReturn() {
-        return returnValue;
-    }
+    internal override Expression CollapseFinalReturn() => returnValue;
 
-    public override REPLValueFuture Eval(REPLContext context) {
-        return returnValue.Eval(context).Then(BuiltinType.Unit, value => new REPLReturn(value));
-    }
+    public override REPLValueFuture Eval(REPLContext context) => returnValue.Eval(context).Then(BuiltinType.Unit, value => new REPLReturn(value));
 }

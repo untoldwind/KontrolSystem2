@@ -46,9 +46,7 @@ public class Continue(Position start = new(), Position end = new()) : Expression
         set { }
     }
 
-    public override TO2Type ResultType(IBlockContext context) {
-        return BuiltinType.Unit;
-    }
+    public override TO2Type ResultType(IBlockContext context) => BuiltinType.Unit;
 
     public override void Prepare(IBlockContext context) {
     }
@@ -71,7 +69,5 @@ public class Continue(Position start = new(), Position end = new()) : Expression
         context.IL.AdjustStack(stackCount);
     }
 
-    public override REPLValueFuture Eval(REPLContext context) {
-        return REPLValueFuture.Success(REPLContinue.INSTANCE);
-    }
+    public override REPLValueFuture Eval(REPLContext context) => REPLValueFuture.Success(REPLContinue.INSTANCE);
 }

@@ -111,27 +111,15 @@ public class Bracket(Expression expression, Position start = new(), Position end
         set => expression.TypeHint = value;
     }
 
-    public override TO2Type ResultType(IBlockContext context) {
-        return expression.ResultType(context);
-    }
+    public override TO2Type ResultType(IBlockContext context) => expression.ResultType(context);
 
-    public override void Prepare(IBlockContext context) {
-        expression.Prepare(context);
-    }
+    public override void Prepare(IBlockContext context) => expression.Prepare(context);
 
-    public override void EmitCode(IBlockContext context, bool dropResult) {
-        expression.EmitCode(context, dropResult);
-    }
+    public override void EmitCode(IBlockContext context, bool dropResult) => expression.EmitCode(context, dropResult);
 
-    public override void EmitPtr(IBlockContext context) {
-        expression.EmitPtr(context);
-    }
+    public override void EmitPtr(IBlockContext context) => expression.EmitPtr(context);
 
-    public override void EmitStore(IBlockContext context, IBlockVariable variable, bool dropResult) {
-        expression.EmitStore(context, variable, dropResult);
-    }
+    public override void EmitStore(IBlockContext context, IBlockVariable variable, bool dropResult) => expression.EmitStore(context, variable, dropResult);
 
-    public override REPLValueFuture Eval(REPLContext context) {
-        return expression.Eval(context);
-    }
+    public override REPLValueFuture Eval(REPLContext context) => expression.Eval(context);
 }
