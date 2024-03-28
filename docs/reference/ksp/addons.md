@@ -12,9 +12,10 @@ Provides access to optional addons.
 
 #### Fields
 
-Name | Type | Read-only | Description
---- | --- | --- | ---
-version | string | R/O | 
+| Name    | Type   | Read-only | Description |
+| ------- | ------ | --------- | ----------- |
+| version | string | R/O       |             |
+
 
 #### Methods
 
@@ -29,10 +30,11 @@ flightplan.circularize ( burnUt : float,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-burnUt | float |  | 
-burnOffsetFactor | float | x | 
+| Name             | Type  | Optional | Description |
+| ---------------- | ----- | -------- | ----------- |
+| burnUt           | float |          |             |
+| burnOffsetFactor | float | x        |             |
+
 
 ##### course_correction
 
@@ -45,10 +47,11 @@ flightplan.course_correction ( burnUt : float,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-burnUt | float |  | 
-burnOffsetFactor | float | x | 
+| Name             | Type  | Optional | Description |
+| ---------------- | ----- | -------- | ----------- |
+| burnUt           | float |          |             |
+| burnOffsetFactor | float | x        |             |
+
 
 ##### ellipticize
 
@@ -63,12 +66,13 @@ flightplan.ellipticize ( burnUt : float,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-burnUt | float |  | 
-newAp | float |  | 
-newPe | float |  | 
-burnOffsetFactor | float | x | 
+| Name             | Type  | Optional | Description |
+| ---------------- | ----- | -------- | ----------- |
+| burnUt           | float |          |             |
+| newAp            | float |          |             |
+| newPe            | float |          |             |
+| burnOffsetFactor | float | x        |             |
+
 
 ##### hohmann_transfer
 
@@ -81,10 +85,11 @@ flightplan.hohmann_transfer ( burnUt : float,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-burnUt | float |  | 
-burnOffsetFactor | float | x | 
+| Name             | Type  | Optional | Description |
+| ---------------- | ----- | -------- | ----------- |
+| burnUt           | float |          |             |
+| burnOffsetFactor | float | x        |             |
+
 
 ##### intercept_tgt
 
@@ -98,11 +103,12 @@ flightplan.intercept_tgt ( burnUt : float,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-burnUt | float |  | 
-tgtUt | float |  | 
-burnOffsetFactor | float | x | 
+| Name             | Type  | Optional | Description |
+| ---------------- | ----- | -------- | ----------- |
+| burnUt           | float |          |             |
+| tgtUt            | float |          |             |
+| burnOffsetFactor | float | x        |             |
+
 
 ##### match_planes
 
@@ -115,10 +121,11 @@ flightplan.match_planes ( burnUt : float,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-burnUt | float |  | 
-burnOffsetFactor | float | x | 
+| Name             | Type  | Optional | Description |
+| ---------------- | ----- | -------- | ----------- |
+| burnUt           | float |          |             |
+| burnOffsetFactor | float | x        |             |
+
 
 ##### match_velocity
 
@@ -131,10 +138,11 @@ flightplan.match_velocity ( burnUt : float,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-burnUt | float |  | 
-burnOffsetFactor | float | x | 
+| Name             | Type  | Optional | Description |
+| ---------------- | ----- | -------- | ----------- |
+| burnUt           | float |          |             |
+| burnOffsetFactor | float | x        |             |
+
 
 ##### moon_return
 
@@ -147,10 +155,11 @@ flightplan.moon_return ( burnUt : float,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-burnUt | float |  | 
-burnOffsetFactor | float | x | 
+| Name             | Type  | Optional | Description |
+| ---------------- | ----- | -------- | ----------- |
+| burnUt           | float |          |             |
+| burnOffsetFactor | float | x        |             |
+
 
 ##### planetary_xfer
 
@@ -163,10 +172,11 @@ flightplan.planetary_xfer ( burnUt : float,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-burnUt | float |  | 
-burnOffsetFactor | float | x | 
+| Name             | Type  | Optional | Description |
+| ---------------- | ----- | -------- | ----------- |
+| burnUt           | float |          |             |
+| burnOffsetFactor | float | x        |             |
+
 
 ##### set_inclination
 
@@ -180,11 +190,12 @@ flightplan.set_inclination ( burnUt : float,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-burnUt | float |  | 
-inclination | float |  | 
-burnOffsetFactor | float | x | 
+| Name             | Type  | Optional | Description |
+| ---------------- | ----- | -------- | ----------- |
+| burnUt           | float |          |             |
+| inclination      | float |          |             |
+| burnOffsetFactor | float | x        |             |
+
 
 ##### set_new_ap
 
@@ -198,11 +209,12 @@ flightplan.set_new_ap ( burnUt : float,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-burnUt | float |  | 
-newAp | float |  | 
-burnOffsetFactor | float | x | 
+| Name             | Type  | Optional | Description |
+| ---------------- | ----- | -------- | ----------- |
+| burnUt           | float |          |             |
+| newAp            | float |          |             |
+| burnOffsetFactor | float | x        |             |
+
 
 ##### set_new_lan
 
@@ -216,11 +228,12 @@ flightplan.set_new_lan ( burnUt : float,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-burnUt | float |  | 
-newLanValue | float |  | 
-burnOffsetFactor | float | x | 
+| Name             | Type  | Optional | Description |
+| ---------------- | ----- | -------- | ----------- |
+| burnUt           | float |          |             |
+| newLanValue      | float |          |             |
+| burnOffsetFactor | float | x        |             |
+
 
 ##### set_new_pe
 
@@ -234,11 +247,12 @@ flightplan.set_new_pe ( burnUt : float,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-burnUt | float |  | 
-newPe | float |  | 
-burnOffsetFactor | float | x | 
+| Name             | Type  | Optional | Description |
+| ---------------- | ----- | -------- | ----------- |
+| burnUt           | float |          |             |
+| newPe            | float |          |             |
+| burnOffsetFactor | float | x        |             |
+
 
 ##### set_new_sma
 
@@ -252,11 +266,12 @@ flightplan.set_new_sma ( burnUt : float,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-burnUt | float |  | 
-newSma | float |  | 
-burnOffsetFactor | float | x | 
+| Name             | Type  | Optional | Description |
+| ---------------- | ----- | -------- | ----------- |
+| burnUt           | float |          |             |
+| newSma           | float |          |             |
+| burnOffsetFactor | float | x        |             |
+
 
 ##### set_node_longitude
 
@@ -270,11 +285,12 @@ flightplan.set_node_longitude ( burnUt : float,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-burnUt | float |  | 
-newNodeLongValue | float |  | 
-burnOffsetFactor | float | x | 
+| Name             | Type  | Optional | Description |
+| ---------------- | ----- | -------- | ----------- |
+| burnUt           | float |          |             |
+| newNodeLongValue | float |          |             |
+| burnOffsetFactor | float | x        |             |
+
 
 ## Functions
 

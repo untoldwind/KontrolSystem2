@@ -18,12 +18,13 @@ pub sync fn bi_impulsive_transfer ( start : ksp::orbit::Orbit,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-start | ksp::orbit::Orbit |  | 
-target | ksp::orbit::Orbit |  | 
-min_UT | float |  | 
-max_UT | float | x | 
+| Name   | Type              | Optional | Description |
+| ------ | ----------------- | -------- | ----------- |
+| start  | ksp::orbit::Orbit |          |             |
+| target | ksp::orbit::Orbit |          |             |
+| min_UT | float             |          |             |
+| max_UT | float             | x        |             |
+
 
 ### bi_impulsive_transfer_body
 
@@ -38,12 +39,13 @@ pub sync fn bi_impulsive_transfer_body ( start : ksp::orbit::Orbit,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-start | ksp::orbit::Orbit |  | 
-target | ksp::orbit::Body |  | 
-min_UT | float |  | 
-target_periapsis | float |  | 
+| Name             | Type              | Optional | Description |
+| ---------------- | ----------------- | -------- | ----------- |
+| start            | ksp::orbit::Orbit |          |             |
+| target           | ksp::orbit::Body  |          |             |
+| min_UT           | float             |          |             |
+| target_periapsis | float             |          |             |
+
 
 ### bi_impulsive_transfer_near
 
@@ -58,12 +60,13 @@ pub sync fn bi_impulsive_transfer_near ( start : ksp::orbit::Orbit,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-start | ksp::orbit::Orbit |  | 
-target | ksp::orbit::Orbit |  | 
-UT | float |  | 
-TT | float |  | 
+| Name   | Type              | Optional | Description |
+| ------ | ----------------- | -------- | ----------- |
+| start  | ksp::orbit::Orbit |          |             |
+| target | ksp::orbit::Orbit |          |             |
+| UT     | float             |          |             |
+| TT     | float             |          |             |
+
 
 ### change_apoapsis
 
@@ -77,11 +80,12 @@ pub sync fn change_apoapsis ( orbit : ksp::orbit::Orbit,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-orbit | ksp::orbit::Orbit |  | 
-UT | float |  | 
-apoapsis_radius | float |  | 
+| Name            | Type              | Optional | Description |
+| --------------- | ----------------- | -------- | ----------- |
+| orbit           | ksp::orbit::Orbit |          |             |
+| UT              | float             |          |             |
+| apoapsis_radius | float             |          |             |
+
 
 ### change_periapsis
 
@@ -95,11 +99,12 @@ pub sync fn change_periapsis ( orbit : ksp::orbit::Orbit,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-orbit | ksp::orbit::Orbit |  | 
-UT | float |  | 
-periapsis_radius | float |  | 
+| Name             | Type              | Optional | Description |
+| ---------------- | ----------------- | -------- | ----------- |
+| orbit            | ksp::orbit::Orbit |          |             |
+| UT               | float             |          |             |
+| periapsis_radius | float             |          |             |
+
 
 ### cheapest_course_correction
 
@@ -113,11 +118,12 @@ pub sync fn cheapest_course_correction ( orbit : ksp::orbit::Orbit,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-orbit | ksp::orbit::Orbit |  | 
-min_UT | float |  | 
-target | ksp::orbit::Orbit |  | 
+| Name   | Type              | Optional | Description |
+| ------ | ----------------- | -------- | ----------- |
+| orbit  | ksp::orbit::Orbit |          |             |
+| min_UT | float             |          |             |
+| target | ksp::orbit::Orbit |          |             |
+
 
 ### circularize_orbit
 
@@ -131,9 +137,10 @@ or periapsis (if `orbit` is hyperbolic).
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-orbit | ksp::orbit::Orbit |  | 
+| Name  | Type              | Optional | Description |
+| ----- | ----------------- | -------- | ----------- |
+| orbit | ksp::orbit::Orbit |          |             |
+
 
 ### circularize_orbit_at
 
@@ -146,10 +153,11 @@ pub sync fn circularize_orbit_at ( orbit : ksp::orbit::Orbit,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-orbit | ksp::orbit::Orbit |  | 
-UT | float |  | 
+| Name  | Type              | Optional | Description |
+| ----- | ----------------- | -------- | ----------- |
+| orbit | ksp::orbit::Orbit |          |             |
+| UT    | float             |          |             |
+
 
 ### circularize_orbit_pe
 
@@ -161,9 +169,10 @@ pub sync fn circularize_orbit_pe ( orbit : ksp::orbit::Orbit ) -> Result<(UT : f
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-orbit | ksp::orbit::Orbit |  | 
+| Name  | Type              | Optional | Description |
+| ----- | ----------------- | -------- | ----------- |
+| orbit | ksp::orbit::Orbit |          |             |
+
 
 ### course_correction_body
 
@@ -178,12 +187,13 @@ pub sync fn course_correction_body ( start : ksp::orbit::Orbit,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-start | ksp::orbit::Orbit |  | 
-target | ksp::orbit::Body |  | 
-UT | float |  | 
-target_periapsis | float |  | 
+| Name             | Type              | Optional | Description |
+| ---------------- | ----------------- | -------- | ----------- |
+| start            | ksp::orbit::Orbit |          |             |
+| target           | ksp::orbit::Body  |          |             |
+| UT               | float             |          |             |
+| target_periapsis | float             |          |             |
+
 
 ### ellipticize
 
@@ -198,12 +208,13 @@ pub sync fn ellipticize ( orbit : ksp::orbit::Orbit,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-orbit | ksp::orbit::Orbit |  | 
-UT | float |  | 
-periapsis | float |  | 
-apoapsis | float |  | 
+| Name      | Type              | Optional | Description |
+| --------- | ----------------- | -------- | ----------- |
+| orbit     | ksp::orbit::Orbit |          |             |
+| UT        | float             |          |             |
+| periapsis | float             |          |             |
+| apoapsis  | float             |          |             |
+
 
 ### ideal_ejection
 
@@ -219,13 +230,14 @@ pub sync fn ideal_ejection ( body : ksp::orbit::Body,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-body | ksp::orbit::Body |  | 
-UT | float |  | 
-radius | float |  | 
-normal | ksp::math::Vec3 |  | 
-exit_velocity | ksp::math::Vec3 |  | 
+| Name          | Type             | Optional | Description |
+| ------------- | ---------------- | -------- | ----------- |
+| body          | ksp::orbit::Body |          |             |
+| UT            | float            |          |             |
+| radius        | float            |          |             |
+| normal        | ksp::math::Vec3  |          |             |
+| exit_velocity | ksp::math::Vec3  |          |             |
+
 
 ### intercept_at
 
@@ -241,13 +253,14 @@ pub sync fn intercept_at ( start : ksp::orbit::Orbit,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-start | ksp::orbit::Orbit |  | 
-start_UT | float |  | 
-target | ksp::orbit::Orbit |  | 
-target_UT | float |  | 
-offset_distance | float | x | 
+| Name            | Type              | Optional | Description |
+| --------------- | ----------------- | -------- | ----------- |
+| start           | ksp::orbit::Orbit |          |             |
+| start_UT        | float             |          |             |
+| target          | ksp::orbit::Orbit |          |             |
+| target_UT       | float             |          |             |
+| offset_distance | float             | x        |             |
+
 
 ### match_apoapsis
 
@@ -260,10 +273,11 @@ pub sync fn match_apoapsis ( start : ksp::orbit::Orbit,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-start | ksp::orbit::Orbit |  | 
-target | ksp::orbit::Orbit |  | 
+| Name   | Type              | Optional | Description |
+| ------ | ----------------- | -------- | ----------- |
+| start  | ksp::orbit::Orbit |          |             |
+| target | ksp::orbit::Orbit |          |             |
+
 
 ### match_inclination
 
@@ -276,10 +290,11 @@ pub sync fn match_inclination ( start : ksp::orbit::Orbit,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-start | ksp::orbit::Orbit |  | 
-target | ksp::orbit::Orbit |  | 
+| Name   | Type              | Optional | Description |
+| ------ | ----------------- | -------- | ----------- |
+| start  | ksp::orbit::Orbit |          |             |
+| target | ksp::orbit::Orbit |          |             |
+
 
 ### match_periapsis
 
@@ -292,10 +307,11 @@ pub sync fn match_periapsis ( start : ksp::orbit::Orbit,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-start | ksp::orbit::Orbit |  | 
-target | ksp::orbit::Orbit |  | 
+| Name   | Type              | Optional | Description |
+| ------ | ----------------- | -------- | ----------- |
+| start  | ksp::orbit::Orbit |          |             |
+| target | ksp::orbit::Orbit |          |             |
+
 
 ### match_velocities
 
@@ -308,10 +324,11 @@ pub sync fn match_velocities ( start : ksp::orbit::Orbit,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-start | ksp::orbit::Orbit |  | 
-target | ksp::orbit::Orbit |  | 
+| Name   | Type              | Optional | Description |
+| ------ | ----------------- | -------- | ----------- |
+| start  | ksp::orbit::Orbit |          |             |
+| target | ksp::orbit::Orbit |          |             |
+
 
 ### next_closest_approach_time
 
@@ -325,8 +342,9 @@ pub sync fn next_closest_approach_time ( start : ksp::orbit::Orbit,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-start | ksp::orbit::Orbit |  | 
-target | ksp::orbit::Orbit |  | 
-UT | float |  | 
+| Name   | Type              | Optional | Description |
+| ------ | ----------------- | -------- | ----------- |
+| start  | ksp::orbit::Orbit |          |             |
+| target | ksp::orbit::Orbit |          |             |
+| UT     | float             |          |             |
+

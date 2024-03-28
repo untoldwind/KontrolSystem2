@@ -59,14 +59,12 @@ class MainClass {
                     output.WriteLine("#### Fields");
                     output.WriteLine();
 
-                    output.WriteLine("Name | Type | Read-only | Description");
-                    output.WriteLine("--- | --- | --- | ---");
+                    var table = new TableHelper("Name", "Type", "Read-only", "Description");
 
                     foreach (var (name, declaredType) in type.DeclaredFields.OrderBy(kv => kv.Key).Select(kv => (kv.Key, kv.Value))) {
-                        var ro = declaredType.CanStore ? "R/W" : "R/O";
-                        output.WriteLine(
-                            $"{name} | {LinkType(declaredType.DeclaredType.Name)} | {ro} | {declaredType.Description?.Replace("\n", " ")}");
+                        table.AddRow(name, LinkType(declaredType.DeclaredType.Name), declaredType.CanStore ? "R/W" : "R/O", declaredType.Description?.Replace("\n", " ") ?? "");
                     }
+                    output.WriteLine(table.Markdown);
                 }
 
                 if (type.DeclaredMethods.Count > 0) {
@@ -88,13 +86,13 @@ class MainClass {
                             output.WriteLine();
                             output.WriteLine("Parameters");
                             output.WriteLine();
-                            output.WriteLine("Name | Type | Optional | Description");
-                            output.WriteLine("--- | --- | --- | ---");
+
+                            var table = new TableHelper("Name", "Type", "Optional", "Description");
 
                             foreach (FunctionParameter parameter in method.DeclaredParameters) {
-                                string optional = parameter.HasDefault ? "x" : "";
-                                output.WriteLine($"{parameter.name} | {parameter.type} | {optional} | {parameter.description}");
+                                table.AddRow(parameter.name, parameter.type?.ToString() ?? "", parameter.HasDefault ? "x" : "", parameter.description ?? "");
                             }
+                            output.WriteLine(table.Markdown);
                         }
                     }
                 }
@@ -106,15 +104,15 @@ class MainClass {
             output.WriteLine("## Constants");
             output.WriteLine();
 
-            output.WriteLine("Name | Type | Description");
-            output.WriteLine("--- | --- | ---");
+            var table = new TableHelper("Name", "Type", "Description");
+
             foreach (string constantName in module.AllConstantNames.OrderBy(name => name)) {
                 IKontrolConstant constant = module.FindConstant(constantName)!;
 
-                output.WriteLine($"{constantName} | {constant.Type} | {constant.Description?.Replace("\n", " ")}");
+                table.AddRow(constantName, constant.Type.ToString(), constant.Description?.Replace("\n", " ") ?? "");
             }
 
-            output.WriteLine();
+            output.WriteLine(table.Markdown);
         }
 
         if (module.AllFunctionNames.Any()) {
@@ -138,13 +136,14 @@ class MainClass {
                     output.WriteLine();
                     output.WriteLine("Parameters");
                     output.WriteLine();
-                    output.WriteLine("Name | Type | Optional | Description");
-                    output.WriteLine("--- | --- | --- | ---");
+                    
+                    var table = new TableHelper("Name", "Type", "Optional", "Description");
 
                     foreach (RealizedParameter parameter in function.Parameters) {
-                        string optional = parameter.HasDefault ? "x" : "";
-                        output.WriteLine($"{parameter.name} | {parameter.type} | {optional} | {parameter.description}");
+                        table.AddRow(parameter.name, parameter.type?.ToString() ?? "", parameter.HasDefault ? "x" : "", parameter.description ?? "");
                     }
+                    
+                    output.WriteLine(table.Markdown);
                 }
             }
         }

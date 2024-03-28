@@ -12,9 +12,10 @@ Collection to game and runtime related functions.
 
 #### Fields
 
-Name | Type | Read-only | Description
---- | --- | --- | ---
-available_processes | [ksp::game::Process](/reference/ksp/game.md#process)[] | R/O | 
+| Name                | Type                                                   | Read-only | Description |
+| ------------------- | ------------------------------------------------------ | --------- | ----------- |
+| available_processes | [ksp::game::Process](/reference/ksp/game.md#process)[] | R/O       |             |
+
 
 #### Methods
 
@@ -28,9 +29,10 @@ mainframe.find_process ( name : string ) -> Option<ksp::game::Process>
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-name | string |  | 
+| Name | Type   | Optional | Description |
+| ---- | ------ | -------- | ----------- |
+| name | string |          |             |
+
 
 ### Process
 
@@ -38,11 +40,12 @@ name | string |  |
 
 #### Fields
 
-Name | Type | Read-only | Description
---- | --- | --- | ---
-arguments | [ksp::game::ProcessArgument](/reference/ksp/game.md#processargument)[] | R/O | 
-is_running | bool | R/O | 
-name | string | R/O | 
+| Name       | Type                                                                   | Read-only | Description |
+| ---------- | ---------------------------------------------------------------------- | --------- | ----------- |
+| arguments  | [ksp::game::ProcessArgument](/reference/ksp/game.md#processargument)[] | R/O       |             |
+| is_running | bool                                                                   | R/O       |             |
+| name       | string                                                                 | R/O       |             |
+
 
 #### Methods
 
@@ -57,10 +60,11 @@ process.start ( forVessel : Option<ksp::vessel::Vessel>,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-forVessel | Option<ksp::vessel::Vessel> | x | 
-arguments | string[] | x | 
+| Name      | Type                        | Optional | Description |
+| --------- | --------------------------- | -------- | ----------- |
+| forVessel | Option<ksp::vessel::Vessel> | x        |             |
+| arguments | string[]                    | x        |             |
+
 
 ##### stop
 
@@ -76,17 +80,18 @@ process.stop ( ) -> bool
 
 #### Fields
 
-Name | Type | Read-only | Description
---- | --- | --- | ---
-default_value | string | R/O | 
-name | string | R/O | 
-type | string | R/O | 
+| Name          | Type   | Read-only | Description |
+| ------------- | ------ | --------- | ----------- |
+| default_value | string | R/O       |             |
+| name          | string | R/O       |             |
+| type          | string | R/O       |             |
+
 
 ## Constants
 
-Name | Type | Description
---- | --- | ---
-MAINFRAME | ksp::game::Mainframe | KontrolSystem mainframe 
+| Name      | Type                 | Description              |
+| --------- | -------------------- | ------------------------ |
+| MAINFRAME | ksp::game::Mainframe | KontrolSystem mainframe  |
 
 
 ## Functions
@@ -112,9 +117,10 @@ Stop execution of given number of seconds (factions of a seconds are supported a
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-seconds | float |  | 
+| Name    | Type  | Optional | Description |
+| ------- | ----- | -------- | ----------- |
+| seconds | float |          |             |
+
 
 ### wait_until
 
@@ -127,9 +133,10 @@ Stop execution until a given condition is met.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-predicate | sync fn() -> bool |  | 
+| Name      | Type              | Optional | Description |
+| --------- | ----------------- | -------- | ----------- |
+| predicate | sync fn() -> bool |          |             |
+
 
 ### wait_while
 
@@ -142,9 +149,10 @@ Stop execution as long as a given condition is met.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-predicate | sync fn() -> bool |  | 
+| Name      | Type              | Optional | Description |
+| --------- | ----------------- | -------- | ----------- |
+| predicate | sync fn() -> bool |          |             |
+
 
 ### yield
 

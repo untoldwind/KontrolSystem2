@@ -16,10 +16,11 @@ pub sync fn global_navball ( vessel : ksp::vessel::Vessel,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-vessel | ksp::vessel::Vessel |  | 
-dir | ksp::math::GlobalDirection |  | 
+| Name   | Type                       | Optional | Description |
+| ------ | -------------------------- | -------- | ----------- |
+| vessel | ksp::vessel::Vessel        |          |             |
+| dir    | ksp::math::GlobalDirection |          |             |
+
 
 ### navball
 
@@ -32,7 +33,8 @@ pub sync fn navball ( vessel : ksp::vessel::Vessel,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-vessel | ksp::vessel::Vessel |  | 
-dir | ksp::math::Direction |  | 
+| Name   | Type                 | Optional | Description |
+| ------ | -------------------- | -------- | ----------- |
+| vessel | ksp::vessel::Vessel  |          |             |
+| dir    | ksp::math::Direction |          |             |
+

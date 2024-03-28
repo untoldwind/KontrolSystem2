@@ -15,9 +15,10 @@ pub sync fn angle_to_180 ( angle : float ) -> float
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-angle | float |  | 
+| Name  | Type  | Optional | Description |
+| ----- | ----- | -------- | ----------- |
+| angle | float |          |             |
+
 
 ### angle_to_360
 
@@ -29,9 +30,10 @@ pub sync fn angle_to_360 ( angle : float ) -> float
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-angle | float |  | 
+| Name  | Type  | Optional | Description |
+| ----- | ----- | -------- | ----------- |
+| angle | float |          |             |
+
 
 ### global_ship_is_facing
 
@@ -46,12 +48,13 @@ pub sync fn global_ship_is_facing ( vessel : ksp::vessel::Vessel,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-vessel | ksp::vessel::Vessel |  | 
-desired_facing | ksp::math::GlobalVector |  | 
-max_deviation_degrees | float |  | 
-max_angular_velocity | float |  | 
+| Name                  | Type                    | Optional | Description |
+| --------------------- | ----------------------- | -------- | ----------- |
+| vessel                | ksp::vessel::Vessel     |          |             |
+| desired_facing        | ksp::math::GlobalVector |          |             |
+| max_deviation_degrees | float                   |          |             |
+| max_angular_velocity  | float                   |          |             |
+
 
 ### remove_all_nodes
 
@@ -63,9 +66,10 @@ pub sync fn remove_all_nodes ( vessel : ksp::vessel::Vessel ) -> Unit
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-vessel | ksp::vessel::Vessel |  | 
+| Name   | Type                | Optional | Description |
+| ------ | ------------------- | -------- | ----------- |
+| vessel | ksp::vessel::Vessel |          |             |
+
 
 ### ship_is_facing
 
@@ -83,9 +87,10 @@ Determine if `vessel` is facing a given direction.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-vessel | ksp::vessel::Vessel |  | 
-desired_facing | ksp::math::Vec3 |  | 
-max_deviation_degrees | float |  | 
-max_angular_velocity | float |  | 
+| Name                  | Type                | Optional | Description |
+| --------------------- | ------------------- | -------- | ----------- |
+| vessel                | ksp::vessel::Vessel |          |             |
+| desired_facing        | ksp::math::Vec3     |          |             |
+| max_deviation_degrees | float               |          |             |
+| max_angular_velocity  | float               |          |             |
+

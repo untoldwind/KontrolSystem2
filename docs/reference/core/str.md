@@ -18,10 +18,11 @@ Format items using C# format strings (https://learn.microsoft.com/en-us/dotnet/a
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-format | string |  | 
-items | T |  | 
+| Name   | Type   | Optional | Description |
+| ------ | ------ | -------- | ----------- |
+| format | string |          |             |
+| items  | T      |          |             |
+
 
 ### join
 
@@ -35,7 +36,8 @@ Join an array of string with a separator.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-separator | string |  | 
-items | string[] |  | 
+| Name      | Type     | Optional | Description |
+| --------- | -------- | -------- | ----------- |
+| separator | string   |          |             |
+| items     | string[] |          |             |
+

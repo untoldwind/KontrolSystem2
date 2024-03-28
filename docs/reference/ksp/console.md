@@ -16,10 +16,11 @@ Representation of a console
 
 #### Fields
 
-Name | Type | Read-only | Description
---- | --- | --- | ---
-cursor_col | int | R/O | 
-cursor_row | int | R/O | 
+| Name       | Type | Read-only | Description |
+| ---------- | ---- | --------- | ----------- |
+| cursor_col | int  | R/O       |             |
+| cursor_row | int  | R/O       |             |
+
 
 #### Methods
 
@@ -43,9 +44,10 @@ Clear a line
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-row | int |  | 
+| Name | Type | Optional | Description |
+| ---- | ---- | -------- | ----------- |
+| row  | int  |          |             |
+
 
 ##### move_cursor
 
@@ -59,10 +61,11 @@ Move the cursor to a give `row` and `column`.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-row | int |  | 
-column | int |  | 
+| Name   | Type | Optional | Description |
+| ------ | ---- | -------- | ----------- |
+| row    | int  |          |             |
+| column | int  |          |             |
+
 
 ##### print
 
@@ -75,9 +78,10 @@ Print a message at the current cursor position (and move cursor forward)
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-message | string |  | 
+| Name    | Type   | Optional | Description |
+| ------- | ------ | -------- | ----------- |
+| message | string |          |             |
+
 
 ##### print_at
 
@@ -92,11 +96,12 @@ Moves the cursor to the specified position, prints the message and restores the 
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-row | int |  | 
-column | int |  | 
-message | string |  | 
+| Name    | Type   | Optional | Description |
+| ------- | ------ | -------- | ----------- |
+| row     | int    |          |             |
+| column  | int    |          |             |
+| message | string |          |             |
+
 
 ##### print_line
 
@@ -109,9 +114,10 @@ Print a message at the current cursor position and move cursor to the beginning 
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-message | string |  | 
+| Name    | Type   | Optional | Description |
+| ------- | ------ | -------- | ----------- |
+| message | string |          |             |
+
 
 ### RgbaColor
 
@@ -120,25 +126,26 @@ Interface color with alpha channel.
 
 #### Fields
 
-Name | Type | Read-only | Description
---- | --- | --- | ---
-alpha | float | R/O | 
-blue | float | R/O | 
-green | float | R/O | 
-red | float | R/O | 
+| Name  | Type  | Read-only | Description |
+| ----- | ----- | --------- | ----------- |
+| alpha | float | R/O       |             |
+| blue  | float | R/O       |             |
+| green | float | R/O       |             |
+| red   | float | R/O       |             |
+
 
 ## Constants
 
-Name | Type | Description
---- | --- | ---
-BLACK | ksp::console::RgbaColor | Color black 
-BLUE | ksp::console::RgbaColor | Color blue 
-CONSOLE | ksp::console::Console | Main console 
-CYAN | ksp::console::RgbaColor | Color cyan 
-GREEN | ksp::console::RgbaColor | Color green 
-RED | ksp::console::RgbaColor | Color red 
-WHITE | ksp::console::RgbaColor | Color red 
-YELLOW | ksp::console::RgbaColor | Color yellow 
+| Name    | Type                    | Description   |
+| ------- | ----------------------- | ------------- |
+| BLACK   | ksp::console::RgbaColor | Color black   |
+| BLUE    | ksp::console::RgbaColor | Color blue    |
+| CONSOLE | ksp::console::Console   | Main console  |
+| CYAN    | ksp::console::RgbaColor | Color cyan    |
+| GREEN   | ksp::console::RgbaColor | Color green   |
+| RED     | ksp::console::RgbaColor | Color red     |
+| WHITE   | ksp::console::RgbaColor | Color red     |
+| YELLOW  | ksp::console::RgbaColor | Color yellow  |
 
 
 ## Functions
@@ -158,9 +165,10 @@ Create a new color from `red`, `green`, `blue` and `alpha` (0.0 - 1.0).
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-red | float |  | 
-green | float |  | 
-blue | float |  | 
-alpha | float | x | 
+| Name  | Type  | Optional | Description |
+| ----- | ----- | -------- | ----------- |
+| red   | float |          |             |
+| green | float |          |             |
+| blue  | float |          |             |
+| alpha | float | x        |             |
+

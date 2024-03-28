@@ -17,9 +17,10 @@ Write a debug-level `message`.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-message | string |  | 
+| Name    | Type   | Optional | Description |
+| ------- | ------ | -------- | ----------- |
+| message | string |          |             |
+
 
 ### error
 
@@ -32,9 +33,10 @@ Write an error-level `message`.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-message | string |  | 
+| Name    | Type   | Optional | Description |
+| ------- | ------ | -------- | ----------- |
+| message | string |          |             |
+
 
 ### info
 
@@ -47,9 +49,10 @@ Write an info-level `message`.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-message | string |  | 
+| Name    | Type   | Optional | Description |
+| ------- | ------ | -------- | ----------- |
+| message | string |          |             |
+
 
 ### warning
 
@@ -62,6 +65,7 @@ Write a warning-level `message`.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-message | string |  | 
+| Name    | Type   | Optional | Description |
+| ------- | ------ | -------- | ----------- |
+| message | string |          |             |
+

@@ -16,10 +16,11 @@ pub sync fn land_deorbit_delta_v ( vessel : ksp::vessel::Vessel,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-vessel | ksp::vessel::Vessel |  | 
-alt | float |  | 
+| Name   | Type                | Optional | Description |
+| ------ | ------------------- | -------- | ----------- |
+| vessel | ksp::vessel::Vessel |          |             |
+| alt    | float               |          |             |
+
 
 ### land_time_to_longitude
 
@@ -32,7 +33,8 @@ pub sync fn land_time_to_longitude ( vessel : ksp::vessel::Vessel,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-vessel | ksp::vessel::Vessel |  | 
-longitude | float |  | 
+| Name      | Type                | Optional | Description |
+| --------- | ------------------- | -------- | ----------- |
+| vessel    | ksp::vessel::Vessel |          |             |
+| longitude | float               |          |             |
+

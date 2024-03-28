@@ -16,10 +16,11 @@ pub sync fn has_engine_in_stage ( vessel : ksp::vessel::Vessel,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-vessel | ksp::vessel::Vessel |  | 
-stage | int |  | 
+| Name   | Type                | Optional | Description |
+| ------ | ------------------- | -------- | ----------- |
+| vessel | ksp::vessel::Vessel |          |             |
+| stage  | int                 |          |             |
+
 
 ### has_flameout
 
@@ -31,9 +32,10 @@ pub sync fn has_flameout ( vessel : ksp::vessel::Vessel ) -> bool
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-vessel | ksp::vessel::Vessel |  | 
+| Name   | Type                | Optional | Description |
+| ------ | ------------------- | -------- | ----------- |
+| vessel | ksp::vessel::Vessel |          |             |
+
 
 ### has_ignited
 
@@ -45,9 +47,10 @@ pub sync fn has_ignited ( vessel : ksp::vessel::Vessel ) -> bool
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-vessel | ksp::vessel::Vessel |  | 
+| Name   | Type                | Optional | Description |
+| ------ | ------------------- | -------- | ----------- |
+| vessel | ksp::vessel::Vessel |          |             |
+
 
 ### has_still_running
 
@@ -59,9 +62,10 @@ pub sync fn has_still_running ( vessel : ksp::vessel::Vessel ) -> bool
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-vessel | ksp::vessel::Vessel |  | 
+| Name   | Type                | Optional | Description |
+| ------ | ------------------- | -------- | ----------- |
+| vessel | ksp::vessel::Vessel |          |             |
+
 
 ### trigger_staging
 
@@ -78,6 +82,7 @@ Will return `true` if stating has been triggered.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-vessel | ksp::vessel::Vessel |  | 
+| Name   | Type                | Optional | Description |
+| ------ | ------------------- | -------- | ----------- |
+| vessel | ksp::vessel::Vessel |          |             |
+

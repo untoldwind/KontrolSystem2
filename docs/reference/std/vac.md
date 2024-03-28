@@ -18,12 +18,13 @@ pub sync fn estimate_burn_time ( vessel : ksp::vessel::Vessel,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-vessel | ksp::vessel::Vessel |  | 
-delta_v | float |  | 
-stage_delay | float |  | 
-throttle_limit | float |  | 
+| Name           | Type                | Optional | Description |
+| -------------- | ------------------- | -------- | ----------- |
+| vessel         | ksp::vessel::Vessel |          |             |
+| delta_v        | float               |          |             |
+| stage_delay    | float               |          |             |
+| throttle_limit | float               |          |             |
+
 
 ### exec_next_node
 
@@ -37,6 +38,7 @@ Will result in an error if there are no planed maneuver nodes.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-vessel | ksp::vessel::Vessel |  | 
+| Name   | Type                | Optional | Description |
+| ------ | ------------------- | -------- | ----------- |
+| vessel | ksp::vessel::Vessel |          |             |
+

@@ -29,10 +29,11 @@ Released under the GNU GENERAL PUBLIC LICENSE as part of the PyKEP library:
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-r1 | ksp::math::Vec3 |  | 
-r2 | ksp::math::Vec3 |  | 
-tof | float |  | 
-mu | float |  | 
-clockwise | bool |  | 
+| Name      | Type            | Optional | Description |
+| --------- | --------------- | -------- | ----------- |
+| r1        | ksp::math::Vec3 |          |             |
+| r2        | ksp::math::Vec3 |          |             |
+| tof       | float           |          |             |
+| mu        | float           |          |             |
+| clockwise | bool            |          |             |
+

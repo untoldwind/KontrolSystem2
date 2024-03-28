@@ -11,12 +11,13 @@
 
 #### Fields
 
-Name | Type | Read-only | Description
---- | --- | --- | ---
-end_ut | float | R/O | End time of the time series. This will increase when data is added. 
-name | string | R/O | Name of the time series. Has to be unique. 
-resolution | float | R/O |  Current time resolution of the time series. This will increase the longer `end_ut - start_ut` gets to prevent accumulation of too much data.  
-start_ut | float | R/O | Start time of the time series. 
+| Name       | Type   | Read-only | Description                                                                                                                                     |
+| ---------- | ------ | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| end_ut     | float  | R/O       | End time of the time series. This will increase when data is added.                                                                             |
+| name       | string | R/O       | Name of the time series. Has to be unique.                                                                                                      |
+| resolution | float  | R/O       |  Current time resolution of the time series. This will increase the longer `end_ut - start_ut` gets to prevent accumulation of too much data.   |
+| start_ut   | float  | R/O       | Start time of the time series.                                                                                                                  |
+
 
 #### Methods
 
@@ -32,10 +33,11 @@ Add a data `value` at time `ut`.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-ut | float |  | 
-value | float |  | 
+| Name  | Type  | Optional | Description |
+| ----- | ----- | -------- | ----------- |
+| ut    | float |          |             |
+| value | float |          |             |
+
 
 ## Functions
 
@@ -56,11 +58,12 @@ If a time series of the `name` already exists it will be replace by the new one.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-name | string |  | 
-startUt | float |  | 
-initialResolution | float |  | 
+| Name              | Type   | Optional | Description |
+| ----------------- | ------ | -------- | ----------- |
+| name              | string |          |             |
+| startUt           | float  |          |             |
+| initialResolution | float  |          |             |
+
 
 ### get_time_series
 
@@ -73,9 +76,10 @@ Get a time series by name. Will be undefined if there it does not exists
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-name | string |  | 
+| Name | Type   | Optional | Description |
+| ---- | ------ | -------- | ----------- |
+| name | string |          |             |
+
 
 ### remove_all_time_series
 
@@ -97,9 +101,10 @@ Remove a time series by name.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-name | string |  | 
+| Name | Type   | Optional | Description |
+| ---- | ------ | -------- | ----------- |
+| name | string |          |             |
+
 
 ### save_time_series
 
@@ -112,6 +117,7 @@ Store the data of all time series to a file.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-filename | string |  | 
+| Name     | Type   | Optional | Description |
+| -------- | ------ | -------- | ----------- |
+| filename | string |          |             |
+

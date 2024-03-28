@@ -30,10 +30,11 @@ Get next gaussian distributed random number
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-mu | float | x | Mean value
-sigma | float | x | Standard deviation
+| Name  | Type  | Optional | Description        |
+| ----- | ----- | -------- | ------------------ |
+| mu    | float | x        | Mean value         |
+| sigma | float | x        | Standard deviation |
+
 
 ##### next_int
 
@@ -46,24 +47,25 @@ Get next random number between `min` and `max`
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-min | int |  | Minimum value (inclusive)
-max | int |  | Maximum value (inclusive)
+| Name | Type | Optional | Description               |
+| ---- | ---- | -------- | ------------------------- |
+| min  | int  |          | Minimum value (inclusive) |
+| max  | int  |          | Maximum value (inclusive) |
+
 
 ## Constants
 
-Name | Type | Description
---- | --- | ---
-DEG_TO_RAD | float | Multiplicator to convert an angle of degree to radian.
-E | float | Represents the natural logarithmic base, specified by the e constant,
-EPSILON | float | Machine epsilon, i.e lowest possible resolution of a floating point number.
-MAX_FLOAT | float | Maximum possible floating point number.
-MAX_INT | int | Maximum possible integer number.
-MIN_FLOAT | float | Minimum possible floating point number.
-MIN_INT | int | Minimum possible integer number.
-PI | float | Represents the ratio of the circumference of a circle to its diameter, specified by the constant, π.
-RAD_TO_DEG | float | Multiplicator to convert an angle of radian to degree.
+| Name       | Type  | Description                                                                                          |
+| ---------- | ----- | ---------------------------------------------------------------------------------------------------- |
+| DEG_TO_RAD | float | Multiplicator to convert an angle of degree to radian.                                               |
+| E          | float | Represents the natural logarithmic base, specified by the e constant,                                |
+| EPSILON    | float | Machine epsilon, i.e lowest possible resolution of a floating point number.                          |
+| MAX_FLOAT  | float | Maximum possible floating point number.                                                              |
+| MAX_INT    | int   | Maximum possible integer number.                                                                     |
+| MIN_FLOAT  | float | Minimum possible floating point number.                                                              |
+| MIN_INT    | int   | Minimum possible integer number.                                                                     |
+| PI         | float | Represents the ratio of the circumference of a circle to its diameter, specified by the constant, π. |
+| RAD_TO_DEG | float | Multiplicator to convert an angle of radian to degree.                                               |
 
 
 ## Functions
@@ -79,9 +81,10 @@ Returns the absolute value of a number.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-value | float |  | 
+| Name  | Type  | Optional | Description |
+| ----- | ----- | -------- | ----------- |
+| value | float |          |             |
+
 
 ### acos
 
@@ -93,9 +96,10 @@ Returns the angle in radian whose cosine is the specified number.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-d | float |  | 
+| Name | Type  | Optional | Description |
+| ---- | ----- | -------- | ----------- |
+| d    | float |          |             |
+
 
 ### acos_deg
 
@@ -107,9 +111,10 @@ Returns the angle in degree whose cosine is the specified number.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-x | float |  | 
+| Name | Type  | Optional | Description |
+| ---- | ----- | -------- | ----------- |
+| x    | float |          |             |
+
 
 ### acosh
 
@@ -121,9 +126,10 @@ Returns the angle whose hyperbolic cosine is the specified number.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-x | float |  | 
+| Name | Type  | Optional | Description |
+| ---- | ----- | -------- | ----------- |
+| x    | float |          |             |
+
 
 ### asin
 
@@ -135,9 +141,10 @@ Returns the angle in radian whose sine is the specified number.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-d | float |  | 
+| Name | Type  | Optional | Description |
+| ---- | ----- | -------- | ----------- |
+| d    | float |          |             |
+
 
 ### asin_deg
 
@@ -149,9 +156,10 @@ Returns the angle in degree whose sine is the specified number.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-x | float |  | 
+| Name | Type  | Optional | Description |
+| ---- | ----- | -------- | ----------- |
+| x    | float |          |             |
+
 
 ### asinh
 
@@ -163,9 +171,10 @@ Returns the angle whose hyperbolic sine is the specified number.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-x | float |  | 
+| Name | Type  | Optional | Description |
+| ---- | ----- | -------- | ----------- |
+| x    | float |          |             |
+
 
 ### atan
 
@@ -177,9 +186,10 @@ Returns the angle in radian whose tanget is the specified number.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-d | float |  | 
+| Name | Type  | Optional | Description |
+| ---- | ----- | -------- | ----------- |
+| d    | float |          |             |
+
 
 ### atan2
 
@@ -192,10 +202,11 @@ Returns the angle in redian whose tangent is the quotient of two specified numbe
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-y | float |  | 
-x | float |  | 
+| Name | Type  | Optional | Description |
+| ---- | ----- | -------- | ----------- |
+| y    | float |          |             |
+| x    | float |          |             |
+
 
 ### atan2_deg
 
@@ -208,10 +219,11 @@ Returns the angle in degree whose tangent is the quotient of two specified numbe
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-y | float |  | 
-x | float |  | 
+| Name | Type  | Optional | Description |
+| ---- | ----- | -------- | ----------- |
+| y    | float |          |             |
+| x    | float |          |             |
+
 
 ### atan_deg
 
@@ -223,9 +235,10 @@ Returns the angle in degree whose tangent is the specified number.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-x | float |  | 
+| Name | Type  | Optional | Description |
+| ---- | ----- | -------- | ----------- |
+| x    | float |          |             |
+
 
 ### atanh
 
@@ -237,9 +250,10 @@ Returns the angle whose hyperbolic tanget is the specified number.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-x | float |  | 
+| Name | Type  | Optional | Description |
+| ---- | ----- | -------- | ----------- |
+| x    | float |          |             |
+
 
 ### ceiling
 
@@ -251,9 +265,10 @@ Returns the smallest integral value that is greater than or equal to the specifi
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-a | float |  | 
+| Name | Type  | Optional | Description |
+| ---- | ----- | -------- | ----------- |
+| a    | float |          |             |
+
 
 ### clamp
 
@@ -267,11 +282,12 @@ Clamp a number between a given minimum and maximum
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-x | float |  | 
-min | float |  | 
-max | float |  | 
+| Name | Type  | Optional | Description |
+| ---- | ----- | -------- | ----------- |
+| x    | float |          |             |
+| min  | float |          |             |
+| max  | float |          |             |
+
 
 ### clamp_degrees180
 
@@ -283,9 +299,10 @@ Clamp an angle between -180 and 180 degree
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-angle | float |  | 
+| Name  | Type  | Optional | Description |
+| ----- | ----- | -------- | ----------- |
+| angle | float |          |             |
+
 
 ### clamp_degrees360
 
@@ -297,9 +314,10 @@ Clamp an angle between 0 and 360 degree
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-angle | float |  | 
+| Name  | Type  | Optional | Description |
+| ----- | ----- | -------- | ----------- |
+| angle | float |          |             |
+
 
 ### clamp_radians2_pi
 
@@ -311,9 +329,10 @@ Clamp an angle between 0 and 2π
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-angle | float |  | 
+| Name  | Type  | Optional | Description |
+| ----- | ----- | -------- | ----------- |
+| angle | float |          |             |
+
 
 ### clamp_radians_pi
 
@@ -325,9 +344,10 @@ Clamp an angle between -π and π
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-angle | float |  | 
+| Name  | Type  | Optional | Description |
+| ----- | ----- | -------- | ----------- |
+| angle | float |          |             |
+
 
 ### cos
 
@@ -339,9 +359,10 @@ Returns the cosine of the specified angle in redian.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-d | float |  | 
+| Name | Type  | Optional | Description |
+| ---- | ----- | -------- | ----------- |
+| d    | float |          |             |
+
 
 ### cos_deg
 
@@ -353,9 +374,10 @@ Returns the cosine of the specified angle in degree.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-x | float |  | 
+| Name | Type  | Optional | Description |
+| ---- | ----- | -------- | ----------- |
+| x    | float |          |             |
+
 
 ### cosh
 
@@ -367,9 +389,10 @@ Returns the hyperbolic cosine of the specified angle.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-value | float |  | 
+| Name  | Type  | Optional | Description |
+| ----- | ----- | -------- | ----------- |
+| value | float |          |             |
+
 
 ### exp
 
@@ -381,9 +404,10 @@ Returns e raised to the specified power.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-d | float |  | 
+| Name | Type  | Optional | Description |
+| ---- | ----- | -------- | ----------- |
+| d    | float |          |             |
+
 
 ### floor
 
@@ -395,9 +419,10 @@ Returns the largest integral value less than or equal to the specified number.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-d | float |  | 
+| Name | Type  | Optional | Description |
+| ---- | ----- | -------- | ----------- |
+| d    | float |          |             |
+
 
 ### log
 
@@ -409,9 +434,10 @@ Returns the natural (base e) logarithm of a specified number.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-d | float |  | 
+| Name | Type  | Optional | Description |
+| ---- | ----- | -------- | ----------- |
+| d    | float |          |             |
+
 
 ### log10
 
@@ -423,9 +449,10 @@ Returns the base 10 logarithm of a specified number.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-d | float |  | 
+| Name | Type  | Optional | Description |
+| ---- | ----- | -------- | ----------- |
+| d    | float |          |             |
+
 
 ### max
 
@@ -438,10 +465,11 @@ Returns the larger of two decimal numbers.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-val1 | float |  | 
-val2 | float |  | 
+| Name | Type  | Optional | Description |
+| ---- | ----- | -------- | ----------- |
+| val1 | float |          |             |
+| val2 | float |          |             |
+
 
 ### min
 
@@ -454,10 +482,11 @@ Returns the smaller of two decimal numbers.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-val1 | float |  | 
-val2 | float |  | 
+| Name | Type  | Optional | Description |
+| ---- | ----- | -------- | ----------- |
+| val1 | float |          |             |
+| val2 | float |          |             |
+
 
 ### pow
 
@@ -470,10 +499,11 @@ Returns a specified number raised to the specified power.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-x | float |  | 
-y | float |  | 
+| Name | Type  | Optional | Description |
+| ---- | ----- | -------- | ----------- |
+| x    | float |          |             |
+| y    | float |          |             |
+
 
 ### random
 
@@ -493,9 +523,10 @@ New random number generator from given seed
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-seed | int |  | 
+| Name | Type | Optional | Description |
+| ---- | ---- | -------- | ----------- |
+| seed | int  |          |             |
+
 
 ### round
 
@@ -507,9 +538,10 @@ Rounds a decimal value to the nearest integral value, and rounds midpoint values
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-a | float |  | 
+| Name | Type  | Optional | Description |
+| ---- | ----- | -------- | ----------- |
+| a    | float |          |             |
+
 
 ### sin
 
@@ -521,9 +553,10 @@ Returns the sine of the specified angle in redian.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-a | float |  | 
+| Name | Type  | Optional | Description |
+| ---- | ----- | -------- | ----------- |
+| a    | float |          |             |
+
 
 ### sin_deg
 
@@ -535,9 +568,10 @@ Returns the sine of the specified angle in degree.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-x | float |  | 
+| Name | Type  | Optional | Description |
+| ---- | ----- | -------- | ----------- |
+| x    | float |          |             |
+
 
 ### sinh
 
@@ -549,9 +583,10 @@ Returns the hyperbolic sine of the specified angle.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-value | float |  | 
+| Name  | Type  | Optional | Description |
+| ----- | ----- | -------- | ----------- |
+| value | float |          |             |
+
 
 ### sqrt
 
@@ -563,9 +598,10 @@ Returns the square root of a specified number.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-d | float |  | 
+| Name | Type  | Optional | Description |
+| ---- | ----- | -------- | ----------- |
+| d    | float |          |             |
+
 
 ### tan
 
@@ -577,9 +613,10 @@ Returns the sine of the specified angle in redian.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-a | float |  | 
+| Name | Type  | Optional | Description |
+| ---- | ----- | -------- | ----------- |
+| a    | float |          |             |
+
 
 ### tan_deg
 
@@ -591,9 +628,10 @@ Returns the sine of the specified angle in degree.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-x | float |  | 
+| Name | Type  | Optional | Description |
+| ---- | ----- | -------- | ----------- |
+| x    | float |          |             |
+
 
 ### tanh
 
@@ -605,9 +643,10 @@ Returns the hyperbolic tangent of the specified angle.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-value | float |  | 
+| Name  | Type  | Optional | Description |
+| ----- | ----- | -------- | ----------- |
+| value | float |          |             |
+
 
 ### truncate
 
@@ -619,6 +658,7 @@ Calculates the integral part of a specified number.
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-d | float |  | 
+| Name | Type  | Optional | Description |
+| ---- | ----- | -------- | ----------- |
+| d    | float |          |             |
+

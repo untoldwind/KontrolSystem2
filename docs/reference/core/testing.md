@@ -17,9 +17,10 @@ Assert that `actual` is false (Test only)
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-actual | bool |  | 
+| Name   | Type | Optional | Description |
+| ------ | ---- | -------- | ----------- |
+| actual | bool |          |             |
+
 
 ### assert_float
 
@@ -34,11 +35,12 @@ Assert that `actual` float is almost equal to `expected` with an absolute tolera
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-expected | float |  | 
-actual | float |  | 
-delta | float | x | 
+| Name     | Type  | Optional | Description |
+| -------- | ----- | -------- | ----------- |
+| expected | float |          |             |
+| actual   | float |          |             |
+| delta    | float | x        |             |
+
 
 ### assert_int
 
@@ -52,10 +54,11 @@ Assert that `actual` integer is equal to `expected` (Test only)
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-expected | int |  | 
-actual | int |  | 
+| Name     | Type | Optional | Description |
+| -------- | ---- | -------- | ----------- |
+| expected | int  |          |             |
+| actual   | int  |          |             |
+
 
 ### assert_none
 
@@ -67,9 +70,10 @@ pub sync fn assert_none ( actual : Option<T> ) -> Unit
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-actual | Option<T> |  | 
+| Name   | Type      | Optional | Description |
+| ------ | --------- | -------- | ----------- |
+| actual | Option<T> |          |             |
+
 
 ### assert_some
 
@@ -82,10 +86,11 @@ pub sync fn assert_some ( expected : T,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-expected | T |  | 
-actual | Option<T> |  | 
+| Name     | Type      | Optional | Description |
+| -------- | --------- | -------- | ----------- |
+| expected | T         |          |             |
+| actual   | Option<T> |          |             |
+
 
 ### assert_string
 
@@ -99,10 +104,11 @@ Assert that `actual` string is equal to `expected` (Test only)
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-expected | string |  | 
-actual | string |  | 
+| Name     | Type   | Optional | Description |
+| -------- | ------ | -------- | ----------- |
+| expected | string |          |             |
+| actual   | string |          |             |
+
 
 ### assert_true
 
@@ -115,9 +121,10 @@ Assert that `actual` is true (Test only)
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-actual | bool |  | 
+| Name   | Type | Optional | Description |
+| ------ | ---- | -------- | ----------- |
+| actual | bool |          |             |
+
 
 ### assert_yield
 
@@ -130,9 +137,10 @@ Assert that test case has yielded `expected` number of times already (Async test
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-expected | int |  | 
+| Name     | Type | Optional | Description |
+| -------- | ---- | -------- | ----------- |
+| expected | int  |          |             |
+
 
 ### fail_test
 
@@ -145,9 +153,10 @@ Fail the test case with a `message` (Test only).
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-message | string |  | 
+| Name    | Type   | Optional | Description |
+| ------- | ------ | -------- | ----------- |
+| message | string |          |             |
+
 
 ### test_sleep
 
@@ -160,9 +169,10 @@ Suspend execution for `millis`
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-millis | int |  | 
+| Name   | Type | Optional | Description |
+| ------ | ---- | -------- | ----------- |
+| millis | int  |          |             |
+
 
 ### yield
 

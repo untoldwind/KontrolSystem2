@@ -16,10 +16,11 @@ pub sync fn choose_docking_nodes ( vessel : ksp::vessel::Vessel,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-vessel | ksp::vessel::Vessel |  | 
-target | ksp::vessel::Targetable |  | 
+| Name   | Type                    | Optional | Description |
+| ------ | ----------------------- | -------- | ----------- |
+| vessel | ksp::vessel::Vessel     |          |             |
+| target | ksp::vessel::Targetable |          |             |
+
 
 ### dock_approach
 
@@ -32,10 +33,11 @@ pub fn dock_approach ( vessel : ksp::vessel::Vessel,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-vessel | ksp::vessel::Vessel |  | 
-target_port | ksp::vessel::ModuleDockingNode |  | 
+| Name        | Type                           | Optional | Description |
+| ----------- | ------------------------------ | -------- | ----------- |
+| vessel      | ksp::vessel::Vessel            |          |             |
+| target_port | ksp::vessel::ModuleDockingNode |          |             |
+
 
 ### dock_move_correct_side
 
@@ -48,10 +50,11 @@ pub fn dock_move_correct_side ( vessel : ksp::vessel::Vessel,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-vessel | ksp::vessel::Vessel |  | 
-target_port | ksp::vessel::ModuleDockingNode |  | 
+| Name        | Type                           | Optional | Description |
+| ----------- | ------------------------------ | -------- | ----------- |
+| vessel      | ksp::vessel::Vessel            |          |             |
+| target_port | ksp::vessel::ModuleDockingNode |          |             |
+
 
 ### dock_vessel
 
@@ -64,7 +67,8 @@ pub fn dock_vessel ( vessel : ksp::vessel::Vessel,
 
 Parameters
 
-Name | Type | Optional | Description
---- | --- | --- | ---
-vessel | ksp::vessel::Vessel |  | 
-target | ksp::vessel::Targetable |  | 
+| Name   | Type                    | Optional | Description |
+| ------ | ----------------------- | -------- | ----------- |
+| vessel | ksp::vessel::Vessel     |          |             |
+| target | ksp::vessel::Targetable |          |             |
+
