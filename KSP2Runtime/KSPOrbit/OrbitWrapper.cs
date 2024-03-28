@@ -9,7 +9,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit;
 public class OrbitWrapper(IKSPContext context, PatchedConicsOrbit orbit) : KSPOrbitModule.IOrbit {
     protected readonly IKSPContext context = context;
     protected readonly PatchedConicsOrbit orbit = orbit;
-    
+
     public KSPOrbitModule.IBody ReferenceBody => new BodyWrapper(context, orbit.referenceBody);
 
     public Option<double> Apoapsis => orbit.eccentricity < 1 ? Option.Some(orbit.ApoapsisArl) : Option.None<double>();

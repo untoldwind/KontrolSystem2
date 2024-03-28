@@ -611,16 +611,17 @@ Remove all maneuver nodes
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
-ETA | float | R/W | 
-burn_duration | float | R/O | 
-burn_vector | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/W | 
-expected_orbit | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit) | R/O | 
-global_burn_vector | [ksp::math::GlobalVelocity](/reference/ksp/math.md#globalvelocity) | R/W | 
-normal | float | R/W | 
-orbit_patch | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit) | R/O | 
-prograde | float | R/W | 
-radial_out | float | R/W | 
-time | float | R/W | 
+ETA | float | R/W | Get/set the estimated time of arrival to the maneuver 
+burn_duration | float | R/O | Get the estimated burn duration of the maneuver 
+burn_vector | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/W | Get/set the burn vector of the maneuver in the celestial frame of the main body 
+expected_orbit | [ksp::orbit::OrbitPatch](/reference/ksp/orbit.md#orbitpatch) | R/O | Get the expected orbit patch after the maneuver has been executed 
+expected_trajectory | [ksp::orbit::Trajectory](/reference/ksp/orbit.md#trajectory) | R/O | Get the expected trajectory after the maneuver has been executed 
+global_burn_vector | [ksp::math::GlobalVelocity](/reference/ksp/math.md#globalvelocity) | R/W | Get/set coordinate independent the burn vector of the maneuver 
+normal | float | R/W | Get/set the orbital normal part of the maneuver 
+orbit_patch | [ksp::orbit::OrbitPatch](/reference/ksp/orbit.md#orbitpatch) | R/O | Get the orbit patch the maneuver should be executed on 
+prograde | float | R/W | Get/set the orbital prograde part of the maneuver 
+radial_out | float | R/W | Get/set the orbital radial part of the maneuver 
+time | float | R/W | Get/set the universal time the maneuver should be executed 
 
 #### Methods
 
@@ -630,6 +631,7 @@ time | float | R/W |
 maneuvernode.remove ( ) -> Unit
 ```
 
+Remove maneuver node from the maneuver plan
 
 
 ### ModuleAirIntake
@@ -1661,7 +1663,8 @@ mass | float | R/O | Total mass of the vessel.
 name | string | R/O | The name of the vessel. 
 north | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get the horizon north vector in the celestial frame of the main body. 
 offset_ground | float | R/O | 
-orbit | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit) | R/O | Current orbit or orbit patch of the vessel. 
+orbit | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit) | R/O | Current orbit of the vessel. 
+orbit_patch | [ksp::orbit::OrbitPatch](/reference/ksp/orbit.md#orbitpatch) | R/O | Current orbit patch of the vessel. 
 orbital_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Orbital velocity of the vessel relative to the main body. This is equivalent of expressing the `global_velocity` in the celestial frame of the main body. 
 parts | [ksp::vessel::Part](/reference/ksp/vessel.md#part)[] | R/O | Get a list of all vessel parts. 
 pitch_yaw_roll | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Returns the pitch, yaw/heading and roll of the vessel relative to the horizon. 

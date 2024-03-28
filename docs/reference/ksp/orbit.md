@@ -826,6 +826,7 @@ ut | float |  |
 
 ### OrbitPatch
 
+Represents a orbit patch of a trajectory
 
 
 #### Fields
@@ -838,7 +839,7 @@ apoapsis_radius | Option&lt;float> | R/O | Radius of apoapsis of the orbit (i.e.
 argument_of_periapsis | float | R/O | Argument of periapsis of the orbit. 
 eccentricity | float | R/O | Eccentricity of the orbit. 
 end_transition | [ksp::orbit::PatchTransitionType](/reference/ksp/orbit.md#patchtransitiontype) | R/O | Get transition type at the end of the orbit patch 
-end_ut | float | R/O | Universal time of the start of the orbit patch, in case it is an orbit-patch 
+end_ut | float | R/O | Universal time of the start of the orbit patch 
 epoch | float | R/O | Orbit epoch. 
 inclination | float | R/O | Inclination of the orbit in degree. 
 mean_anomaly_at_epoch | float | R/O | Mean anomaly of the orbit at `epoch` 
@@ -855,7 +856,7 @@ relative_ascending_node | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O |
 relative_eccentricity_vector | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get the relative eccentricity vector. 
 semi_major_axis | float | R/O | Semi major axis of the orbit. 
 start_transition | [ksp::orbit::PatchTransitionType](/reference/ksp/orbit.md#patchtransitiontype) | R/O | Get transition type at the beginning of the orbit patch 
-start_ut | float | R/O | Universal time of the start of the orbit patch, in case it is an orbit-patch 
+start_ut | float | R/O | Universal time of the start of the orbit patch 
 trajectory | [ksp::orbit::Trajectory](/reference/ksp/orbit.md#trajectory) | R/O | The trajectory this orbit patch belongs to 
 
 #### Methods
@@ -1431,13 +1432,16 @@ value | string |  | Enum value to lookup
 
 ### Trajectory
 
+Representation of a trajectory of a vessel that might has multiple orbit patches
 
 
 #### Fields
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
+end_ut | float | R/O | Universal time of the end of the trajectory 
 length | int | R/O | length
+start_ut | float | R/O | Universal time of the start of the trajectory 
 
 #### Methods
 
@@ -1496,6 +1500,21 @@ Parameters
 Name | Type | Optional | Description
 --- | --- | --- | ---
 predicate | sync fn(ksp::orbit::OrbitPatch) -> bool |  | Predicate function/check to be applied on each element of the array until element is found.
+
+##### find_patch
+
+```rust
+trajectory.find_patch ( ut : float ) -> Option<ksp::orbit::OrbitPatch>
+```
+
+Find orbit patch for a given universal time `ut`
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+ut | float |  | 
 
 ##### flat_map
 

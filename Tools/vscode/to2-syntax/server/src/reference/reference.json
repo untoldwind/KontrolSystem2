@@ -16267,7 +16267,7 @@
         },
         "OrbitPatch": {
           "name": "OrbitPatch",
-          "description": "",
+          "description": "Represents a orbit patch of a trajectory\n",
           "fields": {
             "trajectory": {
               "name": "trajectory",
@@ -16281,7 +16281,7 @@
             },
             "start_ut": {
               "name": "start_ut",
-              "description": "Universal time of the start of the orbit patch, in case it is an orbit-patch\n",
+              "description": "Universal time of the start of the orbit patch\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -16290,7 +16290,7 @@
             },
             "end_ut": {
               "name": "end_ut",
-              "description": "Universal time of the start of the orbit patch, in case it is an orbit-patch\n",
+              "description": "Universal time of the start of the orbit patch\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -17215,7 +17215,7 @@
         },
         "Trajectory": {
           "name": "Trajectory",
-          "description": "",
+          "description": "Representation of a trajectory of a vessel that might has multiple orbit patches\n",
           "fields": {
             "length": {
               "name": "length",
@@ -17224,6 +17224,24 @@
               "type": {
                 "kind": "Builtin",
                 "name": "int"
+              }
+            },
+            "start_ut": {
+              "name": "start_ut",
+              "description": "Universal time of the start of the trajectory\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "end_ut": {
+              "name": "end_ut",
+              "description": "Universal time of the end of the trajectory\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
               }
             }
           },
@@ -17540,6 +17558,31 @@
               "parameters": [],
               "returnType": {
                 "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::orbit",
+                    "name": "OrbitPatch"
+                  }
+                ]
+              }
+            },
+            "find_patch": {
+              "isAsync": false,
+              "name": "find_patch",
+              "description": "Find orbit patch for a given universal time `ut`\n",
+              "parameters": [
+                {
+                  "name": "ut",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Option",
                 "parameters": [
                   {
                     "kind": "Standard",
@@ -48223,6 +48266,7 @@
           "fields": {
             "time": {
               "name": "time",
+              "description": "Get/set the universal time the maneuver should be executed\n",
               "readOnly": false,
               "type": {
                 "kind": "Builtin",
@@ -48231,6 +48275,7 @@
             },
             "prograde": {
               "name": "prograde",
+              "description": "Get/set the orbital prograde part of the maneuver\n",
               "readOnly": false,
               "type": {
                 "kind": "Builtin",
@@ -48239,6 +48284,7 @@
             },
             "normal": {
               "name": "normal",
+              "description": "Get/set the orbital normal part of the maneuver\n",
               "readOnly": false,
               "type": {
                 "kind": "Builtin",
@@ -48247,6 +48293,7 @@
             },
             "radial_out": {
               "name": "radial_out",
+              "description": "Get/set the orbital radial part of the maneuver\n",
               "readOnly": false,
               "type": {
                 "kind": "Builtin",
@@ -48255,6 +48302,7 @@
             },
             "ETA": {
               "name": "ETA",
+              "description": "Get/set the estimated time of arrival to the maneuver\n",
               "readOnly": false,
               "type": {
                 "kind": "Builtin",
@@ -48263,15 +48311,17 @@
             },
             "orbit_patch": {
               "name": "orbit_patch",
+              "description": "Get the orbit patch the maneuver should be executed on\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
                 "module": "ksp::orbit",
-                "name": "Orbit"
+                "name": "OrbitPatch"
               }
             },
             "burn_vector": {
               "name": "burn_vector",
+              "description": "Get/set the burn vector of the maneuver in the celestial frame of the main body\n",
               "readOnly": false,
               "type": {
                 "kind": "Standard",
@@ -48281,6 +48331,7 @@
             },
             "global_burn_vector": {
               "name": "global_burn_vector",
+              "description": "Get/set coordinate independent the burn vector of the maneuver\n",
               "readOnly": false,
               "type": {
                 "kind": "Standard",
@@ -48290,19 +48341,31 @@
             },
             "burn_duration": {
               "name": "burn_duration",
+              "description": "Get the estimated burn duration of the maneuver\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
                 "name": "float"
               }
             },
-            "expected_orbit": {
-              "name": "expected_orbit",
+            "expected_trajectory": {
+              "name": "expected_trajectory",
+              "description": "Get the expected trajectory after the maneuver has been executed\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
                 "module": "ksp::orbit",
-                "name": "Orbit"
+                "name": "Trajectory"
+              }
+            },
+            "expected_orbit": {
+              "name": "expected_orbit",
+              "description": "Get the expected orbit patch after the maneuver has been executed\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::orbit",
+                "name": "OrbitPatch"
               }
             }
           },
@@ -48310,6 +48373,7 @@
             "remove": {
               "isAsync": false,
               "name": "remove",
+              "description": "Remove maneuver node from the maneuver plan\n",
               "parameters": [],
               "returnType": {
                 "kind": "Builtin",
@@ -51974,12 +52038,22 @@
             },
             "orbit": {
               "name": "orbit",
-              "description": "Current orbit or orbit patch of the vessel.\n",
+              "description": "Current orbit of the vessel.\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
                 "module": "ksp::orbit",
                 "name": "Orbit"
+              }
+            },
+            "orbit_patch": {
+              "name": "orbit_patch",
+              "description": "Current orbit patch of the vessel.\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::orbit",
+                "name": "OrbitPatch"
               }
             }
           },

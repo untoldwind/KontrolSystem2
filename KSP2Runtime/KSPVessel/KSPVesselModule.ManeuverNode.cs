@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using KontrolSystem.KSP.Runtime.KSPMath;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.TO2.Binding;
@@ -13,14 +14,14 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 public partial class KSPVesselModule {
     [KSClass("ManeuverNode")]
     public class ManeuverNodeAdapter(KSPVesselModule.VesselAdapter vesselAdapter, ManeuverNodeData maneuverNode) {
-        [KSField(IsAsyncStore = true)]
+        [KSField(Description = "Get/set the universal time the maneuver should be executed", IsAsyncStore = true)]
         public double Time {
             get => maneuverNode.Time;
             set => vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.UpdateTimeOnNode(maneuverNode, value,
                 FakeGizmoData());
         }
 
-        [KSField(IsAsyncStore = true)]
+        [KSField(Description = "Get/set the orbital prograde part of the maneuver", IsAsyncStore = true)]
         public double Prograde {
             get => maneuverNode.BurnVector.z;
             set => vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.UpdateChangeOnNode(maneuverNode,
@@ -28,7 +29,7 @@ public partial class KSPVesselModule {
                 FakeGizmoData());
         }
 
-        [KSField(IsAsyncStore = true)]
+        [KSField(Description = "Get/set the orbital normal part of the maneuver", IsAsyncStore = true)]
         public double Normal {
             get => maneuverNode.BurnVector.y;
             set => vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.UpdateChangeOnNode(maneuverNode,
@@ -36,7 +37,7 @@ public partial class KSPVesselModule {
                 FakeGizmoData());
         }
 
-        [KSField(IsAsyncStore = true)]
+        [KSField(Description = "Get/set the orbital radial part of the maneuver", IsAsyncStore = true)]
         public double RadialOut {
             get => maneuverNode.BurnVector.x;
             set => vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.UpdateChangeOnNode(maneuverNode,
@@ -44,19 +45,20 @@ public partial class KSPVesselModule {
                 FakeGizmoData());
         }
 
-        [KSField("ETA", IsAsyncStore = true)]
+        [KSField("ETA", Description = "Get/set the estimated time of arrival to the maneuver", IsAsyncStore = true)]
         public double Eta {
             get => maneuverNode.Time - vesselAdapter.context.UniversalTime;
             set => vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.UpdateTimeOnNode(maneuverNode,
                 value + vesselAdapter.context.UniversalTime, FakeGizmoData());
         }
 
-        [KSField]
-        public KSPOrbitModule.IOrbit OrbitPatch => new OrbitWrapper(vesselAdapter.context,
+        [KSField(Description = "Get the orbit patch the maneuver should be executed on")]
+        public KSPOrbitModule.OrbitPatch OrbitPatch => new(vesselAdapter.context, vesselAdapter.Trajectory,
             vesselAdapter.vessel.Orbiter.PatchedConicSolver.FindPatchContainingUT(maneuverNode.Time) ??
             vesselAdapter.vessel.Orbit);
 
-        [KSField(IsAsyncStore = true)]
+        [KSField(Description = "Get/set the burn vector of the maneuver in the celestial frame of the main body",
+            IsAsyncStore = true)]
         public Vector3d BurnVector {
             get {
                 KSPOrbitModule.IOrbit orbit = new OrbitWrapper(vesselAdapter.context,
@@ -78,7 +80,7 @@ public partial class KSPVesselModule {
             }
         }
 
-        [KSField(IsAsyncStore = true)]
+        [KSField(Description = "Get/set coordinate independent the burn vector of the maneuver", IsAsyncStore = true)]
         public VelocityAtPosition GlobalBurnVector {
             get {
                 KSPOrbitModule.IOrbit orbit = new OrbitWrapper(vesselAdapter.context,
@@ -104,20 +106,27 @@ public partial class KSPVesselModule {
             }
         }
 
-        [KSField] public double BurnDuration => maneuverNode.BurnDuration;
+        [KSField(Description = "Get the estimated burn duration of the maneuver")]
+        public double BurnDuration => maneuverNode.BurnDuration;
 
-        [KSField]
-        public KSPOrbitModule.IOrbit ExpectedOrbit {
+        [KSField(Description = "Get the expected trajectory after the maneuver has been executed")]
+        public KSPOrbitModule.Trajectory ExpectedTrajectory => new(vesselAdapter.context,
+            vesselAdapter.vessel.Orbiter.ManeuverPlanSolver.ManeuverTrajectory
+                .SelectMany<IPatchedOrbit, PatchedConicsOrbit>(patch =>
+                    patch is PatchedConicsOrbit o && o.ActivePatch ? [o] : []).ToArray());
+
+        [KSField(Description = "Get the expected orbit patch after the maneuver has been executed")]
+        public KSPOrbitModule.OrbitPatch ExpectedOrbit {
             get {
                 foreach (var patchedOrbit in vesselAdapter.vessel.Orbiter.ManeuverPlanSolver.ManeuverTrajectory)
                     if (patchedOrbit is PatchedConicsOrbit o && o.ActivePatch && o.StartUT > maneuverNode.Time &&
                         o.PatchStartTransition == PatchTransitionType.EndThrust)
-                        return new OrbitWrapper(vesselAdapter.context, o);
-                return vesselAdapter.Orbit;
+                        return new KSPOrbitModule.OrbitPatch(vesselAdapter.context, ExpectedTrajectory, o);
+                return vesselAdapter.OrbitPatch;
             }
         }
 
-        [KSMethod]
+        [KSMethod(Description = "Remove maneuver node from the maneuver plan")]
         public void Remove() {
             vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.RemoveNodesFromVessel(vesselAdapter.vessel.GlobalId,
                 [maneuverNode]);
