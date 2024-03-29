@@ -398,13 +398,9 @@ public class MockOrbit : KSPOrbitModule.IOrbit {
         return eccentricity * Math.Sinh(eccentricAnomaly) - eccentricAnomaly;
     }
 
-    public double GetMeanMotion() {
-        return Math.Sqrt(body.mu / Math.Abs(semiMajorAxis * semiMajorAxis * semiMajorAxis));
-    }
+    public double GetMeanMotion() => Math.Sqrt(body.mu / Math.Abs(semiMajorAxis * semiMajorAxis * semiMajorAxis));
 
-    public double GetTrueAnomalyAtUT(double ut) {
-        return GetTrueAnomalyAtOrbitTime(GetOrbitTimeAtUT(ut));
-    }
+    public double TrueAnomalyAtUT(double ut) => GetTrueAnomalyAtOrbitTime(GetOrbitTimeAtUT(ut));
 
     public double GetOrbitTimeAtUT(double ut) {
         double orbitTime;
@@ -418,25 +414,15 @@ public class MockOrbit : KSPOrbitModule.IOrbit {
         return orbitTime;
     }
 
-    public double GetOrbitTimeAtMeanAnomaly(double meanAnomaly) {
-        return meanAnomaly / meanMotion;
-    }
+    public double GetOrbitTimeAtMeanAnomaly(double meanAnomaly) => meanAnomaly / meanMotion;
 
-    public Vector3d GetRelativePositionAtUT(double ut) {
-        return GetPositionAtOrbitTime(GetOrbitTimeAtUT(ut));
-    }
+    public Vector3d GetRelativePositionAtUT(double ut) => GetPositionAtOrbitTime(GetOrbitTimeAtUT(ut));
 
-    public Vector3d GetPositionAtOrbitTime(double orbitTime) {
-        return RelativePositionForTrueAnomaly(GetTrueAnomalyAtOrbitTime(orbitTime));
-    }
+    public Vector3d GetPositionAtOrbitTime(double orbitTime) => RelativePositionForTrueAnomaly(GetTrueAnomalyAtOrbitTime(orbitTime));
 
-    public Vector3d GetOrbitalVelocityAtUT(double ut) {
-        return GetOrbitalVelocityAtOrbitTime(GetOrbitTimeAtUT(ut));
-    }
+    public Vector3d GetOrbitalVelocityAtUT(double ut) => GetOrbitalVelocityAtOrbitTime(GetOrbitTimeAtUT(ut));
 
-    public Vector3d GetOrbitalVelocityAtOrbitTime(double orbitTime) {
-        return GetOrbitalVelocityAtTrueAnomaly(GetTrueAnomalyAtOrbitTime(orbitTime));
-    }
+    public Vector3d GetOrbitalVelocityAtOrbitTime(double orbitTime) => GetOrbitalVelocityAtTrueAnomaly(GetTrueAnomalyAtOrbitTime(orbitTime));
 
     public Vector3d GetOrbitalVelocityAtTrueAnomaly(double trueAnomaly) {
         var x = Math.Cos(trueAnomaly);

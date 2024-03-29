@@ -67,7 +67,7 @@ class MainClass {
                     output.WriteLine();
                     output.WriteLine($"Can be used like an array {LinkType(indexAccess.TargetType.Name)}[]");
                 }
-                
+
                 if (type.DeclaredFields.Count > 0) {
                     output.WriteLine();
                     output.WriteLine("#### Fields");
@@ -150,13 +150,13 @@ class MainClass {
                     output.WriteLine();
                     output.WriteLine("Parameters");
                     output.WriteLine();
-                    
+
                     var table = new TableHelper("Name", "Type", "Optional", "Description");
 
                     foreach (RealizedParameter parameter in function.Parameters) {
                         table.AddRow(parameter.name, parameter.type?.ToString() ?? "", parameter.HasDefault ? "x" : "", parameter.description ?? "");
                     }
-                    
+
                     output.WriteLine(table.Markdown);
                 }
             }

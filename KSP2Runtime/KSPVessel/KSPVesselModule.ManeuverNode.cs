@@ -108,7 +108,7 @@ public partial class KSPVesselModule {
 
         [KSField(Description = "Get the estimated burn duration of the maneuver")]
         public double BurnDuration => maneuverNode.BurnDuration;
-        
+
         [KSField(Description = "Get the expected orbit patch after the maneuver has been executed")]
         public KSPOrbitModule.OrbitPatch ExpectedOrbit {
             get {
@@ -116,7 +116,7 @@ public partial class KSPVesselModule {
                     vesselAdapter.vessel.Orbiter.ManeuverPlanSolver.ManeuverTrajectory
                         .SelectMany<IPatchedOrbit, PatchedConicsOrbit>(patch =>
                             patch is PatchedConicsOrbit o && o.ActivePatch ? [o] : []).ToArray());
-                
+
                 foreach (var patchedOrbit in vesselAdapter.vessel.Orbiter.ManeuverPlanSolver.ManeuverTrajectory)
                     if (patchedOrbit is PatchedConicsOrbit o && o.ActivePatch && o.StartUT > maneuverNode.Time &&
                         o.PatchStartTransition == PatchTransitionType.EndThrust)

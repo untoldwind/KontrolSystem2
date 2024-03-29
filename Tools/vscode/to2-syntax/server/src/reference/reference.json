@@ -16124,6 +16124,25 @@
                 "name": "float"
               }
             },
+            "true_anomaly_at_ut": {
+              "isAsync": false,
+              "name": "true_anomaly_at_ut",
+              "description": "The true anomaly of the orbit at a given universal type `ut`.\nThe vector is projected into the orbital plane and then the true anomaly is\ncomputed as the angle this vector makes with the vector pointing to the periapsis.\nThe returned value is always between 0 and 2pi.\n",
+              "parameters": [
+                {
+                  "name": "ut",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
             "ascending_node_true_anomaly": {
               "isAsync": false,
               "name": "ascending_node_true_anomaly",
@@ -17069,6 +17088,25 @@
                     "kind": "Standard",
                     "module": "ksp::math",
                     "name": "Vec3"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "true_anomaly_at_ut": {
+              "isAsync": false,
+              "name": "true_anomaly_at_ut",
+              "description": "The true anomaly of the orbit at a given universal type `ut`.\nThe vector is projected into the orbital plane and then the true anomaly is\ncomputed as the angle this vector makes with the vector pointing to the periapsis.\nThe returned value is always between 0 and 2pi.\n",
+              "parameters": [
+                {
+                  "name": "ut",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
                   },
                   "hasDefault": false
                 }

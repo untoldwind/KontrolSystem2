@@ -176,9 +176,11 @@ public class OrbitWrapper(IKSPContext context, PatchedConicsOrbit orbit) : KSPOr
         //outgoing side of the orbit. If vectorToAN is more than 90 degrees from this vector, it occurs
         //during the infalling part of the orbit.
         if (Math.Abs(Vector3d.Angle(projected, Vector3d.Cross(oNormal, vectorToPe))) < 90)
-            return angleFromPe * DirectBindingMath.DegToRad;
-        return (360 - angleFromPe) * DirectBindingMath.DegToRad;
+            return DirectBindingMath.ClampRadians2Pi(angleFromPe * DirectBindingMath.DegToRad);
+        return DirectBindingMath.ClampRadians2Pi((360 - angleFromPe) * DirectBindingMath.DegToRad);
     }
+
+    public double TrueAnomalyAtUT(double ut) => DirectBindingMath.ClampRadians2Pi(orbit.TrueAnomalyAtUT(ut));
 
     public double AscendingNodeTrueAnomaly(KSPOrbitModule.IOrbit b) {
         var vectorToAn = Vector3d.Cross(OrbitNormal, b.OrbitNormal);

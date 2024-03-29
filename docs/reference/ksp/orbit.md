@@ -815,6 +815,25 @@ Parameters
 | radius | float |          |             |
 
 
+##### true_anomaly_at_ut
+
+```rust
+orbit.true_anomaly_at_ut ( ut : float ) -> float
+```
+
+The true anomaly of the orbit at a given universal type `ut`.
+The vector is projected into the orbital plane and then the true anomaly is
+computed as the angle this vector makes with the vector pointing to the periapsis.
+The returned value is always between 0 and 2pi.
+
+
+Parameters
+
+| Name | Type  | Optional | Description |
+| ---- | ----- | -------- | ----------- |
+| ut   | float |          |             |
+
+
 ##### true_anomaly_from_vector
 
 ```rust
@@ -1402,6 +1421,25 @@ Parameters
 | Name   | Type  | Optional | Description |
 | ------ | ----- | -------- | ----------- |
 | radius | float |          |             |
+
+
+##### true_anomaly_at_ut
+
+```rust
+orbitpatch.true_anomaly_at_ut ( ut : float ) -> float
+```
+
+The true anomaly of the orbit at a given universal type `ut`.
+The vector is projected into the orbital plane and then the true anomaly is
+computed as the angle this vector makes with the vector pointing to the periapsis.
+The returned value is always between 0 and 2pi.
+
+
+Parameters
+
+| Name | Type  | Optional | Description |
+| ---- | ----- | -------- | ----------- |
+| ut   | float |          |             |
 
 
 ##### true_anomaly_from_vector

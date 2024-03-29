@@ -170,7 +170,7 @@ public class TypeReference {
                     SuffixOperators.Add(reference.Op, [reference]);
             }
         }
-        
+
         IForInSource? forInSource = type.ForInSource(moduleContext, null);
 
         if (forInSource != null) {
@@ -209,10 +209,10 @@ public class TypeReference {
 
     [JsonProperty("forInSource", NullValueHandling = NullValueHandling.Ignore)]
     public TypeRef? ForInSource { get; }
-    
+
     [JsonProperty("indexAccess", NullValueHandling = NullValueHandling.Ignore)]
     public TypeRef? IndexAccess { get; }
-    
+
     [JsonIgnore]
     public RealizedType TO2Type { get; }
 }

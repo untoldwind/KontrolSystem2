@@ -198,6 +198,12 @@ public partial class KSPOrbitModule {
                 The returned value is always between 0 and 2pi.")]
         double TrueAnomalyFromVector(Vector3d vec);
 
+        [KSMethod("true_anomaly_at_ut", Description = @"The true anomaly of the orbit at a given universal type `ut`.
+                The vector is projected into the orbital plane and then the true anomaly is
+                computed as the angle this vector makes with the vector pointing to the periapsis.
+                The returned value is always between 0 and 2pi.")]
+        double TrueAnomalyAtUT(double ut);
+
         [KSMethod(Description =
             @"Gives the true anomaly (in a's orbit) at which a crosses its ascending node with b's orbit.
                 The returned value is always between 0 and 360.")]

@@ -31,126 +31,70 @@ public class StaticOrbit(IKSPContext context, CelestialBodyComponent body) : KSP
     public ITransformFrame ReferenceFrame => body.transform.celestialFrame;
     public Vector3d OrbitNormal => Vector3d.up;
 
-    public Vector3d OrbitalVelocity(double ut) {
-        return Vector3d.zero;
-    }
+    public Vector3d OrbitalVelocity(double ut) => Vector3d.zero;
 
-    public Position GlobalPosition(double ut) {
-        return body.Position;
-    }
+    public Position GlobalPosition(double ut) => body.Position;
 
-    public Vector GlobalRelativePosition(double ut) {
-        return new Vector(ReferenceFrame, Vector3d.zero);
-    }
+    public Vector GlobalRelativePosition(double ut) => new(ReferenceFrame, Vector3d.zero);
 
-    public VelocityAtPosition GlobalVelocity(double ut) {
-        return new VelocityAtPosition(body.Velocity, body.Position);
-    }
+    public VelocityAtPosition GlobalVelocity(double ut) => new(body.Velocity, body.Position);
 
-    public Vector3d RelativePosition(double ut) {
-        return Vector3d.zero;
-    }
+    public Vector3d RelativePosition(double ut) => Vector3d.zero;
 
-    public Vector3d RelativePositionForTrueAnomaly(double trueAnomaly) {
-        return Vector3d.zero;
-    }
+    public Vector3d RelativePositionForTrueAnomaly(double trueAnomaly) => Vector3d.zero;
 
-    public Position GlobalPositionForTrueAnomaly(double trueAnomaly) {
-        return body.Position;
-    }
+    public Position GlobalPositionForTrueAnomaly(double trueAnomaly) => body.Position;
 
     public Vector3d Prograde(double ut) {
         return Vector3d.forward;
     }
 
-    public Vector3d NormalPlus(double ut) {
-        return Vector3d.up;
-    }
+    public Vector3d NormalPlus(double ut) => Vector3d.up;
 
-    public Vector3d RadialPlus(double ut) {
-        return Vector3d.right;
-    }
+    public Vector3d RadialPlus(double ut) => Vector3d.right;
 
-    public Vector3d Up(double ut) {
-        return Vector3d.up;
-    }
+    public Vector3d Up(double ut) => Vector3d.up;
 
-    public double Radius(double ut) {
-        return 0;
-    }
+    public double Radius(double ut) => 0;
 
-    public Vector3d Horizontal(double ut) {
-        return Vector3d.forward;
-    }
+    public Vector3d Horizontal(double ut) => Vector3d.forward;
 
-    public KSPOrbitModule.IOrbit PerturbedOrbit(double ut, Vector3d dV) {
-        return this;
-    }
+    public KSPOrbitModule.IOrbit PerturbedOrbit(double ut, Vector3d dV) => this;
 
-    public double MeanAnomalyAtUt(double ut) {
-        return 0;
-    }
+    public double MeanAnomalyAtUt(double ut) => 0;
 
-    public double UTAtMeanAnomaly(double meanAnomaly, double ut) {
-        return 0;
-    }
+    public double UTAtMeanAnomaly(double meanAnomaly, double ut) => 0;
 
-    public double GetMeanAnomalyAtEccentricAnomaly(double ecc) {
-        return 0;
-    }
+    public double GetMeanAnomalyAtEccentricAnomaly(double ecc) => 0;
 
-    public double GetEccentricAnomalyAtTrueAnomaly(double trueAnomaly) {
-        return 0;
-    }
+    public double GetEccentricAnomalyAtTrueAnomaly(double trueAnomaly) => 0;
 
-    public double TimeOfTrueAnomaly(double trueAnomaly, Option<double> maybeUt = new()) {
-        return 0;
-    }
+    public double TimeOfTrueAnomaly(double trueAnomaly, Option<double> maybeUt = new()) => 0;
 
-    public double NextPeriapsisTime(Option<double> ut = new()) {
-        return 0;
-    }
+    public double NextPeriapsisTime(Option<double> ut = new()) => 0;
 
-    public Option<double> NextApoapsisTime(Option<double> ut = new()) {
-        return new Option<double>();
-    }
+    public Option<double> NextApoapsisTime(Option<double> ut = new()) => new();
 
-    public double TrueAnomalyAtRadius(double radius) {
-        return 0;
-    }
+    public double TrueAnomalyAtRadius(double radius) => 0;
 
-    public Option<double> NextTimeOfRadius(double ut, double radius) {
-        return new Option<double>();
-    }
+    public Option<double> NextTimeOfRadius(double ut, double radius) => new();
 
-    public double SynodicPeriod(KSPOrbitModule.IOrbit other) {
-        return 0;
-    }
+    public double SynodicPeriod(KSPOrbitModule.IOrbit other) => 0;
 
-    public double TrueAnomalyFromVector(Vector3d vec) {
-        return 0;
-    }
+    public double TrueAnomalyFromVector(Vector3d vec) => 0;
 
-    public double AscendingNodeTrueAnomaly(KSPOrbitModule.IOrbit b) {
-        return 0;
-    }
+    public double TrueAnomalyAtUT(double ut) => 0;
 
-    public double DescendingNodeTrueAnomaly(KSPOrbitModule.IOrbit b) {
-        return 0;
-    }
+    public double AscendingNodeTrueAnomaly(KSPOrbitModule.IOrbit b) => 0;
 
-    public double TimeOfAscendingNode(KSPOrbitModule.IOrbit b, Option<double> maybeUt = new()) {
-        return 0;
-    }
+    public double DescendingNodeTrueAnomaly(KSPOrbitModule.IOrbit b) => 0;
 
-    public double TimeOfDescendingNode(KSPOrbitModule.IOrbit b, Option<double> maybeUt = new()) {
-        return 0;
-    }
+    public double TimeOfAscendingNode(KSPOrbitModule.IOrbit b, Option<double> maybeUt = new()) => 0;
+
+    public double TimeOfDescendingNode(KSPOrbitModule.IOrbit b, Option<double> maybeUt = new()) => 0;
 
     public Vector3d RelativeAscendingNode => Vector3d.zero;
     public Vector3d RelativeEccentricityVector => Vector3d.zero;
 
-    public string ToFixed(long decimals) {
-        return "Static orbit";
-    }
+    public string ToFixed(long decimals) => "Static orbit";
 }

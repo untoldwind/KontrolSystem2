@@ -23,6 +23,7 @@
   * `vessel.trajectory` now returns a `ksp::orbit::Trajectory`, for compatibility  `ksp::orbit::Trajectory` can be used
     (almost) like a `ksp::orbit::OrbitPatch[]` (i.e. it can be used in a `for` loop and `vessel.trajectory[0]` still works)
   * Properties ein `vessel.maneuver` have been updated accordingly
+* Add `true_anomaly_at_ut(ut: float)` to `ksp::orbit::Orbit`
 
 ## 0.5.6.3 -> 0.5.7.3
 
