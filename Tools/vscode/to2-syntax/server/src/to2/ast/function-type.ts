@@ -144,6 +144,10 @@ export class FunctionType implements RealizedType {
     return undefined;
   }
 
+  public supportIndexAccess(): TO2Type | undefined {
+    return undefined;
+  }
+
   public guessReturnType(
     context: BlockContext,
     args: Expression[],

@@ -4,7 +4,6 @@ import { TO2Type, UNKNOWN_TYPE } from "./to2-type";
 import { InputPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
-import { isArrayType } from "./array-type";
 
 export class IndexGet extends Expression {
   constructor(
@@ -55,6 +54,6 @@ export class IndexGet extends Expression {
       .resultType(context)
       .realizedType(context.module);
 
-    return isArrayType(targetType) ? targetType.elementType : undefined;
+    return targetType.supportIndexAccess();
   }
 }

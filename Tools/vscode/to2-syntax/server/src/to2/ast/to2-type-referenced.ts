@@ -130,9 +130,23 @@ export class ReferencedType implements RealizedType {
   }
 
   public forInSource(): TO2Type | undefined {
+    if (this.typeReference.forInSource) {
+      return currentTypeResolver().resolveTypeRef(
+        this.typeReference.forInSource,
+      );
+    }
     return this.name === "Range"
       ? currentTypeResolver().BUILTIN_INT
       : undefined;
+  }
+
+  public supportIndexAccess(): TO2Type | undefined {
+    if (this.typeReference.indexAccess) {
+      return currentTypeResolver().resolveTypeRef(
+        this.typeReference.indexAccess,
+      );
+    }
+    return undefined;
   }
 
   public fillGenerics(

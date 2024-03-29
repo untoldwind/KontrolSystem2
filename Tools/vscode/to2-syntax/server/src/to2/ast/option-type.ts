@@ -109,6 +109,10 @@ export class OptionType implements RealizedType {
     return undefined;
   }
 
+  public supportIndexAccess(): TO2Type | undefined {
+    return undefined;
+  }
+
   public setModuleName(moduleName: string, context: ModuleContext): void {
     this.elementType.setModuleName?.(moduleName, context);
   }

@@ -93,6 +93,10 @@ export class TupleType implements RealizedType {
     return undefined;
   }
 
+  public supportIndexAccess(): TO2Type | undefined {
+    return undefined;
+  }
+
   public setModuleName(moduleName: string, context: ModuleContext): void {
     this.itemTypes.forEach((item) => item.setModuleName?.(moduleName, context));
   }

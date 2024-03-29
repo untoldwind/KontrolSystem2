@@ -89,6 +89,10 @@ export class ResultType implements RealizedType {
     return undefined;
   }
 
+  public supportIndexAccess(): TO2Type | undefined {
+    return undefined;
+  }
+
   public setModuleName(moduleName: string, context: ModuleContext): void {
     this.successType.setModuleName?.(moduleName, context);
   }
