@@ -23,14 +23,10 @@ public partial class KSPVesselModule {
         [KSField(Description = "Get the planed trajectory of the vessel if all maneuvers are successfully executed." +
                                "The list of orbit patch will always start after the first maneuvering node." +
                                "I.e. if not maneuvers are planed this list will be empty.")]
-        public KSPOrbitModule.IOrbit[] Trajectory {
-            get {
-                return vesselAdapter.vessel.Orbiter.ManeuverPlanSolver.PatchedConicsList
-                    .Where(patch => patch.ActivePatch)
-                    .Select(patch => (KSPOrbitModule.IOrbit)new OrbitWrapper(vesselAdapter.context, patch))
-                    .ToArray();
-            }
-        }
+        public KSPOrbitModule.Trajectory Trajectory => new(vesselAdapter.context,
+                    vesselAdapter.vessel.Orbiter.ManeuverPlanSolver.ManeuverTrajectory
+                        .SelectMany<IPatchedOrbit, PatchedConicsOrbit>(patch =>
+                            patch is PatchedConicsOrbit o && o.ActivePatch ? [o] : []).ToArray());
 
         [KSField]
         public ManeuverNodeAdapter[] Nodes => maneuverPlan.GetNodes()

@@ -48123,14 +48123,9 @@
               "description": "Get the planed trajectory of the vessel if all maneuvers are successfully executed.The list of orbit patch will always start after the first maneuvering node.I.e. if not maneuvers are planed this list will be empty.\n",
               "readOnly": true,
               "type": {
-                "kind": "Array",
-                "parameters": [
-                  {
-                    "kind": "Standard",
-                    "module": "ksp::orbit",
-                    "name": "Orbit"
-                  }
-                ]
+                "kind": "Standard",
+                "module": "ksp::orbit",
+                "name": "Trajectory"
               }
             },
             "nodes": {
@@ -48346,16 +48341,6 @@
               "type": {
                 "kind": "Builtin",
                 "name": "float"
-              }
-            },
-            "expected_trajectory": {
-              "name": "expected_trajectory",
-              "description": "Get the expected trajectory after the maneuver has been executed\n",
-              "readOnly": true,
-              "type": {
-                "kind": "Standard",
-                "module": "ksp::orbit",
-                "name": "Trajectory"
               }
             },
             "expected_orbit": {
@@ -52038,16 +52023,6 @@
             },
             "orbit": {
               "name": "orbit",
-              "description": "Current orbit of the vessel.\n",
-              "readOnly": true,
-              "type": {
-                "kind": "Standard",
-                "module": "ksp::orbit",
-                "name": "Orbit"
-              }
-            },
-            "orbit_patch": {
-              "name": "orbit_patch",
               "description": "Current orbit patch of the vessel.\n",
               "readOnly": true,
               "type": {

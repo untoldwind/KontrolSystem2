@@ -402,10 +402,9 @@ public partial class KSPVesselModule {
         [KSField(Description = "The name of the vessel.")]
         public string Name => vessel.Name;
 
-        [KSField(Description = "Current orbit of the vessel.")]
         public KSPOrbitModule.IOrbit Orbit => new OrbitWrapper(context, vessel.Orbit);
 
-        [KSField(Description = "Current orbit patch of the vessel.")]
+        [KSField("orbit", Description = "Current orbit patch of the vessel.")]
         public KSPOrbitModule.OrbitPatch OrbitPatch => new(context, Trajectory, vessel.Orbit);
 
         public Option<KSPOrbitModule.IBody> AsBody => new();
