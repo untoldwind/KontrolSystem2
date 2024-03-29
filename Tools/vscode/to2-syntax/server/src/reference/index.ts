@@ -147,6 +147,8 @@ export const TypeReference = z.object({
   suffixOperators: z.record(Operator, z.array(OperatorReference)).optional(),
   assignableFromAny: z.boolean(),
   assignableFrom: z.array(TypeRef),
+  forInSource: TypeRef.optional(),
+  indexAccess: TypeRef.optional(),
 });
 
 export type TypeReference = z.infer<typeof TypeReference>;

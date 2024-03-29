@@ -342,8 +342,8 @@ export class TypeResolver {
 var typeResolverInstance: TypeResolver | undefined = undefined;
 
 export function currentTypeResolver(): TypeResolver {
-  if(typeResolverInstance === undefined)
-    console.log("Init type resolver from default")
+  if (typeResolverInstance === undefined)
+    console.log("Init type resolver from default");
   typeResolverInstance ??= new TypeResolver(REFERENCE);
   return typeResolverInstance;
 }
@@ -353,6 +353,6 @@ export function typeResolverInitialized(): boolean {
 }
 
 export function initTypeResolver(reference: Reference) {
-  console.log("Init type resolver from mod")
+  console.log("Init type resolver from mod");
   typeResolverInstance = new TypeResolver(reference);
 }

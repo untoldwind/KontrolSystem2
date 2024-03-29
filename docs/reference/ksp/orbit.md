@@ -1514,6 +1514,10 @@ Parameters
 Representation of a trajectory of a vessel that might has multiple orbit patches
 
 
+Can be used in `for(... in ...)` loop to iterate over [ksp::orbit::OrbitPatch](/reference/ksp/orbit.md#orbitpatch)
+
+Can be used like an array [ksp::orbit::OrbitPatch](/reference/ksp/orbit.md#orbitpatch)[]
+
 #### Fields
 
 | Name     | Type  | Read-only | Description                                    |

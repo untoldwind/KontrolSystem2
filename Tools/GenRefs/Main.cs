@@ -170,6 +170,18 @@ public class TypeReference {
                     SuffixOperators.Add(reference.Op, [reference]);
             }
         }
+        
+        IForInSource? forInSource = type.ForInSource(moduleContext, null);
+
+        if (forInSource != null) {
+            ForInSource = new TypeRef(moduleContext, forInSource.ElementType);
+        }
+
+        IIndexAccessEmitter? indexAccess = type.AllowedIndexAccess(moduleContext, new IndexSpec(new LiteralInt(0)));
+
+        if (indexAccess != null) {
+            IndexAccess = new TypeRef(moduleContext, indexAccess.TargetType.UnderlyingType(moduleContext));
+        }
     }
 
     [JsonProperty("name")] public string Name { get; }
@@ -195,6 +207,12 @@ public class TypeReference {
     [JsonProperty("assignableFrom")]
     public List<TypeRef> AssignableFrom { get; }
 
+    [JsonProperty("forInSource", NullValueHandling = NullValueHandling.Ignore)]
+    public TypeRef? ForInSource { get; }
+    
+    [JsonProperty("indexAccess", NullValueHandling = NullValueHandling.Ignore)]
+    public TypeRef? IndexAccess { get; }
+    
     [JsonIgnore]
     public RealizedType TO2Type { get; }
 }

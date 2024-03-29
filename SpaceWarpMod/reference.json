@@ -1503,7 +1503,11 @@
         }
       },
       "assignableFromAny": false,
-      "assignableFrom": []
+      "assignableFrom": [],
+      "forInSource": {
+        "kind": "Builtin",
+        "name": "int"
+      }
     },
     "ArrayBuilder": {
       "name": "ArrayBuilder",
@@ -17594,7 +17598,17 @@
             }
           },
           "assignableFromAny": false,
-          "assignableFrom": []
+          "assignableFrom": [],
+          "forInSource": {
+            "kind": "Standard",
+            "module": "ksp::orbit",
+            "name": "OrbitPatch"
+          },
+          "indexAccess": {
+            "kind": "Standard",
+            "module": "ksp::orbit",
+            "name": "OrbitPatch"
+          }
         },
         "Waypoint": {
           "name": "Waypoint",

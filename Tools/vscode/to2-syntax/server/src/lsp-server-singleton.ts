@@ -250,14 +250,12 @@ export class LspServerSingleton {
     ];
 
     for (const candidate of candidates) {
-      
       if (await isFile(candidate)) {
         try {
-          const content = JSON.parse( await fs.readFile(candidate, "utf-8"));
+          const content = JSON.parse(await fs.readFile(candidate, "utf-8"));
 
           initTypeResolver(content as Reference);
-        }
-        catch(e) {
+        } catch (e) {
           // ignore
         }
       }

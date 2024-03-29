@@ -54,6 +54,20 @@ class MainClass {
                 output.WriteLine();
                 output.WriteLine(type.Description);
 
+                IForInSource? forInSource = type.ForInSource(moduleContext, null);
+
+                if (forInSource != null) {
+                    output.WriteLine();
+                    output.WriteLine($"Can be used in `for(... in ...)` loop to iterate over {LinkType(forInSource.ElementType.Name)}");
+                }
+
+                IIndexAccessEmitter? indexAccess = type.AllowedIndexAccess(moduleContext, new IndexSpec(new LiteralInt(0)));
+
+                if (indexAccess != null) {
+                    output.WriteLine();
+                    output.WriteLine($"Can be used like an array {LinkType(indexAccess.TargetType.Name)}[]");
+                }
+                
                 if (type.DeclaredFields.Count > 0) {
                     output.WriteLine();
                     output.WriteLine("#### Fields");
