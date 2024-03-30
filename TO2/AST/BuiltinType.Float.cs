@@ -146,33 +146,21 @@ public abstract partial class BuiltinType {
 
         public override string Name => "float";
 
-        public override Type GeneratedType(ModuleContext context) {
-            return typeof(double);
-        }
+        public override Type GeneratedType(ModuleContext context) => typeof(double);
 
-        public override IOperatorCollection AllowedPrefixOperators(ModuleContext context) {
-            return allowedPrefixOperators;
-        }
+        public override IOperatorCollection AllowedPrefixOperators(ModuleContext context) => allowedPrefixOperators;
 
-        public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) {
-            return allowedSuffixOperators;
-        }
+        public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) => allowedSuffixOperators;
 
-        public override bool IsAssignableFrom(ModuleContext context, TO2Type otherType) {
-            return otherType == Int || otherType == Float;
-        }
+        public override bool IsAssignableFrom(ModuleContext context, TO2Type otherType) => otherType == Int || otherType == Float;
 
         public override IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) {
             return otherType == Int ? intToFloatAssign : DefaultAssignEmitter.Instance;
         }
 
         // Fallback if framework is (slightly) incompatible
-        public static bool IsFiniteWrapper(double d) {
-            return !double.IsInfinity(d);
-        }
+        public static bool IsFiniteWrapper(double d) => !double.IsInfinity(d);
 
-        public override IREPLValue REPLCast(object? value) {
-            return new REPLFloat((double)value!);
-        }
+        public override IREPLValue REPLCast(object? value) => new REPLFloat((double)value!);
     }
 }

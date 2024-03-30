@@ -15,17 +15,11 @@ public abstract partial class BuiltinType {
 
         public override string Name => "Unit";
 
-        public override Type GeneratedType(ModuleContext context) {
-            return typeof(object);
-        }
+        public override Type GeneratedType(ModuleContext context) => typeof(object);
 
-        public override bool IsAssignableFrom(ModuleContext context, TO2Type otherType) {
-            return true;
-        }
+        public override bool IsAssignableFrom(ModuleContext context, TO2Type otherType) => true;
 
-        public override IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) {
-            return anyToUnitAssign;
-        }
+        public override IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) => anyToUnitAssign;
     }
 
     private class AnyToUnitAssign : IAssignEmitter {
@@ -43,8 +37,6 @@ public abstract partial class BuiltinType {
             context.IL.Emit(OpCodes.Ldnull);
         }
 
-        public IREPLValue EvalConvert(Node node, IREPLValue value) {
-            return REPLUnit.INSTANCE;
-        }
+        public IREPLValue EvalConvert(Node node, IREPLValue value) => REPLUnit.INSTANCE;
     }
 }

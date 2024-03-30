@@ -48,54 +48,39 @@ public class LookupTypeReference : TO2Type {
         }
     }
 
-    public override bool IsValid(ModuleContext context) {
-        return ReferencedType(context) != null;
-    }
+    public override bool IsValid(ModuleContext context) => ReferencedType(context) != null;
 
-    public override RealizedType UnderlyingType(ModuleContext context) {
-        return ReferencedType(context);
-    }
+    public override RealizedType UnderlyingType(ModuleContext context) => ReferencedType(context);
 
-    public override Type GeneratedType(ModuleContext context) {
-        return ReferencedType(context).GeneratedType(context);
-    }
+    public override Type GeneratedType(ModuleContext context) => ReferencedType(context).GeneratedType(context);
 
-    public override IOperatorCollection AllowedPrefixOperators(ModuleContext context) {
-        return ReferencedType(context).AllowedPrefixOperators(context);
-    }
+    public override IOperatorCollection AllowedPrefixOperators(ModuleContext context) =>
+        ReferencedType(context).AllowedPrefixOperators(context);
 
-    public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) {
-        return ReferencedType(context).AllowedSuffixOperators(context);
-    }
+    public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) =>
+        ReferencedType(context).AllowedSuffixOperators(context);
 
-    public override IMethodInvokeFactory? FindMethod(ModuleContext context, string methodName) {
-        return ReferencedType(context).FindMethod(context, methodName);
-    }
+    public override IMethodInvokeFactory? FindMethod(ModuleContext context, string methodName) =>
+        ReferencedType(context).FindMethod(context, methodName);
 
-    public override IFieldAccessFactory? FindField(ModuleContext context, string fieldName) {
-        return ReferencedType(context).FindField(context, fieldName);
-    }
+    public override IFieldAccessFactory? FindField(ModuleContext context, string fieldName) =>
+        ReferencedType(context).FindField(context, fieldName);
 
-    public override IIndexAccessEmitter? AllowedIndexAccess(ModuleContext context, IndexSpec indexSpec) {
-        return ReferencedType(context).AllowedIndexAccess(context, indexSpec);
-    }
+    public override IIndexAccessEmitter? AllowedIndexAccess(ModuleContext context, IndexSpec indexSpec) =>
+        ReferencedType(context).AllowedIndexAccess(context, indexSpec);
 
     public override IUnapplyEmitter?
-        AllowedUnapplyPatterns(ModuleContext context, string unapplyName, int itemCount) {
-        return ReferencedType(context).AllowedUnapplyPatterns(context, unapplyName, itemCount);
-    }
+        AllowedUnapplyPatterns(ModuleContext context, string unapplyName, int itemCount) =>
+        ReferencedType(context).AllowedUnapplyPatterns(context, unapplyName, itemCount);
 
-    public override IForInSource? ForInSource(ModuleContext context, TO2Type? typeHint) {
-        return ReferencedType(context).ForInSource(context, typeHint);
-    }
+    public override IForInSource? ForInSource(ModuleContext context, TO2Type? typeHint) =>
+        ReferencedType(context).ForInSource(context, typeHint);
 
-    public override bool IsAssignableFrom(ModuleContext context, TO2Type otherType) {
-        return ReferencedType(context).IsAssignableFrom(context, otherType);
-    }
+    public override bool IsAssignableFrom(ModuleContext context, TO2Type otherType) =>
+        ReferencedType(context).IsAssignableFrom(context, otherType);
 
-    public override IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) {
-        return ReferencedType(context).AssignFrom(context, otherType);
-    }
+    public override IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) =>
+        ReferencedType(context).AssignFrom(context, otherType);
 
     private RealizedType ReferencedType(ModuleContext context) {
         var realizedType = moduleName != null
@@ -151,37 +136,29 @@ public class DirectTypeReference(RealizedType referencedType, List<TO2Type> decl
         return referencedType.FillGenerics(context, arguments);
     }
 
-    public override IOperatorCollection AllowedPrefixOperators(ModuleContext context) {
-        return UnderlyingType(context).AllowedPrefixOperators(context);
-    }
+    public override IOperatorCollection AllowedPrefixOperators(ModuleContext context) =>
+        UnderlyingType(context).AllowedPrefixOperators(context);
 
-    public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) {
-        return UnderlyingType(context).AllowedSuffixOperators(context);
-    }
+    public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) =>
+        UnderlyingType(context).AllowedSuffixOperators(context);
 
-    public override IMethodInvokeFactory? FindMethod(ModuleContext context, string methodName) {
-        return UnderlyingType(context).FindMethod(context, methodName);
-    }
+    public override IMethodInvokeFactory? FindMethod(ModuleContext context, string methodName) =>
+        UnderlyingType(context).FindMethod(context, methodName);
 
-    public override IFieldAccessFactory? FindField(ModuleContext context, string fieldName) {
-        return UnderlyingType(context).FindField(context, fieldName);
-    }
+    public override IFieldAccessFactory? FindField(ModuleContext context, string fieldName) =>
+        UnderlyingType(context).FindField(context, fieldName);
 
     public override RealizedType
-        FillGenerics(ModuleContext context, Dictionary<string, RealizedType>? typeArguments) {
-        return UnderlyingType(context).FillGenerics(context, typeArguments);
-    }
+        FillGenerics(ModuleContext context, Dictionary<string, RealizedType>? typeArguments) =>
+        UnderlyingType(context).FillGenerics(context, typeArguments);
 
-    public override bool IsAssignableFrom(ModuleContext context, TO2Type otherType) {
-        return UnderlyingType(context).IsAssignableFrom(context, otherType);
-    }
+    public override bool IsAssignableFrom(ModuleContext context, TO2Type otherType) =>
+        UnderlyingType(context).IsAssignableFrom(context, otherType);
 
-    public override IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) {
-        return UnderlyingType(context).AssignFrom(context, otherType);
-    }
+    public override IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) =>
+        UnderlyingType(context).AssignFrom(context, otherType);
 
     public override IEnumerable<(string name, RealizedType type)> InferGenericArgument(ModuleContext context,
-        RealizedType? concreteType) {
-        return UnderlyingType(context).InferGenericArgument(context, concreteType);
-    }
+        RealizedType? concreteType) =>
+        UnderlyingType(context).InferGenericArgument(context, concreteType);
 }

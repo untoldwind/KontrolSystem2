@@ -22,7 +22,5 @@ public class DefaultAssignEmitter : IAssignEmitter {
     public void EmitConvert(IBlockContext context, bool mutableTarget) {
     } // Nothing to convert
 
-    public IREPLValue EvalConvert(Node node, IREPLValue value) {
-        return value;
-    }
+    public IREPLValue EvalConvert(Node node, IREPLValue value) => value;
 }

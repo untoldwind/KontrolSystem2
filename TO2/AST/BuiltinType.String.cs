@@ -140,8 +140,7 @@ public abstract partial class BuiltinType {
                         () => new ArrayType(String),
                         () => [new("separator", String, "Search string (separator)")],
                         false, typeof(StringMethods), typeof(StringMethods).GetMethod("Split"))
-                },
-                {
+                }, {
                     "ellipsis",
                     new BoundMethodInvokeFactory("Truncate string with ellipsis if necessary", true,
                         () => String,
@@ -165,25 +164,19 @@ public abstract partial class BuiltinType {
 
         public override string Name => "string";
 
-        public override Type GeneratedType(ModuleContext context) {
-            return typeof(string);
-        }
+        public override Type GeneratedType(ModuleContext context) => typeof(string);
 
-        public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) {
-            return allowedOperators;
-        }
+        public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) => allowedOperators;
 
-        public override bool IsAssignableFrom(ModuleContext context, TO2Type otherType) {
-            return otherType == String || otherType.GeneratedType(context) == typeof(CoreError.Error);
-        }
+        public override bool IsAssignableFrom(ModuleContext context, TO2Type otherType) =>
+            otherType == String || otherType.GeneratedType(context) == typeof(CoreError.Error);
 
-        public override IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) {
-            return otherType.GeneratedType(context) == typeof(CoreError.Error) ? errorToStringAssign : DefaultAssignEmitter.Instance;
-        }
+        public override IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) =>
+            otherType.GeneratedType(context) == typeof(CoreError.Error)
+                ? errorToStringAssign
+                : DefaultAssignEmitter.Instance;
 
-        public override IREPLValue REPLCast(object? value) {
-            return new REPLString((string)value!);
-        }
+        public override IREPLValue REPLCast(object? value) => new REPLString((string)value!);
     }
 
     private class ErrorToStringAssign : IAssignEmitter {

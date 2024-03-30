@@ -79,9 +79,7 @@ public abstract partial class BuiltinType : RealizedType {
 
     private static RealizedType LazyCell() => Cell;
 
-    public override RealizedType UnderlyingType(ModuleContext context) {
-        return this;
-    }
+    public override RealizedType UnderlyingType(ModuleContext context) => this;
 
     public static TO2Type? GetBuiltinType(List<string> namePath, List<TO2Type> typeArguments) {
         if (namePath.Count != 1) return null;

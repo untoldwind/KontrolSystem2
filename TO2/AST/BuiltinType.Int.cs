@@ -132,17 +132,11 @@ public abstract partial class BuiltinType {
 
         public override string Name => "int";
 
-        public override Type GeneratedType(ModuleContext context) {
-            return typeof(long);
-        }
+        public override Type GeneratedType(ModuleContext context) => typeof(long);
 
-        public override IOperatorCollection AllowedPrefixOperators(ModuleContext context) {
-            return allowedPrefixOperators;
-        }
+        public override IOperatorCollection AllowedPrefixOperators(ModuleContext context) => allowedPrefixOperators;
 
-        public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) {
-            return allowedSuffixOperators;
-        }
+        public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) => allowedSuffixOperators;
 
         public override IREPLValue REPLCast(object? value) {
             if (value is long l)

@@ -23,18 +23,15 @@ public class TupleType : RealizedType {
 
     public override string Name => $"({string.Join(", ", itemTypes)})";
 
-    public override bool IsValid(ModuleContext context) {
-        return itemTypes.Count > 0 && itemTypes.All(t => t.IsValid(context));
-    }
+    public override bool IsValid(ModuleContext context) =>
+        itemTypes.Count > 0 && itemTypes.All(t => t.IsValid(context));
 
-    public override RealizedType UnderlyingType(ModuleContext context) {
-        return new TupleType(itemTypes.Select(p => p.UnderlyingType(context) as TO2Type).ToList());
-    }
+    public override RealizedType UnderlyingType(ModuleContext context) =>
+        new TupleType(itemTypes.Select(p => p.UnderlyingType(context) as TO2Type).ToList());
 
-    public override Type GeneratedType(ModuleContext context) {
-        return generatedType ??=
+    public override Type GeneratedType(ModuleContext context) =>
+        generatedType ??=
             DeriveTupleType(itemTypes.Select(t => t.GeneratedType(context)).ToList());
-    }
 
     public override bool IsAssignableFrom(ModuleContext context, TO2Type otherType) {
         if (!(otherType.UnderlyingType(context) is TupleType)) return false;
@@ -44,7 +41,8 @@ public class TupleType : RealizedType {
     internal static Type DeriveTupleType(List<Type> itemTypes) {
         if (itemTypes.Count > 7) {
             var rest = DeriveTupleType(itemTypes.Skip(7).ToList());
-            return Type.GetType("System.ValueTuple`8")!.MakeGenericType(itemTypes.Take(7).Concat(rest.Yield()).ToArray());
+            return Type.GetType("System.ValueTuple`8")!.MakeGenericType(
+                itemTypes.Take(7).Concat(rest.Yield()).ToArray());
         }
 
         return Type.GetType($"System.ValueTuple`{itemTypes.Count}")!.MakeGenericType([.. itemTypes]);
@@ -87,7 +85,5 @@ internal class TupleFieldAccessFactory : IFieldAccessFactory {
     }
 
     public IFieldAccessFactory
-        FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) {
-        return this;
-    }
+        FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) => this;
 }

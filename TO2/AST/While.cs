@@ -27,13 +27,9 @@ public class While : Expression, IVariableContainer {
 
     public IVariableContainer? ParentContainer { get; private set; }
 
-    public TO2Type? FindVariableLocal(IBlockContext context, string name) {
-        return condition.GetScopeVariables(context)?.Get(name);
-    }
+    public TO2Type? FindVariableLocal(IBlockContext context, string name) => condition.GetScopeVariables(context)?.Get(name);
 
-    public override TO2Type ResultType(IBlockContext context) {
-        return BuiltinType.Unit;
-    }
+    public override TO2Type ResultType(IBlockContext context) => BuiltinType.Unit;
 
     public override void Prepare(IBlockContext context) {
     }

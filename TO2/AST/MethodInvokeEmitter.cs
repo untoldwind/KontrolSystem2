@@ -50,9 +50,12 @@ public interface IMethodInvokeFactory {
 
 public delegate REPLValueFuture REPLMethodCall(Node node, IREPLValue[] targetWithArguments);
 
-public class InlineMethodInvokeFactory(string description, Func<RealizedType> resultType, bool isConst,
-    REPLMethodCall methodCall, params OpCode[] opCodes) : IMethodInvokeFactory {
-
+public class InlineMethodInvokeFactory(
+    string description,
+    Func<RealizedType> resultType,
+    bool isConst,
+    REPLMethodCall methodCall,
+    params OpCode[] opCodes) : IMethodInvokeFactory {
     public bool IsConst { get; } = isConst;
     public string Description { get; } = description;
 
@@ -68,20 +71,18 @@ public class InlineMethodInvokeFactory(string description, Func<RealizedType> re
 
     public List<FunctionParameter> DeclaredParameters => [];
 
-    public IMethodInvokeEmitter Create(IBlockContext context, List<TO2Type> arguments, Node node) {
-        return new InlineMethodInvokeEmitter(resultType(), [], methodCall, opCodes);
-    }
+    public IMethodInvokeEmitter Create(IBlockContext context, List<TO2Type> arguments, Node node) =>
+        new InlineMethodInvokeEmitter(resultType(), [], methodCall, opCodes);
 
     public IMethodInvokeFactory
-        FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) {
-        return this;
-    }
+        FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) => this;
 }
 
-public class InlineMethodInvokeEmitter(RealizedType returnType, List<RealizedParameter> parameters,
+public class InlineMethodInvokeEmitter(
+    RealizedType returnType,
+    List<RealizedParameter> parameters,
     REPLMethodCall methodCall,
     params OpCode[] opCodes) : IMethodInvokeEmitter {
-
     public RealizedType ResultType { get; } = returnType;
 
     public List<RealizedParameter> Parameters { get; } = parameters;
@@ -100,13 +101,19 @@ public class InlineMethodInvokeEmitter(RealizedType returnType, List<RealizedPar
     }
 }
 
-public class BoundMethodInvokeFactory(string? description, bool isConst, Func<RealizedType> resultType,
-    Func<List<RealizedParameter>> parameters, bool isAsync, Type methodTarget, MethodInfo? methodInfo,
+public class BoundMethodInvokeFactory(
+    string? description,
+    bool isConst,
+    Func<RealizedType> resultType,
+    Func<List<RealizedParameter>> parameters,
+    bool isAsync,
+    Type methodTarget,
+    MethodInfo? methodInfo,
     Func<ModuleContext, IEnumerable<(string name, RealizedType type)>>? targetTypeArguments = null,
     bool constrained = false) : IMethodInvokeFactory {
     private readonly MethodInfo methodInfo = methodInfo ??
-                          throw new ArgumentException(
-                              $"MethodInfo is null for {description} in type {methodTarget}");
+                                             throw new ArgumentException(
+                                                 $"MethodInfo is null for {description} in type {methodTarget}");
 
     public bool IsConst { get; } = isConst;
     public string? Description { get; } = description;
@@ -171,9 +178,13 @@ public class BoundMethodInvokeFactory(string? description, bool isConst, Func<Re
     }
 }
 
-public class BoundMethodInvokeEmitter(RealizedType resultType, List<RealizedParameter> parameters, bool isAsync,
-    Type methodTarget, MethodInfo methodInfo, bool constrained = false) : IMethodInvokeEmitter {
-
+public class BoundMethodInvokeEmitter(
+    RealizedType resultType,
+    List<RealizedParameter> parameters,
+    bool isAsync,
+    Type methodTarget,
+    MethodInfo methodInfo,
+    bool constrained = false) : IMethodInvokeEmitter {
     public RealizedType ResultType { get; } = resultType;
     public List<RealizedParameter> Parameters { get; } = parameters;
     public bool IsAsync { get; } = isAsync;

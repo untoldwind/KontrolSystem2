@@ -23,9 +23,7 @@ public class UseDeclaration : Node, IModuleItem {
         this.alias = alias;
     }
 
-    public IEnumerable<StructuralError> TryDeclareTypes(ModuleContext context) {
-        return [];
-    }
+    public IEnumerable<StructuralError> TryDeclareTypes(ModuleContext context) => [];
 
     public IEnumerable<StructuralError> TryImportTypes(ModuleContext context) {
         var module = context.FindModule(fromModule);
@@ -69,9 +67,7 @@ public class UseDeclaration : Node, IModuleItem {
         return [];
     }
 
-    public IEnumerable<StructuralError> TryVerifyFunctions(ModuleContext context) {
-        return [];
-    }
+    public IEnumerable<StructuralError> TryVerifyFunctions(ModuleContext context) => [];
 
     public IEnumerable<StructuralError> TryImportFunctions(ModuleContext context) {
         if (alias != null) return [];

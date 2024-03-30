@@ -39,25 +39,20 @@ public class TO2Module {
         structs = this.items.Where(item => item is StructDeclaration).Cast<StructDeclaration>().ToList();
     }
 
-    public List<StructuralError> TryDeclareTypes(ModuleContext context) {
-        return items.SelectMany(item => item.TryDeclareTypes(context)).ToList();
-    }
+    public List<StructuralError> TryDeclareTypes(ModuleContext context) =>
+        items.SelectMany(item => item.TryDeclareTypes(context)).ToList();
 
-    public List<StructuralError> TryImportTypes(ModuleContext context) {
-        return items.SelectMany(item => item.TryImportTypes(context)).ToList();
-    }
+    public List<StructuralError> TryImportTypes(ModuleContext context) =>
+        items.SelectMany(item => item.TryImportTypes(context)).ToList();
 
-    public List<StructuralError> TryImportConstants(ModuleContext context) {
-        return items.SelectMany(item => item.TryImportConstants(context)).ToList();
-    }
+    public List<StructuralError> TryImportConstants(ModuleContext context) =>
+        items.SelectMany(item => item.TryImportConstants(context)).ToList();
 
-    public List<StructuralError> TryVerifyFunctions(ModuleContext context) {
-        return items.SelectMany(item => item.TryVerifyFunctions(context)).ToList();
-    }
+    public List<StructuralError> TryVerifyFunctions(ModuleContext context) =>
+        items.SelectMany(item => item.TryVerifyFunctions(context)).ToList();
 
-    public List<StructuralError> TryImportFunctions(ModuleContext context) {
-        return items.SelectMany(item => item.TryImportFunctions(context)).ToList();
-    }
+    public List<StructuralError> TryImportFunctions(ModuleContext context) =>
+        items.SelectMany(item => item.TryImportFunctions(context)).ToList();
 
     public static string BuildName(string fileName) {
         fileName = fileName.ToLower();

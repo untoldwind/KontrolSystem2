@@ -69,21 +69,13 @@ public class RecordStructType : RecordType {
             new BoundFieldAccessFactory(field.description, () => field.type, runtimeType, field.field));
     }
 
-    public override bool IsValid(ModuleContext context) {
-        return true;
-    }
+    public override bool IsValid(ModuleContext context) => true;
 
-    public override RealizedType UnderlyingType(ModuleContext context) {
-        return this;
-    }
+    public override RealizedType UnderlyingType(ModuleContext context) => this;
 
-    public override Type GeneratedType(ModuleContext context) {
-        return typeCreator != null ? typeCreator(context) : runtimeType;
-    }
+    public override Type GeneratedType(ModuleContext context) => typeCreator != null ? typeCreator(context) : runtimeType;
 
-    public override IOperatorCollection AllowedPrefixOperators(ModuleContext context) {
-        return allowedPrefixOperators;
-    }
+    public override IOperatorCollection AllowedPrefixOperators(ModuleContext context) => allowedPrefixOperators;
 
     public override IIndexAccessEmitter? AllowedIndexAccess(ModuleContext context, IndexSpec indexSpec) {
         return null;
@@ -106,9 +98,7 @@ public class RecordStructType : RecordType {
         variable.EmitStore(context);
     }
 
-    internal override IOperatorEmitter CombineFrom(RecordType otherType) {
-        return new AssignRecordStruct(this, otherType);
-    }
+    internal override IOperatorEmitter CombineFrom(RecordType otherType) => new AssignRecordStruct(this, otherType);
 }
 
 internal class AssignRecordStruct : RecordTypeAssignEmitter<RecordStructType> {

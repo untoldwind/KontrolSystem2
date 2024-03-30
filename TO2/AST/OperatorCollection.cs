@@ -26,13 +26,10 @@ public class OperatorCollection : IOperatorCollection {
         return collection[op].Find(o => o.Accepts(context, otherType));
     }
 
-    public IEnumerator<(Operator op, List<IOperatorEmitter> emitters)> GetEnumerator() {
-        return collection.Select(o => (o.Key, o.Value)).GetEnumerator();
-    }
+    public IEnumerator<(Operator op, List<IOperatorEmitter> emitters)> GetEnumerator() =>
+        collection.Select(o => (o.Key, o.Value)).GetEnumerator();
 
-    IEnumerator IEnumerable.GetEnumerator() {
-        return GetEnumerator();
-    }
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     public void Add(Operator op, IOperatorEmitter operatorEmitter) {
         if (collection.TryGetValue(op, out var value))

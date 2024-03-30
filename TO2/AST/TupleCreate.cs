@@ -33,9 +33,7 @@ public class TupleCreate(List<Expression> items, Position start, Position end) :
         }
     }
 
-    public override TO2Type ResultType(IBlockContext context) {
-        return DeriveType(context);
-    }
+    public override TO2Type ResultType(IBlockContext context) => DeriveType(context);
 
     public override void Prepare(IBlockContext context) {
         foreach (var item in items) item.Prepare(context);
@@ -112,9 +110,8 @@ public class TupleCreate(List<Expression> items, Position start, Position end) :
         if (!dropResult) variable.EmitLoad(context);
     }
 
-    private TupleType DeriveType(IBlockContext context) {
-        return resultType ??= new TupleType(items.Select(item => item.ResultType(context)).ToList());
-    }
+    private TupleType DeriveType(IBlockContext context) =>
+        resultType ??= new TupleType(items.Select(item => item.ResultType(context)).ToList());
 
     public override REPLValueFuture Eval(REPLContext context) {
         throw new REPLException(this, "Not supported in REPL mode");

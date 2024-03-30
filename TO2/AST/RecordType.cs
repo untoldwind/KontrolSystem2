@@ -27,9 +27,7 @@ public abstract class RecordType : RealizedType {
         return true;
     }
 
-    public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) {
-        return recordTypeOperators;
-    }
+    public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) => recordTypeOperators;
 
     internal abstract IOperatorEmitter CombineFrom(RecordType otherType);
 }
@@ -65,13 +63,9 @@ internal class RecordTypeOperators : IOperatorCollection {
         return hasMatch ? recordType.CombineFrom(otherRecordType) : null;
     }
 
-    public IEnumerator<(Operator op, List<IOperatorEmitter> emitters)> GetEnumerator() {
-        return allowedOperators.GetEnumerator();
-    }
+    public IEnumerator<(Operator op, List<IOperatorEmitter> emitters)> GetEnumerator() => allowedOperators.GetEnumerator();
 
-    IEnumerator IEnumerable.GetEnumerator() {
-        return GetEnumerator();
-    }
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }
 
 internal abstract class RecordTypeAssignEmitter<T> : IAssignEmitter, IOperatorEmitter where T : RecordType {
@@ -112,9 +106,7 @@ internal abstract class RecordTypeAssignEmitter<T> : IAssignEmitter, IOperatorEm
 
     public TO2Type OtherType => sourceType;
 
-    public bool Accepts(ModuleContext context, TO2Type otherType) {
-        return sourceType.IsAssignableFrom(context, otherType);
-    }
+    public bool Accepts(ModuleContext context, TO2Type otherType) => sourceType.IsAssignableFrom(context, otherType);
 
     // ---------------- IOperatorEmitter ----------------
     public void EmitCode(IBlockContext context, Node target) {
@@ -139,9 +131,7 @@ internal abstract class RecordTypeAssignEmitter<T> : IAssignEmitter, IOperatorEm
         EmitAssignToPtr(context, tempRight);
     }
 
-    public IOperatorEmitter FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) {
-        return this;
-    }
+    public IOperatorEmitter FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) => this;
 
     public IREPLValue Eval(Node node, IREPLValue left, IREPLValue? right) {
         throw new REPLException(node, "Not supported in REPL mode");

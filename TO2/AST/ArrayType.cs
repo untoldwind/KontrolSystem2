@@ -56,21 +56,13 @@ public class ArrayType : RealizedType {
 
     public override Dictionary<string, IFieldAccessFactory> DeclaredFields { get; }
 
-    public override bool IsValid(ModuleContext context) {
-        return ElementType.IsValid(context);
-    }
+    public override bool IsValid(ModuleContext context) => ElementType.IsValid(context);
 
-    public override RealizedType UnderlyingType(ModuleContext context) {
-        return new ArrayType(ElementType.UnderlyingType(context));
-    }
+    public override RealizedType UnderlyingType(ModuleContext context) => new ArrayType(ElementType.UnderlyingType(context));
 
-    public override Type GeneratedType(ModuleContext context) {
-        return ElementType.GeneratedType(context).MakeArrayType();
-    }
+    public override Type GeneratedType(ModuleContext context) => ElementType.GeneratedType(context).MakeArrayType();
 
-    public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) {
-        return allowedSuffixOperators;
-    }
+    public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) => allowedSuffixOperators;
 
     public override IIndexAccessEmitter? AllowedIndexAccess(ModuleContext context, IndexSpec indexSpec) {
         switch (indexSpec.indexType) {
@@ -83,9 +75,8 @@ public class ArrayType : RealizedType {
         }
     }
 
-    public override IForInSource ForInSource(ModuleContext context, TO2Type? typeHint) {
-        return new ArrayForInSource(GeneratedType(context), ElementType.UnderlyingType(context));
-    }
+    public override IForInSource ForInSource(ModuleContext context, TO2Type? typeHint) =>
+        new ArrayForInSource(GeneratedType(context), ElementType.UnderlyingType(context));
 
     public override RealizedType
         FillGenerics(ModuleContext context, Dictionary<string, RealizedType>? typeArguments) {

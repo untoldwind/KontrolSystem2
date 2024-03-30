@@ -28,9 +28,7 @@ public abstract class TO2Type {
     /// <summary>
     ///     Check if the type is valid.
     /// </summary>
-    public virtual bool IsValid(ModuleContext context) {
-        return true;
-    }
+    public virtual bool IsValid(ModuleContext context) => true;
 
     /// <summary>
     ///     Get the underlying type in case this type is an alias or reference to another type.
@@ -45,16 +43,12 @@ public abstract class TO2Type {
     /// <summary>
     ///     Get collection of operators that may be used as prefix to this type (i.e. where this type is on the right side)
     /// </summary>
-    public virtual IOperatorCollection AllowedPrefixOperators(ModuleContext context) {
-        return BuiltinType.NoOperators;
-    }
+    public virtual IOperatorCollection AllowedPrefixOperators(ModuleContext context) => BuiltinType.NoOperators;
 
     /// <summary>
     ///     Get collection of operators that may be used as postfix to this type (i.e. where this type is on the left side)
     /// </summary>
-    public virtual IOperatorCollection AllowedSuffixOperators(ModuleContext context) {
-        return BuiltinType.NoOperators;
-    }
+    public virtual IOperatorCollection AllowedSuffixOperators(ModuleContext context) => BuiltinType.NoOperators;
 
     /// <summary>
     ///     Find a method of this type by name.
@@ -71,51 +65,36 @@ public abstract class TO2Type {
     /// <summary>
     ///     Check if index access is allowed for this type.
     /// </summary>
-    public virtual IIndexAccessEmitter? AllowedIndexAccess(ModuleContext context, IndexSpec indexSpec) {
-        return null;
-    }
+    public virtual IIndexAccessEmitter? AllowedIndexAccess(ModuleContext context, IndexSpec indexSpec) => null;
 
     /// <summary>
     ///     Get a list of all pattern this type can be unapplied to.
     /// </summary>
     public virtual IUnapplyEmitter?
-        AllowedUnapplyPatterns(ModuleContext context, string unapplyName, int itemCount) {
-        return null;
-    }
+        AllowedUnapplyPatterns(ModuleContext context, string unapplyName, int itemCount) => null;
 
     /// <summary>
     ///     Check if this type can be used as source in a for .. in expression.
     /// </summary>
-    public virtual IForInSource? ForInSource(ModuleContext context, TO2Type? typeHint) {
-        return null;
-    }
+    public virtual IForInSource? ForInSource(ModuleContext context, TO2Type? typeHint) => null;
 
     /// <summary>
     ///     Check if a variable of this type can be assigned from an other type.
     /// </summary>
-    public virtual bool IsAssignableFrom(ModuleContext context, TO2Type otherType) {
-        return GeneratedType(context).IsAssignableFrom(otherType.GeneratedType(context));
-    }
+    public virtual bool IsAssignableFrom(ModuleContext context, TO2Type otherType) =>
+        GeneratedType(context).IsAssignableFrom(otherType.GeneratedType(context));
 
     /// <summary>
     ///     Get the rule how to assign/convert an other type to this type.
     /// </summary>
-    public virtual IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) {
-        return DefaultAssignEmitter.Instance;
-    }
+    public virtual IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) => DefaultAssignEmitter.Instance;
 
     public virtual IEnumerable<(string name, RealizedType type)> InferGenericArgument(ModuleContext context,
-        RealizedType? concreteType) {
-        return [];
-    }
+        RealizedType? concreteType) => [];
 
-    public virtual IREPLValue REPLCast(object? value) {
-        return new REPLAny(this, value);
-    }
+    public virtual IREPLValue REPLCast(object? value) => new REPLAny(this, value);
 
-    public override string ToString() {
-        return Name;
-    }
+    public override string ToString() => Name;
 }
 
 /// <summary>
@@ -128,18 +107,14 @@ public abstract class RealizedType : TO2Type {
 
     public virtual TO2Type[] GenericParameters => [];
 
-    public override IMethodInvokeFactory? FindMethod(ModuleContext context, string methodName) {
-        return DeclaredMethods.Get(methodName);
-    }
+    public override IMethodInvokeFactory? FindMethod(ModuleContext context, string methodName) =>
+        DeclaredMethods.Get(methodName);
 
-    public override IFieldAccessFactory? FindField(ModuleContext context, string fieldName) {
-        return DeclaredFields.Get(fieldName);
-    }
+    public override IFieldAccessFactory? FindField(ModuleContext context, string fieldName) =>
+        DeclaredFields.Get(fieldName);
 
     public virtual RealizedType
-        FillGenerics(ModuleContext context, Dictionary<string, RealizedType>? typeArguments) {
-        return this;
-    }
+        FillGenerics(ModuleContext context, Dictionary<string, RealizedType>? typeArguments) => this;
 
     public virtual void EmitInitialize(IBlockContext context, IBlockVariable variable) {
     }

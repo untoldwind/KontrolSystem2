@@ -44,9 +44,7 @@ public class RecordCreate : Expression {
         }
     }
 
-    public override TO2Type ResultType(IBlockContext context) {
-        return DeriveType(context);
-    }
+    public override TO2Type ResultType(IBlockContext context) => DeriveType(context);
 
     public override void Prepare(IBlockContext context) {
         foreach (var item in items.Values) item.Prepare(context);

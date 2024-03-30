@@ -37,13 +37,9 @@ public class IfThen : Expression, IVariableContainer {
 
     public IVariableContainer? ParentContainer { get; private set; }
 
-    public TO2Type? FindVariableLocal(IBlockContext context, string name) {
-        return condition.GetScopeVariables(context)?.Get(name);
-    }
+    public TO2Type? FindVariableLocal(IBlockContext context, string name) => condition.GetScopeVariables(context)?.Get(name);
 
-    public override TO2Type ResultType(IBlockContext context) {
-        return new OptionType(thenExpression.ResultType(context));
-    }
+    public override TO2Type ResultType(IBlockContext context) => new OptionType(thenExpression.ResultType(context));
 
     public override void Prepare(IBlockContext context) {
     }
@@ -208,9 +204,7 @@ public class IfThenElse(
 
     public IVariableContainer? ParentContainer { get; private set; }
 
-    public TO2Type? FindVariableLocal(IBlockContext context, string name) {
-        return condition.GetScopeVariables(context)?.Get(name);
-    }
+    public TO2Type? FindVariableLocal(IBlockContext context, string name) => condition.GetScopeVariables(context)?.Get(name);
 
     public override TO2Type ResultType(IBlockContext context) {
         TO2Type thenType = thenExpression.ResultType(context).UnderlyingType(context.ModuleContext);

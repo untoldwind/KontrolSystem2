@@ -26,9 +26,7 @@ public class BinaryBool : Expression {
         }
     }
 
-    public override TO2Type ResultType(IBlockContext context) {
-        return BuiltinType.Bool;
-    }
+    public override TO2Type ResultType(IBlockContext context) => BuiltinType.Bool;
 
     public override void Prepare(IBlockContext context) {
         left.Prepare(context);

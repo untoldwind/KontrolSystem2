@@ -36,29 +36,21 @@ public class OptionType : RealizedType {
 
     public override string LocalName => "Option";
 
-    public override bool IsValid(ModuleContext context) {
-        return elementType.IsValid(context);
-    }
+    public override bool IsValid(ModuleContext context) => elementType.IsValid(context);
 
-    public override RealizedType UnderlyingType(ModuleContext context) {
-        return new OptionType(elementType.UnderlyingType(context));
-    }
+    public override RealizedType UnderlyingType(ModuleContext context) =>
+        new OptionType(elementType.UnderlyingType(context));
 
-    public override Type GeneratedType(ModuleContext context) {
-        return DeriveType(context);
-    }
+    public override Type GeneratedType(ModuleContext context) => DeriveType(context);
 
-    public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) {
-        return allowedSuffixOperators;
-    }
+    public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) => allowedSuffixOperators;
 
     public override IUnapplyEmitter?
-        AllowedUnapplyPatterns(ModuleContext context, string unapplyName, int itemCount) {
-        return unapplyName switch {
+        AllowedUnapplyPatterns(ModuleContext context, string unapplyName, int itemCount) =>
+        unapplyName switch {
             "Some" when itemCount == 1 => new OptionSomeUnapplyEmitter(this),
             _ => null,
         };
-    }
 
     public override bool IsAssignableFrom(ModuleContext context, TO2Type otherType) {
         if (otherType.UnderlyingType(context) is OptionType otherOption)
@@ -77,13 +69,11 @@ public class OptionType : RealizedType {
     }
 
     public override RealizedType
-        FillGenerics(ModuleContext context, Dictionary<string, RealizedType>? typeArguments) {
-        return new OptionType(elementType.UnderlyingType(context).FillGenerics(context, typeArguments));
-    }
+        FillGenerics(ModuleContext context, Dictionary<string, RealizedType>? typeArguments) =>
+        new OptionType(elementType.UnderlyingType(context).FillGenerics(context, typeArguments));
 
-    private Type DeriveType(ModuleContext context) {
-        return typeof(Option<>).MakeGenericType(elementType.GeneratedType(context));
-    }
+    private Type DeriveType(ModuleContext context) =>
+        typeof(Option<>).MakeGenericType(elementType.GeneratedType(context));
 
     public override IEnumerable<(string name, RealizedType type)> InferGenericArgument(ModuleContext context,
         RealizedType? concreteType) {
@@ -132,17 +122,16 @@ internal class OptionFieldAccess : IFieldAccessFactory {
         var generateType = optionType.GeneratedType(context);
         return field switch {
             OptionField.Defined => new BoundFieldAccessEmitter(BuiltinType.Bool, generateType,
-                            [generateType.GetField("defined")]),
-            OptionField.Value => new BoundFieldAccessEmitter(optionType.elementType.UnderlyingType(context), generateType,
-                            [generateType.GetField("value")]),
+                [generateType.GetField("defined")]),
+            OptionField.Value => new BoundFieldAccessEmitter(optionType.elementType.UnderlyingType(context),
+                generateType,
+                [generateType.GetField("value")]),
             _ => throw new InvalidOperationException($"Unknown option field: {field}"),
         };
     }
 
     public IFieldAccessFactory
-        FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) {
-        return this;
-    }
+        FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) => this;
 }
 
 internal class AssignSome : IAssignEmitter {
@@ -204,9 +193,8 @@ internal class OptionBitOrOperator : IOperatorEmitter {
         this.optionType = optionType;
     }
 
-    public bool Accepts(ModuleContext context, TO2Type otherType) {
-        return optionType.elementType.IsAssignableFrom(context, otherType);
-    }
+    public bool Accepts(ModuleContext context, TO2Type otherType) =>
+        optionType.elementType.IsAssignableFrom(context, otherType);
 
     public TO2Type OtherType => optionType.elementType;
 
@@ -258,9 +246,7 @@ internal class OptionBitOrOperator : IOperatorEmitter {
         context.IL.MarkLabel(end);
     }
 
-    public IOperatorEmitter FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) {
-        return this;
-    }
+    public IOperatorEmitter FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) => this;
 
     public IREPLValue Eval(Node node, IREPLValue left, IREPLValue? right) {
         if (left.Type is OptionType lot && left.Value is IAnyOption lo)
@@ -350,9 +336,7 @@ internal class OptionUnwrapOperator : IOperatorEmitter {
         variable.EmitStore(context);
     }
 
-    public IOperatorEmitter FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) {
-        return this;
-    }
+    public IOperatorEmitter FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) => this;
 
     public IREPLValue Eval(Node node, IREPLValue left, IREPLValue? right) {
         if (left.Type is OptionType lot && left.Value is IAnyOption lo)
@@ -412,9 +396,7 @@ internal class OptionMapFactory : IMethodInvokeFactory {
     }
 
     public IMethodInvokeFactory
-        FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) {
-        return this;
-    }
+        FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) => this;
 }
 
 internal class OptionThenFactory : IMethodInvokeFactory {
@@ -473,9 +455,7 @@ internal class OptionThenFactory : IMethodInvokeFactory {
     }
 
     public IMethodInvokeFactory
-        FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) {
-        return this;
-    }
+        FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) => this;
 }
 
 internal class OptionOkOrFactory : IMethodInvokeFactory {
@@ -493,13 +473,12 @@ internal class OptionOkOrFactory : IMethodInvokeFactory {
 
     public bool IsConst => true;
 
-    public TypeHint? ArgumentHint(int argumentIdx) {
-        return null;
-    }
+    public TypeHint? ArgumentHint(int argumentIdx) => null;
 
     public TO2Type DeclaredReturn => new ResultType(optionType.elementType);
 
-    public List<FunctionParameter> DeclaredParameters => [new("if_none", BuiltinType.String, "Error message if option is undefined")];
+    public List<FunctionParameter> DeclaredParameters =>
+        [new("if_none", BuiltinType.String, "Error message if option is undefined")];
 
     public IMethodInvokeEmitter? Create(IBlockContext context, List<TO2Type> arguments, Node node) {
         var generatedType = optionType.GeneratedType(context.ModuleContext);
@@ -515,9 +494,7 @@ internal class OptionOkOrFactory : IMethodInvokeFactory {
     }
 
     public IMethodInvokeFactory
-        FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) {
-        return this;
-    }
+        FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) => this;
 }
 
 internal class OptionSomeUnapplyEmitter : IUnapplyEmitter {

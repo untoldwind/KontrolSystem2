@@ -14,9 +14,7 @@ public class FieldGet(
         set => target.VariableContainer = value;
     }
 
-    public bool IsConst(IBlockContext context) {
-        return (target as IAssignContext)?.IsConst(context) ?? true;
-    }
+    public bool IsConst(IBlockContext context) => (target as IAssignContext)?.IsConst(context) ?? true;
 
     public override TO2Type ResultType(IBlockContext context) {
         var targetType = target.ResultType(context);

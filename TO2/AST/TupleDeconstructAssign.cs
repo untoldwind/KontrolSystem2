@@ -21,9 +21,7 @@ public class TupleDeconstructAssign : Expression {
         set => expression.VariableContainer = value;
     }
 
-    public override TO2Type ResultType(IBlockContext context) {
-        return BuiltinType.Unit;
-    }
+    public override TO2Type ResultType(IBlockContext context) => BuiltinType.Unit;
 
     public override void Prepare(IBlockContext context) {
     }

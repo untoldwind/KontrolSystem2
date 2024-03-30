@@ -9,8 +9,13 @@ using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST;
 
-public readonly struct StructField(string name, TO2Type type, string description, Expression initializer,
-    Position start = new(), Position end = new()) {
+public readonly struct StructField(
+    string name,
+    TO2Type type,
+    string description,
+    Expression initializer,
+    Position start = new(),
+    Position end = new()) {
     public readonly string name = name;
     public readonly TO2Type type = type;
     public readonly string description = description;
@@ -65,19 +70,14 @@ public class StructDeclaration : Node, IModuleItem, IVariableContainer {
         return [];
     }
 
-    public IEnumerable<StructuralError> TryVerifyFunctions(ModuleContext context) {
-        return [];
-    }
+    public IEnumerable<StructuralError> TryVerifyFunctions(ModuleContext context) => [];
 
-    public IEnumerable<StructuralError> TryImportFunctions(ModuleContext context) {
-        return [];
-    }
+    public IEnumerable<StructuralError> TryImportFunctions(ModuleContext context) => [];
 
     public IVariableContainer? ParentContainer => null;
 
-    public TO2Type? FindVariableLocal(IBlockContext context, string variableName) {
-        return constructorParameters.Find(p => p.name == variableName)?.type;
-    }
+    public TO2Type? FindVariableLocal(IBlockContext context, string variableName) =>
+        constructorParameters.Find(p => p.name == variableName)?.type;
 
     public void EmitConstructor(IBlockContext context) {
         foreach (var field in fields.Where(e => e.IsRight).Select(e => e.Right)) {

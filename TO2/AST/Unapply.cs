@@ -25,9 +25,7 @@ public class Unapply(
         set => expression.VariableContainer = value;
     }
 
-    public override TO2Type ResultType(IBlockContext context) {
-        return BuiltinType.Bool;
-    }
+    public override TO2Type ResultType(IBlockContext context) => BuiltinType.Bool;
 
     public override Dictionary<string, TO2Type>? GetScopeVariables(IBlockContext context) {
         var valueType = expression.ResultType(context);

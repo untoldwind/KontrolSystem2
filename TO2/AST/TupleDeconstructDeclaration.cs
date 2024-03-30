@@ -36,9 +36,7 @@ public class TupleDeconstructDeclaration : Node, IBlockItem {
         set { }
     }
 
-    public TO2Type ResultType(IBlockContext context) {
-        return BuiltinType.Unit;
-    }
+    public TO2Type ResultType(IBlockContext context) => BuiltinType.Unit;
 
     public void Prepare(IBlockContext context) {
     }

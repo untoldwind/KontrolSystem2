@@ -29,9 +29,7 @@ public class FunctionParameter(
 
     public bool HasDefault => defaultValue != null;
 
-    public override string ToString() {
-        return $"{name} : {type}";
-    }
+    public override string ToString() => $"{name} : {type}";
 
     public override REPLValueFuture Eval(REPLContext context) {
         throw new NotSupportedException("Function are not supported in REPL mode");
@@ -62,17 +60,11 @@ public class FunctionDeclaration : Node, IModuleItem, IVariableContainer {
         this.expression.TypeHint = context => this.declaredReturn.UnderlyingType(context.ModuleContext);
     }
 
-    public IEnumerable<StructuralError> TryDeclareTypes(ModuleContext context) {
-        return [];
-    }
+    public IEnumerable<StructuralError> TryDeclareTypes(ModuleContext context) => [];
 
-    public IEnumerable<StructuralError> TryImportTypes(ModuleContext context) {
-        return [];
-    }
+    public IEnumerable<StructuralError> TryImportTypes(ModuleContext context) => [];
 
-    public IEnumerable<StructuralError> TryImportConstants(ModuleContext context) {
-        return [];
-    }
+    public IEnumerable<StructuralError> TryImportConstants(ModuleContext context) => [];
 
     public IEnumerable<StructuralError> TryVerifyFunctions(ModuleContext context) {
         var errors =
@@ -88,9 +80,7 @@ public class FunctionDeclaration : Node, IModuleItem, IVariableContainer {
         return errors;
     }
 
-    public IEnumerable<StructuralError> TryImportFunctions(ModuleContext context) {
-        return [];
-    }
+    public IEnumerable<StructuralError> TryImportFunctions(ModuleContext context) => [];
 
     public IVariableContainer? ParentContainer => null;
 

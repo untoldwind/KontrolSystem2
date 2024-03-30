@@ -25,18 +25,13 @@ public class RecordTupleType : RecordType {
 
     public override Dictionary<string, IFieldAccessFactory> DeclaredFields { get; }
 
-    public override bool IsValid(ModuleContext context) {
-        return itemTypes.Count > 0 && itemTypes.Values.All(t => t.IsValid(context));
-    }
+    public override bool IsValid(ModuleContext context) => itemTypes.Count > 0 && itemTypes.Values.All(t => t.IsValid(context));
 
-    public override RealizedType UnderlyingType(ModuleContext context) {
-        return new RecordTupleType(itemTypes.Select(kv => (kv.Key, kv.Value.UnderlyingType(context) as TO2Type)));
-    }
+    public override RealizedType UnderlyingType(ModuleContext context) => new RecordTupleType(itemTypes.Select(kv => (kv.Key, kv.Value.UnderlyingType(context) as TO2Type)));
 
-    public override Type GeneratedType(ModuleContext context) {
-        return generatedType ??=
+    public override Type GeneratedType(ModuleContext context) =>
+        generatedType ??=
             TupleType.DeriveTupleType(itemTypes.Values.Select(t => t.GeneratedType(context)).ToList());
-    }
 
     public override IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) {
         var newGeneratedType = GeneratedType(context);
@@ -47,9 +42,7 @@ public class RecordTupleType : RecordType {
             : DefaultAssignEmitter.Instance;
     }
 
-    internal override IOperatorEmitter CombineFrom(RecordType otherType) {
-        return new AssignRecordTuple(this, otherType);
-    }
+    internal override IOperatorEmitter CombineFrom(RecordType otherType) => new AssignRecordTuple(this, otherType);
 }
 
 internal class AssignRecordTuple : RecordTypeAssignEmitter<RecordTupleType> {

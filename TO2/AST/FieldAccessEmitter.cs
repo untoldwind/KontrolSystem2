@@ -86,9 +86,7 @@ public class InlineFieldAccessEmitter(RealizedType fieldType, REPLFieldAccess re
     public void EmitStore(IBlockContext context) {
     }
 
-    public IREPLValue EvalGet(Node node, IREPLValue target) {
-        return replFieldAccess(node, target);
-    }
+    public IREPLValue EvalGet(Node node, IREPLValue target) => replFieldAccess(node, target);
 
     public IREPLValue EvalAssign(Node node, IREPLValue target, IREPLValue value) {
         throw new REPLException(node, "Field assign not supported");
@@ -122,9 +120,7 @@ public class BoundFieldAccessFactory : IFieldAccessFactory {
 
     public bool CanStore => !fieldInfos.Last().IsInitOnly;
 
-    public IFieldAccessEmitter Create(ModuleContext context) {
-        return new BoundFieldAccessEmitter(fieldType(), fieldTarget, fieldInfos);
-    }
+    public IFieldAccessEmitter Create(ModuleContext context) => new BoundFieldAccessEmitter(fieldType(), fieldTarget, fieldInfos);
 
     public IFieldAccessFactory FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) {
         if (fieldTarget.IsGenericTypeDefinition) {
@@ -263,10 +259,9 @@ public class BoundPropertyLikeFieldAccessFactory : IFieldAccessFactory {
 
     public bool CanStore => setter != null;
 
-    public IFieldAccessEmitter Create(ModuleContext context) {
-        return new BoundPropertyLikeFieldAccessEmitter(fieldType(), methodTarget, getter, setter, isAsyncStore,
+    public IFieldAccessEmitter Create(ModuleContext context) =>
+        new BoundPropertyLikeFieldAccessEmitter(fieldType(), methodTarget, getter, setter, isAsyncStore,
             opCodes);
-    }
 
     public IFieldAccessFactory FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) {
         if (methodTarget.IsGenericTypeDefinition) {

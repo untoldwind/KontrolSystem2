@@ -27,9 +27,7 @@ public class RangeCreate : Expression {
         }
     }
 
-    public override TO2Type ResultType(IBlockContext context) {
-        return BuiltinType.Range;
-    }
+    public override TO2Type ResultType(IBlockContext context) => BuiltinType.Range;
 
     public override void EmitCode(IBlockContext context, bool dropResult) {
         if (dropResult) return;

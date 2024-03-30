@@ -184,10 +184,9 @@ public class Lambda : Expression, IVariableContainer {
         return new LambdaClass([.. clonedVariables.Values], constructorBuilder, lambdaContext.MethodBuilder);
     }
 
-    private List<FunctionParameter> FixedParameters(FunctionType lambdaType) {
-        return parameters.Zip(lambdaType.parameterTypes, (p, f) => new FunctionParameter(p.name, p.type ?? f, null))
+    private List<FunctionParameter> FixedParameters(FunctionType lambdaType) =>
+        parameters.Zip(lambdaType.parameterTypes, (p, f) => new FunctionParameter(p.name, p.type ?? f, null))
             .ToList();
-    }
 
     public override REPLValueFuture Eval(REPLContext context) {
         throw new NotSupportedException("Lambda are not supported in REPL mode");

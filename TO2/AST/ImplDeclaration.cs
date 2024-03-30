@@ -13,13 +13,9 @@ public class ImplDeclaration(
     Position start = new(),
     Position end = new())
     : Node(start, end), IModuleItem {
-    public IEnumerable<StructuralError> TryDeclareTypes(ModuleContext context) {
-        return [];
-    }
+    public IEnumerable<StructuralError> TryDeclareTypes(ModuleContext context) => [];
 
-    public IEnumerable<StructuralError> TryImportTypes(ModuleContext context) {
-        return [];
-    }
+    public IEnumerable<StructuralError> TryImportTypes(ModuleContext context) => [];
 
     public IEnumerable<StructuralError> TryImportConstants(ModuleContext context) {
         var structDelegate = context.mappedTypes.Get(name) as StructTypeAliasDelegate;
@@ -50,9 +46,7 @@ public class ImplDeclaration(
         return errors;
     }
 
-    public IEnumerable<StructuralError> TryImportFunctions(ModuleContext context) {
-        return [];
-    }
+    public IEnumerable<StructuralError> TryImportFunctions(ModuleContext context) => [];
 
     public override REPLValueFuture Eval(REPLContext context) {
         throw new NotSupportedException("Structs are not supported in REPL mode");

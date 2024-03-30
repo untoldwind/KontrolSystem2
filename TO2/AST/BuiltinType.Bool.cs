@@ -61,20 +61,12 @@ public abstract partial class BuiltinType {
 
         public override string Name => "bool";
 
-        public override Type GeneratedType(ModuleContext context) {
-            return typeof(bool);
-        }
+        public override Type GeneratedType(ModuleContext context) => typeof(bool);
 
-        public override IOperatorCollection AllowedPrefixOperators(ModuleContext context) {
-            return allowedPrefixOperators;
-        }
+        public override IOperatorCollection AllowedPrefixOperators(ModuleContext context) => allowedPrefixOperators;
 
-        public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) {
-            return allowedSuffixOperators;
-        }
+        public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) => allowedSuffixOperators;
 
-        public override IREPLValue REPLCast(object? value) {
-            return new REPLBool((bool)value!);
-        }
+        public override IREPLValue REPLCast(object? value) => new REPLBool((bool)value!);
     }
 }

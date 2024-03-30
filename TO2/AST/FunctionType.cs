@@ -20,9 +20,7 @@ public class FunctionType(bool isAsync, List<TO2Type> parameterTypes, TO2Type re
 
     public override Dictionary<string, IFieldAccessFactory> DeclaredFields => BuiltinType.NoFields;
 
-    public override bool IsValid(ModuleContext context) {
-        return returnType.IsValid(context) && parameterTypes.All(t => t.IsValid(context));
-    }
+    public override bool IsValid(ModuleContext context) => returnType.IsValid(context) && parameterTypes.All(t => t.IsValid(context));
 
     public override RealizedType UnderlyingType(ModuleContext context) {
         return new FunctionType(isAsync,
@@ -57,17 +55,11 @@ public class FunctionType(bool isAsync, List<TO2Type> parameterTypes, TO2Type re
     }
 
 
-    public override IOperatorCollection AllowedPrefixOperators(ModuleContext context) {
-        return BuiltinType.NoOperators;
-    }
+    public override IOperatorCollection AllowedPrefixOperators(ModuleContext context) => BuiltinType.NoOperators;
 
-    public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) {
-        return BuiltinType.NoOperators;
-    }
+    public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) => BuiltinType.NoOperators;
 
-    public override IIndexAccessEmitter? AllowedIndexAccess(ModuleContext context, IndexSpec indexSpec) {
-        return null;
-    }
+    public override IIndexAccessEmitter? AllowedIndexAccess(ModuleContext context, IndexSpec indexSpec) => null;
 
     public override RealizedType
         FillGenerics(ModuleContext context, Dictionary<string, RealizedType>? typeArguments) {

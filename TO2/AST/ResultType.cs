@@ -30,21 +30,14 @@ public class ResultType : RealizedType {
 
     public override string LocalName => "Result";
 
-    public override bool IsValid(ModuleContext context) {
-        return successType.IsValid(context);
-    }
+    public override bool IsValid(ModuleContext context) => successType.IsValid(context);
 
-    public override RealizedType UnderlyingType(ModuleContext context) {
-        return new ResultType(successType.UnderlyingType(context));
-    }
+    public override RealizedType UnderlyingType(ModuleContext context) =>
+        new ResultType(successType.UnderlyingType(context));
 
-    public override Type GeneratedType(ModuleContext context) {
-        return DeriveType(context);
-    }
+    public override Type GeneratedType(ModuleContext context) => DeriveType(context);
 
-    public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) {
-        return allowedSuffixOperators;
-    }
+    public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) => allowedSuffixOperators;
 
     public override IUnapplyEmitter?
         AllowedUnapplyPatterns(ModuleContext context, string unapplyName, int itemCount) {
@@ -58,7 +51,7 @@ public class ResultType : RealizedType {
     public override bool IsAssignableFrom(ModuleContext context, TO2Type otherType) {
         if (otherType.UnderlyingType(context) is ResultType otherResultType)
             return successType == otherResultType.successType ||
-                    successType.IsAssignableFrom(context, otherResultType.successType);
+                   successType.IsAssignableFrom(context, otherResultType.successType);
 
         return successType == otherType || successType.IsAssignableFrom(context, otherType);
     }
@@ -130,11 +123,12 @@ internal class ResultFieldAccess : IFieldAccessFactory {
         var generateType = resultType.GeneratedType(context);
         return field switch {
             ResultField.Success => new BoundFieldAccessEmitter(BuiltinType.Bool, generateType,
-                            [generateType.GetField("success")]),
-            ResultField.Value => new BoundFieldAccessEmitter(resultType.successType.UnderlyingType(context), generateType,
-                            [generateType.GetField("value")]),
+                [generateType.GetField("success")]),
+            ResultField.Value => new BoundFieldAccessEmitter(resultType.successType.UnderlyingType(context),
+                generateType,
+                [generateType.GetField("value")]),
             ResultField.Error => new BoundFieldAccessEmitter(BuiltinType.Error.UnderlyingType(context), generateType,
-                            [generateType.GetField("error")]),
+                [generateType.GetField("error")]),
             _ => throw new InvalidOperationException($"Unknown option field: {field}"),
         };
     }
@@ -209,9 +203,7 @@ internal class ResultUnwrapOperator : IOperatorEmitter {
 
     public TO2Type ResultType => resultType.successType;
 
-    public bool Accepts(ModuleContext context, TO2Type otherType) {
-        return otherType == BuiltinType.Unit;
-    }
+    public bool Accepts(ModuleContext context, TO2Type otherType) => otherType == BuiltinType.Unit;
 
     public void EmitCode(IBlockContext context, Node target) {
         if (context.ExpectedReturn.UnderlyingType(context.ModuleContext) is not ResultType expectedReturn) {
@@ -274,9 +266,7 @@ internal class ResultUnwrapOperator : IOperatorEmitter {
         variable.EmitStore(context);
     }
 
-    public IOperatorEmitter FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) {
-        return this;
-    }
+    public IOperatorEmitter FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) => this;
 
     public IREPLValue Eval(Node node, IREPLValue left, IREPLValue? right) {
         if (left.Type is ResultType lrt && left.Value is IAnyResult lr)

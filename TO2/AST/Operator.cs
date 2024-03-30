@@ -120,13 +120,9 @@ public class DirectOperatorEmitter(
         variable.EmitStore(context);
     }
 
-    public IOperatorEmitter FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) {
-        return this;
-    }
+    public IOperatorEmitter FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) => this;
 
-    public IREPLValue Eval(Node node, IREPLValue left, IREPLValue? right) {
-        return replOperator(node, left, right);
-    }
+    public IREPLValue Eval(Node node, IREPLValue left, IREPLValue? right) => replOperator(node, left, right);
 }
 
 public class StaticMethodOperatorEmitter : IOperatorEmitter {
@@ -146,9 +142,7 @@ public class StaticMethodOperatorEmitter : IOperatorEmitter {
         this.postOpCodes = postOpCodes;
     }
 
-    public bool Accepts(ModuleContext context, TO2Type otherType) {
-        return otherTypeFactory().IsAssignableFrom(context, otherType);
-    }
+    public bool Accepts(ModuleContext context, TO2Type otherType) => otherTypeFactory().IsAssignableFrom(context, otherType);
 
     public TO2Type OtherType => otherTypeFactory();
 

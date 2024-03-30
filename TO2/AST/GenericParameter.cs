@@ -9,13 +9,9 @@ namespace KontrolSystem.TO2.AST;
 public class GenericParameter(string name) : RealizedType {
     public override string Name => name;
 
-    public override Type GeneratedType(ModuleContext context) {
-        return typeof(object);
-    }
+    public override Type GeneratedType(ModuleContext context) => typeof(object);
 
-    public override RealizedType UnderlyingType(ModuleContext context) {
-        return this;
-    }
+    public override RealizedType UnderlyingType(ModuleContext context) => this;
 
     public override RealizedType FillGenerics(ModuleContext context,
         Dictionary<string, RealizedType>? typeArguments) {

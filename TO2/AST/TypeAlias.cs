@@ -15,13 +15,9 @@ public class TypeAlias(
     Position start = new(),
     Position end = new())
     : Node(start, end), IModuleItem {
-    public IEnumerable<StructuralError> TryImportConstants(ModuleContext context) {
-        return [];
-    }
+    public IEnumerable<StructuralError> TryImportConstants(ModuleContext context) => [];
 
-    public IEnumerable<StructuralError> TryImportFunctions(ModuleContext context) {
-        return [];
-    }
+    public IEnumerable<StructuralError> TryImportFunctions(ModuleContext context) => [];
 
     public IEnumerable<StructuralError> TryDeclareTypes(ModuleContext context) {
         if (exported) context.exportedTypes!.Add((name, new TypeAliasDelegate(context, type, description, this)));
@@ -40,9 +36,7 @@ public class TypeAlias(
         return [];
     }
 
-    public IEnumerable<StructuralError> TryVerifyFunctions(ModuleContext context) {
-        return [];
-    }
+    public IEnumerable<StructuralError> TryVerifyFunctions(ModuleContext context) => [];
 
     public override REPLValueFuture Eval(REPLContext context) {
         if (context.replModuleContext.mappedTypes.ContainsKey(name))
@@ -71,34 +65,26 @@ public class TypeAliasDelegate : TO2Type {
 
     public override string Name => aliasedType.Name;
 
-    public override IFieldAccessFactory? FindField(ModuleContext context, string fieldName) {
-        return aliasedType.FindField(declaredModule, fieldName);
-    }
+    public override IFieldAccessFactory? FindField(ModuleContext context, string fieldName) =>
+        aliasedType.FindField(declaredModule, fieldName);
 
-    public override IIndexAccessEmitter? AllowedIndexAccess(ModuleContext context, IndexSpec indexSpec) {
-        return aliasedType.AllowedIndexAccess(declaredModule, indexSpec);
-    }
+    public override IIndexAccessEmitter? AllowedIndexAccess(ModuleContext context, IndexSpec indexSpec) =>
+        aliasedType.AllowedIndexAccess(declaredModule, indexSpec);
 
-    public override IMethodInvokeFactory? FindMethod(ModuleContext context, string methodName) {
-        return aliasedType.FindMethod(declaredModule, methodName);
-    }
+    public override IMethodInvokeFactory? FindMethod(ModuleContext context, string methodName) =>
+        aliasedType.FindMethod(declaredModule, methodName);
 
-    public override IOperatorCollection AllowedPrefixOperators(ModuleContext context) {
-        return aliasedType.AllowedPrefixOperators(declaredModule);
-    }
+    public override IOperatorCollection AllowedPrefixOperators(ModuleContext context) =>
+        aliasedType.AllowedPrefixOperators(declaredModule);
 
-    public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) {
-        return aliasedType.AllowedSuffixOperators(declaredModule);
-    }
+    public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) =>
+        aliasedType.AllowedSuffixOperators(declaredModule);
 
     public override IUnapplyEmitter?
-        AllowedUnapplyPatterns(ModuleContext context, string unapplyName, int itemCount) {
-        return aliasedType.AllowedUnapplyPatterns(context, unapplyName, itemCount);
-    }
+        AllowedUnapplyPatterns(ModuleContext context, string unapplyName, int itemCount) =>
+        aliasedType.AllowedUnapplyPatterns(context, unapplyName, itemCount);
 
-    public override Type GeneratedType(ModuleContext context) {
-        return aliasedType.GeneratedType(declaredModule);
-    }
+    public override Type GeneratedType(ModuleContext context) => aliasedType.GeneratedType(declaredModule);
 
     public override RealizedType UnderlyingType(ModuleContext context) {
         if (lookingUp)

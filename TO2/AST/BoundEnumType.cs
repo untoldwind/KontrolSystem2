@@ -187,9 +187,7 @@ internal class EnumConstantFieldAccessEmitter : IFieldAccessEmitter {
     public void EmitStore(IBlockContext context) {
     }
 
-    public IREPLValue EvalGet(Node node, IREPLValue target) {
-        return new REPLAny(boundEnumType, Enum.ToObject(boundEnumType.enumType, value));
-    }
+    public IREPLValue EvalGet(Node node, IREPLValue target) => new REPLAny(boundEnumType, Enum.ToObject(boundEnumType.enumType, value));
 
     public IREPLValue EvalAssign(Node node, IREPLValue target, IREPLValue value) {
         throw new REPLException(node, "Field assign not supported");

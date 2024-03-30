@@ -70,29 +70,17 @@ public class RangeType : RealizedType {
 
     public override string Name => "Range";
 
-    public override bool IsValid(ModuleContext context) {
-        return true;
-    }
+    public override bool IsValid(ModuleContext context) => true;
 
-    public override RealizedType UnderlyingType(ModuleContext context) {
-        return this;
-    }
+    public override RealizedType UnderlyingType(ModuleContext context) => this;
 
-    public override Type GeneratedType(ModuleContext context) {
-        return typeof(Range);
-    }
+    public override Type GeneratedType(ModuleContext context) => typeof(Range);
 
-    public override IIndexAccessEmitter? AllowedIndexAccess(ModuleContext context, IndexSpec indexSpec) {
-        return null;
-    }
+    public override IIndexAccessEmitter? AllowedIndexAccess(ModuleContext context, IndexSpec indexSpec) => null;
 
-    public override IForInSource ForInSource(ModuleContext context, TO2Type? typeHint) {
-        return new RangeForInSource();
-    }
+    public override IForInSource ForInSource(ModuleContext context, TO2Type? typeHint) => new RangeForInSource();
 
-    public override IREPLValue REPLCast(object? value) {
-        return new REPLRange((Range)value!);
-    }
+    public override IREPLValue REPLCast(object? value) => new REPLRange((Range)value!);
 }
 
 public class RangeForInSource : IForInSource {

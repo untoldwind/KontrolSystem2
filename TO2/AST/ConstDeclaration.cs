@@ -23,25 +23,15 @@ public class ConstDeclaration : Node, IModuleItem {
         this.expression.TypeHint = context => this.type.UnderlyingType(context.ModuleContext);
     }
 
-    public IEnumerable<StructuralError> TryDeclareTypes(ModuleContext context) {
-        return [];
-    }
+    public IEnumerable<StructuralError> TryDeclareTypes(ModuleContext context) => [];
 
-    public IEnumerable<StructuralError> TryImportConstants(ModuleContext context) {
-        return [];
-    }
+    public IEnumerable<StructuralError> TryImportConstants(ModuleContext context) => [];
 
-    public IEnumerable<StructuralError> TryImportFunctions(ModuleContext context) {
-        return [];
-    }
+    public IEnumerable<StructuralError> TryImportFunctions(ModuleContext context) => [];
 
-    public IEnumerable<StructuralError> TryImportTypes(ModuleContext context) {
-        return [];
-    }
+    public IEnumerable<StructuralError> TryImportTypes(ModuleContext context) => [];
 
-    public IEnumerable<StructuralError> TryVerifyFunctions(ModuleContext context) {
-        return [];
-    }
+    public IEnumerable<StructuralError> TryVerifyFunctions(ModuleContext context) => [];
 
     public override REPLValueFuture Eval(REPLContext context) {
         var expressionFuture = expression.Eval(context);
