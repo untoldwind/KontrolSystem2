@@ -434,11 +434,11 @@ Add sub panel with horizontal layout to the container
 
 Parameters
 
-| Name    | Type           | Optional | Description                                    |
-| ------- | -------------- | -------- | ---------------------------------------------- |
-| gap     | float          | x        | Gap between each element of the panel          |
-| align   | ksp::ui::Align | x        | Alignment of the panel in its parent container |
-| stretch | float          | x        |                                                |
+| Name    | Type           | Optional | Description                                                          |
+| ------- | -------------- | -------- | -------------------------------------------------------------------- |
+| gap     | float          | x        | Gap between each element of the panel                                |
+| align   | ksp::ui::Align | x        | Alignment of the panel in its parent container                       |
+| stretch | float          | x        | Relative amount of available space to acquire (beyond minimal space) |
 
 
 ##### add_horizontal_slider
@@ -595,6 +595,30 @@ Parameters
 | gap     | float          | x        | Gap between each element of the panel                                |
 | align   | ksp::ui::Align | x        | Alignment of the panel in its parent container                       |
 | stretch | float          | x        | Relative amount of available space to acquire (beyond minimal space) |
+
+
+##### add_vertical_scroll
+
+```rust
+container.add_vertical_scroll ( minWidth : float,
+                                minHeight : float,
+                                gap : float,
+                                align : ksp::ui::Align,
+                                stretch : float ) -> ksp::ui::Container
+```
+
+Add vertical scroll view to the container
+
+
+Parameters
+
+| Name      | Type           | Optional | Description                                                          |
+| --------- | -------------- | -------- | -------------------------------------------------------------------- |
+| minWidth  | float          |          | Minimum width of the scroll view                                     |
+| minHeight | float          |          | Minimum height of the scroll view                                    |
+| gap       | float          | x        | Gap between each element of the panel                                |
+| align     | ksp::ui::Align | x        | Alignment of the panel in its parent container                       |
+| stretch   | float          | x        | Relative amount of available space to acquire (beyond minimal space) |
 
 
 ##### remove
@@ -1703,11 +1727,11 @@ Add sub panel with horizontal layout to the container
 
 Parameters
 
-| Name    | Type           | Optional | Description                                    |
-| ------- | -------------- | -------- | ---------------------------------------------- |
-| gap     | float          | x        | Gap between each element of the panel          |
-| align   | ksp::ui::Align | x        | Alignment of the panel in its parent container |
-| stretch | float          | x        |                                                |
+| Name    | Type           | Optional | Description                                                          |
+| ------- | -------------- | -------- | -------------------------------------------------------------------- |
+| gap     | float          | x        | Gap between each element of the panel                                |
+| align   | ksp::ui::Align | x        | Alignment of the panel in its parent container                       |
+| stretch | float          | x        | Relative amount of available space to acquire (beyond minimal space) |
 
 
 ##### add_horizontal_slider
@@ -1864,6 +1888,30 @@ Parameters
 | gap     | float          | x        | Gap between each element of the panel                                |
 | align   | ksp::ui::Align | x        | Alignment of the panel in its parent container                       |
 | stretch | float          | x        | Relative amount of available space to acquire (beyond minimal space) |
+
+
+##### add_vertical_scroll
+
+```rust
+window.add_vertical_scroll ( minWidth : float,
+                             minHeight : float,
+                             gap : float,
+                             align : ksp::ui::Align,
+                             stretch : float ) -> ksp::ui::Container
+```
+
+Add vertical scroll view to the container
+
+
+Parameters
+
+| Name      | Type           | Optional | Description                                                          |
+| --------- | -------------- | -------- | -------------------------------------------------------------------- |
+| minWidth  | float          |          | Minimum width of the scroll view                                     |
+| minHeight | float          |          | Minimum height of the scroll view                                    |
+| gap       | float          | x        | Gap between each element of the panel                                |
+| align     | ksp::ui::Align | x        | Alignment of the panel in its parent container                       |
+| stretch   | float          | x        | Relative amount of available space to acquire (beyond minimal space) |
 
 
 ##### center

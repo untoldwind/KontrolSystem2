@@ -18,8 +18,8 @@ public abstract class UGUILayout(RectTransform containerTransform, UGUILayout.Pa
 
     public abstract Vector2 MinSize { get; }
 
-    public ILayoutEntry Add(GameObject child, Align align, Vector2 minSize, float stretch = 0.0f) {
-        var entry = new LayoutEntry(this, child, align, minSize, stretch);
+    public ILayoutEntry Add(GameObject child, Align align, Vector2 minSize, float stretch = 0.0f, Func<Vector2>? layoutAction = null) {
+        var entry = new LayoutEntry(this, child, align, minSize, stretch, layoutAction);
         layoutEntries.Add(entry);
         return entry;
     }
@@ -83,16 +83,14 @@ public abstract class UGUILayout(RectTransform containerTransform, UGUILayout.Pa
         }
     }
 
-    private readonly struct LayoutEntry(UGUILayout layout, GameObject child, UGUILayout.Align align, Vector2 minSize, float stretch) : ILayoutEntry {
-        private readonly UGUILayout layout = layout;
-        private readonly GameObject child = child;
-
+    private readonly struct LayoutEntry(UGUILayout layout, GameObject child, UGUILayout.Align align, Vector2 minSize, float stretch, Func<Vector2>? layoutAction) : ILayoutEntry {
         public RectTransform Transform => child.GetComponent<RectTransform>();
         public Vector2 MinSize { get; } = minSize;
         public float Stretch { get; } = stretch;
         public Align Align { get; } = align;
 
         public void Layout() {
+            layoutAction?.Invoke();
         }
 
         public void Remove() {

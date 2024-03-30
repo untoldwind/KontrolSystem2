@@ -26789,7 +26789,8 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": true
+                  "hasDefault": true,
+                  "description": "Relative amount of available space to acquire (beyond minimal space)"
                 }
               ],
               "returnType": {
@@ -26803,6 +26804,64 @@
               "name": "add_vertical_panel",
               "description": "Add sub panel with vertical layout to the container\n",
               "parameters": [
+                {
+                  "name": "gap",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": true,
+                  "description": "Gap between each element of the panel"
+                },
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::ui",
+                    "name": "Align"
+                  },
+                  "hasDefault": true,
+                  "description": "Alignment of the panel in its parent container"
+                },
+                {
+                  "name": "stretch",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": true,
+                  "description": "Relative amount of available space to acquire (beyond minimal space)"
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Container"
+              }
+            },
+            "add_vertical_scroll": {
+              "isAsync": false,
+              "name": "add_vertical_scroll",
+              "description": "Add vertical scroll view to the container\n",
+              "parameters": [
+                {
+                  "name": "minWidth",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false,
+                  "description": "Minimum width of the scroll view"
+                },
+                {
+                  "name": "minHeight",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false,
+                  "description": "Minimum height of the scroll view"
+                },
                 {
                   "name": "gap",
                   "type": {
@@ -29392,7 +29451,8 @@
                     "kind": "Builtin",
                     "name": "float"
                   },
-                  "hasDefault": true
+                  "hasDefault": true,
+                  "description": "Relative amount of available space to acquire (beyond minimal space)"
                 }
               ],
               "returnType": {
@@ -29406,6 +29466,64 @@
               "name": "add_vertical_panel",
               "description": "Add sub panel with vertical layout to the container\n",
               "parameters": [
+                {
+                  "name": "gap",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": true,
+                  "description": "Gap between each element of the panel"
+                },
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::ui",
+                    "name": "Align"
+                  },
+                  "hasDefault": true,
+                  "description": "Alignment of the panel in its parent container"
+                },
+                {
+                  "name": "stretch",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": true,
+                  "description": "Relative amount of available space to acquire (beyond minimal space)"
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Container"
+              }
+            },
+            "add_vertical_scroll": {
+              "isAsync": false,
+              "name": "add_vertical_scroll",
+              "description": "Add vertical scroll view to the container\n",
+              "parameters": [
+                {
+                  "name": "minWidth",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false,
+                  "description": "Minimum width of the scroll view"
+                },
+                {
+                  "name": "minHeight",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": false,
+                  "description": "Minimum height of the scroll view"
+                },
                 {
                   "name": "gap",
                   "type": {

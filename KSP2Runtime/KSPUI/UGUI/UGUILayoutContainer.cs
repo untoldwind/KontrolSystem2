@@ -59,4 +59,12 @@ public class UGUILayoutContainer : UGUIElement {
 
         return new UGUILayoutContainer(panel, layout);
     }
+
+    public static (GameObject scroll, UGUILayoutContainer container) VerticalScroll(float gap = 10, UGUILayout.Padding padding = default) {
+        var panel = UIFactory.Instance!.CreatePanel();
+        var layout = new UGUIVerticalLayout(panel.GetComponent<RectTransform>(), gap,
+            padding.Max(new UGUILayout.Padding(5, 5, 5, 5)));
+
+        return (UIFactory.Instance!.CreateScrollView(panel), new UGUILayoutContainer(panel, layout));
+    }
 }

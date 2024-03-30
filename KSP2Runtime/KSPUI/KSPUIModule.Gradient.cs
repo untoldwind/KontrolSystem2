@@ -7,19 +7,13 @@ namespace KontrolSystem.KSP.Runtime.KSPUI;
 
 public partial class KSPUIModule {
     [KSClass("Gradient")]
-    public class GradientWrapper {
-        private readonly SortedList<double, KSPConsoleModule.RgbaColor> colors;
-        private bool dirty;
-        private readonly Gradient gradient;
-
-        public GradientWrapper(KSPConsoleModule.RgbaColor start, KSPConsoleModule.RgbaColor end) {
-            colors = new SortedList<double, KSPConsoleModule.RgbaColor> {
-                { 0, start },
-                { 1, end }
-            };
-            gradient = new Gradient();
-            dirty = true;
-        }
+    public class GradientWrapper(KSPConsoleModule.RgbaColor start, KSPConsoleModule.RgbaColor end) {
+        private readonly SortedList<double, KSPConsoleModule.RgbaColor> colors = new() {
+            { 0, start },
+            { 1, end }
+        };
+        private bool dirty = true;
+        private readonly Gradient gradient = new();
 
         public Gradient Gradient {
             get {
