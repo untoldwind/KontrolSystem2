@@ -34,8 +34,6 @@ public partial class KSPScienceModule {
         [KSField] public double TransmissionSize => researchReport.TransmissionSize;
 
         [KSMethod]
-        public bool StartTransmit() {
-            return scienceStorageComponent.StartReportTransmission(researchReport.ResearchReportKey);
-        }
+        public bool StartTransmit() => scienceStorageComponent.StartReportTransmission(researchReport.ResearchReportKey);
     }
 }

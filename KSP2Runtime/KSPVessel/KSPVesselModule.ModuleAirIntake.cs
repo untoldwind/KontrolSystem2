@@ -6,9 +6,6 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public partial class KSPVesselModule {
     [KSClass("ModuleAirIntake")]
-    public class ModuleAirIntakeAdapter : BaseAirIntakeAdapter<PartAdapter, PartComponent> {
-
-        public ModuleAirIntakeAdapter(PartAdapter part, Data_ResourceIntake dataResourceIntake) : base(part, dataResourceIntake) {
-        }
-    }
+    public class ModuleAirIntakeAdapter(PartAdapter part, Data_ResourceIntake dataResourceIntake)
+        : BaseAirIntakeAdapter<PartAdapter, PartComponent>(part, dataResourceIntake);
 }

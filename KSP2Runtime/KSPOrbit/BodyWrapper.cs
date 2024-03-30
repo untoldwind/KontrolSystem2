@@ -8,7 +8,8 @@ using UniLinq;
 
 namespace KontrolSystem.KSP.Runtime.KSPOrbit;
 
-public class BodyWrapper(IKSPContext context, CelestialBodyComponent body) : KSPOrbitModule.IBody, KSPVesselModule.IKSPTargetable {
+public class BodyWrapper(IKSPContext context, CelestialBodyComponent body)
+    : KSPOrbitModule.IBody, KSPVesselModule.IKSPTargetable {
     public string Name => body.Name;
 
     public Option<KSPOrbitModule.IBody> ParentBody => Option.OfNullable(body.referenceBody).Map<KSPOrbitModule.IBody>(
@@ -79,18 +80,14 @@ public class BodyWrapper(IKSPContext context, CelestialBodyComponent body) : KSP
         return fromCenter - body.radius + sceneryOffset;
     }
 
-    public Vector3d SurfacePosition(double latitude, double longitude, double altitude) {
-        return body.GetSurfaceNVector(latitude, longitude) * (body.radius + altitude);
-    }
+    public Vector3d SurfacePosition(double latitude, double longitude, double altitude) =>
+        body.GetSurfaceNVector(latitude, longitude) * (body.radius + altitude);
 
-    public Position GlobalSurfacePosition(double latitude, double longitude, double altitude) {
-        return new Position(body.transform.celestialFrame,
+    public Position GlobalSurfacePosition(double latitude, double longitude, double altitude) =>
+        new(body.transform.celestialFrame,
             body.GetSurfaceNVector(latitude, longitude) * (body.radius + altitude));
-    }
 
-    public KSPOrbitModule.GeoCoordinates GeoCoordinates(double latitude, double longitude) {
-        return new KSPOrbitModule.GeoCoordinates(this, latitude, longitude);
-    }
+    public KSPOrbitModule.GeoCoordinates GeoCoordinates(double latitude, double longitude) => new(this, latitude, longitude);
 
     public KSPOrbitModule.IOrbit CreateOrbit(Vector3d position, Vector3d velocity, double ut) {
         var orbit = new PatchedConicsOrbit(body.universeModel);

@@ -7,6 +7,8 @@ namespace KontrolSystem.KSP.Runtime.KSPOAB;
 
 public partial class KSPOABModule {
     [KSClass("ObjectAssemblySolarPanel")]
-    public class ObjectAssemblySolarPanelAdapter(KSPOABModule.ObjectAssemblyPartAdapter part, Data_SolarPanel dataSolarPanel) : BaseSolarPanelAdapter<ObjectAssemblyPartAdapter, IObjectAssemblyPart>(part, dataSolarPanel) {
-    }
+    public class ObjectAssemblySolarPanelAdapter(
+        KSPOABModule.ObjectAssemblyPartAdapter part,
+        Data_SolarPanel dataSolarPanel)
+        : BaseSolarPanelAdapter<ObjectAssemblyPartAdapter, IObjectAssemblyPart>(part, dataSolarPanel);
 }

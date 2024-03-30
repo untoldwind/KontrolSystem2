@@ -7,6 +7,6 @@ namespace KontrolSystem.KSP.Runtime.KSPOAB;
 
 public partial class KSPOABModule {
     [KSClass("ObjectAssemblyRCS")]
-    public class ObjectAssemblyRCS(ObjectAssemblyPartAdapter part, Data_RCS dataRcs) : BaseRCSAdapter<ObjectAssemblyPartAdapter, IObjectAssemblyPart>(part, dataRcs) {
-    }
+    public class ObjectAssemblyRCS(ObjectAssemblyPartAdapter part, Data_RCS dataRcs)
+        : BaseRCSAdapter<ObjectAssemblyPartAdapter, IObjectAssemblyPart>(part, dataRcs);
 }

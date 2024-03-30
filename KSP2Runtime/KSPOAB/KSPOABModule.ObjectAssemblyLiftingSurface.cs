@@ -7,7 +7,8 @@ namespace KontrolSystem.KSP.Runtime.KSPOAB;
 
 public partial class KSPOABModule {
     [KSClass("ObjectAssemblyLiftingSurface")]
-    public class ObjectAssemblyLiftingSurfaceAdapter(ObjectAssemblyPartAdapter part, Data_LiftingSurface dataLiftingSurface) : BaseLiftingSurfaceAdapter<ObjectAssemblyPartAdapter, IObjectAssemblyPart>(part, dataLiftingSurface) {
-
-    }
+    public class ObjectAssemblyLiftingSurfaceAdapter(
+        ObjectAssemblyPartAdapter part,
+        Data_LiftingSurface dataLiftingSurface)
+        : BaseLiftingSurfaceAdapter<ObjectAssemblyPartAdapter, IObjectAssemblyPart>(part, dataLiftingSurface);
 }

@@ -7,6 +7,6 @@ namespace KontrolSystem.KSP.Runtime.KSPOAB;
 
 public partial class KSPOABModule {
     [KSClass("ObjectAssemblyDecoupler")]
-    public class ObjectAssemblyDecouplerAdapter(ObjectAssemblyPartAdapter part, Data_Decouple dataDecouple) : BaseDecouplerAdapter<ObjectAssemblyPartAdapter, IObjectAssemblyPart>(part, dataDecouple) {
-    }
+    public class ObjectAssemblyDecouplerAdapter(ObjectAssemblyPartAdapter part, Data_Decouple dataDecouple)
+        : BaseDecouplerAdapter<ObjectAssemblyPartAdapter, IObjectAssemblyPart>(part, dataDecouple);
 }

@@ -7,6 +7,6 @@ namespace KontrolSystem.KSP.Runtime.KSPOAB;
 
 public partial class KSPOABModule {
     [KSClass("ObjectAssemblyCommand")]
-    public class ObjectAssemblyCommandAdapter(ObjectAssemblyPartAdapter part, Data_Command dataCommand) : BaseCommandAdapter<ObjectAssemblyPartAdapter, IObjectAssemblyPart>(part, dataCommand) {
-    }
+    public class ObjectAssemblyCommandAdapter(ObjectAssemblyPartAdapter part, Data_Command dataCommand)
+        : BaseCommandAdapter<ObjectAssemblyPartAdapter, IObjectAssemblyPart>(part, dataCommand);
 }

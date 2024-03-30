@@ -6,6 +6,6 @@ namespace KontrolSystem.KSP.Runtime.KSPOAB;
 
 public partial class KSPOABModule {
     [KSClass("ObjectAssemblyExperiment")]
-    public class ObjectAssemblyExperimentAdapter(ExperimentConfiguration experimentConfiguration) : BaseExperimentAdapter(experimentConfiguration) {
-    }
+    public class ObjectAssemblyExperimentAdapter(ExperimentConfiguration experimentConfiguration)
+        : BaseExperimentAdapter(experimentConfiguration);
 }

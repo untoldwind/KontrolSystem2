@@ -7,6 +7,6 @@ namespace KontrolSystem.KSP.Runtime.KSPOAB;
 
 public partial class KSPOABModule {
     [KSClass("ObjectAssemblyReactionWheel")]
-    public class ObjectAssemblyReactionWheelAdapter(ObjectAssemblyPartAdapter part, Data_ReactionWheel reactionWheel) : BaseReactionWheelAdapter<ObjectAssemblyPartAdapter, IObjectAssemblyPart>(part, reactionWheel) {
-    }
+    public class ObjectAssemblyReactionWheelAdapter(ObjectAssemblyPartAdapter part, Data_ReactionWheel reactionWheel)
+        : BaseReactionWheelAdapter<ObjectAssemblyPartAdapter, IObjectAssemblyPart>(part, reactionWheel);
 }

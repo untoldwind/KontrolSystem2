@@ -7,7 +7,6 @@ namespace KontrolSystem.KSP.Runtime.KSPOAB;
 
 public partial class KSPOABModule {
     [KSClass("ObjectAssemblyDrag")]
-    public class ObjectAssemblyDragAdapter(ObjectAssemblyPartAdapter part, Data_Drag dataDrag) : BaseDragAdapter<ObjectAssemblyPartAdapter, IObjectAssemblyPart>(part, dataDrag) {
-
-    }
+    public class ObjectAssemblyDragAdapter(ObjectAssemblyPartAdapter part, Data_Drag dataDrag)
+        : BaseDragAdapter<ObjectAssemblyPartAdapter, IObjectAssemblyPart>(part, dataDrag);
 }

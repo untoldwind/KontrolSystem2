@@ -7,6 +7,6 @@ namespace KontrolSystem.KSP.Runtime.KSPOAB;
 
 public partial class KSPOABModule {
     [KSClass("ObjectAssemblyLight")]
-    public class ObjectAssemblyLightAdapter(ObjectAssemblyPartAdapter part, Data_Light dataLight) : BaseLightAdapter<ObjectAssemblyPartAdapter, IObjectAssemblyPart>(part, dataLight) {
-    }
+    public class ObjectAssemblyLightAdapter(ObjectAssemblyPartAdapter part, Data_Light dataLight)
+        : BaseLightAdapter<ObjectAssemblyPartAdapter, IObjectAssemblyPart>(part, dataLight);
 }

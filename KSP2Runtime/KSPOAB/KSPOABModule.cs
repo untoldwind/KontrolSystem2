@@ -10,8 +10,7 @@ public partial class KSPOABModule {
     [KSFunction(
         Description = "Try to get the currently active vessel. Will result in an error if there is none."
     )]
-    public static Result<ObjectAssemblyBuilderAdapter> ActiveObjectAssemblyBuilder() {
-        return ObjectAssemblyBuilderAdapter.NullSafe(KSPContext.CurrentContext.Game.OAB.Current)
+    public static Result<ObjectAssemblyBuilderAdapter> ActiveObjectAssemblyBuilder() =>
+        ObjectAssemblyBuilderAdapter.NullSafe(KSPContext.CurrentContext.Game.OAB.Current)
             .OkOr("No active object assembly");
-    }
 }

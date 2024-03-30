@@ -6,8 +6,9 @@ using KSP.OAB;
 namespace KontrolSystem.KSP.Runtime.KSPOAB;
 
 public partial class KSPOABModule {
-
     [KSClass("ObjectAssemblyControlSurface")]
-    public class ObjectAssemblyControlSurfaceAdapter(ObjectAssemblyPartAdapter part, Data_ControlSurface dataControlSurface) : BaseControlSurfaceAdapter<ObjectAssemblyPartAdapter, IObjectAssemblyPart>(part, dataControlSurface) {
-    }
+    public class ObjectAssemblyControlSurfaceAdapter(
+        ObjectAssemblyPartAdapter part,
+        Data_ControlSurface dataControlSurface)
+        : BaseControlSurfaceAdapter<ObjectAssemblyPartAdapter, IObjectAssemblyPart>(part, dataControlSurface);
 }

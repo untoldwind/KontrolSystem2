@@ -21,10 +21,9 @@ public partial class KSPOABModule {
         public ObjectAssemblyAdapter[] Assemblies => objectAssemblyBuilder.ActivePartTracker.partAssemblies
             .Select(assembly => new ObjectAssemblyAdapter(assembly)).ToArray();
 
-        public static Option<ObjectAssemblyBuilderAdapter> NullSafe(ObjectAssemblyBuilder? objectAssemblyBuilder) {
-            return objectAssemblyBuilder != null
+        public static Option<ObjectAssemblyBuilderAdapter> NullSafe(ObjectAssemblyBuilder? objectAssemblyBuilder) =>
+            objectAssemblyBuilder != null
                 ? new Option<ObjectAssemblyBuilderAdapter>(new ObjectAssemblyBuilderAdapter(objectAssemblyBuilder))
                 : new Option<ObjectAssemblyBuilderAdapter>();
-        }
     }
 }

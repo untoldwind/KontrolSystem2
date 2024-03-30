@@ -43,64 +43,38 @@ public class OrbitWrapper(IKSPContext context, PatchedConicsOrbit orbit) : KSPOr
 
     public Vector3d OrbitNormal => -orbit.GetRelativeOrbitNormal().SwapYAndZ;
 
-    public Vector3d RelativePosition(double ut) {
-        return orbit.GetRelativePositionAtUTZup(ut).SwapYAndZ;
-    }
+    public Vector3d RelativePosition(double ut) => orbit.GetRelativePositionAtUTZup(ut).SwapYAndZ;
 
-    public Vector3d RelativePositionForTrueAnomaly(double trueAnomaly) {
-        return orbit.GetRelativePositionFromTrueAnomaly(trueAnomaly * DirectBindingMath.DegToRad);
-    }
+    public Vector3d RelativePositionForTrueAnomaly(double trueAnomaly) => orbit.GetRelativePositionFromTrueAnomaly(trueAnomaly * DirectBindingMath.DegToRad);
 
-    public Position GlobalPositionForTrueAnomaly(double trueAnomaly) {
-        return new Position(ReferenceFrame,
+    public Position GlobalPositionForTrueAnomaly(double trueAnomaly) =>
+        new(ReferenceFrame,
             orbit.GetRelativePositionFromTrueAnomaly(trueAnomaly * DirectBindingMath.DegToRad));
-    }
 
-    public Position GlobalPosition(double ut) {
-        return ReferenceBody.Orbit.GlobalPosition(ut) + GlobalRelativePosition(ut);
-    }
+    public Position GlobalPosition(double ut) => ReferenceBody.Orbit.GlobalPosition(ut) + GlobalRelativePosition(ut);
 
-    public Vector GlobalRelativePosition(double ut) {
-        return new Vector(ReferenceFrame, orbit.GetRelativePositionAtUTZup(ut).SwapYAndZ);
-    }
+    public Vector GlobalRelativePosition(double ut) => new(ReferenceFrame, orbit.GetRelativePositionAtUTZup(ut).SwapYAndZ);
 
-    public VelocityAtPosition GlobalVelocity(double ut) {
-        return new VelocityAtPosition(
+    public VelocityAtPosition GlobalVelocity(double ut) =>
+        new(
             new Velocity(context.Game.UniverseModel.GalacticOrigin.celestialFrame.motionFrame,
                 orbit.GetFrameVelAtUTZup(ut).SwapYAndZ), GlobalPosition(ut));
-    }
 
-    public Vector3d OrbitalVelocity(double ut) {
-        return orbit.GetOrbitalVelocityAtUTZup(ut).SwapYAndZ;
-    }
+    public Vector3d OrbitalVelocity(double ut) => orbit.GetOrbitalVelocityAtUTZup(ut).SwapYAndZ;
 
-    public Vector3d Prograde(double ut) {
-        return OrbitalVelocity(ut).normalized;
-    }
+    public Vector3d Prograde(double ut) => OrbitalVelocity(ut).normalized;
 
-    public Vector3d NormalPlus(double ut) {
-        return orbit.GetRelativeOrbitNormal().SwapYAndZ.normalized;
-    }
+    public Vector3d NormalPlus(double ut) => orbit.GetRelativeOrbitNormal().SwapYAndZ.normalized;
 
-    public Vector3d RadialPlus(double ut) {
-        return Vector3d.Exclude(Prograde(ut), Up(ut)).normalized;
-    }
+    public Vector3d RadialPlus(double ut) => Vector3d.Exclude(Prograde(ut), Up(ut)).normalized;
 
-    public Vector3d Up(double ut) {
-        return RelativePosition(ut).normalized;
-    }
+    public Vector3d Up(double ut) => RelativePosition(ut).normalized;
 
-    public double Radius(double ut) {
-        return RelativePosition(ut).magnitude;
-    }
+    public double Radius(double ut) => RelativePosition(ut).magnitude;
 
-    public Vector3d Horizontal(double ut) {
-        return Vector3d.Exclude(Up(ut), Prograde(ut)).normalized;
-    }
+    public Vector3d Horizontal(double ut) => Vector3d.Exclude(Up(ut), Prograde(ut)).normalized;
 
-    public KSPOrbitModule.IOrbit PerturbedOrbit(double ut, Vector3d dV) {
-        return ReferenceBody.CreateOrbit(RelativePosition(ut), OrbitalVelocity(ut) + dV, ut);
-    }
+    public KSPOrbitModule.IOrbit PerturbedOrbit(double ut, Vector3d dV) => ReferenceBody.CreateOrbit(RelativePosition(ut), OrbitalVelocity(ut) + dV, ut);
 
     public double MeanAnomalyAtUt(double ut) {
         var ret = (orbit.ObTAtEpoch + (ut - orbit.epoch)) * orbit.meanMotion;
@@ -115,13 +89,9 @@ public class OrbitWrapper(IKSPContext context, PatchedConicsOrbit orbit) : KSPOr
         return ut + meanDifference / MeanMotion;
     }
 
-    public double GetMeanAnomalyAtEccentricAnomaly(double ecc) {
-        return orbit.GetMeanAnomaly(ecc);
-    }
+    public double GetMeanAnomalyAtEccentricAnomaly(double ecc) => orbit.GetMeanAnomaly(ecc);
 
-    public double GetEccentricAnomalyAtTrueAnomaly(double trueAnomaly) {
-        return orbit.GetEccentricAnomaly(trueAnomaly);
-    }
+    public double GetEccentricAnomalyAtTrueAnomaly(double trueAnomaly) => orbit.GetEccentricAnomaly(trueAnomaly);
 
     public double TimeOfTrueAnomaly(double trueAnomaly, Option<double> maybeUt = new()) {
         var ut = maybeUt.GetValueOrDefault(context.UniversalTime);
@@ -142,9 +112,7 @@ public class OrbitWrapper(IKSPContext context, PatchedConicsOrbit orbit) : KSPOr
         return Option.None<double>();
     }
 
-    public double TrueAnomalyAtRadius(double radius) {
-        return orbit.TrueAnomalyAtRadius(radius);
-    }
+    public double TrueAnomalyAtRadius(double radius) => orbit.TrueAnomalyAtRadius(radius);
 
     public Option<double> NextTimeOfRadius(double ut, double radius) {
         if (radius < orbit.Periapsis || (orbit.eccentricity < 1 && radius > orbit.Apoapsis))
@@ -187,17 +155,11 @@ public class OrbitWrapper(IKSPContext context, PatchedConicsOrbit orbit) : KSPOr
         return TrueAnomalyFromVector(vectorToAn);
     }
 
-    public double DescendingNodeTrueAnomaly(KSPOrbitModule.IOrbit b) {
-        return DirectBindingMath.ClampRadians2Pi(AscendingNodeTrueAnomaly(b) + Math.PI);
-    }
+    public double DescendingNodeTrueAnomaly(KSPOrbitModule.IOrbit b) => DirectBindingMath.ClampRadians2Pi(AscendingNodeTrueAnomaly(b) + Math.PI);
 
-    public double TimeOfAscendingNode(KSPOrbitModule.IOrbit b, Option<double> maybeUt = new()) {
-        return TimeOfTrueAnomaly(AscendingNodeTrueAnomaly(b), maybeUt);
-    }
+    public double TimeOfAscendingNode(KSPOrbitModule.IOrbit b, Option<double> maybeUt = new()) => TimeOfTrueAnomaly(AscendingNodeTrueAnomaly(b), maybeUt);
 
-    public double TimeOfDescendingNode(KSPOrbitModule.IOrbit b, Option<double> maybeUt = new()) {
-        return TimeOfTrueAnomaly(DescendingNodeTrueAnomaly(b), maybeUt);
-    }
+    public double TimeOfDescendingNode(KSPOrbitModule.IOrbit b, Option<double> maybeUt = new()) => TimeOfTrueAnomaly(DescendingNodeTrueAnomaly(b), maybeUt);
 
     public Vector3d RelativeAscendingNode =>
         ReferenceFrame.ToLocalPosition(orbit.ReferenceFrame, orbit.GetRelativeANVector().SwapYAndZ);
@@ -205,11 +167,7 @@ public class OrbitWrapper(IKSPContext context, PatchedConicsOrbit orbit) : KSPOr
     public Vector3d RelativeEccentricityVector =>
         ReferenceFrame.ToLocalPosition(orbit.ReferenceFrame, orbit.GetRelativeEccVector().SwapYAndZ);
 
-    public override string ToString() {
-        return KSPOrbitModule.OrbitToString(this);
-    }
+    public override string ToString() => KSPOrbitModule.OrbitToString(this);
 
-    public string ToFixed(long decimals) {
-        return KSPOrbitModule.OrbitToFixed(this, decimals);
-    }
+    public string ToFixed(long decimals) => KSPOrbitModule.OrbitToFixed(this, decimals);
 }

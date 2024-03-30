@@ -7,6 +7,8 @@ namespace KontrolSystem.KSP.Runtime.KSPOAB;
 
 public partial class KSPOABModule {
     [KSClass("ObjectAssemblyGenerator")]
-    public class ObjectAssemblyGeneratorAdapter(ObjectAssemblyPartAdapter part, Data_ModuleGenerator dataModuleGenerator) : BaseGeneratorAdatper<ObjectAssemblyPartAdapter, IObjectAssemblyPart>(part, dataModuleGenerator) {
-    }
+    public class ObjectAssemblyGeneratorAdapter(
+        ObjectAssemblyPartAdapter part,
+        Data_ModuleGenerator dataModuleGenerator)
+        : BaseGeneratorAdatper<ObjectAssemblyPartAdapter, IObjectAssemblyPart>(part, dataModuleGenerator);
 }

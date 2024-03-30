@@ -37,9 +37,7 @@ public partial class KSPUIModule {
     }
 
     [KSFunction]
-    public static GradientWrapper Gradient(KSPConsoleModule.RgbaColor start, KSPConsoleModule.RgbaColor end) {
-        return new GradientWrapper(start, end);
-    }
+    public static GradientWrapper Gradient(KSPConsoleModule.RgbaColor start, KSPConsoleModule.RgbaColor end) => new(start, end);
 
     public static (IEnumerable<RealizedType>, IEnumerable<IKontrolConstant>) DirectBindings() {
         return BindingGenerator.RegisterEnumTypeMappings("ksp::ui",

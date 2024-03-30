@@ -25,13 +25,11 @@ public partial class KSPOrbitModule {
         public double TerrainHeight => Body.TerrainHeight(Latitude, Longitude);
 
         [KSMethod(Description = "Position of the geo coordinate in the celestial frame of the body")]
-        public Vector3d AltitudePosition([KSParameter("Altitude relative to sea-level")] double altitude) {
-            return Body.SurfacePosition(Latitude, Longitude, altitude);
-        }
+        public Vector3d AltitudePosition([KSParameter("Altitude relative to sea-level")] double altitude) =>
+            Body.SurfacePosition(Latitude, Longitude, altitude);
 
         [KSMethod(Description = "Coordinate system independent position of the geo coordinate")]
-        public Position GlobalAltitudePosition([KSParameter("Altitude relative to sea-level")] double altitude) {
-            return Body.GlobalSurfacePosition(Latitude, Longitude, altitude);
-        }
+        public Position GlobalAltitudePosition([KSParameter("Altitude relative to sea-level")] double altitude) =>
+            Body.GlobalSurfacePosition(Latitude, Longitude, altitude);
     }
 }

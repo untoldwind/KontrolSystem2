@@ -29,9 +29,7 @@ public partial class KSPOrbitModule {
     }
 
     [KSFunction(Description = "Get the galactic celestial frame.")]
-    public static ITransformFrame GalacticOrigin() {
-        return KSPContext.CurrentContext.Game.UniverseModel.GalacticOrigin.celestialFrame;
-    }
+    public static ITransformFrame GalacticOrigin() => KSPContext.CurrentContext.Game.UniverseModel.GalacticOrigin.celestialFrame;
 
     public static (IEnumerable<RealizedType>, IEnumerable<IKontrolConstant>) DirectBindings() {
         return BindingGenerator.RegisterEnumTypeMappings("ksp::orbit",

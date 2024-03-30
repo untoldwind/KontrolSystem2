@@ -133,24 +133,20 @@ public partial class KSPResourceModule {
             }
         }
 
-        public bool HasResource(ResourceDefinitionID resourceDefinitionID) {
-            return ResourceDefinitionIDs.Contains(resourceDefinitionID);
-        }
+        public bool HasResource(ResourceDefinitionID resourceDefinitionID) => ResourceDefinitionIDs.Contains(resourceDefinitionID);
 
-        public double GetTotalIn(ResourceDefinitionID resourceDefinitionID) {
-            return Math.Min(
+        public double GetTotalIn(ResourceDefinitionID resourceDefinitionID) =>
+            Math.Min(
                 resourceLimits.Find(resourceLimit => resourceLimit.resourceDefinitionID == resourceDefinitionID)
                     .maxUnits,
                 ResourceContainer.resourceContainer.GetResourceCapacityUnits(resourceDefinitionID) -
                 ResourceContainer.resourceContainer.GetResourceStoredUnits(resourceDefinitionID));
-        }
 
-        public double GetTotalOut(ResourceDefinitionID resourceDefinitionID) {
-            return Math.Min(
+        public double GetTotalOut(ResourceDefinitionID resourceDefinitionID) =>
+            Math.Min(
                 resourceLimits.Find(resourceLimit => resourceLimit.resourceDefinitionID == resourceDefinitionID)
                     .maxUnits,
                 ResourceContainer.resourceContainer.GetResourceStoredUnits(resourceDefinitionID));
-        }
 
         internal double PrepareTransfer(ResourceDefinitionID resourceDefinitionID, double remaining) {
             if (remaining <= 1e-5) return 0.0;

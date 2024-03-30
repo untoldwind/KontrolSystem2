@@ -10,7 +10,8 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel;
 
 public partial class KSPVesselModule {
     [KSClass("ModuleControlSurface")]
-    public class ModuleControlSurfaceAdapter(PartAdapter part, Data_ControlSurface dataControlSurface) : BaseControlSurfaceAdapter<PartAdapter, PartComponent>(part, dataControlSurface) {
+    public class ModuleControlSurfaceAdapter(PartAdapter part, Data_ControlSurface dataControlSurface)
+        : BaseControlSurfaceAdapter<PartAdapter, PartComponent>(part, dataControlSurface) {
         [KSField]
         public Vector3d DragForce => part.vesselAdapter.vessel.mainBody.transform.celestialFrame.ToLocalVector(
             new Vector(part.part.SimulationObject.transform.bodyFrame,
