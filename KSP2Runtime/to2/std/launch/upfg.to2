@@ -1,0 +1,30 @@
+use { Vec3 } from ksp::math
+use { Vessel } from ksp::vessel
+
+pub type ConicStateExtrapolationParams = (dtcp: float, xcp: float, A: float, D: float, E: float)
+
+pub type ConicStateExtrapolation = fn(float) -> float
+
+pub struct TargetParameters(angle: float, normal: Vec3, radius: float, velocity: float) {
+    angle: float = angle
+    normal: Vec3 = normal
+    radius: float = radius
+    velocity: float = velocity
+}
+
+pub struct VesselParameters(vessel: Vessel) {
+    time: float = vessel.time_since_launch
+    mass: float = vessel.mass
+    radius: Vec3 = vessel.position
+    velocity: Vec3 = vessel.orbital_velocity
+}
+
+pub struct State {
+    cser: float = 0
+    rbias: float = 0
+    rd: float = 0
+    rgrav: float = 0
+    time: float = 0
+    v: float = 0
+    vgo: float = 0
+}

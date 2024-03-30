@@ -1,0 +1,251 @@
+use { floor, sqrt, max, PI } from core::math
+use { ConicStateExtrapolationParams } from std::launch::upfg
+use { Vec3 } from ksp::math
+
+// Conic state extrapolation
+// As outlined here: https://ntrs.nasa.gov/citations/19740018034
+
+// U_1 Series Summation
+sync fn uss(xarg: float, a: float, kmax: int) -> float = {
+    let du1 = xarg / 4
+    let u1 = du1
+    let u1old = 0.0
+    const f7 = -a * du1 * du1
+    let k = 3
+
+    while(k < kmax) {
+        du1 = f7 * du1 / (k*(k -1))
+        u1old = u1
+        u1 = u1 + du1
+        if (u1 == u1old) break
+        k += 2
+    }
+
+    u1
+}
+
+// Q continued fraction
+sync fn qcf(w: float) -> float = {
+    const xq = 
+        if (w < 1)
+            21.04 - 13.04*w
+        else if (w < 4.625)
+            (5.0/3.0) * (2*w+5)
+        else if (w < 13.846)
+            (10.0/7.0) * (w+12)
+        else if (w < 44)
+            0.5 * (w+60)
+        else if (w < 100)
+            0.25 * (w+164)
+        else
+            70
+    let b = 0.0
+    const y = (w - 1) / (w + 1)
+    let j = floor(xq).to_int
+    
+    b =  y / (1 + (j - 1) / (j + 2) * (1 - b))
+
+    while (j > 2) {
+        j -= 1
+        b = y / (1 + (j - 1) / (j + 2) * (1 -b))
+    }
+
+    1/w/w * (1 + (2-b/2) / (3*w*(w+1)))
+}
+
+// Kepler transfer time interval
+sync fn ktti(xarg: float, s0s: float, a: float, kmax: int) -> (dtguess: float, A: float, D: float, E: float) = {
+    const u1 = uss(xarg, a, kmax)
+    const zs = 2 * u1
+    const E = 1 - 0.5*a*zs*zs
+    const w = sqrt(max(0.5+E/2, 0))
+    const D = w * zs
+    const A = D*D
+    const B = 2*(E+s0s*D)
+    const Q = qcf(w)
+    const t = D*(B+A*Q)
+
+    (dtguess: t, A: A, D: D, E: E)
+}
+
+type Limits = (xmin: float, dtmin: float, xmax: float, dtmax: float)
+
+// Secant iterator
+sync fn si(dterror: float, xguess: float, dtguess: float, limits: Limits) -> (dxs: float, limits: Limits) = {
+    const etp = 0.000001
+    let dxs = 0.0
+    let (xmin, dtmin, xmax, dtmax) = limits
+    const dtminp = dtguess - dtmin
+    const dtmaxp = dtguess - dtmax
+
+    if (dtminp.abs < etp || dtmaxp.abs < etp) {
+        dxs = 0.0
+    } else {
+        if (dterror < 0.0) {
+            dxs = (xguess-xmax) * (dterror/dtmaxp)
+            if (xguess + dxs <= xmin) {
+                dxs = (xguess-xmin) * (dterror/dtminp)
+            }
+            xmax = xguess
+            dtmax = dtguess
+        } else {
+            dxs = (xguess-xmin) * (dterror/dtminp)
+            if (xguess+dxs >= xmax) {
+                dxs = (xguess-xmax) * (dterror/dtmaxp)
+            }
+            xmin = xguess
+            dtmin = dtguess
+        }
+    }
+
+    (dxs: dxs, limits: (xmin: xmin, dtmin: dtmin, xmax: xmax, dtmax: dtmax))
+}
+
+type KilState = (xguess: float, dtguess: float, A: float, D: float, E: float)
+
+// Kepler iteration loop
+sync fn kil(imax: int, dts: float, start_limits: Limits, s0s: float, a: float, kmax: int, start_state: KilState) -> KilState = {
+    const etp = 0.000001
+    let i = 1
+    let dterror = 0.0
+	let dxs = 0.0
+    let (xguess, dtguess, A, D, E) = start_state
+	let xold = 0.0
+	let dtold = 0.0
+    let limits = start_limits
+
+    while (i < imax) {
+        dterror = dts - dtguess
+
+        if (dterror.abs < etp) break
+
+        (dxs, limits) = si(dterror, xguess, dtguess, limits)
+
+        xold = xguess
+        xguess = xguess + dxs
+
+        if (xguess == xold) break
+
+        dtold = dtguess
+
+        (dtguess, A, D, E) = ktti(xguess, s0s, a, kmax)
+
+        if (dtguess == dtold) break
+
+        i += 1
+    }
+
+    (xguess: xguess, dtguess: dtguess, A: A, D: D, E: E)
+}
+
+sync fn cse1(r0: Vec3, v0: Vec3, dt: float, last: ConicStateExtrapolationParams, mu: float) -> (r: Vec3, v: Vec3, params: ConicStateExtrapolationParams) = {
+    const dtcp = if (last.dtcp == 0.0) dt else last.dtcp
+    const xcp = last.xcp
+    const x = xcp
+    let A = last.A
+    let D = last.D
+    let E = last.E
+
+    const kmax = 10
+    const imax = 10
+
+    const f0 = if (dt >= 0.0) 1 else -1
+
+    let n = 0
+    const r0m = r0.magnitude
+
+    const f1 = f0 * sqrt(r0m / mu)
+    const f2 = 1 / f1
+    const f3 = f2 / r0m
+    const f4 = f1 * r0m
+    const f5 = f0 / sqrt(r0m)
+    const f6 = f0 * sqrt(r0m)
+
+    const ir0 = r0 / r0m
+    const v0s = f1 * v0
+    const sigma0s = ir0 * v0s
+    const b0 = v0s.sqr_magnitude - 1
+    const alphas = 1 - b0
+
+    let xguess = f5 * x
+    let xlast = f5 * xcp
+    let xmin = 0.0
+    let dts = f3 * dt
+    let dtlast = f3 * dtcp
+    let dtmin = 0.0
+    let dtmax = 0.0
+    let xP = 0.0
+    let Ps = 0.0
+
+    let xmax = 2 * PI / sqrt(alphas.abs)
+
+    if (alphas > 0.0) {
+        dtmax = xmax / alphas
+        xP = xmax
+        Ps = dtmax
+
+        while (dts >= Ps) {
+            n += 1
+            dts -= Ps
+            dtlast -= Ps
+            xguess -= xP
+            xlast -= xP
+        }
+    } else {
+        dtmax = ktti(xmax, sigma0s, alphas, kmax).dtguess
+
+        if (dtmax < dts) {
+            while (dtmax < dts) {
+                dtmin = dtmax
+                xmin = xmax
+                xmax = 2 * xmax
+
+                dtmax = ktti(xmax, sigma0s, alphas, kmax).dtguess
+            }
+        }
+    }
+
+    if (xmin >= xguess || xguess >= xmax) {
+        xguess = 0.5 * (xmin + xmax)
+    }
+
+    let dtguess =  ktti(xguess, sigma0s, alphas, kmax).dtguess
+
+    if (dts < dtguess) {
+        if (xguess < xlast && xlast < xmax && dtguess < dtlast && dtlast < dtmax) {
+            xmax = xlast
+            dtmax = dtlast
+        }
+    } else {
+        if (xmin < xlast && xlast < xguess && dtmin < dtlast && dtlast < dtguess) {
+            xmin = xlast
+            dtmin = dtlast
+        }
+    }
+
+    (xguess, dtguess, A, D, E) = kil(imax, dts, (xmin: xmin, dtmin: dtmin, xmax: xmax, dtmax: dtmax), sigma0s, alphas, kmax, (xguess: xguess, dtguess: dtguess, A: A, D: D, E: E))
+
+    const rs = 1 + 2 * (b0*A + sigma0s*D*E)
+    const b4 = 1 / rs
+
+    let xc = 0.0
+    let dtc = 0.0
+
+    if (n > 0) {
+        xc = f6 * (xguess+n*xP)
+        dtc = f4 * (dtguess+n*Ps)
+    } else {
+        xc = f6 * xguess
+        dtc = f4 * dtguess
+    }
+
+    const F = 1 - 2*A
+    const Gs = 2 * (D*E + sigma0s*A)
+    const Fts = -2 * b4 * D * E
+    const Gt = 1 - 2*b4*A
+
+    const r = r0m * (F*ir0 + Gs*v0s)
+    const v = f2 * (Fts*ir0 + Gt*v0s)
+
+    (r: r, v: v, params: (dtcp: dtc, xcp: xc, A: A, D: D, E: E))
+}

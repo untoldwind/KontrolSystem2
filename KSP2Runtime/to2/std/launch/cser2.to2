@@ -1,0 +1,78 @@
+use { sqrt, sin, cos, pow, E, RAD_TO_DEG } from core::math
+use { ConicStateExtrapolationParams } from std::launch::upfg
+use { Vec3 } from ksp::math
+
+//	Stumpff S and C functions
+sync fn SnC(z: float) -> (S: float, C: float) = {
+    const az = z.abs
+
+    if(az < 1e-4) {
+        (
+            S: (1 - z * (0.05 - z / 840) ) / 6,
+            C: 0.5 - z * (1 - z / 30) / 24
+        )
+    } else {
+        const saz = sqrt(az)
+
+        if(z > 0) {
+            (
+                S: (saz - sin(saz)) / (saz * az),
+                C: (1 - cos(saz)) / az
+            )
+        } else {
+            const x = E ** saz
+            (
+                S: (0.5 * (x - 1 / x) - saz) / (saz * az),
+                C: (0.5 * (x + 1 / x) - 1) / az
+            )
+        }
+    }
+}
+
+// Conic State Extrapolation
+sync fn cse2(r0: Vec3, v0: Vec3, dt: float, last: ConicStateExtrapolationParams, mu: float) -> (r: Vec3, v: Vec3, params: ConicStateExtrapolationParams) = {
+    const rscale = r0.magnitude
+    const vscale = sqrt(mu / rscale)
+    const r0s = r0 / rscale
+    const v0s = v0 / vscale
+    const dts = dt * vscale / rscale
+    const v2s = v0.sqr_magnitude * rscale / mu
+    const alpha = 2 - v2s
+    const armd1 = v2s - 1
+    const rvr0s = (r0 * v0) / sqrt(mu * rscale)
+
+    const tol = 5e-9
+    const x0 = 0.0
+    let x = if(x0 == 0.0) dts * alpha.abs else x0
+
+    let ratio = 1.0
+    let x2 = x * x
+    let z = alpha * x2
+    let SCz = SnC(z)
+    let x2Cz = x2 * SCz.C
+    let f = 0.0
+    let df = 0.0
+
+    while (ratio.abs > tol) {
+        f = x + rvr0s * x2Cz + armd1 * x * x2 * SCz.S - dts
+        df = x * rvr0s * (1 - z * SCz.S) + armd1 * x2Cz + 1
+        ratio = f / df
+        x -= ratio
+        x2 = x * x
+        z = alpha * x2
+        SCz = SnC(z)
+        x2Cz = x2 * SCz.C
+    }
+
+    const Lf = 1 -x2Cz
+    const Lg = dts - x2 * x * SCz.S
+
+    const r1 = Lf * r0s + Lg * v0s
+    const ir1 = 1 / r1.magnitude
+    const Lfdot = ir1 * x * (z * SCz.S - 1)
+    const Lgdot = 1 - x2Cz * ir1
+
+    const v1 = Lfdot * r0s + Lgdot * v0s
+
+    (r: r1 * rscale, v: v1 * vscale, params: last)
+}

@@ -1,0 +1,22 @@
+use { cos_deg, sin_deg } from core::math
+use { vec3, Vec3, Direction, look_dir_up } from ksp::math
+
+const UP : Vec3 = vec3(0, 1, 0)
+
+//	Rodrigues vector rotation formula
+pub fn rodrigues(inVector: Vec3, axis: Vec3, angle: float) -> Vec3 = {
+    const normal_axis = axis.normalized
+    let outVector = inVector * cos_deg(angle)
+
+    outVector += axis.cross(inVector) * sin_deg(angle)
+    outVector += axis * (axis * inVector) * (1 - cos_deg(angle))
+
+    outVector
+}
+
+//	Returns a direction for given aim vector and roll angle
+pub fn aimAndRoll(aimVec: Vec3, rollAng: float) -> Direction = {
+    const rollVector = rodrigues(UP, aimVec, -rollAng)
+
+    look_dir_up(aimVec, rollVector)
+}
