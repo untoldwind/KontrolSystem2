@@ -13,6 +13,9 @@ public partial class KSPDebugModule {
     [KSConstant("MAIN_LOG", Description = "Main script specific log file")]
     public static readonly ILogFile MainLog = new DelegateLogFile();
 
+    [KSConstant("SAVE_LOAD_CONTROL", Description = "Control save/load of game")]
+    public static readonly SaveLoadControl SaveLoadControlInstance = new SaveLoadControl();
+    
     [KSFunction]
     public static ILogFile OpenLogFile(string name) {
         return KSPContext.CurrentContext.AddLogFile(name)!;
