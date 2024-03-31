@@ -1,6 +1,6 @@
 # Changes
 
-## 0.5.7.3 ->
+## 0.5.7.3 -> 0.5.7.6
 
 * The `?` operator can now also be used on `Option<T>` in functions that return a `Result<T>`
   * Example: 
@@ -24,6 +24,7 @@
     (almost) like a `ksp::orbit::OrbitPatch[]` (i.e. it can be used in a `for` loop and `vessel.trajectory[0]` still works)
   * Properties ein `vessel.maneuver` have been updated accordingly
 * Add `true_anomaly_at_ut(ut: float)` to `ksp::orbit::Orbit`
+* Fix: Scroll wheel in UI does not affect camera zoom any more
 
 ## 0.5.6.3 -> 0.5.7.3
 
