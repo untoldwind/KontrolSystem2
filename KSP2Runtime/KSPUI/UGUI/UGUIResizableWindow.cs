@@ -44,6 +44,7 @@ public class UGUIResizableWindow : KerbalMonoBehaviour {
     internal void Initialize(string title, Rect initialRect) {
         var canvas = Game.UI.GetPopupCanvas();
         window = new GameObject("ResizeableWindow", typeof(Image));
+        window.layer = UIFactory.UI_LAYER;
         canvasTransform = (RectTransform)canvas.transform;
         windowTransform = (RectTransform)window.transform;
         windowTransform.SetParent(canvasTransform);
@@ -65,18 +66,21 @@ public class UGUIResizableWindow : KerbalMonoBehaviour {
         window.AddComponent<UGUIDragHandler>().Init(canvasTransform, OnMove, OnFocus);
 
         var resizer = new GameObject("Resizer", typeof(Image));
+        resizer.layer = UIFactory.UI_LAYER;
         UIFactory.Layout(resizer, window.transform, UIFactory.LAYOUT_END, UIFactory.LAYOUT_END, 0, 0, 30, 30);
         var imageResizer = resizer.GetComponent<Image>();
         imageResizer.color = Color.clear;
         resizer.AddComponent<UGUIDragHandler>().Init(windowTransform, OnResize);
 
         var closeButton = UIFactory.Instance.CreateDeleteButton();
+        closeButton.layer = UIFactory.UI_LAYER;
         UIFactory.Layout(closeButton, window.transform, UIFactory.LAYOUT_END, UIFactory.LAYOUT_START, -3, -3,
             UIFactory.Instance.uiFontSize + 10, UIFactory.Instance.uiFontSize + 10);
         closeButton.GetComponent<Button>().onClick.AddListener(Close);
 
         var windowTitle = UIFactory.Instance.CreateText(title, UIFactory.Instance.uiFontSize + 6,
             HorizontalAlignmentOptions.Center);
+        windowTitle.layer = UIFactory.UI_LAYER;
         UIFactory.Layout(windowTitle, window.transform, UIFactory.LAYOUT_STRETCH, UIFactory.LAYOUT_START, 30, -2, -60,
             UIFactory.Instance.uiFontSize + 10);
     }

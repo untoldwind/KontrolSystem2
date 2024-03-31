@@ -7,6 +7,7 @@ public class UGUIElement {
 
     protected UGUIElement(GameObject gameObject, Vector2 minSize) {
         GameObject = gameObject;
+        GameObject.layer = UIFactory.UI_LAYER;
         this.minSize = minSize;
     }
 

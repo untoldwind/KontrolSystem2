@@ -65,6 +65,7 @@ public interface UIAssetsProvider {
 }
 
 public class UIFactory {
+    internal static readonly int UI_LAYER = 5;
     internal static LayoutAlign LAYOUT_START = new(0, 0, 0);
     internal static LayoutAlign LAYOUT_CENTER = new(0.5f, 0.5f, 0.5f);
     internal static LayoutAlign LAYOUT_END = new(1, 1, 1);
@@ -177,7 +178,9 @@ public class UIFactory {
 
     internal GameObject CreateButton(string label) {
         var buttonRoot = new GameObject("Button", typeof(Image), typeof(Button));
+        buttonRoot.layer = UI_LAYER;
         var labelText = new GameObject("ButtonLabel", typeof(TextMeshProUGUI));
+        labelText.layer = UI_LAYER;
         var labelTextTransform = labelText.GetComponent<RectTransform>();
         labelTextTransform.SetParent(buttonRoot.transform);
         labelTextTransform.anchorMin = Vector2.zero;
@@ -213,6 +216,7 @@ public class UIFactory {
 
     internal GameObject CreateDeleteButton() {
         var root = new GameObject("CloseButton", typeof(Image), typeof(Button));
+        root.layer = UI_LAYER;
         var buttonImage = root.GetComponent<Image>();
         buttonImage.sprite = Instance!.windowCloseButton;
         buttonImage.type = Image.Type.Sliced;
@@ -229,7 +233,9 @@ public class UIFactory {
 
     internal GameObject CreateSelectButton(string label) {
         var buttonRoot = new GameObject("SelectButton", typeof(Image), typeof(Toggle));
+        buttonRoot.layer = UI_LAYER;
         var checkmark = new GameObject("SelectCheckmark", typeof(Image));
+        checkmark.layer = UI_LAYER;
         var checkmarkTransform = checkmark.GetComponent<RectTransform>();
         checkmarkTransform.SetParent(buttonRoot.transform);
         checkmarkTransform.anchorMin = Vector2.zero;
@@ -280,7 +286,9 @@ public class UIFactory {
 
     internal GameObject CreateIconButton(Texture2D icon) {
         var buttonRoot = new GameObject("IconToggle", typeof(Image), typeof(Button));
+        buttonRoot.layer = UI_LAYER;
         var iconImage = new GameObject("Icon", typeof(RawImage));
+        iconImage.layer = UI_LAYER;
         var iconTransform = iconImage.GetComponent<RectTransform>();
         iconTransform.SetParent(buttonRoot.transform);
         iconTransform.anchorMin = Vector2.one * 0.5f;
@@ -309,10 +317,13 @@ public class UIFactory {
 
     public GameObject CreateToggle(string label) {
         var toggleRoot = new GameObject("Toggle", typeof(Toggle));
-
+        toggleRoot.layer = UI_LAYER;
         var background = new GameObject("Background", typeof(Image));
+        background.layer = UI_LAYER;
         var checkmark = new GameObject("Checkmark", typeof(Image));
+        checkmark.layer = UI_LAYER;
         var childLabel = new GameObject("Label", typeof(TextMeshProUGUI));
+        childLabel.layer = UI_LAYER;
 
         var toggle = toggleRoot.GetComponent<Toggle>();
         toggle.isOn = false;
@@ -374,8 +385,11 @@ public class UIFactory {
 
     internal GameObject CreateVScrollbar() {
         var scrollbarRoot = new GameObject("VScrollbar", typeof(Image), typeof(Scrollbar));
+        scrollbarRoot.layer = UI_LAYER;
         var sliderArea = new GameObject("Sliding Area", typeof(RectTransform));
+        sliderArea.layer = UI_LAYER;
         var handle = new GameObject("Handle", typeof(Image));
+        handle.layer = UI_LAYER;
 
         var bgImage = scrollbarRoot.GetComponent<Image>();
         bgImage.sprite = vScrollBackground;
@@ -407,8 +421,11 @@ public class UIFactory {
 
     internal GameObject CreateScrollView(GameObject content) {
         var root = new GameObject("Scroll View", typeof(Image));
+        root.layer = UI_LAYER;
         var scrollRoot = new GameObject("Scroll Rect", typeof(ScrollRect));
+        scrollRoot.layer = UI_LAYER;
         var viewport = new GameObject("Viewport", typeof(Image), typeof(Mask));
+        viewport.layer = UI_LAYER;
 
         var scrollRootRT = scrollRoot.GetComponent<RectTransform>();
         scrollRootRT.SetParent(root.transform);
@@ -463,6 +480,7 @@ public class UIFactory {
 
     internal GameObject CreatePanel() {
         var panel = new GameObject("Panel", typeof(Image));
+        panel.layer = UI_LAYER;
 
         var image = panel.GetComponent<Image>();
         image.sprite = panelBackground;
@@ -476,6 +494,7 @@ public class UIFactory {
         HorizontalAlignmentOptions hAlign = HorizontalAlignmentOptions.Left,
         VerticalAlignmentOptions vAlign = VerticalAlignmentOptions.Middle) {
         var root = new GameObject("Text", typeof(TextMeshProUGUI));
+        root.layer = UI_LAYER;
         var textMesh = root.GetComponent<TextMeshProUGUI>();
         textMesh.SetText(text);
         textMesh.font = uiFont;
@@ -490,8 +509,10 @@ public class UIFactory {
 
     internal GameObject CreateInputField() {
         var root = new GameObject("InputField", typeof(Image), typeof(InputFieldExtended));
+        root.layer = UI_LAYER;
         root.SetActive(false);
         var textArea = new GameObject("TextArea", typeof(RectMask2D));
+        textArea.layer = UI_LAYER;
         Layout(textArea, root.transform, LAYOUT_STRETCH, LAYOUT_STRETCH, 3, -6, -6, 0);
 
         var childText = new GameObject("Text", typeof(TextMeshProUGUI));
@@ -531,16 +552,21 @@ public class UIFactory {
 
     internal GameObject CreateHSlider() {
         var root = new GameObject("Slider", typeof(Slider));
-
+        root.layer = UI_LAYER;
         var background = new GameObject("Background", typeof(Image));
+        background.layer = UI_LAYER;
         Layout(background, root.transform, LAYOUT_STRETCH, LAYOUT_STRETCH, 0, 0, 0, 0);
         var fillArea = new GameObject("Fill Area", typeof(RectTransform));
+        fillArea.layer = UI_LAYER;
         Layout(fillArea, root.transform, LAYOUT_STRETCH, LAYOUT_STRETCH, 5, 0, -20, 0);
         var fill = new GameObject("Fill", typeof(Image));
+        fill.layer = UI_LAYER;
         Layout(fill, fillArea.transform, LAYOUT_STRETCH, LAYOUT_STRETCH, -5, 0, 10, 0);
         var handleArea = new GameObject("Handle Slide Area", typeof(RectTransform));
+        handleArea.layer = UI_LAYER;
         Layout(handleArea, root.transform, LAYOUT_STRETCH, LAYOUT_STRETCH, 10, -3, -20, -6);
         var handle = new GameObject("Handle", typeof(Image));
+        handle.layer = UI_LAYER;
         Layout(handle, handleArea.transform, LAYOUT_START, LAYOUT_STRETCH, -6, 0, 12, 0);
 
         var backgroundImage = background.GetComponent<Image>();
