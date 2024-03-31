@@ -1,7 +1,7 @@
 #!/bin/sh
 
 DIR=$(dirname $0)
-UNITY_PATH=$HOME/Unity/Hub/Editor/2020.3.33f1
+UNITY_PATH=$HOME/Unity/Hub/Editor/2022.3.5f1
 
 rm -rf $DIR/Assets/AssetBundles $DIR/Assets/AssetBundles.meta 
 
