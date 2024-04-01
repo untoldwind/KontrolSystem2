@@ -33,7 +33,7 @@ public partial class KSPVesselModule {
         [KSField] public double WheelThrottleTrim => pilotFlightCtrlState.wheelThrottleTrim;
 
         [KSField] public double TranslateX => pilotFlightCtrlState.X;
-        
+
         [KSField] public double TranslateY => pilotFlightCtrlState.Y;
 
         [KSField] public double TranslateZ => pilotFlightCtrlState.Z;

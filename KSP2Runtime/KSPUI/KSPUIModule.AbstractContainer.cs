@@ -146,6 +146,19 @@ public partial class KSPUIModule {
             return new FloatInputField(this, element, entry);
         }
 
+        [KSMethod(Description = "Add dropdown field to the container")]
+        public Dropdown AddDropdown(
+            [KSParameter("Selectable options")]
+            string[] options,
+            [KSParameter("Alignment of the input field in its parent container")]
+            UGUILayout.Align align = UGUILayout.Align.Stretch,
+            [KSParameter("Relative amount of available space to acquire (beyond minimal space)")]
+            double stretch = 0) {
+            var (element, entry) = layout.Add(UGUIDropdown.Create(options, 50.0f), align, (float)stretch);
+            Root.Layout();
+            return new Dropdown(this, element, entry);
+        }
+        
         [KSMethod(Description = "Add horizontal slider to the container")]
         public Slider AddHorizontalSlider(
             [KSParameter("Minimum value of the slider")]

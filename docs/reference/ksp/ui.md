@@ -383,6 +383,26 @@ Parameters
 | stretch   | float          | x        | Relative amount of available space to acquire (beyond minimal space) |
 
 
+##### add_dropdown
+
+```rust
+container.add_dropdown ( options : string[],
+                         align : ksp::ui::Align,
+                         stretch : float ) -> ksp::ui::Dropdown
+```
+
+Add dropdown field to the container
+
+
+Parameters
+
+| Name    | Type           | Optional | Description                                                          |
+| ------- | -------------- | -------- | -------------------------------------------------------------------- |
+| options | string[]       |          | Selectable options                                                   |
+| align   | ksp::ui::Align | x        | Alignment of the input field in its parent container                 |
+| stretch | float          | x        | Relative amount of available space to acquire (beyond minimal space) |
+
+
 ##### add_float_input
 
 ```rust
@@ -625,6 +645,59 @@ Parameters
 
 ```rust
 container.remove ( ) -> Unit
+```
+
+
+
+### Dropdown
+
+
+
+#### Fields
+
+| Name    | Type     | Read-only | Description |
+| ------- | -------- | --------- | ----------- |
+| enabled | bool     | R/W       |             |
+| options | string[] | R/W       |             |
+| value   | int      | R/W       |             |
+
+
+#### Methods
+
+##### bind
+
+```rust
+dropdown.bind ( boundValue : Cell<T> ) -> ksp::ui::Dropdown
+```
+
+
+
+Parameters
+
+| Name       | Type    | Optional | Description |
+| ---------- | ------- | -------- | ----------- |
+| boundValue | Cell<T> |          |             |
+
+
+##### on_change
+
+```rust
+dropdown.on_change ( onChange : sync fn(int) -> Unit ) -> Unit
+```
+
+
+
+Parameters
+
+| Name     | Type                 | Optional | Description |
+| -------- | -------------------- | -------- | ----------- |
+| onChange | sync fn(int) -> Unit |          |             |
+
+
+##### remove
+
+```rust
+dropdown.remove ( ) -> Unit
 ```
 
 
@@ -1674,6 +1747,26 @@ Parameters
 | minHeight | float          |          | Minimum height of the canvas                                         |
 | align     | ksp::ui::Align | x        | Alignment of the canvas in its parent container                      |
 | stretch   | float          | x        | Relative amount of available space to acquire (beyond minimal space) |
+
+
+##### add_dropdown
+
+```rust
+window.add_dropdown ( options : string[],
+                      align : ksp::ui::Align,
+                      stretch : float ) -> ksp::ui::Dropdown
+```
+
+Add dropdown field to the container
+
+
+Parameters
+
+| Name    | Type           | Optional | Description                                                          |
+| ------- | -------------- | -------- | -------------------------------------------------------------------- |
+| options | string[]       |          | Selectable options                                                   |
+| align   | ksp::ui::Align | x        | Alignment of the input field in its parent container                 |
+| stretch | float          | x        | Relative amount of available space to acquire (beyond minimal space) |
 
 
 ##### add_float_input

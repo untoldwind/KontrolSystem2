@@ -2372,6 +2372,11 @@
         {
           "kind": "Standard",
           "module": "ksp::ui",
+          "name": "Dropdown"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
           "name": "Gradient"
         },
         {
@@ -3440,6 +3445,11 @@
           "kind": "Standard",
           "module": "ksp::ui",
           "name": "Container"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::ui",
+          "name": "Dropdown"
         },
         {
           "kind": "Standard",
@@ -14362,6 +14372,11 @@
             {
               "kind": "Standard",
               "module": "ksp::ui",
+              "name": "Dropdown"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
               "name": "Gradient"
             },
             {
@@ -18538,6 +18553,11 @@
             {
               "kind": "Standard",
               "module": "ksp::ui",
+              "name": "Dropdown"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
               "name": "Gradient"
             },
             {
@@ -20119,6 +20139,11 @@
             {
               "kind": "Standard",
               "module": "ksp::ui",
+              "name": "Dropdown"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
               "name": "Gradient"
             },
             {
@@ -21344,6 +21369,11 @@
             {
               "kind": "Standard",
               "module": "ksp::ui",
+              "name": "Dropdown"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
               "name": "Gradient"
             },
             {
@@ -22509,6 +22539,11 @@
             {
               "kind": "Standard",
               "module": "ksp::ui",
+              "name": "Dropdown"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
               "name": "Gradient"
             },
             {
@@ -23630,6 +23665,11 @@
               "kind": "Standard",
               "module": "ksp::ui",
               "name": "Container"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Dropdown"
             },
             {
               "kind": "Standard",
@@ -25795,6 +25835,11 @@
             {
               "kind": "Standard",
               "module": "ksp::ui",
+              "name": "Dropdown"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
               "name": "Gradient"
             },
             {
@@ -27266,6 +27311,51 @@
                 "name": "FloatInputField"
               }
             },
+            "add_dropdown": {
+              "isAsync": false,
+              "name": "add_dropdown",
+              "description": "Add dropdown field to the container\n",
+              "parameters": [
+                {
+                  "name": "options",
+                  "type": {
+                    "kind": "Array",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "string"
+                      }
+                    ]
+                  },
+                  "hasDefault": false,
+                  "description": "Selectable options"
+                },
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::ui",
+                    "name": "Align"
+                  },
+                  "hasDefault": true,
+                  "description": "Alignment of the input field in its parent container"
+                },
+                {
+                  "name": "stretch",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": true,
+                  "description": "Relative amount of available space to acquire (beyond minimal space)"
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Dropdown"
+              }
+            },
             "add_horizontal_slider": {
               "isAsync": false,
               "name": "add_horizontal_slider",
@@ -27391,6 +27481,108 @@
               "returnType": {
                 "kind": "Builtin",
                 "name": "Unit"
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "Dropdown": {
+          "name": "Dropdown",
+          "description": "",
+          "fields": {
+            "options": {
+              "name": "options",
+              "readOnly": false,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "string"
+                  }
+                ]
+              }
+            },
+            "value": {
+              "name": "value",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "int"
+              }
+            },
+            "enabled": {
+              "name": "enabled",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            }
+          },
+          "methods": {
+            "remove": {
+              "isAsync": false,
+              "name": "remove",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
+            },
+            "on_change": {
+              "isAsync": false,
+              "name": "on_change",
+              "parameters": [
+                {
+                  "name": "onChange",
+                  "type": {
+                    "kind": "Function",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "int"
+                      }
+                    ],
+                    "returnType": {
+                      "kind": "Builtin",
+                      "name": "Unit"
+                    },
+                    "isAsync": false
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
+            },
+            "bind": {
+              "isAsync": false,
+              "name": "bind",
+              "parameters": [
+                {
+                  "name": "boundValue",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "",
+                    "name": "Cell",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "int"
+                      }
+                    ]
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Dropdown"
               }
             }
           },
@@ -29928,6 +30120,51 @@
                 "name": "FloatInputField"
               }
             },
+            "add_dropdown": {
+              "isAsync": false,
+              "name": "add_dropdown",
+              "description": "Add dropdown field to the container\n",
+              "parameters": [
+                {
+                  "name": "options",
+                  "type": {
+                    "kind": "Array",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "string"
+                      }
+                    ]
+                  },
+                  "hasDefault": false,
+                  "description": "Selectable options"
+                },
+                {
+                  "name": "align",
+                  "type": {
+                    "kind": "Standard",
+                    "module": "ksp::ui",
+                    "name": "Align"
+                  },
+                  "hasDefault": true,
+                  "description": "Alignment of the input field in its parent container"
+                },
+                {
+                  "name": "stretch",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "float"
+                  },
+                  "hasDefault": true,
+                  "description": "Relative amount of available space to acquire (beyond minimal space)"
+                }
+              ],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::ui",
+                "name": "Dropdown"
+              }
+            },
             "add_horizontal_slider": {
               "isAsync": false,
               "name": "add_horizontal_slider",
@@ -30967,6 +31204,11 @@
               "kind": "Standard",
               "module": "ksp::ui",
               "name": "Container"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Dropdown"
             },
             {
               "kind": "Standard",
@@ -32102,6 +32344,11 @@
               "kind": "Standard",
               "module": "ksp::ui",
               "name": "Container"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Dropdown"
             },
             {
               "kind": "Standard",
@@ -33261,6 +33508,11 @@
             {
               "kind": "Standard",
               "module": "ksp::ui",
+              "name": "Dropdown"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
               "name": "Gradient"
             },
             {
@@ -34392,6 +34644,11 @@
               "kind": "Standard",
               "module": "ksp::ui",
               "name": "Container"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Dropdown"
             },
             {
               "kind": "Standard",
@@ -35537,6 +35794,11 @@
               "kind": "Standard",
               "module": "ksp::ui",
               "name": "Container"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Dropdown"
             },
             {
               "kind": "Standard",
@@ -36776,6 +37038,11 @@
             {
               "kind": "Standard",
               "module": "ksp::ui",
+              "name": "Dropdown"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
               "name": "Gradient"
             },
             {
@@ -37961,6 +38228,11 @@
             {
               "kind": "Standard",
               "module": "ksp::ui",
+              "name": "Dropdown"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
               "name": "Gradient"
             },
             {
@@ -39102,6 +39374,11 @@
               "kind": "Standard",
               "module": "ksp::ui",
               "name": "Container"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Dropdown"
             },
             {
               "kind": "Standard",
@@ -40267,6 +40544,11 @@
               "kind": "Standard",
               "module": "ksp::ui",
               "name": "Container"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Dropdown"
             },
             {
               "kind": "Standard",
@@ -41446,6 +41728,11 @@
             {
               "kind": "Standard",
               "module": "ksp::ui",
+              "name": "Dropdown"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
               "name": "Gradient"
             },
             {
@@ -42597,6 +42884,11 @@
               "kind": "Standard",
               "module": "ksp::ui",
               "name": "Container"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Dropdown"
             },
             {
               "kind": "Standard",
@@ -43916,6 +44208,11 @@
             {
               "kind": "Standard",
               "module": "ksp::ui",
+              "name": "Dropdown"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
               "name": "Gradient"
             },
             {
@@ -45051,6 +45348,11 @@
             {
               "kind": "Standard",
               "module": "ksp::ui",
+              "name": "Dropdown"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
               "name": "Gradient"
             },
             {
@@ -46182,6 +46484,11 @@
               "kind": "Standard",
               "module": "ksp::ui",
               "name": "Container"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Dropdown"
             },
             {
               "kind": "Standard",
@@ -47327,6 +47634,11 @@
               "kind": "Standard",
               "module": "ksp::ui",
               "name": "Container"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Dropdown"
             },
             {
               "kind": "Standard",

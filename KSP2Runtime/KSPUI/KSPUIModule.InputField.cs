@@ -49,7 +49,7 @@ public partial class KSPUIModule {
     }
 
     [KSClass]
-    public class StringInputField(KSPUIModule.AbstractContainer parent, UGUIInputField inputField, UGUILayout.ILayoutEntry entry) : AbstractInputField(parent, inputField, entry) {
+    public class StringInputField(AbstractContainer parent, UGUIInputField inputField, UGUILayout.ILayoutEntry entry) : AbstractInputField(parent, inputField, entry) {
         [KSField]
         public string Value {
             get => inputField.Value;

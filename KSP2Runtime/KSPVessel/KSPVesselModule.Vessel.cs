@@ -450,7 +450,7 @@ public partial class KSPVesselModule {
                 return pilotInput;
             }
         }
-        
+
         [KSMethod]
         public KSPControlModule.SteeringManager SetSteering(Vector3d pitchYawRoll) {
             if (context.TryFindAutopilot<KSPControlModule.SteeringManager>(vessel, out var steeringManager)) {
