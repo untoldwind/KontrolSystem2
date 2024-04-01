@@ -3,6 +3,8 @@
 ## 0.5.7.6 ->
 
 * Experimental support for triggering quicksave/load via `ksp::debug::SAVE_LOAD_CONTROL`
+  * Current limitations: Triggering a quick-load will terminate all running scripts, including the script triggering it
+* Support `vessel.pilot_input` (capture the flight controls as desired by pilot before mangled by any autopilot)
 
 ## 0.5.7.3 -> 0.5.7.6
 

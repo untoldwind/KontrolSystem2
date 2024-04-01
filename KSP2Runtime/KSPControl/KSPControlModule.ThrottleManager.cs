@@ -8,14 +8,8 @@ namespace KontrolSystem.KSP.Runtime.KSPControl;
 
 public partial class KSPControlModule {
     [KSClass("ThrottleManager")]
-    public class ThrottleManager : BaseAutopilot {
-        private Func<double, double> throttleProvider;
-
-        public ThrottleManager(IKSPContext context, VesselComponent vessel, Func<double, double> throttleProvider) :
-            base(context, vessel) {
-            this.throttleProvider = throttleProvider;
-        }
-
+    public class ThrottleManager(IKSPContext context, VesselComponent vessel, Func<double, double> throttleProvider)
+        : BaseAutopilot(context, vessel, 30) {
         [KSField]
         public double Throttle {
             get => throttleProvider(0);

@@ -24,6 +24,7 @@ public partial class KSPVesselModule {
     public class VesselAdapter : IKSPTargetable {
         internal readonly IKSPContext context;
         internal readonly VesselComponent vessel;
+        internal PilotInput? pilotInput = null;
 
         internal VesselAdapter(IKSPContext context, VesselComponent vessel) {
             this.context = context;
@@ -437,6 +438,19 @@ public partial class KSPVesselModule {
                 QuaternionD.Euler(-pitchAboveHorizon, degreesFromNorth, roll)));
         }
 
+        [KSField(Description = "Get the desired pilot input for this vessel.")]
+        public PilotInput PilotInput {
+            get {
+                if (pilotInput == null) {
+                    var context = KSPContext.CurrentContext;
+                    pilotInput = new PilotInput(this.context, vessel);
+                    context.HookAutopilot(vessel, pilotInput);
+                }
+
+                return pilotInput;
+            }
+        }
+        
         [KSMethod]
         public KSPControlModule.SteeringManager SetSteering(Vector3d pitchYawRoll) {
             if (context.TryFindAutopilot<KSPControlModule.SteeringManager>(vessel, out var steeringManager)) {
@@ -542,6 +556,9 @@ public partial class KSPVesselModule {
         [KSMethod(Description = "Unhook all autopilots from the vessel.")]
         public void ReleaseControl() {
             context.UnhookAllAutopilots(vessel);
+            if (pilotInput != null) {
+                context.HookAutopilot(vessel, pilotInput);
+            }
         }
 
         [KSMethod(Description = "Make this vessel the active vessel.")]

@@ -8,14 +8,11 @@ namespace KontrolSystem.KSP.Runtime.KSPControl;
 
 public partial class KSPControlModule {
     [KSClass("WheelSteeringManager")]
-    public class WheelSteeringManager : BaseAutopilot {
-        private Func<double, double> wheelSteerProvider;
-
-        public WheelSteeringManager(IKSPContext context, VesselComponent vessel,
-            Func<double, double> wheelSteerProvider) : base(context, vessel) {
-            this.wheelSteerProvider = wheelSteerProvider;
-        }
-
+    public class WheelSteeringManager(
+        IKSPContext context,
+        VesselComponent vessel,
+        Func<double, double> wheelSteerProvider)
+        : BaseAutopilot(context, vessel, 40) {
         [KSField]
         public double WheelSteer {
             get => wheelSteerProvider(0);

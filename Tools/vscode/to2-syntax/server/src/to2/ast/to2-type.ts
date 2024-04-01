@@ -224,12 +224,12 @@ export class TypeResolver {
   public BUILTIN_ERROR: ReferencedType;
   public BUILTIN_ARRAYBUILDER: ReferencedType;
 
-  constructor(private reference: Reference) {
+  constructor(reference: Reference) {
     this.referencedTypes = [
-      ...Object.values(REFERENCE.builtin).map(
+      ...Object.values(reference.builtin).map(
         (typeReference) => new ReferencedType(typeReference),
       ),
-      ...Object.values(REFERENCE.modules).flatMap((module) =>
+      ...Object.values(reference.modules).flatMap((module) =>
         Object.values(module.types).map(
           (typeReference) => new ReferencedType(typeReference, module.name),
         ),
@@ -242,7 +242,7 @@ export class TypeResolver {
       {} as Record<string, ReferencedType>,
     );
 
-    this.referencedTypeAliases = Object.values(REFERENCE.modules)
+    this.referencedTypeAliases = Object.values(reference.modules)
       .flatMap((module) =>
         Object.entries(module.typeAliases).map(([name, typeRef]) => ({
           name: `${module.name}::${name}`,
@@ -349,20 +349,23 @@ export class TypeResolver {
   }
 }
 
+var currentReference: Reference = REFERENCE;
 var typeResolverInstance: TypeResolver | undefined = undefined;
 
 export function currentTypeResolver(): TypeResolver {
-  if (typeResolverInstance === undefined)
+  if (typeResolverInstance === undefined) {
     console.log("Init type resolver from default");
-  typeResolverInstance ??= new TypeResolver(REFERENCE);
+    typeResolverInstance = new TypeResolver(currentReference);
+  }
   return typeResolverInstance;
 }
 
 export function typeResolverInitialized(): boolean {
-  return typeResolverInstance !== undefined;
+  return currentReference !== REFERENCE;
 }
 
 export function initTypeResolver(reference: Reference) {
   console.log("Init type resolver from mod");
+  currentReference = currentReference;
   typeResolverInstance = new TypeResolver(reference);
 }

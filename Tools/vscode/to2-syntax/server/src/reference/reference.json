@@ -2757,6 +2757,11 @@
         {
           "kind": "Standard",
           "module": "ksp::vessel",
+          "name": "PilotInput"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
           "name": "ScienceStorage"
         },
         {
@@ -3820,6 +3825,11 @@
           "kind": "Standard",
           "module": "ksp::vessel",
           "name": "Part"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "PilotInput"
         },
         {
           "kind": "Standard",
@@ -14737,6 +14747,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "PilotInput"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ScienceStorage"
             },
             {
@@ -18908,6 +18923,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "PilotInput"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ScienceStorage"
             },
             {
@@ -20484,6 +20504,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "PilotInput"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ScienceStorage"
             },
             {
@@ -21704,6 +21729,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "PilotInput"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ScienceStorage"
             },
             {
@@ -22864,6 +22894,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "PilotInput"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ScienceStorage"
             },
             {
@@ -23980,6 +24015,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PilotInput"
             },
             {
               "kind": "Standard",
@@ -26136,6 +26176,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PilotInput"
             },
             {
               "kind": "Standard",
@@ -31306,6 +31351,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "PilotInput"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ScienceStorage"
             },
             {
@@ -32432,6 +32482,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PilotInput"
             },
             {
               "kind": "Standard",
@@ -33586,6 +33641,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "PilotInput"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ScienceStorage"
             },
             {
@@ -34712,6 +34772,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PilotInput"
             },
             {
               "kind": "Standard",
@@ -35852,6 +35917,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PilotInput"
             },
             {
               "kind": "Standard",
@@ -37086,6 +37156,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "PilotInput"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ScienceStorage"
             },
             {
@@ -38266,6 +38341,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "PilotInput"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ScienceStorage"
             },
             {
@@ -39402,6 +39482,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PilotInput"
             },
             {
               "kind": "Standard",
@@ -40562,6 +40647,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PilotInput"
             },
             {
               "kind": "Standard",
@@ -41736,6 +41826,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "PilotInput"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ScienceStorage"
             },
             {
@@ -42882,6 +42977,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PilotInput"
             },
             {
               "kind": "Standard",
@@ -44196,6 +44296,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "PilotInput"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ScienceStorage"
             },
             {
@@ -45326,6 +45431,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "PilotInput"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ScienceStorage"
             },
             {
@@ -46452,6 +46562,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PilotInput"
             },
             {
               "kind": "Standard",
@@ -47592,6 +47707,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PilotInput"
             },
             {
               "kind": "Standard",
@@ -51418,6 +51538,146 @@
           "assignableFromAny": false,
           "assignableFrom": []
         },
+        "PilotInput": {
+          "name": "PilotInput",
+          "description": "Contains the flight control values as desired by the pilot.\n",
+          "fields": {
+            "pitch": {
+              "name": "pitch",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "pitch_trim": {
+              "name": "pitch_trim",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "yaw": {
+              "name": "yaw",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "yaw_trim": {
+              "name": "yaw_trim",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "roll": {
+              "name": "roll",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "roll_trim": {
+              "name": "roll_trim",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "main_throttle": {
+              "name": "main_throttle",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "wheel_steer": {
+              "name": "wheel_steer",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "wheel_steer_trim": {
+              "name": "wheel_steer_trim",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "wheel_throttle": {
+              "name": "wheel_throttle",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "wheel_throttle_trim": {
+              "name": "wheel_throttle_trim",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "translate_x": {
+              "name": "translate_x",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "translate_y": {
+              "name": "translate_y",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "translate_z": {
+              "name": "translate_z",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            }
+          },
+          "methods": {
+            "release": {
+              "isAsync": true,
+              "name": "release",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
+            },
+            "resume": {
+              "isAsync": false,
+              "name": "resume",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
         "ScienceStorage": {
           "name": "ScienceStorage",
           "description": "Represents the science storage / research inventory of a vessel.\n",
@@ -52388,6 +52648,16 @@
                 "kind": "Standard",
                 "module": "ksp::orbit",
                 "name": "OrbitPatch"
+              }
+            },
+            "pilot_input": {
+              "name": "pilot_input",
+              "description": "Get the desired pilot input for this vessel.\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "PilotInput"
               }
             }
           },

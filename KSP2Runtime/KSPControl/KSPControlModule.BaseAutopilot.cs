@@ -13,14 +13,17 @@ public partial class KSPControlModule {
         protected readonly VesselComponent vessel;
         protected bool suspended;
 
-        protected BaseAutopilot(IKSPContext context, VesselComponent vessel) {
+        protected BaseAutopilot(IKSPContext context, VesselComponent vessel, int priority) {
             this.context = context;
             this.vessel = vessel;
+            Priority = priority;
 
             suspended = false;
 
             this.context.HookAutopilot(this.vessel, this);
         }
+
+        public int Priority { get; }
 
         public abstract void UpdateAutopilot(ref FlightCtrlState st, float deltaTime);
 

@@ -22,6 +22,8 @@ public interface IMarker {
 }
 
 public interface IKSPAutopilot {
+    int Priority { get; }
+
     void UpdateAutopilot(ref FlightCtrlState st, float deltaTime);
 }
 

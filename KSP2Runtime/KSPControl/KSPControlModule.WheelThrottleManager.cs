@@ -8,14 +8,11 @@ namespace KontrolSystem.KSP.Runtime.KSPControl;
 
 public partial class KSPControlModule {
     [KSClass("WheelThrottleManager")]
-    public class WheelThrottleManager : BaseAutopilot {
-        private Func<double, double> wheelThrottleProvider;
-
-        public WheelThrottleManager(IKSPContext context, VesselComponent vessel,
-            Func<double, double> wheelThrottleProvider) : base(context, vessel) {
-            this.wheelThrottleProvider = wheelThrottleProvider;
-        }
-
+    public class WheelThrottleManager(
+        IKSPContext context,
+        VesselComponent vessel,
+        Func<double, double> wheelThrottleProvider)
+        : BaseAutopilot(context, vessel, 50) {
         [KSField]
         public double WheelThrottle {
             get => wheelThrottleProvider(0);

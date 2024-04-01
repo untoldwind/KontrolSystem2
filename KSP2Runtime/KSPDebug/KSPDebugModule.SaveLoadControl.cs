@@ -8,11 +8,11 @@ public partial class KSPDebugModule {
     [KSClass(Description = "Control load/save of game")]
     public class SaveLoadControl {
         [KSField] public bool IsLoaded => KSPContext.CurrentContext.Game.SaveLoadManager.IsLoaded;
-        
+
         [KSField] public bool IsLoading => KSPContext.CurrentContext.Game.SaveLoadManager.IsLoading;
 
         [KSField] public bool IsSaving => KSPContext.CurrentContext.Game.SaveLoadManager.IsSaving;
-        
+
         [KSField]
         public bool QuickLoadAllowed =>
             KSPContext.CurrentContext.Game.SessionManager.IsDifficultyOptionEnabled("AllowQuickLoad");

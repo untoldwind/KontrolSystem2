@@ -32,7 +32,10 @@ internal class AutopilotHooks {
     internal bool IsEmpty => autopilots.Count == 0;
 
     internal void Add(IKSPAutopilot autopilot) {
-        if (!autopilots.Contains(autopilot)) autopilots.Add(autopilot);
+        if (!autopilots.Contains(autopilot)) {
+            autopilots.Add(autopilot);
+            autopilots.Sort((a, b) => a.Priority.CompareTo(b.Priority));
+        }
     }
 
     internal bool Remove(IKSPAutopilot autopilot) {

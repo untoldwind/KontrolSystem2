@@ -124,6 +124,8 @@ public partial class KSPControlModule {
             this.context.HookAutopilot(this.vessel.vessel, this);
         }
 
+        public int Priority => 10;
+
         [KSField] public bool ShowFacingVectors { get; set; }
 
         [KSField] public bool ShowAngularVectors { get; set; }

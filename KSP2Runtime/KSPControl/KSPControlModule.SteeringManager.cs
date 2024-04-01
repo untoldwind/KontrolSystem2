@@ -12,7 +12,7 @@ public partial class KSPControlModule {
         private Func<double, Vector3d> pitchYawRollProvider;
 
         public SteeringManager(IKSPContext context, VesselComponent vessel, Func<double, Vector3d> pitchYawRollProvider)
-            : base(context, vessel) {
+            : base(context, vessel, 10) {
             this.pitchYawRollProvider = pitchYawRollProvider;
         }
 

@@ -12,7 +12,7 @@ public partial class KSPControlModule {
         private Func<double, Vector3d> translateProvider;
 
         public RCSTranslateManager(IKSPContext context, VesselComponent vessel,
-            Func<double, Vector3d> translateProvider) : base(context, vessel) {
+            Func<double, Vector3d> translateProvider) : base(context, vessel, 20) {
             this.translateProvider = translateProvider;
         }
 

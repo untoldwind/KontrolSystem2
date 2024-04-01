@@ -1467,6 +1467,49 @@ Parameters
 | value | string |          | Enum value to lookup |
 
 
+### PilotInput
+
+Contains the flight control values as desired by the pilot.
+
+
+#### Fields
+
+| Name                | Type  | Read-only | Description |
+| ------------------- | ----- | --------- | ----------- |
+| main_throttle       | float | R/O       |             |
+| pitch               | float | R/O       |             |
+| pitch_trim          | float | R/O       |             |
+| roll                | float | R/O       |             |
+| roll_trim           | float | R/O       |             |
+| translate_x         | float | R/O       |             |
+| translate_y         | float | R/O       |             |
+| translate_z         | float | R/O       |             |
+| wheel_steer         | float | R/O       |             |
+| wheel_steer_trim    | float | R/O       |             |
+| wheel_throttle      | float | R/O       |             |
+| wheel_throttle_trim | float | R/O       |             |
+| yaw                 | float | R/O       |             |
+| yaw_trim            | float | R/O       |             |
+
+
+#### Methods
+
+##### release
+
+```rust
+pilotinput.release ( ) -> Unit
+```
+
+
+
+##### resume
+
+```rust
+pilotinput.resume ( ) -> Unit
+```
+
+
+
 ### ReactionWheelState
 
 State of a reaction wheel
@@ -1738,6 +1781,7 @@ Represents an in-game vessel, which might be a rocket, plane, rover ... or actua
 | orbit                    | [ksp::orbit::OrbitPatch](/reference/ksp/orbit.md#orbitpatch)                            | R/O       | Current orbit patch of the vessel.                                                                                                                                                                                                                                                            |
 | orbital_velocity         | [ksp::math::Vec3](/reference/ksp/math.md#vec3)                                          | R/O       | Orbital velocity of the vessel relative to the main body. This is equivalent of expressing the `global_velocity` in the celestial frame of the main body.                                                                                                                                     |
 | parts                    | [ksp::vessel::Part](/reference/ksp/vessel.md#part)[]                                    | R/O       | Get a list of all vessel parts.                                                                                                                                                                                                                                                               |
+| pilot_input              | [ksp::vessel::PilotInput](/reference/ksp/vessel.md#pilotinput)                          | R/O       | Get the desired pilot input for this vessel.                                                                                                                                                                                                                                                  |
 | pitch_yaw_roll           | [ksp::math::Vec3](/reference/ksp/math.md#vec3)                                          | R/O       | Returns the pitch, yaw/heading and roll of the vessel relative to the horizon.                                                                                                                                                                                                                |
 | position                 | [ksp::math::Vec3](/reference/ksp/math.md#vec3)                                          | R/O       | Coordinate position of the vessel in the celestial frame of the main body.                                                                                                                                                                                                                    |
 | research_location        | Option&lt;[ksp::science::ResearchLocation](/reference/ksp/science.md#researchlocation)> | R/O       | Get the current research location of the vessel.                                                                                                                                                                                                                                              |
