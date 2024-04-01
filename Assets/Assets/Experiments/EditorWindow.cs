@@ -59,6 +59,9 @@ namespace Experiments {
             var fileNameInput = UGUIInputField.Create("", 120);
             root.Add(fileNameInput);
 
+            var dropbox = UGUIDropdown.Create();
+            root.Add(dropbox);
+
             var buttonContainer = root.Add(UGUILayoutContainer.Horizontal(10, new Padding(0, 0, 20, 20)));
             
             var delete = UIFactory.Instance.CreateButton("Delete");

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.TextCore.LowLevel;
@@ -65,6 +66,7 @@ namespace Experiments {
         internal readonly Sprite vScrollBackground;
         internal readonly Sprite vScrollHandle;
         internal readonly Sprite frameBackground;
+        internal readonly Sprite downIconSprite;
         internal readonly TMP_FontAsset graphFont;
         internal readonly TMP_FontAsset uiFont;
         internal readonly TMP_FontAsset consoleFont;
@@ -121,6 +123,7 @@ namespace Experiments {
             sliderHandle = Make9TileSprite(uiAssetsProvider.SliderHandle, new Vector4(3, 5, 3, 5));
             consoleBackground = Make9TileSprite(uiAssetsProvider.ConsoleBackground, new Vector4(20, 20, 20, 20));
             consoleInactiveFrame = Make9TileSprite(uiAssetsProvider.ConsoleInactiveFrame, new Vector4(20, 20, 20, 20));
+            downIconSprite = Make9TileSprite(uiAssetsProvider.DownIcon, new Vector4(1, 1, 1, 1));
 
             GLUIDrawer.Initialize(graphFont);
         }
@@ -500,6 +503,177 @@ namespace Experiments {
             root.SetActive(true);
             
             return root;
+        }
+
+        internal GameObject CreateDropdown(float size = 20) {
+            var dropdownRoot = new GameObject("Dropdown", typeof(Image), typeof(TMP_Dropdown));
+            var label = new GameObject("Label", typeof(TextMeshProUGUI));
+            var arrow = new GameObject("arrow", typeof(Image));
+            var template = new GameObject("Template", typeof(Image), typeof(ScrollRect));
+            var viewport = new GameObject("Viewport", typeof(Image), typeof(Mask));
+            var content = new GameObject("Content", typeof(RectTransform));
+            var item = new GameObject("Item", typeof(Toggle));
+            var itemBackground = new GameObject("Item Background", typeof(Image));
+            var itemLabel = new GameObject("Item Label", typeof(TextMeshProUGUI));
+            var scrollbar = CreateVScrollbar();
+            
+            scrollbar.GetComponent<Scrollbar>().SetDirection(Scrollbar.Direction.BottomToTop, true);
+            
+            template.SetActive(false);
+            
+            var dropdown = dropdownRoot.GetComponent<TMP_Dropdown>();
+            
+            RectTransform dropdownRootRT = dropdownRoot.GetComponent<RectTransform>();
+            
+            var backgroundImage = dropdownRoot.GetComponent<Image>();
+            backgroundImage.sprite = frameBackground;
+            backgroundImage.type = Image.Type.Tiled;
+            backgroundImage.color = Color.white;
+
+            var textMesh = label.GetComponent<TextMeshProUGUI>();
+            textMesh.SetText("text");
+            textMesh.font = uiFont;
+            textMesh.horizontalAlignment = HorizontalAlignmentOptions.Left;
+            textMesh.verticalAlignment = VerticalAlignmentOptions.Middle;
+            textMesh.fontSize = size;
+            textMesh.color = new Color(0.8382f, 0.8784f, 1);
+            textMesh.enableWordWrapping = false;
+            dropdown.captionText = textMesh;
+            
+            var labelRT = label.GetComponent<RectTransform>();
+            labelRT.SetParent(dropdownRootRT);
+            labelRT.anchorMin = Vector2.zero;
+            labelRT.anchorMax = Vector2.one;
+            labelRT.pivot = new Vector2(0, 0);
+            labelRT.sizeDelta = new Vector2(25, 6);
+            labelRT.anchoredPosition = new Vector3(5, 0, 0);
+
+            var arrowImage = arrow.GetComponent<Image>();
+            arrowImage.sprite = downIconSprite;
+            arrowImage.type = Image.Type.Tiled;
+            arrowImage.color = Color.white;
+            
+            var arrowRT = arrow.GetComponent<RectTransform>();
+            arrowRT.SetParent(dropdownRootRT);
+            arrowRT.anchorMin = new Vector2(1, 0.5f);
+            arrowRT.anchorMax = new Vector2(1, 0.5f);
+            arrowRT.pivot = new Vector2(1, 0);
+            arrowRT.sizeDelta = new Vector2(20, 16);
+            arrowRT.anchoredPosition = new Vector3(0, -8, 0);
+
+            var templateRT = template.GetComponent<RectTransform>();
+            templateRT.SetParent(dropdownRootRT);
+            templateRT.anchorMin        = new Vector2(0, 0);
+            templateRT.anchorMax        = new Vector2(1, 0);
+            templateRT.pivot            = new Vector2(0.5f, 1);
+            templateRT.anchoredPosition = new Vector2(0, 2);
+            templateRT.sizeDelta        = new Vector2(0, 150);
+            dropdown.template = templateRT;
+            
+            var templateBackground = template.GetComponent<Image>();
+            templateBackground.sprite = panelBackground;
+            templateBackground.type = Image.Type.Tiled;
+            templateBackground.color = Color.white;
+            
+            var viewportRT = viewport.GetComponent<RectTransform>();
+            viewportRT.SetParent(templateRT);
+            viewportRT.anchorMin        = new Vector2(0, 0);
+            viewportRT.anchorMax        = new Vector2(1, 1);
+            viewportRT.sizeDelta        = new Vector2(-10, 0);
+            viewportRT.pivot            = new Vector2(0, 1);
+            viewportRT.anchoredPosition = Vector3.zero;
+            
+            Mask viewportMask = viewport.GetComponent<Mask>();
+            viewportMask.showMaskGraphic = false;
+
+            Image viewportImage = viewport.GetComponent<Image>();
+            viewportImage.type = Image.Type.Tiled;
+            
+            var contentRT = content.GetComponent<RectTransform>();
+            contentRT.SetParent(viewportRT);
+            contentRT.anchorMin         = new Vector2(0f, 1);
+            contentRT.anchorMax         = new Vector2(1f, 1);
+            contentRT.pivot             = new Vector2(0.5f, 1);
+            contentRT.anchoredPosition  = new Vector2(0, 0);
+            contentRT.sizeDelta         = new Vector2(-10, 28);
+            
+            var itemRT = item.GetComponent<RectTransform>();
+            itemRT.SetParent(contentRT);
+            itemRT.anchorMin            = new Vector2(0, 0.5f);
+            itemRT.anchorMax            = new Vector2(1, 0.5f);
+            itemRT.sizeDelta            = new Vector2(0, 20);
+            itemRT.anchoredPosition = Vector3.zero;
+
+            var itemToggle = item.GetComponent<Toggle>();
+            var btColors = itemToggle.colors;
+            btColors.normalColor = new Color(0.1569f, 0.1804f, 0.2157f);
+            btColors.highlightedColor = new Color(0.1804f, 0.2078f, 0.251f);
+            btColors.pressedColor = new Color(0.1804f, 0.2078f, 0.251f);
+            btColors.selectedColor = new Color(0.1804f, 0.2078f, 0.251f);
+            itemToggle.colors = btColors;
+            
+            var itemBackgroundRT = itemBackground.GetComponent<RectTransform>();
+            itemBackgroundRT.SetParent(itemRT);
+            itemBackgroundRT.anchorMin  = Vector2.zero;
+            itemBackgroundRT.anchorMax  = Vector2.one;
+            itemBackgroundRT.sizeDelta  = Vector2.zero;
+            itemBackgroundRT.anchoredPosition = Vector3.zero;
+
+            var itemBackgroundBackground = itemBackground.GetComponent<Image>();
+            itemBackgroundBackground.color = Color.white;
+
+            var itemLabelRT = itemLabel.GetComponent<RectTransform>();
+            itemLabelRT.SetParent(itemRT);
+            itemLabelRT.anchorMin       = Vector2.zero;
+            itemLabelRT.anchorMax       = Vector2.one;
+            itemLabelRT.offsetMin       = new Vector2(20, 1);
+            itemLabelRT.offsetMax       = new Vector2(-10, -2);
+            
+            var itemLabelText = itemLabel.GetComponent<TextMeshProUGUI>();
+            itemLabelText.font = uiFont;
+            itemLabelText.horizontalAlignment = HorizontalAlignmentOptions.Left;
+            itemLabelText.verticalAlignment = VerticalAlignmentOptions.Middle;
+            itemLabelText.fontSize = size;
+            itemLabelText.color = new Color(0.8382f, 0.8784f, 1);
+            itemLabelText.enableWordWrapping = false;
+            
+            dropdown.itemText = itemLabelText;
+
+            item.GetComponent<Toggle>().targetGraphic = itemBackgroundBackground;
+            
+            RectTransform vScrollbarRT = scrollbar.GetComponent<RectTransform>();
+            vScrollbarRT.SetParent(templateRT);
+            vScrollbarRT.anchorMin = Vector2.right;
+            vScrollbarRT.anchorMax = Vector2.one;
+            vScrollbarRT.pivot = Vector2.one;
+            vScrollbarRT.sizeDelta = new Vector2(20, 0);
+            vScrollbarRT.anchoredPosition = Vector3.zero;
+            
+            ScrollRect templateScrollRect = template.GetComponent<ScrollRect>();
+            templateScrollRect.content = content.GetComponent<RectTransform>();
+            templateScrollRect.viewport = viewport.GetComponent<RectTransform>();
+            templateScrollRect.horizontal = false;
+            templateScrollRect.verticalScrollbar = scrollbar.GetComponent<Scrollbar>();
+            templateScrollRect.verticalScrollbarVisibility = ScrollRect.ScrollbarVisibility.AutoHideAndExpandViewport;
+            templateScrollRect.verticalScrollbarSpacing = -3;
+            
+            dropdown.options = new List<TMP_Dropdown.OptionData>() {
+                new TMP_Dropdown.OptionData("Test1"),
+                new TMP_Dropdown.OptionData("Test2"),
+                new TMP_Dropdown.OptionData("Test3"),
+                new TMP_Dropdown.OptionData("Test4"),
+                new TMP_Dropdown.OptionData("Test5"),
+                new TMP_Dropdown.OptionData("Test6"),
+                new TMP_Dropdown.OptionData("Test7"),
+                new TMP_Dropdown.OptionData("Test8"),
+                new TMP_Dropdown.OptionData("Test17"),
+                new TMP_Dropdown.OptionData("Test18"),
+                new TMP_Dropdown.OptionData("Test17"),
+                new TMP_Dropdown.OptionData("Test18"),
+            };
+            dropdown.RefreshShownValue();
+            
+            return dropdownRoot;
         }
 
         internal GameObject CreateHSlider() {
