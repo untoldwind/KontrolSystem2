@@ -315,12 +315,46 @@ logfile.truncate ( ) -> Unit
 Truncate/clear the log file.
 
 
+### SaveLoadControl
+
+Control load/save of game
+
+
+#### Fields
+
+| Name               | Type | Read-only | Description |
+| ------------------ | ---- | --------- | ----------- |
+| is_loaded          | bool | R/O       |             |
+| is_loading         | bool | R/O       |             |
+| is_saving          | bool | R/O       |             |
+| quick_load_allowed | bool | R/O       |             |
+
+
+#### Methods
+
+##### quick_load
+
+```rust
+saveloadcontrol.quick_load ( ) -> Unit
+```
+
+
+
+##### quick_save
+
+```rust
+saveloadcontrol.quick_save ( ) -> Unit
+```
+
+
+
 ## Constants
 
-| Name     | Type                | Description                    |
-| -------- | ------------------- | ------------------------------ |
-| DEBUG    | ksp::debug::Debug   | Collection of debug helper     |
-| MAIN_LOG | ksp::debug::LogFile | Main script specific log file  |
+| Name              | Type                        | Description                    |
+| ----------------- | --------------------------- | ------------------------------ |
+| DEBUG             | ksp::debug::Debug           | Collection of debug helper     |
+| MAIN_LOG          | ksp::debug::LogFile         | Main script specific log file  |
+| SAVE_LOAD_CONTROL | ksp::debug::SaveLoadControl | Control save/load of game      |
 
 
 ## Functions

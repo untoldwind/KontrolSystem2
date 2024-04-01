@@ -1992,6 +1992,11 @@
         {
           "kind": "Standard",
           "module": "ksp::debug",
+          "name": "SaveLoadControl"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::debug",
           "name": "DebugVector"
         },
         {
@@ -3050,6 +3055,11 @@
           "kind": "Standard",
           "module": "ksp::debug",
           "name": "DebugPath"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::debug",
+          "name": "SaveLoadControl"
         },
         {
           "kind": "Standard",
@@ -7714,6 +7724,66 @@
           "assignableFromAny": false,
           "assignableFrom": []
         },
+        "SaveLoadControl": {
+          "name": "SaveLoadControl",
+          "description": "Control load/save of game\n",
+          "fields": {
+            "is_loaded": {
+              "name": "is_loaded",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "is_loading": {
+              "name": "is_loading",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "is_saving": {
+              "name": "is_saving",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "quick_load_allowed": {
+              "name": "quick_load_allowed",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            }
+          },
+          "methods": {
+            "quick_save": {
+              "isAsync": false,
+              "name": "quick_save",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
+            },
+            "quick_load": {
+              "isAsync": false,
+              "name": "quick_load",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
         "DebugVector": {
           "name": "DebugVector",
           "description": "Represents a debugging vector in the current scene.\n",
@@ -7892,6 +7962,15 @@
             "kind": "Standard",
             "module": "ksp::debug",
             "name": "LogFile"
+          }
+        },
+        "SAVE_LOAD_CONTROL": {
+          "name": "SAVE_LOAD_CONTROL",
+          "description": "Control save/load of game\n",
+          "type": {
+            "kind": "Standard",
+            "module": "ksp::debug",
+            "name": "SaveLoadControl"
           }
         }
       },
@@ -13898,6 +13977,11 @@
             {
               "kind": "Standard",
               "module": "ksp::debug",
+              "name": "SaveLoadControl"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
               "name": "DebugVector"
             },
             {
@@ -18064,6 +18148,11 @@
             {
               "kind": "Standard",
               "module": "ksp::debug",
+              "name": "SaveLoadControl"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
               "name": "DebugVector"
             },
             {
@@ -19635,6 +19724,11 @@
             {
               "kind": "Standard",
               "module": "ksp::debug",
+              "name": "SaveLoadControl"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
               "name": "DebugVector"
             },
             {
@@ -20850,6 +20944,11 @@
             {
               "kind": "Standard",
               "module": "ksp::debug",
+              "name": "SaveLoadControl"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
               "name": "DebugVector"
             },
             {
@@ -22005,6 +22104,11 @@
             {
               "kind": "Standard",
               "module": "ksp::debug",
+              "name": "SaveLoadControl"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
               "name": "DebugVector"
             },
             {
@@ -23116,6 +23220,11 @@
               "kind": "Standard",
               "module": "ksp::debug",
               "name": "DebugPath"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "SaveLoadControl"
             },
             {
               "kind": "Standard",
@@ -25267,6 +25376,11 @@
               "kind": "Standard",
               "module": "ksp::debug",
               "name": "DebugPath"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "SaveLoadControl"
             },
             {
               "kind": "Standard",
@@ -30432,6 +30546,11 @@
             {
               "kind": "Standard",
               "module": "ksp::debug",
+              "name": "SaveLoadControl"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
               "name": "DebugVector"
             },
             {
@@ -31553,6 +31672,11 @@
               "kind": "Standard",
               "module": "ksp::debug",
               "name": "DebugPath"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "SaveLoadControl"
             },
             {
               "kind": "Standard",
@@ -32702,6 +32826,11 @@
             {
               "kind": "Standard",
               "module": "ksp::debug",
+              "name": "SaveLoadControl"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
               "name": "DebugVector"
             },
             {
@@ -33823,6 +33952,11 @@
               "kind": "Standard",
               "module": "ksp::debug",
               "name": "DebugPath"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "SaveLoadControl"
             },
             {
               "kind": "Standard",
@@ -34958,6 +35092,11 @@
               "kind": "Standard",
               "module": "ksp::debug",
               "name": "DebugPath"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "SaveLoadControl"
             },
             {
               "kind": "Standard",
@@ -36187,6 +36326,11 @@
             {
               "kind": "Standard",
               "module": "ksp::debug",
+              "name": "SaveLoadControl"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
               "name": "DebugVector"
             },
             {
@@ -37362,6 +37506,11 @@
             {
               "kind": "Standard",
               "module": "ksp::debug",
+              "name": "SaveLoadControl"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
               "name": "DebugVector"
             },
             {
@@ -38493,6 +38642,11 @@
               "kind": "Standard",
               "module": "ksp::debug",
               "name": "DebugPath"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "SaveLoadControl"
             },
             {
               "kind": "Standard",
@@ -39648,6 +39802,11 @@
               "kind": "Standard",
               "module": "ksp::debug",
               "name": "DebugPath"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "SaveLoadControl"
             },
             {
               "kind": "Standard",
@@ -40817,6 +40976,11 @@
             {
               "kind": "Standard",
               "module": "ksp::debug",
+              "name": "SaveLoadControl"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
               "name": "DebugVector"
             },
             {
@@ -41958,6 +42122,11 @@
               "kind": "Standard",
               "module": "ksp::debug",
               "name": "DebugPath"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "SaveLoadControl"
             },
             {
               "kind": "Standard",
@@ -43267,6 +43436,11 @@
             {
               "kind": "Standard",
               "module": "ksp::debug",
+              "name": "SaveLoadControl"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
               "name": "DebugVector"
             },
             {
@@ -44392,6 +44566,11 @@
             {
               "kind": "Standard",
               "module": "ksp::debug",
+              "name": "SaveLoadControl"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
               "name": "DebugVector"
             },
             {
@@ -45513,6 +45692,11 @@
               "kind": "Standard",
               "module": "ksp::debug",
               "name": "DebugPath"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "SaveLoadControl"
             },
             {
               "kind": "Standard",
@@ -46648,6 +46832,11 @@
               "kind": "Standard",
               "module": "ksp::debug",
               "name": "DebugPath"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "SaveLoadControl"
             },
             {
               "kind": "Standard",

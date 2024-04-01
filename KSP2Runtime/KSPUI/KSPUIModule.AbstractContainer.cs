@@ -41,14 +41,14 @@ public partial class KSPUIModule {
             [KSParameter("Gap between each element of the panel")]
             double gap = 10,
             [KSParameter("Alignment of the panel in its parent container")]
-            UGUILayout.Align align = UGUILayout.Align.Stretch, 
-            [KSParameter("Relative amount of available space to acquire (beyond minimal space)")] 
+            UGUILayout.Align align = UGUILayout.Align.Stretch,
+            [KSParameter("Relative amount of available space to acquire (beyond minimal space)")]
             double stretch = 0) {
             var (element, entry) = layout.Add(UGUILayoutContainer.HorizontalPanel((float)gap), align, (float)stretch);
             Root.Layout();
             return new Container(Root, element.layout, entry);
         }
-        
+
         [KSMethod(Description = "Add sub panel with vertical layout to the container")]
         public Container AddVerticalPanel(
             [KSParameter("Gap between each element of the panel")]
@@ -64,14 +64,14 @@ public partial class KSPUIModule {
 
         [KSMethod(Description = "Add vertical scroll view to the container")]
         public Container AddVerticalScroll(
-            [KSParameter("Minimum width of the scroll view")] 
+            [KSParameter("Minimum width of the scroll view")]
             double minWidth,
-            [KSParameter("Minimum height of the scroll view")] 
+            [KSParameter("Minimum height of the scroll view")]
             double minHeight,
             [KSParameter("Gap between each element of the panel")]
             double gap = 10,
             [KSParameter("Alignment of the panel in its parent container")]
-            UGUILayout.Align align = UGUILayout.Align.Stretch, 
+            UGUILayout.Align align = UGUILayout.Align.Stretch,
             [KSParameter("Relative amount of available space to acquire (beyond minimal space)")]
             double stretch = 0) {
             var (scroll, container) = UGUILayoutContainer.VerticalScroll((float)gap);
@@ -79,7 +79,7 @@ public partial class KSPUIModule {
             Root.Layout();
             return new Container(Root, container.layout, entry);
         }
-        
+
         [KSMethod(Description = "Add label to the container")]
         public Label AddLabel(string label,
             [KSParameter("Alignment of the label in its parent container")]

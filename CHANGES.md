@@ -1,5 +1,9 @@
 # Changes
 
+## 0.5.7.6 ->
+
+* Experimental support for triggering quicksave/load via `ksp::debug::SAVE_LOAD_CONTROL`
+
 ## 0.5.7.3 -> 0.5.7.6
 
 * The `?` operator can now also be used on `Option<T>` in functions that return a `Result<T>`
