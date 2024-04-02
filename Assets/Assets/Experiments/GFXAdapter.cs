@@ -52,6 +52,8 @@ namespace Experiments {
 
         public Texture2D ConsoleInactiveFrame => GetTexture("monitor_minimal_frame");
 
+        public Texture2D ConsoleActiveFrame => GetTexture("monitor_minimal_frame_active");
+        
         public Texture2D UpIcon => GetTexture("up");
 
         public Texture2D DownIcon => GetTexture("down");

@@ -26,7 +26,7 @@ namespace Experiments {
             frameImage.type = Image.Type.Sliced;
             frameImage.color = Color.white;
             
-            GameObject console = new GameObject("Console", typeof(TextMeshProUGUI));
+            GameObject console = new GameObject("Console", typeof(TextMeshProUGUI), typeof(ConsoleWindowInput));
             UIFactory.Layout(console, consoleBackground.transform, UIFactory.LAYOUT_STRECH, UIFactory.LAYOUT_STRECH, 
                 10, -10, -20, -20);
             var textMesh = console.GetComponent<TextMeshProUGUI>();
@@ -35,6 +35,8 @@ namespace Experiments {
             textMesh.verticalAlignment = VerticalAlignmentOptions.Top;
             textMesh.fontSize = 12;
             textMesh.color = new Color(0.5f, 1.0f, 0.5f, 1.0f);
+            
+            console.GetComponent<ConsoleWindowInput>().Init(frameImage);
 
             var replContainer = root.Add(UGUILayoutContainer.Horizontal(2));
             
@@ -58,7 +60,7 @@ namespace Experiments {
             buttonContainer.Add(UGUIButton.Create("Clear", () => {}));
             buttonContainer.Add(UGUIButton.Create("Copy", () => { }));
 
-            textMesh.SetText("Bla\nBlaBla\nBlaBla\nBlaBla\nBlaBla\nBlaBla\nBlaBla\nBlaBla\nBlaBla\nBlaBla\nBla");
+            textMesh.SetText("Bla\nBlaBla\u2588\nBlaBla\nBlaBla\nBlaBla\nBlaBla\nBlaBla\nBlaBla\nBlaBla\nBlaBla\nBla");
 
             MinSize = root.MinSize;
             root.Layout();
