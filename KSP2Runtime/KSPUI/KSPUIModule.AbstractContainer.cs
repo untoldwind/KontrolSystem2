@@ -158,7 +158,7 @@ public partial class KSPUIModule {
             Root.Layout();
             return new Dropdown(this, element, entry);
         }
-        
+
         [KSMethod(Description = "Add horizontal slider to the container")]
         public Slider AddHorizontalSlider(
             [KSParameter("Minimum value of the slider")]

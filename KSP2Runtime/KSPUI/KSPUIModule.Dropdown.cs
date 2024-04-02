@@ -25,7 +25,7 @@ public partial class KSPUIModule {
             get => dropdown.Options;
             set => dropdown.Options = value;
         }
-        
+
         [KSField]
         public long Value {
             get => dropdown.Value;
