@@ -122,7 +122,7 @@ public class UIFactory {
         panelBackground = Make9TileSprite(uiAssetsProvider.PanelBackground, new Vector4(6, 6, 6, 6));
         vScrollBackground = Make9TileSprite(uiAssetsProvider.VScrollBackground, new Vector4(0, 6, 0, 6));
         vScrollHandle = Make9TileSprite(uiAssetsProvider.VScrollHandle, new Vector4(6, 11, 6, 11));
-        frameBackground = Make9TileSprite(uiAssetsProvider.FrameBackground, new Vector4(4, 4, 4, 4));
+        frameBackground = Make9TileSprite(uiAssetsProvider.FrameBackground, new Vector4(5, 5, 5, 5));
         stateInactive = uiAssetsProvider.StateInactive;
         stateActive = uiAssetsProvider.StateActive;
         stateError = uiAssetsProvider.StateError;
@@ -608,9 +608,9 @@ public class UIFactory {
         labelRT.anchorMin = Vector2.zero;
         labelRT.anchorMax = Vector2.one;
         labelRT.pivot = new Vector2(0, 0);
-        labelRT.sizeDelta = new Vector2(25, 6);
-        labelRT.anchoredPosition = new Vector3(5, 0, 0);
-
+        labelRT.sizeDelta = new Vector2(25, 0);
+        labelRT.anchoredPosition = new Vector3(7, 2, 0);
+        
         var arrowImage = arrow.GetComponent<Image>();
         arrowImage.sprite = downIconSprite;
         arrowImage.type = Image.Type.Tiled;
@@ -621,8 +621,8 @@ public class UIFactory {
         arrowRT.anchorMin = new Vector2(1, 0.5f);
         arrowRT.anchorMax = new Vector2(1, 0.5f);
         arrowRT.pivot = new Vector2(1, 0);
-        arrowRT.sizeDelta = new Vector2(20, 16);
-        arrowRT.anchoredPosition = new Vector3(0, -8, 0);
+        arrowRT.sizeDelta = new Vector2(16, 16);
+        arrowRT.anchoredPosition = new Vector3(-4, -8, 0);
 
         var templateRT = template.GetComponent<RectTransform>();
         templateRT.SetParent(dropdownRootRT);
@@ -664,7 +664,7 @@ public class UIFactory {
         itemRT.SetParent(contentRT);
         itemRT.anchorMin = new Vector2(0, 0.5f);
         itemRT.anchorMax = new Vector2(1, 0.5f);
-        itemRT.sizeDelta = new Vector2(0, 20);
+        itemRT.sizeDelta = new Vector2(0, uiFontSize + 10);
         itemRT.anchoredPosition = Vector3.zero;
 
         var itemToggle = item.GetComponent<Toggle>();
@@ -690,7 +690,7 @@ public class UIFactory {
         itemLabelRT.anchorMin = Vector2.zero;
         itemLabelRT.anchorMax = Vector2.one;
         itemLabelRT.offsetMin = new Vector2(20, 1);
-        itemLabelRT.offsetMax = new Vector2(-10, -2);
+        itemLabelRT.offsetMax = new Vector2(-10,  1);
 
         var itemLabelText = itemLabel.GetComponent<TextMeshProUGUI>();
         itemLabelText.font = uiFont;

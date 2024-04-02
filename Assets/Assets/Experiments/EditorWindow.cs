@@ -59,7 +59,7 @@ namespace Experiments {
             var fileNameInput = UGUIInputField.Create("", 120);
             root.Add(fileNameInput);
 
-            var dropbox = UGUIDropdown.Create();
+            var dropbox = UGUIDropdown.Create(new string[]{ "Option1", "Option2", "Option3", "Option4" }, 50.0f);
             root.Add(dropbox);
 
             var buttonContainer = root.Add(UGUILayoutContainer.Horizontal(10, new Padding(0, 0, 20, 20)));

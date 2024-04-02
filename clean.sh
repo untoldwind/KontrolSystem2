@@ -8,3 +8,4 @@ rm -rf TO2/obj
 rm -rf TO2-Test/obj
 rm -rf SpaceWarpMod/obj
 rm -rf KSP2Runtime/obj
+rm -rf KSP2Runtime-Test/obj

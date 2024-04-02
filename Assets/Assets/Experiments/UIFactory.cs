@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.TextCore.LowLevel;
@@ -7,56 +9,56 @@ using UnityEngine.UI;
 namespace Experiments {
     public interface UIAssetsProvider {
         Texture2D WindowsBackground { get; }
-        
+
         Texture2D CloseButton { get; }
-        
+
         Texture2D ButtonBackground { get; }
-        
+
         Texture2D SelectButtonBackground { get; }
-        
+
         Texture2D PanelBackground { get; }
 
         Texture2D VScrollBackground { get; }
-        
+
         Texture2D VScrollHandle { get; }
-        
+
         Texture2D FrameBackground { get; }
-        
+
         Texture2D StateInactive { get; }
-        
+
         Texture2D StateActive { get; }
-        
+
         Texture2D StateError { get; }
 
         Texture2D StartIcon { get; }
-        
+
         Texture2D StopIcon { get; }
-        
+
         Texture2D ToggleOn { get; }
-        
+
         Texture2D ToggleOff { get; }
-        
+
         Texture2D SliderBackground { get; }
-        
+
         Texture2D SliderFill { get; }
-        
+
         Texture2D SliderHandle { get; }
-        
+
         Texture2D ConsoleBackground { get; }
 
         Texture2D ConsoleInactiveFrame { get; }
-        
+
         Texture2D UpIcon { get; }
-        
+
         Texture2D DownIcon { get; }
-        
+
         Font GraphFont { get; }
 
         Font UIFont { get; }
 
         Font ConsoleFont { get; }
     }
-    
+
     public class UIFactory {
         internal readonly Sprite windowBackground;
         internal readonly Sprite windowCloseButton;
@@ -84,21 +86,25 @@ namespace Experiments {
         internal readonly Sprite sliderHandle;
         internal readonly Sprite consoleBackground;
         internal readonly Sprite consoleInactiveFrame;
+        internal readonly float uiFontSize = 20;
 
         public static UIFactory Instance { get; private set; }
-        
+
         public static void Init(UIAssetsProvider uiAssetsProvider) {
             Instance = new UIFactory(uiAssetsProvider);
         }
-        
+
         internal UIFactory(UIAssetsProvider uiAssetsProvider) {
-            graphFont = TMP_FontAsset.CreateFontAsset(uiAssetsProvider.GraphFont, 90, 9, GlyphRenderMode.SDFAA_HINTED, 1024, 1024, AtlasPopulationMode.Dynamic);
+            graphFont = TMP_FontAsset.CreateFontAsset(uiAssetsProvider.GraphFont, 90, 9, GlyphRenderMode.SDFAA_HINTED,
+                1024, 1024, AtlasPopulationMode.Dynamic);
             UpdateShader(graphFont, true);
 
-            uiFont = TMP_FontAsset.CreateFontAsset(uiAssetsProvider.UIFont, 90, 9, GlyphRenderMode.SDFAA_HINTED, 1024, 1024, AtlasPopulationMode.Dynamic);
+            uiFont = TMP_FontAsset.CreateFontAsset(uiAssetsProvider.UIFont, 90, 9, GlyphRenderMode.SDFAA_HINTED, 1024,
+                1024, AtlasPopulationMode.Dynamic);
             UpdateShader(uiFont, false);
 
-            consoleFont = TMP_FontAsset.CreateFontAsset(uiAssetsProvider.ConsoleFont, 90, 9, GlyphRenderMode.SDFAA_HINTED, 1024, 1024, AtlasPopulationMode.Dynamic);
+            consoleFont = TMP_FontAsset.CreateFontAsset(uiAssetsProvider.ConsoleFont, 90, 9,
+                GlyphRenderMode.SDFAA_HINTED, 1024, 1024, AtlasPopulationMode.Dynamic);
             UpdateShader(consoleFont, false);
 
             windowBackground = Make9TileSprite(uiAssetsProvider.WindowsBackground, new Vector4(30, 30, 30, 30));
@@ -108,7 +114,7 @@ namespace Experiments {
             panelBackground = Make9TileSprite(uiAssetsProvider.PanelBackground, new Vector4(6, 6, 6, 6));
             vScrollBackground = Make9TileSprite(uiAssetsProvider.VScrollBackground, new Vector4(0, 6, 0, 6));
             vScrollHandle = Make9TileSprite(uiAssetsProvider.VScrollHandle, new Vector4(6, 11, 6, 11));
-            frameBackground = Make9TileSprite(uiAssetsProvider.FrameBackground, new Vector4(4, 4, 4, 4));
+            frameBackground = Make9TileSprite(uiAssetsProvider.FrameBackground, new Vector4(5, 5, 5, 5));
             stateInactive = uiAssetsProvider.StateInactive;
             stateActive = uiAssetsProvider.StateActive;
             stateError = uiAssetsProvider.StateError;
@@ -128,9 +134,9 @@ namespace Experiments {
             GLUIDrawer.Initialize(graphFont);
         }
 
-        internal void  UpdateShaderRaster(TMP_FontAsset fontAsset) {
-            Material tmp_material = new Material( Shader.Find("TextMeshPro/Bitmap"));
-            
+        internal void UpdateShaderRaster(TMP_FontAsset fontAsset) {
+            Material tmp_material = new Material(Shader.Find("TextMeshPro/Bitmap"));
+
             tmp_material.SetTexture(ShaderUtilities.ID_MainTex, fontAsset.atlasTexture);
             tmp_material.SetFloat(ShaderUtilities.ID_TextureWidth, fontAsset.atlasWidth);
             tmp_material.SetFloat(ShaderUtilities.ID_TextureHeight, fontAsset.atlasHeight);
@@ -138,9 +144,11 @@ namespace Experiments {
             fontAsset.material = tmp_material;
         }
 
-        internal void  UpdateShader(TMP_FontAsset fontAsset, bool overlay) {
-            Material tmp_material = new Material( Shader.Find(overlay ? "TextMeshPro/Distance Field Overlay" : "TextMeshPro/Distance Field"));
-            
+        internal void UpdateShader(TMP_FontAsset fontAsset, bool overlay) {
+            Material tmp_material =
+                new Material(
+                    Shader.Find(overlay ? "TextMeshPro/Distance Field Overlay" : "TextMeshPro/Distance Field"));
+
             tmp_material.SetTexture(ShaderUtilities.ID_MainTex, fontAsset.atlasTexture);
             tmp_material.SetFloat(ShaderUtilities.ID_TextureWidth, fontAsset.atlasWidth);
             tmp_material.SetFloat(ShaderUtilities.ID_TextureHeight, fontAsset.atlasHeight);
@@ -150,7 +158,7 @@ namespace Experiments {
 
             fontAsset.material = tmp_material;
         }
-        
+
         internal Sprite Make9TileSprite(Texture2D texture, Vector4 border) {
             return Sprite.Create(texture,
                 new Rect(0, 0, texture.width, texture.height), Vector2.one * 0.5f, 100, 0,
@@ -158,22 +166,22 @@ namespace Experiments {
         }
 
         internal GameObject CreateButton(string label) {
-            GameObject buttonRoot = new GameObject("Button", typeof(Image), typeof(Button));
-            GameObject labelText = new GameObject("ButtonLabel", typeof(TextMeshProUGUI));
-            RectTransform labelTextTransform = labelText.GetComponent<RectTransform>();
+            var buttonRoot = CreateUIObject("Button", typeof(Image), typeof(Button));
+            var labelText = CreateUIObject("ButtonLabel", typeof(TextMeshProUGUI));
+            var labelTextTransform = labelText.GetComponent<RectTransform>();
             labelTextTransform.SetParent(buttonRoot.transform);
             labelTextTransform.anchorMin = Vector2.zero;
             labelTextTransform.anchorMax = Vector2.one;
             labelTextTransform.sizeDelta = Vector2.zero;
             labelTextTransform.anchoredPosition = new Vector2(0, 1);
-            
-            Image image = buttonRoot.GetComponent<Image>();
+
+            var image = buttonRoot.GetComponent<Image>();
             image.sprite = buttonBackground;
             image.type = Image.Type.Tiled;
             image.color = Color.white;
 
-            Button bt = buttonRoot.GetComponent<Button>();
-            ColorBlock colors = bt.colors;
+            var bt = buttonRoot.GetComponent<Button>();
+            var colors = bt.colors;
             colors.normalColor = new Color(0.4784f, 0.5216f, 0.6f);
             colors.highlightedColor = new Color(0.7059f, 0.7686f, 0.8824f);
             colors.pressedColor = new Color(0.8059f, 0.8686f, 0.9824f);
@@ -181,21 +189,22 @@ namespace Experiments {
             colors.disabledColor = new Color(0.2784f, 0.3216f, 0.4f);
             bt.colors = colors;
 
-            TextMeshProUGUI text = labelTextTransform.GetComponent<TextMeshProUGUI>();
+            var text = labelTextTransform.GetComponent<TextMeshProUGUI>();
             text.text = label;
             text.font = uiFont;
             text.horizontalAlignment = HorizontalAlignmentOptions.Center;
             text.verticalAlignment = VerticalAlignmentOptions.Middle;
-            text.fontSize = 20;
+            text.fontSize = uiFontSize;
             text.color = Color.black;
-            
-            return buttonRoot;            
+            text.enableWordWrapping = false;
+
+            return buttonRoot;
         }
 
         internal GameObject CreateDeleteButton() {
-            var root = new GameObject("CloseButton", typeof(Image), typeof(Button));
+            var root = CreateUIObject("CloseButton", typeof(Image), typeof(Button));
             var buttonImage = root.GetComponent<Image>();
-            buttonImage.sprite = UIFactory.Instance.windowCloseButton;
+            buttonImage.sprite = Instance!.windowCloseButton;
             buttonImage.type = Image.Type.Sliced;
             buttonImage.color = Color.white;
             var button = root.GetComponent<Button>();
@@ -209,35 +218,35 @@ namespace Experiments {
         }
 
         internal GameObject CreateSelectButton(string label) {
-            GameObject buttonRoot = new GameObject("SelectButton", typeof(Image), typeof(Toggle));
-            GameObject checkmark = new GameObject("SelectCheckmark", typeof(Image));
-            RectTransform checkmarkTransform = checkmark.GetComponent<RectTransform>();
+            var buttonRoot = CreateUIObject("SelectButton", typeof(Image), typeof(Toggle));
+            var checkmark = CreateUIObject("SelectCheckmark", typeof(Image));
+            var checkmarkTransform = checkmark.GetComponent<RectTransform>();
             checkmarkTransform.SetParent(buttonRoot.transform);
             checkmarkTransform.anchorMin = Vector2.zero;
             checkmarkTransform.anchorMax = Vector2.one;
             checkmarkTransform.sizeDelta = Vector2.zero;
-            
-            GameObject labelText = new GameObject("ButtonLabel", typeof(TextMeshProUGUI));
-            RectTransform labelTextTransform = labelText.GetComponent<RectTransform>();
+
+            var labelText = CreateUIObject("ButtonLabel", typeof(TextMeshProUGUI));
+            var labelTextTransform = labelText.GetComponent<RectTransform>();
             labelTextTransform.SetParent(checkmarkTransform);
             labelTextTransform.anchorMin = Vector2.zero;
             labelTextTransform.anchorMax = Vector2.one;
             labelTextTransform.sizeDelta = Vector2.zero;
             labelTextTransform.anchoredPosition = new Vector2(0, 1);
 
-            Image image = buttonRoot.GetComponent<Image>();
+            var image = buttonRoot.GetComponent<Image>();
             image.sprite = selectButtonBackground;
             image.type = Image.Type.Tiled;
             image.color = Color.white;
 
-            Image checkmarkImage = checkmark.GetComponent<Image>();
+            var checkmarkImage = checkmark.GetComponent<Image>();
             checkmarkImage.sprite = selectButtonBackground;
             checkmarkImage.type = Image.Type.Tiled;
             checkmarkImage.color = new Color(0.2941f, 0.3137f, 0.6902f);
-            
-            Toggle toggle = buttonRoot.GetComponent<Toggle>();
+
+            var toggle = buttonRoot.GetComponent<Toggle>();
             toggle.isOn = false;
-            
+
             toggle.graphic = checkmarkImage;
             toggle.targetGraphic = image;
             var btColors = toggle.colors;
@@ -246,39 +255,40 @@ namespace Experiments {
             btColors.pressedColor = new Color(0.1804f, 0.2078f, 0.251f);
             btColors.selectedColor = new Color(0.1804f, 0.2078f, 0.251f);
             toggle.colors = btColors;
-            
-            TextMeshProUGUI text = labelTextTransform.GetComponent<TextMeshProUGUI>();
+
+            var text = labelTextTransform.GetComponent<TextMeshProUGUI>();
             text.text = label;
             text.font = uiFont;
             text.horizontalAlignment = HorizontalAlignmentOptions.Center;
             text.verticalAlignment = VerticalAlignmentOptions.Middle;
-            text.fontSize = 20;
+            text.fontSize = uiFontSize;
             text.color = new Color(0.7961f, 0.8706f, 1f);
-            
-            return buttonRoot;          
+            text.enableWordWrapping = false;
+
+            return buttonRoot;
         }
 
         internal GameObject CreateIconButton(Texture2D icon) {
-            GameObject buttonRoot = new GameObject("IconToggle", typeof(Image), typeof(Button));
-            GameObject iconImage = new GameObject("Icon", typeof(RawImage));
-            RectTransform iconTransform = iconImage.GetComponent<RectTransform>();
+            var buttonRoot = CreateUIObject("IconToggle", typeof(Image), typeof(Button));
+            var iconImage = CreateUIObject("Icon", typeof(RawImage));
+            var iconTransform = iconImage.GetComponent<RectTransform>();
             iconTransform.SetParent(buttonRoot.transform);
             iconTransform.anchorMin = Vector2.one * 0.5f;
             iconTransform.anchorMax = Vector2.one * 0.5f;
             iconTransform.sizeDelta = new Vector2(icon.width, icon.height);
 
-            Image image = buttonRoot.GetComponent<Image>();
+            var image = buttonRoot.GetComponent<Image>();
             image.sprite = selectButtonBackground;
             image.type = Image.Type.Tiled;
             image.color = Color.white;
 
-            RawImage rawImage = iconImage.GetComponent<RawImage>();
+            var rawImage = iconImage.GetComponent<RawImage>();
             rawImage.texture = icon;
             rawImage.color = Color.white;
-            
-            Button bt = buttonRoot.GetComponent<Button>();
-            ColorBlock btColors = bt.colors;
-            btColors.normalColor = new Color(0,0,0, 0);
+
+            var bt = buttonRoot.GetComponent<Button>();
+            var btColors = bt.colors;
+            btColors.normalColor = new Color(0, 0, 0, 0);
             btColors.highlightedColor = new Color(0.2941f, 0.3137f, 0.6902f);
             btColors.pressedColor = new Color(0.2941f, 0.3137f, 0.6902f);
             btColors.selectedColor = new Color(0.1804f, 0.2078f, 0.251f);
@@ -288,51 +298,51 @@ namespace Experiments {
         }
 
         public GameObject CreateToggle(string label) {
-            GameObject toggleRoot = new GameObject("Toggle", typeof(Toggle));
+            var toggleRoot = CreateUIObject("Toggle", typeof(Toggle));
+            var background = CreateUIObject("Background", typeof(Image));
+            var checkmark = CreateUIObject("Checkmark", typeof(Image));
+            var childLabel = CreateUIObject("Label", typeof(TextMeshProUGUI));
 
-            GameObject background = new GameObject("Background", typeof(Image));
-            GameObject checkmark = new GameObject("Checkmark", typeof(Image));
-            GameObject childLabel = new GameObject("Label", typeof(TextMeshProUGUI));
-            
-            Toggle toggle = toggleRoot.GetComponent<Toggle>();
+            var toggle = toggleRoot.GetComponent<Toggle>();
             toggle.isOn = false;
 
-            Image bgImage = background.GetComponent<Image>();
+            var bgImage = background.GetComponent<Image>();
             bgImage.sprite = toggleOff;
             bgImage.type = Image.Type.Tiled;
             bgImage.color = Color.white;
 
-            Image checkmarkImage = checkmark.GetComponent<Image>();
+            var checkmarkImage = checkmark.GetComponent<Image>();
             checkmarkImage.sprite = toggleOn;
             checkmarkImage.type = Image.Type.Tiled;
             checkmarkImage.color = Color.white;
 
-            TextMeshProUGUI labelText = childLabel.GetComponent<TextMeshProUGUI>();
+            var labelText = childLabel.GetComponent<TextMeshProUGUI>();
             labelText.text = label;
             labelText.font = uiFont;
             labelText.horizontalAlignment = HorizontalAlignmentOptions.Left;
             labelText.verticalAlignment = VerticalAlignmentOptions.Middle;
-            labelText.fontSize = 20;
+            labelText.fontSize = uiFontSize;
             labelText.color = new Color(0.7961f, 0.8706f, 1f);
+            labelText.enableWordWrapping = false;
 
             toggle.graphic = checkmarkImage;
             toggle.targetGraphic = bgImage;
-            ColorBlock colors = toggle.colors;
+            var colors = toggle.colors;
             colors.normalColor = new Color(0.4784f, 0.5216f, 0.6f);
             colors.highlightedColor = new Color(0.7059f, 0.7686f, 0.8824f);
             colors.pressedColor = new Color(0.8059f, 0.8686f, 0.9824f);
             colors.selectedColor = new Color(0.7059f, 0.7686f, 0.8824f);
             toggle.colors = colors;
 
-            RectTransform bgRect = background.GetComponent<RectTransform>();
+            var bgRect = background.GetComponent<RectTransform>();
             bgRect.SetParent(toggleRoot.transform);
-            bgRect.anchorMin        = new Vector2(0f, 0.5f);
-            bgRect.anchorMax        = new Vector2(0f, 0.5f);
+            bgRect.anchorMin = new Vector2(0f, 0.5f);
+            bgRect.anchorMax = new Vector2(0f, 0.5f);
             bgRect.pivot = new Vector2(0, 0.5f);
             bgRect.anchoredPosition = Vector2.zero;
-            bgRect.sizeDelta        = new Vector2(40f, 20f);
+            bgRect.sizeDelta = new Vector2(40f, 20f);
 
-            RectTransform checkmarkRect = checkmark.GetComponent<RectTransform>();
+            var checkmarkRect = checkmark.GetComponent<RectTransform>();
             checkmarkRect.SetParent(background.transform);
             checkmarkRect.anchorMin = new Vector2(0f, 0.5f);
             checkmarkRect.anchorMax = new Vector2(0f, 0.5f);
@@ -340,109 +350,110 @@ namespace Experiments {
             checkmarkRect.anchoredPosition = Vector2.zero;
             checkmarkRect.sizeDelta = new Vector2(40f, 20f);
 
-            RectTransform labelRect = childLabel.GetComponent<RectTransform>();
+            var labelRect = childLabel.GetComponent<RectTransform>();
             labelRect.SetParent(toggleRoot.transform);
-            labelRect.anchorMin     = new Vector2(0f, 0f);
-            labelRect.anchorMax     = new Vector2(1f, 1f);
+            labelRect.anchorMin = new Vector2(0f, 0f);
+            labelRect.anchorMax = new Vector2(1f, 1f);
             labelRect.pivot = new Vector2(0, 0.5f);
-            labelRect.anchoredPosition     = new Vector2(43f, 2f);
-            labelRect.sizeDelta     = new Vector2(-43f, 0f);
-            
+            labelRect.anchoredPosition = new Vector2(43f, 2f);
+            labelRect.sizeDelta = new Vector2(-43f, 0f);
+
             return toggleRoot;
         }
-        
+
         internal GameObject CreateVScrollbar() {
-            GameObject scrollbarRoot = new GameObject("VScrollbar", typeof(Image), typeof(Scrollbar));
-            GameObject sliderArea = new GameObject("Sliding Area", typeof(RectTransform));
-            GameObject handle = new GameObject("Handle", typeof(Image));
-            
-            Image bgImage = scrollbarRoot.GetComponent<Image>();
+            var scrollbarRoot = CreateUIObject("VScrollbar", typeof(Image), typeof(Scrollbar));
+            var sliderArea = CreateUIObject("Sliding Area", typeof(RectTransform));
+            var handle = CreateUIObject("Handle", typeof(Image));
+
+            var bgImage = scrollbarRoot.GetComponent<Image>();
             bgImage.sprite = vScrollBackground;
             bgImage.type = Image.Type.Tiled;
             bgImage.color = Color.white;
 
-            Image handleImage = handle.GetComponent<Image>();
+            var handleImage = handle.GetComponent<Image>();
             handleImage.sprite = vScrollHandle;
             handleImage.type = Image.Type.Tiled;
             handleImage.color = Color.white;
 
-            RectTransform sliderAreaRect = sliderArea.GetComponent<RectTransform>();
+            var sliderAreaRect = sliderArea.GetComponent<RectTransform>();
             sliderAreaRect.SetParent(scrollbarRoot.transform);
             sliderAreaRect.sizeDelta = new Vector2(-20, -20);
             sliderAreaRect.anchorMin = Vector2.zero;
             sliderAreaRect.anchorMax = Vector2.one;
 
-            RectTransform handleRect = handle.GetComponent<RectTransform>();
+            var handleRect = handle.GetComponent<RectTransform>();
             handleRect.SetParent(sliderAreaRect);
             handleRect.sizeDelta = new Vector2(20, 20);
 
-            Scrollbar scrollbar = scrollbarRoot.GetComponent<Scrollbar>();
+            var scrollbar = scrollbarRoot.GetComponent<Scrollbar>();
             scrollbar.handleRect = handleRect;
             scrollbar.targetGraphic = handleImage;
             scrollbar.direction = Scrollbar.Direction.TopToBottom;
-            
+
             return scrollbarRoot;
         }
-        
-        internal GameObject CreateScrollView(GameObject content) {
-            GameObject root = new GameObject("Scroll View", typeof(Image));
-            GameObject scrollRoot = new GameObject("Scroll Rect", typeof(ScrollRect));
-            GameObject viewport = new GameObject("Viewport", typeof(Image), typeof(Mask));
 
-            RectTransform scrollRootRT = scrollRoot.GetComponent<RectTransform>();
+        internal GameObject CreateScrollView(GameObject content) {
+            var root = CreateUIObject("Scroll View", typeof(Image));
+            var scrollRoot = CreateUIObject("Scroll Rect", typeof(ScrollRect));
+            var viewport = CreateUIObject("Viewport", typeof(Image), typeof(Mask));
+
+            var scrollRootRT = scrollRoot.GetComponent<RectTransform>();
             scrollRootRT.SetParent(root.transform);
             scrollRootRT.anchorMin = Vector2.zero;
             scrollRootRT.anchorMax = Vector2.one;
             scrollRootRT.localPosition = Vector3.zero;
             scrollRootRT.sizeDelta = new Vector2(-10, -10);
 
-            GameObject vScrollbar = CreateVScrollbar();
+            var vScrollbar = CreateVScrollbar();
             vScrollbar.GetComponent<Scrollbar>().SetDirection(Scrollbar.Direction.BottomToTop, true);
-            RectTransform vScrollbarRT = vScrollbar.GetComponent<RectTransform>();
+            var vScrollbarRT = vScrollbar.GetComponent<RectTransform>();
             vScrollbarRT.SetParent(scrollRoot.transform);
             vScrollbarRT.anchorMin = Vector2.right;
             vScrollbarRT.anchorMax = Vector2.one;
             vScrollbarRT.pivot = Vector2.one;
             vScrollbarRT.sizeDelta = new Vector2(20, 0);
 
-            RectTransform viewportRT = viewport.GetComponent<RectTransform>();
+            var viewportRT = viewport.GetComponent<RectTransform>();
             viewportRT.SetParent(scrollRoot.transform);
             viewportRT.anchorMin = Vector2.zero;
             viewportRT.anchorMax = Vector2.one;
             viewportRT.sizeDelta = new Vector2(-20, 0);
             viewportRT.pivot = Vector2.up;
 
-            RectTransform contentRT = content.GetComponent<RectTransform>();
+            var contentRT = content.GetComponent<RectTransform>();
             contentRT.SetParent(viewportRT);
             contentRT.anchorMin = Vector2.up;
             contentRT.anchorMax = Vector2.one;
             contentRT.sizeDelta = new Vector2(0, 0);
             contentRT.pivot = Vector2.up;
 
-            ScrollRect scrollRect = scrollRoot.GetComponent<ScrollRect>();
+            var scrollRect = scrollRoot.GetComponent<ScrollRect>();
             scrollRect.content = contentRT;
             scrollRect.viewport = viewportRT;
             scrollRect.verticalScrollbar = vScrollbar.GetComponent<Scrollbar>();
             scrollRect.verticalScrollbarVisibility = ScrollRect.ScrollbarVisibility.Permanent;
             scrollRect.verticalScrollbarSpacing = 3;
 
-            Image rootImage = root.GetComponent<Image>();
+            var rootImage = root.GetComponent<Image>();
             rootImage.sprite = panelBackground;
             rootImage.type = Image.Type.Tiled;
             rootImage.color = Color.white;
 
-            Mask viewportMask = viewport.GetComponent<Mask>();
+            var viewportMask = viewport.GetComponent<Mask>();
             viewportMask.showMaskGraphic = false;
 
-            Image viewportImage = viewport.GetComponent<Image>();
+            var viewportImage = viewport.GetComponent<Image>();
             viewportImage.type = Image.Type.Tiled;
 
             return root;
-        }        
-        internal GameObject CreatePanel() {
-            GameObject panel = new GameObject("Panel", typeof(Image));
+        }
 
-            Image image = panel.GetComponent<Image>();
+        internal GameObject CreatePanel() {
+            var panel = CreateUIObject("Panel", typeof(Image));
+
+            var image = panel.GetComponent<Image>();
             image.sprite = panelBackground;
             image.type = Image.Type.Tiled;
             image.color = Color.white;
@@ -450,8 +461,10 @@ namespace Experiments {
             return panel;
         }
 
-        internal GameObject CreateText(string text, float size = 20, HorizontalAlignmentOptions hAlign = HorizontalAlignmentOptions.Left, VerticalAlignmentOptions vAlign = VerticalAlignmentOptions.Middle) {
-            var root = new GameObject("Text", typeof(TextMeshProUGUI));
+        internal GameObject CreateText(string text, float size = 20,
+            HorizontalAlignmentOptions hAlign = HorizontalAlignmentOptions.Left,
+            VerticalAlignmentOptions vAlign = VerticalAlignmentOptions.Middle) {
+            var root = CreateUIObject("Text", typeof(TextMeshProUGUI));
             var textMesh = root.GetComponent<TextMeshProUGUI>();
             textMesh.SetText(text);
             textMesh.font = uiFont;
@@ -469,10 +482,10 @@ namespace Experiments {
             root.SetActive(false);
             var textArea = new GameObject("TextArea", typeof(RectMask2D));
             Layout(textArea, root.transform, LAYOUT_STRECH, LAYOUT_STRECH, 3, -3, -6, 0);
-            
+
             var childText = new GameObject("Text", typeof(TextMeshProUGUI));
             Layout(childText, textArea.transform, LAYOUT_STRECH, LAYOUT_STRECH, 0, 0, 0, 0);
-            
+
             Image image = root.GetComponent<Image>();
             image.sprite = frameBackground;
             image.type = Image.Type.Tiled;
@@ -501,30 +514,31 @@ namespace Experiments {
             inputField.pointSize = 20;
 
             root.SetActive(true);
-            
+
             return root;
         }
 
-        internal GameObject CreateDropdown(float size = 20) {
-            var dropdownRoot = new GameObject("Dropdown", typeof(Image), typeof(TMP_Dropdown));
-            var label = new GameObject("Label", typeof(TextMeshProUGUI));
-            var arrow = new GameObject("arrow", typeof(Image));
-            var template = new GameObject("Template", typeof(Image), typeof(ScrollRect));
-            var viewport = new GameObject("Viewport", typeof(Image), typeof(Mask));
-            var content = new GameObject("Content", typeof(RectTransform));
-            var item = new GameObject("Item", typeof(Toggle));
-            var itemBackground = new GameObject("Item Background", typeof(Image));
-            var itemLabel = new GameObject("Item Label", typeof(TextMeshProUGUI));
+
+        internal GameObject CreateDropdown(string[] options, float size = 20) {
+            var dropdownRoot = CreateUIObject("Dropdown", typeof(Image), typeof(TMP_Dropdown));
+            var label = CreateUIObject("Label", typeof(TextMeshProUGUI));
+            var arrow = CreateUIObject("arrow", typeof(Image));
+            var template = CreateUIObject("Template", typeof(Image), typeof(ScrollRect));
+            var viewport = CreateUIObject("Viewport", typeof(Image), typeof(Mask));
+            var content = CreateUIObject("Content", typeof(RectTransform));
+            var item = CreateUIObject("Item", typeof(Toggle));
+            var itemBackground = CreateUIObject("Item Background", typeof(Image));
+            var itemLabel = CreateUIObject("Item Label", typeof(TextMeshProUGUI));
             var scrollbar = CreateVScrollbar();
-            
+
             scrollbar.GetComponent<Scrollbar>().SetDirection(Scrollbar.Direction.BottomToTop, true);
-            
+
             template.SetActive(false);
-            
+
             var dropdown = dropdownRoot.GetComponent<TMP_Dropdown>();
-            
+
             RectTransform dropdownRootRT = dropdownRoot.GetComponent<RectTransform>();
-            
+
             var backgroundImage = dropdownRoot.GetComponent<Image>();
             backgroundImage.sprite = frameBackground;
             backgroundImage.type = Image.Type.Tiled;
@@ -539,69 +553,69 @@ namespace Experiments {
             textMesh.color = new Color(0.8382f, 0.8784f, 1);
             textMesh.enableWordWrapping = false;
             dropdown.captionText = textMesh;
-            
+
             var labelRT = label.GetComponent<RectTransform>();
             labelRT.SetParent(dropdownRootRT);
             labelRT.anchorMin = Vector2.zero;
             labelRT.anchorMax = Vector2.one;
             labelRT.pivot = new Vector2(0, 0);
-            labelRT.sizeDelta = new Vector2(25, 6);
-            labelRT.anchoredPosition = new Vector3(5, 0, 0);
+            labelRT.sizeDelta = new Vector2(25, 0);
+            labelRT.anchoredPosition = new Vector3(7, 2, 0);
 
             var arrowImage = arrow.GetComponent<Image>();
             arrowImage.sprite = downIconSprite;
             arrowImage.type = Image.Type.Tiled;
             arrowImage.color = Color.white;
-            
+
             var arrowRT = arrow.GetComponent<RectTransform>();
             arrowRT.SetParent(dropdownRootRT);
             arrowRT.anchorMin = new Vector2(1, 0.5f);
             arrowRT.anchorMax = new Vector2(1, 0.5f);
             arrowRT.pivot = new Vector2(1, 0);
-            arrowRT.sizeDelta = new Vector2(20, 16);
-            arrowRT.anchoredPosition = new Vector3(0, -8, 0);
+            arrowRT.sizeDelta = new Vector2(16, 16);
+            arrowRT.anchoredPosition = new Vector3(-4, -8, 0);
 
             var templateRT = template.GetComponent<RectTransform>();
             templateRT.SetParent(dropdownRootRT);
-            templateRT.anchorMin        = new Vector2(0, 0);
-            templateRT.anchorMax        = new Vector2(1, 0);
-            templateRT.pivot            = new Vector2(0.5f, 1);
+            templateRT.anchorMin = new Vector2(0, 0);
+            templateRT.anchorMax = new Vector2(1, 0);
+            templateRT.pivot = new Vector2(0.5f, 1);
             templateRT.anchoredPosition = new Vector2(0, 2);
-            templateRT.sizeDelta        = new Vector2(0, 150);
+            templateRT.sizeDelta = new Vector2(0, 150);
             dropdown.template = templateRT;
-            
+
             var templateBackground = template.GetComponent<Image>();
             templateBackground.sprite = panelBackground;
             templateBackground.type = Image.Type.Tiled;
             templateBackground.color = Color.white;
-            
+
             var viewportRT = viewport.GetComponent<RectTransform>();
             viewportRT.SetParent(templateRT);
-            viewportRT.anchorMin        = new Vector2(0, 0);
-            viewportRT.anchorMax        = new Vector2(1, 1);
-            viewportRT.sizeDelta        = new Vector2(-10, 0);
-            viewportRT.pivot            = new Vector2(0, 1);
+            viewportRT.anchorMin = new Vector2(0, 0);
+            viewportRT.anchorMax = new Vector2(1, 1);
+            viewportRT.sizeDelta = new Vector2(-10, 0);
+            viewportRT.pivot = new Vector2(0, 1);
             viewportRT.anchoredPosition = Vector3.zero;
-            
+
             Mask viewportMask = viewport.GetComponent<Mask>();
             viewportMask.showMaskGraphic = false;
 
             Image viewportImage = viewport.GetComponent<Image>();
             viewportImage.type = Image.Type.Tiled;
-            
+
             var contentRT = content.GetComponent<RectTransform>();
             contentRT.SetParent(viewportRT);
-            contentRT.anchorMin         = new Vector2(0f, 1);
-            contentRT.anchorMax         = new Vector2(1f, 1);
-            contentRT.pivot             = new Vector2(0.5f, 1);
-            contentRT.anchoredPosition  = new Vector2(0, 0);
-            contentRT.sizeDelta         = new Vector2(-10, 28);
-            
+            contentRT.anchorMin = new Vector2(0f, 1);
+            contentRT.anchorMax = new Vector2(1f, 1);
+            contentRT.pivot = new Vector2(0.5f, 1);
+            contentRT.anchoredPosition = new Vector2(0, 0);
+            contentRT.sizeDelta = new Vector2(-10, 28);
+
             var itemRT = item.GetComponent<RectTransform>();
             itemRT.SetParent(contentRT);
-            itemRT.anchorMin            = new Vector2(0, 0.5f);
-            itemRT.anchorMax            = new Vector2(1, 0.5f);
-            itemRT.sizeDelta            = new Vector2(0, 20);
+            itemRT.anchorMin = new Vector2(0, 0.5f);
+            itemRT.anchorMax = new Vector2(1, 0.5f);
+            itemRT.sizeDelta = new Vector2(0, uiFontSize + 10);
             itemRT.anchoredPosition = Vector3.zero;
 
             var itemToggle = item.GetComponent<Toggle>();
@@ -611,12 +625,12 @@ namespace Experiments {
             btColors.pressedColor = new Color(0.1804f, 0.2078f, 0.251f);
             btColors.selectedColor = new Color(0.1804f, 0.2078f, 0.251f);
             itemToggle.colors = btColors;
-            
+
             var itemBackgroundRT = itemBackground.GetComponent<RectTransform>();
             itemBackgroundRT.SetParent(itemRT);
-            itemBackgroundRT.anchorMin  = Vector2.zero;
-            itemBackgroundRT.anchorMax  = Vector2.one;
-            itemBackgroundRT.sizeDelta  = Vector2.zero;
+            itemBackgroundRT.anchorMin = Vector2.zero;
+            itemBackgroundRT.anchorMax = Vector2.one;
+            itemBackgroundRT.sizeDelta = Vector2.zero;
             itemBackgroundRT.anchoredPosition = Vector3.zero;
 
             var itemBackgroundBackground = itemBackground.GetComponent<Image>();
@@ -624,11 +638,11 @@ namespace Experiments {
 
             var itemLabelRT = itemLabel.GetComponent<RectTransform>();
             itemLabelRT.SetParent(itemRT);
-            itemLabelRT.anchorMin       = Vector2.zero;
-            itemLabelRT.anchorMax       = Vector2.one;
-            itemLabelRT.offsetMin       = new Vector2(20, 1);
-            itemLabelRT.offsetMax       = new Vector2(-10, -2);
-            
+            itemLabelRT.anchorMin = Vector2.zero;
+            itemLabelRT.anchorMax = Vector2.one;
+            itemLabelRT.offsetMin = new Vector2(20, 1);
+            itemLabelRT.offsetMax = new Vector2(-10,  1);
+
             var itemLabelText = itemLabel.GetComponent<TextMeshProUGUI>();
             itemLabelText.font = uiFont;
             itemLabelText.horizontalAlignment = HorizontalAlignmentOptions.Left;
@@ -636,11 +650,11 @@ namespace Experiments {
             itemLabelText.fontSize = size;
             itemLabelText.color = new Color(0.8382f, 0.8784f, 1);
             itemLabelText.enableWordWrapping = false;
-            
+
             dropdown.itemText = itemLabelText;
 
             item.GetComponent<Toggle>().targetGraphic = itemBackgroundBackground;
-            
+
             RectTransform vScrollbarRT = scrollbar.GetComponent<RectTransform>();
             vScrollbarRT.SetParent(templateRT);
             vScrollbarRT.anchorMin = Vector2.right;
@@ -648,7 +662,7 @@ namespace Experiments {
             vScrollbarRT.pivot = Vector2.one;
             vScrollbarRT.sizeDelta = new Vector2(20, 0);
             vScrollbarRT.anchoredPosition = Vector3.zero;
-            
+
             ScrollRect templateScrollRect = template.GetComponent<ScrollRect>();
             templateScrollRect.content = content.GetComponent<RectTransform>();
             templateScrollRect.viewport = viewport.GetComponent<RectTransform>();
@@ -656,23 +670,10 @@ namespace Experiments {
             templateScrollRect.verticalScrollbar = scrollbar.GetComponent<Scrollbar>();
             templateScrollRect.verticalScrollbarVisibility = ScrollRect.ScrollbarVisibility.AutoHideAndExpandViewport;
             templateScrollRect.verticalScrollbarSpacing = -3;
-            
-            dropdown.options = new List<TMP_Dropdown.OptionData>() {
-                new TMP_Dropdown.OptionData("Test1"),
-                new TMP_Dropdown.OptionData("Test2"),
-                new TMP_Dropdown.OptionData("Test3"),
-                new TMP_Dropdown.OptionData("Test4"),
-                new TMP_Dropdown.OptionData("Test5"),
-                new TMP_Dropdown.OptionData("Test6"),
-                new TMP_Dropdown.OptionData("Test7"),
-                new TMP_Dropdown.OptionData("Test8"),
-                new TMP_Dropdown.OptionData("Test17"),
-                new TMP_Dropdown.OptionData("Test18"),
-                new TMP_Dropdown.OptionData("Test17"),
-                new TMP_Dropdown.OptionData("Test18"),
-            };
+
+            dropdown.options = options.Select(option => new TMP_Dropdown.OptionData(option)).ToList();
             dropdown.RefreshShownValue();
-            
+
             return dropdownRoot;
         }
 
@@ -681,11 +682,11 @@ namespace Experiments {
 
             var background = new GameObject("Background", typeof(Image));
             Layout(background, root.transform, LAYOUT_STRECH, LAYOUT_STRECH, 0, 0, 0, 0);
-            var fillArea = new GameObject("Fill Area",  typeof(RectTransform));
+            var fillArea = new GameObject("Fill Area", typeof(RectTransform));
             Layout(fillArea, root.transform, LAYOUT_STRECH, LAYOUT_STRECH, 5, 0, -20, 0);
-            var fill = new GameObject("Fill",  typeof(Image));
+            var fill = new GameObject("Fill", typeof(Image));
             Layout(fill, fillArea.transform, LAYOUT_STRECH, LAYOUT_STRECH, -5, 0, 10, 0);
-            var handleArea = new GameObject("Handle Slide Area",  typeof(RectTransform));
+            var handleArea = new GameObject("Handle Slide Area", typeof(RectTransform));
             Layout(handleArea, root.transform, LAYOUT_STRECH, LAYOUT_STRECH, 10, -3, -20, -6);
             var handle = new GameObject("Handle", typeof(Image));
             Layout(handle, handleArea.transform, LAYOUT_START, LAYOUT_STRECH, -6, 0, 12, 0);
@@ -694,16 +695,16 @@ namespace Experiments {
             backgroundImage.sprite = sliderBackground;
             backgroundImage.type = Image.Type.Tiled;
             backgroundImage.color = Color.white;
-            
+
             Image fillImage = fill.GetComponent<Image>();
             fillImage.sprite = sliderFill;
             fillImage.type = Image.Type.Tiled;
             fillImage.color = Color.white;
-            
+
             Image handleImage = handle.GetComponent<Image>();
             handleImage.sprite = sliderHandle;
             handleImage.color = Color.white;
-            
+
             Slider slider = root.GetComponent<Slider>();
             slider.fillRect = fill.GetComponent<RectTransform>();
             slider.handleRect = handle.GetComponent<RectTransform>();
@@ -712,8 +713,9 @@ namespace Experiments {
 
             return root;
         }
-        
-        internal static RectTransform Layout(GameObject gameObject, Transform parent, LayoutAlign horizontal, LayoutAlign vertical,
+
+        internal static RectTransform Layout(GameObject gameObject, Transform parent, LayoutAlign horizontal,
+            LayoutAlign vertical,
             float x, float y, float width, float height) {
             RectTransform transform = gameObject.GetComponent<RectTransform>();
             transform.SetParent(parent);
@@ -726,7 +728,7 @@ namespace Experiments {
 
             return transform;
         }
-        
+
         internal struct LayoutAlign {
             internal float min;
             internal float max;
@@ -738,6 +740,8 @@ namespace Experiments {
                 this.pivot = pivot;
             }
         }
+
+        private static GameObject CreateUIObject(string name, params Type[] components) => new(name, components);
 
         internal static LayoutAlign LAYOUT_START = new LayoutAlign(0, 0, 0);
         internal static LayoutAlign LAYOUT_CENTER = new LayoutAlign(0.5f, 0.5f, 0.5f);
