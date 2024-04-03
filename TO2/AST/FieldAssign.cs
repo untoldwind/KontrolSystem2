@@ -1,18 +1,27 @@
-﻿using System.Reflection.Emit;
+﻿using System.Linq.Expressions;
+using System.Reflection.Emit;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
 using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST;
 
-public class FieldAssign(
-    Expression target,
-    string fieldName,
-    Operator op,
-    Expression expression,
-    Position start = new(),
-    Position end = new())
-    : Expression(start, end) {
+public class FieldAssign : Expression {
+    private readonly Expression target;
+    private readonly string fieldName;
+    private readonly Operator op;
+    private readonly Expression expression;
+
+    public FieldAssign(Expression target, string fieldName, Operator op, Expression expression,
+        Position start = new(), Position end = new())
+        : base(start, end) {
+        this.target = target;
+        this.fieldName = fieldName;
+        this.op = op;
+        this.expression = expression;
+        this.expression.TypeHint = context => ResultType(context).UnderlyingType(context.ModuleContext);
+    }
+
     public override IVariableContainer? VariableContainer {
         set {
             target.VariableContainer = value;

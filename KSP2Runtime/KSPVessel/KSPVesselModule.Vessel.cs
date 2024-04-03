@@ -566,37 +566,43 @@ public partial class KSPVesselModule {
             return KSPContext.CurrentContext.Game.ViewController.SetActiveVehicle(vessel);
         }
 
-        [KSMethod(Description = @"One time override for the pitch control.
+        [KSMethod(Description = @"Deprecated: Use corresponding field in `pilot_input`.
+            One time override for the pitch control.
             Note: This has to be refreshed regularly to have an impact.")]
         public void OverrideInputPitch(double value) {
             FlightInputHandler.OverrideInputPitch((float)value);
         }
 
-        [KSMethod(Description = @"One time override for the roll control.
+        [KSMethod(Description = @"Deprecated: Use corresponding field in `pilot_input`.
+            One time override for the roll control.
             Note: This has to be refreshed regularly to have an impact.")]
         public void OverrideInputRoll(double value) {
             FlightInputHandler.OverrideInputRoll((float)value);
         }
 
-        [KSMethod(Description = @"One time override for the yaw control.
+        [KSMethod(Description = @"Deprecated: Use corresponding field in `pilot_input`.
+            One time override for the yaw control.
             Note: This has to be refreshed regularly to have an impact.")]
         public void OverrideInputYaw(double value) {
             FlightInputHandler.OverrideInputYaw((float)value);
         }
 
-        [KSMethod(Description = @"One time override for the translate x control.
+        [KSMethod(Description = @"Deprecated: Use corresponding field in `pilot_input`.
+            One time override for the translate x control.
             Note: This has to be refreshed regularly to have an impact.")]
         public void OverrideInputTranslateX(double value) {
             FlightInputHandler.OverrideInputTranslateX((float)value);
         }
 
-        [KSMethod(Description = @"One time override for the translate y control.
+        [KSMethod(Description = @"Deprecated: Use corresponding field in `pilot_input`.
+            One time override for the translate y control.
             Note: This has to be refreshed regularly to have an impact.")]
         public void OverrideInputTranslateY(double value) {
             FlightInputHandler.OverrideInputTranslateY((float)value);
         }
 
-        [KSMethod(Description = @"One time override for the translate z control.
+        [KSMethod(Description = @"Deprecated: Use corresponding field in `pilot_input`.
+            One time override for the translate z control.
             Note: This has to be refreshed regularly to have an impact.")]
         public void OverrideInputTranslateZ(double value) {
             FlightInputHandler.OverrideInputTranslateZ((float)value);

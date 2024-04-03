@@ -5,6 +5,8 @@
 * Experimental support for triggering quicksave/load via `ksp::debug::SAVE_LOAD_CONTROL`
   * Current limitations: Triggering a quick-load will terminate all running scripts, including the script triggering it
 * Support `vessel.pilot_input` (capture the flight controls as desired by pilot before mangled by any autopilot)
+  * The existing `vessel.override_input_` methods are now considered deprecated as they mess with the pilot input on a
+    deep level. Use the new `vessel.pilot_input.override_` fields instead
 * Add UI `container.add_dropdown` element
 
 ## 0.5.7.3 -> 0.5.7.6

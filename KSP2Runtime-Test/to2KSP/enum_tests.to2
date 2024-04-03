@@ -9,3 +9,8 @@ test sync fn test_enums() -> Unit = {
     assert_true(t.defined)
     assert_string("AntiTarget", t.value.to_string())
 }
+
+pub fn test_ves(vessel: ksp::vessel::Vessel) -> Unit = {
+    const pi = vessel.pilot_input
+    pi.override_pitch = None()
+}
