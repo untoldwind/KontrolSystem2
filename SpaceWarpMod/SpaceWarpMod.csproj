@@ -5,6 +5,7 @@
         <RootNamespace>KontrolSystem.SpaceWarpMod</RootNamespace>
         <AssemblyName>KontrolSystemSpaceWarpMod</AssemblyName>
         <BaseOutputPath>../bin</BaseOutputPath>
+        <LangVersion>default</LangVersion>
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="Assembly-CSharp">

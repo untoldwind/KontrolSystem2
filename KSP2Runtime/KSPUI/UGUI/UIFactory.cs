@@ -610,7 +610,7 @@ public class UIFactory {
         labelRT.pivot = new Vector2(0, 0);
         labelRT.sizeDelta = new Vector2(25, 0);
         labelRT.anchoredPosition = new Vector3(7, 2, 0);
-        
+
         var arrowImage = arrow.GetComponent<Image>();
         arrowImage.sprite = downIconSprite;
         arrowImage.type = Image.Type.Tiled;
@@ -690,7 +690,7 @@ public class UIFactory {
         itemLabelRT.anchorMin = Vector2.zero;
         itemLabelRT.anchorMax = Vector2.one;
         itemLabelRT.offsetMin = new Vector2(20, 1);
-        itemLabelRT.offsetMax = new Vector2(-10,  1);
+        itemLabelRT.offsetMax = new Vector2(-10, 1);
 
         var itemLabelText = itemLabel.GetComponent<TextMeshProUGUI>();
         itemLabelText.font = uiFont;

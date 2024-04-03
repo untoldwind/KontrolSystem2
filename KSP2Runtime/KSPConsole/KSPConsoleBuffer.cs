@@ -204,4 +204,8 @@ public class KSPConsoleBuffer {
             topLine = topLine.Next;
         while (bufferLines.Count > maxLines) bufferLines.RemoveFirst();
     }
+
+    internal string DisplayText() => string.Join("\n",
+        VisibleLines.Select(line =>
+            line.ToString().Replace('\0', ' ').Substring(0, VisibleCols)));
 }

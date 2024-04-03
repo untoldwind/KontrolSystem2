@@ -1,3 +1,4 @@
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -5,8 +6,15 @@ using UnityEngine.UI;
 namespace Experiments {
     public class ConsoleWindow : UGUIResizableWindow {
         private RawImage replStartStopIcon;
-        
+        private KSPConsoleBuffer consoleBuffer = new KSPConsoleBuffer(25, 40);
+        private TextMeshProUGUI consoleText;
+        private float charHeight;
+        private float charWidth;
+
         public void OnEnable() {
+            consoleBuffer.PrintLine("Test Line 1");
+            consoleBuffer.PrintLine("Test Line 2");
+            
             Initialize("KontrolSystem: Console", new Rect(200, 500, 400, 500));
 
             var root = RootVerticalLayout();
@@ -29,13 +37,17 @@ namespace Experiments {
             GameObject console = new GameObject("Console", typeof(TextMeshProUGUI), typeof(ConsoleWindowInput));
             UIFactory.Layout(console, consoleBackground.transform, UIFactory.LAYOUT_STRECH, UIFactory.LAYOUT_STRECH, 
                 10, -10, -20, -20);
-            var textMesh = console.GetComponent<TextMeshProUGUI>();
-            textMesh.font = UIFactory.Instance.consoleFont;
-            textMesh.horizontalAlignment = HorizontalAlignmentOptions.Left;
-            textMesh.verticalAlignment = VerticalAlignmentOptions.Top;
-            textMesh.fontSize = 12;
-            textMesh.color = new Color(0.5f, 1.0f, 0.5f, 1.0f);
+            consoleText = console.GetComponent<TextMeshProUGUI>();
+            consoleText.font = UIFactory.Instance.consoleFont;
+            consoleText.horizontalAlignment = HorizontalAlignmentOptions.Left;
+            consoleText.verticalAlignment = VerticalAlignmentOptions.Top;
+            consoleText.fontSize = 12;
+            consoleText.color = new Color(0.5f, 1.0f, 0.5f, 1.0f);
             
+            var fontScale = consoleText.fontSize / consoleText.font.faceInfo.pointSize;
+            charHeight = consoleText.font.faceInfo.lineHeight * fontScale;
+            charWidth = consoleText.font.glyphTable[0].metrics.horizontalAdvance * fontScale;
+
             console.GetComponent<ConsoleWindowInput>().Init(frameImage);
 
             var replContainer = root.Add(UGUILayoutContainer.Horizontal(2));
@@ -59,11 +71,28 @@ namespace Experiments {
 
             buttonContainer.Add(UGUIButton.Create("Clear", () => {}));
             buttonContainer.Add(UGUIButton.Create("Copy", () => { }));
-
-            textMesh.SetText("Bla\nBlaBla\u2588\nBlaBla\nBlaBla\nBlaBla\nBlaBla\nBlaBla\nBlaBla\nBlaBla\nBlaBla\nBla");
-
+            
             MinSize = root.MinSize;
             root.Layout();
+
+            consoleBuffer.changed.AddListener(OnConsoleBufferChanged);
+
+            OnConsoleBufferChanged();
+        }
+        
+        
+        protected override void OnResize(Vector2 delta) {
+            base.OnResize(delta);
+
+            OnConsoleBufferChanged();
+        }
+
+        private void OnConsoleBufferChanged() {
+            var textRect = consoleText!.GetComponent<RectTransform>().rect;
+
+            consoleBuffer!.Resize((int)(textRect.height / charHeight), (int)(textRect.width / charWidth));
+
+            consoleText.SetText(consoleBuffer.DisplayText());
         }
     }
 }

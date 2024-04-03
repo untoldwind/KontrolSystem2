@@ -2,7 +2,7 @@
 <Project>
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
-        <LangVersion>latest</LangVersion>
+        <LangVersion>default</LangVersion>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <NoWarn>NETSDK1188</NoWarn>
         <Nullable>enable</Nullable>

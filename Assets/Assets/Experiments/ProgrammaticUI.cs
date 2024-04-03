@@ -1,6 +1,8 @@
 using System;
 using Experiments;
+using UnityEditor;
 using UnityEngine;
+using EditorWindow = Experiments.EditorWindow;
 
 public class ProgrammaticUI : MonoBehaviour {
     private Canvas _canvas;
@@ -9,9 +11,6 @@ public class ProgrammaticUI : MonoBehaviour {
     
     // Start is called before the first frame update
     void Start() {
-        UIFactory.Init(new GFXAdapter());
-
-
         gameObject.AddComponent<ModuleManagerWindow>();
         gameObject.AddComponent<ConsoleWindow>();
         gameObject.AddComponent<TelemetryWindow>();
@@ -30,11 +29,5 @@ public class ProgrammaticUI : MonoBehaviour {
             timeSeries1.AddData(0.5 * i, Math.Cos(i * Math.PI / 400.0));
             timeSeries2.AddData(0.5 * i, Math.Sin(i * Math.PI / 300.0));
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

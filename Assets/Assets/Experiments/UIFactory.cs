@@ -91,12 +91,19 @@ namespace Experiments {
         internal readonly Sprite consoleActiveFrame;
         internal readonly float uiFontSize = 20;
 
-        public static UIFactory Instance { get; private set; }
+        private static UIFactory? _instance = null;
 
-        public static void Init(UIAssetsProvider uiAssetsProvider) {
-            Instance = new UIFactory(uiAssetsProvider);
+        public static UIFactory Instance {
+            get {
+                if (_instance == null) {
+                    AssetBundle.UnloadAllAssetBundles(true);
+                    _instance = new UIFactory(new GFXAdapter());
+                }
+
+                return _instance;
+            }
         }
-
+        
         internal UIFactory(UIAssetsProvider uiAssetsProvider) {
             graphFont = TMP_FontAsset.CreateFontAsset(uiAssetsProvider.GraphFont, 90, 9, GlyphRenderMode.SDFAA_HINTED,
                 1024, 1024, AtlasPopulationMode.Dynamic);

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Experiments {
     public class GFXAdapter : UIAssetsProvider {
-        private readonly AssetBundle assetBundle;
+        internal readonly AssetBundle assetBundle;
 
         public GFXAdapter() {
             assetBundle = AssetBundle.LoadFromFile(Path.Combine(Application.dataPath, "AssetBundles/kontrolsystem2"));

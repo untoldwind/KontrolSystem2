@@ -112,9 +112,7 @@ public class ConsoleWindow : UGUIResizableWindow {
 
         consoleBuffer!.Resize((int)(textRect.height / charHeight), (int)(textRect.width / charWidth));
 
-        consoleText.SetText(string.Join("\n",
-            consoleBuffer.VisibleLines.Select(line =>
-                line.ToString().Replace('\0', ' ').Substring(0, consoleBuffer?.VisibleCols ?? 0))));
+        consoleText.SetText(consoleBuffer.DisplayText());
     }
 
     private void OnRunCommand() {
