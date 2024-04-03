@@ -1474,22 +1474,36 @@ Contains the flight control values as desired by the pilot.
 
 #### Fields
 
-| Name                | Type  | Read-only | Description |
-| ------------------- | ----- | --------- | ----------- |
-| main_throttle       | float | R/O       |             |
-| pitch               | float | R/O       |             |
-| pitch_trim          | float | R/O       |             |
-| roll                | float | R/O       |             |
-| roll_trim           | float | R/O       |             |
-| translate_x         | float | R/O       |             |
-| translate_y         | float | R/O       |             |
-| translate_z         | float | R/O       |             |
-| wheel_steer         | float | R/O       |             |
-| wheel_steer_trim    | float | R/O       |             |
-| wheel_throttle      | float | R/O       |             |
-| wheel_throttle_trim | float | R/O       |             |
-| yaw                 | float | R/O       |             |
-| yaw_trim            | float | R/O       |             |
+| Name                         | Type             | Read-only | Description                                                                                                                                                               |
+| ---------------------------- | ---------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| main_throttle                | float            | R/O       | Main throttle input by the pilot                                                                                                                                          |
+| override_main_throttle       | Option&lt;float> | R/W       | Override main throttle. As long as this is defined (i.e. set to Some(value)) the pilot input will be overriden. Set to None to give control back to the pilot.            |
+| override_pitch               | Option&lt;float> | R/W       | Override pitch input. As long as this is defined (i.e. set to Some(value)) the pilot input will be overriden. Set to None to give control back to the pilot.              |
+| override_pitch_trim          | Option&lt;float> | R/W       | Override pitch trim. As long as this is defined (i.e. set to Some(value)) the pilot input will be overriden. Set to None to give control back to the pilot.               |
+| override_roll                | Option&lt;float> | R/W       | Override roll input. As long as this is defined (i.e. set to Some(value)) the pilot input will be overriden. Set to None to give control back to the pilot.               |
+| override_roll_trim           | Option&lt;float> | R/W       | Override roll trim. As long as this is defined (i.e. set to Some(value)) the pilot input will be overriden. Set to None to give control back to the pilot.                |
+| override_translate_x         | Option&lt;float> | R/W       | Override RCS translation x input. As long as this is defined (i.e. set to Some(value)) the pilot input will be overriden. Set to None to give control back to the pilot.  |
+| override_translate_y         | Option&lt;float> | R/W       | Override RCS translation y input. As long as this is defined (i.e. set to Some(value)) the pilot input will be overriden. Set to None to give control back to the pilot.  |
+| override_translate_z         | Option&lt;float> | R/W       | Override RCS translation z input. As long as this is defined (i.e. set to Some(value)) the pilot input will be overriden. Set to None to give control back to the pilot.  |
+| override_wheel_steer         | Option&lt;float> | R/W       | Override wheel steering. As long as this is defined (i.e. set to Some(value)) the pilot input will be overriden. Set to None to give control back to the pilot.           |
+| override_wheel_steer_trim    | Option&lt;float> | R/W       | Override wheel steering trim. As long as this is defined (i.e. set to Some(value)) the pilot input will be overriden. Set to None to give control back to the pilot.      |
+| override_wheel_throttle      | Option&lt;float> | R/W       | Override wheel throttle. As long as this is defined (i.e. set to Some(value)) the pilot input will be overriden. Set to None to give control back to the pilot.           |
+| override_wheel_throttle_trim | Option&lt;float> | R/W       | Override wheel throttle trim. As long as this is defined (i.e. set to Some(value)) the pilot input will be overriden. Set to None to give control back to the pilot.      |
+| override_yaw                 | Option&lt;float> | R/W       | Override yaw input. As long as this is defined (i.e. set to Some(value)) the pilot input will be overriden. Set to None to give control back to the pilot.                |
+| override_yaw_trim            | Option&lt;float> | R/W       | Override yaw trim. As long as this is defined (i.e. set to Some(value)) the pilot input will be overriden. Set to None to give control back to the pilot.                 |
+| pitch                        | float            | R/O       | Pitch input by the pilot                                                                                                                                                  |
+| pitch_trim                   | float            | R/O       | Pitch trim as set by the pilot                                                                                                                                            |
+| roll                         | float            | R/O       | Roll input by the pilot                                                                                                                                                   |
+| roll_trim                    | float            | R/O       | Roll trim as set by the pilot                                                                                                                                             |
+| translate_x                  | float            | R/O       | RCS translate x input by the pilot                                                                                                                                        |
+| translate_y                  | float            | R/O       | RCS translate y input by the pilot                                                                                                                                        |
+| translate_z                  | float            | R/O       | RCS translate z input by the pilot                                                                                                                                        |
+| wheel_steer                  | float            | R/O       | Wheel steering input by the pilot                                                                                                                                         |
+| wheel_steer_trim             | float            | R/O       | Wheel trim as set by the pilot                                                                                                                                            |
+| wheel_throttle               | float            | R/O       | Wheel throttle input by the pilot                                                                                                                                         |
+| wheel_throttle_trim          | float            | R/O       | Wheel throttle trim as set by the pilot                                                                                                                                   |
+| yaw                          | float            | R/O       | Yaw input by the pilot                                                                                                                                                    |
+| yaw_trim                     | float            | R/O       | Yaw trim as set by the pilot                                                                                                                                              |
 
 
 #### Methods
@@ -1935,6 +1949,7 @@ Parameters
 vessel.override_input_pitch ( value : float ) -> Unit
 ```
 
+Deprecated: Use corresponding field in `pilot_input`.
 One time override for the pitch control.
 Note: This has to be refreshed regularly to have an impact.
 
@@ -1952,6 +1967,7 @@ Parameters
 vessel.override_input_roll ( value : float ) -> Unit
 ```
 
+Deprecated: Use corresponding field in `pilot_input`.
 One time override for the roll control.
 Note: This has to be refreshed regularly to have an impact.
 
@@ -1969,6 +1985,7 @@ Parameters
 vessel.override_input_translate_x ( value : float ) -> Unit
 ```
 
+Deprecated: Use corresponding field in `pilot_input`.
 One time override for the translate x control.
 Note: This has to be refreshed regularly to have an impact.
 
@@ -1986,6 +2003,7 @@ Parameters
 vessel.override_input_translate_y ( value : float ) -> Unit
 ```
 
+Deprecated: Use corresponding field in `pilot_input`.
 One time override for the translate y control.
 Note: This has to be refreshed regularly to have an impact.
 
@@ -2003,6 +2021,7 @@ Parameters
 vessel.override_input_translate_z ( value : float ) -> Unit
 ```
 
+Deprecated: Use corresponding field in `pilot_input`.
 One time override for the translate z control.
 Note: This has to be refreshed regularly to have an impact.
 
@@ -2020,6 +2039,7 @@ Parameters
 vessel.override_input_yaw ( value : float ) -> Unit
 ```
 
+Deprecated: Use corresponding field in `pilot_input`.
 One time override for the yaw control.
 Note: This has to be refreshed regularly to have an impact.
 

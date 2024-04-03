@@ -51856,6 +51856,7 @@
           "fields": {
             "pitch": {
               "name": "pitch",
+              "description": "Pitch input by the pilot\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -51864,6 +51865,7 @@
             },
             "pitch_trim": {
               "name": "pitch_trim",
+              "description": "Pitch trim as set by the pilot\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -51872,6 +51874,7 @@
             },
             "yaw": {
               "name": "yaw",
+              "description": "Yaw input by the pilot\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -51880,6 +51883,7 @@
             },
             "yaw_trim": {
               "name": "yaw_trim",
+              "description": "Yaw trim as set by the pilot\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -51888,6 +51892,7 @@
             },
             "roll": {
               "name": "roll",
+              "description": "Roll input by the pilot\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -51896,6 +51901,7 @@
             },
             "roll_trim": {
               "name": "roll_trim",
+              "description": "Roll trim as set by the pilot\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -51904,6 +51910,7 @@
             },
             "main_throttle": {
               "name": "main_throttle",
+              "description": "Main throttle input by the pilot\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -51912,6 +51919,7 @@
             },
             "wheel_steer": {
               "name": "wheel_steer",
+              "description": "Wheel steering input by the pilot\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -51920,6 +51928,7 @@
             },
             "wheel_steer_trim": {
               "name": "wheel_steer_trim",
+              "description": "Wheel trim as set by the pilot\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -51928,6 +51937,7 @@
             },
             "wheel_throttle": {
               "name": "wheel_throttle",
+              "description": "Wheel throttle input by the pilot\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -51936,6 +51946,7 @@
             },
             "wheel_throttle_trim": {
               "name": "wheel_throttle_trim",
+              "description": "Wheel throttle trim as set by the pilot\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -51944,6 +51955,7 @@
             },
             "translate_x": {
               "name": "translate_x",
+              "description": "RCS translate x input by the pilot\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -51952,6 +51964,7 @@
             },
             "translate_y": {
               "name": "translate_y",
+              "description": "RCS translate y input by the pilot\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -51960,10 +51973,207 @@
             },
             "translate_z": {
               "name": "translate_z",
+              "description": "RCS translate z input by the pilot\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
                 "name": "float"
+              }
+            },
+            "override_pitch": {
+              "name": "override_pitch",
+              "description": "Override pitch input.\nAs long as this is defined (i.e. set to Some(value)) the pilot input will be overriden.\nSet to None to give control back to the pilot.\n",
+              "readOnly": false,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  }
+                ]
+              }
+            },
+            "override_pitch_trim": {
+              "name": "override_pitch_trim",
+              "description": "Override pitch trim.\nAs long as this is defined (i.e. set to Some(value)) the pilot input will be overriden.\nSet to None to give control back to the pilot.\n",
+              "readOnly": false,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  }
+                ]
+              }
+            },
+            "override_yaw": {
+              "name": "override_yaw",
+              "description": "Override yaw input.\nAs long as this is defined (i.e. set to Some(value)) the pilot input will be overriden.\nSet to None to give control back to the pilot.\n",
+              "readOnly": false,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  }
+                ]
+              }
+            },
+            "override_yaw_trim": {
+              "name": "override_yaw_trim",
+              "description": "Override yaw trim.\nAs long as this is defined (i.e. set to Some(value)) the pilot input will be overriden.\nSet to None to give control back to the pilot.\n",
+              "readOnly": false,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  }
+                ]
+              }
+            },
+            "override_roll": {
+              "name": "override_roll",
+              "description": "Override roll input.\nAs long as this is defined (i.e. set to Some(value)) the pilot input will be overriden.\nSet to None to give control back to the pilot.\n",
+              "readOnly": false,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  }
+                ]
+              }
+            },
+            "override_roll_trim": {
+              "name": "override_roll_trim",
+              "description": "Override roll trim.\nAs long as this is defined (i.e. set to Some(value)) the pilot input will be overriden.\nSet to None to give control back to the pilot.\n",
+              "readOnly": false,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  }
+                ]
+              }
+            },
+            "override_main_throttle": {
+              "name": "override_main_throttle",
+              "description": "Override main throttle.\nAs long as this is defined (i.e. set to Some(value)) the pilot input will be overriden.\nSet to None to give control back to the pilot.\n",
+              "readOnly": false,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  }
+                ]
+              }
+            },
+            "override_wheel_steer": {
+              "name": "override_wheel_steer",
+              "description": "Override wheel steering.\nAs long as this is defined (i.e. set to Some(value)) the pilot input will be overriden.\nSet to None to give control back to the pilot.\n",
+              "readOnly": false,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  }
+                ]
+              }
+            },
+            "override_wheel_steer_trim": {
+              "name": "override_wheel_steer_trim",
+              "description": "Override wheel steering trim.\nAs long as this is defined (i.e. set to Some(value)) the pilot input will be overriden.\nSet to None to give control back to the pilot.\n",
+              "readOnly": false,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  }
+                ]
+              }
+            },
+            "override_wheel_throttle": {
+              "name": "override_wheel_throttle",
+              "description": "Override wheel throttle.\nAs long as this is defined (i.e. set to Some(value)) the pilot input will be overriden.\nSet to None to give control back to the pilot.\n",
+              "readOnly": false,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  }
+                ]
+              }
+            },
+            "override_wheel_throttle_trim": {
+              "name": "override_wheel_throttle_trim",
+              "description": "Override wheel throttle trim.\nAs long as this is defined (i.e. set to Some(value)) the pilot input will be overriden.\nSet to None to give control back to the pilot.\n",
+              "readOnly": false,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  }
+                ]
+              }
+            },
+            "override_translate_x": {
+              "name": "override_translate_x",
+              "description": "Override RCS translation x input.\nAs long as this is defined (i.e. set to Some(value)) the pilot input will be overriden.\nSet to None to give control back to the pilot.\n",
+              "readOnly": false,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  }
+                ]
+              }
+            },
+            "override_translate_y": {
+              "name": "override_translate_y",
+              "description": "Override RCS translation y input.\nAs long as this is defined (i.e. set to Some(value)) the pilot input will be overriden.\nSet to None to give control back to the pilot.\n",
+              "readOnly": false,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  }
+                ]
+              }
+            },
+            "override_translate_z": {
+              "name": "override_translate_z",
+              "description": "Override RCS translation z input.\nAs long as this is defined (i.e. set to Some(value)) the pilot input will be overriden.\nSet to None to give control back to the pilot.\n",
+              "readOnly": false,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "float"
+                  }
+                ]
               }
             }
           },
@@ -53313,7 +53523,7 @@
             "override_input_pitch": {
               "isAsync": false,
               "name": "override_input_pitch",
-              "description": "One time override for the pitch control.\nNote: This has to be refreshed regularly to have an impact.\n",
+              "description": "Deprecated: Use corresponding field in `pilot_input`.\nOne time override for the pitch control.\nNote: This has to be refreshed regularly to have an impact.\n",
               "parameters": [
                 {
                   "name": "value",
@@ -53332,7 +53542,7 @@
             "override_input_roll": {
               "isAsync": false,
               "name": "override_input_roll",
-              "description": "One time override for the roll control.\nNote: This has to be refreshed regularly to have an impact.\n",
+              "description": "Deprecated: Use corresponding field in `pilot_input`.\nOne time override for the roll control.\nNote: This has to be refreshed regularly to have an impact.\n",
               "parameters": [
                 {
                   "name": "value",
@@ -53351,7 +53561,7 @@
             "override_input_yaw": {
               "isAsync": false,
               "name": "override_input_yaw",
-              "description": "One time override for the yaw control.\nNote: This has to be refreshed regularly to have an impact.\n",
+              "description": "Deprecated: Use corresponding field in `pilot_input`.\nOne time override for the yaw control.\nNote: This has to be refreshed regularly to have an impact.\n",
               "parameters": [
                 {
                   "name": "value",
@@ -53370,7 +53580,7 @@
             "override_input_translate_x": {
               "isAsync": false,
               "name": "override_input_translate_x",
-              "description": "One time override for the translate x control.\nNote: This has to be refreshed regularly to have an impact.\n",
+              "description": "Deprecated: Use corresponding field in `pilot_input`.\nOne time override for the translate x control.\nNote: This has to be refreshed regularly to have an impact.\n",
               "parameters": [
                 {
                   "name": "value",
@@ -53389,7 +53599,7 @@
             "override_input_translate_y": {
               "isAsync": false,
               "name": "override_input_translate_y",
-              "description": "One time override for the translate y control.\nNote: This has to be refreshed regularly to have an impact.\n",
+              "description": "Deprecated: Use corresponding field in `pilot_input`.\nOne time override for the translate y control.\nNote: This has to be refreshed regularly to have an impact.\n",
               "parameters": [
                 {
                   "name": "value",
@@ -53408,7 +53618,7 @@
             "override_input_translate_z": {
               "isAsync": false,
               "name": "override_input_translate_z",
-              "description": "One time override for the translate z control.\nNote: This has to be refreshed regularly to have an impact.\n",
+              "description": "Deprecated: Use corresponding field in `pilot_input`.\nOne time override for the translate z control.\nNote: This has to be refreshed regularly to have an impact.\n",
               "parameters": [
                 {
                   "name": "value",
