@@ -56,9 +56,24 @@ public class Direction {
 
     public double Roll => Euler.z;
 
+    public Vector3d Axis {
+        get {
+            rotation.ToAngleAxis(out _, out var axis);
+            return axis;
+        }
+    }
+
+    public double Angle {
+        get {
+            rotation.ToAngleAxis(out var angle, out _);
+            return angle;
+        }
+    }
+
     public Vector3d UpVector => rotation * Vector3d.up;
 
     public Vector3d RightVector => rotation * Vector3d.right;
+    
 
     /// <summary>
     ///     Produces a direction that if it was applied to vector v1, would

@@ -110,6 +110,14 @@ public static class DirectionBinding {
                 new BoundPropertyLikeFieldAccessFactory("Roll in degree", () => BuiltinType.Float,
                     typeof(Direction), typeof(Direction).GetProperty("Roll"))
             }, {
+                "axis",
+                new BoundPropertyLikeFieldAccessFactory("The rotation axis", () => Vector3Binding.Vector3Type,
+                    typeof(Direction), typeof(Direction).GetProperty("Axis"))
+            }, {
+                "angle",
+                new BoundPropertyLikeFieldAccessFactory("The rotation angle around the axis in degrees", () => BuiltinType.Float,
+                    typeof(Direction), typeof(Direction).GetProperty("Angle"))
+            }, {
                 "inverse",
                 new BoundPropertyLikeFieldAccessFactory("Inverse direction", LazyDirectionType,
                     typeof(DirectionBinding),

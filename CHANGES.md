@@ -8,6 +8,9 @@
   * The existing `vessel.override_input_` methods are now considered deprecated as they mess with the pilot input on a
     deep level. Use the new `vessel.pilot_input.override_` fields instead
 * Add UI `container.add_dropdown` element
+* Potentially breaking change:
+  * Remove `vessel.angular_momentum` and `vessel.global_angular_momentum` since the underlying
+    calculation of the game does not produce correct results (in most cases it is always zero).
 
 ## 0.5.7.3 -> 0.5.7.6
 

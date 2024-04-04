@@ -160,10 +160,7 @@ public partial class KSPVesselModule {
         public double AltitudeSealevel => vessel.AltitudeFromSeaLevel;
 
         [KSField] public double AltitudeScenery => vessel.AltitudeFromScenery;
-
-        [KSField(Description = "Get the coordinate system independent angular momentum of the vessel.")]
-        public AngularVelocity GlobalAngularMomentum => vessel.angularMomentum;
-
+        
         [KSField(Description = "Get the coordinate system independent angular velocity of the vessel.")]
         public AngularVelocity GlobalAngularVelocity => vessel.AngularVelocity;
 
@@ -196,11 +193,7 @@ public partial class KSPVesselModule {
                 return totalVesselTorque;
             }
         }
-
-        [KSField(Description = "Get the angular momentum of the vessel in the celestial frame of its main body.")]
-        public Vector3d AngularMomentum =>
-            vessel.mainBody.celestialMotionFrame.ToLocalAngularVelocity(vessel.angularMomentum);
-
+        
         [KSField(Description = "Get the coordinate angular velocity in the celestial frame of its main body.")]
         public Vector3d AngularVelocity =>
             vessel.mainBody.celestialMotionFrame.ToLocalAngularVelocity(vessel.AngularVelocity);
