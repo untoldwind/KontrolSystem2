@@ -87,7 +87,7 @@ export class LspServerSingleton {
           start: moduleResult.remaining.position,
           end: textDocument.positionAt(
             moduleResult.remaining.position.offset +
-              moduleResult.remaining.available,
+            moduleResult.remaining.available,
           ),
         },
         message: moduleResult.expected,
@@ -262,11 +262,11 @@ export class LspServerSingleton {
     }
   }
 
-  async updateConfig(config: To2LspSettings) {
-    this.globalSettings = config;
+  async updateConfig(config: To2LspSettings | undefined) {
+    this.globalSettings = config ?? defaultSettings;
 
-    for (const libraryPath of [config.libraryPath, config.localLibraryPath]) {
-      if (libraryPath.length === 0 || !(await isDirectory(libraryPath)))
+    for (const libraryPath of [config?.libraryPath, config?.localLibraryPath]) {
+      if (!libraryPath || libraryPath.length === 0 || !(await isDirectory(libraryPath)))
         continue;
       await this.updateTypeResolver(libraryPath);
       const libraryUri = pathToUri(libraryPath, this.documents);
@@ -411,8 +411,8 @@ export class LspServerSingleton {
       (node) =>
         node.documentation
           ? node.documentation
-              .filter((doc) => doc.range.contains(params.position))
-              .map((doc) => doc.value)
+            .filter((doc) => doc.range.contains(params.position))
+            .map((doc) => doc.value)
           : [],
     );
 

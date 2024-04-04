@@ -80,6 +80,7 @@ public class KSPCoreContext(string processName, ITO2Logger logger, GameInstance 
     private readonly List<Action> nextUpdateOnce = [];
     private readonly Stack<CoreError.StackEntry> callStack = new();
     private readonly Dictionary<string, DirectLogFile> logFiles = [];
+    private readonly List<MessageBus.Subscription> subscriptions = [];
 
     public bool IsBackground => false;
     public ITO2Logger Logger { get; } = logger;
@@ -181,6 +182,12 @@ public class KSPCoreContext(string processName, ITO2Logger logger, GameInstance 
         return newLogFile;
     }
 
+    public MessageBus.Subscription<T> AddSubscription<T>() {
+        var subscription = Mainframe.Instance!.MessageBus.Subscribe<T>();
+        subscriptions.Add(subscription);
+        return subscription;
+    }
+    
     public bool TryFindAutopilot<T>(VesselComponent vessel, [MaybeNullWhen(false)] out T autopilot) where T : IKSPAutopilot {
         if (autopilotHooks.TryGetValue(vessel, out var hook)) return hook.TryFindAutopilot(out autopilot);
 
@@ -271,6 +278,9 @@ public class KSPCoreContext(string processName, ITO2Logger logger, GameInstance 
 
         foreach (var logFile in logFiles.Values) logFile.Close();
 
+        foreach (var subscription in subscriptions) subscription.Unsubscribe();
+        
+        subscriptions.Clear();
         logFiles.Clear();
         windows.Clear();
         resourceTransfers.Clear();

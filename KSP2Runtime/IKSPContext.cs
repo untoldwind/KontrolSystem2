@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using KontrolSystem.KSP.Runtime.Core;
 using KontrolSystem.KSP.Runtime.KSPConsole;
 using KontrolSystem.KSP.Runtime.KSPDebug;
 using KontrolSystem.KSP.Runtime.KSPGame;
@@ -59,6 +60,8 @@ public interface IKSPContext : IContext {
     void AddWindow(KSPUIModule.Window window);
 
     KSPDebugModule.ILogFile? AddLogFile(string fileName);
+
+    MessageBus.Subscription<T> AddSubscription<T>();
 
     bool TryFindAutopilot<T>(VesselComponent vessel, [MaybeNullWhen(false)] out T autopilot) where T : IKSPAutopilot;
 

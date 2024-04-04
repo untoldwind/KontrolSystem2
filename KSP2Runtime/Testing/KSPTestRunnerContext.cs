@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using KontrolSystem.KSP.Runtime.Core;
 using KontrolSystem.KSP.Runtime.KSPConsole;
 using KontrolSystem.KSP.Runtime.KSPDebug;
 using KontrolSystem.KSP.Runtime.KSPGame;
@@ -33,6 +34,8 @@ public class KSPTestRunnerContext : TestRunnerContext, IKSPContext {
         MockBody.Pol
     }.ToDictionary(body => body.Name);
 
+    private MessageBus MessageBus { get; } = new ();
+    
     public GameInstance Game => throw new NotSupportedException("Game is no available in test-mode");
 
     public KSPGameMode GameMode => KSPGameMode.Unknown;
@@ -42,7 +45,7 @@ public class KSPTestRunnerContext : TestRunnerContext, IKSPContext {
     public KSPConsoleBuffer ConsoleBuffer { get; } = new(50, 80);
 
     public TimeSeriesCollection TimeSeriesCollection { get; } = new();
-
+    
     public double UniversalTime => 0;
 
     public VesselComponent? ActiveVessel => null;
@@ -71,6 +74,8 @@ public class KSPTestRunnerContext : TestRunnerContext, IKSPContext {
     public KSPDebugModule.ILogFile? AddLogFile(string fileName) {
         return null;
     }
+
+    public MessageBus.Subscription<T> AddSubscription<T>() => MessageBus.Subscribe<T>();
 
     public bool TryFindAutopilot<T>(VesselComponent vessel, [MaybeNullWhen(false)] out T autopilot) where T : IKSPAutopilot {
         autopilot = default;

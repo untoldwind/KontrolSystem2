@@ -44,6 +44,8 @@ public class Mainframe : KerbalMonoBehaviour {
 
     public TimeSeriesCollection TimeSeriesCollection { get; } = new();
 
+    public MessageBus MessageBus { get; } = new();
+    
     public bool Rebooting => rebooting;
     public TimeSpan LastRebootTime => state?.bootTime ?? TimeSpan.Zero;
     public IEnumerable<MainframeError> LastErrors => state?.errors ?? Enumerable.Empty<MainframeError>();
@@ -68,7 +70,7 @@ public class Mainframe : KerbalMonoBehaviour {
             return ListProcesses(GameMode, activeVessel).ToArray();
         }
     }
-
+    
     public void Awake() {
         Instance = this;
         Game.Messages.Subscribe<GameStateChangedMessage>(OnStateChange);
