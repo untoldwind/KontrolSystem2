@@ -1,6 +1,6 @@
 # Changes
 
-## 0.5.7.6 ->
+## 0.5.7.6 -> 0.5.7.9
 
 * Experimental support for triggering quicksave/load via `ksp::debug::SAVE_LOAD_CONTROL`
   * Current limitations: Triggering a quick-load will terminate all running scripts, including the script triggering it
