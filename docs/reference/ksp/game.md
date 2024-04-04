@@ -12,9 +12,10 @@ Collection to game and runtime related functions.
 
 #### Fields
 
-| Name                | Type                                                   | Read-only | Description |
-| ------------------- | ------------------------------------------------------ | --------- | ----------- |
-| available_processes | [ksp::game::Process](/reference/ksp/game.md#process)[] | R/O       |             |
+| Name                | Type                                                   | Read-only | Description                          |
+| ------------------- | ------------------------------------------------------ | --------- | ------------------------------------ |
+| available_processes | [ksp::game::Process](/reference/ksp/game.md#process)[] | R/O       |                                      |
+| version             | string                                                 | R/O       | Version number of the KontrolSystem  |
 
 
 #### Methods

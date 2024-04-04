@@ -13,6 +13,8 @@ Represents the rotation from an initial coordinate system when looking down the 
 
 | Name         | Type                                                     | Read-only | Description                                                |
 | ------------ | -------------------------------------------------------- | --------- | ---------------------------------------------------------- |
+| angle        | float                                                    | R/O       | The rotation angle around the axis in degrees              |
+| axis         | [ksp::math::Vec3](/reference/ksp/math.md#vec3)           | R/O       | The rotation axis                                          |
 | euler        | [ksp::math::Vec3](/reference/ksp/math.md#vec3)           | R/W       | Euler angles in degree of the rotation                     |
 | inverse      | [ksp::math::Direction](/reference/ksp/math.md#direction) | R/O       | Inverse direction                                          |
 | pitch        | float                                                    | R/O       | Pitch in degree                                            |

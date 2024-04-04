@@ -8024,6 +8024,15 @@
           "name": "Mainframe",
           "description": "",
           "fields": {
+            "version": {
+              "name": "version",
+              "description": "Version number of the KontrolSystem\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            },
             "available_processes": {
               "name": "available_processes",
               "readOnly": true,
@@ -9319,6 +9328,25 @@
             "roll": {
               "name": "roll",
               "description": "Roll in degree",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "axis": {
+              "name": "axis",
+              "description": "The rotation axis",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "Vec3"
+              }
+            },
+            "angle": {
+              "name": "angle",
+              "description": "The rotation angle around the axis in degrees",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -52779,16 +52807,6 @@
                 "name": "float"
               }
             },
-            "global_angular_momentum": {
-              "name": "global_angular_momentum",
-              "description": "Get the coordinate system independent angular momentum of the vessel.\n",
-              "readOnly": true,
-              "type": {
-                "kind": "Standard",
-                "module": "ksp::math",
-                "name": "GlobalAngularVelocity"
-              }
-            },
             "global_angular_velocity": {
               "name": "global_angular_velocity",
               "description": "Get the coordinate system independent angular velocity of the vessel.\n",
@@ -52812,16 +52830,6 @@
             "total_torque": {
               "name": "total_torque",
               "description": "Get the available torque of relative to its control frame.\n",
-              "readOnly": true,
-              "type": {
-                "kind": "Standard",
-                "module": "ksp::math",
-                "name": "Vec3"
-              }
-            },
-            "angular_momentum": {
-              "name": "angular_momentum",
-              "description": "Get the angular momentum of the vessel in the celestial frame of its main body.\n",
               "readOnly": true,
               "type": {
                 "kind": "Standard",
