@@ -8,6 +8,9 @@ namespace KontrolSystem.KSP.Runtime.KSPGame;
 public partial class KSPGameModule {
     [KSClass("Mainframe")]
     public class MainframeAdapter {
+        [KSField(Description = "Version number of the KontrolSystem")]
+        public string Version => Mainframe.Instance!.Version;
+        
         [KSField]
         public ProcessAdapter[] AvailableProcesses {
             get {
