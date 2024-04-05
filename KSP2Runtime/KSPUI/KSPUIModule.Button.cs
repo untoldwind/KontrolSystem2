@@ -44,7 +44,7 @@ public partial class KSPUIModule {
         }
 
         [KSMethod(Description = "Function to be called if button is clicked")]
-        public void OnClick(Action onClick) {
+        public void OnClick<T>(Func<T> onClick) {
             var context = KSPContext.CurrentContext;
             button.OnClick(() => {
                 try {

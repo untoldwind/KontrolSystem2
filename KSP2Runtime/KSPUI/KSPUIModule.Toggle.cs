@@ -51,7 +51,7 @@ public partial class KSPUIModule {
         }
 
         [KSMethod]
-        public void OnChange(Action<bool> onChange) {
+        public void OnChange<T>(Func<bool, T> onChange) {
             var context = KSPContext.CurrentContext;
             toggle.OnChange(value => {
                 try {

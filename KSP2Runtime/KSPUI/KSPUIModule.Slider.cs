@@ -38,7 +38,7 @@ public partial class KSPUIModule {
         }
 
         [KSMethod]
-        public void OnChange(Action<double> onChange) {
+        public void OnChange<T>(Func<double, T> onChange) {
             var context = KSPContext.CurrentContext;
             slider.OnChange(value => {
                 try {

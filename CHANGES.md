@@ -1,5 +1,11 @@
 # Changes
 
+## 0.5.7.9 ->
+
+* Add `ksp::game::MESSAGE_BUS`
+* Add `ksp::game::notification_alert` and `ksp::game::notification_passive`
+* Allow any return value in UI callbacks (#151)
+
 ## 0.5.7.6 -> 0.5.7.9
 
 * Experimental support for triggering quicksave/load via `ksp::debug::SAVE_LOAD_CONTROL`

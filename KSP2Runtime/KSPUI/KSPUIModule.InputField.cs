@@ -57,7 +57,7 @@ public partial class KSPUIModule {
         }
 
         [KSMethod]
-        public void OnChange(Action<string> onChange) {
+        public void OnChange<T>(Func<string, T> onChange) {
             var context = KSPContext.CurrentContext;
             inputField.OnChange(value => {
                 try {
@@ -99,7 +99,7 @@ public partial class KSPUIModule {
         }
 
         [KSMethod]
-        public void OnChange(Action<double> onChange) {
+        public void OnChange<T>(Func<double, T> onChange) {
             var context = KSPContext.CurrentContext;
             inputField.OnChange(value => {
                 try {
@@ -142,7 +142,7 @@ public partial class KSPUIModule {
         }
 
         [KSMethod]
-        public void OnChange(Action<double> onChange) {
+        public void OnChange<T>(Func<double, T> onChange) {
             var context = KSPContext.CurrentContext;
             inputField.OnChange(value => {
                 try {

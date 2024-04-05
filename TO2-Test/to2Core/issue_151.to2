@@ -1,0 +1,25 @@
+use * from core::testing
+use { lambda_generic_callback } from test::module
+
+sync fn test_callback(a: int) -> string = a.to_string()
+
+test sync fn test_generic_callback() -> Unit = {
+    const cell : Cell<int> = Cell(0)
+    
+    lambda_generic_callback(10, fn(a) -> cell.set_value(a))
+    
+    assert_int(20, cell.value)
+
+    lambda_generic_callback(20, fn(a) -> cell.value = a)
+    
+    assert_int(40, cell.value)
+
+    lambda_generic_callback(30, fn(a) -> {
+        cell.value = a
+        "some string"
+    })
+    
+    assert_int(60, cell.value)
+    
+    lambda_generic_callback(10, test_callback)
+}

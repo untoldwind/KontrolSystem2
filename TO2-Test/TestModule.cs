@@ -14,6 +14,11 @@ public class TestModule {
     }
 
     [KSFunction]
+    public static void lambda_generic_callback<T>(long a, Func<long, T> call) {
+        call(2 * a);
+    }
+
+    [KSFunction]
     public static TestEnumerable CreateTestEnumerable() => new();
 
     [KSFunction]

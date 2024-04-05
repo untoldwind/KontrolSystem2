@@ -45,7 +45,7 @@ public partial class KSPUIModule {
         }
 
         [KSMethod]
-        public void OnChange(Action<long> onChange) {
+        public void OnChange<T>(Func<long, T> onChange) {
             var context = KSPContext.CurrentContext;
             dropdown.OnChange(value => {
                 try {
