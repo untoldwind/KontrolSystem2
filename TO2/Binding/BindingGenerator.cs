@@ -115,7 +115,7 @@ public static class BindingGenerator {
     }
 
     private static void LinkType(BoundType boundType) {
-        var interfaces = boundType.runtimeType.GetCustomAttribute<KSClass>().ScanInterfaces ?? [];
+        var interfaces = boundType.runtimeType.GetCustomAttribute<KSClass>()?.ScanInterfaces ?? [];
         foreach (var method in boundType.runtimeType.GetMethods(BindingFlags.Public | BindingFlags.Instance)) {
             var ksMethod = method.GetCustomAttribute<KSMethod>() ?? interfaces.Select(i => i.GetMethod(method.Name)?.GetCustomAttribute<KSMethod>()).FirstOrDefault(attr => attr != null);
             if (ksMethod == null) continue;

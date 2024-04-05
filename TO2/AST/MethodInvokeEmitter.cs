@@ -43,7 +43,7 @@ public interface IMethodInvokeFactory {
 
     TypeHint? ArgumentHint(int argumentIdx);
 
-    IMethodInvokeEmitter? Create(IBlockContext context, List<TO2Type> arguments, Node node);
+    IMethodInvokeEmitter? Create(IBlockContext context, List<TO2Type> arguments, RealizedType? desiredResult, Node node);
 
     IMethodInvokeFactory FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments);
 }
@@ -71,7 +71,7 @@ public class InlineMethodInvokeFactory(
 
     public List<FunctionParameter> DeclaredParameters => [];
 
-    public IMethodInvokeEmitter Create(IBlockContext context, List<TO2Type> arguments, Node node) =>
+    public IMethodInvokeEmitter Create(IBlockContext context, List<TO2Type> arguments, RealizedType? desiredResult, Node node) =>
         new InlineMethodInvokeEmitter(resultType(), [], methodCall, opCodes);
 
     public IMethodInvokeFactory
@@ -136,11 +136,11 @@ public class BoundMethodInvokeFactory(
         parameters().Select(p =>
             new FunctionParameter(p.name, p.type, p.description, p.HasDefault ? new LiteralBool(true) : null)).ToList();
 
-    public IMethodInvokeEmitter? Create(IBlockContext context, List<TO2Type> arguments, Node node) {
+    public IMethodInvokeEmitter? Create(IBlockContext context, List<TO2Type> arguments, RealizedType? desiredResult, Node node) {
         var (genericMethod, genericResult, genericParameters) =
             Helpers.MakeGeneric(context,
                 resultType(), parameters(), methodInfo,
-                null, arguments,
+                desiredResult, arguments,
                 targetTypeArguments?.Invoke(context.ModuleContext) ??
                 [],
                 node);

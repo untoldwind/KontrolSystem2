@@ -19,7 +19,7 @@ public static class REPLExpression {
         var result = TO2ParserREPL.REPLItems.Parse(expression);
 
         var kspContext = new KSPCoreContext("REPL", Mainframe.Instance!.Logger, Mainframe.Instance.Game,
-            Mainframe.Instance.ConsoleBuffer, Mainframe.Instance.TimeSeriesCollection,
+            Mainframe.Instance.ConsoleBuffer, Mainframe.Instance.TimeSeriesCollection, Mainframe.Instance.MessageBus,
             Mainframe.Instance.OptionalAddons);
         var registry = Mainframe.Instance.LastRegistry!;
         var context = new REPLContext(registry, kspContext);

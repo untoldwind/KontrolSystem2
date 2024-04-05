@@ -9,7 +9,7 @@ public class MessageBus {
         public abstract Type MessageType { get; }
 
         public abstract void Unsubscribe();
-        
+
         internal abstract void Publish(object? message);
     }
 
@@ -31,7 +31,7 @@ public class MessageBus {
             }
         }
 
-        public Option<T> NextMessage() {
+        public Option<T> Recv() {
             lock (inbox) {
                 return inbox.TryDequeue(out var message) ? Option.Some(message) : Option.None<T>();
             }

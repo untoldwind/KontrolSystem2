@@ -211,7 +211,7 @@ internal class EnumFromStringMethodFactory(BoundEnumType boundEnumType) : IMetho
         new("value", BuiltinType.String, "Enum value to lookup")
     ];
 
-    public IMethodInvokeEmitter Create(IBlockContext context, List<TO2Type> arguments, Node node) => new EnumFromStringMethodEmitter(boundEnumType);
+    public IMethodInvokeEmitter Create(IBlockContext context, List<TO2Type> arguments, RealizedType? desiredResult, Node node) => new EnumFromStringMethodEmitter(boundEnumType);
 
     public IMethodInvokeFactory
         FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) =>

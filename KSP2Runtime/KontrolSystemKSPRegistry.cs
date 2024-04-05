@@ -28,6 +28,8 @@ public static class KontrolSystemKSPRegistry {
         var (resourceTypes, resourceConstants) = KSPResourceModule.DirectBindings();
         var (scienceTypes, scienceConstants) = KSPScienceModule.DirectBindings();
         var (uiTypes, ruiConstants) = KSPUIModule.DirectBindings();
+        var gameTypes = KSPGameModule.DirectBindings();
+
         registry.RegisterModule(
             BindingGenerator.BindModule(typeof(KSPConsoleModule)));
         registry.RegisterModule(
@@ -43,7 +45,7 @@ public static class KontrolSystemKSPRegistry {
         registry.RegisterModule(
             BindingGenerator.BindModule(typeof(KSPOABModule)));
         registry.RegisterModule(
-            BindingGenerator.BindModule(typeof(KSPGameModule)));
+            BindingGenerator.BindModule(typeof(KSPGameModule), gameTypes));
         registry.RegisterModule(
             BindingGenerator.BindModule(typeof(KSPGameWarpModule)));
         registry.RegisterModule(

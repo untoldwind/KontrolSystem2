@@ -7,6 +7,7 @@ namespace KontrolSystem.KSP.Runtime.Core;
 internal class State {
     internal readonly List<MainframeError> errors;
     internal readonly KontrolRegistry? registry;
+    internal readonly MessageBus messageBus;
 
     internal TimeSpan bootTime;
 
@@ -14,5 +15,6 @@ internal class State {
         this.registry = registry;
         this.bootTime = bootTime;
         this.errors = errors;
+        messageBus = new();
     }
 }

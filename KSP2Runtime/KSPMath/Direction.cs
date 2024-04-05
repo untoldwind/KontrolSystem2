@@ -73,7 +73,7 @@ public class Direction {
     public Vector3d UpVector => rotation * Vector3d.up;
 
     public Vector3d RightVector => rotation * Vector3d.right;
-    
+
 
     /// <summary>
     ///     Produces a direction that if it was applied to vector v1, would

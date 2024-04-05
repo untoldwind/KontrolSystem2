@@ -61,6 +61,8 @@ public interface IKSPContext : IContext {
 
     KSPDebugModule.ILogFile? AddLogFile(string fileName);
 
+    MessageBus MessageBus { get; }
+
     MessageBus.Subscription<T> AddSubscription<T>();
 
     bool TryFindAutopilot<T>(VesselComponent vessel, [MaybeNullWhen(false)] out T autopilot) where T : IKSPAutopilot;

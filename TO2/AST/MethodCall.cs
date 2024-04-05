@@ -13,6 +13,7 @@ public class MethodCall : Expression {
     private readonly string methodName;
     private readonly Expression target;
     private ILocalRef? preparedResult;
+    private TypeHint? typeHint;
 
     public MethodCall(Expression target, string methodName, List<Expression> arguments,
         Position start = new(), Position end = new()) : base(start, end) {
@@ -37,6 +38,10 @@ public class MethodCall : Expression {
         }
     }
 
+    public override TypeHint? TypeHint {
+        set => typeHint = value;
+    }
+
     public override TO2Type ResultType(IBlockContext context) {
         var targetType = target.ResultType(context);
         var method = targetType.FindMethod(context.ModuleContext, methodName);
@@ -52,7 +57,7 @@ public class MethodCall : Expression {
                 resolvedTypes.Add(type);
             }
 
-            var methodInvoker = method.Create(argumentContext, resolvedTypes, this);
+            var methodInvoker = method.Create(argumentContext, resolvedTypes, typeHint?.Invoke(context), this);
 
             if (methodInvoker != null) return methodInvoker.ResultType;
         }
@@ -89,7 +94,7 @@ public class MethodCall : Expression {
 
         var targetType = target.ResultType(context);
         var methodInvoker = targetType.FindMethod(context.ModuleContext, methodName)
-            ?.Create(context, arguments.Select(arg => arg.ResultType(context)).ToList(), this);
+            ?.Create(context, arguments.Select(arg => arg.ResultType(context)).ToList(), typeHint?.Invoke(context), this);
 
         target.Prepare(context);
 
@@ -142,7 +147,7 @@ public class MethodCall : Expression {
                 ));
 
         var argumentTypes = arguments.Select(arg => arg.ResultType(context)).ToList();
-        var methodInvoker = method.Create(context, argumentTypes, this);
+        var methodInvoker = method.Create(context, argumentTypes, typeHint?.Invoke(context), this);
 
         if (methodInvoker == null) {
             context.AddError(new StructuralError(
@@ -311,7 +316,7 @@ public class MethodCall : Expression {
 
         if (method != null) {
             var methodInvoker = method.Create(context.replBlockContext,
-                argumentFutures.Select(a => targetFuture.Type).ToList(), this);
+                argumentFutures.Select(a => targetFuture.Type).ToList(), typeHint?.Invoke(context.replBlockContext), this);
 
             if (context.replBlockContext.HasErrors)
                 throw new REPLException(this, context.replBlockContext.AllErrors.First().message);

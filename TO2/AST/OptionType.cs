@@ -378,7 +378,7 @@ internal class OptionMapFactory : IMethodInvokeFactory {
             "Function to be applied on the optional value if defined")
     ];
 
-    public IMethodInvokeEmitter? Create(IBlockContext context, List<TO2Type> arguments, Node node) {
+    public IMethodInvokeEmitter? Create(IBlockContext context, List<TO2Type> arguments, RealizedType? desiredResult, Node node) {
         if (arguments.Count != 1) return null;
         if (arguments[0].UnderlyingType(context.ModuleContext) is not FunctionType mapper) return null;
 
@@ -430,7 +430,7 @@ internal class OptionThenFactory : IMethodInvokeFactory {
             "Function to be applied on the optional value if defined")
     ];
 
-    public IMethodInvokeEmitter? Create(IBlockContext context, List<TO2Type> arguments, Node node) {
+    public IMethodInvokeEmitter? Create(IBlockContext context, List<TO2Type> arguments, RealizedType? desiredResult, Node node) {
         if (arguments.Count != 1) return null;
         if (arguments[0].UnderlyingType(context.ModuleContext) is not FunctionType mapper) return null;
 
@@ -480,7 +480,7 @@ internal class OptionOkOrFactory : IMethodInvokeFactory {
     public List<FunctionParameter> DeclaredParameters =>
         [new("if_none", BuiltinType.String, "Error message if option is undefined")];
 
-    public IMethodInvokeEmitter? Create(IBlockContext context, List<TO2Type> arguments, Node node) {
+    public IMethodInvokeEmitter? Create(IBlockContext context, List<TO2Type> arguments, RealizedType? desiredResult, Node node) {
         var generatedType = optionType.GeneratedType(context.ModuleContext);
         var methodInfo = generatedType.GetMethod("OkOr") ??
                          throw new ArgumentException($"No OkOr method in {generatedType}");

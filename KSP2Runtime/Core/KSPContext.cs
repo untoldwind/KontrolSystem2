@@ -65,7 +65,7 @@ internal class AutopilotHooks {
 }
 
 public class KSPCoreContext(string processName, ITO2Logger logger, GameInstance gameInstance, KSPConsoleBuffer consoleBuffer,
-    TimeSeriesCollection timeSeriesCollection, OptionalAddons optionalAddons) : IKSPContext {
+    TimeSeriesCollection timeSeriesCollection, MessageBus messageBus, OptionalAddons optionalAddons) : IKSPContext {
     internal const int MaxCallStack = 100;
     private readonly Dictionary<VesselComponent, AutopilotHooks> autopilotHooks = [];
     private readonly List<BackgroundKSPContext> childContexts = [];
@@ -182,12 +182,14 @@ public class KSPCoreContext(string processName, ITO2Logger logger, GameInstance 
         return newLogFile;
     }
 
+    public MessageBus MessageBus => messageBus;
+
     public MessageBus.Subscription<T> AddSubscription<T>() {
-        var subscription = Mainframe.Instance!.MessageBus.Subscribe<T>();
+        var subscription = messageBus.Subscribe<T>();
         subscriptions.Add(subscription);
         return subscription;
     }
-    
+
     public bool TryFindAutopilot<T>(VesselComponent vessel, [MaybeNullWhen(false)] out T autopilot) where T : IKSPAutopilot {
         if (autopilotHooks.TryGetValue(vessel, out var hook)) return hook.TryFindAutopilot(out autopilot);
 
@@ -279,7 +281,7 @@ public class KSPCoreContext(string processName, ITO2Logger logger, GameInstance 
         foreach (var logFile in logFiles.Values) logFile.Close();
 
         foreach (var subscription in subscriptions) subscription.Unsubscribe();
-        
+
         subscriptions.Clear();
         logFiles.Clear();
         windows.Clear();

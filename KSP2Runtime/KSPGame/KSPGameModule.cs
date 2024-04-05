@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
 using UnityEngine;
@@ -11,6 +13,9 @@ namespace KontrolSystem.KSP.Runtime.KSPGame;
 public partial class KSPGameModule {
     [KSConstant("MAINFRAME", Description = "KontrolSystem mainframe")]
     public static readonly MainframeAdapter MainframeInstance = new();
+
+    [KSConstant("MESSAGE_BUS", Description = "Shared message bus")]
+    public static readonly MessageBusAdapter MessageBusInstance = new();
 
     [KSFunction(
         Description = "Get the current universal time (UT) in seconds from start."
@@ -68,4 +73,6 @@ public partial class KSPGameModule {
         });
         return new Future.Success<object?>(null);
     }
+
+    public static IEnumerable<RealizedType> DirectBindings() => MessageBusBinding.MessageBusTypes;
 }

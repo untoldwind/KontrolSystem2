@@ -44,8 +44,8 @@ public class Mainframe : KerbalMonoBehaviour {
 
     public TimeSeriesCollection TimeSeriesCollection { get; } = new();
 
-    public MessageBus MessageBus { get; } = new();
-    
+    public MessageBus MessageBus => state?.messageBus ?? new();
+
     public bool Rebooting => rebooting;
     public TimeSpan LastRebootTime => state?.bootTime ?? TimeSpan.Zero;
     public IEnumerable<MainframeError> LastErrors => state?.errors ?? Enumerable.Empty<MainframeError>();
@@ -70,7 +70,7 @@ public class Mainframe : KerbalMonoBehaviour {
             return ListProcesses(GameMode, activeVessel).ToArray();
         }
     }
-    
+
     public void Awake() {
         Instance = this;
         Game.Messages.Subscribe<GameStateChangedMessage>(OnStateChange);
@@ -190,7 +190,7 @@ public class Mainframe : KerbalMonoBehaviour {
         switch (process.State) {
         case KontrolSystemProcessState.Available:
             var context = new KSPCoreContext(process.Name, process.logger, Game, ConsoleBuffer, TimeSeriesCollection,
-                config!.OptionalAddons);
+                MessageBus, config!.OptionalAddons);
             var entrypoint = process.EntrypointFor(context.GameMode, context);
             if (entrypoint == null) return false;
             arguments ??= process.EntrypointArgumentDescriptors(context.GameMode).Select(arg => arg.DefaultValue)

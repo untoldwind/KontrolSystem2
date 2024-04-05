@@ -1,0 +1,22 @@
+use * from ksp::testing
+use { MESSAGE_BUS, Subscription } from ksp::game
+
+test sync fn test_publish_subscribe_simple() -> Unit = {
+    const subscription : Subscription<string> = MESSAGE_BUS.subscribe()
+    
+    assert_false(subscription.peek().defined)
+    assert_false(subscription.recv().defined)
+    
+    MESSAGE_BUS.publish("Test1")
+    
+    assert_true(subscription.peek().defined)
+    assert_string("Test1", subscription.peek().value)
+    
+    const received = subscription.recv()
+    
+    assert_true(received.defined)
+    assert_string("Test1", received.value)
+    
+    assert_false(subscription.peek().defined)
+    assert_false(subscription.recv().defined)    
+} 
