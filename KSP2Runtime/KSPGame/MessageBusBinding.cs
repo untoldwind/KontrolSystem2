@@ -30,7 +30,7 @@ public static class MessageBusBinding {
 
     private static List<BoundType>? messageBusTypes;
 
-    internal static List<BoundType> MessageBusTypes {
+    internal static IEnumerable<BoundType> MessageBusTypes {
         get {
             if (messageBusTypes == null) {
                 messageBusTypes = [SubscriptionType];

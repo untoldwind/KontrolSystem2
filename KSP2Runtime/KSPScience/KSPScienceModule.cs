@@ -25,31 +25,31 @@ public partial class KSPScienceModule {
                 ("ExperimentState", "Science experiment state", typeof(ExperimentState),
                 [
                     (ExperimentState.NONE, "Unknown state"),
-                        (ExperimentState.INVALIDLOCATION, "Location not valid"),
-                        (ExperimentState.READY, "Experiment is ready to run"),
-                        (ExperimentState.RUNNING, "Experiment is running"),
-                        (ExperimentState.PAUSED, "Experiment is paused"),
-                        (ExperimentState.OUTOFRESOURCE, "Experiment ran out of resources"),
-                        (ExperimentState.LOCATIONCHANGED, "Experiment location changed"),
-                        (ExperimentState.INSUFFICIENTCREW, "Experiment requires more available crew members"),
-                        (ExperimentState.NOCONTROL, "Experiment requires control of the vessel"),
-                        (ExperimentState.INSUFFICIENTSTORAGE, "Not enough storage capacity for experiment"),
-                        (ExperimentState.ALREADYSTORED, "Experiment has already stored results"),
-                        (ExperimentState.BLOCKED, "Experiment is blocked")
+                    (ExperimentState.INVALIDLOCATION, "Location not valid"),
+                    (ExperimentState.READY, "Experiment is ready to run"),
+                    (ExperimentState.RUNNING, "Experiment is running"),
+                    (ExperimentState.PAUSED, "Experiment is paused"),
+                    (ExperimentState.OUTOFRESOURCE, "Experiment ran out of resources"),
+                    (ExperimentState.LOCATIONCHANGED, "Experiment location changed"),
+                    (ExperimentState.INSUFFICIENTCREW, "Experiment requires more available crew members"),
+                    (ExperimentState.NOCONTROL, "Experiment requires control of the vessel"),
+                    (ExperimentState.INSUFFICIENTSTORAGE, "Not enough storage capacity for experiment"),
+                    (ExperimentState.ALREADYSTORED, "Experiment has already stored results"),
+                    (ExperimentState.BLOCKED, "Experiment is blocked")
                 ]),
                 ("ScienceSituation", "Situation of a science experiment", typeof(ScienceSitutation),
                 [
                     (ScienceSitutation.None, "No specific situation required"),
-                        (ScienceSitutation.HighOrbit, "Experiment in high orbit"),
-                        (ScienceSitutation.LowOrbit, "Experiment in low orbit"),
-                        (ScienceSitutation.Atmosphere, "Experiment inside an atmosphere"),
-                        (ScienceSitutation.Splashed, "Experiment while splashed"),
-                        (ScienceSitutation.Landed, "Experiment while landed")
+                    (ScienceSitutation.HighOrbit, "Experiment in high orbit"),
+                    (ScienceSitutation.LowOrbit, "Experiment in low orbit"),
+                    (ScienceSitutation.Atmosphere, "Experiment inside an atmosphere"),
+                    (ScienceSitutation.Splashed, "Experiment while splashed"),
+                    (ScienceSitutation.Landed, "Experiment while landed")
                 ]),
                 ("ScienceReportType", "Type of science report", typeof(ScienceReportType),
                 [
                     (ScienceReportType.DataType, "Science data"),
-                        (ScienceReportType.SampleType, "Science sample for experiments")
+                    (ScienceReportType.SampleType, "Science sample for experiments")
                 ])
             });
 
