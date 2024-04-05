@@ -19,4 +19,63 @@ test sync fn test_publish_subscribe_simple() -> Unit = {
     
     assert_false(subscription.peek().defined)
     assert_false(subscription.recv().defined)    
-} 
+}
+
+struct SpecialEvent(message: string) {
+    message: string = message
+}
+
+test sync fn test_publish_subscribe_own_type() -> Unit = {
+    const subscription1 : Subscription<string> = MESSAGE_BUS.subscribe()
+    const subscription2 : Subscription<SpecialEvent> = MESSAGE_BUS.subscribe()
+    
+    assert_false(subscription1.peek().defined)
+    assert_false(subscription1.recv().defined)
+    assert_false(subscription2.peek().defined)
+    assert_false(subscription2.recv().defined)
+
+    MESSAGE_BUS.publish(SpecialEvent("Test2"))
+    
+    assert_false(subscription1.peek().defined)
+    assert_false(subscription1.recv().defined)
+
+    assert_true(subscription2.peek().defined)
+    assert_string("Test2", subscription2.peek().value.message)
+
+    const received = subscription2.recv()
+    
+    assert_true(received.defined)
+    assert_string("Test2", received.value.message)
+    
+    assert_false(subscription2.peek().defined)
+    assert_false(subscription2.recv().defined)    
+}
+
+test sync fn test_subscribe_unsubscribe() -> Unit = {
+    const subscription1 : Subscription<int> = MESSAGE_BUS.subscribe()
+    const subscription2 : Subscription<int> = MESSAGE_BUS.subscribe()
+
+    assert_false(subscription1.peek().defined)
+    assert_false(subscription2.peek().defined)
+
+    MESSAGE_BUS.publish(1)
+    
+    const received1a = subscription1.recv()
+    const received2a = subscription2.recv()
+    
+    assert_true(received1a.defined)
+    assert_int(1, received1a.value)
+    assert_true(received2a.defined)
+    assert_int(1, received2a.value)
+    
+    subscription2.unsubscribe()
+    
+    MESSAGE_BUS.publish(2)
+    
+    const received1b = subscription1.recv()
+    const received2b = subscription2.recv()
+    
+    assert_true(received1b.defined)
+    assert_int(2, received1b.value)
+    assert_false(received2b.defined)
+}
