@@ -68,7 +68,7 @@ Parameters
 ##### on_click
 
 ```rust
-button.on_click ( onClick : sync fn() -> Unit ) -> Unit
+button.on_click ( onClick : sync fn() -> T ) -> Unit
 ```
 
 Function to be called if button is clicked
@@ -76,9 +76,9 @@ Function to be called if button is clicked
 
 Parameters
 
-| Name    | Type              | Optional | Description |
-| ------- | ----------------- | -------- | ----------- |
-| onClick | sync fn() -> Unit |          |             |
+| Name    | Type           | Optional | Description |
+| ------- | -------------- | -------- | ----------- |
+| onClick | sync fn() -> T |          |             |
 
 
 ##### remove
@@ -682,16 +682,16 @@ Parameters
 ##### on_change
 
 ```rust
-dropdown.on_change ( onChange : sync fn(int) -> Unit ) -> Unit
+dropdown.on_change ( onChange : sync fn(int) -> T ) -> Unit
 ```
 
 
 
 Parameters
 
-| Name     | Type                 | Optional | Description |
-| -------- | -------------------- | -------- | ----------- |
-| onChange | sync fn(int) -> Unit |          |             |
+| Name     | Type              | Optional | Description |
+| -------- | ----------------- | -------- | ----------- |
+| onChange | sync fn(int) -> T |          |             |
 
 
 ##### remove
@@ -735,16 +735,16 @@ Parameters
 ##### on_change
 
 ```rust
-floatinputfield.on_change ( onChange : sync fn(float) -> Unit ) -> Unit
+floatinputfield.on_change ( onChange : sync fn(float) -> T ) -> Unit
 ```
 
 
 
 Parameters
 
-| Name     | Type                   | Optional | Description |
-| -------- | ---------------------- | -------- | ----------- |
-| onChange | sync fn(float) -> Unit |          |             |
+| Name     | Type                | Optional | Description |
+| -------- | ------------------- | -------- | ----------- |
+| onChange | sync fn(float) -> T |          |             |
 
 
 ##### remove
@@ -811,16 +811,16 @@ Parameters
 ##### on_change
 
 ```rust
-intinputfield.on_change ( onChange : sync fn(float) -> Unit ) -> Unit
+intinputfield.on_change ( onChange : sync fn(float) -> T ) -> Unit
 ```
 
 
 
 Parameters
 
-| Name     | Type                   | Optional | Description |
-| -------- | ---------------------- | -------- | ----------- |
-| onChange | sync fn(float) -> Unit |          |             |
+| Name     | Type                | Optional | Description |
+| -------- | ------------------- | -------- | ----------- |
+| onChange | sync fn(float) -> T |          |             |
 
 
 ##### remove
@@ -1340,16 +1340,16 @@ Parameters
 ##### on_change
 
 ```rust
-slider.on_change ( onChange : sync fn(float) -> Unit ) -> Unit
+slider.on_change ( onChange : sync fn(float) -> T ) -> Unit
 ```
 
 
 
 Parameters
 
-| Name     | Type                   | Optional | Description |
-| -------- | ---------------------- | -------- | ----------- |
-| onChange | sync fn(float) -> Unit |          |             |
+| Name     | Type                | Optional | Description |
+| -------- | ------------------- | -------- | ----------- |
+| onChange | sync fn(float) -> T |          |             |
 
 
 ##### remove
@@ -1393,16 +1393,16 @@ Parameters
 ##### on_change
 
 ```rust
-stringinputfield.on_change ( onChange : sync fn(string) -> Unit ) -> Unit
+stringinputfield.on_change ( onChange : sync fn(string) -> T ) -> Unit
 ```
 
 
 
 Parameters
 
-| Name     | Type                    | Optional | Description |
-| -------- | ----------------------- | -------- | ----------- |
-| onChange | sync fn(string) -> Unit |          |             |
+| Name     | Type                 | Optional | Description |
+| -------- | -------------------- | -------- | ----------- |
+| onChange | sync fn(string) -> T |          |             |
 
 
 ##### remove
@@ -1463,16 +1463,16 @@ Parameters
 ##### on_change
 
 ```rust
-toggle.on_change ( onChange : sync fn(bool) -> Unit ) -> Unit
+toggle.on_change ( onChange : sync fn(bool) -> T ) -> Unit
 ```
 
 
 
 Parameters
 
-| Name     | Type                  | Optional | Description |
-| -------- | --------------------- | -------- | ----------- |
-| onChange | sync fn(bool) -> Unit |          |             |
+| Name     | Type               | Optional | Description |
+| -------- | ------------------ | -------- | ----------- |
+| onChange | sync fn(bool) -> T |          |             |
 
 
 ##### remove

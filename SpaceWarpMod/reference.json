@@ -2002,7 +2002,33 @@
         {
           "kind": "Standard",
           "module": "ksp::game",
+          "name": "Importance"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::game",
+          "name": "ImportanceConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::game",
+          "name": "Subscription",
+          "parameters": [
+            {
+              "kind": "Generic",
+              "name": "T"
+            }
+          ]
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::game",
           "name": "Mainframe"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::game",
+          "name": "MessageBus"
         },
         {
           "kind": "Standard",
@@ -3079,7 +3105,33 @@
         {
           "kind": "Standard",
           "module": "ksp::game",
+          "name": "Importance"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::game",
+          "name": "ImportanceConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::game",
+          "name": "Subscription",
+          "parameters": [
+            {
+              "kind": "Generic",
+              "name": "T"
+            }
+          ]
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::game",
           "name": "Mainframe"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::game",
+          "name": "MessageBus"
         },
         {
           "kind": "Standard",
@@ -8020,6 +8072,1234 @@
       "name": "ksp::game",
       "description": "Collection to game and runtime related functions.\n",
       "types": {
+        "Importance": {
+          "name": "Importance",
+          "description": "Importance of a notification",
+          "fields": {},
+          "methods": {
+            "to_string": {
+              "isAsync": false,
+              "name": "to_string",
+              "description": "String representation of the number",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            }
+          },
+          "suffixOperators": {
+            "==": [
+              {
+                "op": "==",
+                "otherType": {
+                  "kind": "Standard",
+                  "module": "ksp::game",
+                  "name": "Importance"
+                },
+                "resultType": {
+                  "kind": "Builtin",
+                  "name": "bool"
+                }
+              }
+            ],
+            "!=": [
+              {
+                "op": "!=",
+                "otherType": {
+                  "kind": "Standard",
+                  "module": "ksp::game",
+                  "name": "Importance"
+                },
+                "resultType": {
+                  "kind": "Builtin",
+                  "name": "bool"
+                }
+              }
+            ]
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "ImportanceConstants": {
+          "name": "ImportanceConstants",
+          "description": "",
+          "fields": {
+            "None": {
+              "name": "None",
+              "description": "",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::game",
+                "name": "Importance"
+              }
+            },
+            "High": {
+              "name": "High",
+              "description": "High",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::game",
+                "name": "Importance"
+              }
+            },
+            "Medium": {
+              "name": "Medium",
+              "description": "Medium",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::game",
+                "name": "Importance"
+              }
+            },
+            "Low": {
+              "name": "Low",
+              "description": "Low",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::game",
+                "name": "Importance"
+              }
+            }
+          },
+          "methods": {
+            "from_string": {
+              "isAsync": false,
+              "name": "from_string",
+              "description": "Parse from string",
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "string"
+                  },
+                  "hasDefault": false,
+                  "description": "Enum value to lookup"
+                }
+              ],
+              "returnType": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::game",
+                    "name": "Importance"
+                  }
+                ]
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": [
+            {
+              "kind": "Builtin",
+              "name": "Unit"
+            },
+            {
+              "kind": "Builtin",
+              "name": "bool"
+            },
+            {
+              "kind": "Builtin",
+              "name": "int"
+            },
+            {
+              "kind": "Builtin",
+              "name": "float"
+            },
+            {
+              "kind": "Builtin",
+              "name": "string"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Range"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "ArrayBuilder",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Cell",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Option",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Result",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "R"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::background",
+              "name": "Task",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "Error"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::error",
+              "name": "StackEntry"
+            },
+            {
+              "kind": "Standard",
+              "module": "core::math",
+              "name": "Random"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::addons",
+              "name": "FlightPlan"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "Console"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "RgbaColor"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "MovingAverage"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "PIDLoop"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "RCSTranslateManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "SteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "ThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "TorquePI"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelSteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugBillboard"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "Debug"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "GroundMarker"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "LogFile"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugPath"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "SaveLoadControl"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Importance"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Subscription",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "MessageBus"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Process"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ProcessArgument"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec3"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Direction"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Matrix2x2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalAngularVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalPosition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "TransformFrame"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssembly"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyBuilder"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyCommand"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyControlSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDockingNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyEngine"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyEngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyExperiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLiftingSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyLight"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyPart"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyRCS"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyReactionWheel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyResource"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyScienceExperiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblySolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyStageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::oab",
+              "name": "ObjectAssemblyTransmitter"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "PatchTransitionType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "PatchTransitionTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Body"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "GeoCoordinates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Orbit"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "OrbitPatch"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Trajectory"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Waypoint"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirectionConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceContainer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceData"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceReceipeIngredient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceSetting"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransfer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransferEntry"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceReportType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceReportTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "CompletedResearchReport"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "Experiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchLocation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchReport"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::telemetry",
+              "name": "TimeSeries"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Align"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "AlignConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Button"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Canvas"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "ConsoleWindow"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Container"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Dropdown"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Gradient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "StringInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "IntInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "FloatInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Label"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Line2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "PixelLine2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Polygon2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rect2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Slider"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Text2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Toggle"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Translate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Scale2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rotate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "ValueRaster2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Window"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStatesConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "CommandControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "CommandControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeployableDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeployableDeployStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PartCategory"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PartCategoryConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ActuatorMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ActuatorModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ReactionWheelState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ReactionWheelStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ConnectionNodeStatus"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ConnectionNodeStatusConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "FlightCtrlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ActionGroups"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Autopilot"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "StageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Maneuver"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ManeuverNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleCommand"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleControlSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDockingNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDrag"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleEngine"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleGenerator"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleGimbal"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleHeatshield"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLiftingSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLight"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleRCS"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleReactionWheel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleScienceExperiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleTransmitter"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PilotInput"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ScienceStorage"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Staging"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Targetable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Vessel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringController"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringControl"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "BodyParameters"
+            },
+            {
+              "kind": "Record",
+              "names": [
+                "brake_time",
+                "end_latitude",
+                "end_longitude",
+                "end_time",
+                "path"
+              ],
+              "parameters": [
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Array",
+                  "parameters": [
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "GlobalPosition"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "ReentrySimulation"
+            }
+          ]
+        },
+        "Subscription": {
+          "name": "Subscription",
+          "description": "Central message bus",
+          "genericParameters": [
+            "T"
+          ],
+          "fields": {},
+          "methods": {
+            "peek": {
+              "isAsync": false,
+              "name": "peek",
+              "description": "Peek for next message without consuming it",
+              "parameters": [],
+              "returnType": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Generic",
+                    "name": "T"
+                  }
+                ]
+              }
+            },
+            "recv": {
+              "isAsync": false,
+              "name": "recv",
+              "description": "Receive next message",
+              "parameters": [],
+              "returnType": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Generic",
+                    "name": "T"
+                  }
+                ]
+              }
+            },
+            "unsubscribe": {
+              "isAsync": false,
+              "name": "unsubscribe",
+              "description": "Unsubscribe from the message bus. No further messages will be received",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
         "Mainframe": {
           "name": "Mainframe",
           "description": "",
@@ -8069,6 +9349,51 @@
                     "kind": "Standard",
                     "module": "ksp::game",
                     "name": "Process"
+                  }
+                ]
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "MessageBus": {
+          "name": "MessageBus",
+          "description": "Shared message bus\n",
+          "fields": {},
+          "methods": {
+            "publish": {
+              "isAsync": false,
+              "name": "publish",
+              "description": "Publish a message to anyone interested (or the void)\n",
+              "parameters": [
+                {
+                  "name": "message",
+                  "type": {
+                    "kind": "Generic",
+                    "name": "T"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
+            },
+            "subscribe": {
+              "isAsync": false,
+              "name": "subscribe",
+              "description": "Create a subscription to a specific message type\n",
+              "parameters": [],
+              "returnType": {
+                "kind": "Standard",
+                "module": "ksp::game",
+                "name": "Subscription",
+                "parameters": [
+                  {
+                    "kind": "Generic",
+                    "name": "T"
                   }
                 ]
               }
@@ -8199,6 +9524,15 @@
       },
       "typeAliases": {},
       "constants": {
+        "Importance": {
+          "name": "Importance",
+          "description": "Importance of a notification",
+          "type": {
+            "kind": "Standard",
+            "module": "ksp::game",
+            "name": "ImportanceConstants"
+          }
+        },
         "MAINFRAME": {
           "name": "MAINFRAME",
           "description": "KontrolSystem mainframe\n",
@@ -8206,6 +9540,15 @@
             "kind": "Standard",
             "module": "ksp::game",
             "name": "Mainframe"
+          }
+        },
+        "MESSAGE_BUS": {
+          "name": "MESSAGE_BUS",
+          "description": "Shared message bus\n",
+          "type": {
+            "kind": "Standard",
+            "module": "ksp::game",
+            "name": "MessageBus"
           }
         }
       },
@@ -8290,6 +9633,77 @@
                 "isAsync": false
               },
               "hasDefault": false
+            }
+          ],
+          "returnType": {
+            "kind": "Builtin",
+            "name": "Unit"
+          }
+        },
+        "notification_alert": {
+          "isAsync": false,
+          "name": "notification_alert",
+          "description": "Show an alert notification\n",
+          "parameters": [
+            {
+              "name": "title",
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              },
+              "hasDefault": false
+            },
+            {
+              "name": "message",
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              },
+              "hasDefault": false
+            },
+            {
+              "name": "importance",
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::game",
+                "name": "Importance"
+              },
+              "hasDefault": true
+            },
+            {
+              "name": "duration",
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              },
+              "hasDefault": true
+            }
+          ],
+          "returnType": {
+            "kind": "Builtin",
+            "name": "Unit"
+          }
+        },
+        "notification_passive": {
+          "isAsync": false,
+          "name": "notification_passive",
+          "description": "Show a passive notification\n",
+          "parameters": [
+            {
+              "name": "message",
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              },
+              "hasDefault": false
+            },
+            {
+              "name": "duration",
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              },
+              "hasDefault": true
             }
           ],
           "returnType": {
@@ -14035,7 +15449,33 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "Importance"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ImportanceConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Subscription",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "MessageBus"
             },
             {
               "kind": "Standard",
@@ -18216,7 +19656,33 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "Importance"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ImportanceConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Subscription",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "MessageBus"
             },
             {
               "kind": "Standard",
@@ -19802,7 +21268,33 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "Importance"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ImportanceConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Subscription",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "MessageBus"
             },
             {
               "kind": "Standard",
@@ -21032,7 +22524,33 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "Importance"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ImportanceConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Subscription",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "MessageBus"
             },
             {
               "kind": "Standard",
@@ -22202,7 +23720,33 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "Importance"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ImportanceConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Subscription",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "MessageBus"
             },
             {
               "kind": "Standard",
@@ -23332,7 +24876,33 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "Importance"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ImportanceConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Subscription",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "MessageBus"
             },
             {
               "kind": "Standard",
@@ -25498,7 +27068,33 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "Importance"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ImportanceConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Subscription",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "MessageBus"
             },
             {
               "kind": "Standard",
@@ -26384,8 +27980,8 @@
                     "kind": "Function",
                     "parameters": [],
                     "returnType": {
-                      "kind": "Builtin",
-                      "name": "Unit"
+                      "kind": "Generic",
+                      "name": "T"
                     },
                     "isAsync": false
                   },
@@ -27574,8 +29170,8 @@
                       }
                     ],
                     "returnType": {
-                      "kind": "Builtin",
-                      "name": "Unit"
+                      "kind": "Generic",
+                      "name": "T"
                     },
                     "isAsync": false
                   },
@@ -27698,8 +29294,8 @@
                       }
                     ],
                     "returnType": {
-                      "kind": "Builtin",
-                      "name": "Unit"
+                      "kind": "Generic",
+                      "name": "T"
                     },
                     "isAsync": false
                   },
@@ -27795,8 +29391,8 @@
                       }
                     ],
                     "returnType": {
-                      "kind": "Builtin",
-                      "name": "Unit"
+                      "kind": "Generic",
+                      "name": "T"
                     },
                     "isAsync": false
                   },
@@ -27892,8 +29488,8 @@
                       }
                     ],
                     "returnType": {
-                      "kind": "Builtin",
-                      "name": "Unit"
+                      "kind": "Generic",
+                      "name": "T"
                     },
                     "isAsync": false
                   },
@@ -28206,8 +29802,8 @@
                       }
                     ],
                     "returnType": {
-                      "kind": "Builtin",
-                      "name": "Unit"
+                      "kind": "Generic",
+                      "name": "T"
                     },
                     "isAsync": false
                   },
@@ -28371,8 +29967,8 @@
                       }
                     ],
                     "returnType": {
-                      "kind": "Builtin",
-                      "name": "Unit"
+                      "kind": "Generic",
+                      "name": "T"
                     },
                     "isAsync": false
                   },
@@ -30866,7 +32462,33 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "Importance"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ImportanceConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Subscription",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "MessageBus"
             },
             {
               "kind": "Standard",
@@ -32006,7 +33628,33 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "Importance"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ImportanceConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Subscription",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "MessageBus"
             },
             {
               "kind": "Standard",
@@ -33166,7 +34814,33 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "Importance"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ImportanceConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Subscription",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "MessageBus"
             },
             {
               "kind": "Standard",
@@ -34306,7 +35980,33 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "Importance"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ImportanceConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Subscription",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "MessageBus"
             },
             {
               "kind": "Standard",
@@ -35456,7 +37156,33 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "Importance"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ImportanceConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Subscription",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "MessageBus"
             },
             {
               "kind": "Standard",
@@ -36696,7 +38422,33 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "Importance"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ImportanceConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Subscription",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "MessageBus"
             },
             {
               "kind": "Standard",
@@ -37886,7 +39638,33 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "Importance"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ImportanceConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Subscription",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "MessageBus"
             },
             {
               "kind": "Standard",
@@ -39036,7 +40814,33 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "Importance"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ImportanceConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Subscription",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "MessageBus"
             },
             {
               "kind": "Standard",
@@ -40206,7 +42010,33 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "Importance"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ImportanceConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Subscription",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "MessageBus"
             },
             {
               "kind": "Standard",
@@ -41386,7 +43216,33 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "Importance"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ImportanceConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Subscription",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "MessageBus"
             },
             {
               "kind": "Standard",
@@ -42546,7 +44402,33 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "Importance"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ImportanceConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Subscription",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "MessageBus"
             },
             {
               "kind": "Standard",
@@ -43866,7 +45748,33 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "Importance"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ImportanceConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Subscription",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "MessageBus"
             },
             {
               "kind": "Standard",
@@ -45006,7 +46914,33 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "Importance"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ImportanceConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Subscription",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "MessageBus"
             },
             {
               "kind": "Standard",
@@ -46146,7 +48080,33 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "Importance"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ImportanceConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Subscription",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "MessageBus"
             },
             {
               "kind": "Standard",
@@ -47296,7 +49256,33 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "Importance"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ImportanceConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Subscription",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "MessageBus"
             },
             {
               "kind": "Standard",

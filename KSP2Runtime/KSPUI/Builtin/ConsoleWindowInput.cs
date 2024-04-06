@@ -60,13 +60,13 @@ public class ConsoleWindowInput : KerbalMonoBehaviour, IDeselectHandler, IPointe
                 EventSystem current = EventSystem.current;
                 if (current.alreadySelecting)
                     return;
-                
+
                 if (current.currentSelectedGameObject != gameObject)
                     current.SetSelectedGameObject(gameObject);
 
                 shouldActivateNextUpdate = false;
                 OnFocus();
-                
+
                 return;
             }
 
@@ -96,14 +96,14 @@ public class ConsoleWindowInput : KerbalMonoBehaviour, IDeselectHandler, IPointe
     private void OnDisable() {
         OnBlur();
     }
-    
+
     internal void OnFocus() {
         isFocused = true;
         consoleBuffer!.SetFocus(true);
         consoleFrame!.sprite = UIFactory.Instance!.consoleActiveFrame;
-        
+
         if (!Application.isPlaying) return;
-        
+
         Game.InputManager.SetInputLock(InputLocks.GlobalInputDisabled, true);
         Game.InputManager.SetInputLock(InputLocks.FlightInputDisabled, true);
         Game.InputManager.SetInputLock(InputLocks.OABInputDisabled, true);
@@ -114,9 +114,9 @@ public class ConsoleWindowInput : KerbalMonoBehaviour, IDeselectHandler, IPointe
         isFocused = false;
         consoleBuffer!.SetFocus(false);
         consoleFrame!.sprite = UIFactory.Instance!.consoleInactiveFrame;
-        
+
         if (!Application.isPlaying) return;
-        
+
         Game.InputManager.SetInputLock(InputLocks.GlobalInputEnabled);
         Game.InputManager.SetInputLock(InputLocks.FlightInputEnabled);
         Game.InputManager.SetInputLock(InputLocks.OABInputEnabled);

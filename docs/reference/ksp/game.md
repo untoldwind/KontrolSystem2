@@ -6,6 +6,51 @@ Collection to game and runtime related functions.
 ## Types
 
 
+### Importance
+
+Importance of a notification
+
+#### Methods
+
+##### to_string
+
+```rust
+importance.to_string ( ) -> string
+```
+
+String representation of the number
+
+### ImportanceConstants
+
+
+
+#### Fields
+
+| Name   | Type                                                       | Read-only | Description |
+| ------ | ---------------------------------------------------------- | --------- | ----------- |
+| High   | [ksp::game::Importance](/reference/ksp/game.md#importance) | R/O       | High        |
+| Low    | [ksp::game::Importance](/reference/ksp/game.md#importance) | R/O       | Low         |
+| Medium | [ksp::game::Importance](/reference/ksp/game.md#importance) | R/O       | Medium      |
+| None   | [ksp::game::Importance](/reference/ksp/game.md#importance) | R/O       |             |
+
+
+#### Methods
+
+##### from_string
+
+```rust
+importanceconstants.from_string ( value : string ) -> Option<ksp::game::Importance>
+```
+
+Parse from string
+
+Parameters
+
+| Name  | Type   | Optional | Description          |
+| ----- | ------ | -------- | -------------------- |
+| value | string |          | Enum value to lookup |
+
+
 ### Mainframe
 
 
@@ -33,6 +78,38 @@ Parameters
 | Name | Type   | Optional | Description |
 | ---- | ------ | -------- | ----------- |
 | name | string |          |             |
+
+
+### MessageBus
+
+Shared message bus
+
+
+#### Methods
+
+##### publish
+
+```rust
+messagebus.publish ( message : T ) -> Unit
+```
+
+Publish a message to anyone interested (or the void)
+
+
+Parameters
+
+| Name    | Type | Optional | Description |
+| ------- | ---- | -------- | ----------- |
+| message | T    |          |             |
+
+
+##### subscribe
+
+```rust
+messagebus.subscribe ( ) -> ksp::game::Subscription<T>
+```
+
+Create a subscription to a specific message type
 
 
 ### Process
@@ -88,11 +165,43 @@ process.stop ( ) -> bool
 | type          | string | R/O       |             |
 
 
+### Subscription
+
+Central message bus
+
+#### Methods
+
+##### peek
+
+```rust
+subscription.peek ( ) -> Option<T>
+```
+
+Peek for next message without consuming it
+
+##### recv
+
+```rust
+subscription.recv ( ) -> Option<T>
+```
+
+Receive next message
+
+##### unsubscribe
+
+```rust
+subscription.unsubscribe ( ) -> Unit
+```
+
+Unsubscribe from the message bus. No further messages will be received
+
 ## Constants
 
-| Name      | Type                 | Description              |
-| --------- | -------------------- | ------------------------ |
-| MAINFRAME | ksp::game::Mainframe | KontrolSystem mainframe  |
+| Name        | Type                           | Description                  |
+| ----------- | ------------------------------ | ---------------------------- |
+| Importance  | ksp::game::ImportanceConstants | Importance of a notification |
+| MAINFRAME   | ksp::game::Mainframe           | KontrolSystem mainframe      |
+| MESSAGE_BUS | ksp::game::MessageBus          | Shared message bus           |
 
 
 ## Functions
@@ -105,6 +214,46 @@ pub sync fn current_time ( ) -> float
 ```
 
 Get the current universal time (UT) in seconds from start.
+
+
+### notification_alert
+
+```rust
+pub sync fn notification_alert ( title : string,
+                                 message : string,
+                                 importance : ksp::game::Importance,
+                                 duration : float ) -> Unit
+```
+
+Show an alert notification
+
+
+Parameters
+
+| Name       | Type                  | Optional | Description |
+| ---------- | --------------------- | -------- | ----------- |
+| title      | string                |          |             |
+| message    | string                |          |             |
+| importance | ksp::game::Importance | x        |             |
+| duration   | float                 | x        |             |
+
+
+### notification_passive
+
+```rust
+pub sync fn notification_passive ( message : string,
+                                   duration : float ) -> Unit
+```
+
+Show a passive notification
+
+
+Parameters
+
+| Name     | Type   | Optional | Description |
+| -------- | ------ | -------- | ----------- |
+| message  | string |          |             |
+| duration | float  | x        |             |
 
 
 ### sleep

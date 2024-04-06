@@ -11,16 +11,8 @@ using UnityEngine.UI;
 namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin;
 
 public class ConsoleWindow : UGUIResizableWindow {
-    public List<string> commandHistory = [];
-
-    public int
-        commandHistoryIndex; // a value of commandHistory.Count indicates that we're not reading from the command history
-
     private float charHeight;
     private float charWidth;
-    private Button? commandHistoryDownButton;
-    private Button? commandHistoryUpButton;
-    private UGUIInputField? commandInputField;
     private KSPConsoleBuffer? consoleBuffer;
     private TextMeshProUGUI? consoleText;
 
@@ -63,29 +55,6 @@ public class ConsoleWindow : UGUIResizableWindow {
         charHeight = consoleText.font.faceInfo.lineHeight * fontScale;
         charWidth = consoleText.font.glyphTable[0].metrics.horizontalAdvance * fontScale;
 
-        var replContainer = root.Add(UGUILayoutContainer.Horizontal(2)).Item1;
-
-        commandInputField = UGUIInputField.Create("", 120);
-        replContainer.Add(commandInputField, UGUILayout.Align.Stretch, 1);
-
-        var replHistoryContainer = replContainer.Add(UGUILayoutContainer.Vertical(0)).Item1;
-
-        var replHistoryUp = UIFactory.Instance.CreateIconButton(UIFactory.Instance.upIcon);
-        replHistoryContainer.Add(replHistoryUp, UGUILayout.Align.Stretch, new Vector2(15, 15));
-        commandHistoryUpButton = replHistoryUp.GetComponent<Button>();
-        commandHistoryUpButton.onClick.AddListener(OnCommandHistoryUp);
-        commandHistoryUpButton.interactable = false;
-
-        var replHistoryDown = UIFactory.Instance.CreateIconButton(UIFactory.Instance.downIcon);
-        replHistoryContainer.Add(replHistoryDown, UGUILayout.Align.Stretch, new Vector2(15, 15));
-        commandHistoryDownButton = replHistoryDown.GetComponent<Button>();
-        commandHistoryDownButton.onClick.AddListener(OnCommandHistoryDown);
-        commandHistoryDownButton.interactable = false;
-
-        var replStartStop = UIFactory.Instance.CreateIconButton(UIFactory.Instance.startIcon);
-        replContainer.Add(replStartStop, UGUILayout.Align.Stretch, new Vector2(30, 30));
-        replStartStop.GetComponent<Button>().onClick.AddListener(OnRunCommand);
-
         var buttonContainer = root.Add(UGUILayoutContainer.Horizontal(20)).Item1;
 
         buttonContainer.Add(UGUIButton.Create("Clear", () => consoleBuffer!.Clear()));
@@ -121,49 +90,5 @@ public class ConsoleWindow : UGUIResizableWindow {
         consoleText.SetText(consoleBuffer.DisplayText());
     }
 
-    private void OnRunCommand() {
-        var replText = commandInputField!.Value;
-
-        if (!string.IsNullOrWhiteSpace(replText)) {
-            commandHistory.Add(replText);
-            Mainframe.Instance!.Logger.Debug($"Submitted: {replText}");
-            consoleBuffer?.PrintLine($"$> {replText}");
-            try {
-                var result = REPLExpression.Run(replText);
-                if (result != null) consoleBuffer?.PrintLine($"{result}");
-            } catch (Exception e) {
-                consoleBuffer?.PrintLine($"{e}");
-            }
-
-            commandHistoryIndex = commandHistory.Count;
-            UpdateCommandHistory();
-        }
-    }
-
-    private void OnCommandHistoryUp() {
-        if (commandHistoryIndex > 0) {
-            commandHistoryIndex--;
-            UpdateCommandHistory();
-        }
-    }
-
-    private void OnCommandHistoryDown() {
-        if (commandHistoryIndex < commandHistory.Count) {
-            commandHistoryIndex++;
-            UpdateCommandHistory();
-        }
-    }
-
-    private void UpdateCommandHistory() {
-        if (commandHistoryIndex >= 0 && commandHistoryIndex < commandHistory.Count)
-            commandInputField!.Value = commandHistory[commandHistoryIndex];
-        else
-            commandInputField!.Value = "";
-
-        commandHistoryUpButton!.interactable = commandHistoryIndex > 0;
-        commandHistoryDownButton!.interactable = commandHistoryIndex < commandHistory.Count;
-
-        Mainframe.Instance!.Logger.Info(
-            $"Command history: {string.Join(", ", commandHistory)} ({commandHistory.Count} command(s)); Command history index: {commandHistoryIndex}; REPL text: {commandInputField.Value}");
-    }
+    
 }

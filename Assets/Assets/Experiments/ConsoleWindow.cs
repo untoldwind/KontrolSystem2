@@ -57,24 +57,7 @@ namespace Experiments {
             charWidth = consoleText.font.glyphTable[0].metrics.horizontalAdvance * fontScale;
 
             console.GetComponent<ConsoleWindowInput>().Init(frameImage, consoleBuffer);
-
-            var replContainer = root.Add(UGUILayoutContainer.Horizontal(2));
             
-            var commandInputField = UGUIInputField.Create("", 120);
-            replContainer.Add(commandInputField, UGUILayout.Align.STRETCH, 1);
-
-            var replHistoryContainer = replContainer.Add(UGUILayoutContainer.Vertical(0));
-
-            GameObject replHistoryUp = UIFactory.Instance.CreateIconButton(UIFactory.Instance.upIcon);
-            replHistoryContainer.Add(replHistoryUp, UGUILayout.Align.STRETCH, new Vector2(15, 15));
-
-            GameObject replHistoryDown = UIFactory.Instance.CreateIconButton(UIFactory.Instance.downIcon);
-            replHistoryContainer.Add(replHistoryDown, UGUILayout.Align.STRETCH, new Vector2(15, 15));
-
-            GameObject replStartStop = UIFactory.Instance.CreateIconButton(false ? UIFactory.Instance.stopIcon : UIFactory.Instance.startIcon);
-            replContainer.Add(replStartStop, UGUILayout.Align.STRETCH, new Vector2( 30, 30));
-            replStartStopIcon = replStartStop.GetComponentInChildren<RawImage>();
-
             var buttonContainer = root.Add(UGUILayoutContainer.Horizontal(20));
 
             buttonContainer.Add(UGUIButton.Create("Clear", () => {}));

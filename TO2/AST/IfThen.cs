@@ -340,7 +340,7 @@ public class IfThenElse(
         TO2Type elseType = elseExpression.ResultType(context.replBlockContext);
         var wrapOption = !(thenResultType is OptionType) && elseType is OptionType;
         if (wrapOption) thenResultType = new OptionType(thenResultType);
-        
+
         return new REPLIfThenElseFuture(thenResultType, context, condition, thenExpression, elseExpression);
     }
 

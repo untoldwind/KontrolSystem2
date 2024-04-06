@@ -57,6 +57,10 @@ namespace Experiments {
         internal bool focus = false;
         private List<ConsoleLine> promptLines = new ();
 
+        private List<List<ConsoleLine>> history = new();
+
+        public int commandHistoryIndex = 0;
+        
         internal ConsolePrompt(int maxLineLength) {
             this.maxLineLength = maxLineLength;
         }
@@ -84,39 +88,64 @@ namespace Experiments {
         }
         
         internal void HandleKey(KeyCode keyCode, char character) {
-            if (caretRow > promptLines.Count) return;
+            lock (promptLock) {
+                if (caretRow > promptLines.Count) return;
 
-            var line = promptLines[caretRow];
+                var line = promptLines[caretRow];
 
-            switch (keyCode) {
-            case KeyCode.Backspace:
-                if (caretCol == 0) return;
-                Array.Copy(line.line, caretCol, line.line, caretCol - 1, maxLineLength - caretCol);
-                caretCol--;
-                break;
-            case KeyCode.Delete:
-                Array.Copy(line.line, caretCol + 1, line.line, caretCol, maxLineLength - caretCol - 1);
-                break;
-            case KeyCode.LeftArrow:
-                if (caretCol > 0) caretCol--;
-                break;
-            case KeyCode.RightArrow:
-                var endIdx = line.line.Count(ch => ch != 0);
-                if (caretCol < endIdx) caretCol++;
-                break;
-            case KeyCode.Home:
-                caretCol = 0;
-                break;
-            case KeyCode.End:
-                caretCol = line.line.Count(ch => ch != 0);
-                break;
-            default:
-                if (character < 32 || character == 127 || caretCol >= maxLineLength - 1) return; 
-                Array.Copy(line.line, caretCol, line.line, caretCol + 1, maxLineLength - caretCol - 1);
-                line.line[caretCol++] = character;
-                break;
+                switch (keyCode) {
+                case KeyCode.Backspace:
+                    if (caretCol == 0) return;
+                    Array.Copy(line.line, caretCol, line.line, caretCol - 1, maxLineLength - caretCol);
+                    caretCol--;
+                    break;
+                case KeyCode.Delete:
+                    Array.Copy(line.line, caretCol + 1, line.line, caretCol, maxLineLength - caretCol - 1);
+                    break;
+                case KeyCode.LeftArrow:
+                    if (caretCol > 0) caretCol--;
+                    break;
+                case KeyCode.RightArrow:
+                    var endIdx = line.line.Count(ch => ch != 0);
+                    if (caretCol < endIdx) caretCol++;
+                    break;
+                case KeyCode.Home:
+                    caretCol = 0;
+                    break;
+                case KeyCode.End:
+                    caretCol = line.line.Count(ch => ch != 0);
+                    break;
+                case KeyCode.UpArrow:
+                    if (commandHistoryIndex == 0) return;
+                    commandHistoryIndex--;
+                    promptLines = history[commandHistoryIndex];
+                    caretCol = 0;
+                    caretRow = 0;
+                    break;
+                case KeyCode.DownArrow:
+                    if (commandHistoryIndex == history.Count) return;
+                    commandHistoryIndex++;
+                    if (commandHistoryIndex == history.Count)
+                        promptLines = new List<ConsoleLine> { new(0, new char[maxLineLength]) };
+                    else
+                        promptLines = history[commandHistoryIndex];
+                    caretCol = 0;
+                    caretRow = 0;
+                    break;
+                case KeyCode.Return:
+                    history.Add(promptLines);
+                    commandHistoryIndex = history.Count;
+                    promptLines = new List<ConsoleLine> { new(0, new char[maxLineLength]) };
+                    caretCol = 0;
+                    caretRow = 0;
+                    break;
+                default:
+                    if (character < 32 || character == 127 || caretCol >= maxLineLength - 1) return;
+                    Array.Copy(line.line, caretCol, line.line, caretCol + 1, maxLineLength - caretCol - 1);
+                    line.line[caretCol++] = character;
+                    break;
+                }
             }
-
         }
 
         internal string RenderLine(ConsoleLine line) {

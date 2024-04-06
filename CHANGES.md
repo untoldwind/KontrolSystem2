@@ -3,8 +3,21 @@
 ## 0.5.7.9 ->
 
 * Add `ksp::game::MESSAGE_BUS`
-* Add `ksp::game::notification_alert` and `ksp::game::notification_passive`
+* Add `ksp::game::notification_alert` and `ksp::game::notification_passive`. Example:
+    ```
+    use { Vessel } from ksp::vessel
+    use { notification_alert, notification_passive, Importance } from ksp::game
+  
+    pub fn main_flight(vessel: Vessel) -> Result<Unit> = {
+      notification_alert("Alert title", "Alert message", Importance.Low, 10)
+      notification_passive("Passive message")
+    }
+    ```
 * Allow any return value in UI callbacks (#151)
+* Fix REPL if typing (#160)
+* Improve ConsoleWindow
+  * REPL command field has been removed
+  * Instead console itself now focusable and has a command prompt with history
 
 ## 0.5.7.6 -> 0.5.7.9
 
