@@ -337,7 +337,10 @@ public class IfThenElse(
             throw new REPLException(this, "Condition of if is not a boolean");
 
         var thenResultType = thenExpression.ResultType(context.replBlockContext);
-
+        TO2Type elseType = elseExpression.ResultType(context.replBlockContext);
+        var wrapOption = !(thenResultType is OptionType) && elseType is OptionType;
+        if (wrapOption) thenResultType = new OptionType(thenResultType);
+        
         return new REPLIfThenElseFuture(thenResultType, context, condition, thenExpression, elseExpression);
     }
 
@@ -347,7 +350,7 @@ public class IfThenElse(
         Expression condition,
         Expression thenExpression,
         Expression elseExpression)
-        : REPLValueFuture(new OptionType(to2Type)) {
+        : REPLValueFuture(to2Type) {
         private REPLValueFuture? conditionFuture;
         private IREPLValue? conditionResult;
         private REPLValueFuture? elseFuture;
@@ -370,7 +373,7 @@ public class IfThenElse(
                     var thenResult = thenFuture.PollValue();
                     if (!thenResult.IsReady) return new FutureResult<IREPLValue?>();
 
-                    return new FutureResult<IREPLValue?>(new REPLAny(Type, Option.Some(thenResult.value)));
+                    return new FutureResult<IREPLValue?>(Type.REPLCast(thenResult.value?.Value));
                 }
 
                 elseFuture ??= elseExpression.Eval(context);
@@ -378,7 +381,7 @@ public class IfThenElse(
                 var elseResult = elseFuture.PollValue();
                 if (!elseResult.IsReady) return new FutureResult<IREPLValue?>();
 
-                return new FutureResult<IREPLValue?>(new REPLAny(Type, Option.Some(elseResult.value)));
+                return new FutureResult<IREPLValue?>(Type.REPLCast(elseResult.value?.Value));
             }
 
             throw new REPLException(condition, "Condition of if is not a boolean");

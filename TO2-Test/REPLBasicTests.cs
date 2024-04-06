@@ -135,6 +135,13 @@ public class REPLBasicTests {
     }
 
     [Fact]
+    public void TestIssue160() {
+        Assert.Equal("34", RunExpression<string>(BuiltinType.String, @"
+                (if (1 < 0) 12 else 34).to_string()
+            "));
+    }
+
+    [Fact]
     public void TestUse() {
         Assert.Equal(0.5, RunExpression<double>(BuiltinType.Float, @"
                 use { cos_deg } from core::math
