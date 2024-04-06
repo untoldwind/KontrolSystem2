@@ -23,19 +23,12 @@ public interface IBlockVariable {
 public interface ITempBlockVariable : IBlockVariable, IDisposable {
 }
 
-internal class MethodParameter : IBlockVariable {
-    private readonly int index;
+internal class MethodParameter(string name, RealizedType type, int index, bool isConst = true) : IBlockVariable {
+    private readonly int index = index;
 
-    public MethodParameter(string name, RealizedType type, int index, bool isConst = true) {
-        Name = name;
-        Type = type;
-        this.index = index;
-        IsConst = isConst;
-    }
-
-    public string Name { get; }
-    public RealizedType Type { get; }
-    public bool IsConst { get; }
+    public string Name { get; } = name;
+    public RealizedType Type { get; } = type;
+    public bool IsConst { get; } = isConst;
 
     public void EmitLoad(IBlockContext context) {
         EmitLoadArg(context.IL, index);
@@ -77,19 +70,12 @@ internal class MethodParameter : IBlockVariable {
     }
 }
 
-internal class DeclaredVariable : IBlockVariable {
-    private readonly ILocalRef localRef;
+internal class DeclaredVariable(string name, bool isConst, RealizedType type, ILocalRef localRef) : IBlockVariable {
+    private readonly ILocalRef localRef = localRef;
 
-    public DeclaredVariable(string name, bool isConst, RealizedType type, ILocalRef localRef) {
-        Name = name;
-        IsConst = isConst;
-        Type = type;
-        this.localRef = localRef;
-    }
-
-    public string Name { get; }
-    public RealizedType Type { get; }
-    public bool IsConst { get; }
+    public string Name { get; } = name;
+    public RealizedType Type { get; } = type;
+    public bool IsConst { get; } = isConst;
 
     public void EmitLoad(IBlockContext context) {
         localRef.EmitLoad(context);
@@ -104,15 +90,10 @@ internal class DeclaredVariable : IBlockVariable {
     }
 }
 
-public class TempVariable : ITempBlockVariable {
-    private readonly ITempLocalRef localRef;
+public class TempVariable(RealizedType type, ITempLocalRef localRef) : ITempBlockVariable {
+    private readonly ITempLocalRef localRef = localRef;
 
-    public TempVariable(RealizedType type, ITempLocalRef localRef) {
-        Type = type;
-        this.localRef = localRef;
-    }
-
-    public RealizedType Type { get; }
+    public RealizedType Type { get; } = type;
 
     public string Name => "***temp***";
 
@@ -135,15 +116,10 @@ public class TempVariable : ITempBlockVariable {
     }
 }
 
-public class ClonedFieldVariable : IBlockVariable {
-    public readonly FieldInfo valueField;
+public class ClonedFieldVariable(RealizedType type, FieldInfo valueField) : IBlockVariable {
+    public readonly FieldInfo valueField = valueField;
 
-    public ClonedFieldVariable(RealizedType type, FieldInfo valueField) {
-        Type = type;
-        this.valueField = valueField;
-    }
-
-    public RealizedType Type { get; }
+    public RealizedType Type { get; } = type;
 
     public string Name => valueField.Name;
 

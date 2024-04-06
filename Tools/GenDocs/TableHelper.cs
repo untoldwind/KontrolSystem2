@@ -20,18 +20,18 @@ public class TableHelper(params string[] columns) {
             var builder = new StringBuilder();
 
             for (int i = 0; i < sizes.Length; i++) {
-                builder.Append("| ").Append(columns[i].PadRight(sizes[i])).Append(" ");
+                builder.Append("| ").Append(columns[i].PadRight(sizes[i])).Append(' ');
             }
 
             builder.Append("|\n");
             for (int i = 0; i < sizes.Length; i++) {
-                builder.Append("| ").Append("---".PadRight(sizes[i], '-')).Append(" ");
+                builder.Append("| ").Append("---".PadRight(sizes[i], '-')).Append(' ');
             }
             builder.Append("|\n");
 
             foreach (var row in rows) {
                 for (int i = 0; i < sizes.Length; i++) {
-                    builder.Append("| ").Append(row[i].PadRight(sizes[i])).Append(" ");
+                    builder.Append("| ").Append(row[i].PadRight(sizes[i])).Append(' ');
                 }
                 builder.Append("|\n");
             }

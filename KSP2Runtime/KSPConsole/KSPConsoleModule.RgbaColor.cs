@@ -9,21 +9,14 @@ public partial class KSPConsoleModule {
     [KSClass("RgbaColor",
         Description = "Interface color with alpha channel."
     )]
-    public class RgbaColor {
-        public RgbaColor(double red, double green, double blue, double alpha = 1.0) {
-            Red = DirectBindingMath.Clamp(red, 0, 1);
-            Green = DirectBindingMath.Clamp(green, 0, 1);
-            Blue = DirectBindingMath.Clamp(blue, 0, 1);
-            Alpha = DirectBindingMath.Clamp(alpha, 0, 1);
-        }
+    public class RgbaColor(double red, double green, double blue, double alpha = 1.0) {
+        [KSField] public double Red { get; } = DirectBindingMath.Clamp(red, 0, 1);
 
-        [KSField] public double Red { get; }
+        [KSField] public double Green { get; } = DirectBindingMath.Clamp(green, 0, 1);
 
-        [KSField] public double Green { get; }
+        [KSField] public double Blue { get; } = DirectBindingMath.Clamp(blue, 0, 1);
 
-        [KSField] public double Blue { get; }
-
-        [KSField] public double Alpha { get; }
+        [KSField] public double Alpha { get; } = DirectBindingMath.Clamp(alpha, 0, 1);
 
         public Color Color => new((float)Red, (float)Green, (float)Blue, (float)Alpha);
 

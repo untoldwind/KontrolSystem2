@@ -8,13 +8,9 @@ namespace KontrolSystem.KSP.Runtime.KSPControl;
 
 public partial class KSPControlModule {
     [KSClass("RCSTranslateManager")]
-    public class RCSTranslateManager : BaseAutopilot {
-        private Func<double, Vector3d> translateProvider;
-
-        public RCSTranslateManager(IKSPContext context, VesselComponent vessel,
-            Func<double, Vector3d> translateProvider) : base(context, vessel, 20) {
-            this.translateProvider = translateProvider;
-        }
+    public class RCSTranslateManager(IKSPContext context, VesselComponent vessel,
+        Func<double, Vector3d> translateProvider) : BaseAutopilot(context, vessel, 20) {
+        private Func<double, Vector3d> translateProvider = translateProvider;
 
         [KSField]
         public Vector3d Translate {

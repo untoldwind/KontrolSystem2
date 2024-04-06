@@ -13,7 +13,7 @@ public class KontrolRegistry {
 
     public void RegisterModule(IKontrolModule kontrolModule) {
         if (modules.ContainsKey(kontrolModule.Name)) {
-            if (!(modules[kontrolModule.Name] is DeclaredKontrolModule))
+            if (modules[kontrolModule.Name] is not DeclaredKontrolModule)
                 throw new ArgumentException($"Module {kontrolModule.Name} is defined twice");
             modules[kontrolModule.Name] = kontrolModule;
         } else {

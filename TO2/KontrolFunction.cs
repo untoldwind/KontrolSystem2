@@ -28,14 +28,9 @@ public interface IKontrolFunction {
     object Invoke(IContext context, params object[] args);
 }
 
-public class KontrolFunctionSelector {
-    private readonly IKontrolFunction? async;
-    private readonly IKontrolFunction? sync;
-
-    public KontrolFunctionSelector(IKontrolFunction? async = null, IKontrolFunction? sync = null) {
-        this.async = async;
-        this.sync = sync;
-    }
+public class KontrolFunctionSelector(IKontrolFunction? async = null, IKontrolFunction? sync = null) {
+    private readonly IKontrolFunction? async = async;
+    private readonly IKontrolFunction? sync = sync;
 
     public IKontrolFunction? PreferAsync => async ?? sync;
 
@@ -70,25 +65,16 @@ public static class KontrolFunctionExtensions {
     }
 }
 
-public class CompiledKontrolFunction : IKontrolFunction {
-    public CompiledKontrolFunction(string name, string? description, bool isAsync,
-        List<RealizedParameter> parameters, RealizedType returnType, MethodInfo? runtimeMethod) {
-        Name = name;
-        Description = description;
-        IsAsync = isAsync;
-        Parameters = parameters;
-        ReturnType = returnType;
-        RuntimeMethod = runtimeMethod ?? throw new ArgumentException($"Method is null for {name} : {returnType}");
-    }
-
+public class CompiledKontrolFunction(string name, string? description, bool isAsync,
+    List<RealizedParameter> parameters, RealizedType returnType, MethodInfo? runtimeMethod) : IKontrolFunction {
     public IKontrolModule? Module { get; internal set; }
-    public string Name { get; }
-    public string? Description { get; }
-    public List<RealizedParameter> Parameters { get; }
-    public RealizedType ReturnType { get; }
-    public MethodInfo RuntimeMethod { get; }
+    public string Name { get; } = name;
+    public string? Description { get; } = description;
+    public List<RealizedParameter> Parameters { get; } = parameters;
+    public RealizedType ReturnType { get; } = returnType;
+    public MethodInfo RuntimeMethod { get; } = runtimeMethod ?? throw new ArgumentException($"Method is null for {name} : {returnType}");
 
-    public bool IsAsync { get; }
+    public bool IsAsync { get; } = isAsync;
 
     public bool IsCompiled => true;
 
@@ -104,22 +90,14 @@ public class CompiledKontrolFunction : IKontrolFunction {
     }
 }
 
-public class DeclaredKontrolFunction : IKontrolFunction {
-    public readonly IBlockContext methodContext;
-    private readonly DeclaredKontrolModule module;
-    public readonly FunctionDeclaration to2Function;
+public class DeclaredKontrolFunction(DeclaredKontrolModule module, IBlockContext methodContext,
+    FunctionDeclaration to2Function) : IKontrolFunction {
+    public readonly IBlockContext methodContext = methodContext;
+    private readonly DeclaredKontrolModule module = module;
+    public readonly FunctionDeclaration to2Function = to2Function;
 
-    public DeclaredKontrolFunction(DeclaredKontrolModule module, IBlockContext methodContext,
-        FunctionDeclaration to2Function) {
-        this.module = module;
-        Parameters = to2Function.parameters.Select(p => new RealizedParameter(methodContext, p)).ToList();
-        ReturnType = to2Function.declaredReturn.UnderlyingType(methodContext.ModuleContext);
-        this.methodContext = methodContext;
-        this.to2Function = to2Function;
-    }
-
-    public List<RealizedParameter> Parameters { get; }
-    public RealizedType ReturnType { get; }
+    public List<RealizedParameter> Parameters { get; } = to2Function.parameters.Select(p => new RealizedParameter(methodContext, p)).ToList();
+    public RealizedType ReturnType { get; } = to2Function.declaredReturn.UnderlyingType(methodContext.ModuleContext);
 
     public IKontrolModule Module => module;
 
@@ -138,22 +116,14 @@ public class DeclaredKontrolFunction : IKontrolFunction {
     }
 }
 
-public class DeclaredKontrolStructConstructor : IKontrolFunction {
-    public readonly IBlockContext methodContext;
-    private readonly DeclaredKontrolModule module;
-    public readonly StructDeclaration to2Struct;
+public class DeclaredKontrolStructConstructor(DeclaredKontrolModule module, IBlockContext methodContext,
+    StructDeclaration to2Struct) : IKontrolFunction {
+    public readonly IBlockContext methodContext = methodContext;
+    private readonly DeclaredKontrolModule module = module;
+    public readonly StructDeclaration to2Struct = to2Struct;
 
-    public DeclaredKontrolStructConstructor(DeclaredKontrolModule module, IBlockContext methodContext,
-        StructDeclaration to2Struct) {
-        this.module = module;
-        Parameters = to2Struct.constructorParameters.Select(p => new RealizedParameter(methodContext, p)).ToList();
-        ReturnType = to2Struct.typeDelegate!.UnderlyingType(methodContext.ModuleContext);
-        this.methodContext = methodContext;
-        this.to2Struct = to2Struct;
-    }
-
-    public List<RealizedParameter> Parameters { get; }
-    public RealizedType ReturnType { get; }
+    public List<RealizedParameter> Parameters { get; } = to2Struct.constructorParameters.Select(p => new RealizedParameter(methodContext, p)).ToList();
+    public RealizedType ReturnType { get; } = to2Struct.typeDelegate!.UnderlyingType(methodContext.ModuleContext);
 
     public IKontrolModule Module => module;
 

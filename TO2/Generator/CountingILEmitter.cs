@@ -6,26 +6,15 @@ using System.Reflection.Emit;
 
 namespace KontrolSystem.TO2.Generator;
 
-public class CountingLocalRef : ITempLocalRef {
-    public CountingLocalRef(int localIndex, Type localType) {
-        LocalIndex = localIndex;
-        LocalType = localType;
-    }
-
-    public int LocalIndex { get; }
-    public Type LocalType { get; }
+public class CountingLocalRef(int localIndex, Type localType) : ITempLocalRef {
+    public int LocalIndex { get; } = localIndex;
+    public Type LocalType { get; } = localType;
 
     public void Dispose() {
     }
 }
 
-public class CountingILEmitter : IILEmitter {
-    public CountingILEmitter(int lastLocalIndex) {
-        ILSize = 0;
-        StackCount = 0;
-        this.LastLocalIndex = lastLocalIndex;
-    }
-
+public class CountingILEmitter(int lastLocalIndex) : IILEmitter {
     public void Emit(OpCode opCode) {
         ILSize += InstructionSize.Get(opCode);
         AdjustStack(opCode);
@@ -139,11 +128,11 @@ public class CountingILEmitter : IILEmitter {
         }
     }
 
-    public int LastLocalIndex { get; private set; }
+    public int LastLocalIndex { get; private set; } = lastLocalIndex;
 
-    public int ILSize { get; private set; }
+    public int ILSize { get; private set; } = 0;
 
-    public int StackCount { get; private set; }
+    public int StackCount { get; private set; } = 0;
 
     public void AdjustStack(int diff) {
         StackCount += diff;

@@ -6,63 +6,45 @@ namespace KontrolSystem.KSP.Runtime.KSPControl;
 public partial class KSPControlModule {
     // For the most part this is a rip-off from KOS
     [KSClass("PIDLoop")]
-    public class PidLoop {
+    public class PidLoop(double kp, double ki, double kd, double minOutput = double.MinValue,
+        double maxOutput = double.MaxValue, bool extraUnwind = false) {
         private bool unWinding;
 
         public PidLoop() : this(1, 0, 0) {
         }
 
-        public PidLoop(double kp, double ki, double kd, double minOutput = double.MinValue,
-            double maxOutput = double.MaxValue, bool extraUnwind = false) {
-            LastSampleTime = double.MaxValue;
-            Kp = kp;
-            Ki = ki;
-            Kd = kd;
-            Input = 0;
-            Setpoint = 0;
-            Error = 0;
-            Output = 0;
-            MaxOutput = maxOutput;
-            MinOutput = minOutput;
-            ErrorSum = 0;
-            PTerm = 0;
-            ITerm = 0;
-            DTerm = 0;
-            ExtraUnwind = extraUnwind;
-        }
+        [KSField] public double LastSampleTime { get; set; } = double.MaxValue;
 
-        [KSField] public double LastSampleTime { get; set; }
+        [KSField] public double Kp { get; set; } = kp;
 
-        [KSField] public double Kp { get; set; }
+        [KSField] public double Ki { get; set; } = ki;
 
-        [KSField] public double Ki { get; set; }
+        [KSField] public double Kd { get; set; } = kd;
 
-        [KSField] public double Kd { get; set; }
-
-        [KSField] public double Input { get; set; }
+        [KSField] public double Input { get; set; } = 0;
 
         // ReSharper disable once IdentifierTypo
-        [KSField] public double Setpoint { get; set; }
+        [KSField] public double Setpoint { get; set; } = 0;
 
-        [KSField] public double Error { get; set; }
+        [KSField] public double Error { get; set; } = 0;
 
-        [KSField] public double Output { get; set; }
+        [KSField] public double Output { get; set; } = 0;
 
-        [KSField] public double MaxOutput { get; set; }
+        [KSField] public double MaxOutput { get; set; } = maxOutput;
 
-        [KSField] public double MinOutput { get; set; }
+        [KSField] public double MinOutput { get; set; } = minOutput;
 
-        [KSField] public double ErrorSum { get; set; }
+        [KSField] public double ErrorSum { get; set; } = 0;
 
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
-        [KSField] public double PTerm { get; set; }
+        [KSField] public double PTerm { get; set; } = 0;
 
         // ReSharper disable once InconsistentNaming
-        [KSField] public double ITerm { get; set; }
+        [KSField] public double ITerm { get; set; } = 0;
 
-        [KSField] public double DTerm { get; set; }
+        [KSField] public double DTerm { get; set; } = 0;
 
-        [KSField] public bool ExtraUnwind { get; set; }
+        [KSField] public bool ExtraUnwind { get; set; } = extraUnwind;
 
         [KSField] public double ChangeRate { get; set; }
 

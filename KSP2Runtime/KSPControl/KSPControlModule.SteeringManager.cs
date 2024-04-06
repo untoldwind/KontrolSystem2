@@ -8,13 +8,8 @@ namespace KontrolSystem.KSP.Runtime.KSPControl;
 
 public partial class KSPControlModule {
     [KSClass("SteeringManager")]
-    public class SteeringManager : BaseAutopilot {
-        private Func<double, Vector3d> pitchYawRollProvider;
-
-        public SteeringManager(IKSPContext context, VesselComponent vessel, Func<double, Vector3d> pitchYawRollProvider)
-            : base(context, vessel, 10) {
-            this.pitchYawRollProvider = pitchYawRollProvider;
-        }
+    public class SteeringManager(IKSPContext context, VesselComponent vessel, Func<double, Vector3d> pitchYawRollProvider) : BaseAutopilot(context, vessel, 10) {
+        private Func<double, Vector3d> pitchYawRollProvider = pitchYawRollProvider;
 
         [KSField]
         public Vector3d PitchYawRoll {

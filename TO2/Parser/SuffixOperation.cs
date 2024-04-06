@@ -12,12 +12,8 @@ public interface IAssignSuffixOperation : ISuffixOperation {
     Expression AssignExpression(Expression target, Operator op, Expression value, Position start, Position end);
 }
 
-public readonly struct IndexGetSuffix : ISuffixOperation, IAssignSuffixOperation {
-    public readonly IndexSpec indexSpec;
-
-    public IndexGetSuffix(IndexSpec indexSpec) {
-        this.indexSpec = indexSpec;
-    }
+public readonly struct IndexGetSuffix(IndexSpec indexSpec) : ISuffixOperation, IAssignSuffixOperation {
+    public readonly IndexSpec indexSpec = indexSpec;
 
     public Expression GetExpression(Expression target, Position start, Position end) {
         return new IndexGet(target, indexSpec, start, end);
@@ -28,12 +24,8 @@ public readonly struct IndexGetSuffix : ISuffixOperation, IAssignSuffixOperation
     }
 }
 
-public readonly struct FieldGetSuffix : ISuffixOperation, IAssignSuffixOperation {
-    public readonly string fieldName;
-
-    public FieldGetSuffix(string fieldName) {
-        this.fieldName = fieldName;
-    }
+public readonly struct FieldGetSuffix(string fieldName) : ISuffixOperation, IAssignSuffixOperation {
+    public readonly string fieldName = fieldName;
 
     public Expression GetExpression(Expression target, Position start, Position end) {
         return new FieldGet(target, fieldName, start, end);
@@ -45,26 +37,17 @@ public readonly struct FieldGetSuffix : ISuffixOperation, IAssignSuffixOperation
     }
 }
 
-public readonly struct MethodCallSuffix : ISuffixOperation {
-    public readonly string methodName;
-    public readonly List<Expression> arguments;
-
-    public MethodCallSuffix(string methodName, List<Expression> arguments) {
-        this.methodName = methodName;
-        this.arguments = arguments;
-    }
+public readonly struct MethodCallSuffix(string methodName, List<Expression> arguments) : ISuffixOperation {
+    public readonly string methodName = methodName;
+    public readonly List<Expression> arguments = arguments;
 
     public Expression GetExpression(Expression target, Position start, Position end) {
         return new MethodCall(target, methodName, arguments, start, end);
     }
 }
 
-public readonly struct OperatorSuffix : ISuffixOperation {
-    public readonly Operator op;
-
-    public OperatorSuffix(Operator op) {
-        this.op = op;
-    }
+public readonly struct OperatorSuffix(Operator op) : ISuffixOperation {
+    public readonly Operator op = op;
 
     public Expression GetExpression(Expression target, Position start, Position end) {
         return new UnarySuffix(target, op, start, end);

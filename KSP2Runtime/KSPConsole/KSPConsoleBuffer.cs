@@ -207,5 +207,5 @@ public class KSPConsoleBuffer {
 
     internal string DisplayText() => string.Join("\n",
         VisibleLines.Select(line =>
-            line.ToString().Replace('\0', ' ').Substring(0, VisibleCols)));
+            line.ToString().Replace('\0', ' ')[..VisibleCols]));
 }
