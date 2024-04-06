@@ -8,35 +8,35 @@ public class KSPConsoleBufferTests {
     public void TestPrint() {
         var console = new KSPConsoleBuffer(25, 40);
 
-        Assert.Equal(25, console.VisibleLines.Count);
+        Assert.Empty(console.VisibleLines(25));
         Assert.Equal(0, console.CursorCol);
         Assert.Equal(0, console.CursorRow);
 
         console.Print("Line1");
 
-        Assert.Equal(25, console.VisibleLines.Count);
+        Assert.Single(console.VisibleLines(25));
         Assert.Equal(5, console.CursorCol);
         Assert.Equal(0, console.CursorRow);
 
         console.Print("Line1a");
 
-        Assert.Equal(25, console.VisibleLines.Count);
+        Assert.Single(console.VisibleLines(25));
         Assert.Equal(11, console.CursorCol);
         Assert.Equal(0, console.CursorRow);
 
         console.Print("Line1b\nLine2\nLine3\nLine4\nLine5");
 
-        Assert.Equal(25, console.VisibleLines.Count);
+        Assert.Equal(5, console.VisibleLines(25).Count);
         Assert.Equal(5, console.CursorCol);
         Assert.Equal(4, console.CursorRow);
 
         console.Print("Line5a");
 
-        Assert.Equal(25, console.VisibleLines.Count);
+        Assert.Equal(5, console.VisibleLines(25).Count);
         Assert.Equal(11, console.CursorCol);
         Assert.Equal(4, console.CursorRow);
 
-        var visibleLines = console.VisibleLines;
+        var visibleLines = console.VisibleLines(25);
 
         Assert.Equal("Line1Line1aLine1b", visibleLines[0].ToString().TrimEnd('\0'));
         Assert.Equal("Line2", visibleLines[1].ToString().TrimEnd('\0'));
@@ -51,18 +51,16 @@ public class KSPConsoleBufferTests {
 
         for (var i = 0; i < 60; i++) console.PrintLine($"Line{i}");
 
-        Assert.Equal(25, console.VisibleLines.Count);
+        Assert.Equal(25, console.VisibleLines(25).Count);
         Assert.Equal(0, console.CursorCol);
         Assert.Equal(24, console.CursorRow);
 
-        var visibleLines = console.VisibleLines;
+        var visibleLines = console.VisibleLines(25);
 
-        for (var i = 0; i < 24; i++) {
-            Assert.Equal($"Line{i + 36}", visibleLines[i].ToString().TrimEnd('\0'));
-            Assert.Equal(i + 36, visibleLines[i].lineNumber);
+        for (var i = 0; i < 25; i++) {
+            Assert.Equal($"Line{i + 35}", visibleLines[i].ToString().TrimEnd('\0'));
+            Assert.Equal(i + 35, visibleLines[i].lineNumber);
         }
-
-        Assert.Equal("", visibleLines[24].ToString().TrimEnd('\0'));
     }
 
     [Fact]
@@ -71,34 +69,30 @@ public class KSPConsoleBufferTests {
 
         for (var i = 0; i < 60; i++) console.PrintLine($"Line{i}");
 
-        Assert.Equal(25, console.VisibleLines.Count);
+        Assert.Equal(25, console.VisibleLines(25).Count);
         Assert.Equal(0, console.CursorCol);
         Assert.Equal(24, console.CursorRow);
 
-        var visibleLines = console.VisibleLines;
+        var visibleLines = console.VisibleLines(25);
 
-        for (var i = 0; i < 24; i++) {
-            Assert.Equal($"Line{i + 36}", visibleLines[i].ToString().TrimEnd('\0'));
-            Assert.Equal(i + 36, visibleLines[i].lineNumber);
+        for (var i = 0; i < 25; i++) {
+            Assert.Equal($"Line{i + 35}", visibleLines[i].ToString().TrimEnd('\0'));
+            Assert.Equal(i + 35, visibleLines[i].lineNumber);
         }
-
-        Assert.Equal("", visibleLines[24].ToString().TrimEnd('\0'));
 
         console.Clear();
 
         for (var i = 0; i < 10; i++) console.PrintLine($"Line{i}");
 
-        Assert.Equal(25, console.VisibleLines.Count);
+        Assert.Equal(10, console.VisibleLines(25).Count);
         Assert.Equal(0, console.CursorCol);
         Assert.Equal(10, console.CursorRow);
 
-        visibleLines = console.VisibleLines;
+        visibleLines = console.VisibleLines(25);
 
         for (var i = 0; i < 10; i++) {
             Assert.Equal($"Line{i}", visibleLines[i].ToString().TrimEnd('\0'));
             Assert.Equal(i, visibleLines[i].lineNumber);
         }
-
-        Assert.Equal("", visibleLines[10].ToString().TrimEnd('\0'));
     }
 }

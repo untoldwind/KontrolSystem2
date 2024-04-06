@@ -14,6 +14,9 @@ namespace Experiments {
         public void OnEnable() {
             consoleBuffer.PrintLine("Test Line 1 <color=red>bla</color>    dfökdfölksdf ölsdkf ölskdf ösdlkfölsdfk ölsdfk ösdlfksdöl fkösldf");
             consoleBuffer.PrintLine("Test <mark=green>\u2588</mark> line 2 lkjsdflkjsdflk jsdflk jsdflkjs dflkjsdf lksdjflksdjf lksdjfm");
+            for (int i = 1; i < 20; i++) {
+                consoleBuffer.PrintLine($"Line {i}");
+            }
             
             Initialize("KontrolSystem: Console", new Rect(200, 500, 400, 500));
 

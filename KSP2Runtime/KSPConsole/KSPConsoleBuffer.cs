@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace KontrolSystem.KSP.Runtime.KSPConsole;
@@ -38,19 +39,118 @@ public struct ConsoleLine {
 
         return new string(line, 0, endIdx + 1);
     }
-    
+
     public readonly override string ToString() {
         return new string(line);
     }
 
-    internal readonly string DisplayText() => 
+    internal readonly string DisplayText() =>
         "<noparse>" + ContentAsString() + "</noparse>";
+}
+
+public class ConsolePrompt {
+    private readonly object promptLock = new();
+
+    private readonly int maxLineLength;
+
+    internal int caretRow = 0;
+    internal int caretCol = 0;
+    internal bool focus = false;
+    private List<ConsoleLine> promptLines = new();
+
+    internal ConsolePrompt(int maxLineLength) {
+        this.maxLineLength = maxLineLength;
+    }
+
+    internal void SetFocus(bool focus) {
+        lock (promptLock) {
+            this.focus = focus;
+            if (focus && promptLines.Count == 0) {
+                promptLines.Add(new ConsoleLine(0, new char[maxLineLength]));
+            } else if (!focus && promptLines.Count == 1 && promptLines.First().IsEmpty()) {
+                caretRow = 0;
+                caretCol = 0;
+                promptLines.Clear();
+            }
+        }
+    }
+
+    internal void Clear() {
+        lock (promptLock) {
+            if (focus) return;
+            caretRow = 0;
+            caretCol = 0;
+            promptLines.Clear();
+        }
+    }
+
+    internal void HandleKey(KeyCode keyCode, char character) {
+        if (caretRow > promptLines.Count) return;
+
+        var line = promptLines[caretRow];
+
+        switch (keyCode) {
+        case KeyCode.Backspace:
+            if (caretCol == 0) return;
+            Array.Copy(line.line, caretCol, line.line, caretCol - 1, maxLineLength - caretCol);
+            caretCol--;
+            break;
+        case KeyCode.Delete:
+            Array.Copy(line.line, caretCol + 1, line.line, caretCol, maxLineLength - caretCol - 1);
+            break;
+        case KeyCode.LeftArrow:
+            if (caretCol > 0) caretCol--;
+            break;
+        case KeyCode.RightArrow:
+            var endIdx = line.line.Count(ch => ch != 0);
+            if (caretCol < endIdx) caretCol++;
+            break;
+        case KeyCode.Home:
+            caretCol = 0;
+            break;
+        case KeyCode.End:
+            caretCol = line.line.Count(ch => ch != 0);
+            break;
+        default:
+            if (character < 32 || character == 127 || caretCol >= maxLineLength - 1) return;
+            Array.Copy(line.line, caretCol, line.line, caretCol + 1, maxLineLength - caretCol - 1);
+            line.line[caretCol++] = character;
+            break;
+        }
+
+    }
+
+    internal string RenderLine(ConsoleLine line) {
+        var endIdx = line.line.Count(ch => ch != 0);
+        if (!focus || line.lineNumber != caretRow || line.line.Length == 0) return $"> {new string(line.line, 0, endIdx)}";
+
+        if (caretCol > endIdx) return $"> {line.ContentAsString()}<mark=green>\u2588</mark>";
+
+        var sb = new StringBuilder();
+        sb.Append("> ");
+        sb.Append(line.line, 0, caretCol);
+        sb.Append("<mark=green>");
+        var caretChar = line.line[caretCol];
+        sb.Append(caretChar > 32 ? caretChar : '\u2588');
+        sb.Append("</mark>");
+        if (endIdx > caretCol) sb.Append(line.line, caretCol + 1, endIdx - caretCol);
+
+        return sb.ToString();
+    }
+
+    internal List<String> DisplayTexts() {
+        lock (promptLock) {
+            return promptLines.Select(RenderLine).ToList();
+        }
+    }
 }
 
 public class KSPConsoleBuffer {
     private static readonly string[] LineSeparators = ["\r\n", "\n"];
 
     private readonly LinkedList<ConsoleLine> bufferLines;
+
+    private ConsolePrompt prompt;
 
     private readonly object consoleLock = new();
 
@@ -65,6 +165,7 @@ public class KSPConsoleBuffer {
     private LinkedListNode<ConsoleLine>? topLine;
 
     public KSPConsoleBuffer(int visibleRows, int visibleCols, int maxLineLength = 1000, int maxLines = 2000) {
+        prompt = new ConsolePrompt(maxLineLength);
         bufferLines = new LinkedList<ConsoleLine>();
         VisibleRows = Math.Max(visibleRows, 1);
         VisibleCols = Math.Max(visibleCols, 1);
@@ -82,19 +183,9 @@ public class KSPConsoleBuffer {
 
     public int VisibleRows { get; private set; }
 
-    public List<ConsoleLine> VisibleLines {
-        get {
-            lock (consoleLock) {
-                var lines = new List<ConsoleLine>();
-                var current = topLine;
-
-                while (current != null) {
-                    lines.Add(current.Value);
-                    current = current.Next;
-                }
-
-                return lines;
-            }
+    public List<ConsoleLine> VisibleLines(int maxVisibleLines) {
+        lock (consoleLock) {
+            return bufferLines.Reverse().SkipWhile(line => line.IsEmpty()).Take(maxVisibleLines).Reverse().ToList();
         }
     }
 
@@ -107,7 +198,8 @@ public class KSPConsoleBuffer {
             CursorCol = CursorRow = 0;
             cursorLine = topLine;
         }
-
+        prompt.Clear();
+        
         changed.Invoke();
     }
 
@@ -208,6 +300,27 @@ public class KSPConsoleBuffer {
         while (bufferLines.Count > maxLines) bufferLines.RemoveFirst();
     }
 
-    internal string DisplayText() => string.Join("\n",
-        VisibleLines.Select(line => line.DisplayText()));
+    internal void SetFocus(bool focus) {
+        prompt.SetFocus(focus);
+        changed.Invoke();
+    }
+
+    internal bool HandleKey(KeyCode keyCode, char character) {
+        switch (keyCode) {
+        case KeyCode.Escape:
+            return false;
+        default:
+            prompt.HandleKey(keyCode, character);
+            changed.Invoke();
+            return true;
+        }
+    }
+
+    internal string DisplayText() {
+        var promptLines = prompt.DisplayTexts();
+
+        return string.Join("\n",
+            VisibleLines(VisibleRows - promptLines.Count).Select(line => line.DisplayText())
+                .Concat(promptLines));
+    }
 }

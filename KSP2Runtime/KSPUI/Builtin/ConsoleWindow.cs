@@ -46,7 +46,7 @@ public class ConsoleWindow : UGUIResizableWindow {
         var frameMask = consoleFrame.GetComponent<RectMask2D>();
         frameMask.padding = new(8, 8, 8, 8);
 
-        var console = new GameObject("Console", typeof(TextMeshProUGUI));
+        var console = new GameObject("Console", typeof(TextMeshProUGUI), typeof(ConsoleWindowInput));
         UIFactory.Layout(console, consoleFrame.transform, UIFactory.LAYOUT_STRETCH, UIFactory.LAYOUT_STRETCH,
             10, -10, -20, -20);
         consoleText = console.GetComponent<TextMeshProUGUI>();
@@ -95,6 +95,7 @@ public class ConsoleWindow : UGUIResizableWindow {
         MinSize = root.Layout();
 
         consoleBuffer = Mainframe.Instance!.ConsoleBuffer;
+        console.GetComponent<ConsoleWindowInput>().Init(frameImage, consoleBuffer);
         consoleBuffer.changed.AddListener(OnConsoleBufferChanged);
 
         OnConsoleBufferChanged();

@@ -48,6 +48,8 @@ public interface UIAssetsProvider {
 
     Texture2D ConsoleInactiveFrame { get; }
 
+    Texture2D ConsoleActiveFrame { get; }
+
     Texture2D UpIcon { get; }
 
     Texture2D DownIcon { get; }
@@ -76,6 +78,7 @@ public class UIFactory {
     internal readonly TMP_FontAsset consoleFont;
     internal readonly float consoleFontSize;
     internal readonly Sprite consoleInactiveFrame;
+    internal readonly Sprite consoleActiveFrame;
     internal readonly Texture2D downIcon;
     internal readonly Sprite downIconSprite;
     internal readonly Sprite frameBackground;
@@ -137,6 +140,7 @@ public class UIFactory {
         sliderHandle = Make9TileSprite(uiAssetsProvider.SliderHandle, new Vector4(3, 5, 3, 5));
         consoleBackground = Make9TileSprite(uiAssetsProvider.ConsoleBackground, new Vector4(20, 20, 20, 20));
         consoleInactiveFrame = Make9TileSprite(uiAssetsProvider.ConsoleInactiveFrame, new Vector4(20, 20, 20, 20));
+        consoleActiveFrame = Make9TileSprite(uiAssetsProvider.ConsoleActiveFrame, new Vector4(20, 20, 20, 20));
         downIconSprite = Make9TileSprite(uiAssetsProvider.DownIcon, new Vector4(1, 1, 1, 1));
 
         GLUIDrawer.Initialize(graphFont);

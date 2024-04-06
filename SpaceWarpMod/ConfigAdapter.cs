@@ -107,6 +107,7 @@ public class ConfigAdapter : KontrolSystemConfig, UIAssetsProvider {
 
     public Texture2D ConsoleBackground => GetTexture("monitor_minimal");
     public Texture2D ConsoleInactiveFrame => GetTexture("monitor_minimal_frame");
+    public Texture2D ConsoleActiveFrame => GetTexture("monitor_minimal_frame_active");
 
     public Font GraphFont {
         get {

@@ -47,11 +47,6 @@ namespace Experiments {
             shouldDeactivateNextUpdate = true;
         }
 
-        public void DeactivateInputField() {
-            isFocused = false;
-            consoleFrame.sprite = UIFactory.Instance.consoleInactiveFrame;
-        }
-
         protected void LateUpdate() {
             if (shouldActivateNextUpdate) {
                 if (!isFocused) {
@@ -63,6 +58,7 @@ namespace Experiments {
 
                     shouldActivateNextUpdate = false;
                     isFocused = true;
+                    consoleBuffer.SetFocus(true);
                     consoleFrame.sprite = UIFactory.Instance.consoleActiveFrame;
                     return;
                 }
@@ -80,6 +76,7 @@ namespace Experiments {
                         EventSystem.current.SetSelectedGameObject(null);
                     
                     shouldDeactivateNextUpdate = false;
+                    consoleBuffer.SetFocus(false);
                     isFocused = false;
                     consoleFrame.sprite = UIFactory.Instance.consoleInactiveFrame;
                 }
@@ -87,6 +84,7 @@ namespace Experiments {
         }
 
         public void OnDeselect(BaseEventData eventData) {
+            consoleBuffer.SetFocus(false);
             isFocused = false;
             consoleFrame.sprite = UIFactory.Instance.consoleInactiveFrame;
         }
