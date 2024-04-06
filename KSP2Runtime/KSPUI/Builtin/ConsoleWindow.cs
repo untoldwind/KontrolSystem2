@@ -36,22 +36,27 @@ public class ConsoleWindow : UGUIResizableWindow {
         image.type = Image.Type.Sliced;
         image.color = Color.white;
 
-        var consoleFrame = new GameObject("ConsoleFrame", typeof(Image));
+        var consoleFrame = new GameObject("ConsoleFrame", typeof(Image), typeof(RectMask2D));
         UIFactory.Layout(consoleFrame, consoleBackground.transform, UIFactory.LAYOUT_STRETCH,
             UIFactory.LAYOUT_STRETCH, 0, 0, 0, 0);
         var frameImage = consoleFrame.GetComponent<Image>();
         frameImage.sprite = UIFactory.Instance.consoleInactiveFrame;
         frameImage.type = Image.Type.Sliced;
         frameImage.color = Color.white;
+        var frameMask = consoleFrame.GetComponent<RectMask2D>();
+        frameMask.padding = new(8, 8, 8, 8);
 
         var console = new GameObject("Console", typeof(TextMeshProUGUI));
-        UIFactory.Layout(console, consoleBackground.transform, UIFactory.LAYOUT_STRETCH, UIFactory.LAYOUT_STRETCH,
+        UIFactory.Layout(console, consoleFrame.transform, UIFactory.LAYOUT_STRETCH, UIFactory.LAYOUT_STRETCH,
             10, -10, -20, -20);
         consoleText = console.GetComponent<TextMeshProUGUI>();
         consoleText.font = UIFactory.Instance.consoleFont;
         consoleText.horizontalAlignment = HorizontalAlignmentOptions.Left;
         consoleText.verticalAlignment = VerticalAlignmentOptions.Top;
         consoleText.fontSize = UIFactory.Instance.consoleFontSize;
+        consoleText.richText = true;
+        consoleText.enableWordWrapping = false;
+        consoleText.overflowMode = TextOverflowModes.Masking;
         consoleText.color = new Color(0.5f, 1.0f, 0.5f, 1.0f);
 
         var fontScale = consoleText.fontSize / consoleText.font.faceInfo.pointSize;

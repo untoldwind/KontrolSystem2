@@ -6,12 +6,15 @@ using UnityEngine.UI;
 namespace Experiments {
     public class ConsoleWindowInput : MonoBehaviour, IDeselectHandler, IPointerClickHandler, IUpdateSelectedHandler {
         private Image consoleFrame;
+        private KSPConsoleBuffer consoleBuffer;
         private bool isFocused;
         private bool shouldActivateNextUpdate;
+        private bool shouldDeactivateNextUpdate;
         private Event processingEvent = new Event();
 
-        public void Init(Image consoleFrame) {
+        public void Init(Image consoleFrame, KSPConsoleBuffer consoleBuffer) {
             this.consoleFrame = consoleFrame;
+            this.consoleBuffer = consoleBuffer;
         }
 
 
@@ -20,7 +23,8 @@ namespace Experiments {
                 switch (processingEvent.rawType) {
                 case EventType.KeyUp: break;
                 case EventType.KeyDown:
-                    UnityEngine.Debug.Log($"Test {processingEvent.character}");
+                    if(!consoleBuffer.HandleKey(processingEvent.keyCode, processingEvent.character))
+                        DeactivateInput();
                     break;
                 }
             }
@@ -29,16 +33,18 @@ namespace Experiments {
         }
 
         public virtual void OnPointerClick(PointerEventData eventData) {
-            //Debug.Log("Pointer Click Event...");
-
             if (eventData.button != PointerEventData.InputButton.Left)
                 return;
 
-            ActivateInputField();
+            ActivateInput();
         }
 
-        public void ActivateInputField() {
+        public void ActivateInput() {
             shouldActivateNextUpdate = true;
+        }
+
+        public void DeactivateInput() {
+            shouldDeactivateNextUpdate = true;
         }
 
         public void DeactivateInputField() {
@@ -63,6 +69,20 @@ namespace Experiments {
 
                 // Reset as we are already activated.
                 shouldActivateNextUpdate = false;
+            }
+
+            if (shouldDeactivateNextUpdate) {
+                if (isFocused) {
+                    if (EventSystem.current == null)
+                        return;
+
+                    if (EventSystem.current.currentSelectedGameObject == gameObject)
+                        EventSystem.current.SetSelectedGameObject(null);
+                    
+                    shouldDeactivateNextUpdate = false;
+                    isFocused = false;
+                    consoleFrame.sprite = UIFactory.Instance.consoleInactiveFrame;
+                }
             }
         }
 

@@ -12,8 +12,8 @@ namespace Experiments {
         private float charWidth;
 
         public void OnEnable() {
-            consoleBuffer.PrintLine("Test Line 1");
-            consoleBuffer.PrintLine("Test Line 2");
+            consoleBuffer.PrintLine("Test Line 1 <color=red>bla</color>    dfökdfölksdf ölsdkf ölskdf ösdlkfölsdfk ölsdfk ösdlfksdöl fkösldf");
+            consoleBuffer.PrintLine("Test <mark=green>\u2588</mark> line 2 lkjsdflkjsdflk jsdflk jsdflkjs dflkjsdf lksdjflksdjf lksdjfm");
             
             Initialize("KontrolSystem: Console", new Rect(200, 500, 400, 500));
 
@@ -26,29 +26,34 @@ namespace Experiments {
             backgroundImage.type = Image.Type.Sliced;
             backgroundImage.color = Color.white;
 
-            GameObject consoleFrame = new GameObject("ConsoleFrame", typeof(Image));
+            GameObject consoleFrame = new GameObject("ConsoleFrame", typeof(Image), typeof(RectMask2D));
             UIFactory.Layout(consoleFrame, consoleBackground.transform, UIFactory.LAYOUT_STRECH,
                 UIFactory.LAYOUT_STRECH, 0, 0, 0, 0);
             Image frameImage = consoleFrame.GetComponent<Image>();
             frameImage.sprite = UIFactory.Instance.consoleInactiveFrame;
             frameImage.type = Image.Type.Sliced;
             frameImage.color = Color.white;
+            RectMask2D mask = consoleFrame.GetComponent<RectMask2D>();
+            mask.padding = new(10, 10, 10, 10);
             
             GameObject console = new GameObject("Console", typeof(TextMeshProUGUI), typeof(ConsoleWindowInput));
-            UIFactory.Layout(console, consoleBackground.transform, UIFactory.LAYOUT_STRECH, UIFactory.LAYOUT_STRECH, 
+            UIFactory.Layout(console, consoleFrame.transform, UIFactory.LAYOUT_STRECH, UIFactory.LAYOUT_STRECH, 
                 10, -10, -20, -20);
             consoleText = console.GetComponent<TextMeshProUGUI>();
             consoleText.font = UIFactory.Instance.consoleFont;
             consoleText.horizontalAlignment = HorizontalAlignmentOptions.Left;
             consoleText.verticalAlignment = VerticalAlignmentOptions.Top;
             consoleText.fontSize = 12;
+            consoleText.richText = true;
+            consoleText.enableWordWrapping = false;
+            consoleText.overflowMode = TextOverflowModes.Masking;
             consoleText.color = new Color(0.5f, 1.0f, 0.5f, 1.0f);
             
             var fontScale = consoleText.fontSize / consoleText.font.faceInfo.pointSize;
             charHeight = consoleText.font.faceInfo.lineHeight * fontScale;
             charWidth = consoleText.font.glyphTable[0].metrics.horizontalAdvance * fontScale;
 
-            console.GetComponent<ConsoleWindowInput>().Init(frameImage);
+            console.GetComponent<ConsoleWindowInput>().Init(frameImage, consoleBuffer);
 
             var replContainer = root.Add(UGUILayoutContainer.Horizontal(2));
             

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Experiments {
@@ -41,6 +42,9 @@ namespace Experiments {
         public readonly override string ToString() {
             return new string(line);
         }
+        
+        internal readonly string DisplayText() => 
+            "<noparse>" + ContentAsString() + "</noparse>";
     }
 
     public class KSPConsoleBuffer {
@@ -204,8 +208,15 @@ namespace Experiments {
             while (bufferLines.Count > maxLines) bufferLines.RemoveFirst();
         }
 
+        internal bool HandleKey(KeyCode keyCode, char character) {
+            switch (keyCode) {
+            case KeyCode.Escape:
+                return false;
+            default:
+                return true;
+            }
+        }
         internal string DisplayText() => string.Join("\n",
-            VisibleLines.Select(line =>
-                line.ToString().Replace('\0', ' ').Substring(0, VisibleCols)));
+            VisibleLines.Select(line => line.DisplayText()));
     }
 }

@@ -38,10 +38,13 @@ public struct ConsoleLine {
 
         return new string(line, 0, endIdx + 1);
     }
-
+    
     public readonly override string ToString() {
         return new string(line);
     }
+
+    internal readonly string DisplayText() => 
+        "<noparse>" + ContentAsString() + "</noparse>";
 }
 
 public class KSPConsoleBuffer {
@@ -206,6 +209,5 @@ public class KSPConsoleBuffer {
     }
 
     internal string DisplayText() => string.Join("\n",
-        VisibleLines.Select(line =>
-            line.ToString().Replace('\0', ' ')[..VisibleCols]));
+        VisibleLines.Select(line => line.DisplayText()));
 }
