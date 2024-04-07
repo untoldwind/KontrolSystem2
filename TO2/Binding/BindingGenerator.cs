@@ -108,7 +108,7 @@ public static class BindingGenerator {
                 IndexSpecType.Single => new BoundArrayLikeIndexAccess(type, indexSpec.start),
                 _ => null,
             } : null,
-            forInSource: isEnumerable ? new BoundEnumerableForInSource(type) : null
+            forInSource: isEnumerable ? () => new BoundEnumerableForInSource(type) : null
         );
         RegisterTypeMapping(type, boundType);
         return boundType;

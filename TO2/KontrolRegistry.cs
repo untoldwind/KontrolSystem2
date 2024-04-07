@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using KontrolSystem.Parsing;
+using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Generator;
 using KontrolSystem.TO2.Parser;
 using KontrolSystem.TO2.Runtime;
+using Enumerable = UniLinq.Enumerable;
+using Result = KontrolSystem.Parsing.Result;
 
 namespace KontrolSystem.TO2;
 
@@ -96,5 +101,39 @@ public class KontrolRegistry {
         }
 
         return context;
+    }
+
+    public CompiledKontrolModule CompileTemporary(TO2Module to2Module) {
+        var context = new Context(this);
+        var declaredKontrolModule = ModuleGenerator.DeclareModule(context, to2Module, "temporary");
+        ModuleGenerator.ImportTypes(declaredKontrolModule);
+        ModuleGenerator.DeclareConstants(declaredKontrolModule);
+        ModuleGenerator.ImportConstants(declaredKontrolModule);
+        ModuleGenerator.DeclareFunctions(declaredKontrolModule);
+        ModuleGenerator.ImportFunctions(declaredKontrolModule);
+        ModuleGenerator.VerifyFunctions(declaredKontrolModule);
+
+        return ModuleGenerator.CompileModule(declaredKontrolModule);
+    }
+
+    public IAnyFuture RunREPL(IContext context, string repl) {
+        //        try {
+        var result = TO2ParserREPL.REPLItems.Parse(repl);
+
+        var to2Module = new TO2Module("<repl>", "", [
+            .. result.OfType<UseDeclaration>(),
+            .. result.OfType<TypeAlias>(),
+            new FunctionDeclaration(FunctionModifier.Public, true, "REPLMain", "", [], BuiltinType.Any,
+                new Block([.. result.OfType<IBlockItem>()]), new Position("<inline>"), new Position("<inline>"))
+        ]);
+
+        var compiled = CompileTemporary(to2Module);
+        var replMain = compiled.FindFunction("REPLMain")!.PreferAsync!;
+
+        return (IAnyFuture)replMain.Invoke(context);
+        //        } catch (Exception e) {
+        //            return new Future.Success<Runtime.Result<object?>>(
+        //                new Runtime.Result<object?>(false, null, new CoreError.Error(e.Message, [])));
+        //        }
     }
 }

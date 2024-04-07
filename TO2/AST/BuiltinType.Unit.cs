@@ -39,4 +39,30 @@ public abstract partial class BuiltinType {
 
         public IREPLValue EvalConvert(Node node, IREPLValue value) => REPLUnit.INSTANCE;
     }
+
+    private class TO2Any : BuiltinType {
+        public override string Name => "Any";
+
+        public override Type GeneratedType(ModuleContext context) => typeof(object);
+
+        public override bool IsAssignableFrom(ModuleContext context, TO2Type otherType) => true;
+
+        public override IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) => new AnyToAnyAssign(otherType.GeneratedType(context));
+    }
+
+    private class AnyToAnyAssign(Type otherType) : IAssignEmitter {
+        public void EmitAssign(IBlockContext context, IBlockVariable variable, Expression expression,
+            bool dropResult) {
+            expression.EmitCode(context, false);
+            if (otherType.IsValueType) context.IL.Emit(OpCodes.Box, otherType);
+            if (!dropResult) context.IL.Emit(OpCodes.Dup);
+            variable.EmitStore(context);
+        }
+
+        public void EmitConvert(IBlockContext context, bool mutableTarget) {
+            if (otherType.IsValueType) context.IL.Emit(OpCodes.Box, otherType);
+        }
+
+        public IREPLValue EvalConvert(Node node, IREPLValue value) => REPLUnit.INSTANCE;
+    }
 }

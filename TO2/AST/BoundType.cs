@@ -13,7 +13,7 @@ public class BoundType(string? modulePrefix, string localName, string? descripti
     IEnumerable<(string name, IFieldAccessFactory access)> allowedFields,
     IEnumerable<RealizedType>? typeParameters = null,
     Func<IndexSpec, IIndexAccessEmitter?>? indexAccessEmitterFactory = null,
-    IForInSource? forInSource = null) : RealizedType {
+    Func<IForInSource>? forInSource = null) : RealizedType {
     public readonly Dictionary<string, IFieldAccessFactory> allowedFields = allowedFields.ToDictionary(m => m.name, m => m.access);
     public readonly Dictionary<string, IMethodInvokeFactory> allowedMethods = allowedMethods.ToDictionary(m => m.name, m => m.invoker);
     public readonly string localName = localName;
@@ -64,7 +64,7 @@ public class BoundType(string? modulePrefix, string localName, string? descripti
     public override IIndexAccessEmitter? AllowedIndexAccess(ModuleContext context, IndexSpec indexSpec) =>
         indexAccessEmitterFactory?.Invoke(indexSpec);
 
-    public override IForInSource? ForInSource(ModuleContext context, TO2Type? typeHint) => forInSource;
+    public override IForInSource? ForInSource(ModuleContext context, TO2Type? typeHint) => forInSource?.Invoke();
 
     public override RealizedType
         FillGenerics(ModuleContext context, Dictionary<string, RealizedType>? typeArguments) {

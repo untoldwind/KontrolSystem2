@@ -12,6 +12,7 @@ public abstract partial class BuiltinType : RealizedType {
 
     public static readonly Dictionary<string, IFieldAccessFactory> NoFields = [];
 
+    public static readonly RealizedType Any = new TO2Any();
     public static readonly RealizedType Unit = new TO2Unit();
     public static readonly RealizedType Bool = new TO2Bool();
     public static readonly RealizedType Int = new TO2Int();
