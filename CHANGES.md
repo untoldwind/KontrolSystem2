@@ -41,7 +41,9 @@
       }
     }
     ```
-
+  * Added system event:
+    * `ksp::game::EventProcessStarted`
+    * `ksp::game::EventProcessStopped`
 * Add `ksp::game::notification_alert` and `ksp::game::notification_passive`. Example:
     ```
     use { Vessel } from ksp::vessel

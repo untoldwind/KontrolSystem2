@@ -29,10 +29,10 @@ public class MessageBus {
             get {
                 lock (inbox) {
                     return inbox.Count > 0;
-                }        
+                }
             }
         }
-        
+
         public Option<T> Peek() {
             lock (inbox) {
                 return inbox.TryPeek(out var message) ? Option.Some(message) : Option.None<T>();

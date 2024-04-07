@@ -6,6 +6,30 @@ Collection to game and runtime related functions.
 ## Types
 
 
+### EventProcessStarted
+
+Process started event will be published to message bus when a process is started
+
+#### Fields
+
+| Name      | Type     | Read-only | Description             |
+| --------- | -------- | --------- | ----------------------- |
+| arguments | string[] | R/O       | Process start arguments |
+| name      | string   | R/O       | Process name            |
+
+
+### EventProcessStopped
+
+Process stop event will be published to message bus when a process is stopped
+
+#### Fields
+
+| Name  | Type              | Read-only | Description                                   |
+| ----- | ----------------- | --------- | --------------------------------------------- |
+| error | Option&lt;string> | R/O       | Error message in case of abnormal termination |
+| name  | string            | R/O       | Process name                                  |
+
+
 ### Importance
 
 Importance of a notification
@@ -168,6 +192,13 @@ process.stop ( ) -> bool
 ### Subscription
 
 Central message bus
+
+#### Fields
+
+| Name         | Type | Read-only | Description                                |
+| ------------ | ---- | --------- | ------------------------------------------ |
+| has_messages | bool | R/O       | Check if subscription has pending messages |
+
 
 #### Methods
 

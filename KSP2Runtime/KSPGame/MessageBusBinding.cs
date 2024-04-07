@@ -33,12 +33,45 @@ public static class MessageBusBinding {
             }
         });
 
+    public static readonly BoundType EventProcessStartedType = Direct.BindType("ksp::game", "EventProcessStarted",
+        "Process started event will be published to message bus when a process is started",
+        typeof(MainframeEvents.ProcessStarted),
+        [],
+        [],
+        new(),
+        new() {
+            {
+                "name", new BoundPropertyLikeFieldAccessFactory("Process name", () => BuiltinType.String,
+                typeof(MainframeEvents.ProcessStarted), typeof(MainframeEvents.ProcessStarted).GetProperty("Name"))
+            },
+            {
+                "arguments", new BoundPropertyLikeFieldAccessFactory("Process start arguments", () => new ArrayType(BuiltinType.String),
+                    typeof(MainframeEvents.ProcessStarted), typeof(MainframeEvents.ProcessStarted).GetProperty("Arguments"))
+            }
+        });
+
+    public static readonly BoundType EventProcessStoppedType = Direct.BindType("ksp::game", "EventProcessStopped",
+        "Process stop event will be published to message bus when a process is stopped",
+        typeof(MainframeEvents.ProcessStopped),
+        [],
+        [],
+        new(),
+        new() {
+            {
+                "name", new BoundPropertyLikeFieldAccessFactory("Process name", () => BuiltinType.String,
+                    typeof(MainframeEvents.ProcessStopped), typeof(MainframeEvents.ProcessStopped).GetProperty("Name"))
+            },
+            {
+                "error", new BoundPropertyLikeFieldAccessFactory("Error message in case of abnormal termination", () => new OptionType(BuiltinType.String),
+                    typeof(MainframeEvents.ProcessStopped), typeof(MainframeEvents.ProcessStopped).GetProperty("Error"))
+            }
+        });
     private static List<BoundType>? messageBusTypes;
 
     internal static IEnumerable<BoundType> MessageBusTypes {
         get {
             if (messageBusTypes == null) {
-                messageBusTypes = [SubscriptionType];
+                messageBusTypes = [SubscriptionType, EventProcessStartedType, EventProcessStoppedType];
                 foreach (var type in messageBusTypes) {
                     BindingGenerator.RegisterTypeMapping(type.runtimeType, type);
                 }

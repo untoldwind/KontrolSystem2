@@ -92,7 +92,7 @@ public class ConsolePrompt {
 
     internal void HandleKey(KeyCode keyCode, char character) {
         string? replText = null;
-        
+
         lock (promptLock) {
             if (caretRow > promptLines.Count) return;
 
@@ -158,7 +158,7 @@ public class ConsolePrompt {
             OnRunCommand(replText);
         }
     }
-    
+
     private void OnRunCommand(string replText) {
         if (!string.IsNullOrWhiteSpace(replText)) {
             Mainframe.Instance!.Logger.Debug($"Submitted: {replText}");
@@ -171,7 +171,7 @@ public class ConsolePrompt {
             }
         }
     }
-    
+
     internal string RenderLine(ConsoleLine line) {
         var endIdx = line.line.Count(ch => ch != 0);
         if (!focus || line.lineNumber != caretRow || line.line.Length == 0) return $"$> {new string(line.line, 0, endIdx)}";

@@ -15,6 +15,7 @@ using KSP.Messages;
 using KSP.Sim.impl;
 using UnityEngine;
 using UnityEngine.Events;
+using Option = KontrolSystem.TO2.Runtime.Option;
 
 namespace KontrolSystem.KSP.Runtime.Core;
 
@@ -209,6 +210,7 @@ public class Mainframe : KerbalMonoBehaviour {
                 coroutines.Add(process.id, coroutine);
             }
 
+            state?.messageBus.Publish(new MainframeEvents.ProcessStarted(process.Name, arguments.Select(arg => arg.ToString()).ToArray()));
             availableProcessesChanged.Invoke();
 
             return true;
@@ -257,6 +259,7 @@ public class Mainframe : KerbalMonoBehaviour {
         process.MarkDone(message, stackTrace);
         coroutines.Remove(process.id);
 
+        state?.messageBus.Publish(new MainframeEvents.ProcessStopped(process.Name, Option.OfNullable(message)));
         if (triggerEvent) availableProcessesChanged.Invoke();
     }
 

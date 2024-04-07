@@ -90,5 +90,5 @@ public class ConsoleWindow : UGUIResizableWindow {
         consoleText.SetText(consoleBuffer.DisplayText());
     }
 
-    
+
 }

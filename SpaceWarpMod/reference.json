@@ -2023,6 +2023,16 @@
         {
           "kind": "Standard",
           "module": "ksp::game",
+          "name": "EventProcessStarted"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::game",
+          "name": "EventProcessStopped"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::game",
           "name": "Mainframe"
         },
         {
@@ -3122,6 +3132,16 @@
               "name": "T"
             }
           ]
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::game",
+          "name": "EventProcessStarted"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::game",
+          "name": "EventProcessStopped"
         },
         {
           "kind": "Standard",
@@ -8396,6 +8416,16 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "EventProcessStarted"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "EventProcessStopped"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
             },
             {
@@ -9254,7 +9284,17 @@
           "genericParameters": [
             "T"
           ],
-          "fields": {},
+          "fields": {
+            "has_messages": {
+              "name": "has_messages",
+              "description": "Check if subscription has pending messages",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            }
+          },
           "methods": {
             "peek": {
               "isAsync": false,
@@ -9297,6 +9337,70 @@
               }
             }
           },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "EventProcessStarted": {
+          "name": "EventProcessStarted",
+          "description": "Process started event will be published to message bus when a process is started",
+          "fields": {
+            "name": {
+              "name": "name",
+              "description": "Process name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            },
+            "arguments": {
+              "name": "arguments",
+              "description": "Process start arguments",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "string"
+                  }
+                ]
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "EventProcessStopped": {
+          "name": "EventProcessStopped",
+          "description": "Process stop event will be published to message bus when a process is stopped",
+          "fields": {
+            "name": {
+              "name": "name",
+              "description": "Process name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            },
+            "error": {
+              "name": "error",
+              "description": "Error message in case of abnormal termination",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "string"
+                  }
+                ]
+              }
+            }
+          },
+          "methods": {},
           "assignableFromAny": false,
           "assignableFrom": []
         },
@@ -15470,6 +15574,16 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "EventProcessStarted"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "EventProcessStopped"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
             },
             {
@@ -19677,6 +19791,16 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "EventProcessStarted"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "EventProcessStopped"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
             },
             {
@@ -21289,6 +21413,16 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "EventProcessStarted"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "EventProcessStopped"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
             },
             {
@@ -22545,6 +22679,16 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "EventProcessStarted"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "EventProcessStopped"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
             },
             {
@@ -23741,6 +23885,16 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "EventProcessStarted"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "EventProcessStopped"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
             },
             {
@@ -24893,6 +25047,16 @@
                   "name": "T"
                 }
               ]
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "EventProcessStarted"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "EventProcessStopped"
             },
             {
               "kind": "Standard",
@@ -27085,6 +27249,16 @@
                   "name": "T"
                 }
               ]
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "EventProcessStarted"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "EventProcessStopped"
             },
             {
               "kind": "Standard",
@@ -32483,6 +32657,16 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "EventProcessStarted"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "EventProcessStopped"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
             },
             {
@@ -33645,6 +33829,16 @@
                   "name": "T"
                 }
               ]
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "EventProcessStarted"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "EventProcessStopped"
             },
             {
               "kind": "Standard",
@@ -34835,6 +35029,16 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "EventProcessStarted"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "EventProcessStopped"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
             },
             {
@@ -35997,6 +36201,16 @@
                   "name": "T"
                 }
               ]
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "EventProcessStarted"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "EventProcessStopped"
             },
             {
               "kind": "Standard",
@@ -37173,6 +37387,16 @@
                   "name": "T"
                 }
               ]
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "EventProcessStarted"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "EventProcessStopped"
             },
             {
               "kind": "Standard",
@@ -38443,6 +38667,16 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "EventProcessStarted"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "EventProcessStopped"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
             },
             {
@@ -39659,6 +39893,16 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "EventProcessStarted"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "EventProcessStopped"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
             },
             {
@@ -40831,6 +41075,16 @@
                   "name": "T"
                 }
               ]
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "EventProcessStarted"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "EventProcessStopped"
             },
             {
               "kind": "Standard",
@@ -42027,6 +42281,16 @@
                   "name": "T"
                 }
               ]
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "EventProcessStarted"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "EventProcessStopped"
             },
             {
               "kind": "Standard",
@@ -43237,6 +43501,16 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "EventProcessStarted"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "EventProcessStopped"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
             },
             {
@@ -44419,6 +44693,16 @@
                   "name": "T"
                 }
               ]
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "EventProcessStarted"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "EventProcessStopped"
             },
             {
               "kind": "Standard",
@@ -45769,6 +46053,16 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "EventProcessStarted"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "EventProcessStopped"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
             },
             {
@@ -46935,6 +47229,16 @@
             {
               "kind": "Standard",
               "module": "ksp::game",
+              "name": "EventProcessStarted"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "EventProcessStopped"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
               "name": "Mainframe"
             },
             {
@@ -48097,6 +48401,16 @@
                   "name": "T"
                 }
               ]
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "EventProcessStarted"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "EventProcessStopped"
             },
             {
               "kind": "Standard",
@@ -49273,6 +49587,16 @@
                   "name": "T"
                 }
               ]
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "EventProcessStarted"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "EventProcessStopped"
             },
             {
               "kind": "Standard",
