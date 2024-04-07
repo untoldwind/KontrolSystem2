@@ -38,6 +38,7 @@ export class LookupTypeReference implements Node, TO2Type {
 
   public realizedType(context: ModuleContext): RealizedType {
     const effectiveContext = this.lookupContext ?? context;
+
     return (
       effectiveContext.findType(
         this.namePath,

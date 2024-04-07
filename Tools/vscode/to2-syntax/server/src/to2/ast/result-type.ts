@@ -36,6 +36,12 @@ export class ResultType implements RealizedType {
     );
   }
 
+  public fillGenericArguments(typeParameters: RealizedType[]): RealizedType {
+    return typeParameters.length >= 1 && typeParameters.length <= 2
+      ? new ResultType(typeParameters[0])
+      : this;
+  }
+
   public guessGeneric(
     context: ModuleContext,
     genericMap: Record<string, RealizedType>,

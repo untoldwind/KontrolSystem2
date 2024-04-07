@@ -86,6 +86,10 @@ export class FunctionType implements RealizedType {
     );
   }
 
+  public fillGenericArguments(typeParameters: RealizedType[]): RealizedType {
+    return this;
+  }
+
   public guessGeneric(
     context: ModuleContext,
     genericMap: Record<string, RealizedType>,

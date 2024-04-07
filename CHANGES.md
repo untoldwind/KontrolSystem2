@@ -2,7 +2,46 @@
 
 ## 0.5.7.9 ->
 
-* Add `ksp::game::MESSAGE_BUS`
+* Add `ksp::game::MESSAGE_BUS`. Example:
+  * Script 1 "test_send.to2":
+    ```rust
+    use { Vessel } from ksp::vessel
+    use { CONSOLE } from ksp::console
+    use { MESSAGE_BUS } from ksp::game
+    
+    pub struct MyMessage(message: string, a_number: int) {
+        message: string = message
+        a_number: int = a_number
+    }
+    
+    pub fn main_flight(vessel: Vessel) -> Result<Unit, string> = {
+        MESSAGE_BUS.publish(MyMessage("Hello", 1234))
+    }
+    ```
+  * Script 2 "test_recv.to2":
+    ```rust
+    use { Vessel } from ksp::vessel
+    use { CONSOLE } from ksp::console
+    use { MESSAGE_BUS, wait_until, Subscription } from ksp::game
+    use { MyMessage } from test_send
+    
+    pub fn main_flight(vessel: Vessel) -> Result<Unit, string> = {
+      CONSOLE.clear()
+
+      const subscription : Subscription<MyMessage> = MESSAGE_BUS.subscribe()
+
+      while(true) {
+        // This is still rather clunky, there should be a proper helper for "wait for message"
+        wait_until(fn() -> subscription.peek().defined)
+        
+        // The wait is not really necessary, this can be done in any loop with yield or sleep
+        if(Some(message) = subscription.recv()) {
+            CONSOLE.print_line($"Recv message: {message.message} {message.a_number}")
+        }
+      }
+    }
+    ```
+
 * Add `ksp::game::notification_alert` and `ksp::game::notification_passive`. Example:
     ```
     use { Vessel } from ksp::vessel

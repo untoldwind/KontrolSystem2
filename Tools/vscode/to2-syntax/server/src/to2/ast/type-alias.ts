@@ -12,7 +12,8 @@ export class TypeAlias implements Node, TypeDeclaration {
   public readonly name: WithPosition<string>;
 
   constructor(
-    public readonly exported: boolean,
+    public readonly pubKeyword: WithPosition<"pub"> | undefined,
+    public readonly typeKeyword: WithPosition<"type">,
     public readonly alias: WithPosition<string>,
     public readonly description: string,
     public readonly type: TO2Type,
@@ -52,7 +53,13 @@ export class TypeAlias implements Node, TypeDeclaration {
     return errors;
   }
 
-  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
+  public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    if (this.pubKeyword) {
+      semanticTokens.push(this.pubKeyword.range.semanticToken("keyword"));
+    }
+    semanticTokens.push(this.typeKeyword.range.semanticToken("keyword"));
+    semanticTokens.push(this.alias.range.semanticToken("type", "declaration"));
+  }
 
   public setModuleName(moduleName: string, context: ModuleContext) {
     this.type.setModuleName?.(moduleName, context);

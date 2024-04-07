@@ -54,7 +54,9 @@ export class RootModuleContext implements ModuleContext {
     typeArguments: RealizedType[],
   ): RealizedType | undefined {
     if (namePath.length === 1 && this.typeAliases.has(namePath[0])) {
-      return this.typeAliases.get(namePath[0]);
+      return this.typeAliases
+        .get(namePath[0])
+        ?.fillGenericArguments(typeArguments);
     }
     if (namePath.length === 2) {
       const mappedModule = this.moduleAliases.get(namePath[0]);

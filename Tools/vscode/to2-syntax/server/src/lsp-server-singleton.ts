@@ -87,7 +87,7 @@ export class LspServerSingleton {
           start: moduleResult.remaining.position,
           end: textDocument.positionAt(
             moduleResult.remaining.position.offset +
-            moduleResult.remaining.available,
+              moduleResult.remaining.available,
           ),
         },
         message: moduleResult.expected,
@@ -175,6 +175,8 @@ export class LspServerSingleton {
   async indexWorkspace(workspaceUri: string) {
     const workspacePath = uriToPath(workspaceUri);
     if (!workspacePath || !(await isDirectory(workspacePath))) return;
+
+    await this.updateTypeResolver(workspacePath);
 
     this.workspaceFolders.add(workspaceUri);
 
@@ -266,12 +268,28 @@ export class LspServerSingleton {
     this.globalSettings = config ?? defaultSettings;
 
     for (const libraryPath of [config?.libraryPath, config?.localLibraryPath]) {
-      if (!libraryPath || libraryPath.length === 0 || !(await isDirectory(libraryPath)))
+      if (
+        !libraryPath ||
+        libraryPath.length === 0 ||
+        !(await isDirectory(libraryPath))
+      )
         continue;
       await this.updateTypeResolver(libraryPath);
       const libraryUri = pathToUri(libraryPath, this.documents);
       if (!this.workspaceFolders.has(libraryUri)) {
         await this.indexWorkspace(libraryUri);
+      }
+    }
+    const referenceJson = config?.referenceJson;
+    if (referenceJson && referenceJson.length > 0) {
+      if (await isFile(referenceJson)) {
+        try {
+          const content = JSON.parse(await fs.readFile(referenceJson, "utf-8"));
+
+          initTypeResolver(content as Reference);
+        } catch (e) {
+          // ignore
+        }
       }
     }
   }
@@ -330,10 +348,6 @@ export class LspServerSingleton {
   }
 
   async onInitialized() {
-    for (const folder of this.workspaceFolders) {
-      const folderPath = uriToPath(folder);
-      folderPath && (await this.updateTypeResolver(folderPath));
-    }
     if (this.hasConfigurationCapability) {
       // Register for all configuration changes.
       this.connection.client.register(
@@ -411,8 +425,8 @@ export class LspServerSingleton {
       (node) =>
         node.documentation
           ? node.documentation
-            .filter((doc) => doc.range.contains(params.position))
-            .map((doc) => doc.value)
+              .filter((doc) => doc.range.contains(params.position))
+              .map((doc) => doc.value)
           : [],
     );
 

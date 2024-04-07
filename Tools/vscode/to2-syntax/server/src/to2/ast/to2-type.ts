@@ -61,6 +61,8 @@ export interface RealizedType extends TO2Type {
     genericMap: Record<string, RealizedType>,
   ): RealizedType;
 
+  fillGenericArguments(typeParameters: RealizedType[]): RealizedType;
+
   guessGeneric(
     context: ModuleContext,
     genericMap: Record<string, RealizedType>,
@@ -130,6 +132,10 @@ export class GenericParameter implements RealizedType {
     genericMap: Record<string, RealizedType>,
   ): RealizedType {
     return genericMap.hasOwnProperty(this.name) ? genericMap[this.name] : this;
+  }
+
+  fillGenericArguments(typeParameters: RealizedType[]): RealizedType {
+    return this;
   }
 
   guessGeneric(
@@ -205,6 +211,10 @@ export const UNKNOWN_TYPE: RealizedType = {
   },
 
   fillGenerics() {
+    return this;
+  },
+
+  fillGenericArguments(typeParameters: RealizedType[]): RealizedType {
     return this;
   },
 
@@ -286,16 +296,6 @@ export class TypeResolver {
     typeArguments: RealizedType[],
   ): RealizedType | undefined {
     const fullName = namePath.join("::");
-    switch (fullName) {
-      case "Option":
-        if (typeArguments.length === 1) return new OptionType(typeArguments[0]);
-        break;
-      case "Result":
-        if (typeArguments.length === 1 || typeArguments.length === 2)
-          return new ResultType(typeArguments[0]);
-        break;
-    }
-
     return this.referencedTypes[fullName]?.fillGenericArguments(typeArguments);
   }
 
@@ -312,27 +312,30 @@ export class TypeResolver {
         return this.findLibraryType([typeRef.module, typeRef.name], []);
       case "Array":
         return new ArrayType(
-          this.resolveTypeRef(typeRef.parameters[0]) ?? UNKNOWN_TYPE,
+          this.resolveTypeRef(typeRef.parameters[0], genericMap) ??
+            UNKNOWN_TYPE,
         );
       case "Option":
         return new OptionType(
-          this.resolveTypeRef(typeRef.parameters[0]) ?? UNKNOWN_TYPE,
+          this.resolveTypeRef(typeRef.parameters[0], genericMap) ??
+            UNKNOWN_TYPE,
         );
       case "Result":
         return new ResultType(
-          this.resolveTypeRef(typeRef.parameters[0]) ?? UNKNOWN_TYPE,
+          this.resolveTypeRef(typeRef.parameters[0], genericMap) ??
+            UNKNOWN_TYPE,
         );
       case "Tuple":
         return new TupleType(
           typeRef.parameters.map(
-            (param) => this.resolveTypeRef(param) ?? UNKNOWN_TYPE,
+            (param) => this.resolveTypeRef(param, genericMap) ?? UNKNOWN_TYPE,
           ),
         );
       case "Record":
         return new RecordType(
           typeRef.parameters.map((param, idx) => [
             { range: UNKNOWN_RANGE, value: typeRef.names[idx] },
-            this.resolveTypeRef(param) ?? UNKNOWN_TYPE,
+            this.resolveTypeRef(param, genericMap) ?? UNKNOWN_TYPE,
           ]),
         );
       case "Function":
@@ -340,10 +343,10 @@ export class TypeResolver {
           typeRef.isAsync,
           typeRef.parameters.map((param, idx) => [
             `param${idx}`,
-            this.resolveTypeRef(param) ?? UNKNOWN_TYPE,
+            this.resolveTypeRef(param, genericMap) ?? UNKNOWN_TYPE,
             false,
           ]),
-          this.resolveTypeRef(typeRef.returnType) ?? UNKNOWN_TYPE,
+          this.resolveTypeRef(typeRef.returnType, genericMap) ?? UNKNOWN_TYPE,
         );
     }
   }

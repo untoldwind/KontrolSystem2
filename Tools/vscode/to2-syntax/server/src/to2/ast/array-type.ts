@@ -46,6 +46,10 @@ export class ArrayType implements RealizedType {
     );
   }
 
+  public fillGenericArguments(typeParameters: RealizedType[]): RealizedType {
+    return typeParameters.length == 1 ? new ArrayType(typeParameters[0]) : this;
+  }
+
   guessGeneric(
     context: ModuleContext,
     genericMap: Record<string, RealizedType>,

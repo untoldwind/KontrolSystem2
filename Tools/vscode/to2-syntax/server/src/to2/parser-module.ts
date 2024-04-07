@@ -47,7 +47,7 @@ import { Registry } from "./ast/registry";
 
 const useKeyword = terminated(withPosition(tag("use")), spacing1);
 
-const typeKeyword = terminated(tag("type"), spacing1);
+const typeKeyword = terminated(withPosition(tag("type")), spacing1);
 
 const structKeyword = terminated(withPosition(tag("struct")), spacing1);
 
@@ -107,11 +107,12 @@ const typeAlias = map(
   seq(
     descriptionComment,
     preceded(whitespace0, opt(pubKeyword)),
-    preceded(typeKeyword, withPosition(identifier)),
+    typeKeyword,
+    withPosition(identifier),
     preceded(eqDelimiter, typeRef),
   ),
-  ([description, pub, name, type], start, end) =>
-    new TypeAlias(pub !== undefined, name, description, type, start, end),
+  ([description, pub, typeKeyword, name, type], start, end) =>
+    new TypeAlias(pub, typeKeyword, name, description, type, start, end),
 );
 
 const structField = map(

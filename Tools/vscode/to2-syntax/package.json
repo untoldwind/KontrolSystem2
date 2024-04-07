@@ -35,6 +35,12 @@
           "default": "",
           "description": "TO2 local library folder (if somewhere else than to2Local)"
         },
+        "to2LspServer.referenceJson": {
+          "scope": "window",
+          "type": "string",
+          "default": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Kerbal Space Program 2\\BepInEx\\plugins\\KontrolSystem2\\reference.json",
+          "description": "Location of the reference.json file containing the latest language information"
+        },
         "to2LspServer.maxNumberOfProblems": {
           "scope": "resource",
           "type": "number",

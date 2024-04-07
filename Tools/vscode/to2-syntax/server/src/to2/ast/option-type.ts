@@ -37,6 +37,12 @@ export class OptionType implements RealizedType {
     );
   }
 
+  public fillGenericArguments(typeParameters: RealizedType[]): RealizedType {
+    return typeParameters.length == 1
+      ? new OptionType(typeParameters[0])
+      : this;
+  }
+
   public guessGeneric(
     context: ModuleContext,
     genericMap: Record<string, RealizedType>,

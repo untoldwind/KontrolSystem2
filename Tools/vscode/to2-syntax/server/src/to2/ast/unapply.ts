@@ -1,14 +1,17 @@
 import { Expression, Node, ValidationError } from ".";
-import { TO2Type, currentTypeResolver } from "./to2-type";
+import { TO2Type, UNKNOWN_TYPE, currentTypeResolver } from "./to2-type";
 import { InputPosition, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
 import { isOptionType } from "./option-type";
+import { InlayHint } from "vscode-languageserver";
 
 export class Unapply extends Expression {
+  public inlayHints: InlayHint[] | undefined;
+
   constructor(
     public readonly pattern: WithPosition<string>,
-    public readonly extractNames: string[],
+    public readonly extractNames: WithPosition<string>[],
     public readonly expression: Expression,
     start: InputPosition,
     end: InputPosition,
@@ -43,13 +46,21 @@ export class Unapply extends Expression {
             range: this.pattern.range,
           });
         } else if (isOptionType(expressionType)) {
-          context.localVariables.set(this.extractNames[0], {
+          context.localVariables.set(this.extractNames[0].value, {
             definition: {
               moduleName: context.module.moduleName,
               range: this.pattern.range,
             },
             value: expressionType.elementType,
           });
+          if (expressionType.elementType !== UNKNOWN_TYPE)
+            this.inlayHints = [
+              {
+                position: this.extractNames[0].range.end,
+                label: `: ${expressionType.elementType.localName}`,
+                paddingLeft: true,
+              },
+            ];
         } else {
           errors.push({
             status: "error",
@@ -70,6 +81,11 @@ export class Unapply extends Expression {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
+    for (const extractName of this.extractNames) {
+      semanticTokens.push(
+        extractName.range.semanticToken("variable", "declaration"),
+      );
+    }
     this.expression.collectSemanticTokens(semanticTokens);
   }
 }

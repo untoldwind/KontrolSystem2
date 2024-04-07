@@ -511,7 +511,7 @@ const unapplyExpr = map(
       spacing0,
       between(
         terminated(tag("("), spacing0),
-        delimited0(identifier, commaDelimiter, "identifier"),
+        delimited0(withPosition(identifier), commaDelimiter, "identifier"),
         preceded(spacing0, tag(")")),
       ),
     ),

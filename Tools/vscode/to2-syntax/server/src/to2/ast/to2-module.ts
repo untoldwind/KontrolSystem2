@@ -10,7 +10,7 @@ import { InputPosition, InputRange } from "../../parser";
 import { ModuleReference } from "../../reference";
 import { SemanticToken } from "../../syntax-token";
 import { ConstDeclaration, isConstDeclaration } from "./const-declaration";
-import { ModuleContext, RootModuleContext } from "./context";
+import { RootModuleContext } from "./context";
 import {
   FunctionDeclaration,
   isFunctionDeclaration,
