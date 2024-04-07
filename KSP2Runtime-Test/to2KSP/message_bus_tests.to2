@@ -4,11 +4,13 @@ use { MESSAGE_BUS, Subscription } from ksp::game
 test sync fn test_publish_subscribe_simple() -> Unit = {
     const subscription : Subscription<string> = MESSAGE_BUS.subscribe()
     
+    assert_false(subscription.has_messages)
     assert_false(subscription.peek().defined)
     assert_false(subscription.recv().defined)
     
     MESSAGE_BUS.publish("Test1")
     
+    assert_true(subscription.has_messages)
     assert_true(subscription.peek().defined)
     assert_string("Test1", subscription.peek().value)
     
@@ -17,6 +19,7 @@ test sync fn test_publish_subscribe_simple() -> Unit = {
     assert_true(received.defined)
     assert_string("Test1", received.value)
     
+    assert_false(subscription.has_messages)
     assert_false(subscription.peek().defined)
     assert_false(subscription.recv().defined)    
 }
@@ -29,6 +32,8 @@ test sync fn test_publish_subscribe_own_type() -> Unit = {
     const subscription1 : Subscription<string> = MESSAGE_BUS.subscribe()
     const subscription2 : Subscription<SpecialEvent> = MESSAGE_BUS.subscribe()
     
+    assert_false(subscription1.has_messages)
+    assert_false(subscription2.has_messages)
     assert_false(subscription1.peek().defined)
     assert_false(subscription1.recv().defined)
     assert_false(subscription2.peek().defined)
@@ -36,9 +41,11 @@ test sync fn test_publish_subscribe_own_type() -> Unit = {
 
     MESSAGE_BUS.publish(SpecialEvent("Test2"))
     
+    assert_false(subscription1.has_messages)
     assert_false(subscription1.peek().defined)
     assert_false(subscription1.recv().defined)
 
+    assert_true(subscription2.has_messages)
     assert_true(subscription2.peek().defined)
     assert_string("Test2", subscription2.peek().value.message)
 
@@ -47,6 +54,7 @@ test sync fn test_publish_subscribe_own_type() -> Unit = {
     assert_true(received.defined)
     assert_string("Test2", received.value.message)
     
+    assert_false(subscription2.has_messages)
     assert_false(subscription2.peek().defined)
     assert_false(subscription2.recv().defined)    
 }
@@ -55,6 +63,8 @@ test sync fn test_subscribe_unsubscribe() -> Unit = {
     const subscription1 : Subscription<int> = MESSAGE_BUS.subscribe()
     const subscription2 : Subscription<int> = MESSAGE_BUS.subscribe()
 
+    assert_false(subscription1.has_messages)
+    assert_false(subscription2.has_messages)
     assert_false(subscription1.peek().defined)
     assert_false(subscription2.peek().defined)
 

@@ -26,7 +26,12 @@ public static class MessageBusBinding {
                     typeof(MessageBus.Subscription<>), typeof(MessageBus.Subscription<>).GetMethod("Unsubscribe"))
             }
         },
-        new());
+        new() {
+            {
+                "has_messages", new BoundPropertyLikeFieldAccessFactory("Check if subscription has pending messages",
+                    () => BuiltinType.Bool, typeof(MessageBus.Subscription<>), typeof(MessageBus.Subscription<>).GetProperty("HasMessages"))
+            }
+        });
 
     private static List<BoundType>? messageBusTypes;
 
