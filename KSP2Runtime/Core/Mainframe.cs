@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using KontrolSystem.KSP.Runtime.KSPConsole;
 using KontrolSystem.KSP.Runtime.KSPGame;
@@ -110,13 +111,13 @@ public class Mainframe : KerbalMonoBehaviour {
 
     public void Reboot() {
         if (rebooting) return;
-        DoReboot(config!);
+        StartCoroutine(DoReboot(config!));
     }
 
-    private async void DoReboot(KontrolSystemConfig config) {
+    private IEnumerator<object?> DoReboot(KontrolSystemConfig config) {
         rebooting = true;
         availableProcessesChanged.Invoke();
-        var nextState = await Task.Run(() => {
+        var task = Task.Factory.StartNew(() => {
             var stopwatch = new Stopwatch();
             try {
                 stopwatch.Start();
@@ -165,18 +166,29 @@ public class Mainframe : KerbalMonoBehaviour {
                 ]);
             }
         });
-        if (nextState.errors.Count == 0 && nextState.registry != null)
-            processes = (processes ?? Enumerable.Empty<KontrolSystemProcess>())
-                .Where(p => p.State == KontrolSystemProcessState.Running ||
-                            p.State == KontrolSystemProcessState.Outdated).Select(p => p.MarkOutdated()).Concat(
-                    nextState.registry.modules.Values
-                        .Where(module =>
-                            module.HasKSCEntrypoint() || module.HasEditorEntrypoint() ||
-                            module.HasTrackingEntrypoint() ||
-                            module.HasFlightEntrypoint())
-                        .Select(module => new KontrolSystemProcess(config.Logger, module))).ToList();
+        var timeout = Stopwatch.StartNew();
+        while (!task.IsCompleted && timeout.ElapsedMilliseconds < 30000) {
+            yield return null;
+        }
+        if (task.IsCompleted) {
+            var nextState = task.Result;
+            if (nextState.errors.Count == 0 && nextState.registry != null)
+                processes = (processes ?? Enumerable.Empty<KontrolSystemProcess>())
+                    .Where(p => p.State == KontrolSystemProcessState.Running ||
+                                p.State == KontrolSystemProcessState.Outdated).Select(p => p.MarkOutdated()).Concat(
+                        nextState.registry.modules.Values
+                            .Where(module =>
+                                module.HasKSCEntrypoint() || module.HasEditorEntrypoint() ||
+                                module.HasTrackingEntrypoint() ||
+                                module.HasFlightEntrypoint())
+                            .Select(module => new KontrolSystemProcess(config.Logger, module))).ToList();
 
-        state = nextState;
+            state = nextState;
+        } else {
+            state = new State(state?.registry, timeout.Elapsed, [
+                new(new Position(), "Reboot timeout", "Reboot exceeded timeout")
+            ]);
+        }
         rebooting = false;
         availableProcessesChanged.Invoke();
     }

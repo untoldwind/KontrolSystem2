@@ -20,9 +20,9 @@ public class REPLCompiledTests {
 
             registry.RegisterModule(BindingGenerator.BindModule(typeof(TestModule)));
 
-//            var context = registry.AddDirectory(Path.Combine(".", "to2Core"));
+            //            var context = registry.AddDirectory(Path.Combine(".", "to2Core"));
 
-//            context.Save("demo_repl.dll");
+            //            context.Save("demo_repl.dll");
         } catch (CompilationErrorException e) {
             foreach (var error in e.errors) output.WriteLine(error.ToString());
 
@@ -177,7 +177,7 @@ public class REPLCompiledTests {
                 log(E)
             "), 5);
     }
-    
+
     private T RunExpression<T>(KontrolRegistry registry, string expression) {
         var context = new TestRunnerContext();
 
