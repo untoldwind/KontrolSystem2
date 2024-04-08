@@ -8,8 +8,6 @@ using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Generator;
 using KontrolSystem.TO2.Parser;
 using KontrolSystem.TO2.Runtime;
-using Enumerable = UniLinq.Enumerable;
-using Result = KontrolSystem.Parsing.Result;
 
 namespace KontrolSystem.TO2;
 
