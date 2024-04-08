@@ -86,7 +86,7 @@ public class ModuleManagerWindow : UGUIResizableWindow {
             horizonal.Layout();
 
             OnProcessesChanged();
-            Mainframe.Instance.availableProcessesChanged.AddListener(OnProcessesChanged);
+            Mainframe.Instance!.availableProcessesChanged.AddListener(OnProcessesChanged);
         }
 
         internal void ShowParameterPopup(KontrolSystemProcessWithArguments element, Action onClose) {

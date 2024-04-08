@@ -52,11 +52,59 @@ public class CommandShell {
         }
     }
 
+    class TestCommand : ICommand {
+        public string Name => "test";
+
+        public string ShortHelp => "Run unit tests.";
+
+        public void Run(string[] arguments) {
+            Mainframe.Instance!.RunUnitTests(arguments.Length > 0 ? arguments[0] : null);
+        }
+    }
+
+    class ListCommand : ICommand {
+        public string Name => "list";
+        public string ShortHelp => "List available processes";
+
+        public void Run(string[] arguments) {
+            var consoleBuffer = Mainframe.Instance!.ConsoleBuffer;
+
+            foreach (var process in Mainframe.Instance!.AvailableProcesses) {
+                consoleBuffer.PrintLine(process.Name);
+            }
+        }
+    }
+
+    class StartCommand : ICommand {
+        public string Name => "start";
+
+        public string ShortHelp => "Start process by name";
+
+        public void Run(string[] arguments) {
+            if (arguments.Length == 0) {
+                Mainframe.Instance!.ConsoleBuffer.PrintLine("Usage: start <name>");
+                return;
+            }
+
+            var name = arguments[0];
+            foreach (var process in Mainframe.Instance!.AvailableProcesses) {
+                if (process.Name == name) {
+                    Mainframe.Instance!.StartProcess(process);
+                    return;
+                }
+            }
+            Mainframe.Instance!.ConsoleBuffer.PrintLine($"No such process: {name}");
+        }
+    }
+
     private static readonly SortedDictionary<string, ICommand> MAIN_COMMANDS = new SortedDictionary<string, ICommand>(
         new List<ICommand> {
             new HelpCommand(),
             new ClearCommand(),
             new RebootCommand(),
+            new TestCommand(),
+            new ListCommand(),
+            new StartCommand(),
         }.ToDictionary(command => command.Name));
 
     public static void RunCommand(string command) {

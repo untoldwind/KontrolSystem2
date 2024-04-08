@@ -7846,6 +7846,7 @@
             },
             "quick_load_allowed": {
               "name": "quick_load_allowed",
+              "description": "Check if quick load is allowed by the game settings\n",
               "readOnly": true,
               "type": {
                 "kind": "Builtin",
@@ -7857,6 +7858,7 @@
             "quick_save": {
               "isAsync": false,
               "name": "quick_save",
+              "description": "Trigger a quick save\n",
               "parameters": [],
               "returnType": {
                 "kind": "Builtin",
@@ -7866,10 +7868,21 @@
             "quick_load": {
               "isAsync": false,
               "name": "quick_load",
+              "description": "Trigger a quick load. Note: This will implicitly terminate all running scripts.\n",
               "parameters": [],
               "returnType": {
                 "kind": "Builtin",
                 "name": "Unit"
+              }
+            },
+            "try_recover_vessel": {
+              "isAsync": false,
+              "name": "try_recover_vessel",
+              "description": "Try to recover the current vessel.\nCurrently a vessel is only recoverable if splashed or landed on Kerbin.\nThis will implicitly terminate the running script if successful.\n\n",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "bool"
               }
             }
           },

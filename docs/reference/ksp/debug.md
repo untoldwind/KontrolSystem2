@@ -322,12 +322,12 @@ Control load/save of game
 
 #### Fields
 
-| Name               | Type | Read-only | Description |
-| ------------------ | ---- | --------- | ----------- |
-| is_loaded          | bool | R/O       |             |
-| is_loading         | bool | R/O       |             |
-| is_saving          | bool | R/O       |             |
-| quick_load_allowed | bool | R/O       |             |
+| Name               | Type | Read-only | Description                                          |
+| ------------------ | ---- | --------- | ---------------------------------------------------- |
+| is_loaded          | bool | R/O       |                                                      |
+| is_loading         | bool | R/O       |                                                      |
+| is_saving          | bool | R/O       |                                                      |
+| quick_load_allowed | bool | R/O       | Check if quick load is allowed by the game settings  |
 
 
 #### Methods
@@ -338,6 +338,7 @@ Control load/save of game
 saveloadcontrol.quick_load ( ) -> Unit
 ```
 
+Trigger a quick load. Note: This will implicitly terminate all running scripts.
 
 
 ##### quick_save
@@ -345,6 +346,19 @@ saveloadcontrol.quick_load ( ) -> Unit
 ```rust
 saveloadcontrol.quick_save ( ) -> Unit
 ```
+
+Trigger a quick save
+
+
+##### try_recover_vessel
+
+```rust
+saveloadcontrol.try_recover_vessel ( ) -> bool
+```
+
+Try to recover the current vessel.
+Currently a vessel is only recoverable if splashed or landed on Kerbin.
+This will implicitly terminate the running script if successful.
 
 
 

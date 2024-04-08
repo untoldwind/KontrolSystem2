@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 using KontrolSystem.KSP.Runtime.KSPConsole;
 using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.KSP.Runtime.KSPTelemetry;
+using KontrolSystem.KSP.Runtime.Testing;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2;
 using KontrolSystem.TO2.Runtime;
+using KontrolSystem.TO2.Tooling;
 using KSP.Game;
 using KSP.Messages;
 using KSP.Sim.impl;
@@ -103,7 +105,7 @@ public class Mainframe : KerbalMonoBehaviour {
 
     public void Initialize(KontrolSystemConfig config) {
         this.config = config;
-        ConsoleBuffer.PrintLine("Welcome to KontrolSystem2");
+        ConsoleBuffer.PrintLine($"Welcome to KontrolSystem2 {config.Version}");
         ConsoleBuffer.PrintLine("Try 'help' for help.");
     }
 
@@ -353,6 +355,37 @@ public class Mainframe : KerbalMonoBehaviour {
 
         } else {
             ConsoleBuffer.Print($"\n\n>>>>> ERROR <<<<<<<<<\n\nREPL timeout {timeout}");
+        }
+    }
+
+    public void RunUnitTests(string? moduleName) {
+        StartCoroutine(DoRunUnitTests(moduleName));
+    }
+
+    private IEnumerator<object?> DoRunUnitTests(string? moduleName) {
+        var registry = state?.registry;
+        if (registry == null) yield break;
+
+        var testReporter = new ConsoleBufferTestReporter(ConsoleBuffer);
+
+        var task = Task.Factory.StartNew(() => {
+            if (moduleName == null)
+                TestRunner.RunTests(registry, testReporter, () => new KSPTestRunnerContext());
+            else {
+                if (registry.modules.TryGetValue(moduleName, out var module)) {
+                    TestRunner.RunTests(module, testReporter, () => new KSPTestRunnerContext());
+                } else {
+                    ConsoleBuffer.PrintLine($"No such module: {moduleName}");
+                }
+            }
+        });
+        var timeout = Stopwatch.StartNew();
+        while (!task.IsCompleted && timeout.ElapsedMilliseconds < 30000) {
+            yield return null;
+        }
+
+        if (!task.IsCompleted) {
+            ConsoleBuffer.PrintLine($"Unit tests timeout {timeout}");
         }
     }
 
