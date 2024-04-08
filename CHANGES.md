@@ -59,6 +59,7 @@
 * Improve ConsoleWindow
   * REPL command field has been removed
   * Instead console itself now focusable and has a command prompt with history
+* Add `try_recover_vessel` to `ksp::debug::SAVE_LOAD_CONTROL` (#152)
 
 ## 0.5.7.6 -> 0.5.7.9
 

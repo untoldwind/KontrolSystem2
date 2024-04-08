@@ -1,4 +1,5 @@
-﻿using KontrolSystem.TO2.Binding;
+﻿using System;
+using KontrolSystem.TO2.Binding;
 using KSP.Game;
 using KSP.Input;
 
@@ -13,11 +14,11 @@ public partial class KSPDebugModule {
 
         [KSField] public bool IsSaving => KSPContext.CurrentContext.Game.SaveLoadManager.IsSaving;
 
-        [KSField]
+        [KSField(Description = "Check if quick load is allowed by the game settings")]
         public bool QuickLoadAllowed =>
             KSPContext.CurrentContext.Game.SessionManager.IsDifficultyOptionEnabled("AllowQuickLoad");
 
-        [KSMethod]
+        [KSMethod(Description = "Trigger a quick save")]
         public void QuickSave() {
             var game = KSPContext.CurrentContext.Game;
             if (game.InputManager.TryGetInputDefinition<GlobalInputDefinition>(
@@ -26,7 +27,7 @@ public partial class KSPDebugModule {
             }
         }
 
-        [KSMethod]
+        [KSMethod(Description = "Trigger a quick load. Note: This will implicitly terminate all running scripts.")]
         public void QuickLoad() {
             var game = KSPContext.CurrentContext.Game;
             if (game.InputManager.TryGetInputDefinition<GlobalInputDefinition>(
@@ -36,6 +37,18 @@ public partial class KSPDebugModule {
                 else
                     inputDefinition.TriggerAction(game.Input.Global.QuickLoad.name);
             }
+        }
+
+        [KSMethod(Description = @"Try to recover the current vessel.
+            Currently a vessel is only recoverable if splashed or landed on Kerbin.
+            This will implicitly terminate the running script if successful.
+        ")]
+        public bool TryRecoverVessel() {
+            var vessel = KSPContext.CurrentContext.ActiveVessel;
+            if (vessel == null || !vessel.LandedOrSplashed || vessel.Orbit.referenceBody.bodyName != "Kerbin") return false;
+            vessel.RecoverVessel(vessel.Orbit.referenceBody.SimulationObject.GlobalId);
+            vessel.SimulationObject.Destroy();
+            throw new Exception("Vessel recovered");
         }
     }
 }
