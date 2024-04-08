@@ -198,22 +198,4 @@ public class REPLCompiledTests {
 
         return (T)result;
     }
-
-    private KontrolRegistry CreateTestRegistry() {
-        try {
-            var registry = KontrolRegistry.CreateCore();
-
-            registry.RegisterModule(BindingGenerator.BindModule(typeof(TestModule)));
-
-            var context = registry.AddDirectory(Path.Combine(".", "to2Core"));
-
-            context.Save("demo.dll");
-
-            return registry;
-        } catch (CompilationErrorException e) {
-            foreach (var error in e.errors) output.WriteLine(error.ToString());
-
-            throw new XunitException(e.Message);
-        }
-    }
 }

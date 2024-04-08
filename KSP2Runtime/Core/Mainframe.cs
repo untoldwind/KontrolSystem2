@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using KontrolSystem.KSP.Runtime.KSPConsole;
 using KontrolSystem.KSP.Runtime.KSPGame;
@@ -24,6 +23,8 @@ public readonly struct MainframeError(Position position, string errorType, strin
     public readonly Position position = position;
     public readonly string errorType = errorType;
     public readonly string message = message;
+
+    public override string ToString() => $"ERROR: [{position}] {errorType}\n{message}";
 }
 
 public class Mainframe : KerbalMonoBehaviour {
@@ -102,6 +103,8 @@ public class Mainframe : KerbalMonoBehaviour {
 
     public void Initialize(KontrolSystemConfig config) {
         this.config = config;
+        ConsoleBuffer.PrintLine("Welcome to KontrolSystem2");
+        ConsoleBuffer.PrintLine("Try 'help' for help.");
     }
 
     public void Destroy() {
@@ -109,12 +112,12 @@ public class Mainframe : KerbalMonoBehaviour {
         Game.Messages.Unsubscribe<GameStateChangedMessage>(OnStateChange);
     }
 
-    public void Reboot() {
+    public void Reboot(bool showInConsole) {
         if (rebooting) return;
-        StartCoroutine(DoReboot(config!));
+        StartCoroutine(DoReboot(config!, showInConsole));
     }
 
-    private IEnumerator<object?> DoReboot(KontrolSystemConfig config) {
+    private IEnumerator<object?> DoReboot(KontrolSystemConfig config, bool showInConsole) {
         rebooting = true;
         availableProcessesChanged.Invoke();
         var task = Task.Factory.StartNew(() => {
@@ -189,6 +192,18 @@ public class Mainframe : KerbalMonoBehaviour {
                 new(new Position(), "Reboot timeout", "Reboot exceeded timeout")
             ]);
         }
+
+        if (showInConsole) {
+            ConsoleBuffer.PrintLine($"Rebooted in {state.bootTime}");
+            if (state.errors.Count == 0) {
+                ConsoleBuffer.PrintLine("No errors");
+            } else {
+                foreach (var error in state.errors) {
+                    ConsoleBuffer.PrintLine($"{error}");
+                }
+            }
+        }
+
         rebooting = false;
         availableProcessesChanged.Invoke();
     }
@@ -263,6 +278,82 @@ public class Mainframe : KerbalMonoBehaviour {
             }
 
         availableProcessesChanged.Invoke();
+    }
+
+    public void RunREPL(string replExpression) {
+        StartCoroutine(DoRunREPL(replExpression));
+    }
+
+    private IEnumerator<object?> DoRunREPL(string replExpression) {
+        var registry = state?.registry;
+        if (registry == null) yield break;
+
+        var context = new KSPCoreContext("REPL", Logger, Game, ConsoleBuffer, TimeSeriesCollection,
+            MessageBus, config!.OptionalAddons);
+        var task = Task.Factory.StartNew(() => {
+            try {
+                return new REPLState(registry.RunREPL(context, replExpression), []);
+            } catch (CompilationErrorException e) {
+                config.Logger.Debug(e.ToString());
+
+                foreach (var error in e.errors) config.Logger.Info(error.ToString());
+
+                return new REPLState(null, e.errors.Select(error => new MainframeError(
+                    error.start,
+                    error.errorType.ToString(),
+                    error.message
+                )).ToList());
+            } catch (ParseException e) {
+                config.Logger.Debug(e.ToString());
+                config.Logger.Info(e.Message);
+
+                return new REPLState(null, [
+                    new(e.position, "Parsing", e.Message)
+                ]);
+            } catch (Exception e) {
+                config.Logger.Error("Mainframe initialization error: " + e);
+
+                return new REPLState(null, [
+                    new(new Position(), "Unknown error", e.Message)
+                ]);
+            }
+        });
+        var timeout = Stopwatch.StartNew();
+        while (!task.IsCompleted && timeout.ElapsedMilliseconds < 30000) {
+            yield return null;
+        }
+
+        if (task.IsCompleted) {
+            var replState = task.Result;
+            var futureResult = replState.futureResult;
+
+            if (futureResult != null) {
+                while (true) {
+                    IAnyFutureResult result;
+                    try {
+                        ContextHolder.CurrentContext.Value = context;
+                        result = futureResult.Poll();
+                    } catch (Exception e) {
+                        ConsoleBuffer.Print($"\n\n>>>>> ERROR <<<<<<<<<\n\nREPL error:\n{e.Message}");
+                        yield break;
+                    } finally {
+                        ContextHolder.CurrentContext.Value = null;
+                    }
+
+                    if (result.IsReady) {
+                        if (result.ValueObject != null) Mainframe.Instance!.ConsoleBuffer.PrintLine($"{result.ValueObject}");
+                        yield break;
+                    }
+
+                    yield return context.NextYield;
+                }
+            } else {
+                ConsoleBuffer.Print($"\n\n>>>>> ERROR <<<<<<<<<\n\nREPL error:\n{string.Join("\n", replState.errors)}");
+            }
+
+        } else {
+            ConsoleBuffer.Print($"\n\n>>>>> ERROR <<<<<<<<<\n\nREPL timeout {timeout}");
+        }
     }
 
     private void OnProcessDone(KontrolSystemProcess process, string? message, CoreError.StackEntry[]? stackTrace, bool triggerEvent = true) {

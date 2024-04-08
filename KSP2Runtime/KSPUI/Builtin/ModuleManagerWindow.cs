@@ -34,7 +34,7 @@ public class ModuleManagerWindow : UGUIResizableWindow {
         if (!Mainframe.Instance.Initialized) {
             Mainframe.Instance.Logger.Debug("Lazy Initialize KontrolSystemMod");
             mainframeStateIcon.texture = UIFactory.Instance.stateInactive;
-            Mainframe.Instance.Reboot();
+            Mainframe.Instance.Reboot(false);
         }
 
         Mainframe.Instance.availableProcessesChanged.AddListener(OnProcessesChanged);
@@ -77,7 +77,7 @@ public class ModuleManagerWindow : UGUIResizableWindow {
 
             var vertical = horizonal.Add(UGUILayoutContainer.Vertical(20, new UGUILayout.Padding(0, 10, 0, 0))).Item1;
 
-            rebootButton = vertical.Add(UGUIButton.Create("Rebooting...", Mainframe.Instance!.Reboot)).Item1;
+            rebootButton = vertical.Add(UGUIButton.Create("Rebooting...", () => Mainframe.Instance!.Reboot(false))).Item1;
             vertical.AddSpace(0, 1);
             vertical.Add(UGUIButton.Create("New Module", UIWindows.Instance!.OpenEditorWindowNew));
             vertical.Add(UGUIButton.Create("Telemetry", UIWindows.Instance.OpenTelemetryWindow));
@@ -190,13 +190,13 @@ public class ModuleManagerWindow : UGUIResizableWindow {
 
             var vertical = horizonal.Add(UGUILayoutContainer.Vertical(20, new UGUILayout.Padding(0, 10, 0, 0))).Item1;
 
-            rebootButton = vertical.Add(UGUIButton.Create("Rebooting...", Mainframe.Instance!.Reboot)).Item1;
+            rebootButton = vertical.Add(UGUIButton.Create("Rebooting...", () => Mainframe.Instance!.Reboot(false))).Item1;
             vertical.Add(UGUIButton.Create("Copy", OnCopyErrors));
 
             horizonal.Layout();
 
             OnProcessesChanged();
-            Mainframe.Instance.availableProcessesChanged.AddListener(OnProcessesChanged);
+            Mainframe.Instance!.availableProcessesChanged.AddListener(OnProcessesChanged);
         }
 
         public override void OnDestroy() {
@@ -351,7 +351,7 @@ public class ModuleManagerWindow : UGUIResizableWindow {
             Action<KontrolSystemProcessWithArguments, Action> showParameters,
             Action closeParameters) {
             var uiFontSize = UIFactory.Instance!.uiFontSize;
-            this.Element = element;
+            Element = element;
 
             root = UGUILayoutContainer.Horizontal(5);
 

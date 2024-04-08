@@ -130,7 +130,7 @@ public class EditorWindow : UGUIResizableWindow {
 
         File.WriteAllText(filepath, source);
 
-        Mainframe.Instance!.Reboot();
+        Mainframe.Instance!.Reboot(false);
         sourceAndRebootButton!.Interactable = false;
     }
 
@@ -138,7 +138,7 @@ public class EditorWindow : UGUIResizableWindow {
         var filepath = fileNameInputField!.Value;
 
         File.Delete(filepath);
-        Mainframe.Instance!.Reboot();
+        Mainframe.Instance!.Reboot(false);
 
         Close();
     }

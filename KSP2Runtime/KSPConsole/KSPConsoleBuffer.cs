@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using KontrolSystem.KSP.Runtime.Core;
-using KontrolSystem.KSP.Runtime.KSPUI.Builtin;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -91,7 +90,7 @@ public class ConsolePrompt {
     }
 
     internal void HandleKey(KeyCode keyCode, char character) {
-        string? replText = null;
+        string? commandText = null;
 
         lock (promptLock) {
             if (caretRow > promptLines.Count) return;
@@ -139,7 +138,7 @@ public class ConsolePrompt {
                 break;
             case KeyCode.Return:
                 if (promptLines.Count == 0 || (promptLines.Count == 1 && promptLines.First().IsEmpty())) return;
-                replText = string.Join("\n", promptLines.Select(l => l.ContentAsString()));
+                commandText = string.Join("\n", promptLines.Select(l => l.ContentAsString()));
                 history.Add(promptLines);
                 commandHistoryIndex = history.Count;
                 promptLines = new List<ConsoleLine> { new(0, new char[maxLineLength]) };
@@ -154,21 +153,8 @@ public class ConsolePrompt {
             }
         }
 
-        if (replText != null) {
-            OnRunCommand(replText);
-        }
-    }
-
-    private void OnRunCommand(string replText) {
-        if (!string.IsNullOrWhiteSpace(replText)) {
-            Mainframe.Instance!.Logger.Debug($"Submitted: {replText}");
-            Mainframe.Instance!.ConsoleBuffer.PrintLine($"$> {replText}");
-            try {
-                var result = REPLExpression.Run(replText);
-                if (result != null) Mainframe.Instance!.ConsoleBuffer.PrintLine($"{result}");
-            } catch (Exception e) {
-                Mainframe.Instance!.ConsoleBuffer.PrintLine($"{e}");
-            }
+        if (commandText != null) {
+            CommandShell.RunCommand(commandText);
         }
     }
 
