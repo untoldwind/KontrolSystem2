@@ -85,16 +85,5 @@ public class FieldGet(
         fieldAccess.EmitPtr(context);
     }
 
-    public override REPLValueFuture Eval(REPLContext context) {
-        var targetFuture = target.Eval(context);
-        var fieldAccess =
-            targetFuture.Type.FindField(context.replModuleContext, fieldName)?.Create(context.replModuleContext);
-
-        if (fieldAccess == null)
-            throw new REPLException(this, $"Type '{targetFuture.Type.Name}' does not have a field '{fieldName}'");
-
-        return targetFuture.Then(fieldAccess.FieldType, target => fieldAccess.EvalGet(this, target));
-    }
-
     public override string ToString() => $"{target}.{fieldName}";
 }

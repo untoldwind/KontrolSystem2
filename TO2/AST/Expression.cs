@@ -120,6 +120,4 @@ public class Bracket(Expression expression, Position start = new(), Position end
     public override void EmitPtr(IBlockContext context) => expression.EmitPtr(context);
 
     public override void EmitStore(IBlockContext context, IBlockVariable variable, bool dropResult) => expression.EmitStore(context, variable, dropResult);
-
-    public override REPLValueFuture Eval(REPLContext context) => expression.Eval(context);
 }

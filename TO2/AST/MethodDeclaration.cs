@@ -111,8 +111,4 @@ public class MethodDeclaration : Node, IVariableContainer {
 
         return syncBlockContext.AllErrors;
     }
-
-    public override REPLValueFuture Eval(REPLContext context) {
-        throw new REPLException(this, "Not supported in REPL mode");
-    }
 }

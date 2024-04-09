@@ -90,28 +90,4 @@ public class ArrayCreate(TO2Type? elementType, List<Expression> elements, Positi
             else context.IL.Emit(OpCodes.Stelem, elementType.GeneratedType(context.ModuleContext));
         }
     }
-
-    public override REPLValueFuture Eval(REPLContext context) {
-        var expressionFutures = Elements.Select(p => p.Eval(context)).ToArray();
-        var elementType = ElementType ?? expressionFutures.FirstOrDefault(e => e.Type != BuiltinType.Unit)?.Type;
-
-        if (elementType == null)
-            throw new REPLException(this, "Unable to infer type of array. Please add some type hint");
-
-        for (var i = 0; i < expressionFutures.Length; i++)
-            if (!elementType.IsAssignableFrom(context.replModuleContext, expressionFutures[i].Type))
-                throw new REPLException(this,
-                    $"Element {i} is of type {expressionFutures[i].Type}, expected {elementType}");
-
-        var resultType = new ArrayType(elementType);
-        var generatedElementType = elementType.GeneratedType(context.replModuleContext);
-
-        return REPLValueFuture.ChainN(resultType, expressionFutures,
-            values => {
-                var destinationArray = Array.CreateInstance(generatedElementType, values.Length);
-                for (var i = 0; i < values.Length; i++)
-                    destinationArray.SetValue(values[i].Value, i);
-                return REPLValueFuture.Success(new REPLArray(resultType, destinationArray));
-            });
-    }
 }

@@ -308,44 +308,6 @@ public class MethodCall : Expression {
         if (!dropResult && invokeMethod.ReturnType == typeof(void)) context.IL.Emit(OpCodes.Ldnull);
     }
 
-    public override REPLValueFuture Eval(REPLContext context) {
-        var targetFuture = target.Eval(context);
-        var argumentFutures = arguments.Select(p => p.Eval(context)).ToList();
-
-        var method = targetFuture.Type.FindMethod(context.replModuleContext, methodName);
-
-        if (method != null) {
-            var methodInvoker = method.Create(context.replBlockContext,
-                argumentFutures.Select(a => targetFuture.Type).ToList(), typeHint?.Invoke(context.replBlockContext), this);
-
-            if (context.replBlockContext.HasErrors)
-                throw new REPLException(this, context.replBlockContext.AllErrors.First().message);
-
-            if (arguments.Count > methodInvoker!.Parameters.Count)
-                throw new REPLException(this,
-                    $"Function '{targetFuture.Type.Name}.{methodName}' only allows {methodInvoker.Parameters.Count} arguments, {arguments.Count} where given");
-
-            if (methodInvoker.RequiredParameterCount() > arguments.Count)
-                throw new REPLException(this,
-                    $"Method '{targetFuture.Type.Name}.{methodName}' requires {methodInvoker.RequiredParameterCount()} arguments, {arguments.Count} where given");
-
-            for (var i = 0; i < arguments.Count; i++) {
-                var argumentType = argumentFutures[i].Type;
-                if (!methodInvoker.Parameters[i].type.IsAssignableFrom(context.replModuleContext, argumentType))
-                    throw new REPLException(this,
-                        $"Argument {methodInvoker.Parameters[i].name} of '{targetFuture.Type.Name}.{methodName}' has to be a {methodInvoker.Parameters[i].type}, but got {argumentType}");
-            }
-
-            argumentFutures.Insert(0, targetFuture);
-
-            return REPLValueFuture.ChainN(methodInvoker.ResultType, [.. argumentFutures],
-                targetWithArguments => methodInvoker.Eval(this, targetWithArguments));
-        }
-
-        throw new REPLException(this,
-            $"Type '{targetFuture.Type.Name}' does not have a method or field '{methodName}'");
-    }
-
     public override string ToString() =>
         $"{target}.{methodName}({string.Join(", ", arguments.Select(a => a.ToString()))})";
 }

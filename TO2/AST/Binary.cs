@@ -1,7 +1,6 @@
 ﻿using System.Reflection.Emit;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
-using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST;
 
@@ -90,23 +89,6 @@ public class Binary(
                 End
             ));
         }
-    }
-
-    public override REPLValueFuture Eval(REPLContext context) {
-        var leftFuture = left.Eval(context);
-        var rightFuture = right.Eval(context);
-
-        var leftEmitter = leftFuture.Type.AllowedSuffixOperators(context.replModuleContext)
-            .GetMatching(context.replModuleContext, op, rightFuture.Type);
-        var rightEmitter = rightFuture.Type.AllowedPrefixOperators(context.replModuleContext)
-            .GetMatching(context.replModuleContext, op, leftFuture.Type);
-
-        if (leftEmitter == null && rightEmitter == null)
-            throw new REPLException(this, $"Cannot {op} a {leftFuture.Type} with a {rightFuture.Type}");
-
-        var opEmitter = leftEmitter ?? rightEmitter!;
-        return REPLValueFuture.Chain2(opEmitter.ResultType, leftFuture, rightFuture,
-            (leftResult, rightResult) => opEmitter.Eval(this, leftResult, rightResult));
     }
 
     public override string ToString() => $"({left} {op.ToPrettyString()} {right})";

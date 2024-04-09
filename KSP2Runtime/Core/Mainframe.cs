@@ -388,9 +388,10 @@ public class Mainframe : KerbalMonoBehaviour {
             ConsoleBuffer.Print($"\n\n>>>>> ERROR <<<<<<<<<\n\nREPL error:\n{string.Join("\n", replState.errors)}");
         } else {
             ConsoleBuffer.Print($"\n\n>>>>> ERROR <<<<<<<<<\n\nREPL timeout {timeout}");
-            replCoroutine = null;
-            UpdatePromptLock();
         }
+
+        replCoroutine = null;
+        UpdatePromptLock();
     }
 
     public void RunUnitTests(string? moduleName) {

@@ -23,8 +23,6 @@ public interface IBlockItem {
     void Prepare(IBlockContext context);
 
     void EmitCode(IBlockContext context, bool dropResult);
-
-    REPLValueFuture Eval(REPLContext context);
 }
 
 public interface IVariableRef {
@@ -131,36 +129,5 @@ public class Block : Expression, IVariableContainer {
         }
 
         return this;
-    }
-
-    public override REPLValueFuture Eval(REPLContext context) {
-        bool childScope = parentContainer == null || parentContainer is Block;
-        REPLContext effectiveContext = context;
-
-        if (childScope) effectiveContext = context.CreateChildContext();
-
-        return new REPLBlockEval(ResultType(context.replBlockContext), effectiveContext, items);
-    }
-
-    internal class REPLBlockEval(TO2Type to2Type, REPLContext context, List<IBlockItem> items) : REPLValueFuture(to2Type) {
-        private readonly IEnumerator<IBlockItem> items = items.Where(item => !item.IsComment).GetEnumerator();
-        private REPLValueFuture? lastFuture;
-        private IREPLValue? lastResult = REPLUnit.INSTANCE;
-
-        public override FutureResult<IREPLValue?> PollValue() {
-            if (lastFuture == null) {
-                if (!items.MoveNext()) return new FutureResult<IREPLValue?>(lastResult);
-                lastFuture = items.Current!.Eval(context);
-            }
-
-            var result = lastFuture.PollValue();
-            if (!result.IsReady) return new FutureResult<IREPLValue?>();
-            if (result.value!.IsBreak || result.value.IsContinue || result.value.IsReturn)
-                return new FutureResult<IREPLValue?>(result.value);
-            lastFuture = null;
-            lastResult = result.value;
-
-            return new FutureResult<IREPLValue?>();
-        }
     }
 }

@@ -338,8 +338,4 @@ public class ForInDeconstruct(
 
         return variables;
     }
-
-    public override REPLValueFuture Eval(REPLContext context) {
-        throw new REPLException(this, "Not supported in REPL mode");
-    }
 }

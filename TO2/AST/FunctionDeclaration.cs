@@ -30,10 +30,6 @@ public class FunctionParameter(
     public bool HasDefault => defaultValue != null;
 
     public override string ToString() => $"{name} : {type}";
-
-    public override REPLValueFuture Eval(REPLContext context) {
-        throw new NotSupportedException("Function are not supported in REPL mode");
-    }
 }
 
 public class FunctionDeclaration : Node, IModuleItem, IVariableContainer {
@@ -125,9 +121,5 @@ public class FunctionDeclaration : Node, IModuleItem, IVariableContainer {
             MethodParameter.EmitLoadArg(context.IL, idx);
         context.IL.EmitNew(OpCodes.Newobj, asyncClass.Value.constructor, parameters.Count);
         context.IL.EmitReturn(asyncClass.Value.type);
-    }
-
-    public override REPLValueFuture Eval(REPLContext context) {
-        throw new NotSupportedException("Function are not supported in REPL mode");
     }
 }

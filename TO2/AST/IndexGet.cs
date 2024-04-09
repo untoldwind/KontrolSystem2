@@ -77,15 +77,5 @@ public class IndexGet(
         indexAccess.EmitPtr(context);
     }
 
-    public override REPLValueFuture Eval(REPLContext context) {
-        var targetFuture = target.Eval(context);
-        var indexAccess = targetFuture.Type.AllowedIndexAccess(context.replModuleContext, indexSpec);
-
-        if (indexAccess == null)
-            throw new REPLException(this, $"Type '{targetFuture.Type.Name}' does not support access by index");
-
-        return targetFuture.Then(indexAccess.TargetType, target => indexAccess.EvalGet(this, context, target));
-    }
-
     public override string ToString() => $"{target}[{indexSpec}]";
 }

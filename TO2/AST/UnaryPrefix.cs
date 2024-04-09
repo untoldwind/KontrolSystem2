@@ -1,7 +1,6 @@
 ﻿using System.Reflection.Emit;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
-using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST;
 
@@ -57,18 +56,6 @@ public class UnaryPrefix : Expression {
         operatorEmitter.EmitCode(context, this);
 
         if (dropResult) context.IL.Emit(OpCodes.Pop);
-    }
-
-    public override REPLValueFuture Eval(REPLContext context) {
-        var rightFuture = right.Eval(context);
-
-        var operatorEmitter = rightFuture.Type.AllowedPrefixOperators(context.replModuleContext)
-            .GetMatching(context.replModuleContext, op, BuiltinType.Unit);
-
-        if (operatorEmitter == null) throw new REPLException(this, $"Prefix {op} on a {rightFuture.Type} is undefined");
-
-        return rightFuture.Then(operatorEmitter.ResultType,
-            rightResult => operatorEmitter.Eval(this, rightResult, null));
     }
 
     public override string ToString() => $"{op.ToPrettyString()} {right}";

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using KontrolSystem.TO2.Generator;
-using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST;
 
@@ -98,10 +97,6 @@ internal abstract class RecordTypeAssignEmitter<T> : IAssignEmitter, IOperatorEm
         someResult.EmitLoad(context);
     }
 
-    public IREPLValue EvalConvert(Node node, IREPLValue value) {
-        throw new REPLException(node, "Not supported in REPL mode");
-    }
-
     public TO2Type ResultType => targetType;
 
     public TO2Type OtherType => sourceType;
@@ -132,10 +127,6 @@ internal abstract class RecordTypeAssignEmitter<T> : IAssignEmitter, IOperatorEm
     }
 
     public IOperatorEmitter FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) => this;
-
-    public IREPLValue Eval(Node node, IREPLValue left, IREPLValue? right) {
-        throw new REPLException(node, "Not supported in REPL mode");
-    }
 
     protected abstract void EmitAssignToPtr(IBlockContext context, IBlockVariable tempSource);
 }

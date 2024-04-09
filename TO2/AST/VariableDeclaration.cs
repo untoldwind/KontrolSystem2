@@ -1,6 +1,5 @@
 ﻿using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
-using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST;
 
@@ -110,30 +109,6 @@ public class VariableDeclaration : Node, IBlockItem, IVariableRef {
             variableType.UnderlyingType(context.ModuleContext));
 
         variable.Type.AssignFrom(context.ModuleContext, valueType).EmitAssign(context, variable, expression, true);
-    }
-
-    public override REPLValueFuture Eval(REPLContext context) {
-        var expressionFuture = expression.Eval(context);
-        var variableType = declaration.IsInferred ? expressionFuture.Type : declaration.type;
-
-        if (context.FindVariable(declaration.target) != null)
-            throw new REPLException(this, $"Variable '{declaration.target}' already declared in this scope");
-
-        if (!variableType!.IsAssignableFrom(context.replModuleContext, expressionFuture.Type))
-            throw new REPLException(this,
-                $"Variable '{declaration.target}' is of type {variableType} but is initialized with {expressionFuture.Type}");
-
-        var variable = context.DeclaredVariable(declaration.target!, isConst,
-            variableType.UnderlyingType(context.replModuleContext));
-        var assign = variable.declaredType.AssignFrom(context.replModuleContext, expressionFuture.Type);
-
-        return expressionFuture.Then(variableType, value => {
-            var converted = assign.EvalConvert(this, value);
-
-            variable.value = converted;
-
-            return converted;
-        });
     }
 
     public string Name => declaration.target!;

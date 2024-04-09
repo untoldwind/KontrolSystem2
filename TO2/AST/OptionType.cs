@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection.Emit;
 using KontrolSystem.TO2.Generator;
 using KontrolSystem.TO2.Runtime;
-using Option = KontrolSystem.Parsing.Option;
 
 namespace KontrolSystem.TO2.AST;
 
@@ -178,12 +176,6 @@ internal class AssignSome : IAssignEmitter {
         context.IL.Emit(OpCodes.Stfld, generatedType.GetField("value"));
         someResult.EmitLoad(context);
     }
-
-    public IREPLValue EvalConvert(Node node, IREPLValue value) {
-        if (value.Type == optionType) return value;
-
-        return new REPLAny(optionType, Option.Some(optionType.elementType.REPLCast(value.Value)));
-    }
 }
 
 internal class OptionBitOrOperator : IOperatorEmitter {
@@ -247,13 +239,6 @@ internal class OptionBitOrOperator : IOperatorEmitter {
     }
 
     public IOperatorEmitter FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) => this;
-
-    public IREPLValue Eval(Node node, IREPLValue left, IREPLValue? right) {
-        if (left.Type is OptionType lot && left.Value is IAnyOption lo)
-            return lot.elementType.REPLCast(lo.Defined ? lo.ValueObject : right);
-
-        throw new REPLException(node, $"Expected {left.Type} to be an option");
-    }
 }
 
 internal class OptionUnwrapOperator : IOperatorEmitter {
@@ -337,15 +322,6 @@ internal class OptionUnwrapOperator : IOperatorEmitter {
     }
 
     public IOperatorEmitter FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) => this;
-
-    public IREPLValue Eval(Node node, IREPLValue left, IREPLValue? right) {
-        if (left.Type is OptionType lot && left.Value is IAnyOption lo)
-            return lo.Defined
-                ? lot.elementType.REPLCast(lo.ValueObject)
-                : new REPLReturn(new REPLAny(lot, Option.None<object>()));
-
-        throw new REPLException(node, $"Expected {left.Type} to be an option");
-    }
 }
 
 internal class OptionMapFactory : IMethodInvokeFactory {

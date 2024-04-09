@@ -35,10 +35,6 @@ public class Break(Position start = new(), Position end = new()) : Expression(st
         context.IL.AdjustStack(stackCount);
 
     }
-
-    public override REPLValueFuture Eval(REPLContext context) {
-        return REPLValueFuture.Success(REPLBreak.INSTANCE);
-    }
 }
 
 public class Continue(Position start = new(), Position end = new()) : Expression(start, end) {
@@ -68,6 +64,4 @@ public class Continue(Position start = new(), Position end = new()) : Expression
             context.InnerLoop.Value.start);
         context.IL.AdjustStack(stackCount);
     }
-
-    public override REPLValueFuture Eval(REPLContext context) => REPLValueFuture.Success(REPLContinue.INSTANCE);
 }

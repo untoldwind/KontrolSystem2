@@ -31,10 +31,10 @@ public class BoundEnumType : RealizedType {
         allowedSuffixOperators = new OperatorCollection {
             {
                 Operator.Eq,
-                new DirectOperatorEmitter(() => this, () => BuiltinType.Bool, REPLAny.ObjEq, OpCodes.Ceq)
+                new DirectOperatorEmitter(() => this, () => BuiltinType.Bool, OpCodes.Ceq)
             }, {
                 Operator.NotEq,
-                new DirectOperatorEmitter(() => this, () => BuiltinType.Bool, REPLAny.ObjNeq, OpCodes.Ceq,
+                new DirectOperatorEmitter(() => this, () => BuiltinType.Bool, OpCodes.Ceq,
                     OpCodes.Ldc_I4_0, OpCodes.Ceq)
             }
         };
@@ -186,12 +186,6 @@ internal class EnumConstantFieldAccessEmitter : IFieldAccessEmitter {
 
     public void EmitStore(IBlockContext context) {
     }
-
-    public IREPLValue EvalGet(Node node, IREPLValue target) => new REPLAny(boundEnumType, Enum.ToObject(boundEnumType.enumType, value));
-
-    public IREPLValue EvalAssign(Node node, IREPLValue target, IREPLValue value) {
-        throw new REPLException(node, "Field assign not supported");
-    }
 }
 
 internal class EnumFromStringMethodFactory(BoundEnumType boundEnumType) : IMethodInvokeFactory {
@@ -232,20 +226,5 @@ internal class EnumFromStringMethodEmitter(BoundEnumType boundEnumType) : IMetho
     public void EmitCode(IBlockContext context) {
         context.IL.EmitCall(OpCodes.Call,
             typeof(BoundEnumConstType).GetMethod("FromString")!.MakeGenericMethod(boundEnumType.enumType), 1);
-    }
-
-    public REPLValueFuture Eval(Node node, IREPLValue[] targetWithArguments) {
-        if (targetWithArguments.Length != 1) throw new REPLException(node, "from_string requires one argument");
-        if (targetWithArguments[0].Value is REPLString value)
-            try {
-                return REPLValueFuture.Success(
-                    new REPLAny(new OptionType(boundEnumType),
-                        Option.Some(Enum.Parse(boundEnumType.enumType, value.stringValue, true))));
-            } catch (Exception) {
-                return REPLValueFuture.Success(
-                    new REPLAny(new OptionType(boundEnumType), Option.None<object>()));
-            }
-
-        throw new REPLException(node, "from_string requires string argument");
     }
 }

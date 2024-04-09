@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
-using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST;
 
@@ -81,15 +79,5 @@ public class StringInterpolation : Expression {
         }
 
         context.IL.EmitCall(OpCodes.Call, typeof(string).GetMethod("Format", [typeof(CultureInfo), typeof(string), typeof(object[])])!, 3);
-    }
-
-    public override REPLValueFuture Eval(REPLContext context) {
-        var expressionFutures = placeholders.Select(p => p.Eval(context)).ToArray();
-        return REPLValueFuture.ChainN(new ArrayType(BuiltinType.Unit), expressionFutures, values => {
-            var args = new object?[values.Length];
-            for (var i = 0; i < values.Length; i++)
-                args[i] = values[i].Value;
-            return REPLValueFuture.Success(new REPLString(string.Format(CultureInfo.InvariantCulture, formatString, args)));
-        });
     }
 }

@@ -54,17 +54,5 @@ public class UnarySuffix(Expression left, Operator op, Position start = new(),
         if (dropResult) context.IL.Emit(OpCodes.Pop);
     }
 
-    public override REPLValueFuture Eval(REPLContext context) {
-        var leftFuture = left.Eval(context);
-
-        var operatorEmitter = leftFuture.Type.AllowedSuffixOperators(context.replModuleContext)
-            .GetMatching(context.replModuleContext, op, BuiltinType.Unit);
-
-        if (operatorEmitter == null) throw new REPLException(this, $"Suffix {op} on a {leftFuture.Type} is undefined");
-
-        return leftFuture.Then(operatorEmitter.ResultType,
-            leftResult => operatorEmitter.Eval(this, leftResult, null));
-    }
-
     public override string ToString() => $"{left} {op.ToPrettyString()}";
 }

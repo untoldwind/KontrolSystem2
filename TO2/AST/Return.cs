@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Reflection.Emit;
+﻿using System.Reflection.Emit;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
-using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST;
 
@@ -39,8 +37,6 @@ public class ReturnEmpty(Position start = new(), Position end = new()) : Express
     }
 
     internal override Expression CollapseFinalReturn() => new Block([], Start, End);
-
-    public override REPLValueFuture Eval(REPLContext context) => REPLValueFuture.Success(new REPLReturn(REPLUnit.INSTANCE));
 }
 
 public class ReturnValue : Expression {
@@ -90,6 +86,4 @@ public class ReturnValue : Expression {
     }
 
     internal override Expression CollapseFinalReturn() => returnValue;
-
-    public override REPLValueFuture Eval(REPLContext context) => returnValue.Eval(context).Then(BuiltinType.Unit, value => new REPLReturn(value));
 }

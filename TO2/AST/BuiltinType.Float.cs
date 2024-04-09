@@ -16,72 +16,72 @@ public abstract partial class BuiltinType {
             allowedPrefixOperators = new OperatorCollection {
                 {
                     Operator.Neg,
-                    new DirectOperatorEmitter(() => Unit, () => Float, REPLFloat.Neg, OpCodes.Neg)
+                    new DirectOperatorEmitter(() => Unit, () => Float, OpCodes.Neg)
                 }, {
                     Operator.Add,
-                    new DirectOperatorEmitter(() => Float, () => Float, REPLFloat.Add, OpCodes.Add)
+                    new DirectOperatorEmitter(() => Float, () => Float, OpCodes.Add)
                 }, {
                     Operator.Sub,
-                    new DirectOperatorEmitter(() => Float, () => Float, REPLFloat.Sub, OpCodes.Sub)
+                    new DirectOperatorEmitter(() => Float, () => Float, OpCodes.Sub)
                 }, {
                     Operator.Mul,
-                    new DirectOperatorEmitter(() => Float, () => Float, REPLFloat.Mul, OpCodes.Mul)
+                    new DirectOperatorEmitter(() => Float, () => Float, OpCodes.Mul)
                 }, {
                     Operator.Div,
-                    new DirectOperatorEmitter(() => Float, () => Float, REPLFloat.Div, OpCodes.Div)
+                    new DirectOperatorEmitter(() => Float, () => Float, OpCodes.Div)
                 }
             };
             allowedSuffixOperators = new OperatorCollection {
                 {
                     Operator.Add,
-                    new DirectOperatorEmitter(() => Float, () => Float, REPLFloat.Add, OpCodes.Add)
+                    new DirectOperatorEmitter(() => Float, () => Float, OpCodes.Add)
                 }, {
                     Operator.AddAssign,
-                    new DirectOperatorEmitter(() => Float, () => Float, REPLFloat.Add, OpCodes.Add)
+                    new DirectOperatorEmitter(() => Float, () => Float, OpCodes.Add)
                 }, {
                     Operator.Sub,
-                    new DirectOperatorEmitter(() => Float, () => Float, REPLFloat.Sub, OpCodes.Sub)
+                    new DirectOperatorEmitter(() => Float, () => Float, OpCodes.Sub)
                 }, {
                     Operator.SubAssign,
-                    new DirectOperatorEmitter(() => Float, () => Float, REPLFloat.Sub, OpCodes.Sub)
+                    new DirectOperatorEmitter(() => Float, () => Float, OpCodes.Sub)
                 }, {
                     Operator.Mul,
-                    new DirectOperatorEmitter(() => Float, () => Float, REPLFloat.Mul, OpCodes.Mul)
+                    new DirectOperatorEmitter(() => Float, () => Float, OpCodes.Mul)
                 }, {
                     Operator.MulAssign,
-                    new DirectOperatorEmitter(() => Float, () => Float, REPLFloat.Mul, OpCodes.Mul)
+                    new DirectOperatorEmitter(() => Float, () => Float, OpCodes.Mul)
                 }, {
                     Operator.Div,
-                    new DirectOperatorEmitter(() => Float, () => Float, REPLFloat.Div, OpCodes.Div)
+                    new DirectOperatorEmitter(() => Float, () => Float, OpCodes.Div)
                 }, {
                     Operator.DivAssign,
-                    new DirectOperatorEmitter(() => Float, () => Float, REPLFloat.Div, OpCodes.Div)
+                    new DirectOperatorEmitter(() => Float, () => Float, OpCodes.Div)
                 }, {
                     Operator.Mod,
-                    new DirectOperatorEmitter(() => Float, () => Float, REPLFloat.Rem, OpCodes.Rem)
+                    new DirectOperatorEmitter(() => Float, () => Float, OpCodes.Rem)
                 }, {
                     Operator.ModAssign,
-                    new DirectOperatorEmitter(() => Float, () => Float, REPLFloat.Rem, OpCodes.Rem)
+                    new DirectOperatorEmitter(() => Float, () => Float, OpCodes.Rem)
                 }, {
                     Operator.Eq,
-                    new DirectOperatorEmitter(() => Float, () => Bool, REPLFloat.Eq, OpCodes.Ceq)
+                    new DirectOperatorEmitter(() => Float, () => Bool, OpCodes.Ceq)
                 }, {
                     Operator.NotEq,
-                    new DirectOperatorEmitter(() => Float, () => Bool, REPLFloat.Neq, OpCodes.Ceq,
+                    new DirectOperatorEmitter(() => Float, () => Bool,  OpCodes.Ceq,
                         OpCodes.Ldc_I4_0, OpCodes.Ceq)
                 }, {
                     Operator.Gt,
-                    new DirectOperatorEmitter(() => Float, () => Bool, REPLFloat.Gt, OpCodes.Cgt)
+                    new DirectOperatorEmitter(() => Float, () => Bool, OpCodes.Cgt)
                 }, {
                     Operator.Lt,
-                    new DirectOperatorEmitter(() => Float, () => Bool, REPLFloat.Lt, OpCodes.Clt)
+                    new DirectOperatorEmitter(() => Float, () => Bool, OpCodes.Clt)
                 }, {
                     Operator.Ge,
-                    new DirectOperatorEmitter(() => Float, () => Bool, REPLFloat.Geq, OpCodes.Clt,
+                    new DirectOperatorEmitter(() => Float, () => Bool,  OpCodes.Clt,
                         OpCodes.Ldc_I4_0, OpCodes.Ceq)
                 }, {
                     Operator.Le,
-                    new DirectOperatorEmitter(() => Float, () => Bool, REPLFloat.Leq, OpCodes.Cgt,
+                    new DirectOperatorEmitter(() => Float, () => Bool,  OpCodes.Cgt,
                         OpCodes.Ldc_I4_0, OpCodes.Ceq)
                 }, {
                     Operator.Pow,
@@ -110,7 +110,7 @@ public abstract partial class BuiltinType {
                 {
                     "to_int",
                     new InlineFieldAccessFactory("Value converted to int (will be truncated as necessary)",
-                        () => Int, REPLFloat.ToInt, OpCodes.Conv_I8)
+                        () => Int, OpCodes.Conv_I8)
                 }, {
                     "abs",
                     new BoundPropertyLikeFieldAccessFactory("Absolute value", () => Float, typeof(Math),
@@ -160,7 +160,5 @@ public abstract partial class BuiltinType {
 
         // Fallback if framework is (slightly) incompatible
         public static bool IsFiniteWrapper(double d) => !double.IsInfinity(d);
-
-        public override IREPLValue REPLCast(object? value) => new REPLFloat((double)value!);
     }
 }

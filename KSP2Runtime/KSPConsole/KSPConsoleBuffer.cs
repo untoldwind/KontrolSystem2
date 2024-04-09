@@ -220,7 +220,7 @@ public class KSPConsoleBuffer {
             changed.Invoke();
         }
     }
-    
+
     internal bool HandleKey(KeyCode keyCode, char character, EventModifiers modifiers) {
         switch (keyCode) {
         case KeyCode.Escape:

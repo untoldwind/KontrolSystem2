@@ -359,49 +359,6 @@ public class Call : Expression {
         };
     }
 
-    public override REPLValueFuture Eval(REPLContext context) {
-        var argumentFutures = arguments.Select(p => p.Eval(context)).ToList();
-
-        var function = ReferencedFunction(context.replModuleContext)?.PreferSync;
-
-        if (function == null) throw new REPLException(this, $"Function '{FullName}' not found");
-
-        if (function.IsAsync && !context.replBlockContext.IsAsync)
-            throw new REPLException(this, $"Cannot call async function '{FullName}' from a sync context");
-
-        if (arguments.Count > function.Parameters.Count)
-            throw new REPLException(this,
-                $"Function '{FullName}' only allows {function.Parameters.Count} arguments, {arguments.Count} where given");
-
-        if (function.RequiredParameterCount() > arguments.Count)
-            throw new REPLException(this,
-                $"Function '{FullName}' requires at least {function.RequiredParameterCount()} arguments, {arguments.Count} where given");
-
-        var (genericMethod, genericResult, genericParameters) =
-            Helpers.MakeGeneric(context.replBlockContext,
-                function.ReturnType, function.Parameters, function.RuntimeMethod!,
-                typeHint?.Invoke(context.replBlockContext),
-                arguments.Select(e => e.ResultType(context.replBlockContext)),
-                [],
-                this);
-
-        for (var i = 0; i < arguments.Count; i++) {
-            var argumentType = argumentFutures[i].Type;
-            if (!genericParameters[i].type.IsAssignableFrom(context.replModuleContext, argumentType))
-                throw new REPLException(this,
-                    $"Argument {function.Parameters[i].name} of '{FullName}' has to be a {genericParameters[i].type}, but {argumentType} was given");
-        }
-
-        return REPLValueFuture.ChainN(genericResult, [.. argumentFutures],
-            arguments => {
-                var result = genericMethod.Invoke(null, arguments.Select(a => a.Value).ToArray());
-
-                return function.IsAsync
-                    ? REPLValueFuture.Wrap(genericResult, (result as IAnyFuture)!)
-                    : REPLValueFuture.Success(genericResult.REPLCast(result));
-            });
-    }
-
     public override string ToString() => moduleName != null ?
         $"{moduleName}::{functionName}({string.Join(", ", arguments.Select(a => a.ToString()))})" :
         $"{functionName}({string.Join(", ", arguments.Select(a => a.ToString()))})";

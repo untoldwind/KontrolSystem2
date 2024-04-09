@@ -37,14 +37,6 @@ public class TypeAlias(
     }
 
     public IEnumerable<StructuralError> TryVerifyFunctions(ModuleContext context) => [];
-
-    public override REPLValueFuture Eval(REPLContext context) {
-        if (context.replModuleContext.mappedTypes.ContainsKey(name))
-            throw new REPLException(this, $"Type with name {name} already defined");
-        context.replModuleContext.mappedTypes.Add(name, type);
-
-        return REPLValueFuture.Success(REPLUnit.INSTANCE);
-    }
 }
 
 public class TypeAliasDelegate : TO2Type {

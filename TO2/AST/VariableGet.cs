@@ -125,17 +125,5 @@ public class VariableGet : Expression, IAssignContext {
             : context.mappedFunctions.Get(name)?.PreferSync;
     }
 
-    public override REPLValueFuture Eval(REPLContext context) {
-        var variable = context.FindVariable(name);
-
-        if (variable != null) return REPLValueFuture.Success(variable.value);
-
-        var constant = ReferencedConstant(context.replModuleContext);
-
-        if (constant != null) return REPLValueFuture.Success(constant.REPLValue());
-
-        throw new REPLException(this, $"No local variable, constant or function '{name}'");
-    }
-
     public override string ToString() => moduleName != null ? $"{moduleName}::{name}" : $"{name}";
 }

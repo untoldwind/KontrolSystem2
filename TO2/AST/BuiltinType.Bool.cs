@@ -15,24 +15,24 @@ public abstract partial class BuiltinType {
             allowedPrefixOperators = new OperatorCollection {
                 {
                     Operator.Not,
-                    new DirectOperatorEmitter(() => Unit, () => Bool, REPLBool.Not, OpCodes.Ldc_I4_0,
+                    new DirectOperatorEmitter(() => Unit, () => Bool, OpCodes.Ldc_I4_0,
                         OpCodes.Ceq)
                 }
             };
             allowedSuffixOperators = new OperatorCollection {
                 {
                     Operator.Eq,
-                    new DirectOperatorEmitter(() => Bool, () => Bool, REPLBool.Eq, OpCodes.Ceq)
+                    new DirectOperatorEmitter(() => Bool, () => Bool, OpCodes.Ceq)
                 }, {
                     Operator.NotEq,
-                    new DirectOperatorEmitter(() => Bool, () => Bool, REPLBool.Neq, OpCodes.Ceq, OpCodes.Ldc_I4_0,
+                    new DirectOperatorEmitter(() => Bool, () => Bool, OpCodes.Ceq, OpCodes.Ldc_I4_0,
                         OpCodes.Ceq)
                 }, {
                     Operator.BoolAnd,
-                    new DirectOperatorEmitter(() => Bool, () => Bool, REPLBool.And, OpCodes.And)
+                    new DirectOperatorEmitter(() => Bool, () => Bool, OpCodes.And)
                 }, {
                     Operator.BoolOr,
-                    new DirectOperatorEmitter(() => Bool, () => Bool, REPLBool.Or, OpCodes.Or)
+                    new DirectOperatorEmitter(() => Bool, () => Bool, OpCodes.Or)
                 }
             };
             DeclaredMethods = new Dictionary<string, IMethodInvokeFactory> {
@@ -47,11 +47,11 @@ public abstract partial class BuiltinType {
                 {
                     "to_int",
                     new InlineFieldAccessFactory("Value converted to integer (false -> 0, true -> 1)",
-                        () => Int, REPLBool.ToInt, OpCodes.Conv_I8)
+                        () => Int,  OpCodes.Conv_I8)
                 }, {
                     "to_float",
                     new InlineFieldAccessFactory("Value converted to float (false -> 0.0, true -> 1.0)",
-                        () => Float, REPLBool.ToFloat, OpCodes.Conv_R8)
+                        () => Float,  OpCodes.Conv_R8)
                 }
             };
         }
@@ -66,7 +66,5 @@ public abstract partial class BuiltinType {
         public override IOperatorCollection AllowedPrefixOperators(ModuleContext context) => allowedPrefixOperators;
 
         public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) => allowedSuffixOperators;
-
-        public override IREPLValue REPLCast(object? value) => new REPLBool((bool)value!);
     }
 }

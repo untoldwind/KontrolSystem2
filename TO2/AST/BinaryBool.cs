@@ -85,37 +85,5 @@ public class BinaryBool : Expression {
         context.IL.MarkLabel(skipRight);
     }
 
-    public override REPLValueFuture Eval(REPLContext context) {
-        var leftType = left.ResultType(context.replBlockContext);
-        var rightType = right.ResultType(context.replBlockContext);
-
-        if (leftType != BuiltinType.Bool)
-            throw new REPLException(left, "Expected boolean");
-        if (rightType != BuiltinType.Bool)
-            throw new REPLException(right, "Expected boolean");
-
-        return op switch {
-            Operator.BoolAnd => left.Eval(context).Then(BuiltinType.Bool, leftValue => {
-                if (leftValue is REPLBool b) {
-                    if (b.boolValue)
-                        return right.Eval(context);
-                    return REPLValueFuture.Success(new REPLBool(false));
-                }
-
-                throw new REPLException(left, "Expected boolean");
-            }),
-            Operator.BoolOr => left.Eval(context).Then(BuiltinType.Bool, leftValue => {
-                if (leftValue is REPLBool b) {
-                    if (!b.boolValue)
-                        return REPLValueFuture.Success(new REPLBool(false));
-                    return right.Eval(context);
-                }
-
-                throw new REPLException(left, "Expected boolean");
-            }),
-            _ => throw new REPLException(this, $"Invalid boolean operator {op}"),
-        };
-    }
-
     public override string ToString() => $"({left} {op.ToPrettyString()} {right})";
 }

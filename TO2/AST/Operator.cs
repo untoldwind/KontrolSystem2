@@ -79,8 +79,6 @@ public static class OperatorExtensions {
     };
 }
 
-public delegate IREPLValue REPLOperator(Node node, IREPLValue left, IREPLValue? right);
-
 public interface IOperatorEmitter {
     TO2Type ResultType { get; }
     TO2Type OtherType { get; }
@@ -92,14 +90,11 @@ public interface IOperatorEmitter {
     void EmitAssign(IBlockContext context, IBlockVariable variable, Node target);
 
     IOperatorEmitter FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments);
-
-    IREPLValue Eval(Node node, IREPLValue left, IREPLValue? right);
 }
 
 public class DirectOperatorEmitter(
     Func<TO2Type> otherTypeFactory,
     Func<TO2Type> resultTypeFactory,
-    REPLOperator replOperator,
     params OpCode[] opCodes)
     : IOperatorEmitter {
     public bool Accepts(ModuleContext context, TO2Type otherType) {
@@ -121,8 +116,6 @@ public class DirectOperatorEmitter(
     }
 
     public IOperatorEmitter FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) => this;
-
-    public IREPLValue Eval(Node node, IREPLValue left, IREPLValue? right) => replOperator(node, left, right);
 }
 
 public class StaticMethodOperatorEmitter : IOperatorEmitter {
@@ -181,11 +174,5 @@ public class StaticMethodOperatorEmitter : IOperatorEmitter {
         }
 
         return this;
-    }
-
-    public IREPLValue Eval(Node node, IREPLValue left, IREPLValue? right) {
-        var result = methodInfo.Invoke(null, [left.Value, right?.Value]);
-
-        return ResultType.REPLCast(result);
     }
 }

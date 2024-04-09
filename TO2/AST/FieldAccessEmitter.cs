@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using KontrolSystem.TO2.Generator;
-using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST;
 
@@ -22,10 +21,6 @@ public interface IFieldAccessEmitter {
     void EmitPtr(IBlockContext context);
 
     void EmitStore(IBlockContext context);
-
-    IREPLValue EvalGet(Node node, IREPLValue target);
-
-    IREPLValue EvalAssign(Node node, IREPLValue target, IREPLValue value);
 }
 
 public interface IFieldAccessFactory {
@@ -40,10 +35,7 @@ public interface IFieldAccessFactory {
     IFieldAccessFactory FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments);
 }
 
-public delegate IREPLValue REPLFieldAccess(Node node, IREPLValue target);
-
-public class InlineFieldAccessFactory(string description, Func<RealizedType> fieldType, REPLFieldAccess replFieldAccess,
-    params OpCode[] opCodes) : IFieldAccessFactory {
+public class InlineFieldAccessFactory(string description, Func<RealizedType> fieldType, params OpCode[] opCodes) : IFieldAccessFactory {
 
     public string Description { get; } = description;
 
@@ -52,7 +44,7 @@ public class InlineFieldAccessFactory(string description, Func<RealizedType> fie
     public bool CanStore => false;
 
     public IFieldAccessEmitter Create(ModuleContext context) {
-        return new InlineFieldAccessEmitter(fieldType(), replFieldAccess, opCodes);
+        return new InlineFieldAccessEmitter(fieldType(), opCodes);
     }
 
     public IFieldAccessFactory
@@ -61,7 +53,7 @@ public class InlineFieldAccessFactory(string description, Func<RealizedType> fie
     }
 }
 
-public class InlineFieldAccessEmitter(RealizedType fieldType, REPLFieldAccess replFieldAccess, OpCode[] loadOpCodes)
+public class InlineFieldAccessEmitter(RealizedType fieldType, OpCode[] loadOpCodes)
     : IFieldAccessEmitter {
     public RealizedType FieldType { get; } = fieldType;
 
@@ -84,12 +76,6 @@ public class InlineFieldAccessEmitter(RealizedType fieldType, REPLFieldAccess re
     }
 
     public void EmitStore(IBlockContext context) {
-    }
-
-    public IREPLValue EvalGet(Node node, IREPLValue target) => replFieldAccess(node, target);
-
-    public IREPLValue EvalAssign(Node node, IREPLValue target, IREPLValue value) {
-        throw new REPLException(node, "Field assign not supported");
     }
 }
 
@@ -173,25 +159,6 @@ public class BoundFieldAccessEmitter(RealizedType fieldType, Type fieldTarget, L
         foreach (var fieldInfo in fieldInfos.Take(fieldCount - 1)) context.IL.Emit(OpCodes.Ldflda, fieldInfo);
 
         context.IL.Emit(OpCodes.Stfld, fieldInfos[fieldCount - 1]);
-    }
-
-    public IREPLValue EvalGet(Node node, IREPLValue target) {
-        var current = target.Value;
-
-        foreach (var fieldInfo in fieldInfos) current = fieldInfo.GetValue(current);
-
-        return FieldType.REPLCast(current);
-    }
-
-    public IREPLValue EvalAssign(Node node, IREPLValue target, IREPLValue value) {
-        var fieldCount = fieldInfos.Count;
-        var current = target.Value;
-
-        foreach (var fieldInfo in fieldInfos.Take(fieldCount - 1)) current = fieldInfo.GetValue(current);
-
-        fieldInfos[fieldCount - 1].SetValue(current, value.Value);
-
-        return FieldType.REPLCast(value.Value);
     }
 }
 
@@ -328,25 +295,5 @@ public class BoundPropertyLikeFieldAccessEmitter(
 
     public void EmitStore(IBlockContext context) {
         context.IL.EmitCall(getter.IsVirtual ? OpCodes.Callvirt : OpCodes.Call, setter!, 2);
-    }
-
-    public IREPLValue EvalGet(Node node, IREPLValue target) {
-        var result = getter.IsStatic
-            ? getter.Invoke(null, [target.Value])
-            : getter.Invoke(target.Value, []);
-
-        return FieldType.REPLCast(result);
-    }
-
-    public IREPLValue EvalAssign(Node node, IREPLValue target, IREPLValue value) {
-        if (setter == null)
-            throw new REPLException(node, "Field assign not supported");
-
-        if (setter.IsStatic)
-            setter.Invoke(null, [target.Value, value.Value]);
-        else
-            setter.Invoke(target.Value, [value.Value]);
-
-        return FieldType.REPLCast(value.Value);
     }
 }

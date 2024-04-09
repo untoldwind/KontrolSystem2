@@ -7,8 +7,6 @@ public interface IAssignEmitter {
     void EmitAssign(IBlockContext context, IBlockVariable variable, Expression expression, bool dropResult);
 
     void EmitConvert(IBlockContext context, bool mutableTarget);
-
-    IREPLValue EvalConvert(Node node, IREPLValue value);
 }
 
 public class DefaultAssignEmitter : IAssignEmitter {
@@ -21,6 +19,4 @@ public class DefaultAssignEmitter : IAssignEmitter {
 
     public void EmitConvert(IBlockContext context, bool mutableTarget) {
     } // Nothing to convert
-
-    public IREPLValue EvalConvert(Node node, IREPLValue value) => value;
 }

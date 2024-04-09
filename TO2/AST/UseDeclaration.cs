@@ -101,38 +101,4 @@ public class UseDeclaration : Node, IModuleItem {
 
         return errors;
     }
-
-    public override REPLValueFuture Eval(REPLContext context) {
-        var module = context.replModuleContext.FindModule(fromModule);
-
-        if (module == null)
-            throw new REPLException(this, $"Module '{fromModule}' not found");
-        if (alias != null)
-            context.replModuleContext.moduleAliases.Add(alias, fromModule);
-        else
-            foreach (var name in names ?? module.AllTypeNames) {
-                var type = module.FindType(name);
-
-                if (type != null) context.replModuleContext.mappedTypes.Add(name, type);
-            }
-
-        foreach (var name in names ?? module.AllConstantNames) {
-            var constant = module.FindConstant(name);
-
-            if (constant != null) context.replModuleContext.mappedConstants.Add(name, constant);
-        }
-
-        foreach (var name in names ?? module.AllFunctionNames) {
-            if (context.replModuleContext.mappedConstants.ContainsKey(name)) continue;
-
-            var function = module.FindFunction(name);
-
-            if (function != null)
-                context.replModuleContext.mappedFunctions.Add(name, function);
-            else if (!context.replModuleContext.mappedTypes.ContainsKey(name))
-                throw new REPLException(this, $"Module '{fromModule}' does not have public member '{name}''");
-        }
-
-        return REPLValueFuture.Success(REPLUnit.INSTANCE);
-    }
 }

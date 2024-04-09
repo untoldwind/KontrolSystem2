@@ -49,20 +49,4 @@ public class BoundArrayLikeIndexAccess(Type implementationType, Expression index
             indexExpression.End
         ));
     }
-
-    public REPLValueFuture EvalGet(Node node, REPLContext context, IREPLValue target) {
-        var indexFuture = indexExpression.Eval(context);
-
-        if (!BuiltinType.Int.IsAssignableFrom(context.replModuleContext, indexFuture.Type))
-            throw new REPLException(node, $"Index has to be of type {BuiltinType.Int}");
-
-        var indexAssign = BuiltinType.Int.AssignFrom(context.replModuleContext, indexFuture.Type);
-
-        return indexFuture.Then(TargetType, i => TargetType.REPLCast(getElementMethod.Invoke(
-            target.Value, [((REPLInt)indexAssign.EvalConvert(node, i)).intValue])));
-    }
-
-    public REPLValueFuture EvalAssign(Node node, REPLContext context, IREPLValue target, IREPLValue value) {
-        throw new REPLException(node, $"Elements of ${BindingGenerator.MapNativeType(elementType)} can not be updated");
-    }
 }

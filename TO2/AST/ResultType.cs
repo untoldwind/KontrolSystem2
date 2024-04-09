@@ -184,12 +184,6 @@ internal class AssignOk : IAssignEmitter {
         context.IL.Emit(OpCodes.Stfld, generatedType.GetField("value"));
         someResult.EmitLoad(context);
     }
-
-    public IREPLValue EvalConvert(Node node, IREPLValue value) {
-        if (value.Type == resultType) return value;
-
-        return new REPLAny(resultType, Result.Ok<object>(resultType.successType.REPLCast(value.Value)));
-    }
 }
 
 internal class ResultUnwrapOperator : IOperatorEmitter {
@@ -267,15 +261,6 @@ internal class ResultUnwrapOperator : IOperatorEmitter {
     }
 
     public IOperatorEmitter FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) => this;
-
-    public IREPLValue Eval(Node node, IREPLValue left, IREPLValue? right) {
-        if (left.Type is ResultType lrt && left.Value is IAnyResult lr)
-            return lr.Success
-                ? lrt.successType.REPLCast(lr.ValueObject)
-                : new REPLReturn(BuiltinType.Error.REPLCast(lr.ErrorObject));
-
-        throw new REPLException(node, $"Expected {left.Type} to be a result");
-    }
 }
 
 internal class ResultOkUnapplyEmitter : IUnapplyEmitter {

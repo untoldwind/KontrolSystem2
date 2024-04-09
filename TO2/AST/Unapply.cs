@@ -68,8 +68,4 @@ public class Unapply(
     public override void Prepare(IBlockContext context) {
         expression.Prepare(context);
     }
-
-    public override REPLValueFuture Eval(REPLContext context) {
-        throw new REPLException(this, "Not supported in REPL mode");
-    }
 }

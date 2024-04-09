@@ -33,17 +33,17 @@ public class ArrayType : RealizedType {
             {
                 "length",
                 new InlineFieldAccessFactory("Length of the array, i.e. number of elements in the array.",
-                    () => BuiltinType.Int, REPLArrayLength, OpCodes.Ldlen, OpCodes.Conv_I8)
+                    () => BuiltinType.Int, OpCodes.Ldlen, OpCodes.Conv_I8)
             },
             {
                 "is_empty",
                 new InlineFieldAccessFactory("Check if the array is empty, i.e. there are no elements in the array.",
-                    () => BuiltinType.Bool, REPLArrayIsEmpty, OpCodes.Ldlen, OpCodes.Ldc_I4_0, OpCodes.Ceq)
+                    () => BuiltinType.Bool,  OpCodes.Ldlen, OpCodes.Ldc_I4_0, OpCodes.Ceq)
             },
             {
                 "is_not_empty",
                 new InlineFieldAccessFactory("Check if the array is not empty, i.e. there are elements in the array.",
-                    () => BuiltinType.Bool, REPLArrayIsNotEmpty, OpCodes.Ldlen, OpCodes.Ldc_I4_0, OpCodes.Cgt_Un)
+                    () => BuiltinType.Bool,  OpCodes.Ldlen, OpCodes.Ldc_I4_0, OpCodes.Cgt_Un)
             }
         };
     }
@@ -93,32 +93,6 @@ public class ArrayType : RealizedType {
     public override IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) {
         return ArrayAssignEmitter.Instance;
     }
-
-    private static IREPLValue REPLArrayLength(Node node, IREPLValue target) {
-        if (target.Value is Array a) return new REPLInt(a.Length);
-
-        throw new REPLException(node, $"Get array length from a non-array: {target.Type.Name}");
-    }
-
-    private static IREPLValue REPLArrayIsEmpty(Node node, IREPLValue target) {
-        if (target.Value is Array a) return new REPLBool(a.Length == 0);
-
-        throw new REPLException(node, $"Get array is_empty from a non-array: {target.Type.Name}");
-    }
-
-    private static IREPLValue REPLArrayIsNotEmpty(Node node, IREPLValue target) {
-        if (target.Value is Array a) return new REPLBool(a.Length > 0);
-
-        throw new REPLException(node, $"Get array is_not_empty from a non-array: {target.Type.Name}");
-    }
-
-    public override IREPLValue REPLCast(object? value) {
-        if (value is Array a)
-            return new REPLArray(this, a);
-
-        throw new REPLException(new Position("Intern"), new Position("Intern"),
-            $"{value?.GetType()} can not be cast to REPLArray");
-    }
 }
 
 public class ArrayAssignEmitter : IAssignEmitter {
@@ -140,10 +114,6 @@ public class ArrayAssignEmitter : IAssignEmitter {
     public void EmitConvert(IBlockContext context, bool mutableTarget) {
         if (mutableTarget)
             context.IL.EmitCall(OpCodes.Call, typeof(ArrayMethods).GetMethod("DeepClone")!, 1);
-    }
-
-    public IREPLValue EvalConvert(Node node, IREPLValue value) {
-        return value;
     }
 }
 

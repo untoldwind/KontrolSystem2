@@ -2,7 +2,6 @@
 using System.Reflection.Emit;
 using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Generator;
-using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2;
 
@@ -14,8 +13,6 @@ public interface IKontrolConstant {
     TO2Type Type { get; }
 
     void EmitLoad(IBlockContext context);
-
-    IREPLValue REPLValue();
 }
 
 public class CompiledKontrolConstant(string name, string? description, TO2Type type, FieldInfo runtimeField)
@@ -27,10 +24,6 @@ public class CompiledKontrolConstant(string name, string? description, TO2Type t
     public void EmitLoad(IBlockContext context) {
         context.IL.Emit(OpCodes.Ldsfld, runtimeField);
     }
-
-    public IREPLValue REPLValue() {
-        return Type.REPLCast(runtimeField.GetValue(null));
-    }
 }
 
 public class EnumKontrolConstant(string name, BoundEnumConstType type, string description) : IKontrolConstant {
@@ -41,10 +34,6 @@ public class EnumKontrolConstant(string name, BoundEnumConstType type, string de
     public string Description { get; } = description;
 
     public void EmitLoad(IBlockContext context) {
-    }
-
-    public IREPLValue REPLValue() {
-        return REPLUnit.INSTANCE;
     }
 }
 
@@ -63,9 +52,5 @@ public class DeclaredKontrolConstant(DeclaredKontrolModule module, ConstDeclarat
 
     public void EmitLoad(IBlockContext context) {
         context.IL.Emit(OpCodes.Ldsfld, runtimeField);
-    }
-
-    public IREPLValue REPLValue() {
-        return Type.REPLCast(runtimeField.GetValue(null));
     }
 }

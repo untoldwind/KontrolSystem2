@@ -92,8 +92,6 @@ public abstract class TO2Type {
     public virtual IEnumerable<(string name, RealizedType type)> InferGenericArgument(ModuleContext context,
         RealizedType? concreteType) => [];
 
-    public virtual IREPLValue REPLCast(object? value) => new REPLAny(this, value);
-
     public override string ToString() => Name;
 }
 

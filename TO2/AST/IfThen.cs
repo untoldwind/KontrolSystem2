@@ -137,45 +137,6 @@ public class IfThen : Expression, IVariableContainer {
             tempResult.EmitLoad(thenContext);
         }
     }
-
-    public override REPLValueFuture Eval(REPLContext context) {
-        if (condition.ResultType(context.replBlockContext) != BuiltinType.Bool)
-            throw new REPLException(this, "Condition of if is not a boolean");
-
-        var thenResultType = thenExpression.ResultType(context.replBlockContext);
-
-        return new REPLIfThenFuture(thenResultType, context, condition, thenExpression);
-    }
-
-    private class REPLIfThenFuture(TO2Type to2Type, REPLContext context, Expression condition, Expression thenExpression) : REPLValueFuture(new OptionType(to2Type)) {
-        private REPLValueFuture? conditionFuture;
-        private IREPLValue? conditionResult;
-        private REPLValueFuture? thenFuture;
-
-        public override FutureResult<IREPLValue?> PollValue() {
-            conditionFuture ??= condition.Eval(context);
-            if (conditionResult == null) {
-                var result = conditionFuture.PollValue();
-
-                if (!result.IsReady) return new FutureResult<IREPLValue?>();
-
-                conditionResult = result.value;
-            }
-
-            if (conditionResult is REPLBool b) {
-                if (!b.boolValue) return new FutureResult<IREPLValue?>(new REPLAny(Type, Option.None<object>()));
-            } else {
-                throw new REPLException(condition, "Condition of if is not a boolean");
-            }
-
-            thenFuture ??= thenExpression.Eval(context);
-
-            var thenResult = thenFuture.PollValue();
-            if (!thenResult.IsReady) return new FutureResult<IREPLValue?>();
-
-            return new FutureResult<IREPLValue?>(new REPLAny(Type, Option.Some(thenResult.value)));
-        }
-    }
 }
 
 public class IfThenElse(
@@ -330,61 +291,5 @@ public class IfThenElse(
 
     internal override Expression CollapseFinalReturn() {
         return new IfThenElse(condition, thenExpression.CollapseFinalReturn(), elseExpression.CollapseFinalReturn());
-    }
-
-    public override REPLValueFuture Eval(REPLContext context) {
-        if (condition.ResultType(context.replBlockContext) != BuiltinType.Bool)
-            throw new REPLException(this, "Condition of if is not a boolean");
-
-        var thenResultType = thenExpression.ResultType(context.replBlockContext);
-        TO2Type elseType = elseExpression.ResultType(context.replBlockContext);
-        var wrapOption = !(thenResultType is OptionType) && elseType is OptionType;
-        if (wrapOption) thenResultType = new OptionType(thenResultType);
-
-        return new REPLIfThenElseFuture(thenResultType, context, condition, thenExpression, elseExpression);
-    }
-
-    private class REPLIfThenElseFuture(
-        TO2Type to2Type,
-        REPLContext context,
-        Expression condition,
-        Expression thenExpression,
-        Expression elseExpression)
-        : REPLValueFuture(to2Type) {
-        private REPLValueFuture? conditionFuture;
-        private IREPLValue? conditionResult;
-        private REPLValueFuture? elseFuture;
-        private REPLValueFuture? thenFuture;
-
-        public override FutureResult<IREPLValue?> PollValue() {
-            conditionFuture ??= condition.Eval(context);
-            if (conditionResult == null) {
-                var result = conditionFuture.PollValue();
-
-                if (!result.IsReady) return new FutureResult<IREPLValue?>();
-
-                conditionResult = result.value;
-            }
-
-            if (conditionResult is REPLBool b) {
-                if (b.boolValue) {
-                    thenFuture ??= thenExpression.Eval(context);
-
-                    var thenResult = thenFuture.PollValue();
-                    if (!thenResult.IsReady) return new FutureResult<IREPLValue?>();
-
-                    return new FutureResult<IREPLValue?>(Type.REPLCast(thenResult.value?.Value));
-                }
-
-                elseFuture ??= elseExpression.Eval(context);
-
-                var elseResult = elseFuture.PollValue();
-                if (!elseResult.IsReady) return new FutureResult<IREPLValue?>();
-
-                return new FutureResult<IREPLValue?>(Type.REPLCast(elseResult.value?.Value));
-            }
-
-            throw new REPLException(condition, "Condition of if is not a boolean");
-        }
     }
 }

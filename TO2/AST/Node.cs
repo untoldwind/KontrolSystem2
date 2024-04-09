@@ -11,6 +11,4 @@ public abstract class Node {
 
     public Position Start { get; }
     public Position End { get; }
-
-    public abstract REPLValueFuture Eval(REPLContext context);
 }

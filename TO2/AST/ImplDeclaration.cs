@@ -47,8 +47,4 @@ public class ImplDeclaration(
     }
 
     public IEnumerable<StructuralError> TryImportFunctions(ModuleContext context) => [];
-
-    public override REPLValueFuture Eval(REPLContext context) {
-        throw new NotSupportedException("Structs are not supported in REPL mode");
-    }
 }

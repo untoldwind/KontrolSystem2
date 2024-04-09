@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Reflection.Emit;
 using KontrolSystem.TO2.Generator;
-using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST;
 
@@ -15,10 +14,6 @@ public interface IIndexAccessEmitter {
     void EmitPtr(IBlockContext context);
 
     void EmitStore(IBlockContext context, Action<IBlockContext> emitValue);
-
-    REPLValueFuture EvalGet(Node node, REPLContext context, IREPLValue target);
-
-    REPLValueFuture EvalAssign(Node node, REPLContext context, IREPLValue target, IREPLValue value);
 }
 
 public class InlineArrayIndexAccessEmitter : IIndexAccessEmitter {
@@ -98,39 +93,5 @@ public class InlineArrayIndexAccessEmitter : IIndexAccessEmitter {
         else if (targetType == BuiltinType.Int) context.IL.Emit(OpCodes.Stelem_I8);
         else if (targetType == BuiltinType.Float) context.IL.Emit(OpCodes.Stelem_R8);
         else context.IL.Emit(OpCodes.Stelem, targetType.GeneratedType(context.ModuleContext));
-    }
-
-    public REPLValueFuture EvalGet(Node node, REPLContext context, IREPLValue target) {
-        var indexFuture = indexExpression.Eval(context);
-
-        if (!BuiltinType.Int.IsAssignableFrom(context.replModuleContext, indexFuture.Type))
-            throw new REPLException(node, $"Index has to be of type {BuiltinType.Int}");
-
-        if (target.Type is ArrayType at && target.Value is Array a) {
-            var indexAssign = BuiltinType.Int.AssignFrom(context.replModuleContext, indexFuture.Type);
-
-            return indexFuture.Then(at.ElementType,
-                i => at.ElementType.REPLCast(a.GetValue(((REPLInt)indexAssign.EvalConvert(node, i)).intValue)));
-        }
-
-        throw new REPLException(node, "Expected array");
-    }
-
-    public REPLValueFuture EvalAssign(Node node, REPLContext context, IREPLValue target, IREPLValue value) {
-        var indexFuture = indexExpression.Eval(context);
-
-        if (!BuiltinType.Int.IsAssignableFrom(context.replModuleContext, indexFuture.Type))
-            throw new REPLException(node, $"Index has to be of type {BuiltinType.Int}");
-
-        if (target.Type is ArrayType at && target.Value is Array a) {
-            var indexAssign = BuiltinType.Int.AssignFrom(context.replModuleContext, indexFuture.Type);
-
-            return indexFuture.Then(at.ElementType, i => {
-                a.SetValue(value.Value, ((REPLInt)indexAssign.EvalConvert(node, i)).intValue);
-                return at.ElementType.REPLCast(value.Value);
-            });
-        }
-
-        throw new REPLException(node, "Expected array");
     }
 }

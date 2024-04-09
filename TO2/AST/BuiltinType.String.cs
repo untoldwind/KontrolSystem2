@@ -175,8 +175,6 @@ public abstract partial class BuiltinType {
             otherType.GeneratedType(context) == typeof(CoreError.Error)
                 ? errorToStringAssign
                 : DefaultAssignEmitter.Instance;
-
-        public override IREPLValue REPLCast(object? value) => new REPLString((string)value!);
     }
 
     private class ErrorToStringAssign : IAssignEmitter {
@@ -190,11 +188,6 @@ public abstract partial class BuiltinType {
 
         public void EmitConvert(IBlockContext context, bool mutableTarget) {
             context.IL.Emit(OpCodes.Ldfld, typeof(CoreError.Error).GetField("message"));
-        }
-
-        public IREPLValue EvalConvert(Node node, IREPLValue value) {
-            if (value is REPLAny a) return new REPLString(a.ToString());
-            throw new REPLException(node, $"Expected error value: {value.Type.Name}");
         }
     }
 }

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using KontrolSystem.TO2.Generator;
-using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST;
 
@@ -18,8 +17,6 @@ public interface IMethodInvokeEmitter {
     bool IsAsync { get; }
 
     void EmitCode(IBlockContext context);
-
-    REPLValueFuture Eval(Node node, IREPLValue[] targetWithArguments);
 }
 
 public static class MethodInvokeEmitterExtensions {
@@ -48,13 +45,10 @@ public interface IMethodInvokeFactory {
     IMethodInvokeFactory FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments);
 }
 
-public delegate REPLValueFuture REPLMethodCall(Node node, IREPLValue[] targetWithArguments);
-
 public class InlineMethodInvokeFactory(
     string description,
     Func<RealizedType> resultType,
     bool isConst,
-    REPLMethodCall methodCall,
     params OpCode[] opCodes) : IMethodInvokeFactory {
     public bool IsConst { get; } = isConst;
     public string Description { get; } = description;
@@ -72,7 +66,7 @@ public class InlineMethodInvokeFactory(
     public List<FunctionParameter> DeclaredParameters => [];
 
     public IMethodInvokeEmitter Create(IBlockContext context, List<TO2Type> arguments, RealizedType? desiredResult, Node node) =>
-        new InlineMethodInvokeEmitter(resultType(), [], methodCall, opCodes);
+        new InlineMethodInvokeEmitter(resultType(), [], opCodes);
 
     public IMethodInvokeFactory
         FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) => this;
@@ -81,7 +75,6 @@ public class InlineMethodInvokeFactory(
 public class InlineMethodInvokeEmitter(
     RealizedType returnType,
     List<RealizedParameter> parameters,
-    REPLMethodCall methodCall,
     params OpCode[] opCodes) : IMethodInvokeEmitter {
     public RealizedType ResultType { get; } = returnType;
 
@@ -94,10 +87,6 @@ public class InlineMethodInvokeEmitter(
 
     public void EmitCode(IBlockContext context) {
         foreach (var opCode in opCodes) context.IL.Emit(opCode);
-    }
-
-    public REPLValueFuture Eval(Node node, IREPLValue[] targetWithArguments) {
-        return methodCall(node, targetWithArguments);
     }
 }
 
@@ -201,16 +190,5 @@ public class BoundMethodInvokeEmitter(
         }
 
         if (methodInfo.ReturnType == typeof(void)) context.IL.Emit(OpCodes.Ldnull);
-    }
-
-    public REPLValueFuture Eval(Node node, IREPLValue[] targetWithArguments) {
-        var result = methodInfo.IsStatic
-            ? methodInfo.Invoke(null, targetWithArguments.Select(a => a.Value).ToArray())
-            : methodInfo.Invoke(targetWithArguments[0].Value,
-                targetWithArguments.Skip(1).Select(a => a.Value).ToArray());
-
-        return IsAsync
-            ? REPLValueFuture.Wrap(ResultType, (result as IAnyFuture)!)
-            : REPLValueFuture.Success(ResultType.REPLCast(result));
     }
 }

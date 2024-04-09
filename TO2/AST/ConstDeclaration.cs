@@ -32,26 +32,4 @@ public class ConstDeclaration : Node, IModuleItem {
     public IEnumerable<StructuralError> TryImportTypes(ModuleContext context) => [];
 
     public IEnumerable<StructuralError> TryVerifyFunctions(ModuleContext context) => [];
-
-    public override REPLValueFuture Eval(REPLContext context) {
-        var expressionFuture = expression.Eval(context);
-
-        if (context.FindVariable(name) != null)
-            throw new REPLException(this, $"Variable '{name}' already declared in this scope");
-
-        if (!type.IsAssignableFrom(context.replModuleContext, expressionFuture.Type))
-            throw new REPLException(this,
-                $"Variable '{name}' is of type {expressionFuture.Type} but is initialized with {expressionFuture.Type}");
-
-        var variable = context.DeclaredVariable(name, true, type.UnderlyingType(context.replModuleContext));
-        var assign = variable.declaredType.AssignFrom(context.replModuleContext, expressionFuture.Type);
-
-        return expressionFuture.Then(BuiltinType.Unit, value => {
-            var converted = assign.EvalConvert(this, value);
-
-            variable.value = converted;
-
-            return converted;
-        });
-    }
 }
