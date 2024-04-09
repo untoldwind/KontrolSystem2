@@ -68,6 +68,10 @@ public class Mainframe : KerbalMonoBehaviour {
 
     public KSPGameMode GameMode => GameModeAdapter.GameModeFromState(Game.GlobalGameState.GetState());
 
+    private Coroutine? replCoroutine;
+
+    private Coroutine? testCoroutine;
+
     public KontrolSystemProcess[] AvailableProcesses {
         get {
             var activeVessel = Game.ViewController.GetActiveSimVessel();
@@ -121,6 +125,7 @@ public class Mainframe : KerbalMonoBehaviour {
 
     private IEnumerator<object?> DoReboot(KontrolSystemConfig config, bool showInConsole) {
         rebooting = true;
+        UpdatePromptLock();
         availableProcessesChanged.Invoke();
         var task = Task.Factory.StartNew(() => {
             var stopwatch = new Stopwatch();
@@ -207,6 +212,7 @@ public class Mainframe : KerbalMonoBehaviour {
         }
 
         rebooting = false;
+        UpdatePromptLock();
         availableProcessesChanged.Invoke();
     }
 
@@ -283,12 +289,36 @@ public class Mainframe : KerbalMonoBehaviour {
     }
 
     public void RunREPL(string replExpression) {
-        StartCoroutine(DoRunREPL(replExpression));
+        if (replCoroutine != null) {
+            StopCoroutine(replCoroutine);
+        }
+        replCoroutine = StartCoroutine(DoRunREPL(replExpression));
+        UpdatePromptLock();
+    }
+
+    public void AbortCommands() {
+        if (replCoroutine != null) {
+            StopCoroutine(replCoroutine);
+            replCoroutine = null;
+        }
+
+        if (testCoroutine != null) {
+            StopCoroutine(testCoroutine);
+            testCoroutine = null;
+        }
+        UpdatePromptLock();
+    }
+
+    private void UpdatePromptLock() {
+        ConsoleBuffer.SetPromptLock(rebooting || replCoroutine != null || testCoroutine != null);
     }
 
     private IEnumerator<object?> DoRunREPL(string replExpression) {
         var registry = state?.registry;
-        if (registry == null) yield break;
+        if (registry == null) {
+            replCoroutine = null;
+            yield break;
+        }
 
         var context = new KSPCoreContext("REPL", Logger, Game, ConsoleBuffer, TimeSeriesCollection,
             MessageBus, config!.OptionalAddons);
@@ -337,34 +367,47 @@ public class Mainframe : KerbalMonoBehaviour {
                         result = futureResult.Poll();
                     } catch (Exception e) {
                         ConsoleBuffer.Print($"\n\n>>>>> ERROR <<<<<<<<<\n\nREPL error:\n{e.Message}");
+                        replCoroutine = null;
+                        UpdatePromptLock();
                         yield break;
                     } finally {
                         ContextHolder.CurrentContext.Value = null;
                     }
 
                     if (result.IsReady) {
-                        if (result.ValueObject != null) Mainframe.Instance!.ConsoleBuffer.PrintLine($"{result.ValueObject}");
+                        if (result.ValueObject != null) ConsoleBuffer.PrintLine($"{result.ValueObject}");
+                        replCoroutine = null;
+                        UpdatePromptLock();
                         yield break;
                     }
 
                     yield return context.NextYield;
                 }
-            } else {
-                ConsoleBuffer.Print($"\n\n>>>>> ERROR <<<<<<<<<\n\nREPL error:\n{string.Join("\n", replState.errors)}");
             }
 
+            ConsoleBuffer.Print($"\n\n>>>>> ERROR <<<<<<<<<\n\nREPL error:\n{string.Join("\n", replState.errors)}");
         } else {
             ConsoleBuffer.Print($"\n\n>>>>> ERROR <<<<<<<<<\n\nREPL timeout {timeout}");
+            replCoroutine = null;
+            UpdatePromptLock();
         }
     }
 
     public void RunUnitTests(string? moduleName) {
-        StartCoroutine(DoRunUnitTests(moduleName));
+        if (testCoroutine != null) {
+            StopCoroutine(testCoroutine);
+        }
+        testCoroutine = StartCoroutine(DoRunUnitTests(moduleName));
+        UpdatePromptLock();
     }
 
     private IEnumerator<object?> DoRunUnitTests(string? moduleName) {
         var registry = state?.registry;
-        if (registry == null) yield break;
+        if (registry == null) {
+            testCoroutine = null;
+            UpdatePromptLock();
+            yield break;
+        }
 
         var testReporter = new ConsoleBufferTestReporter(ConsoleBuffer);
 
@@ -387,6 +430,9 @@ public class Mainframe : KerbalMonoBehaviour {
         if (!task.IsCompleted) {
             ConsoleBuffer.PrintLine($"Unit tests timeout {timeout}");
         }
+
+        testCoroutine = null;
+        UpdatePromptLock();
     }
 
     private void OnProcessDone(KontrolSystemProcess process, string? message, CoreError.StackEntry[]? stackTrace, bool triggerEvent = true) {

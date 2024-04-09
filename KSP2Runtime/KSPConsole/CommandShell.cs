@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using KontrolSystem.TO2;
+using KontrolSystem.KSP.Runtime.KSPConsole;
 
 namespace KontrolSystem.KSP.Runtime.Core;
 
-public class CommandShell {
+public class CommandShell(KSPConsoleBuffer consoleBuffer) {
     interface ICommand {
         string Name { get; }
 
         string ShortHelp { get; }
 
-        void Run(string[] arguments);
+        void Run(KSPConsoleBuffer consoleBuffer, string[] arguments);
     }
 
     class HelpCommand : ICommand {
@@ -19,9 +19,7 @@ public class CommandShell {
 
         public string ShortHelp => "This help message";
 
-        public void Run(string[] arguments) {
-            var consoleBuffer = Mainframe.Instance!.ConsoleBuffer;
-
+        public void Run(KSPConsoleBuffer consoleBuffer, string[] arguments) {
             consoleBuffer.PrintLine("The following commands are supported:\n");
             foreach (var command in MAIN_COMMANDS.Values) {
                 consoleBuffer.PrintLine($"{command.Name}: {command.ShortHelp}");
@@ -37,8 +35,8 @@ public class CommandShell {
 
         public string ShortHelp => "Clear the console";
 
-        public void Run(string[] arguments) {
-            Mainframe.Instance!.ConsoleBuffer.Clear();
+        public void Run(KSPConsoleBuffer consoleBuffer, string[] arguments) {
+            consoleBuffer.Clear();
         }
     }
 
@@ -47,7 +45,7 @@ public class CommandShell {
 
         public string ShortHelp => "Reboot the KontrolSystem";
 
-        public void Run(string[] arguments) {
+        public void Run(KSPConsoleBuffer consoleBuffer, string[] arguments) {
             Mainframe.Instance!.Reboot(true);
         }
     }
@@ -57,7 +55,7 @@ public class CommandShell {
 
         public string ShortHelp => "Run unit tests.";
 
-        public void Run(string[] arguments) {
+        public void Run(KSPConsoleBuffer consoleBuffer, string[] arguments) {
             Mainframe.Instance!.RunUnitTests(arguments.Length > 0 ? arguments[0] : null);
         }
     }
@@ -66,9 +64,7 @@ public class CommandShell {
         public string Name => "list";
         public string ShortHelp => "List available processes";
 
-        public void Run(string[] arguments) {
-            var consoleBuffer = Mainframe.Instance!.ConsoleBuffer;
-
+        public void Run(KSPConsoleBuffer consoleBuffer, string[] arguments) {
             foreach (var process in Mainframe.Instance!.AvailableProcesses) {
                 consoleBuffer.PrintLine(process.Name);
             }
@@ -80,9 +76,9 @@ public class CommandShell {
 
         public string ShortHelp => "Start process by name";
 
-        public void Run(string[] arguments) {
+        public void Run(KSPConsoleBuffer consoleBuffer, string[] arguments) {
             if (arguments.Length == 0) {
-                Mainframe.Instance!.ConsoleBuffer.PrintLine("Usage: start <name>");
+                consoleBuffer.PrintLine("Usage: start <name>");
                 return;
             }
 
@@ -93,7 +89,7 @@ public class CommandShell {
                     return;
                 }
             }
-            Mainframe.Instance!.ConsoleBuffer.PrintLine($"No such process: {name}");
+            consoleBuffer.PrintLine($"No such process: {name}");
         }
     }
 
@@ -107,17 +103,17 @@ public class CommandShell {
             new StartCommand(),
         }.ToDictionary(command => command.Name));
 
-    public static void RunCommand(string command) {
+    public void RunCommand(string command) {
         if (string.IsNullOrWhiteSpace(command)) return;
 
-        Mainframe.Instance!.ConsoleBuffer.PrintLine($"$> " + command);
+        consoleBuffer.PrintLine($"$> " + command);
 
         var parts = command.Trim().Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
 
         if (parts.Length == 0) return;
 
         if (MAIN_COMMANDS.TryGetValue(parts[0], out var cmd)) {
-            cmd.Run(parts[1..]);
+            cmd.Run(consoleBuffer, parts[1..]);
         } else {
             Mainframe.Instance!.RunREPL(command);
         }

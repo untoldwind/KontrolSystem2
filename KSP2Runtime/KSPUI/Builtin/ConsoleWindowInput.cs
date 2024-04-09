@@ -27,7 +27,7 @@ public class ConsoleWindowInput : KerbalMonoBehaviour, IDeselectHandler, IPointe
             switch (processingEvent.rawType) {
             case EventType.KeyUp: break;
             case EventType.KeyDown:
-                if (!consoleBuffer!.HandleKey(processingEvent.keyCode, processingEvent.character))
+                if (!consoleBuffer!.HandleKey(processingEvent.keyCode, processingEvent.character, processingEvent.modifiers))
                     DeactivateInput();
                 break;
             }

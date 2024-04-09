@@ -9,7 +9,7 @@ public class ConsoleBufferTestReporter(KSPConsoleBuffer consoleBuffer) : ITestRe
     }
 
     public void EndModule(string moduleName) {
-        consoleBuffer.PrintLine("\n");
+        consoleBuffer.PrintLine("");
     }
 
     public void Report(TestResult testResult) {
