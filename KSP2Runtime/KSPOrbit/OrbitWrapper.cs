@@ -43,6 +43,8 @@ public class OrbitWrapper(IKSPContext context, PatchedConicsOrbit orbit) : KSPOr
 
     public Vector3d OrbitNormal => -orbit.GetRelativeOrbitNormal().SwapYAndZ;
 
+    public Vector GlobalOrbitNormal => new Vector(ReferenceFrame, OrbitNormal);
+    
     public Vector3d RelativePosition(double ut) => orbit.GetRelativePositionAtUTZup(ut).SwapYAndZ;
 
     public Vector3d RelativePositionForTrueAnomaly(double trueAnomaly) => orbit.GetRelativePositionFromTrueAnomaly(trueAnomaly * DirectBindingMath.DegToRad);
