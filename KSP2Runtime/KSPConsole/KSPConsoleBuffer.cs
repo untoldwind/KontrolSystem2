@@ -31,6 +31,12 @@ public struct ConsoleLine {
         return true;
     }
 
+    internal void EnsureColumnVisible(int col) {
+        for(var i = 0; i < col; i++)
+            if (line[i] == '\0')
+                line[i] = ' ';
+    }
+    
     public readonly string ContentAsString() {
         if (line.Length == 0) return "";
 
@@ -156,6 +162,7 @@ public class KSPConsoleBuffer {
 
             cursorLine = topLine;
             for (var i = 0; i < CursorRow && cursorLine?.Next != null; i++) cursorLine = cursorLine.Next;
+            cursorLine?.Value.EnsureColumnVisible(CursorCol);
         }
     }
 
