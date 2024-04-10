@@ -17263,6 +17263,16 @@
                 "name": "Vec3"
               }
             },
+            "global_orbit_normal": {
+              "name": "global_orbit_normal",
+              "description": "Get the coordinate independent normal vector of the orbit\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "GlobalVector"
+              }
+            },
             "relative_ascending_node": {
               "name": "relative_ascending_node",
               "description": "Get the relative position of the ascending node.\n",
@@ -18234,6 +18244,16 @@
                 "kind": "Standard",
                 "module": "ksp::math",
                 "name": "Vec3"
+              }
+            },
+            "global_orbit_normal": {
+              "name": "global_orbit_normal",
+              "description": "Get the coordinate independent normal vector of the orbit\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::math",
+                "name": "GlobalVector"
               }
             },
             "relative_ascending_node": {

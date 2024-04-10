@@ -32,11 +32,17 @@ public struct ConsoleLine {
     }
 
     internal void EnsureColumnVisible(int col) {
-        for(var i = 0; i < col; i++)
+        for (var i = 0; i < col; i++)
             if (line[i] == '\0')
                 line[i] = ' ';
     }
-    
+
+    public readonly ConsoleLine Clone() {
+        var newLine = new char[line.Length];
+        Array.Copy(line, newLine, line.Length);
+        return new ConsoleLine(lineNumber, newLine);
+    }
+
     public readonly string ContentAsString() {
         if (line.Length == 0) return "";
 

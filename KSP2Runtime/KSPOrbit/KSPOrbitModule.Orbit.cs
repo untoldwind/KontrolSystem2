@@ -73,7 +73,7 @@ public partial class KSPOrbitModule {
 
         [KSField(Description = "Normal vector perpendicular to orbital plane.")]
         Vector3d OrbitNormal { get; }
-        
+
         [KSField(Description = "Get the coordinate independent normal vector of the orbit")]
         Vector GlobalOrbitNormal { get; }
 

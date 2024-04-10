@@ -175,7 +175,7 @@ public class MockOrbit : KSPOrbitModule.IOrbit {
     public Vector3d OrbitNormal => -frameZ.normalized.SwapYAndZ;
 
     public Vector GlobalOrbitNormal => new Vector(ReferenceFrame, OrbitNormal);
-    
+
     public Vector3d RelativePositionForTrueAnomaly(double trueAnomaly) {
         var x = Math.Cos(trueAnomaly);
         var y = Math.Sin(trueAnomaly);

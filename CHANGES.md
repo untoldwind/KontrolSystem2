@@ -2,6 +2,12 @@
 
 ## 0.5.7.9 ->
 
+* Main feature: Improve ConsoleWindow
+    * REPL command field has been removed
+    * Instead, console itself now focusable and has a command prompt with history
+    * In addition to evaluating expression some basic commands have been added:
+      * `help`, `clear`, `test`, `reboot`, `list`, `start`
+      * ... will most likely be expanded in the future
 * Add `ksp::game::MESSAGE_BUS`. Example:
   * Script 1 "test_send.to2":
     ```rust
@@ -56,10 +62,8 @@
     ```
 * Allow any return value in UI callbacks (#151)
 * Fix REPL if typing (#160)
-* Improve ConsoleWindow
-  * REPL command field has been removed
-  * Instead console itself now focusable and has a command prompt with history
 * Add `try_recover_vessel` to `ksp::debug::SAVE_LOAD_CONTROL` (#152)
+* Add `orbit.global_orbit_normal`
 
 ## 0.5.7.6 -> 0.5.7.9
 

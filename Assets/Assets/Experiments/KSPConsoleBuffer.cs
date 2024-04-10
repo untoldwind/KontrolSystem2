@@ -39,6 +39,12 @@ namespace Experiments {
             return new string(line, 0, endIdx + 1);
         }
 
+        public readonly ConsoleLine Clone() {
+            var newLine = new char[line.Length];
+            Array.Copy(line, newLine, line.Length);
+            return new ConsoleLine(lineNumber, newLine);
+        }
+        
         public readonly override string ToString() {
             return new string(line);
         }
@@ -149,7 +155,6 @@ namespace Experiments {
                 CursorRow = Math.Max(Math.Min(row, VisibleRows), 0);
                 CursorCol = Math.Max(Math.Min(col, VisibleCols), 0);
 
-                UnityEngine.Debug.Log(">>> Move cursor");
                 cursorLine = topLine;
                 for (var i = 0; i < CursorRow && cursorLine?.Next != null; i++) cursorLine = cursorLine.Next;
             }
@@ -210,12 +215,11 @@ namespace Experiments {
         }
         
         internal bool HandleKey(KeyCode keyCode, char character, EventModifiers modifiers) {
-            UnityEngine.Debug.Log($"{keyCode} {character} {modifiers}");
             switch (keyCode) {
             case KeyCode.Escape:
                 return false;
             default:
-                prompt.HandleKey(keyCode, character);
+                prompt.HandleKey(keyCode, character, modifiers);
                 changed.Invoke();
                 return true;
             }

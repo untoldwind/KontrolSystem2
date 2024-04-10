@@ -10,7 +10,6 @@ namespace Experiments {
 
         public GFXAdapter() {
             assetBundle = AssetBundle.LoadFromFile(Path.Combine(Application.dataPath, "AssetBundles/kontrolsystem2"));
-            UnityEngine.Debug.Log(">>>> " + String.Join("\n", assetBundle.GetAllAssetNames()));
         }
 
         public Texture2D GetTexture(string name) => assetBundle.LoadAsset<Texture2D>($"assets/gfx/{name}.png");

@@ -27,6 +27,7 @@ public class CommandShell(KSPConsoleBuffer consoleBuffer) {
             consoleBuffer.PrintLine("\nOtherwise the input will be interpreted as TO2 expression, e.g.");
             consoleBuffer.PrintLine("  1 + 2 + 3");
             consoleBuffer.PrintLine("  ksp::vessel::active_vessel().value.position");
+            consoleBuffer.PrintLine("\nHint: Multi-line input is possible via <shift>-Return");
         }
     }
 

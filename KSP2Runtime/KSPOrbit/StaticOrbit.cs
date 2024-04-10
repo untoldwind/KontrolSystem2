@@ -29,7 +29,10 @@ public class StaticOrbit(IKSPContext context, CelestialBodyComponent body) : KSP
     public double MeanMotion => 0;
     public double Period => 0;
     public ITransformFrame ReferenceFrame => body.transform.celestialFrame;
+
     public Vector3d OrbitNormal => Vector3d.up;
+
+    public Vector GlobalOrbitNormal => new Vector(ReferenceFrame, Vector3d.up);
 
     public Vector3d OrbitalVelocity(double ut) => Vector3d.zero;
 

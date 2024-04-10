@@ -99,17 +99,17 @@ public class KSPConsoleBufferTests {
     [Fact]
     public void TestPrintAt() {
         var console = new KSPConsoleBuffer(25, 40);
-        
+
         console.MoveCursor(0, 2);
         console.Print("Test Line 1");
         console.MoveCursor(2, 0);
         console.Print("Test Line 2");
-        
+
         var visibleLines = console.VisibleLines(25);
         Assert.Equal(3, visibleLines.Count);
         Assert.Equal(11, console.CursorCol);
         Assert.Equal(2, console.CursorRow);
-        
+
 
         Assert.Equal("  Test Line 1", visibleLines[0].ToString().TrimEnd('\0'));
         Assert.Equal("", visibleLines[1].ToString().TrimEnd('\0'));
