@@ -22,6 +22,9 @@ public class Binary(
         var leftType = left.ResultType(context);
         var rightType = right.ResultType(context);
 
+        if (leftType is BoundValueType boundLeft)
+            leftType = boundLeft.elementType;
+
         var operatorEmitter =
             leftType.AllowedSuffixOperators(context.ModuleContext)
                 .GetMatching(context.ModuleContext, op, rightType) ??
@@ -48,7 +51,13 @@ public class Binary(
 
     public override void EmitCode(IBlockContext context, bool dropResult) {
         var leftType = left.ResultType(context);
+        IAssignEmitter? leftConvert = null;
         var rightType = right.ResultType(context);
+
+        if (leftType is BoundValueType boundLeft) {
+            leftType = boundLeft.elementType;
+            leftConvert = boundLeft.elementType.AssignFrom(context.ModuleContext, boundLeft);
+        }
 
         if (context.HasErrors) return;
 
@@ -71,7 +80,11 @@ public class Binary(
             right.Prepare(context);
 
             left.EmitCode(context, false);
-            rightEmitter?.OtherType.AssignFrom(context.ModuleContext, leftType).EmitConvert(context, false);
+            if (rightEmitter != null)
+                rightEmitter.OtherType.AssignFrom(context.ModuleContext, leftType).EmitConvert(context, false);
+            else
+                leftConvert?.EmitConvert(context, false);
+
             right.EmitCode(context, false);
             leftEmitter?.OtherType.AssignFrom(context.ModuleContext, rightType).EmitConvert(context, false);
 

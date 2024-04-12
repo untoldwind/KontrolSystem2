@@ -152,11 +152,13 @@ public abstract partial class BuiltinType {
 
         public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) => allowedSuffixOperators;
 
-        public override bool IsAssignableFrom(ModuleContext context, TO2Type otherType) => otherType == Int || otherType == Float;
+        public override bool IsAssignableFrom(ModuleContext context, TO2Type otherType) =>
+            otherType == Int || otherType == Float || (otherType is BoundValueType bound && IsAssignableFrom(context, bound.elementType));
 
-        public override IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) {
-            return otherType == Int ? intToFloatAssign : DefaultAssignEmitter.Instance;
-        }
+        public override IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) =>
+            otherType is BoundValueType bound ?
+                new BoundValueAssignEmitter(bound, AssignFrom(context, bound.elementType)) :
+                otherType == Int ? intToFloatAssign : DefaultAssignEmitter.Instance;
 
         // Fallback if framework is (slightly) incompatible
         public static bool IsFiniteWrapper(double d) => !double.IsInfinity(d);

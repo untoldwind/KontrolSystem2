@@ -44,6 +44,10 @@ public class MethodCall : Expression {
 
     public override TO2Type ResultType(IBlockContext context) {
         var targetType = target.ResultType(context);
+
+        if (targetType is BoundValueType bound)
+            targetType = bound.elementType;
+
         var method = targetType.FindMethod(context.ModuleContext, methodName);
 
         if (method != null) {
@@ -93,6 +97,13 @@ public class MethodCall : Expression {
         if (preparedResult != null) return;
 
         var targetType = target.ResultType(context);
+        IAssignEmitter? targetConvert = null;
+
+        if (targetType is BoundValueType bound) {
+            targetType = bound.elementType;
+            targetConvert = bound.elementType.AssignFrom(context.ModuleContext, bound);
+        }
+
         var methodInvoker = targetType.FindMethod(context.ModuleContext, methodName)
             ?.Create(context, arguments.Select(arg => arg.ResultType(context)).ToList(), typeHint?.Invoke(context), this);
 
@@ -101,6 +112,7 @@ public class MethodCall : Expression {
         if (methodInvoker == null || !methodInvoker.IsAsync || !context.IsAsync) return;
 
         EmitCode(context, false);
+        targetConvert?.EmitConvert(context, false);
         preparedResult = context.DeclareHiddenLocal(methodInvoker.ResultType.GeneratedType(context.ModuleContext));
         preparedResult.EmitStore(context);
     }
@@ -113,17 +125,24 @@ public class MethodCall : Expression {
         }
 
         var targetType = target.ResultType(context);
+        IAssignEmitter? targetConvert = null;
+
+        if (targetType is BoundValueType bound) {
+            targetType = bound.elementType;
+            targetConvert = bound.elementType.AssignFrom(context.ModuleContext, bound);
+        }
+
         var method = targetType.FindMethod(context.ModuleContext, methodName);
 
         if (method != null) {
-            EmitCodeMethodCall(context, targetType, method, dropResult);
+            EmitCodeMethodCall(context, targetType, targetConvert, method, dropResult);
             return;
         }
 
         var field = targetType.FindField(context.ModuleContext, methodName);
 
         if (field != null) {
-            EmitCodeDelegateCall(context, targetType, field, dropResult);
+            EmitCodeDelegateCall(context, targetType, targetConvert, field, dropResult);
             return;
         }
 
@@ -135,7 +154,7 @@ public class MethodCall : Expression {
         ));
     }
 
-    private void EmitCodeMethodCall(IBlockContext context, TO2Type targetType, IMethodInvokeFactory method,
+    private void EmitCodeMethodCall(IBlockContext context, TO2Type targetType, IAssignEmitter? targetConvert, IMethodInvokeFactory method,
         bool dropResult) {
         if (target is IAssignContext assignContext)
             if (assignContext.IsConst(context) && !method.IsConst)
@@ -207,10 +226,21 @@ public class MethodCall : Expression {
 
         if (context.HasErrors) return;
 
-        if (methodInvoker.RequiresPtr)
-            target.EmitPtr(context);
-        else
+        if (methodInvoker.RequiresPtr) {
+            if (targetConvert != null) {
+                target.EmitCode(context, false);
+                targetConvert.EmitConvert(context, false);
+                using var tempLocal =
+                    context.MakeTempVariable(targetType.UnderlyingType(context.ModuleContext));
+                tempLocal.EmitStore(context);
+                tempLocal.EmitLoadPtr(context);
+            } else
+                target.EmitPtr(context);
+        } else {
             target.EmitCode(context, false);
+            targetConvert?.EmitConvert(context, false);
+        }
+
         for (i = 0; i < arguments.Count; i++) {
             arguments[i].EmitCode(context, false);
             if (!context.HasErrors)
@@ -233,7 +263,7 @@ public class MethodCall : Expression {
         if (dropResult) context.IL.Emit(OpCodes.Pop);
     }
 
-    private void EmitCodeDelegateCall(IBlockContext context, TO2Type targetType, IFieldAccessFactory field,
+    private void EmitCodeDelegateCall(IBlockContext context, TO2Type targetType, IAssignEmitter? targetConvert, IFieldAccessFactory field,
         bool dropResult) {
         var fieldAccess = field.Create(context.ModuleContext);
 
@@ -267,10 +297,21 @@ public class MethodCall : Expression {
             return;
         }
 
-        if (fieldAccess.RequiresPtr)
-            target.EmitPtr(context);
-        else
+        if (fieldAccess.RequiresPtr) {
+            if (targetConvert != null) {
+                target.EmitCode(context, false);
+                targetConvert.EmitConvert(context, false);
+                using var tempLocal =
+                    context.MakeTempVariable(targetType.UnderlyingType(context.ModuleContext));
+                tempLocal.EmitStore(context);
+                tempLocal.EmitLoadPtr(context);
+            } else
+                target.EmitPtr(context);
+        } else {
             target.EmitCode(context, false);
+            targetConvert?.EmitConvert(context, false);
+        }
+
         fieldAccess.EmitLoad(context);
 
         for (var i = 0; i < arguments.Count; i++) {

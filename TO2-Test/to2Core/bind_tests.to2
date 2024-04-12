@@ -1,0 +1,44 @@
+use * from core::testing
+
+test sync fn test_basic_binds() -> Unit = {
+    const a = 12
+    const b : Cell<int> = Cell(34)
+    
+    bind x to 2 * b.value * a
+     
+    assert_int(12, a)
+    assert_int(34, b.value)
+    assert_int(2 * 12 * 34, x())
+    assert_int(2 * 12 * 34, x)
+    assert_int(2 * 3 * 12 * 34, 3 * x)
+    assert_int(2 * 5 * 12 * 34, x * 5)
+    assert_int(-2 * 12 * 34, -x)
+    
+    b.value = 45
+    
+    assert_int(45, b.value)
+    assert_int(2 * 12 * 45, x())
+    assert_int(2 * 12 * 45, x)
+    assert_int(2 * 3 * 12 * 45, 3 * x)
+    assert_int(2 * 5 * 12 * 45, x * 5)
+}
+
+test sync fn test_array_binds() -> Unit = {
+    const a : Cell<int[]> = Cell([1, 2, 3])
+    const b : Cell<int> = Cell(5)
+    
+    bind x to a.value.map(fn(e) -> e + b.value)
+    
+    assert_string("[1, 2, 3]", a.value.to_string())
+    assert_int(5, b.value)
+    assert_int(3, x.length)
+    assert_string("[6, 7, 8]", x.to_string())
+    
+    a.value = [1, 2, 3, 4]
+    b.value = 10
+    
+    assert_string("[1, 2, 3, 4]", a.value.to_string())
+    assert_int(10, b.value)
+    assert_int(4, x.length)
+    assert_string("[11, 12, 13, 14]", x.to_string())
+}

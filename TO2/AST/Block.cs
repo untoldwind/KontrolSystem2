@@ -52,7 +52,10 @@ public class Block : Expression, IVariableContainer {
                 foreach (var r in tuple.Refs)
                     if (!variables.ContainsKey(r.Name))
                         variables.Add(r.Name, r);
-
+                break;
+            case BindValueDeclaration bindValue:
+                if (!variables.ContainsKey(bindValue.Name))
+                    variables.Add(bindValue.Name, bindValue);
                 break;
             }
         }

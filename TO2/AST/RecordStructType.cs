@@ -83,6 +83,9 @@ public class RecordStructType : RecordType {
     }
 
     public override IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) {
+        if (otherType is BoundValueType bound)
+            return new BoundValueAssignEmitter(bound, AssignFrom(context, bound.elementType));
+
         var generatedType = GeneratedType(context);
         var generatedOther = otherType.GeneratedType(context);
 

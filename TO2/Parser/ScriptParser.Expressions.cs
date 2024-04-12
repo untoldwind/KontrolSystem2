@@ -15,7 +15,7 @@ public static class TO2ParserExpressions {
 
     private static readonly Parser<bool> LetOrConst = Alt(LetKeyword.To(false), ConstKeyword.To(true));
 
-    public static readonly Parser<IBlockItem> VariableDeclaration = Seq(
+    public static readonly Parser<IBlockItem> LetConstVariableDeclaration = Seq(
         LetOrConst, Alt(
             DeclarationParameter.Map(item => (true, new List<DeclarationParameter> { item })),
             Delimited1(DeclarationParameterOrPlaceholder, CommaDelimiter)
@@ -24,9 +24,17 @@ public static class TO2ParserExpressions {
     ).Map((items, start, end) => {
         if (items.Item2.Item1)
             return new VariableDeclaration(items.Item2.Item2[0], items.Item1, items.Item3, start, end);
-        return new TupleDeconstructDeclaration(items.Item2.Item2, items.Item1, items.Item3, start, end) as
-            IBlockItem;
+        return new TupleDeconstructDeclaration(items.Item2.Item2, items.Item1, items.Item3, start, end) as IBlockItem;
     });
+
+    public static readonly Parser<IBlockItem> BindValueDeclaration = Seq(
+        BindKeyword, Identifier, ToKeyword, Expression
+    ).Map((items, start, end) =>
+        new BindValueDeclaration(items.Item2, items.Item4, start, end) as IBlockItem
+    );
+
+    public static readonly Parser<IBlockItem> VariableDeclaration =
+        Alt(LetConstVariableDeclaration, BindValueDeclaration);
 
     private static readonly Parser<Expression> ReturnExpression = Seq(
         Tag("return"), Opt(Spacing0.Then(Expression))

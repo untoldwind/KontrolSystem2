@@ -23,7 +23,12 @@ public class UnaryPrefix : Expression {
     }
 
     public override TO2Type ResultType(IBlockContext context) {
-        return right.ResultType(context)
+        var rightType = right.ResultType(context);
+
+        if (rightType is BoundValueType bound)
+            rightType = bound.elementType;
+
+        return rightType
             .AllowedPrefixOperators(context.ModuleContext).GetMatching(context.ModuleContext, op, BuiltinType.Unit)
             ?.ResultType ?? BuiltinType.Unit;
     }
@@ -34,6 +39,13 @@ public class UnaryPrefix : Expression {
 
     public override void EmitCode(IBlockContext context, bool dropResult) {
         var rightType = right.ResultType(context);
+        IAssignEmitter? rightConvert = null;
+
+        if (rightType is BoundValueType bound) {
+            rightType = bound.elementType;
+            rightConvert = bound.elementType.AssignFrom(context.ModuleContext, bound);
+        }
+
         var operatorEmitter = rightType.AllowedPrefixOperators(context.ModuleContext)
             .GetMatching(context.ModuleContext, op, BuiltinType.Unit);
 
@@ -50,6 +62,7 @@ public class UnaryPrefix : Expression {
         }
 
         right.EmitCode(context, false);
+        rightConvert?.EmitConvert(context, false);
 
         if (context.HasErrors) return;
 

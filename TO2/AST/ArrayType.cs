@@ -90,9 +90,9 @@ public class ArrayType : RealizedType {
         return ElementType.InferGenericArgument(context, concreteArray.ElementType.UnderlyingType(context));
     }
 
-    public override IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) {
-        return ArrayAssignEmitter.Instance;
-    }
+    public override IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) =>
+        otherType is BoundValueType bound ?
+            new BoundValueAssignEmitter(bound, AssignFrom(context, bound.elementType)) : ArrayAssignEmitter.Instance;
 }
 
 public class ArrayAssignEmitter : IAssignEmitter {

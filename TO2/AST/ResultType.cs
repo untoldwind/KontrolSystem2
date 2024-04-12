@@ -51,10 +51,14 @@ public class ResultType : RealizedType {
             return successType == otherResultType.successType ||
                    successType.IsAssignableFrom(context, otherResultType.successType);
 
-        return successType == otherType || successType.IsAssignableFrom(context, otherType);
+        return successType == otherType || successType.IsAssignableFrom(context, otherType) ||
+               (otherType is BoundValueType bound && IsAssignableFrom(context, bound.elementType));
     }
 
     public override IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) {
+        if (otherType is BoundValueType bound)
+            return new BoundValueAssignEmitter(bound, AssignFrom(context, bound.elementType));
+
         var underlyingOther = otherType.UnderlyingType(context);
         return underlyingOther is not ResultType && successType.IsAssignableFrom(context, underlyingOther)
             ? new AssignOk(this, otherType)

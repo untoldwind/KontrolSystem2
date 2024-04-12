@@ -19,7 +19,12 @@ public class UnarySuffix(Expression left, Operator op, Position start = new(),
     }
 
     public override TO2Type ResultType(IBlockContext context) {
-        return left.ResultType(context)
+        var leftType = left.ResultType(context);
+
+        if (leftType is BoundValueType bound)
+            leftType = bound.elementType;
+
+        return leftType
             .AllowedSuffixOperators(context.ModuleContext).GetMatching(context.ModuleContext, op, BuiltinType.Unit)
             ?.ResultType ?? BuiltinType.Unit;
     }
@@ -30,6 +35,13 @@ public class UnarySuffix(Expression left, Operator op, Position start = new(),
 
     public override void EmitCode(IBlockContext context, bool dropResult) {
         var leftType = left.ResultType(context);
+        IAssignEmitter? leftConvert = null;
+
+        if (leftType is BoundValueType bound) {
+            leftType = bound.elementType;
+            leftConvert = bound.elementType.AssignFrom(context.ModuleContext, bound);
+        }
+
         var operatorEmitter = leftType.AllowedSuffixOperators(context.ModuleContext)
             .GetMatching(context.ModuleContext, op, BuiltinType.Unit);
 
@@ -46,6 +58,7 @@ public class UnarySuffix(Expression left, Operator op, Position start = new(),
         }
 
         left.EmitCode(context, false);
+        leftConvert?.EmitConvert(context, false);
 
         if (context.HasErrors) return;
 

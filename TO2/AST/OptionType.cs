@@ -55,10 +55,14 @@ public class OptionType : RealizedType {
             return elementType == otherOption.elementType ||
                    elementType.IsAssignableFrom(context, otherOption.elementType);
 
-        return elementType == otherType || elementType.IsAssignableFrom(context, otherType);
+        return elementType == otherType || elementType.IsAssignableFrom(context, otherType) ||
+               (otherType is BoundValueType bound && IsAssignableFrom(context, bound.elementType));
     }
 
     public override IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) {
+        if (otherType is BoundValueType bound)
+            return new BoundValueAssignEmitter(bound, AssignFrom(context, bound.elementType));
+
         var underlyingOther = otherType.UnderlyingType(context);
 
         return underlyingOther is not OptionType && elementType.IsAssignableFrom(context, underlyingOther)

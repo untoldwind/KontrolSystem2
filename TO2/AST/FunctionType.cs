@@ -49,6 +49,8 @@ public class FunctionType(bool isAsync, List<TO2Type> parameterTypes, TO2Type re
         if (otherType.UnderlyingType(context) is FunctionType otherFunctionType)
             return !otherFunctionType.isAsync &&
                    GeneratedType(context).IsAssignableFrom(otherType.GeneratedType(context));
+        if (otherType is BoundValueType)
+            return GeneratedType(context).IsAssignableFrom(otherType.GeneratedType(context));
 
         return false;
     }

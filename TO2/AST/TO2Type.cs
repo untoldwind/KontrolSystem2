@@ -80,12 +80,15 @@ public abstract class TO2Type {
     ///     Check if a variable of this type can be assigned from an other type.
     /// </summary>
     public virtual bool IsAssignableFrom(ModuleContext context, TO2Type otherType) =>
-        GeneratedType(context).IsAssignableFrom(otherType.GeneratedType(context));
+        GeneratedType(context).IsAssignableFrom(otherType.GeneratedType(context)) ||
+            (otherType.UnderlyingType(context) is BoundValueType bound && IsAssignableFrom(context, bound.elementType));
 
     /// <summary>
     ///     Get the rule how to assign/convert an other type to this type.
     /// </summary>
-    public virtual IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) => DefaultAssignEmitter.Instance;
+    public virtual IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) =>
+        otherType is BoundValueType bound ?
+            new BoundValueAssignEmitter(bound, AssignFrom(context, bound.elementType)) : DefaultAssignEmitter.Instance;
 
     public virtual IEnumerable<(string name, RealizedType type)> InferGenericArgument(ModuleContext context,
         RealizedType? concreteType) => [];

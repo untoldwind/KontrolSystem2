@@ -18,6 +18,10 @@ public class FieldGet(
 
     public override TO2Type ResultType(IBlockContext context) {
         var targetType = target.ResultType(context);
+
+        if (targetType is BoundValueType bound)
+            targetType = bound.elementType;
+
         var fieldAccess =
             targetType.FindField(context.ModuleContext, fieldName)?.Create(context.ModuleContext);
         if (fieldAccess == null) {
@@ -39,6 +43,13 @@ public class FieldGet(
 
     public override void EmitCode(IBlockContext context, bool dropResult) {
         var targetType = target.ResultType(context);
+        IAssignEmitter? targetConvert = null;
+
+        if (targetType is BoundValueType bound) {
+            targetType = bound.elementType;
+            targetConvert = bound.elementType.AssignFrom(context.ModuleContext, bound);
+        }
+
         var fieldAccess =
             targetType.FindField(context.ModuleContext, fieldName)?.Create(context.ModuleContext);
 
@@ -53,8 +64,20 @@ public class FieldGet(
         }
 
         if (!dropResult) {
-            if (fieldAccess.RequiresPtr) target.EmitPtr(context);
-            else target.EmitCode(context, false);
+            if (fieldAccess.RequiresPtr) {
+                if (targetConvert != null) {
+                    target.EmitCode(context, false);
+                    targetConvert.EmitConvert(context, false);
+                    using var tempLocal =
+                        context.MakeTempVariable(targetType.UnderlyingType(context.ModuleContext));
+                    tempLocal.EmitStore(context);
+                    tempLocal.EmitLoadPtr(context);
+                } else
+                    target.EmitPtr(context);
+            } else {
+                target.EmitCode(context, false);
+                targetConvert?.EmitConvert(context, false);
+            }
 
             if (context.HasErrors) return;
 

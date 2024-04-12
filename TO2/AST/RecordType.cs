@@ -16,7 +16,7 @@ public abstract class RecordType : RealizedType {
 
     public override bool IsAssignableFrom(ModuleContext context, TO2Type otherType) {
         var recordType = otherType.UnderlyingType(context) as RecordType;
-        if (recordType == null) return false;
+        if (recordType == null) return otherType is BoundValueType bound && IsAssignableFrom(context, bound.elementType);
         foreach (var kv in ItemTypes) {
             var otherItem = recordType.ItemTypes.Get(kv.Key);
 

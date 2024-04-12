@@ -35,7 +35,19 @@ public class BinaryBool : Expression {
 
     public override void EmitCode(IBlockContext context, bool dropResult) {
         var leftType = left.ResultType(context);
+        IAssignEmitter? leftConvert = null;
         var rightType = right.ResultType(context);
+        IAssignEmitter? rightConvert = null;
+
+        if (leftType is BoundValueType boundLeft) {
+            leftType = boundLeft.elementType;
+            leftConvert = boundLeft.elementType.AssignFrom(context.ModuleContext, boundLeft);
+        }
+
+        if (rightType is BoundValueType boundRight) {
+            rightType = boundRight.elementType;
+            rightConvert = boundRight.elementType.AssignFrom(context.ModuleContext, boundRight);
+        }
 
         if (leftType != BuiltinType.Bool)
             context.AddError(new StructuralError(
@@ -55,9 +67,16 @@ public class BinaryBool : Expression {
         if (context.HasErrors) return;
 
         left.EmitCode(context, false);
+        leftConvert?.EmitConvert(context, false);
         if (!dropResult) context.IL.Emit(OpCodes.Dup);
 
         var rightCount = right.GetILCount(context, dropResult);
+        if (rightConvert != null) {
+            var countingContext = context.CloneCountingContext();
+            rightConvert.EmitConvert(countingContext, false);
+            rightCount.opCodes += context.IL.ILSize;
+            rightCount.stack += context.IL.StackCount;
+        }
         var skipRight = context.IL.DefineLabel(rightCount.opCodes < 124);
 
         if (context.HasErrors) return;
@@ -82,6 +101,7 @@ public class BinaryBool : Expression {
         if (!dropResult) context.IL.Emit(OpCodes.Pop);
 
         right.EmitCode(context, dropResult);
+        rightConvert?.EmitConvert(context, false);
         context.IL.MarkLabel(skipRight);
     }
 

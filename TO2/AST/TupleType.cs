@@ -33,7 +33,7 @@ public class TupleType : RealizedType {
             DeriveTupleType(itemTypes.Select(t => t.GeneratedType(context)).ToList());
 
     public override bool IsAssignableFrom(ModuleContext context, TO2Type otherType) {
-        if (!(otherType.UnderlyingType(context) is TupleType)) return false;
+        if (!(otherType.UnderlyingType(context) is TupleType)) return otherType is BoundValueType bound && IsAssignableFrom(context, bound.elementType);
         return GeneratedType(context).IsAssignableFrom(otherType.GeneratedType(context));
     }
 

@@ -47,7 +47,7 @@ public class Call : Expression {
         if (constant != null) return (constant.Type as FunctionType)?.returnType ?? BuiltinType.Unit;
 
         TO2Type? variable = ReferencedVariable(context)?.UnderlyingType(context.ModuleContext);
-        if (variable != null) return (variable as FunctionType)?.returnType ?? BuiltinType.Unit;
+        if (variable != null) return (variable as FunctionType)?.returnType ?? (variable as BoundValueType)?.elementType ?? BuiltinType.Unit;
 
         var function = ReferencedFunction(context.ModuleContext)?.ForContext(context);
         if (function == null) {
@@ -125,6 +125,9 @@ public class Call : Expression {
         TO2Type? variable = ReferencedVariable(context)?.UnderlyingType(context.ModuleContext);
 
         if (variable != null) {
+            if (variable is BoundValueType boundValueType) {
+                variable = new FunctionType(false, [], boundValueType.elementType);
+            }
             if (variable is not FunctionType) {
                 context.AddError(
                     new StructuralError(

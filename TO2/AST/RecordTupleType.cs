@@ -34,6 +34,9 @@ public class RecordTupleType : RecordType {
             TupleType.DeriveTupleType(itemTypes.Values.Select(t => t.GeneratedType(context)).ToList());
 
     public override IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) {
+        if (otherType is BoundValueType bound)
+            return new BoundValueAssignEmitter(bound, AssignFrom(context, bound.elementType));
+
         var newGeneratedType = GeneratedType(context);
         var generatedOther = otherType.GeneratedType(context);
 

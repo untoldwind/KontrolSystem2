@@ -179,12 +179,14 @@ public abstract partial class BuiltinType {
         public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) => allowedOperators;
 
         public override bool IsAssignableFrom(ModuleContext context, TO2Type otherType) =>
-            otherType == String || otherType.GeneratedType(context) == typeof(CoreError.Error);
+            otherType == String || otherType.GeneratedType(context) == typeof(CoreError.Error) ||
+                (otherType is BoundValueType bound && IsAssignableFrom(context, bound.elementType));
 
         public override IAssignEmitter AssignFrom(ModuleContext context, TO2Type otherType) =>
-            otherType.GeneratedType(context) == typeof(CoreError.Error)
-                ? errorToStringAssign
-                : DefaultAssignEmitter.Instance;
+            otherType is BoundValueType bound ?
+                new BoundValueAssignEmitter(bound, AssignFrom(context, bound.elementType)) :
+                otherType.GeneratedType(context) == typeof(CoreError.Error)
+                    ? errorToStringAssign : DefaultAssignEmitter.Instance;
     }
 
     private class ErrorToStringAssign : IAssignEmitter {
