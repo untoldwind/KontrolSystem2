@@ -71,9 +71,9 @@ public static class TO2ParserExpressions {
 
     private static readonly Parser<Expression> Block = Char('{').Then(WhiteSpaces0).Then(DelimitedUntil(
         Alt(
+            VariableDeclaration,
             Expression.Map(item => item as IBlockItem),
             LineComment.Map(item => item as IBlockItem),
-            VariableDeclaration,
             ReturnExpression.Map(item => item as IBlockItem),
             WhileExpression.Map(item => item as IBlockItem),
             ForInExpression.Map(item => item as IBlockItem),

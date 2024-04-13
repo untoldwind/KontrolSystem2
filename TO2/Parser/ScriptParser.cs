@@ -28,8 +28,6 @@ public static class TO2ParserCommon {
         "type",
         "struct",
         "impl",
-        "bind",
-        "to"
     ];
 
     public static readonly Parser<bool> PubKeyword = Tag("pub").Then(Spacing1);
