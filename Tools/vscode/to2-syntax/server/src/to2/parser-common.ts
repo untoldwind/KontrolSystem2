@@ -66,6 +66,14 @@ export const letKeyword = terminated(withPosition(tag("let")), spacing1);
 
 export const constKeyword = terminated(withPosition(tag("const")), spacing1);
 
+export const bindKeyword = terminated(withPosition(tag("bind")), spacing1);
+
+export const toKeyword = between(
+  spacing1,
+  withPosition(alt(tag("to"), tag("<-"))),
+  spacing1,
+);
+
 export const lineComment = map(
   between(preceded(whitespace0, tag("//")), charsExcept0("\r\n"), peekLineEnd),
   (comment, start, end) => new LineComment(comment, start, end),

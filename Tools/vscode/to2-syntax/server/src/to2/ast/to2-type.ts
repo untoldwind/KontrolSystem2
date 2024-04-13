@@ -30,7 +30,8 @@ export interface RealizedType extends TO2Type {
     | "Tuple"
     | "Record"
     | "Result"
-    | "Option";
+    | "Option"
+    | "Bound";
   description: string;
 
   hasGenerics(context: ModuleContext): boolean;

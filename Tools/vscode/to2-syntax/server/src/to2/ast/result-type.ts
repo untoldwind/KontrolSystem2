@@ -62,7 +62,7 @@ export class ResultType implements RealizedType {
     return op === "?" ? this.successType : currentTypeResolver().BUILTIN_ERROR;
   }
 
-  public findPrefixOperator(): RealizedType | undefined {
+  public findPrefixOperator(): TO2Type | undefined {
     return undefined;
   }
 

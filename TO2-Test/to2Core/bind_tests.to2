@@ -27,7 +27,7 @@ test sync fn test_array_binds() -> Unit = {
     const a : Cell<int[]> = Cell([1, 2, 3])
     const b : Cell<int> = Cell(5)
     
-    bind x to a.value.map(fn(e) -> e + b.value)
+    bind x <- a.value.map(fn(e) -> e + b.value)
     
     assert_string("[1, 2, 3]", a.value.to_string())
     assert_int(5, b.value)

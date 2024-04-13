@@ -2,17 +2,18 @@ import { ModuleContext } from "./context";
 import { WithDefinitionRef } from "./definition-ref";
 import { FunctionType } from "./function-type";
 import { Operator } from "./operator";
-import { ResultType } from "./result-type";
-import { RealizedType, TO2Type, currentTypeResolver } from "./to2-type";
+import { RealizedType, TO2Type, isRealizedType } from "./to2-type";
 
-export class OptionType implements RealizedType {
-  public readonly kind = "Option";
-  public readonly name: string;
-  public readonly localName: string;
-  public readonly description: string;
+export class BoundValueType implements RealizedType {
+  public readonly kind = "Bound";
+  public readonly elementType: TO2Type;
+  public name: string;
+  public localName: string;
+  public description: string;
 
-  constructor(public readonly elementType: TO2Type) {
-    this.name = this.localName = `Option<${elementType.localName}>`;
+  constructor(element: TO2Type) {
+    this.elementType = element;
+    this.name = this.localName = `Bound<${this.elementType.localName}>`;
     this.description = "";
   }
 
@@ -25,21 +26,21 @@ export class OptionType implements RealizedType {
   }
 
   public realizedType(context: ModuleContext): RealizedType {
-    return new OptionType(this.elementType.realizedType(context));
+    return new BoundValueType(this.elementType.realizedType(context));
   }
 
   public fillGenerics(
     context: ModuleContext,
     genericMap: Record<string, RealizedType>,
   ): RealizedType {
-    return new OptionType(
+    return new BoundValueType(
       this.elementType.realizedType(context).fillGenerics(context, genericMap),
     );
   }
 
   public fillGenericArguments(typeParameters: RealizedType[]): RealizedType {
     return typeParameters.length == 1
-      ? new OptionType(typeParameters[0])
+      ? new BoundValueType(typeParameters[0])
       : this;
   }
 
@@ -48,7 +49,7 @@ export class OptionType implements RealizedType {
     genericMap: Record<string, RealizedType>,
     realizedType: RealizedType,
   ): void {
-    if (isOptionType(realizedType)) {
+    if (isBouldValueType(realizedType)) {
       this.elementType
         .realizedType(context)
         .guessGeneric(
@@ -63,52 +64,42 @@ export class OptionType implements RealizedType {
     op: Operator,
     rightType: RealizedType,
   ): TO2Type | undefined {
-    if (
-      op === "|" &&
-      (this.elementType as RealizedType).isAssignableFrom(rightType)
-    ) {
-      return this.elementType;
-    } else {
-      return undefined;
-    }
+    return isRealizedType(this.elementType)
+      ? this.elementType.findSuffixOperator(op, rightType)
+      : undefined;
   }
 
-  public findPrefixOperator(): TO2Type | undefined {
-    return undefined;
+  public findPrefixOperator(
+    op: Operator,
+    leftType: RealizedType,
+  ): TO2Type | undefined {
+    return isRealizedType(this.elementType)
+      ? this.elementType.findPrefixOperator(op, leftType)
+      : undefined;
   }
 
   public findField(name: string): WithDefinitionRef<TO2Type> | undefined {
-    switch (name) {
-      case "defined":
-        return { value: currentTypeResolver().BUILTIN_BOOL };
-      case "value":
-        return { value: this.elementType };
-      default:
-        return undefined;
-    }
+    return isRealizedType(this.elementType)
+      ? this.elementType.findField(name)
+      : undefined;
   }
 
   public allFieldNames(): string[] {
-    return ["defined", "value"];
+    return isRealizedType(this.elementType)
+      ? this.elementType.allFieldNames()
+      : [];
   }
 
   public findMethod(name: string): WithDefinitionRef<FunctionType> | undefined {
-    switch (name) {
-      case "ok_or":
-        return {
-          value: new FunctionType(
-            false,
-            [["error", currentTypeResolver().BUILTIN_STRING, false]],
-            new ResultType(this.elementType),
-          ),
-        };
-      default:
-        return undefined;
-    }
+    return isRealizedType(this.elementType)
+      ? this.elementType.findMethod(name)
+      : undefined;
   }
 
   public allMethodNames(): string[] {
-    return ["ok_or"];
+    return isRealizedType(this.elementType)
+      ? this.elementType.allMethodNames()
+      : [];
   }
 
   public forInSource(): TO2Type | undefined {
@@ -124,6 +115,6 @@ export class OptionType implements RealizedType {
   }
 }
 
-export function isOptionType(type: RealizedType): type is OptionType {
-  return type.kind === "Option";
+export function isBouldValueType(node: RealizedType): node is BoundValueType {
+  return node.kind === "Bound";
 }

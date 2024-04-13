@@ -42,6 +42,7 @@ import {
 import { VariableGet } from "./ast/variable-get";
 import { While } from "./ast/while";
 import {
+  bindKeyword,
   commaDelimiter,
   constKeyword,
   declarationParameter,
@@ -52,6 +53,7 @@ import {
   letKeyword,
   lineComment,
   lineComments,
+  toKeyword,
   typeRef,
   typeSpec,
 } from "./parser-common";
@@ -71,10 +73,11 @@ import {
 import { ForIn } from "./ast/for-in";
 import { ForInDeconstruct } from "./ast/for-in-deconstruct";
 import { stringInterpolation } from "./parser-stringinterpolation";
+import { BindValueDeclaration } from "./ast/bind-value-declaration";
 
 const letOrConst = alt(letKeyword, constKeyword);
 
-const variableDeclaration = map(
+const letConstvariableDeclaration = map(
   seq(
     letOrConst,
     alt(
@@ -115,6 +118,17 @@ const variableDeclaration = map(
           start,
           end,
         ),
+);
+
+const bindValueDeclaration = map(
+  seq(bindKeyword, withPosition(identifier), toKeyword, expression),
+  ([bind, name, to, expression], start, end) =>
+    new BindValueDeclaration(bind, name, to, expression, start, end),
+);
+
+const variableDeclaration = alt(
+  letConstvariableDeclaration,
+  bindValueDeclaration,
 );
 
 const returnExpression = map(
@@ -217,9 +231,9 @@ const block = map(
     terminated(tag("{"), whitespace0),
     delimitedUntil(
       alt(
+        variableDeclaration,
         expression,
         lineComment,
-        variableDeclaration,
         returnExpression,
         forInExpression,
         whileExpression,

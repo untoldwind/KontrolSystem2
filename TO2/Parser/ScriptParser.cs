@@ -38,7 +38,7 @@ public static class TO2ParserCommon {
 
     public static readonly Parser<bool> BindKeyword = Tag("bind").Then(Spacing1);
 
-    public static readonly Parser<bool> ToKeyword = Spacing1.Then(Tag("to")).Then(Spacing1);
+    public static readonly Parser<bool> ToKeyword = Spacing1.Then(Alt(Tag("to"), Tag("<-"))).Then(Spacing1);
 
     public static readonly Parser<LineComment> LineComment =
         Recognize(CharsExcept0("\r\n")).Map((comment, start, end) => new LineComment(comment, start, end))
