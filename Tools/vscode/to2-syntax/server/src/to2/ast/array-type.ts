@@ -90,13 +90,16 @@ export class ArrayType implements RealizedType {
     switch (name) {
       case "length":
         return { value: currentTypeResolver().BUILTIN_INT };
+      case "is_empty":
+      case "is_not_empty":
+        return { value: currentTypeResolver().BUILTIN_BOOL };
       default:
         return undefined;
     }
   }
 
   public allFieldNames(): string[] {
-    return ["length"];
+    return ["length", "is_empty", "is_not_empty"];
   }
 
   public findMethod(name: string): WithDefinitionRef<FunctionType> | undefined {
