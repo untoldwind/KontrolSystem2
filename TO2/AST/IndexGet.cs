@@ -23,6 +23,9 @@ public class IndexGet(
 
     public override TO2Type ResultType(IBlockContext context) {
         var targetType = target.ResultType(context);
+        if (targetType is BoundValueType bound)
+            targetType = bound.elementType;
+
         return targetType.AllowedIndexAccess(context.ModuleContext, indexSpec)?.TargetType ?? BuiltinType.Unit;
     }
 
@@ -33,6 +36,13 @@ public class IndexGet(
 
     public override void EmitCode(IBlockContext context, bool dropResult) {
         var targetType = target.ResultType(context);
+        IAssignEmitter? targetConvert = null;
+
+        if (targetType is BoundValueType bound) {
+            targetType = bound.elementType;
+            targetConvert = bound.elementType.AssignFrom(context.ModuleContext, bound);
+        }
+
         var indexAccess = targetType.AllowedIndexAccess(context.ModuleContext, indexSpec);
 
         if (indexAccess == null) {
@@ -46,8 +56,20 @@ public class IndexGet(
         }
 
         if (!dropResult) {
-            if (indexAccess.RequiresPtr) target.EmitPtr(context);
-            else target.EmitCode(context, false);
+            if (indexAccess.RequiresPtr) {
+                if (targetConvert != null) {
+                    target.EmitCode(context, false);
+                    targetConvert.EmitConvert(context, false);
+                    using var tempLocal =
+                        context.MakeTempVariable(targetType.UnderlyingType(context.ModuleContext));
+                    tempLocal.EmitStore(context);
+                    tempLocal.EmitLoadPtr(context);
+                } else
+                    target.EmitPtr(context);
+            } else {
+                target.EmitCode(context, false);
+                targetConvert?.EmitConvert(context, false);
+            }
 
             if (context.HasErrors) return;
 
