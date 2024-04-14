@@ -34,8 +34,10 @@ public class ForIn : Expression, IVariableContainer {
 
     public TO2Type? FindVariableLocal(IBlockContext context, string name) {
         if (name != variableName) return null;
-        return variableType ?? sourceExpression.ResultType(context)?.ForInSource(context.ModuleContext, null)?
-            .ElementType;
+        var sourceType = sourceExpression.ResultType(context);
+        if (sourceType is BoundValueType bound)
+            sourceType = bound.elementType;
+        return variableType ?? sourceType.ForInSource(context.ModuleContext, null)?.ElementType;
     }
 
     public override TO2Type ResultType(IBlockContext context) => BuiltinType.Unit;
@@ -45,6 +47,12 @@ public class ForIn : Expression, IVariableContainer {
 
     public override void EmitCode(IBlockContext context, bool dropResult) {
         var sourceType = sourceExpression.ResultType(context).UnderlyingType(context.ModuleContext);
+        IAssignEmitter? sourceConvert = null;
+        if (sourceType is BoundValueType bound) {
+            sourceType = bound.elementType.UnderlyingType(context.ModuleContext);
+            sourceConvert = bound.elementType.AssignFrom(context.ModuleContext, bound);
+        }
+
         var source = sourceType.ForInSource(context.ModuleContext, variableType);
 
         if (source == null)
@@ -86,6 +94,7 @@ public class ForIn : Expression, IVariableContainer {
         var loopVariable = loopContext.DeclaredVariable(variableName, true, source!.ElementType);
 
         sourceExpression.EmitCode(context, false);
+        sourceConvert?.EmitConvert(context, false);
 
         if (context.HasErrors) return;
 

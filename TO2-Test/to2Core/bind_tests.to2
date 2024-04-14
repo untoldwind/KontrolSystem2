@@ -34,6 +34,13 @@ test sync fn test_array_binds() -> Unit = {
     assert_int(3, x.length)
     assert_string("[6, 7, 8]", x.to_string())
     
+    let builder1 : ArrayBuilder<int> = ArrayBuilder()
+    
+    for(i in x) {
+        builder1 += 2 * i
+    }
+    assert_string("[12, 14, 16]", builder1.result().to_string())
+    
     a.value = [1, 2, 3, 4]
     b.value = 10
     
@@ -41,4 +48,11 @@ test sync fn test_array_binds() -> Unit = {
     assert_int(10, b.value)
     assert_int(4, x.length)
     assert_string("[11, 12, 13, 14]", x.to_string())
+
+    let builder2 : ArrayBuilder<int> = ArrayBuilder()
+    
+    for(i in x) {
+        builder2 += 2 * i
+    }
+    assert_string("[22, 24, 26, 28]", builder2.result().to_string())
 }
