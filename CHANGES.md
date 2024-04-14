@@ -1,6 +1,10 @@
 # Changes
 
-## 0.5.7.9 ->
+## 0.5.8.3 ->
+
+* Fix type check of field assign using operators `+=`, `-=` ... (#114) 
+
+## 0.5.7.9 -> 0.5.8.3
 
 * Main feature: Improve ConsoleWindow
     * REPL command field has been removed

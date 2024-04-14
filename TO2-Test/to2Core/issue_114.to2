@@ -1,0 +1,26 @@
+use * from core::testing
+
+pub type LogEntry = string
+
+pub struct Logger() {
+    blackboxes: (vesselUID: string, entries: LogEntry[])[] = []
+}
+
+impl Logger {
+// some other methods...
+    fn new_entry(self, entry: LogEntry) -> Unit = {
+        self.blackboxes += (vesselUID: "entry.vessel.id", entries: [entry])
+    }
+}
+
+test fn test_issue_144() -> Unit = {
+    let logger = Logger()
+
+    assert_int(0, logger.blackboxes.length)
+    
+    logger.new_entry("Test entry")
+    
+    assert_int(1, logger.blackboxes.length)
+    assert_string("entry.vessel.id", logger.blackboxes[0].vesselUID)
+    assert_string("Test entry", logger.blackboxes[0].entries[0])
+}

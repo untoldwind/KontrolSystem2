@@ -116,18 +116,18 @@ public class FieldAssign : Expression {
             ));
             return;
         }
-
-        if (!fieldAccess.FieldType.IsAssignableFrom(context.ModuleContext, valueType)) {
-            context.AddError(new StructuralError(
-                StructuralError.ErrorType.IncompatibleTypes,
-                $"Type '{targetType.Name}' field '{fieldName}' is of type {fieldAccess.FieldType} but is assigned to {valueType}",
-                Start,
-                End
-            ));
-            return;
-        }
-
+        
         if (op == Operator.Assign) {
+            if (!fieldAccess.FieldType.IsAssignableFrom(context.ModuleContext, valueType)) {
+                context.AddError(new StructuralError(
+                    StructuralError.ErrorType.IncompatibleTypes,
+                    $"Type '{targetType.Name}' field '{fieldName}' is of type {fieldAccess.FieldType} but is assigned to {valueType}",
+                    Start,
+                    End
+                ));
+                return;
+            }
+            
             expression.Prepare(context);
 
             if (fieldAccess.RequiresPtr) target.EmitPtr(context);

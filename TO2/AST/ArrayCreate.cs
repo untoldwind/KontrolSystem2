@@ -68,7 +68,7 @@ public class ArrayCreate(TO2Type? elementType, List<Expression> elements, Positi
         context.IL.Emit(OpCodes.Newarr, elementType.GeneratedType(context.ModuleContext));
 
         for (var i = 0; i < Elements.Count; i++) {
-            var valueType = Elements[i].ResultType(context);
+            var valueType = Elements[i].ResultType(context).UnderlyingType(context.ModuleContext);
             if (!elementType.IsAssignableFrom(context.ModuleContext, valueType))
                 context.AddError(new StructuralError(
                     StructuralError.ErrorType.InvalidType,
