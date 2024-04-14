@@ -19,6 +19,9 @@ public partial class KSPVesselModule {
             this.vesselAdapter = vesselAdapter;
         }
 
+        [KSField(Description = "Unique part id. Note: this will be different for each vessel.")]
+        public string Id => part.GlobalId.ToString();
+
         [KSField] public PartCategories PartCategory => part.PartData.category;
 
         [KSField] public string PartTitle => part.PartData.Title;
