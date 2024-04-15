@@ -1362,6 +1362,7 @@ Parameters
 | global_rotation       | [ksp::math::GlobalDirection](/reference/ksp/math.md#globaldirection)                                | R/O       |                                                                |
 | green_mass            | float                                                                                               | R/O       | Green mass (Kerbals) of the part                               |
 | heatshield            | Option&lt;[ksp::vessel::ModuleHeatshield](/reference/ksp/vessel.md#moduleheatshield)>               | R/O       |                                                                |
+| id                    | string                                                                                              | R/O       | Unique part id. Note: this will be different for each vessel.  |
 | is_cargo_bay          | bool                                                                                                | R/O       |                                                                |
 | is_decoupler          | bool                                                                                                | R/O       |                                                                |
 | is_deployable         | bool                                                                                                | R/O       |                                                                |

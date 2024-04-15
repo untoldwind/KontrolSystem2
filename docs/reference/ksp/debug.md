@@ -306,6 +306,15 @@ Parameters
 | message | string |          |             |
 
 
+##### read_lines
+
+```rust
+logfile.read_lines ( ) -> string[]
+```
+
+Read all previous log entries
+
+
 ##### truncate
 
 ```rust

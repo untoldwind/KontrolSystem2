@@ -1,6 +1,6 @@
 # Changes
 
-## 0.5.8.3 ->
+## 0.5.8.3 -> 0.5.8.4
 
 * Fix type check of field assign using operators `+=`, `-=` ... (#114) 
 * Add unique id to `ksp::vessel::Part` (#165)

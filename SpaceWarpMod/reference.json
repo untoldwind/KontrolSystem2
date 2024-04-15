@@ -7741,6 +7741,21 @@
                 "name": "Unit"
               }
             },
+            "read_lines": {
+              "isAsync": true,
+              "name": "read_lines",
+              "description": "Read all previous log entries\n",
+              "parameters": [],
+              "returnType": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Builtin",
+                    "name": "string"
+                  }
+                ]
+              }
+            },
             "truncate": {
               "isAsync": false,
               "name": "truncate",
@@ -53602,6 +53617,15 @@
           "name": "Part",
           "description": "",
           "fields": {
+            "id": {
+              "name": "id",
+              "description": "Unique part id. Note: this will be different for each vessel.\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            },
             "part_category": {
               "name": "part_category",
               "readOnly": true,
