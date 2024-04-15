@@ -1,5 +1,7 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.KSP.Runtime.KSPDebug;
@@ -11,6 +13,10 @@ public class DirectLogFile(string logDirectory, string fileName) : KSPDebugModul
         return new CoreBackground.WaitComplete<object?>(EnsureWriter(true).WriteLineAsync(message).ContinueWith(_ => (object?)null));
     }
 
+    public Future<string[]> ReadLines() {
+        return new CoreBackground.WaitComplete<string[]>(DoReadLines());
+    }
+    
     public void Truncate() {
         streamWriter?.Close();
         EnsureWriter(false);
@@ -23,6 +29,15 @@ public class DirectLogFile(string logDirectory, string fileName) : KSPDebugModul
         }
     }
 
+    private Task<string[]> DoReadLines() {
+        var logFile = Path.Combine(logDirectory, fileName);
+        if (File.Exists(logFile)) {
+            return File.ReadAllLinesAsync(logFile);
+        }
+
+        return Task.FromResult(Array.Empty<string>());
+    }
+    
     private StreamWriter EnsureWriter(bool append) {
         if (streamWriter == null) {
             if (!Directory.Exists(logDirectory))
@@ -40,10 +55,14 @@ public class DelegateLogFile : KSPDebugModule.ILogFile {
         return DelegatedLogFile()?.Log(message) ?? new Future.Success<object?>(null);
     }
 
+    public Future<string[]> ReadLines() {
+        return DelegatedLogFile()?.ReadLines() ?? new Future.Success<string[]>([]);
+    }
+    
     public void Truncate() {
         DelegatedLogFile()?.Truncate();
     }
-
+    
     private KSPDebugModule.ILogFile? DelegatedLogFile() {
         var context = KSPContext.CurrentContext;
 

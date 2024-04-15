@@ -11,6 +11,9 @@ public partial class KSPDebugModule {
         [KSMethod(Description = "Write a log message to the file.")]
         public Future<object?> Log(string message);
 
+        [KSMethod(Description = "Read all previous log entries")]
+        public Future<string[]> ReadLines();
+        
         [KSMethod(Description = "Truncate/clear the log file.")]
         public void Truncate();
     }

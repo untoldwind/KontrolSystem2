@@ -4,6 +4,7 @@
 
 * Fix type check of field assign using operators `+=`, `-=` ... (#114) 
 * Add unique id to `ksp::vessel::Part` (#165)
+* Add `read_lines()` method to `ksp::debug::LogFile` (#144)
 
 ## 0.5.7.9 -> 0.5.8.3
 
