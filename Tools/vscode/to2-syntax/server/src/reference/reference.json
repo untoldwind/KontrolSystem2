@@ -1186,6 +1186,36 @@
             "kind": "Builtin",
             "name": "string"
           }
+        },
+        "to_int": {
+          "isAsync": false,
+          "name": "to_int",
+          "description": "Try to convert string to integer",
+          "parameters": [],
+          "returnType": {
+            "kind": "Result",
+            "parameters": [
+              {
+                "kind": "Builtin",
+                "name": "int"
+              }
+            ]
+          }
+        },
+        "to_float": {
+          "isAsync": false,
+          "name": "to_float",
+          "description": "Try to convert string to float",
+          "parameters": [],
+          "returnType": {
+            "kind": "Result",
+            "parameters": [
+              {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            ]
+          }
         }
       },
       "suffixOperators": {

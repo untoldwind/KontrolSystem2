@@ -1,6 +1,6 @@
 # Changes
 
-## 0.5.8.4 -> 
+## 0.5.8.4 -> 0.5.8.5
 
 * Make timeouts configurable (#168)
 * Add `string.to_int()` and `string.to_float()` methods
