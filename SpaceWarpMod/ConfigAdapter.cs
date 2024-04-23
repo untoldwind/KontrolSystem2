@@ -25,6 +25,9 @@ public class ConfigAdapter : KontrolSystemConfig, UIAssetsProvider {
     internal ConfigEntry<bool> enableHotkey;
     internal ConfigEntry<string> stdLibPath;
     internal ConfigEntry<string> localLibPath;
+    internal ConfigEntry<int> rebootTimeout;
+    internal ConfigEntry<int> unitTestTimeout;
+    internal ConfigEntry<int> replTimeout;
     internal ConfigEntry<MonospaceFont> consoleFont;
     internal ConfigEntry<float> consoleFontSize;
     internal ConfigEntry<MonospaceFont> graphFont;
@@ -44,6 +47,9 @@ public class ConfigAdapter : KontrolSystemConfig, UIAssetsProvider {
             "Path of the standard library");
         localLibPath = config.Bind("Paths", "localLibPath", Path.Combine(Path.GetDirectoryName(pluginInfo.Location)!, "to2Local"),
             "Path of the local user library");
+        rebootTimeout = config.Bind("Timeouts", "rebootTimeout", 30, "Reboot timeout in seconds");
+        replTimeout = config.Bind("Timeouts", "replTimeout", 30, "Timeout when running a console command");
+        unitTestTimeout = config.Bind("Timeouts", "unitTestTimeout", 30, "Timeout when running unit tests");
         consoleFont = config.Bind("Font", "consoleFont", MonospaceFont.JetBrainsMono,
             "Font to use in console window");
         consoleFontSize = config.Bind("Font", "consoleFontSize", 12f, "Size of the console font");
@@ -62,6 +68,12 @@ public class ConfigAdapter : KontrolSystemConfig, UIAssetsProvider {
 
     public string LocalLibPath => localLibPath.Value;
 
+    public int RebootTimeout => rebootTimeout.Value;
+
+    public int REPLTimeout => rebootTimeout.Value;
+    
+    public int UnitTestTimeout => unitTestTimeout.Value;
+    
     public OptionalAddons OptionalAddons => optionalAddons;
 
     public ITO2Logger Logger => loggerAdapter;

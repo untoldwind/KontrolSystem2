@@ -9,6 +9,12 @@ public interface KontrolSystemConfig {
 
     public string LocalLibPath { get; }
 
+    public int RebootTimeout { get; }
+    
+    public int REPLTimeout { get; }
+    
+    public int UnitTestTimeout { get; }
+    
     public ITO2Logger Logger { get; }
 
     public OptionalAddons OptionalAddons { get; }

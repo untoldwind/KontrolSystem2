@@ -177,7 +177,7 @@ public class Mainframe : KerbalMonoBehaviour {
             }
         });
         var timeout = Stopwatch.StartNew();
-        while (!task.IsCompleted && timeout.ElapsedMilliseconds < 30000) {
+        while (!task.IsCompleted && timeout.ElapsedMilliseconds < config.RebootTimeout * 1000) {
             yield return null;
         }
         if (task.IsCompleted) {
@@ -351,7 +351,7 @@ public class Mainframe : KerbalMonoBehaviour {
             }
         });
         var timeout = Stopwatch.StartNew();
-        while (!task.IsCompleted && timeout.ElapsedMilliseconds < 30000) {
+        while (!task.IsCompleted && timeout.ElapsedMilliseconds < config.REPLTimeout * 1000) {
             yield return null;
         }
 
@@ -424,7 +424,7 @@ public class Mainframe : KerbalMonoBehaviour {
             }
         });
         var timeout = Stopwatch.StartNew();
-        while (!task.IsCompleted && timeout.ElapsedMilliseconds < 30000) {
+        while (!task.IsCompleted && timeout.ElapsedMilliseconds < config.UnitTestTimeout * 1000) {
             yield return null;
         }
 
