@@ -12,7 +12,6 @@ public abstract partial class BuiltinType {
         private readonly IAssignEmitter errorToStringAssign;
 
         internal TO2SString() {
-#pragma warning disable IDE0300 // Simplify collection initialization
             allowedOperators = new OperatorCollection {
                 {
                     Operator.Add,
@@ -53,7 +52,6 @@ public abstract partial class BuiltinType {
                         null, OpCodes.Ldc_I4_1, OpCodes.Clt)
                 }
             };
-#pragma warning restore IDE0300 // Simplify collection initialization
             DeclaredMethods = new Dictionary<string, IMethodInvokeFactory> {
                 {
                     "repeat",
@@ -146,6 +144,18 @@ public abstract partial class BuiltinType {
                         () => String,
                         () => [new("max_length", Int, "Maximum length of result string")],
                         false, typeof(StringMethods), typeof(StringMethods).GetMethod("Ellipsis"))
+                }, {
+                    "to_int",
+                    new BoundMethodInvokeFactory("Try to convert string to integer", true,
+                        () => new ResultType(Int),
+                        () => [],
+                        false, typeof(StringMethods), typeof(StringMethods).GetMethod("ParseInt"))
+                }, {
+                    "to_float",
+                    new BoundMethodInvokeFactory("Try to convert string to float", true,
+                        () => new ResultType(Float),
+                        () => [],
+                        false, typeof(StringMethods), typeof(StringMethods).GetMethod("ParseDouble"))
                 }
             };
             DeclaredFields = new Dictionary<string, IFieldAccessFactory> {

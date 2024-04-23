@@ -24,4 +24,20 @@ public static class StringMethods {
 
         return source[..((int)maxLength - 3)] + "...";
     }
+
+    public static Result<long> ParseInt(string source) {
+        if (Int64.TryParse(source, out var value)) {
+            return Result.Ok(value);
+        }
+
+        return Result.Err<long>($"'{source}' is not a valid integer");
+    }
+
+    public static Result<double> ParseDouble(string source) {
+        if (Double.TryParse(source, out var value)) {
+            return Result.Ok(value);
+        }
+
+        return Result.Err<double>($"'{source}' is not a valid floating point");
+    }
 }

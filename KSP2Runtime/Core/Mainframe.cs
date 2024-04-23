@@ -424,7 +424,7 @@ public class Mainframe : KerbalMonoBehaviour {
             }
         });
         var timeout = Stopwatch.StartNew();
-        while (!task.IsCompleted && timeout.ElapsedMilliseconds < config.UnitTestTimeout * 1000) {
+        while (!task.IsCompleted && timeout.ElapsedMilliseconds < config!.UnitTestTimeout * 1000) {
             yield return null;
         }
 

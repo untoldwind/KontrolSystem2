@@ -102,3 +102,25 @@ test sync fn test_string_ellipsis() -> Unit = {
     assert_string("1234567...", "123456789012346".ellipsis(10))
 
 }
+
+test sync fn test_parse_int() -> Unit = {
+    assert_int(1234, "1234".to_int().value)
+    assert_int(12345, "   12345   ".to_int().value)
+    assert_int(-234, "-234".to_int().value)
+    
+    const result = "Not a number".to_int()
+    assert_false(result.success)
+    assert_string("'Not a number' is not a valid integer", result.error.message)
+}
+
+test sync fn test_parse_float() -> Unit = {
+    assert_float(12.345, "12.345".to_float().value)
+    assert_float(12.345, "   12.345   ".to_float().value)
+
+    assert_float(12.345, "1234.5E-2".to_float().value)
+    assert_float(12.345, ".12345E2".to_float().value)
+
+    const result = "Not a number".to_float()
+    assert_false(result.success)
+    assert_string("'Not a number' is not a valid floating point", result.error.message)
+}

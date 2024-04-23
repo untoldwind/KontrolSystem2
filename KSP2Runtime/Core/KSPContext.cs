@@ -278,7 +278,7 @@ public class KSPCoreContext(string processName, ITO2Logger logger, GameInstance 
 
         foreach (var childContext in childContexts.ToArray()) childContext.Cleanup();
 
-        foreach (var logFile in logFiles.Values) logFile.Close();
+        foreach (var logFile in logFiles.Values) _ = logFile.Close();
 
         foreach (var subscription in subscriptions) subscription.Unsubscribe();
 

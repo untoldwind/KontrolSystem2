@@ -1,5 +1,10 @@
 # Changes
 
+## 0.5.8.4 -> 
+
+* Make timeouts configurable (#168)
+* Add `string.to_int()` and `string.to_float()` methods
+
 ## 0.5.8.3 -> 0.5.8.4
 
 * Fix type check of field assign using operators `+=`, `-=` ... (#114) 
