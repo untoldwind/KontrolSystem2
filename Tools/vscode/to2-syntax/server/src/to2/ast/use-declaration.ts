@@ -86,7 +86,7 @@ export class UseDeclaration implements Node, ModuleItem {
             }
           }
           if (importedFunction) {
-            if (context.mappedFunctions.has(name.value)) {
+            if (context.findFunction([name.value])) {
               errors.push({
                 status: "error",
                 message: `Duplicate function name ${name.value}`,
@@ -94,7 +94,7 @@ export class UseDeclaration implements Node, ModuleItem {
               });
             } else {
               importedFunction.definition?.moduleName;
-              context.mappedFunctions.set(name.value, importedFunction);
+              context.registerLocalFunction(name.value, importedFunction);
             }
           }
           if (importedType) {
@@ -122,8 +122,8 @@ export class UseDeclaration implements Node, ModuleItem {
           name,
           importedFunction,
         ] of this.importedModule.allFunctions()) {
-          if (!context.mappedFunctions.has(name)) {
-            context.mappedFunctions.set(name, importedFunction);
+          if (!context.findFunction([name])) {
+            context.registerLocalFunction(name, importedFunction);
           }
         }
         for (const [name, importedType] of this.importedModule.allTypes()) {

@@ -44,6 +44,7 @@ import {
   methodDeclaration,
 } from "./parser-functions";
 import { Registry } from "./ast/registry";
+import { ImplOperatorsDeclaration } from "./ast/impl-operator-declaration";
 
 const useKeyword = terminated(withPosition(tag("use")), spacing1);
 
@@ -52,6 +53,11 @@ const typeKeyword = terminated(withPosition(tag("type")), spacing1);
 const structKeyword = terminated(withPosition(tag("struct")), spacing1);
 
 const implKeyword = terminated(tag("impl"), spacing1);
+
+const operatorsKeyworkd = terminated(
+  tag("operators"),
+  between(spacing1, tag("for"), spacing1),
+);
 
 const fromKeyword = between(spacing1, withPosition(tag("from")), spacing1);
 
@@ -166,19 +172,47 @@ const structDeclaration = map(
 const implDeclaration = map(
   seq(
     withPosition(implKeyword),
-    withPosition(identifier),
-    between(
-      preceded(whitespace0, tag("{")),
-      delimited0(
-        either(lineComment, methodDeclaration),
-        whitespace1,
-        "methods",
+    alt(
+      seq(
+        withPosition(operatorsKeyworkd),
+        withPosition(identifier),
+        between(
+          preceded(whitespace0, tag("{")),
+          delimited0(
+            either(lineComment, functionDeclaration),
+            whitespace1,
+            "operator functions",
+          ),
+          preceded(whitespace0, tag("}")),
+        ),
       ),
-      preceded(whitespace0, tag("}")),
+      seq(
+        withPosition(identifier),
+        between(
+          preceded(whitespace0, tag("{")),
+          delimited0(
+            either(lineComment, methodDeclaration),
+            whitespace1,
+            "methods",
+          ),
+          preceded(whitespace0, tag("}")),
+        ),
+      ),
     ),
   ),
-  ([implKeyword, name, methods], start, end) =>
-    new ImplDeclaration(implKeyword, name, methods, start, end),
+  ([implKeyword, decl], start, end) => {
+    if (decl.length == 2)
+      return new ImplDeclaration(implKeyword, decl[0], decl[1], start, end);
+    else
+      return new ImplOperatorsDeclaration(
+        implKeyword,
+        decl[0],
+        decl[1],
+        decl[2],
+        start,
+        end,
+      );
+  },
 );
 
 const constDeclaration = map(

@@ -33,7 +33,7 @@ export class ReferencedType implements RealizedType {
     this.description = typeReference.description || "";
   }
 
-  public hasGnerics(context: ModuleContext): boolean {
+  public hasGenerics(context: ModuleContext): boolean {
     return this.typeReference.genericParameters !== undefined;
   }
 

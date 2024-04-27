@@ -1,4 +1,4 @@
-import { Node, ValidationError } from ".";
+import { ModuleItem, Node, ValidationError } from ".";
 import { LineComment } from "./line-comment";
 import { MethodDeclaration } from "./method-declaration";
 import { InputPosition, InputRange, WithPosition } from "../../parser";
@@ -6,7 +6,7 @@ import { ImplModuleContext, ModuleContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
 import { RecordType, isRecordType } from "./record-type";
 
-export class ImplDeclaration implements Node {
+export class ImplDeclaration implements ModuleItem {
   public readonly range: InputRange;
 
   constructor(
@@ -77,17 +77,17 @@ export class ImplDeclaration implements Node {
     }
   }
 
+  public setModuleName(moduleName: string, context: ModuleContext) {
+    for (const method of this.methods) {
+      method.setModuleName(moduleName, context);
+    }
+  }
+
   private findStructType(context: ModuleContext): RecordType | undefined {
     const typeAlias = context.typeAliases
       .get(this.name.value)
       ?.realizedType(context);
 
     return typeAlias && isRecordType(typeAlias) ? typeAlias : undefined;
-  }
-
-  public setModuleName(moduleName: string, context: ModuleContext) {
-    for (const method of this.methods) {
-      method.setModuleName(moduleName, context);
-    }
   }
 }

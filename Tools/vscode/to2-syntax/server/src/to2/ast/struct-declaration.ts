@@ -1,4 +1,3 @@
-import { Position } from "vscode-languageserver-textdocument";
 import { Expression, Node, TypeDeclaration, ValidationError } from ".";
 import { TO2Type, UNKNOWN_TYPE, currentTypeResolver } from "./to2-type";
 import { FunctionParameter } from "./function-declaration";
@@ -71,6 +70,8 @@ export class StructDeclaration implements Node, TypeDeclaration {
         return [[field.name, field.type.value]];
       }),
       undefined,
+      undefined,
+      undefined,
       this.name.value,
     );
     this.constructorType = new FunctionType(
@@ -109,14 +110,14 @@ export class StructDeclaration implements Node, TypeDeclaration {
     } else {
       context.typeAliases.set(this.name.value, this.type.realizedType(context));
     }
-    if (context.mappedFunctions.has(this.name.value)) {
+    if (context.findFunction([this.name.value])) {
       errors.push({
         status: "error",
         message: `Duplicate function name ${this.name}`,
         range: this.structName.range,
       });
     } else {
-      context.mappedFunctions.set(this.structName.value, {
+      context.registerLocalFunction(this.structName.value, {
         definition: {
           moduleName: context.moduleName,
           range: this.structName.range,

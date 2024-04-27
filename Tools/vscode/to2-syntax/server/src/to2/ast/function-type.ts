@@ -25,11 +25,11 @@ export class FunctionType implements RealizedType {
     this.requiredParams = parameterTypes.filter((param) => !param[2]).length;
   }
 
-  public hasGnerics(context: ModuleContext): boolean {
+  public hasGenerics(context: ModuleContext): boolean {
     return (
-      this.returnType.realizedType(context).hasGnerics(context) ||
+      this.returnType.realizedType(context).hasGenerics(context) ||
       this.parameterTypes.find((parameter) =>
-        parameter[1].realizedType(context).hasGnerics(context),
+        parameter[1].realizedType(context).hasGenerics(context),
       ) !== undefined
     );
   }

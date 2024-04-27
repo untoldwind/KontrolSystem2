@@ -16,10 +16,10 @@ export class TupleType implements RealizedType {
     this.description = "";
   }
 
-  public hasGnerics(context: ModuleContext): boolean {
+  public hasGenerics(context: ModuleContext): boolean {
     return (
       this.itemTypes.find((item) =>
-        item.realizedType(context).hasGnerics(context),
+        item.realizedType(context).hasGenerics(context),
       ) !== undefined
     );
   }

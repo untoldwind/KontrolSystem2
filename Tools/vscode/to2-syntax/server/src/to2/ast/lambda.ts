@@ -35,7 +35,7 @@ export class Lambda extends Expression {
       typeHint.returnType !== UNKNOWN_TYPE
         ? typeHint.returnType.realizedType(context.module)
         : undefined;
-    if (!returnType || returnType.hasGnerics(context.module))
+    if (!returnType || returnType.hasGenerics(context.module))
       returnType = this.expression
         .resultType(lambdaContext)
         .realizedType(context.module);

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using KontrolSystem.TO2.Generator;
-using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST;
 
@@ -118,24 +117,17 @@ public class DirectOperatorEmitter(
     public IOperatorEmitter FillGenerics(ModuleContext context, Dictionary<string, RealizedType> typeArguments) => this;
 }
 
-public class StaticMethodOperatorEmitter : IOperatorEmitter {
-    private readonly MethodInfo methodInfo;
-    private readonly Func<TO2Type> otherTypeFactory;
-    private readonly OpCode[] postOpCodes;
-    private readonly Func<TO2Type> resultTypeFactory;
-    private readonly Func<ModuleContext, IEnumerable<RealizedType>>? targetTypeArguments;
+public class StaticMethodOperatorEmitter(
+    Func<TO2Type> otherTypeFactory,
+    Func<TO2Type> resultTypeFactory,
+    MethodInfo? methodInfo,
+    Func<ModuleContext, IEnumerable<RealizedType>>? targetTypeArguments = null,
+    params OpCode[] postOpCodes)
+    : IOperatorEmitter {
+    private readonly MethodInfo methodInfo = methodInfo ?? throw new ArgumentException("MethodInfo is null");
 
-    public StaticMethodOperatorEmitter(Func<TO2Type> otherTypeFactory, Func<TO2Type> resultTypeFactory,
-        MethodInfo? methodInfo, Func<ModuleContext, IEnumerable<RealizedType>>? targetTypeArguments = null,
-        params OpCode[] postOpCodes) {
-        this.otherTypeFactory = otherTypeFactory;
-        this.resultTypeFactory = resultTypeFactory;
-        this.methodInfo = methodInfo ?? throw new ArgumentException("MethodInfo is null"); ;
-        this.targetTypeArguments = targetTypeArguments;
-        this.postOpCodes = postOpCodes;
-    }
-
-    public bool Accepts(ModuleContext context, TO2Type otherType) => otherTypeFactory().IsAssignableFrom(context, otherType);
+    public bool Accepts(ModuleContext context, TO2Type otherType) =>
+        otherTypeFactory().IsAssignableFrom(context, otherType);
 
     public TO2Type OtherType => otherTypeFactory();
 

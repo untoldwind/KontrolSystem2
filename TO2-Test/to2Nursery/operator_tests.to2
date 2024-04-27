@@ -27,4 +27,12 @@ test sync fn test_nvector_operators() -> Unit = {
     const vec7 = 2 * vec4
     
     assert_string("NVector(4, [2, 4, 6, 8])", vec7.to_string())
+
+    const vec8 = vec4 * 3
+
+    assert_string("NVector(4, [3, 6, 9, 12])", vec8.to_string())
+
+    const vec9 = vec8 / 2
+
+    assert_string("NVector(4, [1.5, 3, 4.5, 6])", vec9.to_string())
 }

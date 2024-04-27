@@ -2,7 +2,13 @@ import { WithPosition } from "../../parser";
 import { ModuleContext } from "./context";
 import { WithDefinitionRef } from "./definition-ref";
 import { FunctionType } from "./function-type";
+import { Operator } from "./operator";
 import { RealizedType, TO2Type } from "./to2-type";
+
+type OperatorMap = Map<
+  Operator,
+  { otherType: RealizedType; resultType: RealizedType }[]
+>;
 
 export class RecordType implements RealizedType {
   public readonly kind = "Record";
@@ -10,10 +16,14 @@ export class RecordType implements RealizedType {
   public localName: string;
   public description: string;
   public methods: Map<string, WithDefinitionRef<FunctionType>>;
+  public suffixOperators: OperatorMap;
+  public prefixOperators: OperatorMap;
 
   constructor(
     public readonly itemTypes: [WithPosition<string>, TO2Type][],
     methods?: Map<string, WithDefinitionRef<FunctionType>>,
+    suffixOperators?: OperatorMap,
+    prefixOperators?: OperatorMap,
     public readonly structName?: string,
     private moduleName: string = "<unknown>",
   ) {
@@ -24,12 +34,14 @@ export class RecordType implements RealizedType {
         .join(", ")})`;
     this.description = "";
     this.methods = methods ?? new Map();
+    this.suffixOperators = suffixOperators ?? new Map();
+    this.prefixOperators = prefixOperators ?? new Map();
   }
 
-  public hasGnerics(context: ModuleContext): boolean {
+  public hasGenerics(context: ModuleContext): boolean {
     return (
       this.itemTypes.find((item) =>
-        item[1].realizedType(context).hasGnerics(context),
+        item[1].realizedType(context).hasGenerics(context),
       ) !== undefined
     );
   }
@@ -42,6 +54,8 @@ export class RecordType implements RealizedType {
     return new RecordType(
       this.itemTypes.map(([name, type]) => [name, type.realizedType(context)]),
       this.methods,
+      this.suffixOperators,
+      this.prefixOperators,
       this.structName,
       this.moduleName,
     );
@@ -57,6 +71,8 @@ export class RecordType implements RealizedType {
         type.realizedType(context).fillGenerics(context, genericMap),
       ]),
       this.methods,
+      this.suffixOperators,
+      this.prefixOperators,
       this.structName,
       this.moduleName,
     );
@@ -88,12 +104,26 @@ export class RecordType implements RealizedType {
     }
   }
 
-  public findSuffixOperator(): RealizedType | undefined {
-    return undefined;
+  public findSuffixOperator(
+    op: Operator,
+    rightType: RealizedType,
+  ): TO2Type | undefined {
+    const opRef = this.suffixOperators
+      .get(op)
+      ?.find((opRef) => opRef.otherType.isAssignableFrom(rightType));
+
+    return opRef?.resultType;
   }
 
-  public findPrefixOperator(): RealizedType | undefined {
-    return undefined;
+  public findPrefixOperator(
+    op: Operator,
+    leftType: RealizedType,
+  ): TO2Type | undefined {
+    const opRef = this.prefixOperators
+      .get(op)
+      ?.find((opRef) => opRef.otherType.isAssignableFrom(leftType));
+
+    return opRef?.resultType;
   }
 
   public findField(name: string): WithDefinitionRef<TO2Type> | undefined {

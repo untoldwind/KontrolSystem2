@@ -52,7 +52,7 @@ public class TO2TestSuite(ITestOutputHelper output) {
                 }
             }
 
-            throw new XunitException("KSSTestSuite was not successful");
+            throw new XunitException("KSTestSuite was not successful");
         }
     }
 }

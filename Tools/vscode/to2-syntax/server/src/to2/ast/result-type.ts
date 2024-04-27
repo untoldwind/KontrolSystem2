@@ -15,8 +15,8 @@ export class ResultType implements RealizedType {
     this.description = "";
   }
 
-  public hasGnerics(context: ModuleContext): boolean {
-    return this.successType.realizedType(context).hasGnerics(context);
+  public hasGenerics(context: ModuleContext): boolean {
+    return this.successType.realizedType(context).hasGenerics(context);
   }
 
   public isAssignableFrom(otherType: RealizedType): boolean {

@@ -16,7 +16,7 @@ export interface ModuleContext {
   moduleName: string;
   mappedConstants: Map<string, WithDefinitionRef<TO2Type>>;
   moduleAliases: Map<string, string[]>;
-  mappedFunctions: Map<string, WithDefinitionRef<FunctionType>>;
+  //  mappedFunctions: Map<string, WithDefinitionRef<FunctionType>>;
   typeAliases: Map<string, TO2Type>;
   registry: Registry;
 
@@ -32,6 +32,10 @@ export interface ModuleContext {
   ): WithDefinitionRef<FunctionType> | undefined;
   allFunctions(): [string, FunctionType][];
   findModule(namePath: string[]): TO2Module | undefined;
+  registerLocalFunction(
+    name: string,
+    func: WithDefinitionRef<FunctionType>,
+  ): void;
 }
 
 export class RootModuleContext implements ModuleContext {
@@ -208,16 +212,19 @@ export class RootModuleContext implements ModuleContext {
   findModule(namePath: string[]): TO2Module | undefined {
     return this.registry.findModule(namePath);
   }
+
+  registerLocalFunction(
+    name: string,
+    func: WithDefinitionRef<FunctionType>,
+  ): void {
+    this.mappedFunctions.set(name, func);
+  }
 }
 
 export class ImplModuleContext implements ModuleContext {
   public readonly moduleName: string;
   public readonly mappedConstants: Map<string, WithDefinitionRef<TO2Type>> =
     new Map();
-  public readonly mappedFunctions: Map<
-    string,
-    WithDefinitionRef<FunctionType>
-  > = new Map();
   public readonly moduleAliases: Map<string, string[]> = new Map();
   public readonly typeAliases: Map<string, TO2Type> = new Map();
   public readonly registry: Registry;
@@ -229,7 +236,6 @@ export class ImplModuleContext implements ModuleContext {
     this.moduleName = root.moduleName;
     this.registry = root.registry;
     this.mappedConstants = root.mappedConstants;
-    this.mappedFunctions = root.mappedFunctions;
     this.moduleAliases = root.moduleAliases;
     this.typeAliases = root.typeAliases;
   }
@@ -262,6 +268,13 @@ export class ImplModuleContext implements ModuleContext {
 
   findModule(namePath: string[]): TO2Module | undefined {
     return this.root.findModule(namePath);
+  }
+
+  registerLocalFunction(
+    name: string,
+    func: WithDefinitionRef<FunctionType>,
+  ): void {
+    this.root.registerLocalFunction(name, func);
   }
 }
 

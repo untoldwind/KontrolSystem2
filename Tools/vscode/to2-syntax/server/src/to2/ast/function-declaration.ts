@@ -118,7 +118,7 @@ export class FunctionDeclaration implements Node, ModuleItem {
   public validateModuleFirstPass(context: ModuleContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
-    if (context.mappedFunctions.has(this.name.value)) {
+    if (context.findFunction([this.name.value])) {
       errors.push({
         status: "error",
         message: `Duplicate function ${this.name}`,
@@ -140,7 +140,7 @@ export class FunctionDeclaration implements Node, ModuleItem {
         this.declaredReturn.value,
       );
 
-      context.mappedFunctions.set(this.name.value, {
+      context.registerLocalFunction(this.name.value, {
         definition: { moduleName: context.moduleName, range: this.name.range },
         value: this.functionType,
       });

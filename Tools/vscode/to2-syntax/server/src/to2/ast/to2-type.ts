@@ -33,7 +33,7 @@ export interface RealizedType extends TO2Type {
     | "Option";
   description: string;
 
-  hasGnerics(context: ModuleContext): boolean;
+  hasGenerics(context: ModuleContext): boolean;
 
   isAssignableFrom(otherType: RealizedType): boolean;
 
@@ -83,7 +83,7 @@ export class GenericParameter implements RealizedType {
     this.localName = name;
   }
 
-  hasGnerics(_: ModuleContext): boolean {
+  hasGenerics(_: ModuleContext): boolean {
     return true;
   }
 
@@ -166,7 +166,7 @@ export const UNKNOWN_TYPE: RealizedType = {
   localName: "<unknown>",
   description: "Undeterminded type",
 
-  hasGnerics(context: ModuleContext): boolean {
+  hasGenerics(context: ModuleContext): boolean {
     return false;
   },
 

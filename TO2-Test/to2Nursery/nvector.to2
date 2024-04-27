@@ -4,7 +4,7 @@ pub struct NVector(values: float[]) {
 }
 
 impl NVector {
-    sync fn to_string(self) -> string = $"NVector({self.values.length}, {self.values.to_string()})"
+    sync fn to_string(self) -> string = $"NVector({self.dim}, {self.values.to_string()})"
 }
 
 impl operators for NVector {
@@ -19,6 +19,8 @@ impl operators for NVector {
     sync fn mul(left: float, right: NVector) -> NVector = NVector(right.values.map(fn(r) -> left * r))
 
     sync fn mul(left: NVector, right: float) -> NVector = NVector(left.values.map(fn(l) -> l * right))
+
+    sync fn div(left: NVector, right: float) -> NVector = NVector(left.values.map(fn(l) -> l / right))
 }
 
 pub sync fn zero_nvector(dim: int) -> NVector = NVector((0..dim).map(fn(i) -> 0.0))
