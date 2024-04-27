@@ -28,6 +28,9 @@
         <Content Include="to2SelfTest\**\*.*">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
+        <Content Include="to2Nursery\**\*.*">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\TO2\KontrolSystemTO2.csproj"/>

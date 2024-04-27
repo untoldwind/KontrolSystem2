@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
-using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST;
 
@@ -21,11 +18,13 @@ public class ImplDeclaration(
         var structDelegate = context.mappedTypes.Get(name) as StructTypeAliasDelegate;
 
         if (structDelegate == null)
-            return new StructuralError(
-                StructuralError.ErrorType.InvalidType,
-                $"Struct with name {name} is not defined",
-                Start,
-                End).Yield();
+            return [
+                new StructuralError(
+                    StructuralError.ErrorType.InvalidType,
+                    $"Struct with name {name} is not defined",
+                    Start,
+                    End)
+            ];
 
         foreach (var method in methods)
             if (method.IsRight) {

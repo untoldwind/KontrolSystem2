@@ -71,9 +71,9 @@ public class ConfigAdapter : KontrolSystemConfig, UIAssetsProvider {
     public int RebootTimeout => rebootTimeout.Value;
 
     public int REPLTimeout => rebootTimeout.Value;
-    
+
     public int UnitTestTimeout => unitTestTimeout.Value;
-    
+
     public OptionalAddons OptionalAddons => optionalAddons;
 
     public ITO2Logger Logger => loggerAdapter;

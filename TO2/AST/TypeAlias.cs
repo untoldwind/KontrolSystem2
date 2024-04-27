@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
-using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST;
 
@@ -26,12 +24,14 @@ public class TypeAlias(
 
     public IEnumerable<StructuralError> TryImportTypes(ModuleContext context) {
         if (context.mappedTypes.ContainsKey(name))
-            return new StructuralError(
-                StructuralError.ErrorType.DuplicateTypeName,
-                $"Type with name {name} already defined",
-                Start,
-                End
-            ).Yield();
+            return [
+                new StructuralError(
+                    StructuralError.ErrorType.DuplicateTypeName,
+                    $"Type with name {name} already defined",
+                    Start,
+                    End
+                )
+            ];
         context.mappedTypes.Add(name, type);
         return [];
     }

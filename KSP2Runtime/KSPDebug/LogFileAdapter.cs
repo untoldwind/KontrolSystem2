@@ -16,7 +16,7 @@ public class DirectLogFile(string logDirectory, string fileName) : KSPDebugModul
     public Future<string[]> ReadLines() {
         return new CoreBackground.WaitComplete<string[]>(DoReadLines());
     }
-    
+
     public void Truncate() {
         streamWriter?.Close();
         streamWriter = null;
@@ -40,7 +40,7 @@ public class DirectLogFile(string logDirectory, string fileName) : KSPDebugModul
 
         return Array.Empty<string>();
     }
-    
+
     private StreamWriter EnsureWriter(bool append) {
         if (streamWriter == null) {
             if (!Directory.Exists(logDirectory))
@@ -61,11 +61,11 @@ public class DelegateLogFile : KSPDebugModule.ILogFile {
     public Future<string[]> ReadLines() {
         return DelegatedLogFile()?.ReadLines() ?? new Future.Success<string[]>([]);
     }
-    
+
     public void Truncate() {
         DelegatedLogFile()?.Truncate();
     }
-    
+
     private KSPDebugModule.ILogFile? DelegatedLogFile() {
         var context = KSPContext.CurrentContext;
 

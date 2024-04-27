@@ -18,6 +18,8 @@ public static class TO2ParserModule {
 
     private static readonly Parser<bool> ImplKeyword = Tag("impl").Then(Spacing1);
 
+    private static readonly Parser<bool> OperatorsKeyword = Tag("operators").Then(Spacing1.Then(Tag("for").Then(Spacing1)));
+
     private static readonly Parser<bool> FormKeyword = Spacing1.Then(Tag("from")).Then(Spacing1);
 
     private static readonly Parser<bool> AsKeyword = Spacing1.Then(Tag("as")).Then(Spacing1);
@@ -57,10 +59,18 @@ public static class TO2ParserModule {
         new StructDeclaration(items.Item2.IsDefined, items.Item3, items.Item1,
             items.Item4.IsDefined ? items.Item4.Value : [], items.Item5, start, end));
 
-    private static readonly Parser<ImplDeclaration> ImplDeclaration = Seq(
-        ImplKeyword.Then(Identifier), Delimited0(Either(LineComment, MethodDeclaration), WhiteSpaces1, "methods")
-            .Between(WhiteSpaces0.Then(Char('{')), LineComments.Then(WhiteSpaces0).Then(Char('}')))
-    ).Map((items, start, end) => new ImplDeclaration(items.Item1, items.Item2, start, end));
+    private static readonly Parser<IModuleItem> ImplDeclaration = ImplKeyword.Then(Alt<IModuleItem>(
+        Seq(
+            OperatorsKeyword.Then(Identifier),
+            Delimited0(Either(LineComment, FunctionDeclaration), WhiteSpaces1, "methods")
+                .Between(WhiteSpaces0.Then(Char('{')), LineComments.Then(WhiteSpaces0).Then(Char('}')))
+            ).Map((items, start, end) => new ImplOperatorsDeclaration(items.Item1, items.Item2, start, end) as IModuleItem),
+        Seq(
+            Identifier,
+            Delimited0(Either(LineComment, MethodDeclaration), WhiteSpaces1, "methods")
+                    .Between(WhiteSpaces0.Then(Char('{')), LineComments.Then(WhiteSpaces0).Then(Char('}')))
+            ).Map((items, start, end) => new ImplDeclaration(items.Item1, items.Item2, start, end) as IModuleItem)
+            ));
 
     private static readonly Parser<ConstDeclaration> ConstDeclaration = Seq(
         DescriptionComment, Opt(PubKeyword), Tag("const").Then(WhiteSpaces1).Then(Identifier), TypeSpec,

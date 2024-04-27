@@ -1,5 +1,4 @@
-﻿using System.Linq.Expressions;
-using System.Reflection.Emit;
+﻿using System.Reflection.Emit;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
 using KontrolSystem.TO2.Runtime;
@@ -116,7 +115,7 @@ public class FieldAssign : Expression {
             ));
             return;
         }
-        
+
         if (op == Operator.Assign) {
             if (!fieldAccess.FieldType.IsAssignableFrom(context.ModuleContext, valueType)) {
                 context.AddError(new StructuralError(
@@ -127,7 +126,7 @@ public class FieldAssign : Expression {
                 ));
                 return;
             }
-            
+
             expression.Prepare(context);
 
             if (fieldAccess.RequiresPtr) target.EmitPtr(context);

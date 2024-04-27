@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
-using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST;
 
@@ -29,12 +27,12 @@ public class UseDeclaration : Node, IModuleItem {
         var module = context.FindModule(fromModule);
 
         if (module == null)
-            return new StructuralError(
+            return [new StructuralError(
                 StructuralError.ErrorType.NoSuchModule,
                 $"Module '{fromModule}' not found",
                 Start,
                 End
-            ).Yield();
+            )];
         if (alias != null)
             context.moduleAliases.Add(alias, fromModule);
         else
@@ -52,12 +50,12 @@ public class UseDeclaration : Node, IModuleItem {
         var module = context.FindModule(fromModule);
 
         if (module == null)
-            return new StructuralError(
+            return [new StructuralError(
                 StructuralError.ErrorType.NoSuchModule,
                 $"Module '{fromModule}' not found",
                 Start,
                 End
-            ).Yield();
+            )];
         foreach (var name in names ?? module.AllConstantNames) {
             var constant = module.FindConstant(name);
 
@@ -74,12 +72,12 @@ public class UseDeclaration : Node, IModuleItem {
         var module = context.FindModule(fromModule);
 
         if (module == null)
-            return new StructuralError(
+            return [new StructuralError(
                 StructuralError.ErrorType.NoSuchModule,
                 $"Module '{fromModule}' not found",
                 Start,
                 End
-            ).Yield();
+            )];
 
         var errors = new List<StructuralError>();
 

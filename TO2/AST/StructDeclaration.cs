@@ -54,12 +54,12 @@ public class StructDeclaration : Node, IModuleItem, IVariableContainer {
 
     public IEnumerable<StructuralError> TryImportTypes(ModuleContext context) {
         if (context.mappedTypes.ContainsKey(name))
-            return new StructuralError(
+            return [new StructuralError(
                 StructuralError.ErrorType.DuplicateTypeName,
                 $"Type with name {name} already defined",
                 Start,
                 End
-            ).Yield();
+            )];
         context.mappedTypes.Add(name, typeDelegate!);
         return [];
     }
@@ -147,9 +147,7 @@ public class StructTypeAliasDelegate : TO2Type {
     public override string Name { get; }
     public override string Description { get; }
 
-    public override RealizedType UnderlyingType(ModuleContext context) {
-        return realizedType;
-    }
+    public override RealizedType UnderlyingType(ModuleContext context) => realizedType;
 
     public override Type GeneratedType(ModuleContext context) {
         EnsureFields();
@@ -169,6 +167,14 @@ public class StructTypeAliasDelegate : TO2Type {
 
     public void AddMethod(string name, IMethodInvokeFactory methodInvokeFactory) {
         realizedType.DeclaredMethods.Add(name, methodInvokeFactory);
+    }
+
+    public void AddPrefixOperator(Operator op, IOperatorEmitter emitter) {
+        realizedType.allowedPrefixOperators.Add(op, emitter);
+    }
+
+    public void AddSuffixOperator(Operator op, IOperatorEmitter emitter) {
+        realizedType.allowedSuffixOperators.Add(op, emitter);
     }
 
     internal void EnsureFields() {

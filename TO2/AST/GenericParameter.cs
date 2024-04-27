@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
 
 namespace KontrolSystem.TO2.AST;
@@ -20,8 +18,6 @@ public class GenericParameter(string name) : RealizedType {
 
     public override IEnumerable<(string name, RealizedType type)> InferGenericArgument(ModuleContext context,
         RealizedType? concreteType) {
-        return concreteType != null
-            ? (name, concreteType).Yield()
-            : [];
+        return concreteType != null ? [(name, concreteType)] : [];
     }
 }

@@ -1,0 +1,26 @@
+pub struct NVector(values: float[]) {
+    dim: int = values.length
+    values: float[] = values
+}
+
+impl NVector {
+    sync fn to_string(self) -> string = $"NVector({self.values.length}, {self.values.to_string()})"
+}
+
+impl operators for NVector {
+    sync fn unary_minus(right: NVector) -> NVector = NVector(right.values.map(fn(r) -> -r))
+    
+    sync fn add(left: float, right: NVector) -> NVector = NVector(right.values.map(fn(r) -> left + r))
+
+    sync fn add(left: NVector, right: float) -> NVector = NVector(left.values.map(fn(l) -> l + right))
+    
+    sync fn add(left: NVector, right: NVector) -> NVector = NVector((0..min_dim(left.dim, right.dim)).map(fn(i) -> left.values[i] + right.values[i]))
+
+    sync fn mul(left: float, right: NVector) -> NVector = NVector(right.values.map(fn(r) -> left * r))
+
+    sync fn mul(left: NVector, right: float) -> NVector = NVector(left.values.map(fn(l) -> l * right))
+}
+
+pub sync fn zero_nvector(dim: int) -> NVector = NVector((0..dim).map(fn(i) -> 0.0))
+
+sync fn min_dim(dim1: int, dim2: int) -> int = if(dim1 < dim2) dim1 else dim2

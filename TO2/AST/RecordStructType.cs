@@ -15,7 +15,7 @@ public readonly struct RecordStructField(string name, string description, Realiz
 
 public class RecordStructType : RecordType {
     private readonly Dictionary<string, IFieldAccessFactory> allowedFields;
-    private readonly OperatorCollection allowedPrefixOperators;
+    internal readonly OperatorCollection allowedPrefixOperators;
     private readonly ConstructorInfo? constructor;
     internal readonly SortedDictionary<string, FieldInfo> fields;
     private readonly SortedDictionary<string, TO2Type> itemTypes;

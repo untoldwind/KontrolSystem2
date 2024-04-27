@@ -6,10 +6,10 @@ using KontrolSystem.TO2.Generator;
 namespace KontrolSystem.TO2.AST;
 
 public abstract class RecordType : RealizedType {
-    private readonly IOperatorCollection recordTypeOperators;
+    internal readonly OperatorCollection allowedSuffixOperators;
 
-    protected RecordType(IOperatorCollection allowedSuffixOperators) {
-        recordTypeOperators = new RecordTypeOperators(this, allowedSuffixOperators);
+    protected RecordType(OperatorCollection allowedSuffixOperators) {
+        this.allowedSuffixOperators = allowedSuffixOperators;
     }
 
     public abstract SortedDictionary<string, TO2Type> ItemTypes { get; }
@@ -26,7 +26,7 @@ public abstract class RecordType : RealizedType {
         return true;
     }
 
-    public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) => recordTypeOperators;
+    public override IOperatorCollection AllowedSuffixOperators(ModuleContext context) => new RecordTypeOperators(this, allowedSuffixOperators);
 
     internal abstract IOperatorEmitter CombineFrom(RecordType otherType);
 }

@@ -1,0 +1,30 @@
+use * from core::testing
+use { NVector, zero_nvector } from nvector
+
+test sync fn test_nvector_operators() -> Unit = {
+    const vec1 = zero_nvector(4)
+    
+    assert_string("NVector(4, [0, 0, 0, 0])", vec1.to_string())
+    
+    const vec2 = 3.0 + vec1
+    
+    assert_string("NVector(4, [3, 3, 3, 3])", vec2.to_string())
+    
+    const vec3 = vec1 + 4.0
+    
+    assert_string("NVector(4, [4, 4, 4, 4])", vec3.to_string())
+    
+    const vec4 = NVector([1.0, 2.0, 3.0, 4.0])
+    
+    const vec5 = vec2 + vec4
+    
+    assert_string("NVector(4, [4, 5, 6, 7])", vec5.to_string())
+
+    const vec6 = -vec5
+
+    assert_string("NVector(4, [-4, -5, -6, -7])", vec6.to_string())
+
+    const vec7 = 2 * vec4
+    
+    assert_string("NVector(4, [2, 4, 6, 8])", vec7.to_string())
+}

@@ -76,6 +76,15 @@ public class Call : Expression {
 
         var function = ReferencedFunction(context.ModuleContext)?.ForContext(context);
 
+        if (function != null && function.IsAsync && !context.IsAsync) {
+            context.AddError(new StructuralError(
+                StructuralError.ErrorType.NoSuchFunction,
+                $"Cannot call async function or variable '{functionName}' from a sync context",
+                Start,
+                End
+            ));
+            return;
+        }
         if (function == null || !function.IsAsync || !context.IsAsync) return;
 
         EmitCodeFunction(context, false);

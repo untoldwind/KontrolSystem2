@@ -30,7 +30,7 @@ public static class ParserExtensions {
     public static Parser<T> Named<T>(this Parser<T> parser, string expected) {
         return input => {
             var result = parser(input);
-            if (!result.success) return Result.Failure<T>(result.remaining, expected.Yield());
+            if (!result.success) return Result.Failure<T>(result.remaining, [expected]);
             return result;
         };
     }
@@ -43,17 +43,4 @@ public class ParseException(Position position, List<string> expected) : Exceptio
     $"{position}: Expected {string.Join(" or ", expected)}") {
     public readonly List<string> expected = expected;
     public readonly Position position = position;
-}
-
-public static class ObjectExt {
-    /// <summary>
-    ///     Wraps this object instance into an IEnumerable&lt;T&gt;
-    ///     consisting of a single item.
-    /// </summary>
-    /// <typeparam name="T"> Type of the object. </typeparam>
-    /// <param name="item"> The instance that will be wrapped. </param>
-    /// <returns> An IEnumerable&lt;T&gt; consisting of a single item. </returns>
-    public static IEnumerable<T> Yield<T>(this T item) {
-        yield return item;
-    }
 }

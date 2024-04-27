@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
 
 namespace KontrolSystem.TO2.AST;
@@ -42,7 +41,7 @@ public class TupleType : RealizedType {
         if (itemTypes.Count > 7) {
             var rest = DeriveTupleType(itemTypes.Skip(7).ToList());
             return Type.GetType("System.ValueTuple`8")!.MakeGenericType(
-                itemTypes.Take(7).Concat(rest.Yield()).ToArray());
+                itemTypes.Take(7).Concat([rest]).ToArray());
         }
 
         return Type.GetType($"System.ValueTuple`{itemTypes.Count}")!.MakeGenericType([.. itemTypes]);

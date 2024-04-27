@@ -16,14 +16,14 @@ public class TupleDeconstructDeclaration : Node, IBlockItem {
         this.declarations = declarations;
         this.isConst = isConst;
         this.expression = expression;
-        expression.TypeHint = context =>
+        expression.TypeHint = _ =>
             new TupleType(this.declarations.Select(d => d.type ?? BuiltinType.Unit).ToList());
     }
 
     public IEnumerable<IVariableRef> Refs => declarations.SelectMany((declaration, itemIdx) =>
         declaration.IsPlaceholder
             ? Enumerable.Empty<IVariableRef>()
-            : new TupleVariableRef(itemIdx, declaration, expression).Yield());
+            : [new TupleVariableRef(itemIdx, declaration, expression)]);
 
     public bool IsComment => false;
 

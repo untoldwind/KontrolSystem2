@@ -62,7 +62,7 @@ internal readonly struct AsyncClass {
         asyncContext.IL.Emit(OpCodes.Ldarg_0);
         asyncContext.IL.Emit(OpCodes.Ldfld, asyncContext.stateField);
         asyncContext.IL.Emit(OpCodes.Switch,
-            initialState.Yield().Concat(asyncContext.asyncResumes!.Select(ar => ar.pollLabel)));
+            Enumerable.Concat([initialState], asyncContext.asyncResumes!.Select(ar => ar.pollLabel)));
         asyncContext.IL.Emit(OpCodes.Ldarg_0);
         asyncContext.IL.Emit(OpCodes.Ldfld, asyncContext.stateField);
         asyncContext.IL.EmitNew(OpCodes.Newobj,
@@ -77,7 +77,7 @@ internal readonly struct AsyncClass {
         asyncContext.IL.Emit(OpCodes.Ldarg_0);
         asyncContext.IL.Emit(OpCodes.Ldfld, asyncContext.stateField);
         asyncContext.IL.Emit(OpCodes.Switch,
-            initialState.Yield().Concat(asyncContext.asyncResumes.Select(ar => ar.resumeLabel)));
+            Enumerable.Concat([initialState], asyncContext.asyncResumes.Select(ar => ar.resumeLabel)));
         asyncContext.IL.Emit(OpCodes.Ldarg_0);
         asyncContext.IL.Emit(OpCodes.Ldfld, asyncContext.stateField);
         asyncContext.IL.EmitNew(OpCodes.Newobj,

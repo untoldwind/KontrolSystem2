@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
-using KontrolSystem.Parsing;
 using KontrolSystem.TO2.Generator;
 
 namespace KontrolSystem.TO2.AST;
@@ -36,7 +35,7 @@ public class FunctionType(bool isAsync, List<TO2Type> parameterTypes, TO2Type re
                 (Type.GetType($"System.Func`{parameterTypes.Count + 1}") ??
                  throw new ArgumentException($"No type System.Func`{parameterTypes.Count + 1}")).MakeGenericType(
                     parameterTypes
-                        .Concat(returnType.Yield()).Select(p => p.GeneratedType(context)).ToArray());
+                        .Concat([returnType]).Select(p => p.GeneratedType(context)).ToArray());
 
             if (cacheable) generatedType = runtimeType;
 

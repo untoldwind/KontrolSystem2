@@ -13,7 +13,7 @@ public partial class KSPDebugModule {
 
         [KSMethod(Description = "Read all previous log entries")]
         public Future<string[]> ReadLines();
-        
+
         [KSMethod(Description = "Truncate/clear the log file.")]
         public void Truncate();
     }
