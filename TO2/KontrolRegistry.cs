@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using KontrolSystem.Parsing;
@@ -54,10 +55,12 @@ public class KontrolRegistry {
         return context;
     }
 
-    public Context AddDirectory(string baseDir) {
+    public Context AddDirectory(string baseDir, ITO2Logger? logger = null) {
         var context = new Context(this);
         var declaredModules = new List<DeclaredKontrolModule>();
-
+        var stopwatch = new Stopwatch();
+        
+        stopwatch.Start();
         foreach (var fileName in Directory.GetFiles(baseDir, "*.to2", SearchOption.AllDirectories)) {
             if (!fileName.EndsWith(".to2")) continue;
 
@@ -68,28 +71,43 @@ public class KontrolRegistry {
             declaredModules.Add(module);
             context.registry.RegisterModule(module);
         }
+        logger?.Info($"Phase1: {stopwatch.Elapsed}");
 
         foreach (var declared in declaredModules)
             // ... so that types can be imported by other modules
             ModuleGenerator.ImportTypes(declared);
 
+        logger?.Info($"Phase2: {stopwatch.Elapsed}");
+
         foreach (var declared in declaredModules) ModuleGenerator.DeclareConstants(declared);
 
+        logger?.Info($"Phase3: {stopwatch.Elapsed}");
+
         foreach (var declared in declaredModules) ModuleGenerator.ImportConstants(declared);
+
+        logger?.Info($"Phase4: {stopwatch.Elapsed}");
 
         foreach (var declared in declaredModules)
             // ... so that function can be declared (potentially using imported types as arguments or return)
             ModuleGenerator.DeclareFunctions(declared);
 
+        logger?.Info($"Phase5: {stopwatch.Elapsed}");
+
         foreach (var declared in declaredModules)
             // ... so that other modules may import these functions
             ModuleGenerator.ImportFunctions(declared);
 
+        logger?.Info($"Phase6: {stopwatch.Elapsed}");
+
         foreach (var declared in declaredModules) ModuleGenerator.CompileStructs(declared);
+
+        logger?.Info($"Phase6: {stopwatch.Elapsed}");
 
         foreach (var declared in declaredModules)
             // ... so that we should now be able to infer all types
             ModuleGenerator.VerifyFunctions(declared);
+
+        logger?.Info($"Phase7: {stopwatch.Elapsed}");
 
         foreach (var declared in declaredModules) {
             // ... and eventually emit the code and bake the modules
@@ -97,6 +115,8 @@ public class KontrolRegistry {
 
             context.registry.RegisterModule(compiled);
         }
+
+        logger?.Info($"Finalized: {stopwatch.Elapsed}");
 
         return context;
     }

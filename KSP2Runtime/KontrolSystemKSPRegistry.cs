@@ -14,6 +14,7 @@ using KontrolSystem.KSP.Runtime.KSPVessel;
 using KontrolSystem.KSP.Runtime.Testing;
 using KontrolSystem.TO2;
 using KontrolSystem.TO2.Binding;
+using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.KSP.Runtime;
 

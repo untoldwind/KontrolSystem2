@@ -109,7 +109,7 @@ export class ImplOperatorsDeclaration implements ModuleItem {
 }
 
 const unaryOperatorMap: Record<string, Operator> = {
-  unary_minus: "-",
+  neg: "-",
 };
 
 const binaryOperatorMap: Record<string, Operator> = {
@@ -118,6 +118,7 @@ const binaryOperatorMap: Record<string, Operator> = {
   mul: "*",
   div: "/",
   mod: "%",
+  pow: "**",
 };
 
 class ImplOperatorsModuleContext implements ModuleContext {

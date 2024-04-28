@@ -4,21 +4,25 @@ pub struct NVector(values: float[]) {
 }
 
 impl NVector {
+    sync fn add_scalar(self, scalar: float) -> NVector = NVector(self.values.map(fn(v) -> v + scalar))
+
+    sync fn mul_scalar(self, scalar: float) -> NVector = NVector(self.values.map(fn(v) -> v * scalar))
+    
     sync fn to_string(self) -> string = $"NVector({self.dim}, {self.values.to_string()})"
 }
 
 impl operators for NVector {
-    sync fn unary_minus(right: NVector) -> NVector = NVector(right.values.map(fn(r) -> -r))
+    sync fn neg(right: NVector) -> NVector = NVector(right.values.map(fn(r) -> -r))
     
-    sync fn add(left: float, right: NVector) -> NVector = NVector(right.values.map(fn(r) -> left + r))
+    sync fn add(left: float, right: NVector) -> NVector = right.add_scalar(left)
 
-    sync fn add(left: NVector, right: float) -> NVector = NVector(left.values.map(fn(l) -> l + right))
+    sync fn add(left: NVector, right: float) -> NVector = left.add_scalar(right)
     
     sync fn add(left: NVector, right: NVector) -> NVector = NVector((0..min_dim(left.dim, right.dim)).map(fn(i) -> left.values[i] + right.values[i]))
 
-    sync fn mul(left: float, right: NVector) -> NVector = NVector(right.values.map(fn(r) -> left * r))
+    sync fn mul(left: float, right: NVector) -> NVector = right.mul_scalar(left)
 
-    sync fn mul(left: NVector, right: float) -> NVector = NVector(left.values.map(fn(l) -> l * right))
+    sync fn mul(left: NVector, right: float) -> NVector = left.mul_scalar(right)
 
     sync fn div(left: NVector, right: float) -> NVector = NVector(left.values.map(fn(l) -> l / right))
 }

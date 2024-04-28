@@ -130,25 +130,28 @@ public class Mainframe : KerbalMonoBehaviour {
         var task = Task.Factory.StartNew(() => {
             var stopwatch = new Stopwatch();
             try {
+                config.Logger.Info("Start compile");
                 stopwatch.Start();
 
                 var nextRegistry = KontrolSystemKSPRegistry.CreateKSP();
 
                 if (Directory.Exists(config.StdLibPath)) {
-                    config.Logger.Debug($"Add Directory: {config.StdLibPath}");
-                    nextRegistry.AddDirectory(config.StdLibPath);
+                    config.Logger.Info($"Add Directory: {config.StdLibPath}");
+                    nextRegistry.AddDirectory(config.StdLibPath, config.Logger);
                 } else {
                     config.Logger.Warning($"StdLibPath does not exists: {config.LocalLibPath}");
                 }
 
                 if (Directory.Exists(config.LocalLibPath)) {
-                    config.Logger.Debug($"Add Directory: {config.LocalLibPath}");
-                    nextRegistry.AddDirectory(config.LocalLibPath);
+                    config.Logger.Info($"Add Directory: {config.LocalLibPath}");
+                    nextRegistry.AddDirectory(config.LocalLibPath, config.Logger);
                 } else {
                     config.Logger.Warning($"LocalLibPath does not exists: {config.LocalLibPath}");
                 }
 
                 stopwatch.Stop();
+
+                config.Logger.Info($"Done compile {stopwatch.Elapsed}");
 
                 return new State(nextRegistry, stopwatch.Elapsed, []);
             } catch (CompilationErrorException e) {

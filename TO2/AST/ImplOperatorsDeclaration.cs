@@ -12,7 +12,7 @@ public class ImplOperatorsDeclaration(
     Position start = new(),
     Position end = new()) : Node(start, end), IModuleItem {
     private static readonly Dictionary<string, Operator> unaryOperatorMap = new() {
-        { "unary_minus", Operator.Neg }
+        { "neg", Operator.Neg }
     };
 
     private static readonly Dictionary<string, Operator> binaryOperatorMap = new() {
@@ -21,6 +21,7 @@ public class ImplOperatorsDeclaration(
         { "mul", Operator.Mul },
         { "div", Operator.Div },
         { "mod", Operator.Mod },
+        { "pow", Operator.Pow },
     };
 
     private List<DeclaredOperatorEmitter> operatorFunctions = [];
