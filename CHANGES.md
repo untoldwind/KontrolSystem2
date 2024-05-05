@@ -1,5 +1,21 @@
 # Changes
 
+## 0.5.8.5 -> 0.5.9.1
+
+Support for operator overloading.
+
+* `structs` can now have an additional `impl operators for <struct-name>` sections. Functions defined in that section will server as operators for that struct
+* The following operator-functions are supported (at the moment):
+    * Unary operators (require one argument that has to be the struct-type):
+        * `neg`: The `-a` operator aka "negate" aka "sign" aka "unary minus"
+    * Binary operators (require two arguments, at least one of them has to be the struct type):
+        * `add`: The `a + b` operator
+        * `sub`: The `a - b` operator
+        * `mul`: The `a * b` operator
+        * `div`: The `a / b` operator
+        * `mod`: The `a % b` operator
+        * `pow`: The `a ** b` operator
+
 ## 0.5.8.4 -> 0.5.8.5
 
 * Make timeouts configurable (#168)
