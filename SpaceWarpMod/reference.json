@@ -26196,6 +26196,15 @@
                 "kind": "Builtin",
                 "name": "bool"
               }
+            },
+            "potential_science_value": {
+              "isAsync": false,
+              "name": "potential_science_value",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "float"
+              }
             }
           },
           "assignableFromAny": false,
@@ -55561,7 +55570,7 @@
             "name": {
               "name": "name",
               "description": "The name of the vessel.\n",
-              "readOnly": true,
+              "readOnly": false,
               "type": {
                 "kind": "Builtin",
                 "name": "string"

@@ -64,6 +64,14 @@ experiment.pause_experiment ( ) -> bool
 
 
 
+##### potential_science_value
+
+```rust
+experiment.potential_science_value ( ) -> float
+```
+
+
+
 ##### run_experiment
 
 ```rust

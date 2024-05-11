@@ -1,5 +1,10 @@
 # Changes
 
+## 0.5.9.1 ->
+
+* Make `vessel.name` read-write
+* Add `experiment.potential_science_value()`
+
 ## 0.5.8.5 -> 0.5.9.1
 
 Support for operator overloading.
