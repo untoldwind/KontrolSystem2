@@ -394,7 +394,13 @@ public partial class KSPVesselModule {
         }
 
         [KSField(Description = "The name of the vessel.")]
-        public string Name => vessel.Name;
+        public string Name {
+            get => vessel.Name;
+            set {
+                if (vessel.SimulationObject != null)
+                    vessel.SimulationObject.Name = value;
+            }
+        }
 
         public KSPOrbitModule.IOrbit Orbit => new OrbitWrapper(context, vessel.Orbit);
 
