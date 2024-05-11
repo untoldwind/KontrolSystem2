@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
+using KSP.Game.Science;
 using KSP.Modules;
 using KSP.Sim.impl;
 
@@ -9,8 +10,8 @@ namespace KontrolSystem.KSP.Runtime.KSPScience;
 public partial class KSPScienceModule {
     [KSClass("Experiment",
         Description = "Represents an in-game science experiment.")]
-    public class ExperimentAdapter(SimulationObjectModel simulationObject, ExperimentStanding experimentStanding,
-        ExperimentConfiguration experimentConfiguration) : BaseExperimentAdapter(experimentConfiguration) {
+    public class ExperimentAdapter(SimulationObjectModel simulationObject, ExperimentStanding experimentStanding, 
+        ScienceLocationRegionSituation scienceLocationRegionSituation, ExperimentConfiguration experimentConfiguration) : BaseExperimentAdapter(experimentConfiguration) {
 
         [KSField] public bool HasEnoughResources => experimentStanding.HasEnoughResources;
 
@@ -67,6 +68,32 @@ public partial class KSPScienceModule {
 
             moduleScienceExperiment.OnAttemptToRunExperiment(experimentStanding.ExperimentID);
             return true;
+        }
+
+        [KSMethod]
+        public double PotentialScienceValue() {
+            var value = 0.0;
+            var location = scienceLocationRegionSituation.ResearchLocation;
+
+            if (location != null) {
+                var scalar = scienceLocationRegionSituation.SituationScalar * scienceLocationRegionSituation.ScienceRegionScalar * scienceLocationRegionSituation.CelestialBodyScalar;
+                var definition = experimentStanding.ExperimentDefinition;
+                if (definition.ExperimentType == ScienceExperimentType.DataType ||
+                    definition.ExperimentType == ScienceExperimentType.Both) {
+                    value += KSPContext.CurrentContext.Game.ScienceManager.GetPotentialReportValueScaled(
+                        new ResearchReport(definition.ExperimentID, definition.DataReportDisplayName, location,
+                            ScienceReportType.DataType, scalar * definition.DataValue, ""));
+                }
+
+                if (definition.ExperimentType == ScienceExperimentType.SampleType ||
+                    definition.ExperimentType == ScienceExperimentType.Both) {
+                    value += KSPContext.CurrentContext.Game.ScienceManager.GetPotentialReportValueScaled(
+                        new ResearchReport(definition.ExperimentID, definition.DataReportDisplayName, location,
+                            ScienceReportType.SampleType, scalar * definition.SampleValue, ""));
+                }
+            }
+
+            return value;
         }
     }
 }

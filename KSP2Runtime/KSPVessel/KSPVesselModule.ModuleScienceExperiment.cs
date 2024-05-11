@@ -13,7 +13,7 @@ public partial class KSPVesselModule {
         public KSPScienceModule.ExperimentAdapter[] Experiments =>
             dataScienceExperiment.ExperimentStandings.Zip(dataScienceExperiment.Experiments,
                     (standing, config) =>
-                        new KSPScienceModule.ExperimentAdapter(part.part.SimulationObject, standing, config))
+                        new KSPScienceModule.ExperimentAdapter(part.part.SimulationObject, standing, part.vesselAdapter.vessel.VesselScienceRegionSituation, config))
                 .ToArray();
     }
 }

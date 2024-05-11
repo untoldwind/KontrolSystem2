@@ -59,7 +59,7 @@ public class KontrolRegistry {
         var context = new Context(this);
         var declaredModules = new List<DeclaredKontrolModule>();
         var stopwatch = new Stopwatch();
-        
+
         stopwatch.Start();
         foreach (var fileName in Directory.GetFiles(baseDir, "*.to2", SearchOption.AllDirectories)) {
             if (!fileName.EndsWith(".to2")) continue;
