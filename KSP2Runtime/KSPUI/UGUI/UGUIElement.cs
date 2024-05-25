@@ -9,11 +9,17 @@ public class UGUIElement {
         GameObject = gameObject;
         GameObject.layer = UIFactory.UI_LAYER;
         this.minSize = minSize;
+        Visible = true;
     }
 
     public GameObject GameObject { get; protected set; }
 
     public RectTransform Transform => GameObject.GetComponent<RectTransform>();
+
+    public bool Visible {
+        get => GameObject.activeInHierarchy;
+        set => GameObject.SetActive(value);
+    }
 
     public virtual Vector2 MinSize {
         get => minSize;

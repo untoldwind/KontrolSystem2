@@ -26,6 +26,15 @@ public partial class KSPUIModule {
         }
 
         [KSField]
+        public bool Visible {
+            get => slider.Visible;
+            set {
+                slider.Visible = value;
+                parent.Root.Layout();
+            }
+        }
+
+        [KSField]
         public double Value {
             get => SliderToValue(slider.Value);
             set => slider.Value = ValueToSlider(value);

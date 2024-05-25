@@ -11,6 +11,7 @@ public class UGUIVerticalLayout(RectTransform containerTransform, float gap = 10
         get {
             var minSize = new Vector2(padding.left + padding.right, padding.top + padding.bottom);
             foreach (var entry in layoutEntries) {
+                if (!entry.Visible) continue;
                 var entryMinSize = entry.MinSize;
                 minSize.x = Math.Max(minSize.x, entryMinSize.x + padding.left + padding.right);
                 minSize.y += entryMinSize.y;
@@ -39,6 +40,7 @@ public class UGUIVerticalLayout(RectTransform containerTransform, float gap = 10
         if (layoutEntries.Count > 1) availableHeight -= (layoutEntries.Count - 1) * gap;
 
         foreach (var entry in layoutEntries) {
+            if (!entry.Visible) continue;
             var relativeStretch = entry.Stretch > 0 ? entry.Stretch / sumStrech : 0;
             var height = Math.Max(entry.MinSize.y, availableHeight * relativeStretch);
             var entryTransform = entry.Transform;

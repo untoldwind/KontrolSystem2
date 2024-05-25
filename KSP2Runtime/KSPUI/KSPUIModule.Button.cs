@@ -19,6 +19,15 @@ public partial class KSPUIModule {
             this.button.GameObject.AddComponent<UGUILifecycleCallback>().AddOnDestroy(OnDestroy);
         }
 
+        [KSField]
+        public bool Visible {
+            get => button.Visible;
+            set {
+                button.Visible = value;
+                parent.Root.Layout();
+            }
+        }
+
         [KSField(Description = "Font size of the button label")]
         public double FontSize {
             get => button.FontSize;

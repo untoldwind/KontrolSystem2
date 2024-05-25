@@ -16,6 +16,15 @@ public partial class KSPUIModule {
             }
         }
 
+        [KSField]
+        public bool Visible {
+            get => canvas.Visible;
+            set {
+                canvas.Visible = value;
+                parent.Root.Layout();
+            }
+        }
+
         [KSField(Description = "Current width of the canvas (determined by the surrounding container)")]
         public double Width => canvas.Width;
 

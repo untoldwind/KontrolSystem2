@@ -10,7 +10,7 @@ namespace KontrolSystem.KSP.Runtime.KSPScience;
 public partial class KSPScienceModule {
     [KSClass("Experiment",
         Description = "Represents an in-game science experiment.")]
-    public class ExperimentAdapter(SimulationObjectModel simulationObject, ExperimentStanding experimentStanding, 
+    public class ExperimentAdapter(SimulationObjectModel simulationObject, ExperimentStanding experimentStanding,
         ScienceLocationRegionSituation scienceLocationRegionSituation, ExperimentConfiguration experimentConfiguration) : BaseExperimentAdapter(experimentConfiguration) {
 
         [KSField] public bool HasEnoughResources => experimentStanding.HasEnoughResources;

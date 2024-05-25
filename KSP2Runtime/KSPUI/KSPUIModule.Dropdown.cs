@@ -21,6 +21,15 @@ public partial class KSPUIModule {
         }
 
         [KSField]
+        public bool Visible {
+            get => dropdown.Visible;
+            set {
+                dropdown.Visible = value;
+                parent.Root.Layout();
+            }
+        }
+
+        [KSField]
         public string[] Options {
             get => dropdown.Options;
             set => dropdown.Options = value;

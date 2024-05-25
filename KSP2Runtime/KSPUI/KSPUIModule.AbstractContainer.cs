@@ -20,7 +20,7 @@ public partial class KSPUIModule {
             double stretch = 0) {
             var (element, entry) = layout.Add(UGUILayoutContainer.Horizontal((float)gap), align, (float)stretch);
             Root.Layout();
-            return new Container(Root, element.layout, entry);
+            return new Container(Root, element, entry);
         }
 
         [KSMethod(Description = "Add sub container with vertical layout to the container")]
@@ -33,7 +33,7 @@ public partial class KSPUIModule {
             double stretch = 0) {
             var (element, entry) = layout.Add(UGUILayoutContainer.Vertical((float)gap), align, (float)stretch);
             Root.Layout();
-            return new Container(Root, element.layout, entry);
+            return new Container(Root, element, entry);
         }
 
         [KSMethod(Description = "Add sub panel with horizontal layout to the container")]
@@ -46,7 +46,7 @@ public partial class KSPUIModule {
             double stretch = 0) {
             var (element, entry) = layout.Add(UGUILayoutContainer.HorizontalPanel((float)gap), align, (float)stretch);
             Root.Layout();
-            return new Container(Root, element.layout, entry);
+            return new Container(Root, element, entry);
         }
 
         [KSMethod(Description = "Add sub panel with vertical layout to the container")]
@@ -59,7 +59,7 @@ public partial class KSPUIModule {
             double stretch = 0) {
             var (element, entry) = layout.Add(UGUILayoutContainer.VerticalPanel((float)gap), align, (float)stretch);
             Root.Layout();
-            return new Container(Root, element.layout, entry);
+            return new Container(Root, element, entry);
         }
 
         [KSMethod(Description = "Add vertical scroll view to the container")]
@@ -77,7 +77,7 @@ public partial class KSPUIModule {
             var (scroll, container) = UGUILayoutContainer.VerticalScroll((float)gap);
             var entry = layout.Add(scroll, align, new Vector2((float)minWidth, (float)minHeight), (float)stretch, container.Layout);
             Root.Layout();
-            return new Container(Root, container.layout, entry);
+            return new Container(Root, container, entry);
         }
 
         [KSMethod(Description = "Add label to the container")]

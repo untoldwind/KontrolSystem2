@@ -39,6 +39,8 @@ public abstract class UGUILayout(RectTransform containerTransform, UGUILayout.Pa
     public abstract Vector2 Layout();
 
     public interface ILayoutEntry {
+        bool Visible { get; }
+
         RectTransform? Transform { get; }
 
         Vector2 MinSize { get; }
@@ -53,6 +55,8 @@ public abstract class UGUILayout(RectTransform containerTransform, UGUILayout.Pa
     }
 
     private struct LayoutSpace(UGUILayout layout, float minSize, float stretch) : ILayoutEntry {
+        public readonly bool Visible => true;
+
         public readonly RectTransform? Transform => null;
         public Vector2 MinSize { get; } = new Vector2(minSize, minSize);
         public float Stretch { get; } = stretch;
@@ -67,6 +71,7 @@ public abstract class UGUILayout(RectTransform containerTransform, UGUILayout.Pa
     }
 
     private readonly struct LayoutElement(UGUILayout layout, UGUIElement element, UGUILayout.Align align, float stretch) : ILayoutEntry {
+        public bool Visible => element.Visible;
         public RectTransform Transform => element.Transform;
         public Vector2 MinSize => element.MinSize;
         public float Stretch { get; } = stretch;
@@ -84,6 +89,7 @@ public abstract class UGUILayout(RectTransform containerTransform, UGUILayout.Pa
     }
 
     private readonly struct LayoutEntry(UGUILayout layout, GameObject child, UGUILayout.Align align, Vector2 minSize, float stretch, Func<Vector2>? layoutAction) : ILayoutEntry {
+        public bool Visible => true;
         public RectTransform Transform => child.GetComponent<RectTransform>();
         public Vector2 MinSize { get; } = minSize;
         public float Stretch { get; } = stretch;

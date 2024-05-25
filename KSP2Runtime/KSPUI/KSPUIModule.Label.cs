@@ -21,6 +21,15 @@ public partial class KSPUIModule {
         }
 
         [KSField]
+        public bool Visible {
+            get => label.Visible;
+            set {
+                label.Visible = value;
+                parent.Root.Layout();
+            }
+        }
+
+        [KSField]
         public double FontSize {
             get => label.FontSize;
             set {
