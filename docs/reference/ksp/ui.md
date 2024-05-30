@@ -61,6 +61,7 @@ Parameters
 | enabled   | bool   | R/W       | Enable/disable the button      |
 | font_size | float  | R/W       | Font size of the button label  |
 | label     | string | R/W       | Button label                   |
+| visible   | bool   | R/W       |                                |
 
 
 #### Methods
@@ -99,6 +100,7 @@ button.remove ( ) -> Unit
 | -------- | ---------------------------------------------- | --------- | ----------------------------------------------------------------------- |
 | height   | float                                          | R/O       | Current height of the canvas (determined by the surrounding container)  |
 | min_size | [ksp::math::Vec2](/reference/ksp/math.md#vec2) | R/W       | Minimum size of the canvas.                                             |
+| visible  | bool                                           | R/W       |                                                                         |
 | width    | float                                          | R/O       | Current width of the canvas (determined by the surrounding container)   |
 
 
@@ -337,6 +339,13 @@ Open the console window
 
 ### Container
 
+
+
+#### Fields
+
+| Name    | Type | Read-only | Description |
+| ------- | ---- | --------- | ----------- |
+| visible | bool | R/W       |             |
 
 
 #### Methods
@@ -660,6 +669,7 @@ container.remove ( ) -> Unit
 | enabled | bool     | R/W       |             |
 | options | string[] | R/W       |             |
 | value   | int      | R/W       |             |
+| visible | bool     | R/W       |             |
 
 
 #### Methods
@@ -713,6 +723,7 @@ dropdown.remove ( ) -> Unit
 | enabled   | bool  | R/W       |             |
 | font_size | float | R/W       |             |
 | value     | float | R/W       |             |
+| visible   | bool  | R/W       |             |
 
 
 #### Methods
@@ -789,6 +800,7 @@ Parameters
 | enabled   | bool  | R/W       |             |
 | font_size | float | R/W       |             |
 | value     | int   | R/W       |             |
+| visible   | bool  | R/W       |             |
 
 
 #### Methods
@@ -841,6 +853,7 @@ intinputfield.remove ( ) -> Unit
 | --------- | ------ | --------- | ----------- |
 | font_size | float  | R/W       |             |
 | text      | string | R/W       |             |
+| visible   | bool   | R/W       |             |
 
 
 #### Methods
@@ -1318,6 +1331,7 @@ scale2d.clear ( ) -> Unit
 | ------- | ----- | --------- | ----------- |
 | enabled | bool  | R/W       |             |
 | value   | float | R/W       |             |
+| visible | bool  | R/W       |             |
 
 
 #### Methods
@@ -1371,6 +1385,7 @@ slider.remove ( ) -> Unit
 | enabled   | bool   | R/W       |             |
 | font_size | float  | R/W       |             |
 | value     | string | R/W       |             |
+| visible   | bool   | R/W       |             |
 
 
 #### Methods
@@ -1441,6 +1456,7 @@ stringinputfield.remove ( ) -> Unit
 | font_size | float  | R/W       |             |
 | label     | string | R/W       |             |
 | value     | bool   | R/W       |             |
+| visible   | bool   | R/W       |             |
 
 
 #### Methods

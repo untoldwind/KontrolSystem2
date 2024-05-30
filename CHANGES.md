@@ -4,6 +4,7 @@
 
 * Make `vessel.name` read-write
 * Add `experiment.potential_science_value()`
+* Add `.visible` to field to UI elements
 
 ## 0.5.8.5 -> 0.5.9.1
 

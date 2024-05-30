@@ -28201,6 +28201,14 @@
           "name": "Button",
           "description": "",
           "fields": {
+            "visible": {
+              "name": "visible",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
             "font_size": {
               "name": "font_size",
               "description": "Font size of the button label\n",
@@ -28279,6 +28287,14 @@
                 "kind": "Standard",
                 "module": "ksp::math",
                 "name": "Vec2"
+              }
+            },
+            "visible": {
+              "name": "visible",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
               }
             },
             "width": {
@@ -28757,7 +28773,16 @@
         "Container": {
           "name": "Container",
           "description": "",
-          "fields": {},
+          "fields": {
+            "visible": {
+              "name": "visible",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            }
+          },
           "methods": {
             "remove": {
               "isAsync": false,
@@ -29376,6 +29401,14 @@
           "name": "Dropdown",
           "description": "",
           "fields": {
+            "visible": {
+              "name": "visible",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
             "options": {
               "name": "options",
               "readOnly": false,
@@ -29522,6 +29555,14 @@
                 "name": "string"
               }
             },
+            "visible": {
+              "name": "visible",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
             "font_size": {
               "name": "font_size",
               "readOnly": false,
@@ -29617,6 +29658,14 @@
               "type": {
                 "kind": "Builtin",
                 "name": "int"
+              }
+            },
+            "visible": {
+              "name": "visible",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
               }
             },
             "font_size": {
@@ -29716,6 +29765,14 @@
                 "name": "float"
               }
             },
+            "visible": {
+              "name": "visible",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
             "font_size": {
               "name": "font_size",
               "readOnly": false,
@@ -29805,6 +29862,14 @@
           "name": "Label",
           "description": "",
           "fields": {
+            "visible": {
+              "name": "visible",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
             "font_size": {
               "name": "font_size",
               "readOnly": false,
@@ -30030,6 +30095,14 @@
           "name": "Slider",
           "description": "",
           "fields": {
+            "visible": {
+              "name": "visible",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
             "value": {
               "name": "value",
               "readOnly": false,
@@ -30179,6 +30252,14 @@
           "name": "Toggle",
           "description": "",
           "fields": {
+            "visible": {
+              "name": "visible",
+              "readOnly": false,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
             "font_size": {
               "name": "font_size",
               "readOnly": false,
