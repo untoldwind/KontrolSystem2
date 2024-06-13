@@ -1,6 +1,6 @@
 # Changes
 
-## 0.5.9.1 ->
+## 0.5.9.1 -> 0.5.9.5
 
 * Make `vessel.name` read-write
 * Add `experiment.potential_science_value()`
